@@ -20,6 +20,7 @@ import UgpLean.GTE.Evolution
 import UgpLean.GTE.Orbit
 import UgpLean.QuarterLock
 import UgpLean.ElegantKernel
+import UgpLean.LModelDerivation
 import UgpLean.Instance.NemSBridge
 import UgpLean.Papers.Paper25
 import UgpLean.Papers.UGPMain
@@ -45,7 +46,8 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Classification.*`     — Bounds, Theorem A/B, RSUC
 - `UgpLean.GTE.*`                — Evolution, Orbit (canonical 3-step)
 - `UgpLean.QuarterLock`          — k_M = k_gen2 + ¼k_L²
-- `UgpLean.ElegantKernel`        — k_L² = 7/512
+- `UgpLean.ElegantKernel`        — k_L² = 7/512, L_model
+- `UgpLean.LModelDerivation`     — L_model derived from D₁, 5³, orbit length 3
 - `UgpLean.Phase4.*`             — DeltaUGP, GaugeCouplings, UCL, PR1
 - `UgpLean.Universality.*`       — Rule110, UWCA, Turing universality, Architecture bridge
 - `UgpLean.Papers.*`             — Paper25, UGPMain (citable stubs)

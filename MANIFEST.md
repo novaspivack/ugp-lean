@@ -24,7 +24,7 @@
 | Papers citable stubs | Papers.Paper25, Papers.UGPMain | rsuc, n10_survivors | ✓ |
 | **Phase 4** | | | |
 | DeltaUGP | Phase4.DeltaUGP | deltaUGPFormula, leptonB_matches_deltaUGP | ✓ |
-| Gauge couplings | Phase4.GaugeCouplings | g1Sq_bare, g2Sq_bare, g3Sq_bare | ✓ |
+| Gauge couplings | Phase4.GaugeCouplings | D1, g1Sq_bare, g1Sq_bare_eq_D1_over_125 | ✓ |
 | UCL, PR-1 | Phase4.UCL, Phase4.PR1 | Structural stubs | ✓ |
 | **Phase 5** | | | |
 | Rule 110 | Universality.Rule110 | rule110Output, rule110Minterms | ✓ |
@@ -39,5 +39,6 @@
 | Exclusion filters | Compute.ExclusionFilters | exclude_16..exclude_63 | ✓ |
 | Trace identifiability | GTE.Evolution | trace_identifiability | ✓ |
 | L_model exact | ElegantKernel | L_model, L_model_pos | ✓ |
+| L_model derived | LModelDerivation | L_model_eq_log_residual, L_model_from_gauge_structure | ✓ |
 | Stability of Quarter-Lock | QuarterLock | quarterLockStability_holds | ✓ |
 | Symmetric mirror algebra | Core.MirrorAlgebra | mirrorS, discSq, ugp1_mirror_params | ✓ |

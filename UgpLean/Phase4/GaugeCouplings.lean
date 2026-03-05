@@ -13,6 +13,10 @@ Reference: JMP Math Foundations §3, First Principles SM
 
 namespace UgpLean.Phase4
 
+/-- U(1) discrete invariant: D₁ = 1/(k_a k_b k_c)² = 16 from charge 3-volume.
+  From Möbius coefficients (1/8, -3/2, 4/3); V_charge = -1/4, so D₁ = 16 = 2⁴. -/
+def D1 : ℕ := 16
+
 /-- Bare g₁² = 16/125 (U(1) at unification scale). -/
 def g1Sq_bare : ℚ := 16/125
 
@@ -23,6 +27,9 @@ def g2Sq_bare : ℚ := 2329/5400
 def g3Sq_bare : ℚ := 41075281/27648000
 
 theorem g1Sq_bare_eq : g1Sq_bare = 16/125 := rfl
+
+/-- g₁² = D₁/5³ (U(1) coupling from discrete invariant over rank-3 continuous volume). -/
+theorem g1Sq_bare_eq_D1_over_125 : g1Sq_bare = D1 / 125 := rfl
 theorem g2Sq_bare_eq : g2Sq_bare = 2329/5400 := rfl
 theorem g3Sq_bare_eq : g3Sq_bare = 41075281/27648000 := rfl
 

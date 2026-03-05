@@ -60,6 +60,9 @@ What ugp-lean proves. All listed theorems have **0 sorry, 0 axioms** on the core
 | **k_L2_eq** | ElegantKernel | k_L2 = 7/512 |
 | **k_L2_pos** | ElegantKernel | 0 < k_L2 |
 | **L_model_pos** | ElegantKernel | 0 < L_model |
+| **L_model_eq_log_residual** | LModelDerivation | L_model = log₂(residualProduct), residual = (2⁴·5³)/3 |
+| **L_model_eq_log_wedge_form** | LModelDerivation | L_model = log₂((wedge2Factor · wedge5Factor) / orbitLength) |
+| **L_model_from_gauge_structure** | LModelDerivation | L_model = log₂((D₁ · 125) / 3) from D₁, 5³, orbit length 3 |
 
 ## Exclusion Filters
 
