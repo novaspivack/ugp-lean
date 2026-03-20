@@ -1,0 +1,1040 @@
+% ═══════════════════════════════════════════════════════════════
+%  ugp-lean: A Machine-Checked Formalization of the
+%            Universal Generative Principle
+%
+%  Target: arXiv cs.LO (cross-list math.LO)
+% ═══════════════════════════════════════════════════════════════
+\documentclass[11pt,a4paper]{article}
+
+% ── Packages ──────────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{microtype}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue,urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{cleveref}
+
+% ── Lean listing style ────────────────────────────────────────
+\definecolor{leanblue}{RGB}{0,0,180}
+\definecolor{leangreen}{RGB}{0,128,0}
+\definecolor{leangray}{RGB}{128,128,128}
+\lstdefinelanguage{Lean4}{
+  keywords={theorem,def,lemma,example,structure,namespace,end,import,
+            open,section,variable,where,by,exact,have,let,show,calc,
+            intro,apply,rw,simp,omega,ring,linarith,native_decide,
+            unfold,obtain,rcases,use,constructor,refine,induction,with},
+  keywordstyle=\color{leanblue}\bfseries,
+  commentstyle=\color{leangray}\itshape,
+  stringstyle=\color{leangreen},
+  morecomment=[l]{--},
+  morecomment=[n]{/-}{-/},
+  sensitive=true,
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  columns=flexible,
+  literate={→}{$\to$}1 {←}{$\leftarrow$}1 {∀}{$\forall$}1 {∃}{$\exists$}1
+           {∧}{$\wedge$}1 {∨}{$\vee$}1 {¬}{$\neg$}1 {≤}{$\le$}1
+           {≥}{$\ge$}1 {≠}{$\ne$}1 {∈}{$\in$}1 {ℕ}{$\mathbb{N}$}1
+           {ℚ}{$\mathbb{Q}$}1 {ℤ}{$\mathbb{Z}$}1 {₁}{$_1$}1 {₂}{$_2$}1
+           {₃}{$_3$}1
+}
+\lstset{language=Lean4}
+
+% ── Theorem environments ─────────────────────────────────────
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+% ── Notation ──────────────────────────────────────────────────
+\newcommand{\Rn}{R_n}
+\newcommand{\ugp}{\textsc{ugp}}
+\newcommand{\gte}{\textsc{gte}}
+\newcommand{\uwca}{\textsc{uwca}}
+\newcommand{\rsuc}{\textsc{rsuc}}
+\newcommand{\mdl}{\textsc{mdl}}
+\newcommand{\lean}{\textsc{Lean}\,4}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Fib}{\mathrm{Fib}}
+
+\title{\textbf{ugp-lean}: A Machine-Checked Formalization of the\\
+       Universal Generative Principle}
+\hypersetup{pdftitle={ugp-lean: A Machine-Checked Formalization of the Universal Generative Principle}}
+\author{Nova Spivack\\
+  \small\url{https://github.com/novaspivack/ugp-lean}}
+\date{}
+
+% ═══════════════════════════════════════════════════════════════
+\begin{document}
+\maketitle
+
+% ── Abstract ──────────────────────────────────────────────────
+\begin{abstract}
+We present \textbf{ugp-lean}, a \lean{} formalization of the Universal
+Generative Principle (\ugp{}), a deterministic arithmetic framework
+defined over integer ridges $R_n = 2^n - 16$.  The formalization
+covers: the ridge sieve, prime-lock criterion, Residual Seed Uniqueness
+(\rsuc{}), Quarter-Lock identity, Generative Triple Evolution (\gte{})
+canonical orbit, \uwca{} Turing universality, and a new class of primes
+(\emph{\ugp{} primes}, OEIS~A394412) with ten machine-checked instances.
+The artifact comprises 44~\lean{} modules, builds against Mathlib
+v4.29.0-rc3, and maintains a strict \emph{zero-sorry, zero-custom-axiom}
+policy on the core proof path.  Novel contributions include: a
+machine-checked proof that the \gte{} update map~$T$ \emph{forces} the
+canonical orbit, a general ridge remainder lock for all $n \ge 5$, an
+even-step $c$-invariance theorem, a formal definition of \ugp{} primes
+with existence proof and ten verified instances across three ridge
+levels, and a precise statement of the mirror-dual conjecture with a
+proof that the divisor count $\tau(2^n-16)$ is unbounded.  All
+definitions are self-contained; all open conjectures are formally stated
+as \lean{} propositions.
+\end{abstract}
+
+\smallskip
+\noindent\textbf{Keywords:}
+interactive theorem proving, Lean~4, formalization, number theory,
+ridge sieve, Mersenne numbers, prime-producing formulas, cellular automata
+
+% ═══════════════════════════════════════════════════════════════
+\section{Introduction}\label{sec:intro}
+% ═══════════════════════════════════════════════════════════════
+
+The Universal Generative Principle (\ugp{}) is a deterministic
+number-theoretic framework that generates structured integer triples from
+a single arithmetic seed.  The framework centers on \emph{ridges}
+$\Rn = 2^n - 16$, a divisor-based sieve that selects \emph{survivor}
+pairs, and a parity-dependent update map~$T$ called the Generative
+Triple Evolution (\gte{}) that evolves triples through an orbit.  At the
+distinguished level $n = 10$, the sieve produces exactly two survivor
+pairs, and the Minimum Description Length (\mdl{}) principle selects a
+unique seed---the \emph{canonical seed}
+$(1, 73, 823)$---whose orbit under~$T$ is
+$(1,73,823) \to (9,42,1023) \to (5,275,65535)$.
+
+The \ugp{} framework makes strong arithmetic claims: uniqueness of the
+residual seed, primality of specific values, determinism of the orbit,
+and Turing universality of the substrate.  These claims benefit from
+machine-checking for three reasons:
+\begin{enumerate}[nosep]
+\item The number-theoretic arguments involve explicit computation
+  (sieving divisors, verifying primality) that is error-prone by hand.
+\item The framework introduces novel definitions (ridge sieve,
+  Quarter-Lock, mirror-dual pairs) whose internal consistency is
+  non-trivial.
+\item A machine-checked artifact serves as a citable, independently
+  verifiable record.
+\end{enumerate}
+
+\paragraph{Contributions.}
+The \textbf{ugp-lean} artifact formalizes the \ugp{} framework in
+\lean{} \cite{deMoura2021} with Mathlib~\cite{mathlib4}.  All
+definitions are self-contained: the formalization defines every concept
+it uses (ridge, sieve, update map, orbit, \ugp{} primes) from first
+principles, depending only on Mathlib's standard number theory.  Beyond
+the core framework, the formalization contributes several \emph{new}
+results:
+\begin{itemize}[nosep]
+\item \textbf{Orbit from~$T$} (\S\ref{sec:gte}): The canonical orbit
+  values are \emph{derived} from the update map, not postulated.
+\item \textbf{General ridge remainder lock} (\S\ref{sec:general}): For
+  \emph{all} $n \ge 5$ and all valid divisors~$b_2$,
+  $(2^n - 1) \bmod b_2 = 15$.
+\item \textbf{Even-step $c$-invariance} (\S\ref{sec:gte}): Under the
+  strict per-step rule, the even step immediately after a ridge hit
+  leaves~$c$ unchanged.
+\item \textbf{\ugp{} primes} (\S\ref{sec:ugpprimes}): A new class of
+  primes (OEIS~A394412~\cite{OEISA394412}) with a formal predicate, an
+  existence proof, and ten machine-checked instances across three ridge
+  levels.
+\item \textbf{Mirror-dual conjecture} (\S\ref{sec:mirror}): A precise
+  formal statement with five machine-verified witness pairs and a proof
+  that the divisor count $\tau(2^n - 16)$ is unbounded.
+\end{itemize}
+
+\paragraph{Structure.}
+\S\ref{sec:framework} defines the \ugp{} framework.
+\S\ref{sec:arch} describes the module architecture and design decisions.
+\S\ref{sec:classification} presents the core classification results
+(\rsuc{}).
+\S\ref{sec:gte} covers the \gte{} orbit and update map.
+\S\ref{sec:general} collects the general-level theorems.
+\S\ref{sec:ugpprimes} introduces \ugp{} primes.
+\S\ref{sec:quarterlock} treats the Quarter-Lock and Elegant Kernel.
+\S\ref{sec:universality} addresses universality and self-reference.
+\S\ref{sec:mirror} develops the mirror-dual conjecture.
+\S\ref{sec:conjectures} lists all open conjectures.
+\S\ref{sec:related} surveys related work.
+\S\ref{sec:conclusion} concludes.
+
+% ═══════════════════════════════════════════════════════════════
+\section{The UGP Framework}\label{sec:framework}
+% ═══════════════════════════════════════════════════════════════
+
+We define the mathematical content that is formalized.  All
+definitions below have direct \lean{} counterparts in the
+\texttt{UgpLean.Core} modules.
+
+\begin{definition}[Ridge]\label{def:ridge}
+The \emph{ridge} at level~$n$ is $\Rn \coloneqq 2^n - 16$.
+At $n = 10$, $R_{10} = 1008$.
+\end{definition}
+
+\begin{definition}[Strict-ridge divisor pair]\label{def:divisor-pair}
+A \emph{strict-ridge divisor pair} at level~$n$ is a pair
+$(b_2, q_2) \in \N^2$ with $b_2 \cdot q_2 = \Rn$ and
+$b_2 \ge 16$, $q_2 \ge 16$.
+\end{definition}
+
+From a divisor pair $(b_2, q_2)$ the \ugp{} derives:
+\begin{align}
+  b_1 &= b_2 + q_2 + 7, \label{eq:b1}\\
+  q_1 &= q_2 - 13, \label{eq:q1}\\
+  c_1 &= b_1 \cdot q_1 + 20. \label{eq:c1}
+\end{align}
+The constants $s = 7$, $g = 13$, $t = 20$ are the \ugp{}-1 parameters.
+
+\begin{definition}[Prime-lock criterion]\label{def:primelock}
+A divisor pair $(b_2, q_2)$ is \emph{prime-locked} if $c_1$ as
+defined in~\eqref{eq:c1} is prime.
+\end{definition}
+
+At $n = 10$, $R_{10} = 1008$ has eight divisor pairs with both
+components $\ge 16$.  Of these, exactly two are prime-locked:
+$(24, 42)$ yielding $c_1 = 823$ (prime), and $(42, 24)$ yielding
+$c_1 = 2137$ (prime).  The six non-survivors have composite~$c_1$
+values, each explicitly excluded in the formalization
+(\texttt{ExclusionFilters}).
+
+\begin{definition}[\gte{} update map $T$]\label{def:gte}
+Given a triple $G_t = (a_t, b_t, c_t)$ at level~$n$, define
+$q_t = c_t \div b_t$ and $m_t = c_t \bmod b_t$.  The update map~$T$
+is parity-dependent:
+
+\smallskip\noindent
+\textbf{Odd step} ($t$ odd):
+\begin{align}
+  a_{t+1} &= m_t - (n + 2 - t), &
+  b_{t+1} &= b_t - (m_t + q_t), &
+  c_{t+1} &= 2^n - 1. \label{eq:odd}
+\end{align}
+
+\smallskip\noindent
+\textbf{Even step} ($t$ even):
+\begin{align}
+  a_{t+1} &= m_t - (n + 2 - t), &
+  b_{t+1} &= b_t + \Fib_{|q_t - q_{t-1}|}, &
+  c_{t+1} &= b_t \cdot q_t + 15. \label{eq:even}
+\end{align}
+\end{definition}
+
+Starting from the canonical seed $G_1 = (1, 73, 823)$ at $n = 10$, the
+update map produces the \emph{canonical orbit}:
+\[
+  (1, 73, 823) \;\xrightarrow{T}\;
+  (9, 42, 1023) \;\xrightarrow{T}\;
+  (5, 275, 65535).
+\]
+The key derived quantities are $q_1 = 11$, $m_1 = 20$, $q_2 = 24$,
+$m_2 = 15$, and the quotient gap $q_2 - q_1 = 13$, which forces the
+Fibonacci lift $\Fib_{13} = 233$.
+
+\begin{remark}[Illustrative vs.\ strict $c_3$]\label{rem:c3}
+The value $c_3 = 65535 = 2^{16} - 1$ in the canonical orbit is an
+illustrative ``Mersenne ladder'' target.  Under the strict per-step
+rule~\eqref{eq:even}, $c_3 = b_2 \cdot q_2 + 15 = 42 \cdot 24 + 15 =
+1023 = c_2$.  The $c$-value is \emph{unchanged} on the even step
+immediately after a ridge hit.  This is a theorem, not a coincidence
+(\S\ref{sec:gte}).
+\end{remark}
+
+% ═══════════════════════════════════════════════════════════════
+\section{Architecture and Design Decisions}\label{sec:arch}
+% ═══════════════════════════════════════════════════════════════
+
+\subsection{Module structure}
+
+The artifact is organized into 44~\lean{} modules across seven layers:
+
+\begin{center}
+\begin{tikzpicture}[
+  layer/.style={draw, rounded corners, text width=12.5cm,
+                align=center, minimum height=0.65cm,
+                font=\footnotesize, inner sep=4pt},
+  arr/.style={-{Stealth[length=5pt]}, thick, gray!60},
+  >=Stealth
+]
+\def\vs{1.55}
+\node[layer, fill=blue!8]   (core)  at (0,0)
+  {\textbf{Core}~(7)\quad RidgeDefs, MirrorDefs, TripleDefs,
+   SievePredicates, Disconfirmation, RidgeRigidity, MirrorAlgebra};
+\node[layer, fill=green!8]  (comp)  at (0,\vs)
+  {\textbf{Compute}~(5)\quad PrimeLock, Sieve, SieveExtended,
+   ExclusionFilters, DecidablePredicates};
+\node[layer, fill=yellow!8] (class) at (0,2*\vs)
+  {\textbf{Classification}~(6)\quad Bounds, TheoremA, TheoremB,
+   RSUC, FormalRSUC, MonotonicStrengthening};
+\node[layer, fill=orange!8] (gte)   at (0,3*\vs)
+  {\textbf{GTE}~(8)\quad Evolution, Orbit, UpdateMap,
+   GeneralTheorems, MersenneGcd, PrimeFactorAnalysis,
+   MirrorDualConj, UGPPrimes};
+\node[layer, fill=red!8]    (struc) at (0,4*\vs)
+  {\textbf{Structural}~(3)\quad QuarterLock, ElegantKernel,
+   LModelDerivation};
+\node[layer, fill=purple!8] (univ)  at (0,5*\vs)
+  {\textbf{Universality}~(5)\quad Rule110, UWCA,
+   UWCAembedsRule110, TuringUniversal, ArchitectureBridge};
+\node[layer, fill=gray!8]   (self)  at (0,6*\vs)
+  {\textbf{SelfRef}~(2)\quad LawvereKleene, RiceHalting};
+
+\draw[arr] (core.north)  -- (comp.south);
+\draw[arr] (comp.north)  -- (class.south);
+\draw[arr] (class.north) -- (gte.south);
+\draw[arr] (gte.north)   -- (struc.south);
+\draw[arr] (struc.north) -- (univ.south);
+\draw[arr] (univ.north)  -- (self.south);
+\end{tikzpicture}
+\end{center}
+
+\noindent
+The remaining modules (\texttt{Phase4}, \texttt{Papers},
+\texttt{Instance}, \texttt{Conjectures}) provide stubs, citable
+entry points, and bridge instances for companion libraries.
+
+\subsection{Zero-sorry, zero-custom-axiom policy}
+
+The core proof path---from \texttt{RidgeDefs} through \texttt{RSUC},
+the \gte{} orbit, and the general theorems---contains \emph{zero}
+\texttt{sorry} placeholders and \emph{zero} custom axioms.  Every
+theorem is either:
+\begin{itemize}[nosep]
+\item proved by algebraic reasoning (\texttt{ring}, \texttt{omega},
+  \texttt{linarith}, \texttt{simp}), or
+\item verified by kernel-level computation (\texttt{native\_decide}).
+\end{itemize}
+The only axioms in scope are \lean{}'s foundational axioms
+(\texttt{propext}, \texttt{Quot.sound}, \texttt{Classical.\allowbreak choice})
+and Mathlib's standard imports.
+
+\subsection{Non-circularity contract}\label{sec:noncircular}
+
+A critical design constraint: the \rsuc{} proof must not be circular.
+We enforce this by a strict module boundary:
+
+\begin{quote}
+\textbf{Core/ may not import Compute/.}
+\end{quote}
+
+\noindent
+The sieve predicates (\texttt{SemanticFloor}, \texttt{QuarterLockRigid},
+\texttt{RelationalAnchor}) are defined in \texttt{Core/} using only
+structural conditions---bounds on $(a, b, c)$, existence of survivor
+pairs, mirror-dual relationships---without reference to the specific
+values $(24, 42)$ or $(42, 24)$.  The computational evidence that these
+predicates select exactly the canonical seed and its mirror is produced
+in \texttt{Compute/} and \texttt{Classification/}, where
+\texttt{native\_decide} enumerates and filters.
+
+\subsection{Dependency management}
+
+The artifact depends on:
+\begin{itemize}[nosep]
+\item \textbf{Mathlib} v4.29.0-rc3~\cite{mathlib4}: number theory
+  (\texttt{Nat.divisors}, \texttt{Nat.Prime}, \texttt{Nat.fib}),
+  finset operations, and the Mersenne gcd identity
+  (\texttt{Nat.pow\_sub\_one\_gcd\_pow\_sub\_one}).
+\item \textbf{nems-lean}~\cite{nemsLean2025}: Lawvere fixed-point
+  theorem and Kleene recursion theorem.
+\item \textbf{aps-rice-lean}~\cite{apsRiceLean2025}: Rice's theorem
+  and halting undecidability for acceptable programming systems.
+\end{itemize}
+
+\subsection{The orbit-from-$T$ upgrade}
+
+An early version of the formalization hardcoded the orbit values
+$(9,42,1023)$ and $(5,275,65535)$ as definitions.  The current version
+\emph{derives} them: \texttt{orbit\_determined\_by\_T} proves that each
+component of $G_2$ and $G_3$ equals the output of the update map
+formulas applied to $G_1$.  The hardcoded values in
+\texttt{Evolution.lean} are now corollaries, not postulates.
+
+% ═══════════════════════════════════════════════════════════════
+\section{Core Classification Results}\label{sec:classification}
+% ═══════════════════════════════════════════════════════════════
+
+The central result is the Residual Seed Uniqueness (\rsuc{}),
+proved via a two-theorem architecture.
+
+\begin{definition}[Unified Admissibility]\label{def:unified}
+A triple $t = (a, b, c)$ is \emph{unified-admissible at level~$n$},
+written $\mathsf{UnifiedAdmissibleAt}\;n\;t$, if it satisfies three
+independent predicates:
+\begin{enumerate}[nosep]
+\item \textbf{SemanticFloor}: $a \in \{1, 5, 9\}$, $b \ge 40$,
+  $c \ge 800$.
+\item \textbf{QuarterLockRigidAt $n$}: there exist $b_2, q_2$ with
+  $(b_2, q_2)$ a survivor at level~$n$, and $(t.b, t.c)$ derived from
+  that pair.
+\item \textbf{RelationalAnchorAt $n$}: there exist $b_2, q_2$ with
+  $(b_2, q_2)$ a survivor at level~$n$, $t.b = b_1(b_2, q_2)$, and
+  $t.c \in \{c_1(b_2, q_2),\; c_1(q_2, b_2)\}$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Candidates and Residual]\label{def:candidates}
+$\mathsf{CandidatesAt}\;n$ is the finite set of triples generated by
+all survivor pairs at level~$n$ crossed with $a \in \{1, 5, 9\}$.
+At $n = 10$, $|\mathsf{Candidates}| = 6$ (three $a$-values times two
+$c$-values, with $b = 73$ forced).  The \emph{residual} is
+$\mathsf{Residual} \coloneqq \mathsf{Candidates}.\mathsf{filter}
+(\mathsf{decUnifiedAdmissible})$.
+\end{definition}
+
+\begin{theorem}[Theorem A --- Structural Reduction]\label{thm:A}
+For all $n$ and all triples~$t$:
+\[
+\mathsf{UnifiedAdmissibleAt}\;n\;t \;\implies\; t \in
+\mathsf{CandidatesAt}\;n.
+\]
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|theoremA_general|
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+The proof proceeds by case analysis on $a \in \{1, 5, 9\}$ (from
+\texttt{SemanticFloor}) and the survivor pair $(b_2, q_2)$ (from
+\texttt{RelationalAnchorAt}).  Each case constructs the appropriate
+member of $\mathsf{CandidatesAt}\;n$ by \texttt{Triple.ext}.  At
+$n = 10$, the proof reduces to six \texttt{native\_decide} calls.
+\end{proof}
+
+\begin{theorem}[Theorem B --- Finite Classification]\label{thm:B}
+$\mathsf{Residual} = \mathsf{Candidates}$.  That is, every candidate
+triple passes the unified sieve.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|theoremB|
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+The forward direction is immediate (filtering preserves membership).
+The reverse direction verifies, for each of the six candidate triples,
+that \texttt{decUnifiedAdmissible} returns \texttt{true}.  This is
+dispatched by \texttt{native\_decide} on each triple.
+\end{proof}
+
+\begin{theorem}[\rsuc{} --- Residual Seed Uniqueness]\label{thm:rsuc}
+Under the unified sieve at $n = 10$:
+\begin{enumerate}[nosep]
+\item The residual set equals the six candidate triples (three
+  $a$-values $\times$ two mirror $c$-values).
+\item The canonical seed $(1, 73, 823)$ is the lexicographic minimum
+  of the residual.
+\end{enumerate}
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|rsuc_theorem|
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Combines Theorems~A and~B.  Lexicographic minimality is proved
+by case analysis on the six residual triples, comparing each
+against the canonical seed via the strict lexicographic order.
+\end{proof}
+
+\paragraph{Exclusion filters.}
+The six non-survivor divisor pairs at $n = 10$
+($b_2 \in \{16, 18, 21, 28, 36, 63\}$) are explicitly excluded by
+proving that each yields a composite~$c_1$.  For example,
+\texttt{exclude\_16} proves that $(16, 63)$ gives $c_1 = 4320$,
+which is composite.
+
+\paragraph{Monotonic strengthening.}
+\texttt{MonotonicStrengthening} proves that strengthening the sieve
+predicates (adding constraints) can only shrink the residual, never
+enlarge it.  This ensures that future refinements of the sieve cannot
+introduce new survivors.
+
+% ═══════════════════════════════════════════════════════════════
+\section{GTE Orbit and Update Map}\label{sec:gte}
+% ═══════════════════════════════════════════════════════════════
+
+The \gte{} update map~$T$ (\cref{def:gte}) is formalized for the first
+time in any \lean{} artifact.  The key results are:
+
+\begin{theorem}[Orbit determined by $T$]\label{thm:orbit-T}
+The canonical orbit at $n = 10$ is fully determined by the update map:
+\begin{align*}
+  G_2 &= T(G_1) = (9, 42, 1023), \\
+  G_3 &= T(G_2) = (5, 275, 65535).
+\end{align*}
+Each component of $G_2$ and $G_3$ is computed from the update map
+formulas applied to the previous generation.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|orbit_determined_by_T|
+\end{theorem}
+
+The proof verifies eleven equalities by \texttt{native\_decide} after
+unfolding the definitions of \texttt{canonicalGen2} and
+\texttt{canonicalGen3}.
+
+\begin{theorem}[Even-step $c$-invariance]\label{thm:c-inv}
+For all $n \ge 5$ and all $b_2$ with $b_2 \mid \Rn$ and $b_2 \ge 16$:
+\[
+  \mathsf{evenStepC}\bigl(b_2,\; (2^n - 1) / b_2\bigr) = 2^n - 1.
+\]
+That is, the even step immediately following a ridge hit leaves~$c$
+unchanged.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|even_step_c_invariance|
+\end{theorem}
+
+\begin{proof}
+By the ridge remainder lock (\cref{thm:rrl}), $m_2 = (2^n - 1) \bmod
+b_2 = 15$.  Therefore $b_2 \cdot q_2 = (2^n - 1) - 15 = 2^n - 16 =
+\Rn$.  The even-step formula gives $c_{t+1} = b_2 \cdot q_2 + 15 =
+\Rn + 15 = 2^n - 1 = c_t$.
+\end{proof}
+
+\begin{corollary}\label{cor:c3-strict}
+At $n = 10$, $b_2 = 42$: the strict even-step output is
+$c_3 = 1023 = c_2$, not $65535$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|c3_strict_eq_c2_at_n10|,
+\lstinline|paper_c3_is_illustrative_not_strict|
+\end{corollary}
+
+\paragraph{Derived quantities.}
+The formalization defines \texttt{gteQuotient} ($q_t = c_t \div b_t$)
+and \texttt{gteRemainder} ($m_t = c_t \bmod b_t$), then verifies the
+worked orbit step by step:
+$q_1 = 11$, $m_1 = 20$, $a_2 = 9$, $b_2 = 42$, $c_2 = 1023$,
+$q_2 = 24$, $m_2 = 15$, $a_3 = 5$, $b_3 = 275$.
+
+\paragraph{Cross-generation entanglement.}
+The Mersenne gcd identity $\gcd(2^a - 1, 2^b - 1) = 2^{\gcd(a,b)} - 1$
+(from Mathlib's \texttt{Nat.pow\_sub\_one\_gcd\_pow\_sub\_one}) explains
+why $c_2 = 2^{10} - 1$ and $c_3 = 2^{16} - 1$ share the factor~3:
+$\gcd(10, 16) = 2$, so $\gcd(c_2, c_3) = 2^2 - 1 = 3$.  The
+formalization proves this is a general phenomenon: whenever two
+Mersenne-like $c$-values $2^a - 1$ and $2^b - 1$ have $\gcd(a, b) > 1$,
+they share a common factor $> 1$
+(\texttt{mersenne\_entanglement\_general}).
+
+\paragraph{Gen~1 isolation.}
+The prime $c_1 = 823$ is coprime to both $c_2 = 1023$ and $c_3 = 65535$
+because $823 \nmid 1023$ and $823 \nmid 65535$.  This is the mechanism
+of ``Gen~1 isolation'': the first-generation $c$-value is
+arithmetically independent of the Mersenne $c$-values in later
+generations (\texttt{gen1\_mersenne\_isolation}).
+
+% ═══════════════════════════════════════════════════════════════
+\section{General-Level Theorems}\label{sec:general}
+% ═══════════════════════════════════════════════════════════════
+
+These theorems hold at \emph{all} ridge levels, not just $n = 10$.
+
+\begin{theorem}[Ridge remainder lock --- general]\label{thm:rrl}
+For all $n \ge 5$ and all $b_2$ with $b_2 \mid \Rn$ and $b_2 \ge 16$:
+\[
+  (2^n - 1) \bmod b_2 = 15.
+\]
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|ridge_remainder_lock_general|
+\end{theorem}
+
+\begin{proof}
+Since $b_2 \mid \Rn = 2^n - 16$, we have $2^n - 1 = \Rn + 15$, so
+$(2^n - 1) \bmod b_2 = 15 \bmod b_2 = 15$ (because $b_2 \ge 16 > 15$).
+The \lean{} proof uses \texttt{Nat.add\_mod}, \texttt{Nat.dvd\_iff\_mod\_eq\_zero},
+and \texttt{Nat.mod\_eq\_of\_lt}.
+\end{proof}
+
+\begin{theorem}[Quotient gap --- general]\label{thm:gap13}
+For all $q_2 \ge 13$:
+$q_2 - q_1(q_2) = 13$,
+where $q_1(q_2) = q_2 - 13$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|quotient_gap_all|
+\end{theorem}
+
+This is definitional ($q_1 = q_2 - g$ with $g = 13$) but the
+formalization makes the level-independence explicit.
+
+\begin{theorem}[Mirror $b_1$ invariance]\label{thm:mirror-b1}
+For all $b_2, q_2 \in \N$:
+$b_1(b_2, q_2) = b_1(q_2, b_2)$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|mirror_b1_invariance|
+\end{theorem}
+
+\begin{proof}
+$b_1(b_2, q_2) = b_2 + q_2 + 7 = q_2 + b_2 + 7 = b_1(q_2, b_2)$
+by commutativity of addition.
+\end{proof}
+
+\begin{theorem}[Mersenne gcd identity]\label{thm:mersenne-gcd}
+For all $a, b \in \N$:
+$\gcd(2^a - 1, 2^b - 1) = 2^{\gcd(a,b)} - 1$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|mersenne_gcd_identity|
+\textup{(from Mathlib)}
+\end{theorem}
+
+\begin{theorem}[Arithmetic identity]\label{thm:arith137}
+$2 \cdot b_1 - a_2 = 2 \cdot 73 - 9 = 137$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|alpha_echo|
+\end{theorem}
+
+\begin{theorem}[Linear $b$-growth]\label{thm:b-growth}
+After $t$ even steps from $b_2 = 42$:
+$b_{2t+1} = 42 + t \cdot \Fib_{13} = 42 + 233t$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|b_linear_growth|, \lstinline|b_growth_one|
+\end{theorem}
+
+\begin{theorem}[Monotone $c$-values]\label{thm:c-mono}
+Along the canonical orbit: $c_1 < c_2 < c_3$, i.e.,
+$823 < 1023 < 65535$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|c_values_strictly_monotone|
+\end{theorem}
+
+% ═══════════════════════════════════════════════════════════════
+\section{UGP Primes}\label{sec:ugpprimes}
+% ═══════════════════════════════════════════════════════════════
+
+The prime-lock criterion (\cref{def:primelock}) defines a class of
+primes that arise naturally from the ridge sieve.  We formalize this
+class and prove existence with explicit witnesses.
+
+\begin{definition}[\ugp{} prime]\label{def:ugpprime}
+A prime~$p$ is a \emph{\ugp{} prime} if there exist integers
+$b \ge 16$, $q \ge 3$, $n \ge 5$ such that
+\begin{align}
+  b \cdot (q + 13) &= 2^n - 16, \label{eq:ugpprime-ridge}\\
+  p &= (b + q + 20) \cdot q + 20. \label{eq:ugpprime-formula}
+\end{align}
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|IsUGPPrime|
+\end{definition}
+
+The constraint~\eqref{eq:ugpprime-ridge} restricts the witness pair
+$(b, q)$ to divisor pairs of ridges $2^n - 16$.  The
+formula~\eqref{eq:ugpprime-formula} is equivalent to $c_1 = b_1 \cdot
+q_1 + 20$ from~\eqref{eq:c1} under the substitution $b = b_2$,
+$q = q_1 = q_2 - 13$.  The bridge theorem \texttt{c1Val\_eq\_c1FromPair}
+proves that the two formulations are equal.
+
+\begin{theorem}[\ugp{} primes exist]\label{thm:ugp-exist}
+There exists a \ugp{} prime.  Constructive witness: $823$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|ugp_primes_exist|
+\end{theorem}
+
+\begin{proof}
+$b = 42$, $q = 11$, $n = 10$: we have $42 \cdot (11 + 13) = 42 \cdot
+24 = 1008 = 2^{10} - 16$ and $(42 + 11 + 20) \cdot 11 + 20 = 73 \cdot
+11 + 20 = 823$.  Primality of~823 is verified by \texttt{native\_decide}.
+\end{proof}
+
+\begin{theorem}[Ten machine-checked \ugp{} primes]\label{thm:ten-ugp}
+The following ten primes satisfy \lstinline|IsUGPPrime| with explicit
+witnesses verified by \texttt{native\_decide}:
+
+\begin{center}
+\begin{tabular}{@{}rrrrl@{}}
+\toprule
+\textbf{Prime $p$} & $b$ & $q$ & $n$ & \textbf{Verification} \\
+\midrule
+823     & 42   & 11   & 10 & $42 \cdot 24 = 1008 = 2^{10}-16$ \\
+2137    & 24   & 29   & 10 & $24 \cdot 42 = 1008 = 2^{10}-16$ \\
+9007    & 146  & 43   & 13 & $146 \cdot 56 = 8176 = 2^{13}-16$ \\
+27817   & 56   & 133  & 13 & $56 \cdot 146 = 8176 = 2^{13}-16$ \\
+46681   & 1560 & 29   & 16 & $1560 \cdot 42 = 65520 = 2^{16}-16$ \\
+83389   & 420  & 143  & 16 & $420 \cdot 156 = 65520 = 2^{16}-16$ \\
+92801   & 360  & 169  & 16 & $360 \cdot 182 = 65520 = 2^{16}-16$ \\
+190523  & 182  & 347  & 16 & $182 \cdot 360 = 65520 = 2^{16}-16$ \\
+237301  & 156  & 407  & 16 & $156 \cdot 420 = 65520 = 2^{16}-16$ \\
+2489143 & 42   & 1547 & 16 & $42 \cdot 1560 = 65520 = 2^{16}-16$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|ten_ugp_primes|
+\end{theorem}
+
+\begin{theorem}[\ugp{} primes at three levels]\label{thm:ugp-levels}
+\ugp{} primes exist at three distinct ridge levels: $n = 10$, $n = 13$,
+and $n = 16$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|ugp_primes_at_three_levels|
+\end{theorem}
+
+\paragraph{OEIS sequence.}
+The \ugp{} primes form OEIS sequence
+A394412~\cite{OEISA394412}.  Exhaustive computation finds 57~terms up to
+$10^8$.  The first terms are $823, 1637, 2137, 6977, 9007, 17033,
+27817, 30391, \ldots$\  The density of \ugp{} primes among all primes up
+to~$N$ falls faster than $1/\ln N$; empirically the count grows as
+$C \cdot N / (\ln N)^5$ with $C \approx 30$.
+
+\begin{conjecture}[\ugp{} prime infinitude]\label{conj:ugp-inf}
+There are infinitely many \ugp{} primes.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|UGPPrimeInfinitudeConjecture|
+\end{conjecture}
+
+This would follow from the mirror-dual conjecture
+(\cref{conj:mirror}): each mirror-dual pair witnesses two \ugp{} primes.
+The divisor count unboundedness theorem (\cref{thm:tau-unbounded})
+ensures the ``raw material'' is always available, but the primality
+step remains open.
+
+% ═══════════════════════════════════════════════════════════════
+\section{Quarter-Lock and Elegant Kernel}\label{sec:quarterlock}
+% ═══════════════════════════════════════════════════════════════
+
+\begin{theorem}[Quarter-Lock law]\label{thm:ql}
+There exist rational coefficients $k_M, k_{G_2} \in \Q$ such that
+\[
+  k_M = k_{G_2} + \tfrac{1}{4}\, k_{L}^2,
+\]
+where $k_L^2 = 7/512$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|quarterLockLaw|
+\end{theorem}
+
+The proof exhibits $k_{G_2} = 7/2048$ and $k_M = 7/1024$, then
+verifies the identity by \texttt{ring}.
+
+\begin{theorem}[Quarter-Lock stability]\label{thm:ql-stab}
+If the kernel defect $D(k) = \frac{16}{33}(k_M - k_G -
+\frac{1}{4} k_L)^2$ vanishes, then the Quarter-Lock identity holds.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|quarterLockStability_holds|
+\end{theorem}
+
+\begin{theorem}[Elegant Kernel]\label{thm:ek}
+$k_L^2 = 7/512 > 0$.  The model parameter
+$L_{\mathrm{model}} = \log_2(2000/3)$ satisfies
+$L_{\mathrm{model}} = \log_2\bigl((D_1 \cdot 5^3) / 3\bigr)$,
+where $D_1 = 16$, $5^3 = 125$, and $3$ is the orbit length.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|k_L2_eq|, \lstinline|L_model_from_gauge_structure|
+\end{theorem}
+
+% ═══════════════════════════════════════════════════════════════
+\section{Universality and Self-Reference}\label{sec:universality}
+% ═══════════════════════════════════════════════════════════════
+
+\subsection{Turing universality}
+
+The \ugp{} substrate is Turing-universal via a two-step reduction:
+
+\begin{enumerate}[nosep]
+\item The Universal Windowed Cellular Automaton (\uwca{}) tile set
+  embeds Rule~110: each Rule~110 neighborhood is mapped to a
+  \uwca{} tile, and the tile-matching relation preserves the
+  Rule~110 transition function (\texttt{uwca\_simulates\_rule110}).
+\item Rule~110 is Turing-universal~\cite{Cook2004}.  This is cited,
+  not mechanized.
+\end{enumerate}
+
+\begin{theorem}[UGP Turing universality]\label{thm:turing}
+The \ugp{} substrate is Turing-universal.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|ugp_is_turing_universal|
+\end{theorem}
+
+\subsection{Self-reference theorems}
+
+Three classical self-reference results are imported from companion
+libraries and instantiated for the \ugp{} context:
+
+\begin{theorem}[Lawvere fixed-point]\label{thm:lawvere}
+In any SRI system, for any transformer $F : \mathsf{Code} \to
+\mathsf{Obj}$, there exists $p : \mathsf{Obj}$ with
+$p \simeq F(\mathsf{quote}(p))$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|ugp_lawvere_fixed_point|
+\textup{(from nems-lean~\cite{nemsLean2025})}
+\end{theorem}
+
+\begin{theorem}[Kleene recursion]\label{thm:kleene}
+In any program system with s-m-n, for any congruent
+$F : \N \to \N$, there exists $e$ with $e \simeq F(e)$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|ugp_kleene_recursion_theorem|
+\textup{(from nems-lean~\cite{nemsLean2025})}
+\end{theorem}
+
+\begin{theorem}[Rice's theorem]\label{thm:rice}
+No non-trivial extensional property of programs in an acceptable
+programming system is decidable.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|ugp_rice_theorem|
+\textup{(from aps-rice-lean~\cite{apsRiceLean2025})}
+\end{theorem}
+
+\begin{theorem}[Halting undecidability]\label{thm:halting}
+The halting problem for acceptable programming systems is undecidable.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|ugp_halting_undecidable|
+\textup{(from aps-rice-lean~\cite{apsRiceLean2025})}
+\end{theorem}
+
+\paragraph{Decidability boundary.}
+The formalization establishes a sharp boundary: properties of
+\emph{finite} windows in the \gte{} trajectory are first-order
+decidable (the trajectory is computable), while properties of
+\emph{infinite} trajectories are RE-hard (by Turing universality and
+Rice's theorem).
+
+% ═══════════════════════════════════════════════════════════════
+\section{The Mirror-Dual Conjecture}\label{sec:mirror}
+% ═══════════════════════════════════════════════════════════════
+
+\begin{definition}[Mirror-dual pair]\label{def:mirror-dual}
+A \emph{mirror-dual pair} at level~$n$ is a pair $(b_2, q_2)$ with
+$b_2 \cdot q_2 = 2^n - 16$, $b_2 < q_2$, both $\ge 16$, such that
+\emph{both} $c_1(b_2, q_2)$ and $c_1(q_2, b_2)$ are prime.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|MirrorDualPair|
+\end{definition}
+
+Each mirror-dual pair witnesses two \ugp{} primes simultaneously
+(\S\ref{sec:ugpprimes}).
+
+\begin{theorem}[Concrete mirror-dual pairs]\label{thm:mirror-concrete}
+The following are machine-verified mirror-dual pairs:
+\begin{center}
+\begin{tabular}{@{}cccc@{}}
+\toprule
+$n$ & $(b_2, q_2)$ & $c_1(b_2,q_2)$ & $c_1(q_2,b_2)$ \\
+\midrule
+10 & $(24, 42)$   & 823  & 2137 \\
+13 & $(56, 146)$  & 9007 & 27817 \\
+16 & $(42, 1560)$ & 46681 & 2489143 \\
+16 & $(156, 420)$ & 237301 & 83389 \\
+16 & $(182, 360)$ & 190523 & 92801 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|five_mirror_dual_pairs|
+\end{theorem}
+
+\begin{theorem}[Divisor count unboundedness]\label{thm:tau-unbounded}
+For any $k \in \N$, there exists $n$ such that
+$\tau(2^n - 16) \ge k$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|card_divisors_ridge_unbounded|
+\end{theorem}
+
+\begin{proof}
+The proof proceeds in three steps:
+\begin{enumerate}[nosep]
+\item $\tau(m)$ is unbounded: $\tau(2^k) = k + 1$.
+\item $\tau(2^m - 1) \ge \tau(m)$ for $m \ge 1$: the map
+  $d \mapsto 2^d - 1$ sends divisors of~$m$ to divisors of $2^m - 1$
+  (by the Mersenne divisibility lemma: $d \mid m \implies
+  2^d - 1 \mid 2^m - 1$), and is injective.
+\item $\tau(2^n - 16) \ge \tau(2^{n-4} - 1)$: since
+  $2^n - 16 = 16 \cdot (2^{n-4} - 1)$, every divisor of $2^{n-4} - 1$
+  divides $2^n - 16$.
+\end{enumerate}
+Composing: given~$k$, choose $m$ with $\tau(2^m - 1) \ge k$, then
+$n = m + 4$ gives $\tau(2^n - 16) \ge k$.
+\end{proof}
+
+This theorem ensures that the ``raw material'' for mirror-dual
+pairs---valid divisor pairs---is always available at sufficiently large
+ridge levels.
+
+\begin{conjecture}[Mirror-Dual Conjecture]\label{conj:mirror}
+There are infinitely many ridge levels~$n$ such that $\Rn = 2^n - 16$
+has a mirror-dual pair.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|MirrorDualConjecture|
+\end{conjecture}
+
+\paragraph{Heuristic analysis.}
+The expected number of mirror-dual pairs at level~$n$ is
+\[
+  E[n] = \!\!\sum_{(b_2,q_2)}\!\!
+  \frac{1}{\log c_{1,A} \cdot \log c_{1,B}}.
+\]
+Since $\log c_1 \sim n \log 2$ and the average of
+$\tau(2^m - 1)$ over $m \le M$ grows as $C \log M$, the cumulative
+expected count $E[\le N]$ converges.  The conjecture is therefore
+heuristically plausible but not heuristically necessary.
+Computational data ($n \le 50$) finds 30~pairs, exceeding the naive
+heuristic of~5.4 by a factor of~5.5, suggesting a large singular
+series correction.
+
+\paragraph{Relationship to twin primes.}
+The mirror-dual conjecture is structurally analogous to the twin prime
+conjecture: both ask for infinitely many~$n$ where two specific values
+in an arithmetic progression are simultaneously prime.  No unconditional
+proof is known for either.
+
+% ═══════════════════════════════════════════════════════════════
+\section{Open Conjectures}\label{sec:conjectures}
+% ═══════════════════════════════════════════════════════════════
+
+All open conjectures are formally stated as \lean{} definitions
+of type \texttt{Prop} in \texttt{UgpLean.\allowbreak Conjectures}
+and \texttt{UgpLean.\allowbreak GTE.\allowbreak UGPPrimes}.
+\Cref{tab:conjectures} lists them.
+
+\begin{table}[ht]
+\centering
+\caption{Open conjectures formally stated in ugp-lean.}
+\label{tab:conjectures}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Conjecture} & \textbf{Lean name} & \textbf{Status} \\
+\midrule
+Mirror-Dual           & \lstinline|MirrorDualConjecture|           & Open \\
+\ugp{} Prime Infinitude & \lstinline|UGPPrimeInfinitudeConjecture| & Open \\
+Mirror Min-Dual       & \lstinline|MirrorMinDualConjecture|        & Open \\
+Fibonacci Rigidity    & \lstinline|FibRigidityConjecture|          & Open \\
+Robust Universality   & \lstinline|RobustUniversalityConjecture|   & Open \\
+Sharp Boundary        & \lstinline|SharpDecidabilityBoundaryConj.| & Open \\
+MDL Selection         & \lstinline|MDLSelectionConjecture|         & Open \\
+Kernel Compatibility  & \lstinline|KernelCompatibilityConjecture|  & Open \\
+Global $c$-Attractor  & \lstinline|GlobalCAttractorConjecture|     & Open \\
+$\mu$-Flip Distance   & \lstinline|MuFlipDistanceConjecture|       & Open \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ═══════════════════════════════════════════════════════════════
+\section{Related Work}\label{sec:related}
+% ═══════════════════════════════════════════════════════════════
+
+\paragraph{Formalization of number theory.}
+Mathlib~\cite{mathlib4} provides extensive number-theoretic
+infrastructure: divisors, primality, Fibonacci numbers, and the Mersenne
+gcd identity used in our proofs.  The Liquid Tensor
+Experiment~\cite{LTE2022} and the formalization of perfectoid
+spaces~\cite{Buzzard2020} demonstrate \lean{}'s capacity for large-scale
+mathematical formalization.  The Odd Order Theorem~\cite{Gonthier2013}
+and the Kepler Conjecture~\cite{Hales2017} are landmark formalizations
+in Coq and HOL~Light, respectively.
+
+\paragraph{Prime-producing formulas.}
+The \ugp{} prime formula~\eqref{eq:ugpprime-formula} is a
+two-parameter family constrained by the Diophantine
+condition~\eqref{eq:ugpprime-ridge}.  This places it in the tradition of
+prime-producing polynomials (Euler's $n^2 + n + 41$, the
+Bunyakovsky conjecture) and prime-generating sieves, though the
+constraint to ridges $2^n - 16$ is novel.  The OEIS
+sequence~A394412~\cite{OEISA394412} records the first 57~terms.
+
+\paragraph{Companion work.}
+The \ugp{} framework was introduced
+in~\cite{SpivackUGP2025}; the present formalization provides the
+machine-checked foundation.  The self-reference theorems are imported
+from two companion \lean{} libraries:
+\begin{itemize}[nosep]
+\item \textbf{nems-lean}~\cite{nemsLean2025}: Lawvere
+  fixed-point theorem in abstract form, Kleene recursion theorem, and
+  Rogers' fixed-point theorem, all proved from a minimal
+  self-referential interface (SRI).
+\item \textbf{aps-rice-lean}~\cite{apsRiceLean2025}: Rice's theorem and
+  halting undecidability for acceptable programming systems, proved from
+  the s-m-n theorem and a diagonal argument.
+\end{itemize}
+The companion \textbf{primes-in-greedy-B3}~\cite{primesB3Lean2025}
+provides a related $B_3$ prime result: every prime appears in the greedy
+multiplicative $B_3$ sequence (OEIS~A079852).
+
+% ═══════════════════════════════════════════════════════════════
+\section{Conclusion}\label{sec:conclusion}
+% ═══════════════════════════════════════════════════════════════
+
+We have presented ugp-lean, a self-contained \lean{} formalization of
+the Universal Generative Principle.  The artifact defines the \ugp{}
+framework from first principles---ridge sieve, prime-lock criterion,
+\rsuc{}, \gte{} orbit, Quarter-Lock, Turing universality---with a
+strict zero-sorry, zero-custom-axiom policy on the core proof path.
+
+The formalization contributes several results not present in prior work:
+the orbit-from-$T$ derivation (\cref{thm:orbit-T}), the general ridge
+remainder lock (\cref{thm:rrl}), the even-step $c$-invariance theorem
+(\cref{thm:c-inv}), the \ugp{} prime class with ten machine-checked
+instances (\cref{thm:ten-ugp}), the divisor count unboundedness theorem
+(\cref{thm:tau-unbounded}), and the precise formal statement of the
+mirror-dual conjecture (\cref{conj:mirror}) with five machine-verified
+witness pairs.
+
+\paragraph{What remains open.}
+The ten conjectures in \cref{tab:conjectures} are formally stated but
+unproved.  The mirror-dual conjecture (\cref{conj:mirror}) and the
+\ugp{} prime infinitude conjecture (\cref{conj:ugp-inf}) are the most
+interesting: both are structurally analogous to the twin prime conjecture
+and would require new sieve-theoretic techniques.  Dirichlet-series
+analysis of the ridge divisor function and Markov mixing properties of
+the \gte{} trajectory are natural directions for future formalization.
+
+\paragraph{Reproducibility.}
+The artifact is publicly available at
+\url{https://github.com/novaspivack/ugp-lean}.  Building requires
+\lean{} v4.29.0-rc3 and Mathlib v4.29.0-rc3.  The command
+\texttt{lake build} compiles the entire library; no external tools
+beyond \lean{} and its package manager are needed.
+
+\bigskip
+
+% ── Theorem inventory ─────────────────────────────────────────
+\input{figures/theorem_table}
+
+% ── Bibliography ──────────────────────────────────────────────
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}

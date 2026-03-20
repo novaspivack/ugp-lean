@@ -1,0 +1,96 @@
+% ═══════════════════════════════════════════════════════════════
+%  Theorem inventory table for ugp-lean formalization paper
+% ═══════════════════════════════════════════════════════════════
+
+\begin{table}[p]
+\centering
+\caption{Complete theorem inventory.  ``Novel'' indicates results new to this formalization; ``General''
+  indicates level-independent results.
+  All theorems have zero \texttt{sorry} on the core proof path.}
+\label{tab:theorems}
+\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Theorem / Lean name} & \textbf{Module} & \textbf{Paper ref} & \textbf{Novel?} \\
+\midrule
+\multicolumn{4}{@{}l}{\textit{Core Classification (\S\ref{sec:classification})}} \\
+\addlinespace[2pt]
+\lstinline|theoremA_general|          & Classification.TheoremA & Thm A    & --- \\
+\lstinline|theoremB|                  & Classification.TheoremB & Thm B    & --- \\
+\lstinline|rsuc_theorem|              & Classification.RSUC     & RSUC     & --- \\
+\lstinline|mdl_selects_LeptonSeed|    & Classification.TheoremB & MDL      & --- \\
+\lstinline|rsuc_formal|               & Classification.FormalRSUC & RSUC   & --- \\
+\lstinline|rsuc_canon|                & Classification.FormalRSUC & RSUC   & --- \\
+\lstinline|strengthening_cannot_add|  & Classification.Monotonic & ---     & --- \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{Ridge \& Sieve (\S\ref{sec:classification})}} \\
+\addlinespace[2pt]
+\lstinline|ridgeSurvivors_10|         & Compute.Sieve           & \S5      & --- \\
+\lstinline|ridge_remainder_lock|      & Core.RidgeRigidity      & Lem $m_2$ & --- \\
+\lstinline|exclude_16| \ldots\ \lstinline|exclude_63| & Compute.ExclusionFilters & \S5 & --- \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{GTE Orbit (\S\ref{sec:gte})}} \\
+\addlinespace[2pt]
+\lstinline|orbit_determined_by_T|     & GTE.UpdateMap           & Prop 5.1 & \textbf{Yes} \\
+\lstinline|update_map_produces_orbit| & GTE.UpdateMap           & Prop 5.1 & \textbf{Yes} \\
+\lstinline|even_step_c_invariance|    & GTE.UpdateMap           & ---      & \textbf{Yes} \\
+\lstinline|c3_strict_eq_c2_at_n10|    & GTE.UpdateMap           & ---      & \textbf{Yes} \\
+\lstinline|gen1_mersenne_isolation|   & GTE.UpdateMap           & ---      & \textbf{Yes} \\
+\lstinline|mersenne_entanglement_gen| & GTE.UpdateMap           & ---      & \textbf{Yes} \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{General-Level Theorems (\S\ref{sec:general})}} \\
+\addlinespace[2pt]
+\lstinline|ridge_remainder_lock_gen|  & GTE.UpdateMap           & Lem $m_2$ & \textbf{General} \\
+\lstinline|quotient_gap_all|          & GTE.GeneralTheorems     & gap-13   & \textbf{General} \\
+\lstinline|mirror_b1_invariance|      & GTE.UpdateMap           & ---      & \textbf{Yes} \\
+\lstinline|mersenne_gcd_identity|     & GTE.UpdateMap           & ---      & Mathlib \\
+\lstinline|alpha_echo|                & GTE.GeneralTheorems     & $\alpha$-echo & \textbf{Checked} \\
+\lstinline|b_linear_growth|           & GTE.GeneralTheorems     & $b$-growth & --- \\
+\lstinline|c_values_strictly_mono|    & GTE.GeneralTheorems     & $c$-mono & --- \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{Quarter-Lock \& Kernel (\S\ref{sec:quarterlock})}} \\
+\addlinespace[2pt]
+\lstinline|quarterLockLaw|            & QuarterLock             & \S3      & --- \\
+\lstinline|quarterLockStability|      & QuarterLock             & \S3      & --- \\
+\lstinline|k_L2_eq|                   & ElegantKernel           & \S3      & --- \\
+\lstinline|L_model_from_gauge_struct| & LModelDerivation        & \S3      & --- \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{Universality \& Self-Reference (\S\ref{sec:universality})}} \\
+\addlinespace[2pt]
+\lstinline|ugp_is_turing_universal|   & Universality.TuringUniv & \S4      & --- \\
+\lstinline|ugp_lawvere_fixed_point|   & SelfRef.LawvereKleene   & Lawvere  & Import \\
+\lstinline|ugp_kleene_recursion_thm|  & SelfRef.LawvereKleene   & Kleene   & Import \\
+\lstinline|ugp_rice_theorem|          & SelfRef.RiceHalting     & Rice     & Import \\
+\lstinline|ugp_halting_undecidable|   & SelfRef.RiceHalting     & Halting  & Import \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{UGP Primes (\S\ref{sec:ugpprimes})}} \\
+\addlinespace[2pt]
+\lstinline|IsUGPPrime|                & GTE.UGPPrimes           & A394412  & \textbf{Yes} \\
+\lstinline|ugp_primes_exist|          & GTE.UGPPrimes           & ---      & \textbf{Yes} \\
+\lstinline|ten_ugp_primes|            & GTE.UGPPrimes           & ---      & \textbf{Yes} \\
+\lstinline|ugp_primes_at_three_lvls|  & GTE.UGPPrimes           & ---      & \textbf{Yes} \\
+\lstinline|c1Val_eq_c1FromPair|       & GTE.UGPPrimes           & ---      & \textbf{Yes} \\
+\lstinline|UGPPrimeInfinitudeConj|    & GTE.UGPPrimes           & ---      & \textbf{Yes} \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{Mirror-Dual Conjecture (\S\ref{sec:mirror})}} \\
+\addlinespace[2pt]
+\lstinline|card_divisors_ridge_unb|   & GTE.MirrorDualConj      & ---      & \textbf{Yes} \\
+\lstinline|five_mirror_dual_pairs|    & GTE.MirrorDualConj      & ---      & \textbf{Yes} \\
+\lstinline|MirrorDualConjecture|      & GTE.MirrorDualConj      & ---      & \textbf{Yes} \\
+\bottomrule
+\end{tabular}
+\end{table}

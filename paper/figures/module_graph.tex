@@ -1,0 +1,94 @@
+% ═══════════════════════════════════════════════════════════════
+%  Module dependency graph for ugp-lean
+%  (standalone TikZ figure, can be \input from main paper)
+% ═══════════════════════════════════════════════════════════════
+
+% This file is included via \input{figures/module_graph} if needed.
+% The main paper currently uses an inline TikZ diagram in §3.
+% This file provides a more detailed version for supplementary use.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+  mod/.style={draw, rounded corners=3pt, font=\ttfamily\scriptsize,
+              minimum height=0.5cm, inner sep=3pt},
+  layer/.style={draw, dashed, rounded corners=6pt, inner sep=6pt,
+                font=\sffamily\small\bfseries},
+  arr/.style={-{Stealth[length=4pt]}, thick, gray!60},
+  scale=0.9, transform shape
+]
+
+% Core layer
+\node[mod, fill=blue!10] (ridge)   at (0,0)    {RidgeDefs};
+\node[mod, fill=blue!10] (mirror)  at (2.5,0)  {MirrorDefs};
+\node[mod, fill=blue!10] (triple)  at (5,0)    {TripleDefs};
+\node[mod, fill=blue!10] (sieve)   at (7.5,0)  {SievePredicates};
+\node[mod, fill=blue!10] (disconf) at (10,0)   {Disconfirmation};
+\node[mod, fill=blue!10] (rigidity) at (2.5,-0.8) {RidgeRigidity};
+\node[mod, fill=blue!10] (malg)    at (5.5,-0.8) {MirrorAlgebra};
+
+\begin{scope}[on background layer]
+  \node[layer, fill=blue!3, fit=(ridge)(mirror)(triple)(sieve)(disconf)(rigidity)(malg),
+        label={[font=\sffamily\small\bfseries]above left:Core}] {};
+\end{scope}
+
+% Compute layer
+\node[mod, fill=green!10] (plock)  at (0,1.8)   {PrimeLock};
+\node[mod, fill=green!10] (csieve) at (2.8,1.8) {Sieve};
+\node[mod, fill=green!10] (sext)   at (5.2,1.8) {SieveExtended};
+\node[mod, fill=green!10] (excl)   at (7.5,1.8) {ExclusionFilters};
+\node[mod, fill=green!10] (decid)  at (10.2,1.8) {DecidablePredicates};
+
+\begin{scope}[on background layer]
+  \node[layer, fill=green!3, fit=(plock)(csieve)(sext)(excl)(decid),
+        label={[font=\sffamily\small\bfseries]above left:Compute}] {};
+\end{scope}
+
+% Classification layer
+\node[mod, fill=yellow!15] (bounds) at (0,3.4)   {Bounds};
+\node[mod, fill=yellow!15] (thmA)   at (2.5,3.4) {TheoremA};
+\node[mod, fill=yellow!15] (thmB)   at (5,3.4)   {TheoremB};
+\node[mod, fill=yellow!15] (rsuc)   at (7.2,3.4) {RSUC};
+\node[mod, fill=yellow!15] (frsuc)  at (9.2,3.4) {FormalRSUC};
+\node[mod, fill=yellow!15] (mono)   at (11.5,3.4) {Monotonic};
+
+\begin{scope}[on background layer]
+  \node[layer, fill=yellow!3, fit=(bounds)(thmA)(thmB)(rsuc)(frsuc)(mono),
+        label={[font=\sffamily\small\bfseries]above left:Classification}] {};
+\end{scope}
+
+% GTE layer
+\node[mod, fill=orange!12] (evol)   at (0,5)     {Evolution};
+\node[mod, fill=orange!12] (orbit)  at (2.3,5)   {Orbit};
+\node[mod, fill=orange!12] (umap)   at (4.5,5)   {UpdateMap};
+\node[mod, fill=orange!12] (genthm) at (7,5)     {GeneralTheorems};
+\node[mod, fill=orange!12] (mgcd)   at (9.5,5)   {MersenneGcd};
+\node[mod, fill=orange!12] (mdc)    at (11.8,5)  {MirrorDualConj};
+
+\begin{scope}[on background layer]
+  \node[layer, fill=orange!3, fit=(evol)(orbit)(umap)(genthm)(mgcd)(mdc),
+        label={[font=\sffamily\small\bfseries]above left:GTE}] {};
+\end{scope}
+
+% Key dependency arrows
+\draw[arr] (ridge)  -- (plock);
+\draw[arr] (mirror) -- (plock);
+\draw[arr] (ridge)  -- (csieve);
+\draw[arr] (sieve)  -- (csieve);
+\draw[arr] (plock)  -- (csieve);
+\draw[arr] (csieve) -- (bounds);
+\draw[arr] (bounds) -- (thmA);
+\draw[arr] (thmA)   -- (rsuc);
+\draw[arr] (thmB)   -- (rsuc);
+\draw[arr] (decid)  -- (thmB);
+\draw[arr] (ridge)  -- (umap);
+\draw[arr] (evol)   -- (umap);
+\draw[arr] (umap)   -- (genthm);
+\draw[arr] (mgcd)   -- (mdc);
+
+\end{tikzpicture}
+\caption{Module dependency graph (simplified).  Arrows indicate import
+  dependencies.  The critical invariant is that \textbf{Core} does not
+  import \textbf{Compute}, preventing circularity in the \rsuc{} proof.}
+\label{fig:module-graph}
+\end{figure}
