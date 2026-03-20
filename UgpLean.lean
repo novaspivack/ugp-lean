@@ -22,6 +22,10 @@ import UgpLean.GTE.PrimeFactorAnalysis
 import UgpLean.GTE.UpdateMap
 import UgpLean.GTE.MersenneGcd
 import UgpLean.GTE.MirrorDualConjecture
+import UgpLean.GTE.GeneralTheorems
+import UgpLean.SelfRef.LawvereKleene
+import UgpLean.SelfRef.RiceHalting
+import UgpLean.Conjectures
 import UgpLean.QuarterLock
 import UgpLean.ElegantKernel
 import UgpLean.LModelDerivation
@@ -48,7 +52,8 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Core.*`               — RidgeDefs, MirrorDefs, TripleDefs, SievePredicates, Disconfirmation
 - `UgpLean.Compute.*`            — PrimeLock, Sieve, SieveExtended, DecidablePredicates
 - `UgpLean.Classification.*`     — Bounds, Theorem A/B, RSUC
-- `UgpLean.GTE.*`                — Evolution, Orbit (canonical 3-step)
+- `UgpLean.GTE.*`                — Evolution, Orbit, UpdateMap, MersenneGcd, MirrorDualConjecture
+- `UgpLean.SelfRef.*`            — Lawvere/Kleene fixed-point, Rice's theorem, halting undecidability
 - `UgpLean.QuarterLock`          — k_M = k_gen2 + ¼k_L²
 - `UgpLean.ElegantKernel`        — k_L² = 7/512, L_model
 - `UgpLean.LModelDerivation`     — L_model derived from D₁, 5³, orbit length 3

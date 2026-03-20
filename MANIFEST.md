@@ -42,3 +42,24 @@
 | L_model derived | LModelDerivation | L_model_eq_log_residual, L_model_from_gauge_structure | ✓ |
 | Stability of Quarter-Lock | QuarterLock | quarterLockStability_holds | ✓ |
 | Symmetric mirror algebra | Core.MirrorAlgebra | mirrorS, discSq, ugp1_mirror_params | ✓ |
+| **GTE Phase (Mar 2026)** | | | |
+| Def 2.5 — update map T (odd/even steps) | GTE.UpdateMap | gteQuotient, gteRemainder, oddStepA/B/C, evenStepA/B | ✓ |
+| Prop 5.1 — orbit enforced by T, not hardcoded | GTE.UpdateMap | update_map_produces_canonical_orbit, orbit_determined_by_T | ✓ |
+| Lem m2 — ridge remainder lock m₂=15 (all n≥5) | GTE.UpdateMap | ridge_remainder_lock_general | ✓ |
+| prop:mirror-b1 — b₁ mirror-invariant (all n) | GTE.UpdateMap | mirror_b1_invariance | ✓ |
+| prop:mersenne-extremal — b·q=2^k−16 forces c=2^k−1 | GTE.UpdateMap | mersenne_extremal_ridge | ✓ |
+| Even-step c-invariance c₃=c₂=2^n−1 (all n≥5) | GTE.UpdateMap | even_step_c_invariance, c3_strict_eq_c2_at_n10 | ✓ |
+| Mersenne gcd identity gcd(2^a−1,2^b−1)=2^gcd(a,b)−1 | GTE.MersenneGcd | mersenne_gcd_identity | ✓ |
+| Mersenne entanglement: gcd(a,b)>1 → gcd(2^a−1,2^b−1)>1 | GTE.MersenneGcd | mersenne_entanglement_general | ✓ |
+| c-value factorizations: 1023=3×11×31, 65535=3×5×17×257 | GTE.PrimeFactorAnalysis | c2_factorization, c3_factorization | ✓ |
+| Compositeness growth: c₁ prime, c₂ and c₃ composite | GTE.PrimeFactorAnalysis | compositeness_growth | ✓ |
+| Gen 1 isolation: 823 coprime to all Gen 2/3 components | GTE.PrimeFactorAnalysis | gen1_isolated, gen1_mersenne_isolation | ✓ |
+| Gen 2↔3 entanglement via shared factors {3,11} | GTE.PrimeFactorAnalysis | gen2_gen3_entangled, c2_c3_not_coprime | ✓ |
+| Factor-3 separation: 3∤c₁ but 3∣c₂ and 3∣c₃ | GTE.PrimeFactorAnalysis | three_separates_gen1 | ✓ |
+| OEIS A394412 reference (UGP primes) | GTE.PrimeFactorAnalysis | first_ugp_prime, second_ugp_prime | ✓ |
+| τ(2^m−1) ≥ τ(m) for m≥1 (injective Mersenne map) | GTE.MirrorDualConjecture | card_divisors_mersenne_ge | ✓ |
+| τ(m) unbounded: τ(2^k)=k+1 | GTE.MirrorDualConjecture | tau_unbounded | ✓ |
+| τ(2^n−16) unbounded as n→∞ | GTE.MirrorDualConjecture | card_divisors_ridge_unbounded | ✓ |
+| Mirror-dual conjecture (stated, open) | GTE.MirrorDualConjecture | MirrorDualConjecture | def |
+| Five concrete mirror-dual pairs certified (n=10,13,16) | GTE.MirrorDualConjecture | mirror_dual_n10/13/16_a/b/c | ✓ |
+| Conjecture implies infinitely many distinct levels | GTE.MirrorDualConjecture | conjecture_implies_many_levels | ✓ |
