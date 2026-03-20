@@ -35,7 +35,7 @@ lake clean && lake build
 
 ```
 ✔ Built UgpLean (8–10s)
-Build completed successfully (8085 jobs).
+Build completed successfully (8088 jobs).
 ```
 
 - **0 errors**

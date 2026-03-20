@@ -18,6 +18,10 @@ import UgpLean.Classification.FormalRSUC
 import UgpLean.Classification.MonotonicStrengthening
 import UgpLean.GTE.Evolution
 import UgpLean.GTE.Orbit
+import UgpLean.GTE.PrimeFactorAnalysis
+import UgpLean.GTE.UpdateMap
+import UgpLean.GTE.MersenneGcd
+import UgpLean.GTE.MirrorDualConjecture
 import UgpLean.QuarterLock
 import UgpLean.ElegantKernel
 import UgpLean.LModelDerivation

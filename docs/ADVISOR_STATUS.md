@@ -141,7 +141,7 @@ These stubs do **not** affect RSUC or core soundness.
 
 ## Build and Verification
 
-- **Build**: `lake build` — succeeds, ~8085 jobs
+- **Build**: `lake build` — succeeds, ~8088 jobs
 - **Toolchain**: Lean 4.29.0-rc3, Mathlib v4.29.0-rc3
 - **Determinism**: Verified on macOS; should port to Linux
 
