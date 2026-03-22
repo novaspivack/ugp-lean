@@ -1,5 +1,11 @@
 # ugp-lean Theorem Manifest
 
+**Toolchain:** `leanprover/lean4:v4.29.0-rc3`  
+**Mathlib:** v4.29.0-rc3 (via `lakefile.lean`)  
+**Build:** `lake build` from this directory  
+**Root import:** `UgpLean.lean`  
+**Last verified:** 2026-03-22 — matches `lean-toolchain` and Mathlib pin; theorem table below.
+
 **Companion:** The UGP Formalization paper (`NEMS_PAPERS/UGP_GTE_Formalization/`) provides a complete theorem-indexed table mapping every definition and theorem to ugp-lean modules. Use it as the definitive paper-level reference for the artifact.
 
 | Paper / Source | Lean Module | Lean Theorem | Status |
