@@ -15,4 +15,3 @@ paper/*.toc
 paper/*.fdb_latexmk
 paper/*.fls
 paper/*.synctex.gz
-paper/*.pdf
