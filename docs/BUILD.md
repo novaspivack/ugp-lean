@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- **Lean 4**: v4.29.0-rc3 (or compatible)
+- **Lean 4**: v4.29.0-rc6 (or compatible)
 - **elan** (recommended): `curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf \| sh`
 - **Lake**: Bundled with Lean 4; no separate install needed
 
@@ -10,8 +10,8 @@
 
 | Component | Version |
 |-----------|---------|
-| Lean | 4.29.0-rc3 |
-| Mathlib | v4.29.0-rc3 |
+| Lean | 4.29.0-rc6 |
+| Mathlib | v4.29.0-rc6 |
 
 The `lean-toolchain` file pins the Lean version. Mathlib is fetched automatically by Lake.
 
@@ -59,7 +59,7 @@ Build completed successfully (8088 jobs).
 
 ### Wrong Lean version
 - Run `elan show` to see current default
-- `elan override set leanprover/lean4:v4.29.0-rc3` in the repo directory
+- `elan override set leanprover/lean4:v4.29.0-rc6` in the repo directory
 
 ## Verification
 

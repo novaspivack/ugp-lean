@@ -230,6 +230,51 @@ theorem card_divisors_ridge_unbounded :
         · omega
 
 -- ════════════════════════════════════════════════════════════════
+-- §3b  Exact divisor count formula: τ(Rₙ) = 5 · τ(2^(n−4) − 1)
+-- ════════════════════════════════════════════════════════════════
+
+/-- 2 and 2^(b+1) − 1 are coprime (2^(b+1) − 1 is always odd). -/
+theorem coprime_two_mersenne (b : ℕ) : Nat.Coprime 2 (2^(b+1) - 1) := by
+  unfold Nat.Coprime
+  rw [Nat.gcd_rec]
+  have hdvd : 2 ∣ 2^(b+1) := dvd_pow_self 2 (by omega : b + 1 ≠ 0)
+  obtain ⟨k, hk⟩ := hdvd
+  have hk1 : 1 ≤ k := by
+    have : 2 ≤ 2^(b+1) := by
+      calc 2^(b+1) ≥ 2^1 := Nat.pow_le_pow_right (by norm_num) (by omega)
+      _ = 2 := by norm_num
+    omega
+  have hmod : (2^(b+1) - 1) % 2 = 1 := by rw [hk]; omega
+  rw [hmod, Nat.gcd_one_left]
+
+/-- 2^a and 2^b − 1 are coprime for b ≥ 1. -/
+theorem coprime_pow2_mersenne (a : ℕ) {b : ℕ} (hb : 1 ≤ b) :
+    Nat.Coprime (2^a) (2^b - 1) := by
+  obtain ⟨b, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : b ≠ 0)
+  exact (coprime_two_mersenne b).pow_left a
+
+/-- τ(16) = 5. -/
+theorem tau_16 : (Nat.divisors 16).card = 5 := by native_decide
+
+/-- **Exact divisor-count formula.** For n ≥ 5,
+    τ(2^n − 16) = 5 · τ(2^(n−4) − 1).
+
+    This follows from three facts:
+    1. 2^n − 16 = 16 · (2^(n−4) − 1)        [ridge_factorization]
+    2. gcd(16, 2^(n−4) − 1) = 1               [coprime: power of 2 vs. odd]
+    3. τ is multiplicative on coprimes          [Nat.Coprime.card_divisors_mul]
+
+    This strictly strengthens `card_divisors_ridge_unbounded` from
+    "τ(Rₙ) grows without bound" to "τ(Rₙ) equals this explicit function." -/
+theorem tau_ridge_exact (n : ℕ) (hn : 5 ≤ n) :
+    (Nat.divisors (2^n - 16)).card = 5 * (Nat.divisors (2^(n-4) - 1)).card := by
+  rw [ridge_factorization n (by omega)]
+  have h16eq : (16 : ℕ) = 2^4 := by norm_num
+  have hcop : Nat.Coprime 16 (2^(n-4) - 1) :=
+    h16eq ▸ coprime_pow2_mersenne 4 (by omega : 1 ≤ n - 4)
+  rw [Nat.Coprime.card_divisors_mul hcop, tau_16]
+
+-- ════════════════════════════════════════════════════════════════
 -- §4  The mirror-dual conjecture (stated, not proved)
 -- ════════════════════════════════════════════════════════════════
 

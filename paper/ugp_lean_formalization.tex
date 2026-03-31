@@ -127,10 +127,12 @@ machine-checked proof that the \gte{} update map~$T$ \emph{forces} the
 canonical orbit, a general ridge remainder lock for all $n \ge 5$, an
 even-step $c$-invariance theorem, a formal definition of \ugp{} primes
 with existence proof and ten verified instances across three ridge
-levels, and a precise statement of the mirror-dual conjecture with a
-proof that the divisor count $\tau(2^n-16)$ is unbounded.  All
-definitions are self-contained; all open conjectures are formally stated
-as \lean{} propositions.
+levels, a precise statement of the mirror-dual conjecture with a
+proof that the divisor count $\tau(2^n-16)$ is unbounded, and an
+exact divisor-count formula
+$\tau(2^n - 16) = 5 \cdot \tau(2^{n-4} - 1)$ for all $n \ge 5$.
+All definitions are self-contained; all open conjectures are formally
+stated as \lean{} propositions.
 
 \textbf{Trust boundary:} Proved statements are scoped to the ridged arithmetic framework formalized here; open conjectures remain explicit \lean{} \texttt{Prop}s and are not asserted as classical theorems.
 \end{abstract}
@@ -207,8 +209,10 @@ results:
   existence proof, and ten machine-checked instances across three ridge
   levels.
 \item \textbf{Mirror-dual conjecture} (\S\ref{sec:mirror}): A precise
-  formal statement with five machine-verified witness pairs and a proof
-  that the divisor count $\tau(2^n - 16)$ is unbounded.
+  formal statement with five machine-verified witness pairs, a proof
+  that the divisor count $\tau(2^n - 16)$ is unbounded, and an exact
+  formula $\tau(2^n - 16) = 5 \cdot \tau(2^{n-4} - 1)$ via
+  coprimality and multiplicativity of~$\tau$.
 \end{itemize}
 
 \paragraph{Structure.}
@@ -398,7 +402,7 @@ in \texttt{Compute/} and \texttt{Classification/}, where
 
 The artifact depends on:
 \begin{itemize}[nosep]
-\item \textbf{Mathlib} v4.29.0-rc3~\cite{mathlib4}: number theory
+\item \textbf{Mathlib} v4.29.0-rc6~\cite{mathlib4}: number theory
   (\texttt{Nat.divisors}, \texttt{Nat.Prime}, \texttt{Nat.fib}),
   finset operations, and the Mersenne gcd identity
   (\texttt{Nat.pow\_sub\_one\_gcd\_pow\_sub\_one}).
@@ -935,9 +939,33 @@ Composing: given~$k$, choose $m$ with $\tau(2^m - 1) \ge k$, then
 $n = m + 4$ gives $\tau(2^n - 16) \ge k$.
 \end{proof}
 
-This theorem ensures that the ``raw material'' for mirror-dual
+The following theorem strictly strengthens \cref{thm:tau-unbounded} from
+``$\tau(\Rn)$ grows without bound'' to an exact closed-form identity.
+
+\begin{theorem}[Exact divisor-count formula]\label{thm:tau-exact}
+For all $n \ge 5$:
+\[
+  \tau(2^n - 16) \;=\; 5 \cdot \tau(2^{n-4} - 1).
+\]
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|tau_ridge_exact|
+\end{theorem}
+
+\begin{proof}
+Three lines of algebra.  First, $2^n - 16 = 2^4 \cdot (2^{n-4} - 1)$
+(\lstinline|ridge_factorization|).  Second, $\gcd(2^4,\, 2^{n-4} - 1) = 1$
+because $2^{n-4} - 1$ is odd and any power of~$2$ is coprime to any
+odd number (\lstinline|coprime_pow2_mersenne|).  Third, $\tau$ is
+multiplicative on coprime factors
+(\lstinline|Nat.Coprime.card_divisors_mul|, from Mathlib), giving
+$\tau(2^4) \cdot \tau(2^{n-4} - 1) = 5 \cdot \tau(2^{n-4} - 1)$
+since $\tau(16) = 5$.
+\end{proof}
+
+This exact formula ensures that the ``raw material'' for mirror-dual
 pairs---valid divisor pairs---is always available at sufficiently large
-ridge levels.
+ridge levels, and quantifies precisely how much.
 
 \begin{conjecture}[Mirror-Dual Conjecture]\label{conj:mirror}
 There are infinitely many ridge levels~$n$ such that $\Rn = 2^n - 16$
@@ -1054,9 +1082,10 @@ the orbit-from-$T$ derivation (\cref{thm:orbit-T}), the general ridge
 remainder lock (\cref{thm:rrl}), the even-step $c$-invariance theorem
 (\cref{thm:c-inv}), the \ugp{} prime class with ten machine-checked
 instances (\cref{thm:ten-ugp}), the divisor count unboundedness theorem
-(\cref{thm:tau-unbounded}), and the precise formal statement of the
-mirror-dual conjecture (\cref{conj:mirror}) with five machine-verified
-witness pairs.
+(\cref{thm:tau-unbounded}), the exact divisor-count formula
+$\tau(2^n - 16) = 5 \cdot \tau(2^{n-4}-1)$ (\cref{thm:tau-exact}),
+and the precise formal statement of the mirror-dual conjecture
+(\cref{conj:mirror}) with five machine-verified witness pairs.
 
 \paragraph{What remains open.}
 The ten conjectures in \cref{tab:conjectures} are formally stated but
@@ -1070,7 +1099,7 @@ the \gte{} trajectory are natural directions for future formalization.
 \paragraph{Reproducibility.}
 The artifact is publicly available at
 \url{https://github.com/novaspivack/ugp-lean}.  Building requires
-\lean{} v4.29.0-rc3 and Mathlib v4.29.0-rc3.  The command
+\lean{} v4.29.0-rc6 and Mathlib v4.29.0-rc6.  The command
 \texttt{lake build} compiles the entire library; no external tools
 beyond \lean{} and its package manager are needed.
 

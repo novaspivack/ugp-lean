@@ -1,10 +1,10 @@
 # ugp-lean Theorem Manifest
 
-**Toolchain:** `leanprover/lean4:v4.29.0-rc3`  
-**Mathlib:** v4.29.0-rc3 (via `lakefile.lean`)  
+**Toolchain:** `leanprover/lean4:v4.29.0-rc6`  
+**Mathlib:** v4.29.0-rc6 (via `lakefile.lean`)  
 **Build:** `lake build` from this directory  
 **Root import:** `UgpLean.lean`  
-**Last verified:** 2026-03-22 — matches `lean-toolchain` and Mathlib pin; theorem table below.
+**Last verified:** 2026-03-30 — matches `lean-toolchain` and Mathlib pin; theorem table below.
 
 **Companion:** The UGP Formalization paper (`NEMS_PAPERS/UGP_GTE_Formalization/`) provides a complete theorem-indexed table mapping every definition and theorem to ugp-lean modules. Use it as the definitive paper-level reference for the artifact.
 
@@ -66,6 +66,9 @@
 | τ(2^m−1) ≥ τ(m) for m≥1 (injective Mersenne map) | GTE.MirrorDualConjecture | card_divisors_mersenne_ge | ✓ |
 | τ(m) unbounded: τ(2^k)=k+1 | GTE.MirrorDualConjecture | tau_unbounded | ✓ |
 | τ(2^n−16) unbounded as n→∞ | GTE.MirrorDualConjecture | card_divisors_ridge_unbounded | ✓ |
+| **τ(Rₙ) = 5·τ(2^(n−4)−1) exact formula (n≥5)** | GTE.MirrorDualConjecture | tau_ridge_exact | ✓ |
+| 2^a and 2^b−1 coprime (b≥1) | GTE.MirrorDualConjecture | coprime_pow2_mersenne | ✓ |
+| τ(16) = 5 | GTE.MirrorDualConjecture | tau_16 | ✓ |
 | Mirror-dual conjecture (stated, open) | GTE.MirrorDualConjecture | MirrorDualConjecture | def |
 | Five concrete mirror-dual pairs certified (n=10,13,16) | GTE.MirrorDualConjecture | mirror_dual_n10/13/16_a/b/c | ✓ |
 | Conjecture implies infinitely many distinct levels | GTE.MirrorDualConjecture | conjecture_implies_many_levels | ✓ |
