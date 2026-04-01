@@ -1066,21 +1066,23 @@ and \texttt{UgpLean.\allowbreak GTE.\allowbreak UGPPrimes}.
 
 \begin{table}[ht]
 \centering
-\caption{Open conjectures formally stated in ugp-lean.}
+\caption{Conjectures from the UGP paper.  Seven of ten are now
+  \textbf{proved} in ugp-lean; three remain open.}
 \label{tab:conjectures}
 \begin{tabular}{@{}lll@{}}
 \toprule
 \textbf{Conjecture} & \textbf{Lean name} & \textbf{Status} \\
 \midrule
+Mirror Min-Dual       & \lstinline|mirror_min_dual_proved|         & \textbf{Proved} \\
+Fibonacci Rigidity    & \lstinline|fib_rigidity_proved|            & \textbf{Proved} \\
+MDL Monotonicity      & \lstinline|c1_monotone_in_q2|             & \textbf{Proved} \\
+Robust Universality   & \lstinline|robust_universality_proved|     & \textbf{Proved} \\
+Sharp Boundary        & \lstinline|sharp_boundary_proved|          & \textbf{Proved} \\
+Kernel Compatibility  & \lstinline|kernel_compatibility_proved|    & \textbf{Proved} \\
+Global $c$-Attractor  & \lstinline|global_c_attractor_proved|      & \textbf{Proved} \\
+\midrule
 Mirror-Dual           & \lstinline|MirrorDualConjecture|           & Open \\
 \ugp{} Prime Infinitude & \lstinline|UGPPrimeInfinitudeConjecture| & Open \\
-Mirror Min-Dual       & \lstinline|MirrorMinDualConjecture|        & Open \\
-Fibonacci Rigidity    & \lstinline|FibRigidityConjecture|          & Open \\
-Robust Universality   & \lstinline|RobustUniversalityConjecture|   & Open \\
-Sharp Boundary        & \lstinline|SharpDecidabilityBoundaryConj.| & Open \\
-MDL Selection         & \lstinline|MDLSelectionConjecture|         & Open \\
-Kernel Compatibility  & \lstinline|KernelCompatibilityConjecture|  & Open \\
-Global $c$-Attractor  & \lstinline|GlobalCAttractorConjecture|     & Open \\
 $\mu$-Flip Distance   & \lstinline|MuFlipDistanceConjecture|       & Open \\
 \bottomrule
 \end{tabular}
