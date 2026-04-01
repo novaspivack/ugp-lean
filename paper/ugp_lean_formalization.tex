@@ -213,6 +213,10 @@ results:
   that the divisor count $\tau(2^n - 16)$ is unbounded, and an exact
   formula $\tau(2^n - 16) = 5 \cdot \tau(2^{n-4} - 1)$ via
   coprimality and multiplicativity of~$\tau$.
+\item \textbf{Resonant factory} (\S\ref{sec:factory}): Machine-checked
+  algebraic infrastructure for a twin-prime program: branch linearization,
+  gap-2 factory quadratics, and a Hasse check (no local obstruction at
+  primes $\le 43$).
 \end{itemize}
 
 \paragraph{Structure.}
@@ -994,6 +998,59 @@ The mirror-dual conjecture is structurally analogous to the twin prime
 conjecture: both ask for infinitely many~$n$ where two specific values
 in an arithmetic progression are simultaneously prime.  No unconditional
 proof is known for either.
+
+\subsection{Resonant factory formalization}\label{sec:factory}
+
+The \ugp{} $c_1$ function is the algebraic engine behind a twin-prime
+program that reduces the twin prime conjecture to one open problem in
+multiplicative number theory.  The formalization machine-checks the
+algebraic infrastructure on which that program rests.
+
+\begin{theorem}[Branch linearization]\label{thm:branch}
+For all $b_2, q_2 \in \N$ with $q_2 \ge 13$:
+\[
+  c_1(b_2, q_2) = b_2 \cdot (q_2 - 13) + B(q_2),
+  \quad B(q) = (q+7)(q-13) + 20.
+\]
+The intercept $B(q)$ depends only on~$q_2$, making $c_1$ affine in
+the divisor~$b_2$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|branch_linearization|, \lstinline|branchIntercept|
+\end{theorem}
+
+\begin{definition}[Resonant factory]\label{def:factory}
+The \emph{resonant factory} produces gap-2 candidate pairs via:
+\begin{align*}
+  Q_-(t) &= Lt^2 + D_-, & Q_+(t) &= Lt^2 + D_+, & F(t) &= Q_-(t) \cdot Q_+(t),
+\end{align*}
+with $L = 13{,}501{,}400$, $D_- = 119{,}511 = 3^2 \cdot 7^2 \cdot 271$,
+$D_+ = 119{,}513$ (prime).
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|factoryL|, \lstinline|factoryDm|,
+\lstinline|factoryDp|, \lstinline|factoryDp_prime|
+\end{definition}
+
+\begin{theorem}[Gap-2 property]\label{thm:gap2}
+$Q_+(t) - Q_-(t) = 2$ for all~$t$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|factory_gap_two|
+\end{theorem}
+
+\begin{theorem}[Hasse check --- no local obstruction]\label{thm:hasse}
+For every good prime $p \le 43$, the local density
+$\rho_F(p) = \#\{t \bmod p : F(t) \equiv 0\}$ satisfies
+$\rho_F(p) < p$, ensuring the singular series $S > 0$.  The exact
+values are machine-verified: e.g.,
+$\rho_F(37) = 4$, $\rho_F(43) = 4$ (both quadratics split),
+$\rho_F(3) = 1$ (bad prime: $3 \mid D_-$).
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|localDensity_3| through \lstinline|localDensity_43|,
+\lstinline|hasse_check_no_obstruction|
+\end{theorem}
 
 % ═══════════════════════════════════════════════════════════════
 \section{Open Conjectures}\label{sec:conjectures}

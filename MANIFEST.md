@@ -4,7 +4,7 @@
 **Mathlib:** v4.29.0-rc6 (via `lakefile.lean`)  
 **Build:** `lake build` from this directory  
 **Root import:** `UgpLean.lean`  
-**Last verified:** 2026-03-30 — matches `lean-toolchain` and Mathlib pin; theorem table below.
+**Last verified:** 2026-03-31 — matches `lean-toolchain` and Mathlib pin; theorem table below.
 
 **Companion:** The UGP Formalization paper (`NEMS_PAPERS/UGP_GTE_Formalization/`) provides a complete theorem-indexed table mapping every definition and theorem to ugp-lean modules. Use it as the definitive paper-level reference for the artifact.
 
@@ -78,4 +78,4 @@
 | D₊ = 119513 is prime | GTE.ResonantFactory | factoryDp_prime | ✓ |
 | Local density ρ_F(p) for p ≤ 43 (Hasse check) | GTE.ResonantFactory | localDensity_3..43 | ✓ |
 | No local obstruction (singular series S > 0) | GTE.ResonantFactory | hasse_check_no_obstruction | ✓ |
-| Product algebra: Ω(F(t)) = Ω(Q₋(t)) + Ω(Q₊(t)) | GTE.ResonantFactory | factory_product_algebra | ✓ |
+| Product algebra: F(t) = Q₋(t)·Q₊(t), both > 0 | GTE.ResonantFactory | factory_product_factorization | ✓ |
