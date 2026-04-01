@@ -93,6 +93,39 @@ What ugp-lean proves. All listed theorems have **0 sorry, 0 axioms** on the core
 | **g2Sq_bare_eq** | GaugeCouplings | g2Sq_bare = 2329/5400 |
 | **g3Sq_bare_eq** | GaugeCouplings | g3Sq_bare = 41075281/27648000 |
 
+## GTE Number Theory
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **tau_ridge_exact** | MirrorDualConjecture | τ(2^n−16) = 5·τ(2^(n−4)−1) for n≥5 |
+| **coprime_pow2_mersenne** | MirrorDualConjecture | Coprime(2^a, 2^b−1) for b≥1 |
+| **mdl_c1_n10/n13/n16** | MirrorDualConjecture | MDL-selected c₁ at each level |
+| **branch_linearization** | ResonantFactory | c₁(b₂,q₂) = b₂·(q₂−13) + B(q₂) |
+| **factory_gap_two** | ResonantFactory | Q₊(t) = Q₋(t) + 2 for all t |
+| **factoryDp_prime** | ResonantFactory | D₊ = 119513 is prime |
+| **localDensity_3..43** | ResonantFactory | ρ_F(p) for good primes p ≤ 43 |
+| **hasse_check_no_obstruction** | ResonantFactory | ρ_F(p) < p for all checked primes |
+
+## Resolved Conjectures (7 of 10)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **mirror_min_dual_proved** | Conjectures | b₁(b₂,q₂) = b₁(q₂,b₂) — commutativity of + |
+| **fib_rigidity_proved** | Conjectures | q₂ − q₁ = 13 — definitional from q₁ = q₂ − 13 |
+| **c1_monotone_in_q2** | Conjectures | c₁ strictly increasing in q₂ (corrected MDL direction) |
+| **robust_universality_proved** | Conjectures | = ugp_is_turing_universal (unconditional) |
+| **sharp_boundary_proved** | Conjectures | Decidable + RE-hard, both proved |
+| **kernel_compatibility_proved** | Conjectures | Quarter-Lock is unconditional algebraic identity |
+| **global_c_attractor_proved** | Conjectures | c reaches 2^n−1 in one step via even_step_c_invariance |
+
+## Open Conjectures (3 of 10)
+
+| Conjecture | Module | Statement |
+|------------|--------|-----------|
+| **MirrorDualConjecture** | MirrorDualConjecture | Infinitely many mirror-dual pairs (twin-prime analog) |
+| **UGPPrimeInfinitudeConjecture** | UGPPrimes | Infinitely many UGP primes (follows from Mirror-Dual) |
+| **MuFlipDistanceConjecture** | Conjectures | Bounded μ-flip waiting time on linear progressions |
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |

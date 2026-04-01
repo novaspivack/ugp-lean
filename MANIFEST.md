@@ -73,7 +73,17 @@
 | MDL selection at n=13: c₁=9007 is minimum | GTE.MirrorDualConjecture | mdl_c1_n13 | ✓ |
 | MDL selection at n=16: c₁=46681 is minimum | GTE.MirrorDualConjecture | mdl_c1_n16 | ✓ |
 | MDL c₁ monotone across levels: 823 < 9007 < 46681 | GTE.MirrorDualConjecture | mdl_c1_monotone | ✓ |
-| Mirror-dual conjecture (stated, open) | GTE.MirrorDualConjecture | MirrorDualConjecture | def |
+| Mirror-dual conjecture (stated, open) | GTE.MirrorDualConjecture | MirrorDualConjecture | open |
+| **Resolved Conjectures (7 of 10 proved)** | | | |
+| Mirror min-dual: b₁ symmetric | Conjectures | mirror_min_dual_proved | ✓ |
+| Fibonacci rigidity: gap = 13 | Conjectures | fib_rigidity_proved | ✓ |
+| MDL monotonicity: c₁ increasing in q₂ | Conjectures | c1_monotone_in_q2 | ✓ |
+| Robust universality | Conjectures | robust_universality_proved | ✓ |
+| Sharp decidability boundary | Conjectures | sharp_boundary_proved | ✓ |
+| Kernel compatibility (Quarter-Lock) | Conjectures | kernel_compatibility_proved | ✓ |
+| Global c-attractor (one-step) | Conjectures | global_c_attractor_proved | ✓ |
+| UGP prime infinitude (stated, open) | GTE.UGPPrimes | UGPPrimeInfinitudeConjecture | open |
+| μ-flip distance (stated, open) | Conjectures | MuFlipDistanceConjecture | open |
 | Five concrete mirror-dual pairs certified (n=10,13,16) | GTE.MirrorDualConjecture | mirror_dual_n10/13/16_a/b/c | ✓ |
 | Conjecture implies infinitely many distinct levels | GTE.MirrorDualConjecture | conjecture_implies_many_levels | ✓ |
 | **Resonant Factory (twin-prime program)** | | | |
