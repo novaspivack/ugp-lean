@@ -88,15 +88,43 @@ theorem ugpOutputGap_differentiableOn (R : ℝ) :
     · exact differentiableAt_id.sub (differentiableAt_const 13)
   · exact differentiableAt_const 20
 
-/-- The derivative of ugpOutputGap R at q > 0 is 13R/q² + 2q − 6.
-    Proof: expand (R/q + q + 7)(q − 13) + 20 = R − 13R/q + q² − 6q − 71,
-    differentiate term by term, simplify.
-    NOTE: This is a standard calculus fact; the Lean proof uses sorry
-    pending Mathlib HasDerivAt composition normalization. The derivative
-    value is independently verified by symbolic computation. -/
+/-- Auxiliary: the expanded form as a sum of differentiable terms. -/
+private noncomputable def ugpExpanded (R : ℝ) (q : ℝ) : ℝ :=
+  R + -(13 * R * q⁻¹) + q ^ 2 + -(6 * q) + -71
+
+private theorem ugpExpanded_eq (R : ℝ) {q : ℝ} (hq : q ≠ 0) :
+    ugpExpanded R q = ugpOutputGap R q := by
+  unfold ugpExpanded ugpOutputGap; field_simp; ring
+
+private theorem hasDerivAt_ugpExpanded {R q : ℝ} (hq : 0 < q) :
+    HasDerivAt (ugpExpanded R) (13 * R * (q ^ 2)⁻¹ + 2 * q + -6) q := by
+  have hq0 : q ≠ 0 := ne_of_gt hq
+  unfold ugpExpanded
+  have hR : HasDerivAt (fun q => R) 0 q := hasDerivAt_const q R
+  have hInv : HasDerivAt (fun q => 13 * R * q⁻¹) (13 * R * -(q ^ 2)⁻¹) q :=
+    (hasDerivAt_inv hq0).const_mul (13 * R)
+  have hNInv : HasDerivAt (fun q => -(13 * R * q⁻¹)) (-(13 * R * -(q ^ 2)⁻¹)) q :=
+    hInv.neg
+  have hSq : HasDerivAt (fun q => q ^ 2) (2 * q) q := by
+    have := hasDerivAt_pow 2 q; simp [Nat.cast_ofNat] at this; exact this
+  have hLin : HasDerivAt (fun q => -(6 * q)) (-6) q := by
+    have := (hasDerivAt_id q).const_mul 6 |>.neg; simpa using this
+  have hConst : HasDerivAt (fun _ : ℝ => (-71 : ℝ)) 0 q := hasDerivAt_const q (-71)
+  have hAll := ((hR.add hNInv).add hSq).add hLin |>.add hConst
+  refine hAll.congr_deriv ?_
+  ring
+
+/-- The derivative of ugpOutputGap R at q > 0 is 13R/q² + 2q − 6. -/
 theorem ugpOutputGap_deriv {R q : ℝ} (hq : 0 < q) (_hR : 0 < R) :
     HasDerivAt (ugpOutputGap R) (13 * R / q ^ 2 + 2 * q - 6) q := by
-  sorry
+  have hq0 : q ≠ 0 := ne_of_gt hq
+  have h := hasDerivAt_ugpExpanded (R := R) hq
+  have hderiv_eq : 13 * R * (q ^ 2)⁻¹ + 2 * q + -6 = 13 * R / q ^ 2 + 2 * q - 6 := by
+    rw [div_eq_mul_inv]; ring
+  rw [hderiv_eq] at h
+  exact h.congr_of_eventuallyEq (Filter.eventuallyEq_iff_exists_mem.mpr
+    ⟨Set.Ioi 0, Ioi_mem_nhds hq, fun x (hx : 0 < x) =>
+      (ugpExpanded_eq R (ne_of_gt hx)).symm⟩)
 
 /-- The derivative is positive on the shell: for q ≥ 14 and R > 0,
     deriv(ugpOutputGap R)(q) = 13R/q² + 2q - 6 ≥ 2·14 - 6 = 22 > 0. -/
