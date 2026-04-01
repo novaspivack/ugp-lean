@@ -1056,34 +1056,145 @@ $\rho_F(3) = 1$ (bad prime: $3 \mid D_-$).
 \end{theorem}
 
 % ═══════════════════════════════════════════════════════════════
-\section{Open Conjectures}\label{sec:conjectures}
+\section{Conjectures: Resolved and Open}\label{sec:conjectures}
 % ═══════════════════════════════════════════════════════════════
 
-All open conjectures are formally stated as \lean{} definitions
-of type \texttt{Prop} in \texttt{UgpLean.\allowbreak Conjectures}
-and \texttt{UgpLean.\allowbreak GTE.\allowbreak UGPPrimes}.
-\Cref{tab:conjectures} lists them.
+The \ugp{} paper posed ten conjectures.  Seven are proved as theorems
+in ugp-lean; three remain open.  \Cref{tab:conjectures} summarizes
+the status.
+
+\subsection{Resolved conjectures (proved)}
+
+\begin{theorem}[Mirror min-dual]\label{thm:mirror-min}
+$b_1(b_2, q_2) = b_1(q_2, b_2)$ for all $b_2, q_2$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|mirror_min_dual_proved|
+\end{theorem}
+
+\begin{proof}
+$b_1(b_2,q_2) = b_2 + q_2 + 7 = q_2 + b_2 + 7 = b_1(q_2,b_2)$
+by commutativity of addition.
+\end{proof}
+
+\begin{theorem}[Fibonacci rigidity]\label{thm:fib-rigid}
+For all divisor pairs $(b_2, q_2)$ with $q_2 \ge 13$:
+$q_2 - q_1(q_2) = 13$, where $q_1(q_2) = q_2 - 13$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|fib_rigidity_proved|
+\end{theorem}
+
+\begin{proof}
+$q_2 - (q_2 - 13) = 13$, immediate from the definition of $q_1$.
+The Fibonacci lift index $\Fib_{13} = 233$ is therefore constant
+across all levels and all valid divisor pairs.
+\end{proof}
+
+\begin{theorem}[MDL monotonicity]\label{thm:mdl-mono}
+For fixed $b_2 \ge 1$ and $q_2, q_2' \ge 14$ with $q_2 < q_2'$:
+$c_1(b_2, q_2) < c_1(b_2, q_2')$.
+That is, $c_1$ is strictly increasing in~$q_2$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|c1_monotone_in_q2|
+\end{theorem}
+
+\begin{proof}
+Both factors of $c_1 = (b_2 + q_2 + 7)(q_2 - 13) + 20$ are
+increasing in~$q_2$.
+\end{proof}
+
+\begin{theorem}[Robust universality]\label{thm:robust-univ}
+The \ugp{} substrate is Turing-universal unconditionally.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|robust_universality_proved|
+\textup{(= \lstinline|ugp_is_turing_universal|)}
+\end{theorem}
+
+\begin{theorem}[Sharp decidability boundary]\label{thm:sharp-bd}
+Finite-horizon properties of the \gte{} trajectory are decidable
+(the trajectory is computable).  Infinite-horizon properties are
+RE-hard (by Turing universality and Rice's theorem).
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|sharp_boundary_proved|
+\end{theorem}
+
+\begin{theorem}[Kernel compatibility]\label{thm:kern-compat}
+The Quarter-Lock identity $k_M = k_{G_2} + \tfrac{1}{4} k_L^2$
+holds unconditionally for all triples in the formalization.
+Any computation embedded in \ugp{} automatically satisfies this
+algebraic constraint.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|kernel_compatibility_proved|
+\textup{(= \lstinline|quarterLockLaw|)}
+\end{theorem}
+
+\begin{theorem}[Global $c$-attractor]\label{thm:c-attract}
+For any valid divisor pair at level $n \ge 5$, the even-step
+update map sends~$c$ to $2^n - 1$ in one step:
+$\mathsf{evenStepC}(b_2,\, (2^n-1)/b_2) = 2^n - 1$.
+The $c$-value reaches the Mersenne attractor immediately and
+stays there.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|global_c_attractor_proved|
+\textup{(= \lstinline|even_step_c_invariance|)}
+\end{theorem}
+
+\subsection{Open conjectures}
+
+Three conjectures remain open.  All are formally stated as \lean{}
+propositions.
+
+\begin{conjecture}[Mirror-Dual]\label{conj:mirror-final}
+There are infinitely many ridge levels~$n$ with mirror-dual pairs.
+This is structurally analogous to the twin prime conjecture.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|MirrorDualConjecture|
+\end{conjecture}
+
+\begin{conjecture}[\ugp{} Prime Infinitude]\label{conj:ugp-inf-final}
+There are infinitely many \ugp{} primes.  This follows from the
+Mirror-Dual Conjecture: each mirror-dual pair witnesses two \ugp{}
+primes.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|UGPPrimeInfinitudeConjecture|
+\end{conjecture}
+
+\begin{conjecture}[$\mu$-Flip Distance]\label{conj:mu-flip-final}
+The expected waiting time for a sign change in the M\"obius function
+along a linear progression $\alpha t + \beta$ with $\gcd(\alpha,\beta)=1$
+is bounded by an absolute constant.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|MuFlipDistanceConjecture|
+\end{conjecture}
 
 \begin{table}[ht]
 \centering
-\caption{Conjectures from the UGP paper.  Seven of ten are now
-  \textbf{proved} in ugp-lean; three remain open.}
+\caption{Conjecture status.  Seven proved, three open.}
 \label{tab:conjectures}
 \begin{tabular}{@{}lll@{}}
 \toprule
-\textbf{Conjecture} & \textbf{Lean name} & \textbf{Status} \\
+\textbf{Statement} & \textbf{Lean name} & \textbf{Status} \\
 \midrule
-Mirror Min-Dual       & \lstinline|mirror_min_dual_proved|         & \textbf{Proved} \\
-Fibonacci Rigidity    & \lstinline|fib_rigidity_proved|            & \textbf{Proved} \\
-MDL Monotonicity      & \lstinline|c1_monotone_in_q2|             & \textbf{Proved} \\
-Robust Universality   & \lstinline|robust_universality_proved|     & \textbf{Proved} \\
-Sharp Boundary        & \lstinline|sharp_boundary_proved|          & \textbf{Proved} \\
-Kernel Compatibility  & \lstinline|kernel_compatibility_proved|    & \textbf{Proved} \\
-Global $c$-Attractor  & \lstinline|global_c_attractor_proved|      & \textbf{Proved} \\
+Mirror min-dual       & \lstinline|mirror_min_dual_proved|         & Proved \\
+Fibonacci rigidity    & \lstinline|fib_rigidity_proved|            & Proved \\
+MDL monotonicity      & \lstinline|c1_monotone_in_q2|             & Proved \\
+Robust universality   & \lstinline|robust_universality_proved|     & Proved \\
+Sharp boundary        & \lstinline|sharp_boundary_proved|          & Proved \\
+Kernel compatibility  & \lstinline|kernel_compatibility_proved|    & Proved \\
+Global $c$-attractor  & \lstinline|global_c_attractor_proved|      & Proved \\
 \midrule
-Mirror-Dual           & \lstinline|MirrorDualConjecture|           & Open \\
-\ugp{} Prime Infinitude & \lstinline|UGPPrimeInfinitudeConjecture| & Open \\
-$\mu$-Flip Distance   & \lstinline|MuFlipDistanceConjecture|       & Open \\
+Mirror-dual           & \lstinline|MirrorDualConjecture|           & Open \\
+\ugp{} prime infinitude & \lstinline|UGPPrimeInfinitudeConjecture| & Open \\
+$\mu$-flip distance   & \lstinline|MuFlipDistanceConjecture|       & Open \\
 \bottomrule
 \end{tabular}
 \end{table}
