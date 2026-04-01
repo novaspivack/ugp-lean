@@ -126,6 +126,19 @@ What ugp-lean proves. All listed theorems have **0 sorry, 0 axioms** on the core
 | **UGPPrimeInfinitudeConjecture** | UGPPrimes | Infinitely many UGP primes (follows from Mirror-Dual) |
 | **MuFlipDistanceConjecture** | Conjectures | Bounded μ-flip waiting time on linear progressions |
 
+## Real Analysis / DSI Export
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **ugpOutputGap** | DSIExport | Real-valued c₁ on hyperbola: g_R(q) = (R/q+q+7)(q-13)+20 |
+| **ugpShell** | DSIExport | Valid parameter domain {q ≥ 14, R/q ≥ 16, q > 0} |
+| **ugpOutputGap_deriv** | DSIExport | HasDerivAt: g'(q) = 13R/q² + 2q − 6 |
+| **ugpOutputGap_deriv_pos** | DSIExport | Derivative positive for q ≥ 14, R > 0 |
+| **ugp_deriv_lower_bound** | DSIExport | Uniform bound: g'(q) ≥ 22 on shell |
+| **ugpOutputGap_differentiableOn** | DSIExport | Differentiable on (0,∞) |
+| **ugpOutputGap_continuousOn_Icc** | DSIExport | Continuous on compact subsets |
+| **UGPWall1Export** | DSIExport | Packaged export for DSI SmallSymmetricMVTBundle |
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |

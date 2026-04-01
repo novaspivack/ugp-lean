@@ -220,6 +220,10 @@ results:
   algebraic infrastructure for a twin-prime program: branch linearization,
   gap-2 factory quadratics, and a Hasse check (no local obstruction at
   primes $\le 43$).
+\item \textbf{Real analysis} (\S\ref{sec:dsi}): The $c_1$ function on
+  the divisor hyperbola is differentiable with derivative
+  $13R/q^2 + 2q - 6 \ge 22$ on the valid shell---a machine-checked
+  uniform magnification bound for sieve applications.
 \end{itemize}
 
 \paragraph{Structure.}
@@ -233,7 +237,8 @@ results:
 \S\ref{sec:quarterlock} treats the Quarter-Lock and Elegant Kernel.
 \S\ref{sec:universality} addresses universality and self-reference.
 \S\ref{sec:mirror} develops the mirror-dual conjecture.
-\S\ref{sec:conjectures} lists all open conjectures.
+\S\ref{sec:dsi} presents the real-analysis layer.
+\S\ref{sec:conjectures} resolves seven conjectures and states three open ones.
 \S\ref{sec:related} surveys related work.
 \S\ref{sec:conclusion} concludes.
 
@@ -1054,6 +1059,65 @@ $\rho_F(3) = 1$ (bad prime: $3 \mid D_-$).
 \textup{Lean:} \lstinline|localDensity_3| through \lstinline|localDensity_43|,
 \lstinline|hasse_check_no_obstruction|
 \end{theorem}
+
+% ═══════════════════════════════════════════════════════════════
+\section{Real Analysis and the DSI Interface}\label{sec:dsi}
+% ═══════════════════════════════════════════════════════════════
+
+The $c_1$ function, when viewed as a real-valued function on the
+divisor hyperbola $bq = R$, has analytic properties relevant to
+sieve-theoretic applications.  The formalization provides a
+machine-checked real-analysis layer.
+
+\begin{definition}[Output gap on the hyperbola]\label{def:outputgap}
+For $R > 0$ and $q > 0$, the \emph{output gap} is:
+\[
+  g_R(q) \coloneqq \Bigl(\frac{R}{q} + q + 7\Bigr)(q - 13) + 20.
+\]
+This is the real extension of $c_1(R/q,\, q)$ to positive reals.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|ugpOutputGap|
+\end{definition}
+
+\begin{theorem}[Derivative of the output gap]\label{thm:deriv}
+For $R > 0$ and $q > 0$:
+\[
+  g_R'(q) = \frac{13R}{q^2} + 2q - 6.
+\]
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|ugpOutputGap_deriv|
+\end{theorem}
+
+\begin{proof}
+Rewrite $g_R(q) = R - 13Rq^{-1} + q^2 - 6q - 71$,
+differentiate term by term, simplify.  The \lean{} proof
+decomposes into \texttt{HasDerivAt} combinators for
+each summand and reassembles via \texttt{congr\_of\_eventuallyEq}.
+\end{proof}
+
+\begin{theorem}[Uniform derivative lower bound]\label{thm:deriv-bound}
+For $q \ge 14$ and $R > 0$:
+\[
+  g_R'(q) \ge 22.
+\]
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|ugp_deriv_lower_bound|
+\end{theorem}
+
+\begin{proof}
+$g_R'(q) = 13R/q^2 + 2q - 6 \ge 0 + 2 \cdot 14 - 6 = 22$.
+\end{proof}
+
+\noindent
+These results provide the analytic input required by the
+domain-semantic-internalization framework's
+\texttt{SmallSymmetricMVTBundle}: the output gap is differentiable
+on $(0,\infty)$, continuous on compact subsets, and its derivative
+is uniformly bounded below on the valid parameter shell
+$\{q \in \mathbb{R} : 14 \le q \le R/16\}$.
 
 % ═══════════════════════════════════════════════════════════════
 \section{Conjectures: Resolved and Open}\label{sec:conjectures}

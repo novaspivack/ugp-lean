@@ -84,6 +84,15 @@
 | Global c-attractor (one-step) | Conjectures | global_c_attractor_proved | ✓ |
 | UGP prime infinitude (stated, open) | GTE.UGPPrimes | UGPPrimeInfinitudeConjecture | open |
 | μ-flip distance (stated, open) | Conjectures | MuFlipDistanceConjecture | open |
+| **DSI Export (real analysis)** | | | |
+| Real-valued c₁ on hyperbola bq=R | GTE.DSIExport | ugpOutputGap | ✓ |
+| Valid parameter shell {q ≥ 14, R/q ≥ 16} | GTE.DSIExport | ugpShell | ✓ |
+| HasDerivAt: deriv = 13R/q² + 2q − 6 | GTE.DSIExport | ugpOutputGap_deriv | ✓ |
+| Derivative positive on shell | GTE.DSIExport | ugpOutputGap_deriv_pos | ✓ |
+| Uniform lower bound: deriv ≥ 22 | GTE.DSIExport | ugp_deriv_lower_bound | ✓ |
+| Differentiable on (0,∞) | GTE.DSIExport | ugpOutputGap_differentiableOn | ✓ |
+| Continuous on compact subsets | GTE.DSIExport | ugpOutputGap_continuousOn_Icc | ✓ |
+| Wall 1 export bundle for DSI | GTE.DSIExport | UGPWall1Export | ✓ |
 | Five concrete mirror-dual pairs certified (n=10,13,16) | GTE.MirrorDualConjecture | mirror_dual_n10/13/16_a/b/c | ✓ |
 | Conjecture implies infinitely many distinct levels | GTE.MirrorDualConjecture | conjecture_implies_many_levels | ✓ |
 | **Resonant Factory (twin-prime program)** | | | |
