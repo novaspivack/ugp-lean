@@ -24,6 +24,7 @@ import UgpLean.GTE.MersenneGcd
 import UgpLean.GTE.MirrorDualConjecture
 import UgpLean.GTE.GeneralTheorems
 import UgpLean.GTE.UGPPrimes
+import UgpLean.GTE.ResonantFactory
 import UgpLean.SelfRef.LawvereKleene
 import UgpLean.SelfRef.RiceHalting
 import UgpLean.Conjectures

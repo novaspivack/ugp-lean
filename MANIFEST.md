@@ -72,3 +72,10 @@
 | Mirror-dual conjecture (stated, open) | GTE.MirrorDualConjecture | MirrorDualConjecture | def |
 | Five concrete mirror-dual pairs certified (n=10,13,16) | GTE.MirrorDualConjecture | mirror_dual_n10/13/16_a/b/c | ✓ |
 | Conjecture implies infinitely many distinct levels | GTE.MirrorDualConjecture | conjecture_implies_many_levels | ✓ |
+| **Resonant Factory (twin-prime program)** | | | |
+| Branch linearization: c₁ affine in b₂ | GTE.ResonantFactory | branch_linearization | ✓ |
+| Factory gap-2: Q₊(t) = Q₋(t) + 2 | GTE.ResonantFactory | factory_gap_two | ✓ |
+| D₊ = 119513 is prime | GTE.ResonantFactory | factoryDp_prime | ✓ |
+| Local density ρ_F(p) for p ≤ 43 (Hasse check) | GTE.ResonantFactory | localDensity_3..43 | ✓ |
+| No local obstruction (singular series S > 0) | GTE.ResonantFactory | hasse_check_no_obstruction | ✓ |
+| Product algebra: Ω(F(t)) = Ω(Q₋(t)) + Ω(Q₊(t)) | GTE.ResonantFactory | factory_product_algebra | ✓ |
