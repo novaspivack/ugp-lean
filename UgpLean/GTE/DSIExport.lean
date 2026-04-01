@@ -156,7 +156,7 @@ theorem ugp_deriv_lower_bound {R q : ℝ} (hq : 14 ≤ q) (hR : 0 < R) :
 /-- ugpOutputGap is continuous on any compact interval within (0, ∞). -/
 theorem ugpOutputGap_continuousOn_Icc {R a b : ℝ} (ha : 0 < a) :
     ContinuousOn (ugpOutputGap R) (Icc a b) :=
-  (ugpOutputGap_differentiableOn R).continuousOn.mono fun x ⟨hxa, _⟩ => lt_of_lt_of_le ha hxa
+  (ugpOutputGap_differentiableOn R).continuousOn.mono fun _ ⟨hxa, _⟩ => lt_of_lt_of_le ha hxa
 
 -- ════════════════════════════════════════════════════════════════
 -- §5  Export structure (alignment with DSI SmallSymmetricMVTBundle)
@@ -181,6 +181,6 @@ structure UGPWall1Export where
   shell_nonempty : (ugpShell R).Nonempty := ugpShell_nonempty hR224
   deriv_lower : ∀ q ∈ ugpShell R, 0 < q →
     22 ≤ 13 * R / q ^ 2 + 2 * q - 6 :=
-    fun q hq _ => ugp_deriv_lower_bound hq.1 hR
+    fun _ hq _ => ugp_deriv_lower_bound hq.1 hR
 
 end UgpLean
