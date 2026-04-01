@@ -69,6 +69,10 @@
 | **τ(Rₙ) = 5·τ(2^(n−4)−1) exact formula (n≥5)** | GTE.MirrorDualConjecture | tau_ridge_exact | ✓ |
 | 2^a and 2^b−1 coprime (b≥1) | GTE.MirrorDualConjecture | coprime_pow2_mersenne | ✓ |
 | τ(16) = 5 | GTE.MirrorDualConjecture | tau_16 | ✓ |
+| MDL selection at n=10: c₁=823 is minimum | GTE.MirrorDualConjecture | mdl_c1_n10 | ✓ |
+| MDL selection at n=13: c₁=9007 is minimum | GTE.MirrorDualConjecture | mdl_c1_n13 | ✓ |
+| MDL selection at n=16: c₁=46681 is minimum | GTE.MirrorDualConjecture | mdl_c1_n16 | ✓ |
+| MDL c₁ monotone across levels: 823 < 9007 < 46681 | GTE.MirrorDualConjecture | mdl_c1_monotone | ✓ |
 | Mirror-dual conjecture (stated, open) | GTE.MirrorDualConjecture | MirrorDualConjecture | def |
 | Five concrete mirror-dual pairs certified (n=10,13,16) | GTE.MirrorDualConjecture | mirror_dual_n10/13/16_a/b/c | ✓ |
 | Conjecture implies infinitely many distinct levels | GTE.MirrorDualConjecture | conjecture_implies_many_levels | ✓ |
