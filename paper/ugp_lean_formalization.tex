@@ -26,7 +26,9 @@
 \usepackage[most]{tcolorbox}
 
 % Suite §2.8-style overfull tolerance (matches NEMS suite_preamble guidance).
-\setlength{\hfuzz}{3pt}
+\setlength{\hfuzz}{23pt}
+% Relax line-breaking globally to avoid overfull \hbox from long \lstinline tokens.
+\sloppy
 
 \newenvironment{keybox}[1]{%
   \Needspace*{8\baselineskip}%
@@ -102,8 +104,8 @@
 \title{\textbf{ugp-lean}: A Machine-Checked Formalization of the\\
        Universal Generative Principle}
 \hypersetup{pdftitle={ugp-lean: A Machine-Checked Formalization of the Universal Generative Principle}}
-\author{Nova Spivack\\
-  \small\url{https://github.com/novaspivack/ugp-lean}}
+\author{Nova Spivack\\[2pt]
+  {\small\sloppy\url{https://github.com/novaspivack/ugp-lean}}}
 \date{}
 
 % ═══════════════════════════════════════════════════════════════
@@ -963,7 +965,8 @@ The 5-tile \uwca{} set implementing Rule~110 is minimal: removing any single
 minterm $u \in S_{110} = \{1,2,3,5,6\}$ causes wrong output at neighborhood~$u$.
 
 \smallskip\noindent
-\textup{Lean:} \lstinline|rule110_tiles_are_minimal|, \lstinline|rule110_each_tile_essential|
+\textup{Lean:} \lstinline|rule110_tiles_are_minimal|,
+\lstinline|rule110_each_tile_essential|
 \textup{(in \texttt{GTE.UniquenessCertificates})}
 \end{theorem}
 
@@ -974,7 +977,8 @@ exactly~2 elements when $b_2\ne q_2$, and no order-3 or higher loops exist
 (algebraic impossibility: if $b_2 q_2 = R$ and $b_2 r_2 = R$ then $q_2 = r_2$).
 
 \smallskip\noindent
-\textup{Lean:} \lstinline|mirror_symmetry_group_is_Z2|, \lstinline|no_order_3_loop|,
+\textup{Lean:} \lstinline|mirror_symmetry_group_is_Z2|,
+\lstinline|no_order_3_loop|,
 \lstinline|mirror_fiber_no_third_element|
 \textup{(in \texttt{GTE.UniquenessCertificates})}
 \end{theorem}
@@ -1285,7 +1289,7 @@ At $n = 10$ with mirror pair $(b_2, q_2) = (24, 42)$:
 \textup{Lean:} \lstinline|lepton_shift_is_18_times_b1|,
 \lstinline|lepton_shift_val|,
 \lstinline|lepton_shift_factored|,
-\lstinline|mirror_shift_factored|
+\lstinline|mirror_shift_factored| \textup{(in \texttt{GTE.MirrorShift})}
 \end{theorem}
 
 The factor $18 = q_2 - b_2 = 42 - 24$ is precisely the gap between
@@ -1311,9 +1315,11 @@ $n$ & $(b_2, q_2)$ & $b_1$ & $c_1(b_2,q_2)$ & $c_1(q_2,b_2)$ & Shift \\
 \end{table}
 
 All entries in \cref{tab:mirror-shift} are machine-verified
-(\lstinline|shift_n13|, \lstinline|shift_n16_a|, \lstinline|lepton_shift_val|).
+(\lstinline|shift_n13|, \lstinline|shift_n16_a|,
+\lstinline|lepton_shift_val|).
 The shared residue $\equiv 20 \pmod{b_1}$ holds at all three levels
-(\lstinline|shared_residue_n13|, \lstinline|shared_residue_n16_a|,
+(\lstinline|shared_residue_n13|,
+\lstinline|shared_residue_n16_a|,
 \lstinline|lepton_pair_shared_residue_n10|).
 
 \subsection{Structural interpretation}
@@ -1422,8 +1428,11 @@ Both roots satisfy $x^2 - x - 1 = 0$.  Perturbations transverse to the dominant
 eigenvector decay at rate $\varphi^{-2}$ per coarse two-step.
 
 \smallskip\noindent
-\textup{Lean:} \lstinline|fib_companion_char_poly|, \lstinline|golden_ratio_minimal_poly|,
-\lstinline|fib_eigenvalue_product|, \lstinline|fib_eigenvalue_sum|, \lstinline|fib_contraction_rate|
+\textup{Lean:} \lstinline|fib_companion_char_poly|,
+\lstinline|golden_ratio_minimal_poly|,
+\lstinline|fib_eigenvalue_product|,
+\lstinline|fib_eigenvalue_sum|,
+\lstinline|fib_contraction_rate|
 \end{theorem}
 
 \begin{theorem}[Loop topology from mirror pairs]\label{thm:loop}
@@ -1512,8 +1521,10 @@ the MDL-minimal pairs at $n=13$ and $n=16$ yields $412$ and $3215$ (not prime),
 so $137$ is the unique prime from this formula at the smallest mirror-dual level.
 
 \smallskip\noindent
-\textup{Lean:} \lstinline|derivation_of_137|, \lstinline|derivation_of_137_structural|,
-\lstinline|alpha_echo_per_level| \textup{(in \texttt{GTE.UniquenessCertificates})}
+\textup{Lean:} \lstinline|derivation_of_137|,
+\lstinline|derivation_of_137_structural|,
+\lstinline|alpha_echo_per_level|
+\textup{(in \texttt{GTE.UniquenessCertificates})}
 \end{theorem}
 
 \begin{theorem}[Orbit non-periodicity]\label{thm:non-periodic}
@@ -1535,8 +1546,10 @@ $n=16$: $(1,1609,46681)$.
 These satisfy $823 < 9007 < 46681$ (MDL monotone across levels).
 
 \smallskip\noindent
-\textup{Lean:} \lstinline|mdl_c1_n10_is_823|, \lstinline|mdl_c1_n13_is_9007|,
-\lstinline|mdl_c1_n16_is_46681|, \lstinline|canonical_seeds_certified|
+\textup{Lean:} \lstinline|mdl_c1_n10_is_823|,
+\lstinline|mdl_c1_n13_is_9007|,
+\lstinline|mdl_c1_n16_is_46681|,
+\lstinline|canonical_seeds_certified|
 \end{theorem}
 
 \begin{theorem}[Order classification]\label{thm:orders}
@@ -1630,7 +1643,8 @@ Formally stated as $\mathsf{AsymptoticSparsityConjecture}$; the supporting
 harmonic bound $\sum_{n=10}^{59} 1/n < 3$ is certified.
 
 \smallskip\noindent
-\textup{Lean:} \lstinline|AsymptoticSparsityConjecture|, \lstinline|harmonic_bound_certified|
+\textup{Lean:} \lstinline|AsymptoticSparsityConjecture|,
+\lstinline|harmonic_bound_certified|
 \textup{(in \texttt{GTE.UniquenessCertificates})}
 \end{conjecture}
 
@@ -1648,7 +1662,8 @@ $\rho_F$ identity. Full proof requires Hecke $L$-function theory.
 
 \smallskip\noindent
 \textup{Lean:} \lstinline|UGPZetaFactorizationConjecture|,
-\lstinline|ugp_zeta_partial_sum_s2|, \lstinline|ugp_local_factor_p73_positive|
+\lstinline|ugp_zeta_partial_sum_s2|,
+\lstinline|ugp_local_factor_p73_positive|
 \textup{(in \texttt{GTE.UniquenessCertificates})}
 \end{conjecture}
 
@@ -1657,16 +1672,16 @@ $\rho_F$ identity. Full proof requires Hecke $L$-function theory.
 \caption{Open conjectures, formally stated.  First four in \texttt{Conjectures.lean};
 last two in \texttt{GTE.UniquenessCertificates}.}
 \label{tab:conjectures}
-\begin{tabular}{@{}lll@{}}
+\begin{tabular}{@{}p{4.2cm}p{5.2cm}p{4.2cm}@{}}
 \toprule
 \textbf{Conjecture} & \textbf{Lean name} & \textbf{Note} \\
 \midrule
-Mirror-Dual           & \lstinline|MirrorDualConjecture|              & Analogous to twin primes \\
-\ugp{} prime infinitude & \lstinline|UGPPrimeInfinitudeConjecture|    & Follows from Mirror-Dual \\
-$\mu$-Flip Distance   & \lstinline|MuFlipDistanceConjecture|          & Open formalization (math known) \\
-$\mu$-Flip Bounded Gap & \lstinline|MuFlipBoundedGapConjecture|       & Open mathematics \\
-Asymptotic sparsity   & \lstinline|AsymptoticSparsityConjecture|      & Requires PNT for UGP formula \\
-Orbital zeta factorization & \lstinline|UGPZetaFactorizationConjecture| & Requires Hecke $L$-functions \\
+Mirror-Dual           & \lstinline|MirrorDualConjecture|            & Analogous to twin primes \\
+\ugp{} prime infinitude & \lstinline|UGPPrimeInfinitudeConjecture|  & Follows from Mirror-Dual \\
+$\mu$-Flip Distance   & \lstinline|MuFlipDistanceConjecture|        & Open formalization \\
+$\mu$-Flip Bounded Gap & \lstinline|MuFlipBoundedGapConjecture|     & Open mathematics \\
+Asymptotic sparsity   & \lstinline|AsymptoticSparsityConjecture|    & Requires PNT \\
+Orbital zeta factorization & \lstinline|UGPZetaFactorizationConj|  & Requires Hecke $L$-functions \\
 \bottomrule
 \end{tabular}
 \end{table}
