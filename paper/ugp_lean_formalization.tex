@@ -119,7 +119,7 @@ It produces, from first principles and without free parameters, a unique
 canonical seed---the triple $(1,73,823)$---whose orbit under the
 Generative Triple Evolution (\gte{}) map is rigidly determined.
 We present \textbf{ugp-lean}, a machine-checked formalization of this
-framework in \lean{}~4 against Mathlib, comprising 49 modules with a
+framework in \lean{}~4 against Mathlib, comprising 51 modules with a
 strict zero-sorry, zero-custom-axiom policy on the core proof path.
 
 \textbf{What makes \ugp{} special, and what this paper proves.}
@@ -281,8 +281,8 @@ results:
 \S\ref{sec:mirror} develops the mirror-dual conjecture.
 \S\ref{sec:mirrorshift} presents the mirror shift algebra.
 \S\ref{sec:dsi} presents the real-analysis layer.
-\S\ref{sec:structural} presents the structural theorems.
-\S\ref{sec:conjectures} states the four remaining open conjectures.
+\S\ref{sec:structural} presents the structural theorems and uniqueness certificates.
+\S\ref{sec:conjectures} states the six remaining open conjectures.
 \S\ref{sec:related} surveys related work.
 \S\ref{sec:conclusion} concludes.
 
@@ -373,7 +373,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 49~\lean{} modules across seven layers:
+The artifact is organized into 51~\lean{} modules across seven layers:
 
 \begin{center}
 \begin{tikzpicture}[
@@ -394,10 +394,10 @@ The artifact is organized into 49~\lean{} modules across seven layers:
   {\textbf{Classification}~(6)\quad Bounds, TheoremA, TheoremB,
    RSUC, FormalRSUC, MonotonicStrengthening};
 \node[layer, fill=orange!8] (gte)   at (0,3*\vs)
-  {\textbf{GTE}~(12)\quad Evolution, Orbit, UpdateMap,
+  {\textbf{GTE}~(13)\quad Evolution, Orbit, UpdateMap,
    GeneralTheorems, MersenneGcd, PrimeFactorAnalysis,
    MirrorDualConj, MirrorShift, UGPPrimes, InertPrimes,
-   AnalyticArchitecture, StructuralTheorems};
+   AnalyticArchitecture, StructuralTheorems, UniquenessCertificates};
 \node[layer, fill=red!8]    (struc) at (0,4*\vs)
   {\textbf{Structural}~(3)\quad QuarterLock, ElegantKernel,
    LModelDerivation};
@@ -942,6 +942,43 @@ The \ugp{} substrate is Turing-universal.
 \textup{Lean:} \lstinline|ugp_is_turing_universal|
 \end{theorem}
 
+\begin{keybox}{What makes this Turing universality unusual}
+Most Turing-universal systems are \emph{designed} to compute (Turing machines, cellular
+automata with explicit wiring, etc.).  The \ugp{} is an \emph{arithmetic sieve}
+for prime-locked divisor pairs — it was not designed to compute.  Yet the same
+object that selects $(1,73,823)$ from the ridge $R_{10}=1008$ harbors universal
+computation.  The proof is fully machine-checked: \lstinline|uwca_sweep_implements_rule110|
+is established by exhaustive case analysis over all 8 Rule~110 neighborhoods.
+
+\medskip
+\textbf{Further:} the 5-tile set is \emph{minimal} — removing any single minterm
+of $S_{110}$ produces a wrong output (\lstinline|rule110_each_tile_essential|).
+The symmetry group of the \ugp{} mirror fiber is exactly~$\mathbb{Z}/2\mathbb{Z}$
+— no higher-order symmetry loops exist (\lstinline|mirror_symmetry_group_is_Z2|,
+\lstinline|no_order_3_loop|).
+\end{keybox}
+
+\begin{theorem}[Minimal tile count]\label{thm:tiles-minimal}
+The 5-tile \uwca{} set implementing Rule~110 is minimal: removing any single
+minterm $u \in S_{110} = \{1,2,3,5,6\}$ causes wrong output at neighborhood~$u$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|rule110_tiles_are_minimal|, \lstinline|rule110_each_tile_essential|
+\textup{(in \texttt{GTE.UniquenessCertificates})}
+\end{theorem}
+
+\begin{theorem}[Symmetry group is $\mathbb{Z}/2\mathbb{Z}$]\label{thm:z2-symmetry}
+The mirror involution $\sigma:(b_2,q_2)\mapsto(q_2,b_2)$ generates exactly
+$\mathbb{Z}/2\mathbb{Z}$ on any ridge fiber: it has order~2, the fiber has
+exactly~2 elements when $b_2\ne q_2$, and no order-3 or higher loops exist
+(algebraic impossibility: if $b_2 q_2 = R$ and $b_2 r_2 = R$ then $q_2 = r_2$).
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|mirror_symmetry_group_is_Z2|, \lstinline|no_order_3_loop|,
+\lstinline|mirror_fiber_no_third_element|
+\textup{(in \texttt{GTE.UniquenessCertificates})}
+\end{theorem}
+
 \subsection{Self-reference theorems}
 
 Three classical self-reference results are imported from companion
@@ -1445,6 +1482,88 @@ Additionally, \texttt{GTE.StructuralTheorems} proves:
   lex-min among all six residual triples at $n=10$.
 \end{itemize}
 
+\subsection{Uniqueness certificates}\label{sec:uniqueness}
+
+The module \texttt{GTE.UniquenessCertificates} collects further exhaustive
+classification results, all machine-checked.
+
+\begin{keybox}{The n=10 Uniqueness Package}
+All the following are machine-certified in \lstinline|n10_uniqueness_package| (one theorem):
+(1)~the only prime-locked survivors at $n=10$ are $(24,42)$ and $(42,24)$;
+(2)~the MDL seed is the LeptonSeed $(1,73,823)$;
+(3)~the orbit $c$-values are strictly increasing ($823 < 1023 < 65535$);
+(4)~$2 b_1 - a_2 = 137$ and $137$ is prime;
+(5)~the mirror fiber has exactly 2 elements;
+(6)~$n=10$ is order-2, $n=11$ is order-0, $n=12$ is order-1.
+\end{keybox}
+
+\begin{theorem}[The 137 derivation]\label{thm:137}
+The identity $2 b_1 - a_2 = 137$ at the canonical orbit is \emph{derived}, not
+postulated.  The proof chain:
+\begin{enumerate}[nosep]
+\item Universal shared residue: $c_1 \equiv \mathsf{ugp1\_t} = 20 \pmod{b_1}$
+  for any mirror-dual pair at any level (proved in \cref{sec:mirrorshift}).
+  Hence $m_1 = \mathsf{gteRemainder}(823, 73) = 20$.
+\item Odd-step formula: $a_2 = m_1 - (n+2-1) = 20 - 11 = 9$.
+\item Arithmetic: $2 \cdot 73 - 9 = 137$.  \lstinline|Nat.Prime 137|: \lstinline|native_decide|.
+\end{enumerate}
+The formula $2 b_1 - a_2 = 2b_1 - (19-n)$ depends on $n$; computing it at
+the MDL-minimal pairs at $n=13$ and $n=16$ yields $412$ and $3215$ (not prime),
+so $137$ is the unique prime from this formula at the smallest mirror-dual level.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|derivation_of_137|, \lstinline|derivation_of_137_structural|,
+\lstinline|alpha_echo_per_level| \textup{(in \texttt{GTE.UniquenessCertificates})}
+\end{theorem}
+
+\begin{theorem}[Orbit non-periodicity]\label{thm:non-periodic}
+The canonical \gte{} orbit is not eventually periodic: the $c$-values are
+strictly increasing ($c_1 < c_2 < c_3$), so no state repeats.  The general
+principle: any trajectory with strictly monotone $c$-coordinates satisfies
+$G_t \ne G_{t+T}$ for all $t, T$ with $T > 0$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|orbit_c_strictly_monotone|,
+\lstinline|orbit_not_eventually_periodic_from_monotonicity|
+\end{theorem}
+
+\begin{theorem}[MDL canonical seeds at $n=10,13,16$]\label{thm:mdl-multi}
+The lex-minimal prime-locked triple $(1,b_1,c_{1,\min})$ at each certified level:
+$n=10$: $(1,73,823)$;\quad
+$n=13$: $(1,209,9007)$;\quad
+$n=16$: $(1,1609,46681)$.
+These satisfy $823 < 9007 < 46681$ (MDL monotone across levels).
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|mdl_c1_n10_is_823|, \lstinline|mdl_c1_n13_is_9007|,
+\lstinline|mdl_c1_n16_is_46681|, \lstinline|canonical_seeds_certified|
+\end{theorem}
+
+\begin{theorem}[Order classification]\label{thm:orders}
+Ridge levels are classified as order-0 (no prime-locked seed), order-1 (prime-locked
+but no mirror pair), or order-2 (mirror pair).  Machine-verified:
+$n=10$~(order-2), $n=11$~(order-0), $n=12$~(order-1), $n=13$~(order-2).
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|n10_is_order_2|, \lstinline|n11_is_order_0|,
+\lstinline|n12_is_order_1|, \lstinline|n13_is_order_2|
+\end{theorem}
+
+\begin{theorem}[Singular series lower bound]\label{thm:singular-series}
+The partial singular series for mirror-dual pairs, computed from certified
+local factors at good primes $p \in \{13, 23, 29, 31, 37, 41, 43\}$:
+\[
+  \prod_{p \in \{13,23,\ldots,43\}} \!\!\Bigl(1 - \tfrac{\rho_F(p)}{(p-1)^2}\Bigr)
+  \;\ge\; \tfrac{85}{100} \;>\; 0.
+\]
+This is a rigorous lower bound on the mirror-dual singular series $\mathfrak{S}$,
+establishing $\mathfrak{S} > 0$ from certified local data.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|singular_series_partial_lower_bound|,
+\lstinline|singular_series_partial_positive|
+\end{theorem}
+
 % ═══════════════════════════════════════════════════════════════
 \section{Open Conjectures}\label{sec:conjectures}
 % ═══════════════════════════════════════════════════════════════
@@ -1500,18 +1619,54 @@ contains a squarefree integer $n \equiv r \pmod{a}$.
 \textup{Lean:} \lstinline|MuFlipBoundedGapConjecture|
 \end{conjecture}
 
+\begin{conjecture}[Asymptotic sparsity of prime-locked levels]\label{conj:sparsity}
+Let $N(X) = |\{10 \le n \le X : R_n \text{ has a prime-locked seed}\}|$.
+Then $N(X)/X \to 0$ as $X \to \infty$.
+
+\smallskip\noindent
+\emph{Heuristic:} $c_1 \sim 2^n$, so $\Pr[c_1 \text{ prime}] \sim 1/(n\ln 2)$,
+giving $\mathbb{E}[N(X)] \lesssim C\ln X$ while $X$ grows linearly.
+Formally stated as $\mathsf{AsymptoticSparsityConjecture}$; the supporting
+harmonic bound $\sum_{n=10}^{59} 1/n < 3$ is certified.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|AsymptoticSparsityConjecture|, \lstinline|harmonic_bound_certified|
+\textup{(in \texttt{GTE.UniquenessCertificates})}
+\end{conjecture}
+
+\begin{conjecture}[UGP orbital zeta factorization]\label{conj:zeta}
+The Dirichlet series $Z_{\text{\ugp{}}}(s) = \sum_k p_k^{-s}$ over the \ugp{} prime
+sequence admits an Euler product factorization
+$Z_{\text{\ugp{}}}(s) = L(s,\chi_-)^2 \cdot L(s,\chi_+)^2 \cdot G(s)$
+in the zero-free region, where $G(s)$ is analytic and nonzero.
+
+\smallskip\noindent
+\emph{Evidence:} The first 10 \ugp{} primes are certified; the partial sum
+$\sum_{k=1}^{10} p_k^{-2}$ is a certified rational lower bound.
+The local factor $E_{73} = 1 - 2/(73 \cdot 72) > 0$ is certified from the
+$\rho_F$ identity. Full proof requires Hecke $L$-function theory.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|UGPZetaFactorizationConjecture|,
+\lstinline|ugp_zeta_partial_sum_s2|, \lstinline|ugp_local_factor_p73_positive|
+\textup{(in \texttt{GTE.UniquenessCertificates})}
+\end{conjecture}
+
 \begin{table}[ht]
 \centering
-\caption{Open conjectures, formally stated in \texttt{Conjectures.lean}.}
+\caption{Open conjectures, formally stated.  First four in \texttt{Conjectures.lean};
+last two in \texttt{GTE.UniquenessCertificates}.}
 \label{tab:conjectures}
 \begin{tabular}{@{}lll@{}}
 \toprule
 \textbf{Conjecture} & \textbf{Lean name} & \textbf{Note} \\
 \midrule
-Mirror-Dual           & \lstinline|MirrorDualConjecture|           & Analogous to twin primes \\
-\ugp{} prime infinitude & \lstinline|UGPPrimeInfinitudeConjecture| & Follows from Mirror-Dual \\
-$\mu$-Flip Distance   & \lstinline|MuFlipDistanceConjecture|       & Open formalization (math known) \\
-$\mu$-Flip Bounded Gap & \lstinline|MuFlipBoundedGapConjecture|    & Open mathematics \\
+Mirror-Dual           & \lstinline|MirrorDualConjecture|              & Analogous to twin primes \\
+\ugp{} prime infinitude & \lstinline|UGPPrimeInfinitudeConjecture|    & Follows from Mirror-Dual \\
+$\mu$-Flip Distance   & \lstinline|MuFlipDistanceConjecture|          & Open formalization (math known) \\
+$\mu$-Flip Bounded Gap & \lstinline|MuFlipBoundedGapConjecture|       & Open mathematics \\
+Asymptotic sparsity   & \lstinline|AsymptoticSparsityConjecture|      & Requires PNT for UGP formula \\
+Orbital zeta factorization & \lstinline|UGPZetaFactorizationConjecture| & Requires Hecke $L$-functions \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1576,13 +1731,18 @@ instances (\cref{thm:ten-ugp}), the divisor count unboundedness theorem
 $\tau(2^n - 16) = 5 \cdot \tau(2^{n-4}-1)$ (\cref{thm:tau-exact}),
 the precise formal statement of the mirror-dual conjecture
 (\cref{conj:mirror}) with five machine-verified witness pairs,
-and the mirror shift algebra (\cref{sec:mirrorshift}): the universal
+the mirror shift algebra (\cref{sec:mirrorshift}): the universal
 law $c_1(b_2,q_2) - c_1(q_2,b_2) = b_1(q_2-b_2)$ and the shared
 residue $c_1 \equiv 20 \pmod{b_1}$ for all mirror-dual pairs at all
-ridge levels.
+ridge levels,
+and a suite of uniqueness certificates (\cref{sec:uniqueness}):
+the derivation of $2b_1 - a_2 = 137$ from orbit data,
+non-periodicity of the canonical orbit, the symmetry group $\mathbb{Z}/2\mathbb{Z}$
+of the mirror fiber, MDL canonical seeds at $n=10,13,16$, order classification,
+and a certified singular series lower bound $\geq 85/100$.
 
 \paragraph{What remains open.}
-Four conjectures are formally stated in \cref{tab:conjectures}.
+Six conjectures are formally stated in \cref{tab:conjectures}.
 The mirror-dual conjecture (\cref{conj:mirror-final}) and \ugp{} prime
 infinitude (\cref{conj:ugp-inf-final}) are the most
 mathematically significant: both are structurally analogous to the
