@@ -122,18 +122,27 @@ defined over integer ridges $R_n = 2^n - 16$.  The formalization
 covers: the ridge sieve, prime-lock criterion, Residual Seed Uniqueness
 (\rsuc{}), Quarter-Lock identity, Generative Triple Evolution (\gte{})
 canonical orbit, \uwca{} Turing universality, and a new class of primes
-(\emph{\ugp{} primes}, OEIS~A394412) with ten machine-checked instances.
-The artifact comprises 44~\lean{} modules, builds against Mathlib
-v4.29.0-rc3, and maintains a strict \emph{zero-sorry, zero-custom-axiom}
-policy on the core proof path.  Novel contributions include: a
+(\emph{\ugp{} primes}) with ten machine-checked instances.
+The artifact comprises 48~\lean{} modules, builds against Mathlib
+v4.29.0-rc6, and maintains a strict \emph{zero-sorry, zero-custom-axiom}
+policy on the core \ugp{} proof path.  Novel contributions include: a
 machine-checked proof that the \gte{} update map~$T$ \emph{forces} the
 canonical orbit, a general ridge remainder lock for all $n \ge 5$, an
 even-step $c$-invariance theorem, a formal definition of \ugp{} primes
 with existence proof and ten verified instances across three ridge
 levels, a precise statement of the mirror-dual conjecture with a
-proof that the divisor count $\tau(2^n-16)$ is unbounded, and an
+proof that the divisor count $\tau(2^n-16)$ is unbounded, an
 exact divisor-count formula
-$\tau(2^n - 16) = 5 \cdot \tau(2^{n-4} - 1)$ for all $n \ge 5$.
+$\tau(2^n - 16) = 5 \cdot \tau(2^{n-4} - 1)$ for all $n \ge 5$,
+and a new \emph{mirror shift algebra}: a machine-checked proof that for
+any mirror-dual pair $(b_2, q_2)$, both $c_1$-values are congruent to
+$t = 20$ modulo $b_1 = b_2 + q_2 + 7$, and their difference equals
+$b_1 \cdot (q_2 - b_2)$---a universal algebraic law holding at every
+ridge level.
+The repository also contains companion modules (\texttt{InertPrimes},
+\texttt{AnalyticArchitecture}) providing citable analytic infrastructure
+derived from the \ugp{} factory constants; these are documented in
+\texttt{docs/RESONANT\_FACTORY\_NOTE.md} and not discussed in this paper.
 All definitions are self-contained; all open conjectures are formally
 stated as \lean{} propositions.
 
@@ -208,9 +217,8 @@ results:
   strict per-step rule, the even step immediately after a ridge hit
   leaves~$c$ unchanged.
 \item \textbf{\ugp{} primes} (\S\ref{sec:ugpprimes}): A new class of
-  primes (OEIS~A394412~\cite{OEISA394412}) with a formal predicate, an
-  existence proof, and ten machine-checked instances across three ridge
-  levels.
+  primes with a formal predicate, an existence proof, and ten
+  machine-checked instances across three ridge levels.
 \item \textbf{Mirror-dual conjecture} (\S\ref{sec:mirror}): A precise
   formal statement with five machine-verified witness pairs, a proof
   that the divisor count $\tau(2^n - 16)$ is unbounded, and an exact
@@ -220,6 +228,12 @@ results:
   algebraic infrastructure for a twin-prime program: branch linearization,
   gap-2 factory quadratics, and a Hasse check (no local obstruction at
   primes $\le 43$).
+\item \textbf{Mirror shift algebra} (\S\ref{sec:mirrorshift}): A new
+  universal algebraic law: for every mirror-dual pair $(b_2, q_2)$ at
+  any ridge level, both $c_1$-values satisfy $c_1 \equiv 20
+  \pmod{b_1}$, and the shift $c_1(b_2,q_2) - c_1(q_2,b_2) = b_1
+  \cdot (q_2 - b_2)$.  At $n=10$ this gives $2137 - 823 = 73 \cdot 18
+  = 1314 = 2 \cdot 3^2 \cdot 73$.  Machine-checked at $n=10$, $13$, $16$.
 \item \textbf{Real analysis} (\S\ref{sec:dsi}): The $c_1$ function on
   the divisor hyperbola is differentiable with derivative
   $13R/q^2 + 2q - 6 \ge 22$ on the valid shell---a machine-checked
@@ -237,8 +251,9 @@ results:
 \S\ref{sec:quarterlock} treats the Quarter-Lock and Elegant Kernel.
 \S\ref{sec:universality} addresses universality and self-reference.
 \S\ref{sec:mirror} develops the mirror-dual conjecture.
+\S\ref{sec:mirrorshift} presents the mirror shift algebra.
 \S\ref{sec:dsi} presents the real-analysis layer.
-\S\ref{sec:conjectures} resolves seven conjectures and states three open ones.
+\S\ref{sec:conjectures} resolves seven conjectures and states four open ones.
 \S\ref{sec:related} surveys related work.
 \S\ref{sec:conclusion} concludes.
 
@@ -329,7 +344,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 44~\lean{} modules across seven layers:
+The artifact is organized into 48~\lean{} modules across seven layers:
 
 \begin{center}
 \begin{tikzpicture}[
@@ -350,9 +365,9 @@ The artifact is organized into 44~\lean{} modules across seven layers:
   {\textbf{Classification}~(6)\quad Bounds, TheoremA, TheoremB,
    RSUC, FormalRSUC, MonotonicStrengthening};
 \node[layer, fill=orange!8] (gte)   at (0,3*\vs)
-  {\textbf{GTE}~(8)\quad Evolution, Orbit, UpdateMap,
+  {\textbf{GTE}~(11)\quad Evolution, Orbit, UpdateMap,
    GeneralTheorems, MersenneGcd, PrimeFactorAnalysis,
-   MirrorDualConj, UGPPrimes};
+   MirrorDualConj, MirrorShift, UGPPrimes, InertPrimes, AnalyticArchitecture};
 \node[layer, fill=red!8]    (struc) at (0,4*\vs)
   {\textbf{Structural}~(3)\quad QuarterLock, ElegantKernel,
    LModelDerivation};
@@ -762,13 +777,13 @@ and $n = 16$.
 \textup{Lean:} \lstinline|ugp_primes_at_three_levels|
 \end{theorem}
 
-\paragraph{OEIS sequence.}
-The \ugp{} primes form OEIS sequence
-A394412~\cite{OEISA394412}.  Exhaustive computation finds 57~terms up to
-$10^8$.  The first terms are $823, 1637, 2137, 6977, 9007, 17033,
-27817, 30391, \ldots$\  The density of \ugp{} primes among all primes up
-to~$N$ falls faster than $1/\ln N$; empirically the count grows as
-$C \cdot N / (\ln N)^5$ with $C \approx 30$.
+\paragraph{Computational data.}
+Exhaustive computation finds 57~\ugp{} primes up to $10^8$.  The first
+terms are $823, 2137, 9007, 27817, 46681, \ldots$\
+The density of \ugp{} primes among all primes up to~$N$ falls faster
+than $1/\ln N$; empirically the count grows as $C \cdot N / (\ln N)^5$
+with $C \approx 30$, consistent with the Bateman--Horn conjecture for the
+UGP prime formula.
 
 \begin{conjecture}[\ugp{} prime infinitude]\label{conj:ugp-inf}
 There are infinitely many \ugp{} primes.
@@ -1061,6 +1076,156 @@ $\rho_F(3) = 1$ (bad prime: $3 \mid D_-$).
 \end{theorem}
 
 % ═══════════════════════════════════════════════════════════════
+\section{Mirror Shift Algebra}\label{sec:mirrorshift}
+% ═══════════════════════════════════════════════════════════════
+
+The two $c_1$-values produced by a mirror-dual pair are not merely
+both prime: they satisfy a \emph{universal algebraic law} that holds
+at every ridge level, independent of primality.
+This law is formalized in the new module \texttt{GTE.MirrorShift}
+and extended with concrete identities in \texttt{Core.MirrorAlgebra}.
+
+\subsection{The shared-residue theorem}
+
+\begin{theorem}[General shared residue]\label{thm:shared-residue}
+For any divisor pair $(b_2, q_2)$ with $q_2 \ge 13$ and
+$b_1 = b_2 + q_2 + 7 > 20$:
+\[
+  c_1(b_2,\, q_2) \;\equiv\; t \pmod{b_1},
+  \qquad t = 20.
+\]
+Equivalently, $c_1(b_2, q_2) \bmod b_1 = 20$.
+
+By $b_1$-symmetry (\cref{thm:mirror-b1}), the same holds for the
+reversed pair: $c_1(q_2, b_2) \equiv 20 \pmod{b_1}$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|c1Val_mod_b1|, \lstinline|mirror_c1_mod_b1|,
+\lstinline|mirror_pair_shared_residue|
+\end{theorem}
+
+\begin{proof}
+By definition, $c_1(b_2, q_2) = b_1 \cdot (q_2 - 13) + 20$.
+Since $b_1 \mid b_1 \cdot (q_2 - 13)$, we have
+$c_1(b_2,q_2) \bmod b_1 = 20 \bmod b_1 = 20$ (using $b_1 > 20$).
+The \lean{} proof uses \lstinline|Nat.mul_mod_right| to reduce the
+product, \lstinline|Nat.add_mod| to split the sum, and
+\lstinline|Nat.mod_eq_of_lt| to evaluate $20 \bmod b_1 = 20$.
+\end{proof}
+
+At $n = 10$ this gives the two concrete residues:
+$823 \equiv 20 \pmod{73}$ and $2137 \equiv 20 \pmod{73}$,
+machine-checked as \lstinline|leptonC1_mod_leptonB| and
+\lstinline|mirrorC1_mod_leptonB|.
+
+\subsection{The mirror shift formula}
+
+\begin{theorem}[General mirror shift]\label{thm:mirror-shift}
+For any pair $(b_2, q_2)$ with $b_2 \ge 13$, $q_2 \ge 13$,
+and $b_2 \le q_2$:
+\[
+  c_1(b_2,\, q_2) - c_1(q_2,\, b_2)
+  \;=\; b_1(b_2,q_2) \cdot (q_2 - b_2).
+\]
+In particular, $b_1 \mid \bigl(c_1(b_2,q_2) - c_1(q_2,b_2)\bigr)$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|mirror_shift_formula|,
+\lstinline|mirror_shift_divides_b1|
+\end{theorem}
+
+\begin{proof}
+Since $b_1$ is symmetric, both $c_1$-values equal $b_1$ times
+something plus~$20$:
+\begin{align*}
+  c_1(b_2,q_2) &= b_1 \cdot (q_2 - 13) + 20, \\
+  c_1(q_2,b_2) &= b_1 \cdot (b_2 - 13) + 20.
+\end{align*}
+Subtracting (valid in $\N$ since $q_2 \ge b_2$ implies
+$q_2 - 13 \ge b_2 - 13$):
+\[
+  c_1(b_2,q_2) - c_1(q_2,b_2)
+  = b_1 \cdot \bigl[(q_2 - 13) - (b_2 - 13)\bigr]
+  = b_1 \cdot (q_2 - b_2). \qedhere
+\]
+The \lean{} proof lifts to~$\mathbb{Z}$ via \lstinline|nlinarith| after
+eliminating the $\N$-subtraction.
+\end{proof}
+
+\subsection{Concrete instances}
+
+\begin{theorem}[Lepton shift identity]\label{thm:lepton-shift}
+At $n = 10$ with mirror pair $(b_2, q_2) = (24, 42)$:
+\[
+  2137 - 823 \;=\; 73 \times 18 \;=\; 1314 \;=\; 2 \cdot 3^2 \cdot 73.
+\]
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|lepton_shift_is_18_times_b1|,
+\lstinline|lepton_shift_val|,
+\lstinline|lepton_shift_factored|,
+\lstinline|mirror_shift_factored|
+\end{theorem}
+
+The factor $18 = q_2 - b_2 = 42 - 24$ is precisely the gap between
+the two components of the $n=10$ survivor pair.  The factored form
+$1314 = 2 \cdot 3^2 \cdot 73$ shows that the shift is divisible by
+$b_1 = 73$ (as guaranteed by \cref{thm:mirror-shift}) and by~$2$
+and~$3^2 = 9$.
+
+\begin{table}[ht]
+\centering
+\caption{Mirror shift at three certified ridge levels.
+$b_1 = b_2 + q_2 + 7$; shift $= b_1 \cdot (q_2 - b_2)$.}
+\label{tab:mirror-shift}
+\begin{tabular}{@{}cccrrr@{}}
+\toprule
+$n$ & $(b_2, q_2)$ & $b_1$ & $c_1(b_2,q_2)$ & $c_1(q_2,b_2)$ & Shift \\
+\midrule
+10 & $(24, 42)$    & 73   & 823    & 2137   & $73 \times 18 = 1314$ \\
+13 & $(56, 146)$   & 209  & 9007   & 27817  & $209 \times 90 = 18810$ \\
+16 & $(42, 1560)$  & 1609 & 46681  & 2489143 & $1609 \times 1518 = 2444862$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All entries in \cref{tab:mirror-shift} are machine-verified
+(\lstinline|shift_n13|, \lstinline|shift_n16_a|, \lstinline|lepton_shift_val|).
+The shared residue $\equiv 20 \pmod{b_1}$ holds at all three levels
+(\lstinline|shared_residue_n13|, \lstinline|shared_residue_n16_a|,
+\lstinline|lepton_pair_shared_residue_n10|).
+
+\subsection{Structural interpretation}
+
+The mirror shift formula $c_1(b_2,q_2) - c_1(q_2,b_2) = b_1(q_2-b_2)$
+shows that the two $c_1$-values in any mirror-dual pair are not merely
+simultaneously prime by coincidence: they are arithmetically constrained
+to lie in the same residue class modulo $b_1$, separated by a shift that
+is an exact multiple of $b_1$.  The common residue is $t = 20$, the
+\ugp{}-1 parameter.
+
+This is a \emph{structural} fact independent of primality: it holds for
+all divisor pairs, not only the prime-locked ones.  At $n=10$ it says
+$823 \equiv 2137 \equiv 20 \pmod{73}$, so both Lepton primes lie in the
+arithmetic progression $\{73k + 20 : k \ge 0\}$.  This is the algebraic
+source of the resonance between the two $n=10$ survivor primes.
+
+\begin{remark}[UGP ladder parameter $b_1 = 73$ is invisible to $Q_-(t)$]\label{rem:73-inert}
+The mirror shift algebra (\cref{sec:mirrorshift}) certifies that
+$c_1 \equiv c_2 \equiv 20 \pmod{73}$.  A companion observation,
+certified in \texttt{GTE.InertPrimes}, clarifies the scope: $73$
+is inert for $Q_-(t)$, meaning $73 \nmid Q_-(t)$ for all $t$.
+(Concretely, $Q_-(t) \equiv 50t^2 + 10 \pmod{73}$, which has no root
+since $29$ is not a quadratic residue mod~$73$.)  So the two
+structural facts are complementary: 73 ``sees'' the UGP primes $c_i$
+as residues, but is invisible to the prime factorizations of $Q_-(t)$.
+The analytic infrastructure built from the \ugp{} factory constants
+($\rho_F$ identity, discriminants, Dickman-in-APs) is documented
+in \texttt{docs/RESONANT\_FACTORY\_NOTE.md} and the companion modules
+\texttt{GTE.InertPrimes} and \texttt{GTE.AnalyticArchitecture}.
+\end{remark}
+
+% ═══════════════════════════════════════════════════════════════
 \section{Real Analysis and the DSI Interface}\label{sec:dsi}
 % ═══════════════════════════════════════════════════════════════
 
@@ -1124,8 +1289,9 @@ $\{q \in \mathbb{R} : 14 \le q \le R/16\}$.
 % ═══════════════════════════════════════════════════════════════
 
 The \ugp{} paper posed ten conjectures.  Seven are proved as theorems
-in ugp-lean; three remain open.  \Cref{tab:conjectures} summarizes
-the status.
+in ugp-lean.  Four remain open (two original plus two new forms of the
+$\mu$-flip conjecture added in this formalization).
+\Cref{tab:conjectures} summarizes the status.
 
 \subsection{Resolved conjectures (proved)}
 
@@ -1211,7 +1377,7 @@ stays there.
 
 \subsection{Open conjectures}
 
-Three conjectures remain open.  All are formally stated as \lean{}
+Four conjectures remain open.  All are formally stated as \lean{}
 propositions.
 
 \begin{conjecture}[Mirror-Dual]\label{conj:mirror-final}
@@ -1231,18 +1397,38 @@ primes.
 \textup{Lean:} \lstinline|UGPPrimeInfinitudeConjecture|
 \end{conjecture}
 
-\begin{conjecture}[$\mu$-Flip Distance]\label{conj:mu-flip-final}
-The expected waiting time for a sign change in the M\"obius function
-along a linear progression $\alpha t + \beta$ with $\gcd(\alpha,\beta)=1$
-is bounded by an absolute constant.
+\begin{conjecture}[$\mu$-Flip: infinitely many squarefree elements in any coprime AP]\label{conj:mu-flip-final}
+For every $a, r \in \N$ with $a > 0$ and $\gcd(a, r) = 1$, and
+every $N \in \N$, there exists $n \ge N$ with $n \equiv r \pmod{a}$
+and $n$ squarefree.  Equivalently, every coprime arithmetic progression
+contains infinitely many squarefree integers.
 
 \smallskip\noindent
 \textup{Lean:} \lstinline|MuFlipDistanceConjecture|
 \end{conjecture}
 
+\begin{remark}
+The weak form (\lstinline|MuFlipDistanceConjectureWeak|) is the formal
+\lean{} statement using \lstinline|Filter.atTop|.  The underlying fact
+is known unconditionally (Estermann 1931): the density of squarefree
+integers in any primitive AP is $\prod_p (1 - 1/p(p-1)) > 0$.  The
+formal \lean{} proof is not yet mechanized; it is listed here as an
+open formalization target.
+\end{remark}
+
+\begin{conjecture}[$\mu$-Flip Bounded Gap]\label{conj:mu-flip-gap}
+There exists a universal constant $C > 0$ such that for all
+$a, r, N \in \N$ with $a > 0$ and $\gcd(a,r) = 1$,
+the interval $[N, N + Ca]$ contains a squarefree integer
+$n \equiv r \pmod{a}$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|MuFlipBoundedGapConjecture|
+\end{conjecture}
+
 \begin{table}[ht]
 \centering
-\caption{Conjecture status.  Seven proved, three open.}
+\caption{Conjecture status.  Seven proved, four open.}
 \label{tab:conjectures}
 \begin{tabular}{@{}lll@{}}
 \toprule
@@ -1258,7 +1444,8 @@ Global $c$-attractor  & \lstinline|global_c_attractor_proved|      & Proved \\
 \midrule
 Mirror-dual           & \lstinline|MirrorDualConjecture|           & Open \\
 \ugp{} prime infinitude & \lstinline|UGPPrimeInfinitudeConjecture| & Open \\
-$\mu$-flip distance   & \lstinline|MuFlipDistanceConjecture|       & Open \\
+$\mu$-flip (squarefree in AP) & \lstinline|MuFlipDistanceConjecture|  & Open (known; not formalized) \\
+$\mu$-flip bounded gap & \lstinline|MuFlipBoundedGapConjecture|    & Open \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1283,8 +1470,8 @@ two-parameter family constrained by the Diophantine
 condition~\eqref{eq:ugpprime-ridge}.  This places it in the tradition of
 prime-producing polynomials (Euler's $n^2 + n + 41$, the
 Bunyakovsky conjecture) and prime-generating sieves, though the
-constraint to ridges $2^n - 16$ is novel.  The OEIS
-sequence~A394412~\cite{OEISA394412} records the first 57~terms.
+constraint to ridges $2^n - 16$ is novel.  Exhaustive computation
+finds 57~terms up to $10^8$.
 
 \paragraph{Companion work.}
 The \ugp{} framework was introduced
@@ -1321,8 +1508,12 @@ remainder lock (\cref{thm:rrl}), the even-step $c$-invariance theorem
 instances (\cref{thm:ten-ugp}), the divisor count unboundedness theorem
 (\cref{thm:tau-unbounded}), the exact divisor-count formula
 $\tau(2^n - 16) = 5 \cdot \tau(2^{n-4}-1)$ (\cref{thm:tau-exact}),
-and the precise formal statement of the mirror-dual conjecture
-(\cref{conj:mirror}) with five machine-verified witness pairs.
+the precise formal statement of the mirror-dual conjecture
+(\cref{conj:mirror}) with five machine-verified witness pairs,
+and the mirror shift algebra (\cref{sec:mirrorshift}): the universal
+law $c_1(b_2,q_2) - c_1(q_2,b_2) = b_1(q_2-b_2)$ and the shared
+residue $c_1 \equiv 20 \pmod{b_1}$ for all mirror-dual pairs at all
+ridge levels.
 
 \paragraph{What remains open.}
 The ten conjectures in \cref{tab:conjectures} are formally stated but

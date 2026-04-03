@@ -31,7 +31,7 @@ def Candidates : Finset Triple :=
 /-- At n=10, CandidatesAt 10 matches the legacy Candidates definition. -/
 theorem CandidatesAt_10_eq : CandidatesAt 10 = Candidates := by
   rw [Candidates, CandidatesAt, ridgeSurvivors_10]
-  simp only [b1FromPair, q1FromQ2, c1FromPair, pair_24_42_values, pair_42_24_values,
+  simp only [b1FromPair, q1FromQ2, c1FromPair,
     leptonB, leptonC1, mirrorC1, ugp1_s, ugp1_g, ugp1_t]
   native_decide
 

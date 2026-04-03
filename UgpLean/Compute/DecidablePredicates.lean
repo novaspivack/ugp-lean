@@ -36,15 +36,15 @@ theorem RelationalAnchorAt_10_iff (t : Triple) :
   · intro ⟨b₂, q₂, hsurv, hb, hc⟩
     rw [isMirrorDualSurvivorAt_iff, ridgeSurvivors_10, Finset.mem_insert, Finset.mem_singleton] at hsurv
     rcases hsurv with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
-    · simp only [pair_24_42_values, pair_42_24_values, leptonC1, mirrorC1] at hb hc
+    · simp only [pair_24_42_values] at hb hc
       exact ⟨hb, Or.comm.mp hc⟩
-    · simp only [pair_42_24_values, pair_24_42_values, leptonC1, mirrorC1] at hb hc
+    · simp only [pair_42_24_values] at hb hc
       exact ⟨hb, hc⟩
   · intro ⟨hb, hc⟩
     use 42, 24
     rw [isMirrorDualSurvivorAt_iff]
     refine ⟨mem_42_24, hb.trans (pair_42_24_values).1.symm, ?_⟩
-    simp only [pair_42_24_values, pair_24_42_values, leptonC1, mirrorC1]
+    simp only [pair_42_24_values]
     exact hc
 
 /-- QuarterLockRigidAt implies RelationalAnchorAt. -/

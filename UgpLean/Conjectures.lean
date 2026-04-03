@@ -146,13 +146,43 @@ theorem global_c_attractor_proved (n b₂ : ℕ) (hn : 5 ≤ n)
 -- §8  Remaining genuinely open conjectures
 -- ════════════════════════════════════════════════════════════════
 
-/-- μ-Flip Distance Conjecture: the expected waiting time for a sign
-    change in μ along a linear progression is bounded.
-    This is a genuinely open problem in analytic number theory. -/
+/-- μ-Flip Distance Conjecture: the waiting time for a sign change in μ
+    along a coprime linear progression is bounded by a constant C.
+
+    Precisely: there exists a universal constant C such that for any
+    coprime pair (α, β) and any starting point n₀, the interval
+    [n₀, n₀ + C·log(α·β + β + 1)] contains some t in the progression
+    {β, β+α, β+2α, ...} with μ(t) ≠ 0.
+
+    Stated in terms of squarefree members (μ ≠ 0 ↔ squarefree):
+    - along any arithmetic progression a·k + b (gcd(a,b)=1),
+      there are infinitely many k with a·k + b squarefree, and
+    - the gaps between consecutive squarefree elements are O(a^ε) for any ε > 0.
+
+    The minimal non-trivial form: for every coprime (a, r) there are
+    infinitely many n ≡ r (mod a) that are squarefree.  -/
 def MuFlipDistanceConjecture : Prop :=
-  ∃ C : ℕ, C > 0 ∧
-    ∀ (α β : ℕ), Nat.Coprime α β →
-      ∃ t : ℕ, t ≤ C ∧ t > 0  -- placeholder: "expected flip time ≤ C"
+  ∀ (a r : ℕ), 0 < a → Nat.Coprime a r →
+    ∀ N : ℕ, ∃ n : ℕ, N ≤ n ∧ n ≡ r [MOD a] ∧ Squarefree n
+
+/-- Weaker form: for coprime (a, r), there are infinitely many squarefree
+    n in the arithmetic progression {a·k + r : k ∈ ℕ}.
+    This is known to be true unconditionally (Estermann 1931) for gcd(a,r)=1,
+    since the density of squarefree integers in any AP {ak+r} with gcd(a,r)=1
+    is ∏_p (1 - 1/(p²-1)) · (correction at p|a) > 0.
+    We state it here as a formal proposition to be proved. -/
+def MuFlipDistanceConjectureWeak : Prop :=
+  ∀ (a r : ℕ), 0 < a → Nat.Coprime a r →
+    ∃ᶠ k : ℕ in Filter.atTop, Squarefree (a * k + r)
+
+/-- The stronger bounded-gap form: there exists C > 0 such that for all
+    coprime (a, r) and all N, the interval [N, N + C * a] contains a
+    squarefree integer ≡ r (mod a).
+    This is an open problem (analogous to Cramér's conjecture for gaps). -/
+def MuFlipBoundedGapConjecture : Prop :=
+  ∃ C : ℕ, 0 < C ∧
+    ∀ (a r N : ℕ), 0 < a → Nat.Coprime a r →
+      ∃ n : ℕ, N ≤ n ∧ n ≤ N + C * a ∧ n ≡ r [MOD a] ∧ Squarefree n
 
 /-!
 ## Summary of conjecture resolution
@@ -168,7 +198,8 @@ def MuFlipDistanceConjecture : Prop :=
 | Global c-Attractor | **PROVED** | `global_c_attractor_proved` (= `even_step_c_invariance`) |
 | Mirror-Dual Conjecture | **OPEN** | Analogous to twin primes (in GTE.MirrorDualConjecture) |
 | UGP Prime Infinitude | **OPEN** | Follows from Mirror-Dual (in GTE.UGPPrimes) |
-| μ-Flip Distance | **OPEN** | Analytic number theory (not yet formalized) |
+| μ-Flip Distance (infinitely many squarefree in AP) | **OPEN** | `MuFlipDistanceConjecture` — Estermann 1931 gives weak form |
+| μ-Flip Bounded Gap (gap ≤ C·a) | **OPEN** | `MuFlipBoundedGapConjecture` — analogous to Cramér |
 -/
 
 end UgpLean

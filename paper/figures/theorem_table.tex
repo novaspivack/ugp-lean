@@ -77,7 +77,7 @@
 \addlinespace[2pt]
 \multicolumn{4}{@{}l}{\textit{UGP Primes (\S\ref{sec:ugpprimes})}} \\
 \addlinespace[2pt]
-\lstinline|IsUGPPrime|                & GTE.UGPPrimes           & A394412  & \textbf{Yes} \\
+\lstinline|IsUGPPrime|                & GTE.UGPPrimes           & Def~\ref{def:ugpprime} & \textbf{Yes} \\
 \lstinline|ugp_primes_exist|          & GTE.UGPPrimes           & ---      & \textbf{Yes} \\
 \lstinline|ten_ugp_primes|            & GTE.UGPPrimes           & ---      & \textbf{Yes} \\
 \lstinline|ugp_primes_at_three_lvls|  & GTE.UGPPrimes           & ---      & \textbf{Yes} \\
@@ -93,6 +93,44 @@
 \lstinline|coprime_pow2_mersenne|     & GTE.MirrorDualConj      & ---      & \textbf{Yes} \\
 \lstinline|five_mirror_dual_pairs|    & GTE.MirrorDualConj      & ---      & \textbf{Yes} \\
 \lstinline|MirrorDualConjecture|      & GTE.MirrorDualConj      & ---      & \textbf{Yes} \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{Mirror Shift Algebra (\S\ref{sec:mirrorshift})}} \\
+\addlinespace[2pt]
+\lstinline|lepton_mirror_shift|       & Core.MirrorAlgebra      & Thm~\ref{thm:lepton-shift} & \textbf{Yes} \\
+\lstinline|mirror_shift_factored|     & Core.MirrorAlgebra      & Thm~\ref{thm:lepton-shift} & \textbf{Yes} \\
+\lstinline|lepton_shared_residue|     & Core.MirrorAlgebra      & Thm~\ref{thm:shared-residue} & \textbf{Yes} \\
+\lstinline|c1Val_mod_b1|              & GTE.MirrorShift         & Thm~\ref{thm:shared-residue} & \textbf{General} \\
+\lstinline|mirror_pair_shared_residue|& GTE.MirrorShift         & Thm~\ref{thm:shared-residue} & \textbf{General} \\
+\lstinline|mirror_shift_formula|      & GTE.MirrorShift         & Thm~\ref{thm:mirror-shift} & \textbf{General} \\
+\lstinline|mirror_shift_divides_b1|  & GTE.MirrorShift         & Thm~\ref{thm:mirror-shift} & \textbf{General} \\
+\lstinline|lepton_shift_is_18_times_b1| & GTE.MirrorShift      & Thm~\ref{thm:lepton-shift} & \textbf{Yes} \\
+\lstinline|shift_n13|                 & GTE.MirrorShift         & Tab~\ref{tab:mirror-shift} & \textbf{Yes} \\
+\lstinline|shift_n16_a|               & GTE.MirrorShift         & Tab~\ref{tab:mirror-shift} & \textbf{Yes} \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{Inert Primes \& $\rho_F$ Identity (\S\ref{sec:inertprimes})}} \\
+\addlinespace[2pt]
+\lstinline|qm_no_root_of_legendreSym_neg_one| & GTE.InertPrimes & Thm~\ref{thm:inert} & \textbf{General} \\
+\lstinline|qm_no_root_mod_13..137|            & GTE.InertPrimes & Thm~\ref{thm:inert-15} & \textbf{Yes} \\
+\lstinline|qm_inert_primes_certified|         & GTE.InertPrimes & Thm~\ref{thm:inert-15} & \textbf{Yes} \\
+\lstinline|kappa_unram_lower_bound|           & GTE.InertPrimes & Thm~\ref{thm:kappa-pos} & \textbf{Yes} \\
+\lstinline|kappa_unram_pos|                   & GTE.InertPrimes & Thm~\ref{thm:kappa-pos} & \textbf{Yes} \\
+\lstinline|discKminus|, \lstinline|discKplus| & GTE.ResonantFactory & Thm~\ref{thm:disc} & \textbf{Yes} \\
+\lstinline|rhoF_identity_verified|            & GTE.ResonantFactory & Thm~\ref{thm:rhoF-id} & \textbf{Yes} \\
+\lstinline|doubly_inert_71|                   & GTE.ResonantFactory & Thm~\ref{thm:rhoF-id} & \textbf{Yes} \\
+\lstinline|hasse_check_extended|              & GTE.ResonantFactory & Thm~\ref{thm:rhoF-id} & \textbf{Yes} \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{Analytic Architecture (\S\ref{sec:analytic})}} \\
+\addlinespace[2pt]
+\lstinline|dickman_equidistribution_in_APs|  & GTE.AnalyticArch & Thm~\ref{thm:dickman} & Sorry (Tenenbaum) \\
+\lstinline|crt_equidistribution_within_regime| & GTE.AnalyticArch & Thm~\ref{thm:crt-regime} & Sorry (Tenenbaum+CRT) \\
+\lstinline|qminus_qplus_coprime|             & GTE.AnalyticArch & Thm~\ref{thm:qcoprime} & \textbf{Yes} \\
+\lstinline|dickmanThreeHalves_pos|           & GTE.AnalyticArch & Thm~\ref{thm:dickman-pos} & \textbf{Yes} \\
 \addlinespace[4pt]
 \midrule
 \addlinespace[2pt]
