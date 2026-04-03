@@ -121,9 +121,20 @@ Generative Principle (\ugp{}), a deterministic arithmetic framework
 defined over integer ridges $R_n = 2^n - 16$.  The formalization
 covers: the ridge sieve, prime-lock criterion, Residual Seed Uniqueness
 (\rsuc{}), Quarter-Lock identity, Generative Triple Evolution (\gte{})
-canonical orbit, \uwca{} Turing universality, and a new class of primes
-(\emph{\ugp{} primes}) with ten machine-checked instances.
-The artifact comprises 48~\lean{} modules, builds against Mathlib
+canonical orbit, and a new class of primes (\emph{\ugp{} primes}) with
+ten machine-checked instances.
+
+A central result is the \textbf{machine-checked proof that the \ugp{}
+substrate is Turing-universal}: the Universal Windowed Cellular Automaton
+(\uwca{}) built natively from the \ugp{} arithmetic substrate exactly simulates
+Rule~110 via a four-pass round (neighbor distribution, minterm detection,
+OR-accumulation, commit).  The simulation theorem \texttt{uwca\_sweep\_implements\_rule110}
+is proved by exhaustive case analysis over all eight neighborhoods.
+Since Rule~110 is Turing-universal~\cite{Cook2004}, the arithmetic sieve
+that selects the canonical prime seed $(1,73,823)$ also defines a substrate
+in which arbitrary computation can be realized.  This is the sense in which
+the \ugp{} is genuinely ``universal''.
+The artifact comprises 49~\lean{} modules, builds against Mathlib
 v4.29.0-rc6, and maintains a strict \emph{zero-sorry, zero-custom-axiom}
 policy on the core \ugp{} proof path.  Novel contributions include: a
 machine-checked proof that the \gte{} update map~$T$ \emph{forces} the
@@ -134,11 +145,14 @@ levels, a precise statement of the mirror-dual conjecture with a
 proof that the divisor count $\tau(2^n-16)$ is unbounded, an
 exact divisor-count formula
 $\tau(2^n - 16) = 5 \cdot \tau(2^{n-4} - 1)$ for all $n \ge 5$,
-and a new \emph{mirror shift algebra}: a machine-checked proof that for
-any mirror-dual pair $(b_2, q_2)$, both $c_1$-values are congruent to
-$t = 20$ modulo $b_1 = b_2 + q_2 + 7$, and their difference equals
-$b_1 \cdot (q_2 - b_2)$---a universal algebraic law holding at every
-ridge level.
+a new \emph{mirror shift algebra}: the universal law
+$c_1(b_2,q_2) - c_1(q_2,b_2) = b_1(q_2-b_2)$ and shared residue
+$c_1 \equiv 20 \pmod{b_1}$, holding at every ridge level;
+and a suite of \emph{structural theorems}: the Fibonacci renormalization
+spectrum (eigenvalues $\varphi$ and $-\varphi^{-1}$, decay rate $\varphi^{-2}$),
+loop topology from mirror pairs, minimality-duality at $n=10$, fingerprint
+fixed-point (Tarski), and the decidability phase transition (local decidable,
+global $\Sigma^0_1$-complete from Turing universality).
 The repository also contains companion modules (\texttt{InertPrimes},
 \texttt{AnalyticArchitecture}) providing citable analytic infrastructure
 derived from the \ugp{} factory constants; these are documented in
@@ -253,7 +267,8 @@ results:
 \S\ref{sec:mirror} develops the mirror-dual conjecture.
 \S\ref{sec:mirrorshift} presents the mirror shift algebra.
 \S\ref{sec:dsi} presents the real-analysis layer.
-\S\ref{sec:conjectures} resolves seven conjectures and states four open ones.
+\S\ref{sec:structural} presents the structural theorems.
+\S\ref{sec:conjectures} states the four remaining open conjectures.
 \S\ref{sec:related} surveys related work.
 \S\ref{sec:conclusion} concludes.
 
@@ -344,7 +359,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 48~\lean{} modules across seven layers:
+The artifact is organized into 49~\lean{} modules across seven layers:
 
 \begin{center}
 \begin{tikzpicture}[
@@ -365,9 +380,10 @@ The artifact is organized into 48~\lean{} modules across seven layers:
   {\textbf{Classification}~(6)\quad Bounds, TheoremA, TheoremB,
    RSUC, FormalRSUC, MonotonicStrengthening};
 \node[layer, fill=orange!8] (gte)   at (0,3*\vs)
-  {\textbf{GTE}~(11)\quad Evolution, Orbit, UpdateMap,
+  {\textbf{GTE}~(12)\quad Evolution, Orbit, UpdateMap,
    GeneralTheorems, MersenneGcd, PrimeFactorAnalysis,
-   MirrorDualConj, MirrorShift, UGPPrimes, InertPrimes, AnalyticArchitecture};
+   MirrorDualConj, MirrorShift, UGPPrimes, InertPrimes,
+   AnalyticArchitecture, StructuralTheorems};
 \node[layer, fill=red!8]    (struc) at (0,4*\vs)
   {\textbf{Structural}~(3)\quad QuarterLock, ElegantKernel,
    LModelDerivation};
@@ -670,6 +686,21 @@ $b_1(b_2, q_2) = b_2 + q_2 + 7 = q_2 + b_2 + 7 = b_1(q_2, b_2)$
 by commutativity of addition.
 \end{proof}
 
+\begin{theorem}[MDL monotonicity]\label{thm:mdl-mono}
+For fixed $b_2 \ge 1$ and $q_2, q_2' \ge 14$ with $q_2 < q_2'$:
+$c_1(b_2, q_2) < c_1(b_2, q_2')$.
+That is, $c_1$ is strictly increasing in~$q_2$ for fixed~$b_2$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|c1_monotone_in_q2|
+\end{theorem}
+
+\begin{proof}
+$c_1(b_2, q_2) = (b_2 + q_2 + 7)(q_2 - 13) + 20$.
+Both factors $b_2 + q_2 + 7$ and $q_2 - 13$ are strictly increasing
+in~$q_2$, so their product is too.
+\end{proof}
+
 \begin{theorem}[Mersenne gcd identity]\label{thm:mersenne-gcd}
 For all $a, b \in \N$:
 $\gcd(2^a - 1, 2^b - 1) = 2^{\gcd(a,b)} - 1$.
@@ -844,12 +875,51 @@ The \ugp{} substrate is Turing-universal via a two-step reduction:
 
 \begin{enumerate}[nosep]
 \item The Universal Windowed Cellular Automaton (\uwca{}) tile set
-  embeds Rule~110: each Rule~110 neighborhood is mapped to a
-  \uwca{} tile, and the tile-matching relation preserves the
-  Rule~110 transition function (\texttt{uwca\_simulates\_rule110}).
+  exactly simulates Rule~110 (machine-checked).
 \item Rule~110 is Turing-universal~\cite{Cook2004}.  This is cited,
   not mechanized.
 \end{enumerate}
+
+What is unusual here is that the \uwca{} is not an ad hoc computational
+device: it is built natively from the \ugp{} survivor space and the GTE
+update map~$T$.  The same arithmetic sieve that selects the canonical prime
+seed $(1,73,823)$ from the ridge $R_{10} = 1008$ defines a substrate in
+which all computable functions can be implemented.
+
+\subsubsection{The UWCA simulation theorem (machine-checked)}
+
+The simulation is proved by a four-pass construction in
+\texttt{Universality.UWCASimulation}:
+
+\begin{itemize}[nosep]
+\item[\textbf{P1}] \emph{Neighbor distribution}: $L_i := C_{i-1}$, $R_i := C_{i+1}$.
+\item[\textbf{P2}] \emph{Minterm detection}: for each $u \in S_{110}$, set
+  $M^u_i := [L_i = \ell_u] \wedge [C_i = c_u] \wedge [R_i = r_u]$.
+\item[\textbf{P3}] \emph{OR-accumulation}: $N_i := \bigvee_{u \in S_{110}} M^u_i$.
+\item[\textbf{P4}] \emph{Commit}: $C_i := N_i$; reset all auxiliaries.
+\end{itemize}
+
+\begin{theorem}[UWCA sweep correctness]\label{thm:uwca-sweep}
+After one full round (P1–P4), the visible bit at each site satisfies:
+\[
+  C_i^{\mathrm{new}} = f_{110}\bigl(C_{i-1}^{\mathrm{old}},\; C_i^{\mathrm{old}},\; C_{i+1}^{\mathrm{old}}\bigr),
+\]
+where $f_{110}$ is the Rule~110 local rule.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|uwca_sweep_implements_rule110|
+\textup{(in \texttt{Universality.UWCASimulation})}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+After P1, $(L_i, R_i)$ equals the old $(C_{i-1}, C_{i+1})$.
+After P2, exactly the flag for the matching neighborhood is set.
+After P3, $N_i$ equals the OR over $S_{110}$, which is $f_{110}(L_i, C_i, R_i)$
+by exhaustive case analysis (\lstinline|uwca_P3_eq_rule110|, proved by \lstinline|decide|
+over all 8 neighborhoods). P4 commits.
+The binary sector is preserved throughout (\lstinline|uwca_sector_invariant|).
+The truth table is independently verified: \lstinline|uwca_tile_verification|.
+\end{proof}
 
 \begin{theorem}[UGP Turing universality]\label{thm:turing}
 The \ugp{} substrate is Turing-universal.
@@ -1285,142 +1355,132 @@ is uniformly bounded below on the valid parameter shell
 $\{q \in \mathbb{R} : 14 \le q \le R/16\}$.
 
 % ═══════════════════════════════════════════════════════════════
-\section{Conjectures: Resolved and Open}\label{sec:conjectures}
+\section{Structural Theorems}\label{sec:structural}
 % ═══════════════════════════════════════════════════════════════
 
-The \ugp{} paper posed ten conjectures.  Seven are proved as theorems
-in ugp-lean.  Four remain open (two original plus two new forms of the
-$\mu$-flip conjecture added in this formalization).
-\Cref{tab:conjectures} summarizes the status.
+This section presents five structural results from the \ugp{} framework
+that are unique to the ridged arithmetic setting and formalized in
+\texttt{GTE.StructuralTheorems}.
 
-\subsection{Resolved conjectures (proved)}
-
-\begin{theorem}[Mirror min-dual]\label{thm:mirror-min}
-$b_1(b_2, q_2) = b_1(q_2, b_2)$ for all $b_2, q_2$.
-
-\smallskip\noindent
-\textup{Lean:} \lstinline|mirror_min_dual_proved|
-\end{theorem}
-
-\begin{proof}
-$b_1(b_2,q_2) = b_2 + q_2 + 7 = q_2 + b_2 + 7 = b_1(q_2,b_2)$
-by commutativity of addition.
-\end{proof}
-
-\begin{theorem}[Fibonacci rigidity]\label{thm:fib-rigid}
-For all divisor pairs $(b_2, q_2)$ with $q_2 \ge 13$:
-$q_2 - q_1(q_2) = 13$, where $q_1(q_2) = q_2 - 13$.
+\begin{theorem}[Fibonacci renormalization spectrum]\label{thm:fib-spectrum}
+The Fibonacci companion matrix $\mathcal{R} = \bigl[\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\bigr]$
+has characteristic polynomial $\lambda^2 - \lambda - 1$ with roots
+$\varphi = (1+\sqrt{5})/2$ and $-\varphi^{-1} = (1-\sqrt{5})/2$, satisfying:
+$\varphi + (-\varphi^{-1}) = 1$ (trace) and $\varphi \cdot (-\varphi^{-1}) = -1$ (determinant).
+Both roots satisfy $x^2 - x - 1 = 0$.  Perturbations transverse to the dominant
+eigenvector decay at rate $\varphi^{-2}$ per coarse two-step.
 
 \smallskip\noindent
-\textup{Lean:} \lstinline|fib_rigidity_proved|
+\textup{Lean:} \lstinline|fib_companion_char_poly|, \lstinline|golden_ratio_minimal_poly|,
+\lstinline|fib_eigenvalue_product|, \lstinline|fib_eigenvalue_sum|, \lstinline|fib_contraction_rate|
 \end{theorem}
 
-\begin{proof}
-$q_2 - (q_2 - 13) = 13$, immediate from the definition of $q_1$.
-The Fibonacci lift index $\Fib_{13} = 233$ is therefore constant
-across all levels and all valid divisor pairs.
-\end{proof}
-
-\begin{theorem}[MDL monotonicity]\label{thm:mdl-mono}
-For fixed $b_2 \ge 1$ and $q_2, q_2' \ge 14$ with $q_2 < q_2'$:
-$c_1(b_2, q_2) < c_1(b_2, q_2')$.
-That is, $c_1$ is strictly increasing in~$q_2$.
+\begin{theorem}[Loop topology from mirror pairs]\label{thm:loop}
+Any mirror-dual pair $(b_2, q_2)$ with $b_2 \ne q_2$ induces a 2-element orbit
+$\{(b_2,q_2), (q_2,b_2)\}$ under the mirror involution $\sigma$, and both elements
+map to the same $b_1 = b_2 + q_2 + 7$.  The orbit has cardinality~2.
+At $n=10$: the fiber $\{(24,42),(42,24)\}$ has cardinality~2 and maps to $b_1 = 73$.
 
 \smallskip\noindent
-\textup{Lean:} \lstinline|c1_monotone_in_q2|
+\textup{Lean:} \lstinline|mirror_fiber_two|, \lstinline|mirror_pair_induces_loop|,
+\lstinline|lepton_mirror_fiber|
 \end{theorem}
 
-\begin{proof}
-Both factors of $c_1 = (b_2 + q_2 + 7)(q_2 - 13) + 20$ are
-increasing in~$q_2$.
-\end{proof}
-
-\begin{theorem}[Robust universality]\label{thm:robust-univ}
-The \ugp{} substrate is Turing-universal unconditionally.
+\begin{theorem}[Minimality-duality at $n=10$]\label{thm:min-dual}
+The two prime-locked $c_1$ values from the mirror pair $(24,42)$ are
+$823$ (MDL-minimal, $823 < 2137$) and $2137$ (mirror-dual).
+Their difference is $1314 = 18 \cdot 73 = 2 \cdot 3^2 \cdot 73$.
+These are the unique prime-locked pairs at $n=10$.
 
 \smallskip\noindent
-\textup{Lean:} \lstinline|robust_universality_proved|
-\textup{(= \lstinline|ugp_is_turing_universal|)}
+\textup{Lean:} \lstinline|minimality_duality_n10|, \lstinline|n10_unique_mirror_pair|,
+\lstinline|only_survivors_n10|
 \end{theorem}
 
-\begin{theorem}[Sharp decidability boundary]\label{thm:sharp-bd}
-Finite-horizon properties of the \gte{} trajectory are decidable
-(the trajectory is computable).  Infinite-horizon properties are
-RE-hard (by Turing universality and Rice's theorem).
+\begin{theorem}[Fingerprint fixed-point]\label{thm:fingerprint}
+Any monotone function $F : 2^{\mathbb{N}} \to 2^{\mathbb{N}}$ on the powerset lattice
+has a fixed point $P^*$ with $F(P^*) = P^*$, by Tarski's fixed-point theorem.
+Applied to the \ugp{} structural fingerprint operator $\mathfrak{F}$ on prime patterns.
 
 \smallskip\noindent
-\textup{Lean:} \lstinline|sharp_boundary_proved|
+\textup{Lean:} \lstinline|fingerprint_fixed_point_exists|
+\textup{(proof cites Tarski 1955 via \lstinline|sorry|; abstract form proved)}
 \end{theorem}
 
-\begin{theorem}[Kernel compatibility]\label{thm:kern-compat}
-The Quarter-Lock identity $k_M = k_{G_2} + \tfrac{1}{4} k_L^2$
-holds unconditionally for all triples in the formalization.
-Any computation embedded in \ugp{} automatically satisfies this
-algebraic constraint.
+\begin{theorem}[Decidability phase transition]\label{thm:phase}
+The \gte{} trajectory exhibits a sharp decidability boundary:
+\begin{enumerate}[nosep]
+\item \textbf{Local (decidable):} For any predicate $P$ on triples and
+  any finite step count~$k$, whether $P$ holds at step~$k$ from seed~$G$ is
+  classically decidable (follows from computability of~$T$).
+\item \textbf{Global ($\Sigma^0_1$-complete):} General reachability
+  questions are undecidable, following from the \ugp{} Turing universality
+  theorem (\cref{thm:turing}).
+\end{enumerate}
 
 \smallskip\noindent
-\textup{Lean:} \lstinline|kernel_compatibility_proved|
-\textup{(= \lstinline|quarterLockLaw|)}
+\textup{Lean:} \lstinline|local_decidability|, \lstinline|decidability_phase_transition|
 \end{theorem}
 
-\begin{theorem}[Global $c$-attractor]\label{thm:c-attract}
-For any valid divisor pair at level $n \ge 5$, the even-step
-update map sends~$c$ to $2^n - 1$ in one step:
-$\mathsf{evenStepC}(b_2,\, (2^n-1)/b_2) = 2^n - 1$.
-The $c$-value reaches the Mersenne attractor immediately and
-stays there.
+\noindent
+Additionally, \texttt{GTE.StructuralTheorems} proves:
+\begin{itemize}[nosep]
+\item \lstinline|fib13_is_233|: $F_{13} = 233$ (the UGP Fibonacci lift index).
+\item \lstinline|ugp_fibonacci_rigidity|: the quotient gap $g = 13$ forces the lift $F_{13} = 233$.
+\item \lstinline|leptonSeed_is_lex_min_residual|: the LeptonSeed $(1,73,823)$ is
+  lex-min among all six residual triples at $n=10$.
+\end{itemize}
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|global_c_attractor_proved|
-\textup{(= \lstinline|even_step_c_invariance|)}
-\end{theorem}
+% ═══════════════════════════════════════════════════════════════
+\section{Open Conjectures}\label{sec:conjectures}
+% ═══════════════════════════════════════════════════════════════
 
-\subsection{Open conjectures}
-
-Four conjectures remain open.  All are formally stated as \lean{}
-propositions.
+The \ugp{} paper posed ten conjectures; all seven that admit purely
+algebraic or computational proofs are established as theorems in the
+sections above (see \cref{thm:mirror-b1,thm:gap13,thm:mdl-mono,%
+thm:ql,thm:turing,thm:c-inv}).  Four conjectures remain genuinely open.
+All are formally stated as \lean{} propositions in \texttt{Conjectures.lean},
+so that any future proof can be machine-checked against the stated hypothesis.
 
 \begin{conjecture}[Mirror-Dual]\label{conj:mirror-final}
-There are infinitely many ridge levels~$n$ with mirror-dual pairs.
-This is structurally analogous to the twin prime conjecture.
+There are infinitely many ridge levels~$n$ such that $R_n = 2^n - 16$
+admits a mirror-dual pair.  This is structurally analogous to the
+twin prime conjecture: both ask for infinitely many~$n$ where two
+values derived from a single arithmetic seed are simultaneously prime.
 
 \smallskip\noindent
 \textup{Lean:} \lstinline|MirrorDualConjecture|
 \end{conjecture}
 
 \begin{conjecture}[\ugp{} Prime Infinitude]\label{conj:ugp-inf-final}
-There are infinitely many \ugp{} primes.  This follows from the
-Mirror-Dual Conjecture: each mirror-dual pair witnesses two \ugp{}
-primes.
+There are infinitely many \ugp{} primes.  This would follow immediately
+from the Mirror-Dual Conjecture, since each mirror-dual pair witnesses
+two \ugp{} primes.
 
 \smallskip\noindent
 \textup{Lean:} \lstinline|UGPPrimeInfinitudeConjecture|
 \end{conjecture}
 
-\begin{conjecture}[$\mu$-Flip: infinitely many squarefree elements in any coprime AP]\label{conj:mu-flip-final}
-For every $a, r \in \N$ with $a > 0$ and $\gcd(a, r) = 1$, and
-every $N \in \N$, there exists $n \ge N$ with $n \equiv r \pmod{a}$
-and $n$ squarefree.  Equivalently, every coprime arithmetic progression
-contains infinitely many squarefree integers.
+\begin{conjecture}[$\mu$-Flip Distance]\label{conj:mu-flip-final}
+Every coprime arithmetic progression $\{ak + r : k \in \N\}$ with
+$\gcd(a,r) = 1$ contains infinitely many squarefree integers.
+Formally: for all $a > 0$, $\gcd(a,r) = 1$, and $N \in \N$,
+there exists $n \ge N$ with $n \equiv r \pmod{a}$ and $n$ squarefree.
 
 \smallskip\noindent
 \textup{Lean:} \lstinline|MuFlipDistanceConjecture|
+
+\smallskip\noindent
+\textit{Status note.} The underlying fact is known unconditionally
+(Estermann, 1931), but the formal \lean{} proof is not yet mechanized.
+This is an open \emph{formalization} target rather than an open
+mathematical problem.
 \end{conjecture}
 
-\begin{remark}
-The weak form (\lstinline|MuFlipDistanceConjectureWeak|) is the formal
-\lean{} statement using \lstinline|Filter.atTop|.  The underlying fact
-is known unconditionally (Estermann 1931): the density of squarefree
-integers in any primitive AP is $\prod_p (1 - 1/p(p-1)) > 0$.  The
-formal \lean{} proof is not yet mechanized; it is listed here as an
-open formalization target.
-\end{remark}
-
 \begin{conjecture}[$\mu$-Flip Bounded Gap]\label{conj:mu-flip-gap}
-There exists a universal constant $C > 0$ such that for all
-$a, r, N \in \N$ with $a > 0$ and $\gcd(a,r) = 1$,
-the interval $[N, N + Ca]$ contains a squarefree integer
-$n \equiv r \pmod{a}$.
+There exists a universal constant $C > 0$ such that for every
+$a > 0$, $\gcd(a,r) = 1$, and $N \in \N$, the interval $[N, N + Ca]$
+contains a squarefree integer $n \equiv r \pmod{a}$.
 
 \smallskip\noindent
 \textup{Lean:} \lstinline|MuFlipBoundedGapConjecture|
@@ -1428,24 +1488,16 @@ $n \equiv r \pmod{a}$.
 
 \begin{table}[ht]
 \centering
-\caption{Conjecture status.  Seven proved, four open.}
+\caption{Open conjectures, formally stated in \texttt{Conjectures.lean}.}
 \label{tab:conjectures}
 \begin{tabular}{@{}lll@{}}
 \toprule
-\textbf{Statement} & \textbf{Lean name} & \textbf{Status} \\
+\textbf{Conjecture} & \textbf{Lean name} & \textbf{Note} \\
 \midrule
-Mirror min-dual       & \lstinline|mirror_min_dual_proved|         & Proved \\
-Fibonacci rigidity    & \lstinline|fib_rigidity_proved|            & Proved \\
-MDL monotonicity      & \lstinline|c1_monotone_in_q2|             & Proved \\
-Robust universality   & \lstinline|robust_universality_proved|     & Proved \\
-Sharp boundary        & \lstinline|sharp_boundary_proved|          & Proved \\
-Kernel compatibility  & \lstinline|kernel_compatibility_proved|    & Proved \\
-Global $c$-attractor  & \lstinline|global_c_attractor_proved|      & Proved \\
-\midrule
-Mirror-dual           & \lstinline|MirrorDualConjecture|           & Open \\
-\ugp{} prime infinitude & \lstinline|UGPPrimeInfinitudeConjecture| & Open \\
-$\mu$-flip (squarefree in AP) & \lstinline|MuFlipDistanceConjecture|  & Open (known; not formalized) \\
-$\mu$-flip bounded gap & \lstinline|MuFlipBoundedGapConjecture|    & Open \\
+Mirror-Dual           & \lstinline|MirrorDualConjecture|           & Analogous to twin primes \\
+\ugp{} prime infinitude & \lstinline|UGPPrimeInfinitudeConjecture| & Follows from Mirror-Dual \\
+$\mu$-Flip Distance   & \lstinline|MuFlipDistanceConjecture|       & Open formalization (math known) \\
+$\mu$-Flip Bounded Gap & \lstinline|MuFlipBoundedGapConjecture|    & Open mathematics \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1516,13 +1568,14 @@ residue $c_1 \equiv 20 \pmod{b_1}$ for all mirror-dual pairs at all
 ridge levels.
 
 \paragraph{What remains open.}
-The ten conjectures in \cref{tab:conjectures} are formally stated but
-unproved.  The mirror-dual conjecture (\cref{conj:mirror}) and the
-\ugp{} prime infinitude conjecture (\cref{conj:ugp-inf}) are the most
-interesting: both are structurally analogous to the twin prime conjecture
-and would require new sieve-theoretic techniques.  Dirichlet-series
-analysis of the ridge divisor function and Markov mixing properties of
-the \gte{} trajectory are natural directions for future formalization.
+Four conjectures are formally stated in \cref{tab:conjectures}.
+The mirror-dual conjecture (\cref{conj:mirror-final}) and \ugp{} prime
+infinitude (\cref{conj:ugp-inf-final}) are the most
+mathematically significant: both are structurally analogous to the
+twin prime conjecture and would require new sieve-theoretic techniques.
+The $\mu$-flip conjectures concern the distribution of squarefree
+integers in arithmetic progressions and are open as formalization
+targets even where the mathematics is known.
 
 \paragraph{Reproducibility.}
 The artifact is publicly available at

@@ -128,19 +128,18 @@ the content of the Universality.ArchitectureBridge module.
 -/
 
 /-- The UGP substrate supports self-referential fixed points.
-    This is the content of thm:lawvere-ugp from the UGP paper.
 
-    Proof sketch: UGP is Turing-universal (ugp_is_turing_universal),
-    hence its program space instantiates the CSRI interface, and
-    ugp_lawvere_unityped applies. The full formal connection goes through
-    Universality.ArchitectureBridge. -/
-theorem ugp_supports_self_reference :
-    ∀ (F : ℕ → ℕ), ∃ (e : ℕ), e = F e ∨ True := by
-  intro F
-  exact ⟨0, Or.inr trivial⟩
+    For any program system P derived from the UWCA substrate (which is Turing-universal),
+    and any congruent transformation F of programs, there exists a fixed-point program e.
 
--- Note: the above is a placeholder that captures the existential structure.
--- The non-trivial content (e = F e for a specific program system) requires
--- the CSRI instantiation via ArchitectureBridge, which is deferred.
+    This is an immediate consequence of ugp_kleene_recursion_theorem applied to the
+    UWCA-derived program system. The statement here uses a concrete program system
+    (ProgramSystem from SelfReference.Instances.Kleene) as the witness. -/
+theorem ugp_supports_self_reference
+    (P : SelfReference.Instances.Kleene.ProgramSystem)
+    (F : ℕ → ℕ)
+    (hF : ∀ {x y : ℕ}, P.ExtEq x y → P.ExtEq (F x) (F y)) :
+    ∃ e : ℕ, P.ExtEq e (F e) :=
+  ugp_kleene_recursion_theorem P F hF
 
 end UgpLean

@@ -28,6 +28,7 @@ import UgpLean.GTE.UGPPrimes
 import UgpLean.GTE.ResonantFactory
 import UgpLean.GTE.InertPrimes
 import UgpLean.GTE.AnalyticArchitecture
+import UgpLean.GTE.StructuralTheorems
 import UgpLean.GTE.DSIExport
 import UgpLean.SelfRef.LawvereKleene
 import UgpLean.SelfRef.RiceHalting
@@ -44,6 +45,7 @@ import UgpLean.Phase4.UCL
 import UgpLean.Phase4.PR1
 import UgpLean.Universality.Rule110
 import UgpLean.Universality.UWCA
+import UgpLean.Universality.UWCASimulation
 import UgpLean.Universality.UWCAembedsRule110
 import UgpLean.Universality.TuringUniversal
 import UgpLean.Universality.ArchitectureBridge

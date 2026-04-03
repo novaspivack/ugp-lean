@@ -67,7 +67,12 @@
 \addlinespace[2pt]
 \multicolumn{4}{@{}l}{\textit{Universality \& Self-Reference (\S\ref{sec:universality})}} \\
 \addlinespace[2pt]
-\lstinline|ugp_is_turing_universal|   & Universality.TuringUniv & \S4      & --- \\
+\lstinline|uwca_P3_eq_rule110|         & Universality.UWCASimul  & Thm~\ref{thm:uwca-sweep} & \textbf{Yes} \\
+\lstinline|uwca_sweep_implements_rule110| & Universality.UWCASimul & Thm~\ref{thm:uwca-sweep} & \textbf{Yes} \\
+\lstinline|uwca_sector_invariant|     & Universality.UWCASimul  & Thm~\ref{thm:uwca-sweep} & \textbf{Yes} \\
+\lstinline|uwca_tile_verification|    & Universality.UWCASimul  & Thm~\ref{thm:uwca-sweep} & \textbf{Yes} \\
+\lstinline|uwca_simulates_rule110_real| & Universality.UWCAEmbeds & Thm~\ref{thm:uwca-sweep} & \textbf{Yes} \\
+\lstinline|ugp_is_turing_universal|   & Universality.TuringUniv & Thm~\ref{thm:turing}     & --- \\
 \lstinline|ugp_lawvere_fixed_point|   & SelfRef.LawvereKleene   & Lawvere  & Import \\
 \lstinline|ugp_kleene_recursion_thm|  & SelfRef.LawvereKleene   & Kleene   & Import \\
 \lstinline|ugp_rice_theorem|          & SelfRef.RiceHalting     & Rice     & Import \\
@@ -111,26 +116,15 @@
 \addlinespace[4pt]
 \midrule
 \addlinespace[2pt]
-\multicolumn{4}{@{}l}{\textit{Inert Primes \& $\rho_F$ Identity (\S\ref{sec:inertprimes})}} \\
+\multicolumn{4}{@{}l}{\textit{Companion modules (not in paper; see RESONANT\_FACTORY\_NOTE.md)}} \\
 \addlinespace[2pt]
-\lstinline|qm_no_root_of_legendreSym_neg_one| & GTE.InertPrimes & Thm~\ref{thm:inert} & \textbf{General} \\
-\lstinline|qm_no_root_mod_13..137|            & GTE.InertPrimes & Thm~\ref{thm:inert-15} & \textbf{Yes} \\
-\lstinline|qm_inert_primes_certified|         & GTE.InertPrimes & Thm~\ref{thm:inert-15} & \textbf{Yes} \\
-\lstinline|kappa_unram_lower_bound|           & GTE.InertPrimes & Thm~\ref{thm:kappa-pos} & \textbf{Yes} \\
-\lstinline|kappa_unram_pos|                   & GTE.InertPrimes & Thm~\ref{thm:kappa-pos} & \textbf{Yes} \\
-\lstinline|discKminus|, \lstinline|discKplus| & GTE.ResonantFactory & Thm~\ref{thm:disc} & \textbf{Yes} \\
-\lstinline|rhoF_identity_verified|            & GTE.ResonantFactory & Thm~\ref{thm:rhoF-id} & \textbf{Yes} \\
-\lstinline|doubly_inert_71|                   & GTE.ResonantFactory & Thm~\ref{thm:rhoF-id} & \textbf{Yes} \\
-\lstinline|hasse_check_extended|              & GTE.ResonantFactory & Thm~\ref{thm:rhoF-id} & \textbf{Yes} \\
-\addlinespace[4pt]
-\midrule
-\addlinespace[2pt]
-\multicolumn{4}{@{}l}{\textit{Analytic Architecture (\S\ref{sec:analytic})}} \\
-\addlinespace[2pt]
-\lstinline|dickman_equidistribution_in_APs|  & GTE.AnalyticArch & Thm~\ref{thm:dickman} & Sorry (Tenenbaum) \\
-\lstinline|crt_equidistribution_within_regime| & GTE.AnalyticArch & Thm~\ref{thm:crt-regime} & Sorry (Tenenbaum+CRT) \\
-\lstinline|qminus_qplus_coprime|             & GTE.AnalyticArch & Thm~\ref{thm:qcoprime} & \textbf{Yes} \\
-\lstinline|dickmanThreeHalves_pos|           & GTE.AnalyticArch & Thm~\ref{thm:dickman-pos} & \textbf{Yes} \\
+\lstinline|qm_no_root_of_legendreSym_neg_one| & GTE.InertPrimes     & --- & \textbf{General} \\
+\lstinline|qm_inert_primes_certified|          & GTE.InertPrimes     & --- & \textbf{Yes} \\
+\lstinline|kappa_unram_lower_bound|            & GTE.InertPrimes     & --- & \textbf{Yes} \\
+\lstinline|discKminus|, \lstinline|discKplus|  & GTE.ResonantFactory & --- & \textbf{Yes} \\
+\lstinline|rhoF_identity_verified|             & GTE.ResonantFactory & --- & \textbf{Yes} \\
+\lstinline|dickman_equidistribution_in_APs|    & GTE.AnalyticArch   & --- & Sorry (Tenenbaum) \\
+\lstinline|qminus_qplus_coprime|               & GTE.AnalyticArch   & --- & \textbf{Yes} \\
 \addlinespace[4pt]
 \midrule
 \addlinespace[2pt]
@@ -144,15 +138,30 @@
 \addlinespace[4pt]
 \midrule
 \addlinespace[2pt]
-\multicolumn{4}{@{}l}{\textit{Resolved Conjectures (\S\ref{sec:conjectures})}} \\
+\multicolumn{4}{@{}l}{\textit{Structural Theorems (\S\ref{sec:structural})}} \\
 \addlinespace[2pt]
-\lstinline|mirror_min_dual_proved|    & Conjectures             & Thm~\ref{thm:mirror-min}  & \textbf{Yes} \\
-\lstinline|fib_rigidity_proved|       & Conjectures             & Thm~\ref{thm:fib-rigid}   & \textbf{Yes} \\
-\lstinline|c1_monotone_in_q2|        & Conjectures             & Thm~\ref{thm:mdl-mono}    & \textbf{Yes} \\
-\lstinline|robust_universality_proved|& Conjectures             & Thm~\ref{thm:robust-univ} & \textbf{Yes} \\
-\lstinline|sharp_boundary_proved|     & Conjectures             & Thm~\ref{thm:sharp-bd}    & \textbf{Yes} \\
-\lstinline|kernel_compatibility_proved|& Conjectures            & Thm~\ref{thm:kern-compat} & \textbf{Yes} \\
-\lstinline|global_c_attractor_proved| & Conjectures             & Thm~\ref{thm:c-attract}   & \textbf{Yes} \\
+\lstinline|golden_ratio_minimal_poly|     & GTE.StructuralThm & Thm~\ref{thm:fib-spectrum} & \textbf{Yes} \\
+\lstinline|fib_eigenvalue_product|        & GTE.StructuralThm & Thm~\ref{thm:fib-spectrum} & \textbf{Yes} \\
+\lstinline|fib_contraction_rate|          & GTE.StructuralThm & Thm~\ref{thm:fib-spectrum} & \textbf{Yes} \\
+\lstinline|mirror_fiber_two|              & GTE.StructuralThm & Thm~\ref{thm:loop}         & \textbf{Yes} \\
+\lstinline|mirror_pair_induces_loop|      & GTE.StructuralThm & Thm~\ref{thm:loop}         & \textbf{Yes} \\
+\lstinline|minimality_duality_n10|        & GTE.StructuralThm & Thm~\ref{thm:min-dual}     & \textbf{Yes} \\
+\lstinline|only_survivors_n10|            & Compute.ExclFilters & Thm~\ref{thm:min-dual}   & \textbf{Yes} \\
+\lstinline|fingerprint_fixed_point_exists|& GTE.StructuralThm & Thm~\ref{thm:fingerprint}  & Sorry (Tarski) \\
+\lstinline|decidability_phase_transition| & GTE.StructuralThm & Thm~\ref{thm:phase}        & \textbf{Yes} \\
+\lstinline|leptonSeed_is_lex_min_residual|& GTE.StructuralThm & ---                        & \textbf{Yes} \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{Additional proved results (from original conjectures)}} \\
+\addlinespace[2pt]
+\lstinline|mirror_min_dual_proved|    & Conjectures             & Thm~\ref{thm:mirror-b1}   & \textbf{Yes} \\
+\lstinline|fib_rigidity_proved|       & Conjectures             & Thm~\ref{thm:gap13}       & \textbf{Yes} \\
+\lstinline|c1_monotone_in_q2|         & Conjectures             & Thm~\ref{thm:mdl-mono}    & \textbf{Yes} \\
+\lstinline|robust_universality_proved|& Conjectures             & Thm~\ref{thm:turing}      & \textbf{Yes} \\
+\lstinline|sharp_boundary_proved|     & Conjectures             & \S\ref{sec:universality}  & \textbf{Yes} \\
+\lstinline|kernel_compatibility_proved|& Conjectures            & Thm~\ref{thm:ql}          & \textbf{Yes} \\
+\lstinline|global_c_attractor_proved| & Conjectures             & Thm~\ref{thm:c-inv}       & \textbf{Yes} \\
 \addlinespace[4pt]
 \midrule
 \addlinespace[2pt]
