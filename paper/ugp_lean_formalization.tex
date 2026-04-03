@@ -110,58 +110,72 @@
 \begin{document}
 \maketitle
 
-\tableofcontents
-\bigskip
-
 % ── Abstract ──────────────────────────────────────────────────
 \begin{abstract}
 \raggedright
-We present \textbf{ugp-lean}, a \lean{} formalization of the Universal
-Generative Principle (\ugp{}), a deterministic arithmetic framework
-defined over integer ridges $R_n = 2^n - 16$.  The formalization
-covers: the ridge sieve, prime-lock criterion, Residual Seed Uniqueness
-(\rsuc{}), Quarter-Lock identity, Generative Triple Evolution (\gte{})
-canonical orbit, and a new class of primes (\emph{\ugp{} primes}) with
-ten machine-checked instances.
+The Universal Generative Principle (\ugp{}) is a deterministic
+arithmetic framework defined over integer ridges $R_n = 2^n - 16$.
+It produces, from first principles and without free parameters, a unique
+canonical seed---the triple $(1,73,823)$---whose orbit under the
+Generative Triple Evolution (\gte{}) map is rigidly determined.
+We present \textbf{ugp-lean}, a machine-checked formalization of this
+framework in \lean{}~4 against Mathlib, comprising 49 modules with a
+strict zero-sorry, zero-custom-axiom policy on the core proof path.
 
-A central result is the \textbf{machine-checked proof that the \ugp{}
-substrate is Turing-universal}: the Universal Windowed Cellular Automaton
-(\uwca{}) built natively from the \ugp{} arithmetic substrate exactly simulates
-Rule~110 via a four-pass round (neighbor distribution, minterm detection,
-OR-accumulation, commit).  The simulation theorem \texttt{uwca\_sweep\_implements\_rule110}
-is proved by exhaustive case analysis over all eight neighborhoods.
-Since Rule~110 is Turing-universal~\cite{Cook2004}, the arithmetic sieve
-that selects the canonical prime seed $(1,73,823)$ also defines a substrate
-in which arbitrary computation can be realized.  This is the sense in which
-the \ugp{} is genuinely ``universal''.
-The artifact comprises 49~\lean{} modules, builds against Mathlib
-v4.29.0-rc6, and maintains a strict \emph{zero-sorry, zero-custom-axiom}
-policy on the core \ugp{} proof path.  Novel contributions include: a
-machine-checked proof that the \gte{} update map~$T$ \emph{forces} the
-canonical orbit, a general ridge remainder lock for all $n \ge 5$, an
-even-step $c$-invariance theorem, a formal definition of \ugp{} primes
-with existence proof and ten verified instances across three ridge
-levels, a precise statement of the mirror-dual conjecture with a
-proof that the divisor count $\tau(2^n-16)$ is unbounded, an
-exact divisor-count formula
-$\tau(2^n - 16) = 5 \cdot \tau(2^{n-4} - 1)$ for all $n \ge 5$,
-a new \emph{mirror shift algebra}: the universal law
-$c_1(b_2,q_2) - c_1(q_2,b_2) = b_1(q_2-b_2)$ and shared residue
-$c_1 \equiv 20 \pmod{b_1}$, holding at every ridge level;
-and a suite of \emph{structural theorems}: the Fibonacci renormalization
-spectrum (eigenvalues $\varphi$ and $-\varphi^{-1}$, decay rate $\varphi^{-2}$),
-loop topology from mirror pairs, minimality-duality at $n=10$, fingerprint
-fixed-point (Tarski), and the decidability phase transition (local decidable,
-global $\Sigma^0_1$-complete from Turing universality).
-The repository also contains companion modules (\texttt{InertPrimes},
-\texttt{AnalyticArchitecture}) providing citable analytic infrastructure
-derived from the \ugp{} factory constants; these are documented in
-\texttt{docs/RESONANT\_FACTORY\_NOTE.md} and not discussed in this paper.
-All definitions are self-contained; all open conjectures are formally
-stated as \lean{} propositions.
+\textbf{What makes \ugp{} special, and what this paper proves.}
+The \ugp{} exhibits three distinct, interlocking properties, each of which
+we formalize and machine-check:
 
-\textbf{Trust boundary:} Proved statements are scoped to the ridged arithmetic framework formalized here; open conjectures remain explicit \lean{} \texttt{Prop}s and are not asserted as classical theorems.
+\smallskip
+\emph{(1) Algebraic uniqueness.}
+The ridge sieve, prime-lock criterion, and the \rsuc{} theorem together
+prove that $(1,73,823)$ is the unique lexicographic minimum of the residual
+seed class at $n=10$---forced by the arithmetic, not chosen.  The
+\gte{} update map $T$ is proved to \emph{derive} the canonical three-step
+orbit $(1,73,823)\to(9,42,1023)\to(5,275,65535)$ rather than merely
+stating it.  The Quarter-Lock identity $k_M = k_{G_2} + \tfrac{1}{4}k_L^2$
+is an unconditional algebraic invariant.
+
+\smallskip
+\emph{(2) Structural richness.}
+The \ugp{} carries a suite of non-trivial mathematical structures:
+the mirror shift algebra ($c_1(b_2,q_2) - c_1(q_2,b_2) = b_1(q_2-b_2)$,
+universal across all ridge levels), a Fibonacci renormalization spectrum
+(Fibonacci companion eigenvalues $\varphi$ and $-\varphi^{-1}$,
+contraction rate $\varphi^{-2}$), loop topology from mirror pairs,
+an exact divisor-count formula $\tau(2^n-16)=5\,\tau(2^{n-4}-1)$,
+and a minimality-duality theorem at $n=10$.  All are machine-checked.
+
+\smallskip
+\emph{(3) Computational universality.}
+The same arithmetic substrate that selects the canonical seed also
+harbors universal computation: we prove that the \uwca{} built natively
+from the \ugp{} survivor space exactly simulates Rule~110 via a
+four-pass round (P1 neighbor distribution, P2 minterm detection,
+P3 OR-accumulation, P4 commit), verified by exhaustive case analysis
+over all eight neighborhoods.  This implies a sharp \emph{decidability
+phase transition}: finite-window properties of the \gte{} trajectory
+are decidable, while general reachability is $\Sigma^0_1$-complete.
+
+\smallskip
+\textbf{Further contributions.}
+A new class of \emph{\ugp{} primes} is formally defined with ten
+machine-checked instances across three ridge levels.
+Four open conjectures (mirror-dual infinitude, \ugp{} prime infinitude,
+$\mu$-flip squarefree, $\mu$-flip bounded gap) are formally stated as
+\lean{} propositions.
+All definitions are self-contained; no results beyond the ridged
+arithmetic framework are asserted.
+
+\smallskip
+\textbf{Trust boundary:}
+Proved statements are scoped to the ridged arithmetic framework
+formalized here.  Open conjectures remain explicit \lean{}
+\texttt{Prop}s and are not asserted as classical theorems.
 \end{abstract}
+
+\tableofcontents
+\bigskip
 
 \section{Premises, disagreement coordinates, and trust boundary}\label{sec:premises-ugp-lean-paper}
 \begin{keybox}{Where disagreement can (and cannot) live}
