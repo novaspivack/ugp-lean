@@ -52,3 +52,6 @@ lake build
 - [Assumptions.md](Assumptions.md) — Premise ledger
 - **UGP Formalization paper** — `NEMS_PAPERS/UGP_GTE_Formalization/` (definitive formal spec; theorem-indexed mapping)
 - UGP_LEAN_PROGRAM_ROADMAP.md (in workspace)
+<!-- NOVA_ZPO_ZENODO_SOFTWARE_BEGIN -->
+**Archival software (Zenodo):** https://doi.org/10.5281/zenodo.19429247
+<!-- NOVA_ZPO_ZENODO_SOFTWARE_END -->
