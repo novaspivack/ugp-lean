@@ -55,3 +55,6 @@ lake build
 <!-- NOVA_ZPO_ZENODO_SOFTWARE_BEGIN -->
 **Archival software (Zenodo):** https://doi.org/10.5281/zenodo.19429247
 <!-- NOVA_ZPO_ZENODO_SOFTWARE_END -->
+<!-- NOVA_ZPO_ZENODO_PAPER_BEGIN -->
+**Archival paper (Zenodo preprint) (Zenodo):** https://doi.org/10.5281/zenodo.19433539
+<!-- NOVA_ZPO_ZENODO_PAPER_END -->
