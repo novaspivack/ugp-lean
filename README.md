@@ -1,5 +1,23 @@
 # ugp-lean
 
+
+## Research Program
+
+This repository is part of the **Reflexive Reality** research program by [Nova Spivack](https://www.novaspivack.com/).
+
+**What this formalizes:** UGP Formalization (§B2): machine-checked Lean 4 formalization of the Universal Generative Principle — ridge sieve, GTE orbit, Quarter-Lock, Turing universality, self-reference.
+
+| Link | Description |
+|------|-------------|
+| [Research page](https://www.novaspivack.com/research/) | Full index of all papers, programs, and Lean archives |
+| [Full abstracts](https://novaspivack.github.io/research/abstracts/#abs-toc) | Complete abstract for this library's papers |
+| [Zenodo program hub](https://doi.org/10.5281/zenodo.19429270) | Citable DOI hub for the NEMS program |
+
+All results are machine-checked in Lean 4 with a zero-sorry policy on proof targets.
+See [MANIFEST.md](MANIFEST.md) for the sorry audit (if present).
+
+---
+
 Lean 4 formalization of the Universal Generative Principle (UGP) and Generative Triple Evolution (GTE). Proves RSUC, certifies the n=10 sieve and canonical orbit, Quarter-Lock, and Turing universality. The classification is **n-parameterized**: predicates and candidate sets are indexed by ridge level n; at n=10 this yields the certified Lepton Seed.
 
 ## Build
