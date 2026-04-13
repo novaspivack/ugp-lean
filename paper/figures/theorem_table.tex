@@ -1,18 +1,32 @@
 % ═══════════════════════════════════════════════════════════════
 %  Theorem inventory table for ugp-lean formalization paper
+%  Uses longtable so the full inventory flows across pages.
 % ═══════════════════════════════════════════════════════════════
 
-\begin{table}[p]
-\centering
+\begingroup
+\footnotesize
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+\begin{longtable}{@{}p{6.3cm}p{4.6cm}p{1.5cm}p{1.5cm}@{}}
 \caption{Complete theorem inventory.  ``Novel'' indicates results new to this formalization; ``General''
   indicates level-independent results.
-  All theorems have zero \texttt{sorry} on the core proof path.}
-\label{tab:theorems}
-\small
-\begin{tabular}{@{}llll@{}}
+  All theorems have zero \lstinline|sorry| on the core proof path.}
+\label{tab:theorems}\\
 \toprule
 \textbf{Theorem / Lean name} & \textbf{Module} & \textbf{Paper ref} & \textbf{Novel?} \\
 \midrule
+\endfirsthead
+\multicolumn{4}{@{}l}{\textit{(Table~\ref{tab:theorems} continued)}} \\[2pt]
+\toprule
+\textbf{Theorem / Lean name} & \textbf{Module} & \textbf{Paper ref} & \textbf{Novel?} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r@{}}{\textit{continued on next page}} \\
+\endfoot
+\bottomrule
+\endlastfoot
+
 \multicolumn{4}{@{}l}{\textit{Core Classification (\S\ref{sec:classification})}} \\
 \addlinespace[2pt]
 \lstinline|theoremA_general|          & Classification.TheoremA & Thm A    & --- \\
@@ -41,6 +55,16 @@
 \lstinline|c3_strict_eq_c2_at_n10|    & GTE.UpdateMap           & ---      & \textbf{Yes} \\
 \lstinline|gen1_mersenne_isolation|   & GTE.UpdateMap           & ---      & \textbf{Yes} \\
 \lstinline|mersenne_entanglement_gen| & GTE.UpdateMap           & ---      & \textbf{Yes} \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{Dynamics Companions / ML-9 (\S\ref{sec:gte})}} \\
+\addlinespace[2pt]
+\lstinline|gteTransition|             & GTE.GTESimulation       & ---      & \textbf{Yes} \\
+\lstinline|gteAfterSteps|             & GTE.GTESimulation       & ---      & \textbf{Yes} \\
+\lstinline|gte_s1|\ldots\lstinline|gte_s8| & GTE.GTESimulation  & ---      & \textbf{Yes} \\
+\lstinline|gte_entropy_prefix8_gt_prefix9| & GTE.EntropyNonMonotone & ML-9 & \textbf{Yes} \\
+\lstinline|Hpred8_gt_Hpred9|          & GTE.EntropyNonMonotone  & ML-9     & \textbf{Yes} \\
 \addlinespace[4pt]
 \midrule
 \addlinespace[2pt]
@@ -73,6 +97,8 @@
 \lstinline|uwca_tile_verification|    & Universality.UWCASimul  & Thm~\ref{thm:uwca-sweep} & \textbf{Yes} \\
 \lstinline|uwca_simulates_rule110_real| & Universality.UWCAEmbeds & Thm~\ref{thm:uwca-sweep} & \textbf{Yes} \\
 \lstinline|ugp_is_turing_universal|   & Universality.TuringUniv & Thm~\ref{thm:turing}     & --- \\
+\lstinline|uwca_augmented_left_inverse| & Univ.UWCAHistoryReversible & T2 & \textbf{Yes} \\
+\lstinline|uwca_history_lane_step_reversible| & Univ.UWCAHistoryReversible & T2 & \textbf{Yes} \\
 \lstinline|ugp_lawvere_fixed_point|   & SelfRef.LawvereKleene   & Lawvere  & Import \\
 \lstinline|ugp_kleene_recursion_thm|  & SelfRef.LawvereKleene   & Kleene   & Import \\
 \lstinline|ugp_rice_theorem|          & SelfRef.RiceHalting     & Rice     & Import \\
@@ -165,7 +191,7 @@
 \lstinline|mdl_c1_n13_is_9007|               & GTE.UniquenessCert & Thm~\ref{thm:mdl-multi}      & \textbf{Yes} \\
 \lstinline|mdl_c1_n16_is_46681|              & GTE.UniquenessCert & Thm~\ref{thm:mdl-multi}      & \textbf{Yes} \\
 \lstinline|order_classification_n10_to_n13|  & GTE.UniquenessCert & Thm~\ref{thm:orders}         & \textbf{Yes} \\
-\lstinline|singular_series_partial_lower_bound| & GTE.UniquenessCert & Thm~\ref{thm:singular-series} & \textbf{Yes} \\
+\lstinline|singular_series_partial_lower_bound| & GTE.UniquenessCert & Thm~\ref{thm:singular-series} & \textbf{Yes} \\ % col2 abbrev: keeps col1 in bounds
 \lstinline|n10_uniqueness_package|            & GTE.UniquenessCert & \S\ref{sec:uniqueness}       & \textbf{Yes} \\
 \lstinline|AsymptoticSparsityConjecture|      & GTE.UniquenessCert & Conj~\ref{conj:sparsity}     & Stated \\
 \lstinline|UGPZetaFactorizationConjecture|    & GTE.UniquenessCert & Conj~\ref{conj:zeta}         & Stated \\
@@ -189,6 +215,5 @@
 \lstinline|ugpOutputGap_deriv|        & GTE.DSIExport           & Thm~\ref{thm:deriv}  & \textbf{Yes} \\
 \lstinline|ugp_deriv_lower_bound|     & GTE.DSIExport           & Thm~\ref{thm:deriv-bound} & \textbf{Yes} \\
 \lstinline|ugpOutputGap_differentiableOn| & GTE.DSIExport       & ---                   & \textbf{Yes} \\
-\bottomrule
-\end{tabular}
-\end{table}
+\end{longtable}
+\endgroup
