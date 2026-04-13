@@ -401,16 +401,17 @@ The artifact is organized into 51~\lean{} modules across seven layers:
   {\textbf{Classification}~(6)\quad Bounds, TheoremA, TheoremB,
    RSUC, FormalRSUC, MonotonicStrengthening};
 \node[layer, fill=orange!8] (gte)   at (0,3*\vs)
-  {\textbf{GTE}~(13)\quad Evolution, Orbit, UpdateMap,
+  {\textbf{GTE}~(15)\quad Evolution, Orbit, UpdateMap,
    GeneralTheorems, MersenneGcd, PrimeFactorAnalysis,
    MirrorDualConj, MirrorShift, UGPPrimes, InertPrimes,
-   AnalyticArchitecture, StructuralTheorems, UniquenessCertificates};
+   AnalyticArchitecture, StructuralTheorems, UniquenessCertificates,
+   GTESimulation, EntropyNonMonotone};
 \node[layer, fill=red!8]    (struc) at (0,4*\vs)
   {\textbf{Structural}~(3)\quad QuarterLock, ElegantKernel,
    LModelDerivation};
 \node[layer, fill=purple!8] (univ)  at (0,5*\vs)
-  {\textbf{Universality}~(5)\quad Rule110, UWCA,
-   UWCAembedsRule110, TuringUniversal, ArchitectureBridge};
+  {\textbf{Universality}~(6)\quad Rule110, UWCA,
+   UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge};
 \node[layer, fill=gray!8]   (self)  at (0,6*\vs)
   {\textbf{SelfRef}~(2)\quad LawvereKleene, RiceHalting};
 
@@ -964,6 +965,18 @@ The symmetry group of the \ugp{} mirror fiber is exactly~$\mathbb{Z}/2\mathbb{Z}
 — no higher-order symmetry loops exist (\lstinline|mirror_symmetry_group_is_Z2|,
 \lstinline|no_order_3_loop|).
 \end{keybox}
+
+\subsubsection{Dynamics companions (meta-law ML-9)}
+
+The monograph's meta-law ML-9 discusses long-run coarse Shannon entropy along reversible \gte{} trajectories.
+This repository includes two machine-checked companions (outside the core zero-sorry path):
+\texttt{GTE.GTESimulation} fixes the Lepton-seed orbit at $n=10$ via the
+\texttt{UpdateMap} recurrence; \texttt{GTE.EntropyNonMonotone} then shows a strict drop in
+cumulative empirical entropy over coarse macro bins when extending an eight-step prefix to
+nine---a finite witness compatible with non-monotonicity.
+Separately, \texttt{Universality.UWCAHistoryReversible} augments \uwca{} states with a history
+stack of prior tape configurations and proves exact one-step invertibility
+(\lstinline|uwca_augmented_left_inverse|).
 
 \begin{theorem}[Minimal tile count]\label{thm:tiles-minimal}
 The 5-tile \uwca{} set implementing Rule~110 is minimal: removing any single

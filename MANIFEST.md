@@ -4,12 +4,14 @@
 **Mathlib:** v4.29.0-rc6 (via `lakefile.lean`)  
 **Build:** `lake build` from this directory  
 **Root import:** `UgpLean.lean`  
-**Last verified:** 2026-03-31 — matches `lean-toolchain` and Mathlib pin; theorem table below.
+**Last verified:** 2026-04-13 — matches `lean-toolchain` and Mathlib pin; theorem table below.
 
 **Companion:** The UGP Formalization paper (`NEMS_PAPERS/UGP_GTE_Formalization/`) provides a complete theorem-indexed table mapping every definition and theorem to ugp-lean modules. Use it as the definitive paper-level reference for the artifact.
 
 | Paper / Source | Lean Module | Lean Theorem | Status |
 |----------------|-------------|--------------|--------|
+| ML-9 / SPEC_04_06: coarse entropy non-monotone on 8→9 step prefix (Lepton GTE sim, n=10) | GTE.GTESimulation; GTE.EntropyNonMonotone | gte_entropy_prefix8_gt_prefix9; Hpred8_gt_Hpred9 | ✓ |
+| SPEC_04_06 T2: UWCA + history stack, backward ∘ forward = id | Universality.UWCAHistoryReversible | uwca_augmented_left_inverse; uwca_history_lane_step_reversible | ✓ |
 | UGP Main, ridge Rₙ = 2ⁿ − 16 | Core.RidgeDefs | ridge_def, ridge_10 | ✓ |
 | UGP Main, mirror (b₂,q₂) ↦ (b₁,q₁,c₁) | Core.MirrorDefs | b1FromPair, q1FromQ2, c1FromPair | ✓ |
 | UGP Main, prime-lock c₁ prime | Compute.PrimeLock | prime_823, prime_2137 | ✓ |

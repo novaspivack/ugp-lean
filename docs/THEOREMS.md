@@ -83,6 +83,9 @@ What ugp-lean proves. All listed theorems have **0 sorry, 0 axioms** on the core
 | **uwca_simulates_rule110** | UWCAembedsRule110 | UWCA_embeds_Rule110 |
 | **ugp_is_turing_universal** | TuringUniversal | UGP_substrate_turing_universal |
 | **architecture_bridge** | ArchitectureBridge | uniqueness_of_physical_program |
+| **uwca_augmented_left_inverse** | UWCAHistoryReversible | Backward ∘ forward = id on tape × history stack (exact lift) |
+| **uwca_history_lane_step_reversible** | UWCAHistoryReversible | Same with empty initial history |
+| **gte_entropy_prefix8_gt_prefix9** | EntropyNonMonotone | Coarse Shannon entropy drops from 8- to 9-step macro prefix along simulated GTE orbit (\(n=10\)) |
 
 ## Phase 4 (Stubs / Constants)
 
