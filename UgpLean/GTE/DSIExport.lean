@@ -36,7 +36,7 @@ For the **Wall 1 (single-hyperbola)** route class:
 
 This module requires Mathlib v4.29.0-rc6 (same as DSI).
 
-Reference: DSI SPEC_025 item (4), fn-4, ArcBEffectiveGapMagnification.lean
+Reference: DSI item (4), fn-4, ArcBEffectiveGapMagnification.lean
 -/
 
 namespace UgpLean

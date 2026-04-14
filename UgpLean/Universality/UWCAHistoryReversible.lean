@@ -4,7 +4,7 @@ import UgpLean.Universality.UWCASimulation
 /-!
 # UgpLean.Universality.UWCAHistoryReversible — Exact reversibility via a history lane
 
-T2 from SPEC_04_06 / EPIC_04: augment the UWCA state with a **history stack** of prior
+augment the UWCA state with a **history stack** of prior
 tape configurations. One forward sweep stores the pre-image in the stack; peeling the
 stack recovers the exact previous configuration—no floating-point “MSE” needed.
 

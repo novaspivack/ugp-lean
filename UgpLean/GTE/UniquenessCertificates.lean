@@ -15,7 +15,7 @@ import UgpLean.Universality.UWCASimulation
 /-!
 # UgpLean.GTE.UniquenessCertificates — Uniqueness and Classification Theorems
 
-This module formalizes the research program from SPEC_001_P7K:
+This module formalizes the research program from (UGP uniqueness program):
 exhaustive classification results that certify the uniqueness, minimality,
 and structural completeness of the UGP at n=10 and nearby levels.
 
@@ -50,7 +50,7 @@ and structural completeness of the UGP at n=10 and nearby levels.
 8. **Orbit Non-Repetition at Generation Level** (§8): The three canonical
    triples G₁, G₂, G₃ are pairwise distinct — the orbit does not collapse.
 
-Reference: SPEC_001_P7K, UGP Paper §3, §5, §Atlas, cross_domain_results.json
+Reference: (UGP uniqueness program), UGP Paper §3, §5, §Atlas, cross_domain_results.json
 -/
 
 namespace UgpLean
@@ -462,11 +462,11 @@ theorem n10_uniqueness_package :
    mirror_dual_n10, by native_decide, by native_decide⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §9  Asymptotic Sparsity of Prime-Locked Levels (SPEC_001 Item 3)
+-- §9  Asymptotic Sparsity of Prime-Locked Levels
 -- ════════════════════════════════════════════════════════════════
 
 /-!
-## Asymptotic Sparsity (Item 3 of SPEC_001_P7K)
+## Asymptotic Sparsity
 
 **Conjecture:** Let N(X) = |{n ≤ X : R_n has at least one prime-locked seed}|.
 Then N(X)/X → 0 as X → ∞.
@@ -489,7 +489,7 @@ The proof that N(X)/X → 0 requires the prime number theorem for the UGP
 prime formula c₁(b₂,q₂). This is open in Lean formalization.
 -/
 
-/-- **Asymptotic sparsity conjecture** (SPEC_001 Item 3): formally stated.
+/-- **Asymptotic sparsity conjecture**: formally stated.
     N(X) = |{n ≤ X : ∃ b₂ q₂, b₂*q₂ = 2^n-16 ∧ both b₂,q₂ ≥ 16 ∧ Nat.Prime (c1Val b₂ q₂)}|.
     The conjecture: N(X)/X → 0 as X → ∞.
 
@@ -499,7 +499,7 @@ prime formula c₁(b₂,q₂). This is open in Lean formalization.
 def HasPrimeLockedSeed (n : ℕ) : Prop :=
   ∃ b₂ q₂ : ℕ, b₂ * q₂ = 2^n - 16 ∧ 16 ≤ b₂ ∧ 16 ≤ q₂ ∧ Nat.Prime (c1Val b₂ q₂)
 
-/-- **Asymptotic sparsity conjecture** (SPEC_001 Item 3): formally stated.
+/-- **Asymptotic sparsity conjecture**: formally stated.
     For any ε > 0, the fraction of levels n ≤ X with a prime-locked seed
     is eventually < ε. Not proved here — requires PNT for the UGP prime formula. -/
 def AsymptoticSparsityConjecture : Prop :=
@@ -523,11 +523,11 @@ theorem harmonic_bound_certified :
     1/20 + 1/25 + 1/30 + 1/40 + 1/50 < 3 := by norm_num
 
 -- ════════════════════════════════════════════════════════════════
--- §10  UGP Orbital Zeta Function (SPEC_001 Item 10)
+-- §10  UGP Orbital Zeta Function
 -- ════════════════════════════════════════════════════════════════
 
 /-!
-## UGP Orbital Zeta Function (Item 10 of SPEC_001_P7K)
+## UGP Orbital Zeta Function
 
 **Definition:** Z_UGP(s) = Σ_{k=1}^∞ p_k^{−s} where p₁=823, p₂=2137, p₃=9007, ...
 are the UGP primes in order.
