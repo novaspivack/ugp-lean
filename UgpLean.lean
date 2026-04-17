@@ -75,3 +75,5 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 
 **Non-circularity:** Core/ does not import Compute/. See README.md.
 -/
+
+import UgpLean.TE22.ScanCertificate
