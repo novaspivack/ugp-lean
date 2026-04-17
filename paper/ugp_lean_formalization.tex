@@ -905,13 +905,18 @@ If the kernel defect $D(k) = \frac{16}{33}(k_M - k_G -
 \end{theorem}
 
 \begin{theorem}[Elegant Kernel]\label{thm:ek}
-$k_L^2 = 7/512 > 0$.  The model parameter
-$L_{\mathrm{model}} = \log_2(2000/3)$ satisfies
+The constant $k_L^2 = 7/512$ is derived from UGP mirror-invariance structure:
+the numerator $7 = \mathtt{ugp1\_s}$ (the certified mirror-invariance offset
+$b_1 = b_2 + q_2 + s$, $s=7$) and the denominator $2^9 = 512$ is the unique
+power of $2$ in the half-ridge interval $(504, 1008]$, where $1008 = R_{10}$.
+The model parameter $L_{\mathrm{model}} = \log_2(2000/3)$ satisfies
 $L_{\mathrm{model}} = \log_2\bigl((D_1 \cdot 5^3) / 3\bigr)$,
 where $D_1 = 16$, $5^3 = 125$, and $3$ is the orbit length.
 
 \smallskip\noindent
-\textup{Lean:} \lstinline|k_L2_eq|, \lstinline|L_model_from_gauge_structure|
+\textup{Lean:} \lstinline|k_L2_eq|, \lstinline|k_L2_from_ugp1_s|,
+\lstinline|block_denom_in_half_ridge_interval|,
+\lstinline|L_model_from_gauge_structure|
 \end{theorem}
 
 % ═══════════════════════════════════════════════════════════════
