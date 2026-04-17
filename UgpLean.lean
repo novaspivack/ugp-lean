@@ -53,6 +53,7 @@ import UgpLean.Universality.UWCAHistoryReversible
 import UgpLean.Universality.UWCAembedsRule110
 import UgpLean.Universality.TuringUniversal
 import UgpLean.Universality.ArchitectureBridge
+import UgpLean.TE22.ScanCertificate
 
 /-!
 # UgpLean — Universal Generative Principle: Lean 4 Formalization
@@ -73,7 +74,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Universality.*`       — Rule110, UWCA, UWCAHistoryReversible, Turing universality, Architecture bridge
 - `UgpLean.Papers.*`             — Paper25, UGPMain (citable stubs)
 
+- `UgpLean.TE22.*`               — ScanCertificate (TE2.2 PSC scan framework, UGP coupling predictions)
+
 **Non-circularity:** Core/ does not import Compute/. See README.md.
 -/
-
-import UgpLean.TE22.ScanCertificate

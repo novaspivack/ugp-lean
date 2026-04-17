@@ -24,7 +24,8 @@ def k_gen2_example : ℚ := 7/2048
 def k_M_example : ℚ := 7/1024
 
 theorem quarterLock_holds_example : quarterLockIdentity k_M_example k_gen2_example k_L2 := by
-  unfold quarterLockIdentity k_M_example k_gen2_example k_L2
+  unfold quarterLockIdentity k_M_example k_gen2_example
+  rw [k_L2_eq]
   ring
 
 /-- Quarter-Lock Law: There exist rational coefficients satisfying the identity with k_L2 = 7/512. -/
