@@ -95,6 +95,9 @@ What ugp-lean proves. All listed theorems have **0 sorry, 0 axioms** on the core
 | **g1Sq_bare_eq** | GaugeCouplings | g1Sq_bare = 16/125 |
 | **g2Sq_bare_eq** | GaugeCouplings | g2Sq_bare = 2329/5400 |
 | **g3Sq_bare_eq** | GaugeCouplings | g3Sq_bare = 41075281/27648000 |
+| **ugp_coupling_predictions_are_independent** | TE22.ScanCertificate | C15/C16/C4' derived from ugp-lean rationals, not from SM data |
+| **ugp_g1g2_prediction_close_to_SM** | TE22.ScanCertificate | UGP g1²/g2² prediction within 2% of SM value at M_Z |
+| **SM_is_D_minimizer_extended** (framework) | TE22.ScanCertificate | SM unique D-minimizer over 34,560 universes — sorry pending native_decide |
 
 ## GTE Number Theory
 

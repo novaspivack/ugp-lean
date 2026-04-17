@@ -39,6 +39,10 @@
 | UWCA | Universality.UWCA | rule110Tiles | ✓ |
 | Turing universality | Universality.TuringUniversal | ugp_is_turing_universal | ✓ |
 | Architecture bridge | Universality.ArchitectureBridge | uniqueness_of_physical_program | ✓ |
+| **TE22 Scan Certificate (Apr 2026)** | | | |
+| TE22 coupling predictions are algebraically independent of SM data | TE22.ScanCertificate | ugp_coupling_predictions_are_independent | ✓ |
+| UGP g1²/g2² prediction within 2% of SM@Mz | TE22.ScanCertificate | ugp_g1g2_prediction_close_to_SM | ✓ |
+| TE22 SM D-minimizer (framework) | TE22.ScanCertificate | SM_is_D_minimizer_extended | ⚠ sorry (native_decide pending) |
 | **Monograph additions** | | | |
 | Ridge remainder lock | Core.RidgeRigidity | ridge_remainder_lock, m2_canonical | ✓ |
 | Quotient-gap 13 | Core.RidgeRigidity | quotient_gap_13, survivor_gap_* | ✓ |

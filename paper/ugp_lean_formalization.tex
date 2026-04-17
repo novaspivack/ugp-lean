@@ -430,12 +430,29 @@ The remaining modules (\texttt{Phase4}, \texttt{Papers},
 \texttt{Instance}, \texttt{Conjectures}) provide stubs, citable
 entry points, and bridge instances for companion libraries.
 
+The \texttt{TE22} module provides a machine-checked framework for
+the TE2.2 PSC universe scan result.
+Two theorems are proved with zero \texttt{sorry}:
+\texttt{ugp\_coupling\_predictions\_are\_independent} (the three
+UGP-derived coupling ratio predictions $C_{15}$, $C_{16}$, $C_4'$
+are algebraically derived from ugp-lean machine-checked rationals,
+not from SM coupling data) and
+\texttt{ugp\_g1g2\_prediction\_close\_to\_SM} (the UGP $g_1^2/g_2^2$
+prediction is within $2\%$ of the SM value at $M_Z$).
+A third theorem (\texttt{SM\_is\_D\_minimizer\_extended}) states that
+the SM is the unique $D$-minimizer over 34,560 discretized universe
+descriptions; its proof is a \texttt{sorry} placeholder pending
+a \texttt{native\_decide} certification once all constraint functions
+have computable instances (see computational certificate in
+\texttt{ugp-physics/MFRR/.../extended\_scan\_results.json},
+SHA-256: \texttt{407078d7\ldots}).
+
 \subsection{Zero-sorry, zero-custom-axiom policy}
 
 The core proof path---from \texttt{RidgeDefs} through \texttt{RSUC},
 the \gte{} orbit, and the general theorems---contains \emph{zero}
 \texttt{sorry} placeholders and \emph{zero} custom axioms.  Every
-theorem is either:
+theorem in that path is either:
 \begin{itemize}[nosep]
 \item proved by algebraic reasoning (\texttt{ring}, \texttt{omega},
   \texttt{linarith}, \texttt{simp}), or
@@ -444,6 +461,15 @@ theorem is either:
 The only axioms in scope are \lean{}'s foundational axioms
 (\texttt{propext}, \texttt{Quot.sound}, \texttt{Classical.\allowbreak choice})
 and Mathlib's standard imports.
+
+One theorem in the new \texttt{TE22} module
+(\texttt{SM\_is\_D\_minimizer\_extended}) carries a documented
+\texttt{sorry} placeholder: it states the SM uniqueness result for
+the extended 34,560-universe scan, with proof strategy and
+computational certificate recorded; the \texttt{native\_decide}
+proof is in progress.
+All other theorems in the library, including the two new coupling
+independence theorems, are \texttt{sorry}-free.
 
 \subsection{Non-circularity contract}\label{sec:noncircular}
 

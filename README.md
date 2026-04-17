@@ -50,6 +50,7 @@ lake build
 | **GTE** | Evolution, Orbit | Canonical orbit |
 | **Phase4** | DeltaUGP, GaugeCouplings, UCL, PR1 | Gauge, δ_UGP, stubs |
 | **Universality** | Rule110, UWCA, TuringUniversal, ArchitectureBridge | Rule 110, Turing-universal |
+| **TE22** | TE22.ScanCertificate | TE2.2 scan certificate; UGP coupling ratio predictions |
 | **Instance** | NemSBridge | NEMS Paper 25 bridge |
 
 **Non-circularity:** Core/ may not import Compute/. See [docs/DESIGN.md](docs/DESIGN.md).
@@ -63,6 +64,8 @@ lake build
 - `canonical_orbit_triples` — (1,73,823) → (9,42,1023) → (5,275,65535)
 - `strengthening_cannot_add_survivors` — Predicate strengthening cannot add survivors to Residual
 - `ugp_is_turing_universal` — UGP substrate Turing-universal
+- `ugp_coupling_predictions_are_independent` *(TE22)* — C15/C16/C4' coupling ratio predictions derived from ugp-lean machine-checked rationals, not from SM data
+- `ugp_g1g2_prediction_close_to_SM` *(TE22)* — UGP g₁²/g₂² prediction within 2% of SM value at M_Z
 
 ## References
 
