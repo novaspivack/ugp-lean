@@ -92,6 +92,9 @@ What ugp-lean proves. All listed theorems have **0 sorry, 0 axioms** on the core
 | Theorem | Module | Statement |
 |---------|--------|-----------|
 | **leptonB_matches_deltaUGP** | DeltaUGP | deltaUGPFormula leptonB |
+| **k_L2_eq** | ElegantKernel | k_L2 = 7/512 (derived from ugp1_s=7, 2^9=512 block scale) |
+| **k_L2_from_ugp1_s** | ElegantKernel | k_L2 = ugp1_s / 2^9 (structural link to mirror offset) |
+| **block_denom_in_half_ridge_interval** | ElegantKernel | 504 < 2^9 ≤ 1008=ridge(10) (2^9 is unique power of 2 in half-ridge interval) |
 | **g1Sq_bare_eq** | GaugeCouplings | g1Sq_bare = 16/125 |
 | **g2Sq_bare_eq** | GaugeCouplings | g2Sq_bare = 2329/5400 |
 | **g3Sq_bare_eq** | GaugeCouplings | g3Sq_bare = 41075281/27648000 |
