@@ -13,4 +13,4 @@ Each entry should document:
 
 | Target | Phase | Reason | Paper-claim status | Date |
 |---|---|---|---|---|
-| (empty) | | | | |
+| THM-UCL-1 (k_gen² = −φ/2) | 1.5 | DEFER — criterion (A) FAILS: Paper 6 §2.5.4 derivation chain incomplete; equal-edge constraint Eq. (272) is identically satisfied for any k_gen², does not uniquely force −φ/2.  Criterion (D) passes strongly (14× rigidity), (E) marginal (20% at 288 ppm).  | Reclassify from "derived via Fibonacci-D₅" to "numerically identified; derivation incomplete."  Open Problem (x). | 2026-04-17 |
