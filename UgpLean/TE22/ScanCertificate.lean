@@ -122,41 +122,81 @@ theorem ugp_g3sq_over_g2sq_val :
     Value = 1.0094... (extended scan) ≈ 1.0667 (original 14-constraint scan). -/
 noncomputable def D_SM_extended : ℝ := 1.009411295
 
-/-- **Theorem: SM is the unique D-minimizer over 20,160+ universe descriptions.**
+/-- **SM gauge uniqueness (decidable fragment of the TE2.2 scan certificate).**
 
-    This theorem asserts that no universe in the TE2.2 discrete scan achieves
-    lower dissonance than the Standard Model.
+This theorem captures the **decidable fragment** of the full SM D-minimizer
+claim: among all 60 (GaugeGroup, Dimension) pairs in the TE2.2 scan's
+discrete parameter space, **exactly one** pair satisfies the SM predicate
+`isSMGauge g d` — namely `(SU3xSU2xU1, 4D)`.
 
-    ## Proof status: OPEN (sorry placeholder)
+This is proved by `decide` over the 12 × 5 = 60 element Cartesian product.
 
-    ## To complete this proof:
-    1. Make all 14 constraint functions `Computable` with `Decidable` instances.
-    2. Define a `Fintype` instance for the full `UniverseParams` product type.
-    3. Replace `sorry` with:
-       ```
-       native_decide
-       ```
-       or a certified enumeration over `Fintype.elems`.
+## What this does and does not prove
 
-    ## Evidence for the theorem
-    The Python scan (`te2_2_run_scan_extended.py`, SHA 407078d7...) exhaustively
-    verified this over 34,560 universe descriptions with 12 gauge groups.
-    All 12 PSC-passing universes have (d=4, G=SU(3)×SU(2)×U(1), N_gen=3).
-    All 5 new BSM groups (Pati-Salam, E₆, G₂, SU(6), SU(4)) fail PSC.
+**Does prove:** the SM gauge/dimension label is uniquely selected by the
+`isSMGauge` predicate.  No other gauge group or spacetime dimension in the
+TE2.2 parameter space is labelled as SM.
 
-    ## Reference
-    TE2.2 extended scan: `MFRR/.../results/extended_scan_results.json`
-    UGP coupling predictions: `UgpLean.Phase4.GaugeCouplings` (this repo)
--/
+**Does not prove:** the full "SM is the unique D-minimizer" claim (that no
+non-SM universe achieves lower dissonance than SM), which additionally
+requires the dissonance functional `D[Psi]` to be implemented as a computable
+function over `UniverseParams`, plus a `Fintype` instance and a
+`native_decide` over the full 20,160+ universe enumeration.
+
+## Full claim evidence (not Lean-certified here)
+
+The Python scan (`te2_2_run_scan_extended.py`, SHA 407078d7...) exhaustively
+verified the full D-minimality claim over 34,560 universe descriptions with
+12 gauge groups.  All 12 PSC-passing universes have (d=4, G=SU(3)×SU(2)×U(1),
+N_gen=3).  All 5 new BSM groups (Pati-Salam, E₆, G₂, SU(6), SU(4)) fail PSC.
+
+## Open work
+
+The full SM_is_D_minimizer theorem (over all 20,160+ universe descriptions)
+requires:
+1. Making all 14 constraint functions `Computable` with `Decidable` instances.
+2. Defining a `Fintype` instance for the full `UniverseParams` product type.
+3. Running `native_decide` over the enumeration.
+
+This is tracked in the technical-debt registry as tractable 1-2-day work.
+
+## Reference
+TE2.2 extended scan: `MFRR/.../results/extended_scan_results.json`
+UGP coupling predictions: `UgpLean.Phase4.GaugeCouplings` (this repo) -/
+theorem SM_gauge_uniquely_selected :
+    (Finset.univ : Finset (GaugeGroup × Dimension)).filter
+        (fun p => isSMGauge p.1 p.2) =
+      {(GaugeGroup.SU3xSU2xU1, ⟨2, by norm_num⟩)} := by
+  decide
+
+/-- Equivalent formulation: the `isSMGauge` predicate is logically equivalent
+to `(g = SU3xSU2xU1) ∧ (dim_val d = 4)` — so the gauge label has a unique
+combinatorial characterization. -/
+theorem isSMGauge_iff :
+    ∀ (g : GaugeGroup) (d : Dimension),
+      isSMGauge g d = true ↔
+        (g = GaugeGroup.SU3xSU2xU1 ∧ dim_val d = 4) := by
+  decide
+
+/-- Convenience: `isSMGauge` holds exactly for the pair `(SU3xSU2xU1, 4D)`. -/
+theorem isSMGauge_SU3xSU2xU1_4D :
+    isSMGauge GaugeGroup.SU3xSU2xU1 ⟨2, by norm_num⟩ = true := by
+  decide
+
+/-- **DEPRECATED placeholder** — superseded by `SM_gauge_uniquely_selected`.
+
+This theorem previously had the name `SM_is_D_minimizer_extended` but as
+originally stated (`∀ g, ¬ isSMGauge g d → True`) it was vacuous — the
+conclusion was `True` and it proved nothing about dissonance minimality.
+
+Retained here as an alias pointing to the (still-open) full D-minimality
+claim.  When the full native_decide certification is complete, this alias
+will be replaced by the genuine theorem. -/
 theorem SM_is_D_minimizer_extended :
-    ∀ (g : GaugeGroup),
-    ¬ (isSMGauge g ⟨2, by norm_num⟩) →
-    True := by
-  -- TODO: Replace with actual dissonance minimality proof via native_decide.
-  -- Current form is a placeholder showing the theorem structure.
-  -- Full proof requires computable D[Psi] over all universe parameters.
-  intro g _h
-  trivial
+    ∀ (g : GaugeGroup) (d : Dimension),
+      isSMGauge g d = true ↔
+        (g = GaugeGroup.SU3xSU2xU1 ∧ dim_val d = 4) :=
+  isSMGauge_iff
 
 /-- Key lemma: The three UGP coupling ratio predictions are algebraically
     derived from ugp-lean constants, not from SM coupling data. -/

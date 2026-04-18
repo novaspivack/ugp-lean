@@ -52,7 +52,8 @@ match.  See registry at `ugp-physics:specs/WORKING_NOTES/TECH_DEBT_LEAN_SORRY_RE
 | **TE22 Scan Certificate (Apr 2026)** | | | |
 | TE22 coupling predictions are algebraically independent of SM data | TE22.ScanCertificate | ugp_coupling_predictions_are_independent | ✓ |
 | UGP g1²/g2² prediction within 2% of SM@Mz | TE22.ScanCertificate | ugp_g1g2_prediction_close_to_SM | ✓ |
-| TE22 SM D-minimizer (framework) | TE22.ScanCertificate | SM_is_D_minimizer_extended | ⚠ sorry (native_decide pending) |
+| TE22 SM gauge uniquely selected (decidable fragment) | TE22.ScanCertificate | SM_gauge_uniquely_selected, isSMGauge_iff, SM_is_D_minimizer_extended | ✓ (via `decide`) |
+| TE22 SM full D-minimizer (framework) | TE22.ScanCertificate | — (pending Fintype + native_decide on full UniverseParams) | ⏳ tracked in tech-debt registry |
 | **GTE Structural Theorems** | | | |
 | Mirror orbit size 2 (involution) | GTE.StructuralTheorems | mirror_fiber_two, mirror_pair_induces_loop | ✓ |
 | Minimality-duality at n=10 | GTE.StructuralTheorems | minimality_duality_n10, only_survivors_n10 | ✓ |

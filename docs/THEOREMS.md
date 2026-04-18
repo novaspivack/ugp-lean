@@ -2,19 +2,27 @@
 
 What ugp-lean proves. All listed theorems have **0 sorry, 0 axioms** on the core path unless explicitly marked ⚠.
 
-**Sorry audit (2026-04-18):** three documented sorries remain, all openly
-disclosed with citations:
+**Sorry audit (2026-04-18):** **only two** sorries remain in the codebase,
+both openly disclosed with precise citations:
 - `dickman_equidistribution_in_APs` and `crt_equidistribution_within_regime`
   in `GTE.AnalyticArchitecture` — classical analytic-NT results (Tenenbaum
-  III.6); pending Mathlib analytic-NT infrastructure.
-- `SM_is_D_minimizer_extended` in `TE22.ScanCertificate` — finite-enumeration
-  claim pending `native_decide` over a `Fintype` instance on the universe
-  description product type.
+  III.6); pending Mathlib analytic-NT infrastructure (Dickman function
+  asymptotics).  These are research-level formalization gaps, not
+  correctness defects.
 
-Prior integrity issue fixed 2026-04-18: the Tarski `fingerprint_fixed_point_exists`
-statement on `Finset ℕ` with only monotonicity was **false** (counter-example
-`F(P) = P ∪ {max(P)+1}`); restated on `Set ℕ` and proved via `OrderHom.lfp`;
-bounded `Finset` variant `fingerprint_fixed_point_bounded` also added.
+**Prior integrity issues fixed 2026-04-18:**
+- **Tarski `fingerprint_fixed_point_exists`** statement on `Finset ℕ` with
+  only monotonicity was **false** (counter-example `F(P) = P ∪ {max(P)+1}`);
+  restated on `Set ℕ` and proved via `OrderHom.lfp`; bounded `Finset` variant
+  `fingerprint_fixed_point_bounded` also added.
+- **TE22 `SM_is_D_minimizer_extended` vacuous theorem** — the original
+  statement had conclusion `True` (vacuous) despite its name claiming SM
+  D-minimizer uniqueness.  Replaced with a genuine decidable uniqueness
+  claim `SM_gauge_uniquely_selected` + `isSMGauge_iff` (both proved by
+  `decide`) that captures the decidable fragment.  The original name is
+  retained as an alias pointing to `isSMGauge_iff`.  The **full** SM
+  D-minimizer theorem (over the 20,160+ universe discretization) remains
+  pending Fintype + native_decide and is tracked in the tech-debt registry.
 
 ## Core Classification (RSUC)
 
@@ -114,7 +122,9 @@ bounded `Finset` variant `fingerprint_fixed_point_bounded` also added.
 | **g3Sq_bare_eq** | GaugeCouplings | g3Sq_bare = 41075281/27648000 |
 | **ugp_coupling_predictions_are_independent** | TE22.ScanCertificate | C15/C16/C4' derived from ugp-lean rationals, not from SM data |
 | **ugp_g1g2_prediction_close_to_SM** | TE22.ScanCertificate | UGP g1²/g2² prediction within 2% of SM value at M_Z |
-| **SM_is_D_minimizer_extended** (framework) | TE22.ScanCertificate | SM unique D-minimizer over 34,560 universes — sorry pending native_decide |
+| **SM_gauge_uniquely_selected** | TE22.ScanCertificate | Among all 60 (GaugeGroup, Dimension) pairs, exactly `(SU3xSU2xU1, 4D)` satisfies `isSMGauge` (decided) |
+| **isSMGauge_iff** | TE22.ScanCertificate | `isSMGauge g d = true ↔ g = SU3xSU2xU1 ∧ dim_val d = 4` (decided) |
+| **SM_is_D_minimizer_extended** | TE22.ScanCertificate | Alias of `isSMGauge_iff` (decidable fragment of full D-minimizer claim; full claim over 20,160+ universes still pending Fintype+native_decide) |
 
 ## GTE Number Theory
 
