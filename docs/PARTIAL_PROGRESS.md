@@ -1,8 +1,12 @@
-# SPEC_029_UCL1 — Partial Progress Report
+# SPEC_029_UCL1 — Partial Progress Report (SUPERSEDED)
 
 **Date:** 2026-04-18
 **Branch:** `unconditional_closure_attempt_20260418`
-**Status:** PARTIAL CREDIT — significant reduction of axiomatic content
+**Status:** ~~PARTIAL CREDIT~~ → **SUPERSEDED by SOLVED.md** (full closure achieved)
+
+> **Note:** This document describes the intermediate partial-credit state.
+> The full unconditional closure was subsequently achieved in
+> `FullClosure.lean` — see `SOLVED.md` for the definitive result.
 
 ---
 
