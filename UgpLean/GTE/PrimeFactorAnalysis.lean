@@ -149,21 +149,19 @@ theorem factor_42 : (42 : ℕ) = 2 * 3 * 7 := by norm_num
 theorem factor_275 : (275 : ℕ) = 5 ^ 2 * 11 := by norm_num
 
 -- ════════════════════════════════════════════════════════════════
--- §6  OEIS reference
+-- §6  UGP prime sequence anchors
 -- ════════════════════════════════════════════════════════════════
 
 /-!
-## OEIS A394412 — UGP Primes
+## UGP Primes (sequence anchors)
 
-The UGP primes form OEIS sequence A394412: primes p such that
+The UGP primes are primes p such that
 b × (q + 13) = 2^n − 16 and p = (b + q + 20) × q + 20
 for some integers b ≥ 16, q ≥ 3, n ≥ 5.
 
 The Lepton Seed c-value 823 and its mirror 2137 are the first two terms.
-
-Submitted March 2026. 57 terms computed up to 10^8.
-
-See: https://oeis.org/A394412
+57 terms have been computed up to 10^8 via exhaustive sieve.
+The UGP prime predicate is defined in `UgpLean.GTE.UGPPrimes`.
 -/
 
 /-- 823 is the first UGP prime (n=10, b₂=42, q₂=24). -/

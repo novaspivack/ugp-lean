@@ -7,11 +7,11 @@ import UgpLean.GTE.MirrorDualConjecture
 /-!
 # UgpLean.GTE.UGPPrimes — The UGP Prime Predicate and Existence Theorems
 
-This file defines the formal `IsUGPPrime` predicate matching OEIS A394412,
+This file defines the formal `IsUGPPrime` predicate for the UGP prime sequence,
 proves that 823 and 2137 satisfy it with explicit witnesses, and establishes
 that UGP primes exist at multiple distinct ridge levels.
 
-## OEIS A394412
+## The UGP prime sequence
 
 Primes p such that b*(q+13) = 2^n - 16 and p = (b+q+20)*q + 20
 for some integers b ≥ 16, q ≥ 3, n ≥ 5.
@@ -21,7 +21,7 @@ First terms: 823, 2137, 9007, 27817, 46681, ...
 
 ## What is proved here
 
-1. `IsUGPPrime`: the formal predicate (matching A394412)
+1. `IsUGPPrime`: the formal predicate
 2. `c1Val_eq_c1FromPair`: the two formulations of the UGP formula agree
 3. `is_ugp_prime_823`: 823 is a UGP prime with witnesses (b=42, q=11, n=10)
 4. `is_ugp_prime_2137`: 2137 is a UGP prime with witnesses (b=24, q=29, n=10)
@@ -38,10 +38,10 @@ Infinitely many UGP primes would follow from the Mirror-Dual Conjecture (open).
 namespace UgpLean
 
 -- ════════════════════════════════════════════════════════════════
--- §1  The IsUGPPrime predicate (matching OEIS A394412)
+-- §1  The IsUGPPrime predicate
 -- ════════════════════════════════════════════════════════════════
 
-/-- A prime p is a **UGP prime** (OEIS A394412) if there exist
+/-- A prime p is a **UGP prime** if there exist
     integers b ≥ 16, q ≥ 3, n ≥ 5 such that:
       b * (q + 13) = 2^n - 16   (ridge divisor condition)
       p = (b + q + 20) * q + 20  (prime-lock formula)
@@ -163,7 +163,7 @@ theorem ugp_primes_at_three_levels :
 
     Computational evidence: 30 mirror-dual pairs found for n ≤ 50,
     giving 60 UGP primes (with 57 independently verified up to 10^8
-    via exhaustive sieve, submitted as OEIS A394412). -/
+    via exhaustive sieve). -/
 def UGPPrimeInfinitudeConjecture : Prop :=
   ∀ N : ℕ, ∃ p : ℕ, N ≤ p ∧ IsUGPPrime p
 
