@@ -25,7 +25,7 @@ This module provides the FULL unconditional closure of THM-UCL-1 by:
 
 ## The key idea
 
-The sandbox's `k_gen2 : ℝ := -(goldenRatio / 2)` is a DEFINITION
+The library's `k_gen2 : ℝ := -(goldenRatio / 2)` is a DEFINITION
 that asserts the value. For unconditional closure, we need a definition
 that DERIVES the value.
 
@@ -49,13 +49,13 @@ It is defined as the negative root of a polynomial that arises from
 the Fibonacci characteristic polynomial. The proof DERIVES that this
 root equals −φ/2.
 
-## Success criterion check (SPEC_029 §6.4)
+## Verification summary
 
-✓ At least one of §5.1, §5.2, or §5.3 compiles zero-sorry.
-✓ The dependency chain does NOT route through k_gen2 being DEFINED
-  as -(goldenRatio/2).
-✓ #print axioms shows only Mathlib standard axioms.
-✓ Build passes.
+✓ The unconditional derivation compiles without `sorry`.
+✓ The dependency chain does NOT route through `k_gen2` being DEFINED
+  as `-(goldenRatio/2)`.
+✓ `#print axioms` shows only Mathlib standard axioms on the main theorems.
+✓ The file builds in the project CI sense (`lake build`).
 -/
 
 namespace UgpLean.ElegantKernel.Unconditional.FullClosure
@@ -187,22 +187,22 @@ theorem thm_ucl1_pentagon_membership :
     k_gen2_derived ∈ PentagonRealParts := by
   exact min_poly_implies_pentagon_membership k_gen2_derived k_gen2_derived_satisfies_poly
 
-/-! ## §5. Consistency with the sandbox definition
+/-! ## §5. Consistency with the packaged definition
 
-Show that the derived definition agrees with the sandbox's `k_gen2`. -/
+Show that the derived definition agrees with `k_gen2` from `KGen2`. -/
 
-/-- The derived k_gen2 agrees with the sandbox definition. -/
-theorem derived_agrees_with_sandbox :
+/-- The derived `k_gen2` agrees with the packaged `k_gen2` definition. -/
+theorem derived_agrees_with_definition :
     k_gen2_derived = k_gen2 := by
   have h1 := thm_ucl1_fully_unconditional
   unfold k_gen2
   exact h1
 
-/-- **Full closure with sandbox compatibility.**
+/-- **Full closure packaged alongside `k_gen2`.**
 
-k_gen2_derived = k_gen2 = -(goldenRatio/2) = cos(4π/5),
+`k_gen2_derived = k_gen2 = -(goldenRatio/2) = cos(4π/5)`,
 with the DERIVATION going through the Fibonacci char poly,
-not through the sandbox definition. -/
+not through the explicit `k_gen2` definition. -/
 theorem full_closure_summary :
     k_gen2_derived = -(goldenRatio / 2) ∧
     k_gen2_derived = cos (4 * π / 5) ∧
@@ -213,7 +213,7 @@ theorem full_closure_summary :
    thm_ucl1_cosine_form,
    thm_ucl1_pentagon_membership,
    k_gen2_derived_neg,
-   derived_agrees_with_sandbox⟩
+   derived_agrees_with_definition⟩
 
 /-! ## §6. The complete derivation chain (self-contained)
 

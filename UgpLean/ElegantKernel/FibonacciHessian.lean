@@ -61,9 +61,8 @@ to formalize the UCL itself as a derived object from the GTE (the Paper 8
 full framework construction).  That is substantial but is a clear target.
 
 In this module we state the connection as the `FibonacciHessian` claim,
-prove it holds in the sandbox (where k_gen² is defined), and establish the
-equivalence between the Phase B1 cyclotomic form and the Phase B2 Fibonacci
-form.
+prove it for the packaged `k_gen2` definition, and establish the equivalence
+between the Phase B1 cyclotomic form and the Phase B2 Fibonacci form.
 -/
 
 namespace UgpLean.ElegantKernel.FibHess
@@ -85,7 +84,7 @@ explicit. -/
 def FibonacciHessian : Prop :=
   k_gen2 = -(goldenRatio / 2)
 
-/-- The Fibonacci Hessian claim holds (in the sandbox), by Phase A. -/
+/-- The Fibonacci Hessian claim holds for the packaged definition, by Phase A. -/
 theorem fibonacci_hessian_holds : FibonacciHessian :=
   k_gen2_eq_neg_phi_half
 

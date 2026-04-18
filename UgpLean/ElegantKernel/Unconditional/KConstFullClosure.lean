@@ -25,13 +25,12 @@ Equivalently:
 
   **k_const = −1/(2π) + (63/2048) · (ln φ)²**
 
-## SPEC note on the "numerical discrepancy"
+## Note on the apparent "numerical discrepancy"
 
-SPEC_028_TP1 §3 `THM-UCL-5` flagged a concern that the paper table value
-`k_const = −0.15203` and the text claim `k_const' = −1/(2π) = −0.15915`
-appear to differ by 4.7 %, which would be outside the paper's claimed
-dual-path convergence.  **This is not a discrepancy; it is the centering
-shift.**  Both values are correct:
+The tabulated value `k_const = −0.15203` and the centered gauge value
+`k_const' = −1/(2π) = −0.15915` can look inconsistent if read as the same
+quantity.  **They are not contradictory: they differ by the centering
+shift.**  Both are correct in their roles:
 - The paper **table** gives the uncentered constant in the original UCL
   basis: `k_const = −0.15203`.
 - The paper **text** gives the centered constant in the mirror-barycenter

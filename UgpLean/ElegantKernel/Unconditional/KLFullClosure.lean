@@ -12,8 +12,8 @@ import UgpLean.LModelDerivation
 
 ## Context
 
-The UCL linear-L coefficient `k_L ≈ 0.01973720` is claimed in
-`theoretical_coefficients.json` to have the closed-form
+The UCL linear-L coefficient `k_L ≈ 0.01973720` matches numerical calibration
+to the closed-form
 **k_L = −2 · k_L² · L*** where **L* = −(3/2) · ln(φ)**.
 
 Since `k_L² = 7/512` is already Lean-certified
@@ -60,7 +60,7 @@ The balance equation itself is the UGP physical principle and is taken as a
 structural characterization.  What Lean proves is that, GIVEN this principle,
 L* is uniquely determined as −(3/2)·ln(φ).
 
-## Defensibility (Phase 1.5 pre-check)
+## Defensibility checklist
 
 - **(A) Pre-specification:** both integers (2, 3) come from pre-existing
   GTE Lean theorems, not from the target value.

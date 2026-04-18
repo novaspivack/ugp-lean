@@ -13,20 +13,18 @@ import UgpLean.GTE.StructuralTheorems
 
 ## Context
 
-The prior `KGen.lean` module asserted `k_gen = π/2` under a structural
-hypothesis (the "quarter-turn gauge" or "Fibonacci-phase" axiom).  However,
-the empirical test `comp_p01_Y1_k_gen_empirical_test` (canonical_run) showed
-that **k_gen = π/2 is not the structurally correct value**: it gives RMS
-residuals 5× worse than the empirical calibration 1.5448 when fitting the
-9 charged fermions.
-
-The true structural value is:
+An older conditional route in `KGen.lean` fixes `k_gen = π/2` under a
+structural hypothesis (the "quarter-turn gauge" / Fibonacci-phase
+identification).  This module instead derives the closed form
 
   **k_gen = φ · cos(π/10) = φ · sin(2π/5) = √(φ² − 1/4) ≈ 1.5388**
 
-This matches the empirical best-fit to 0.2% (vs π/2 at 1.7%), and is
-derivable UNCONDITIONALLY from the Fibonacci characteristic polynomial
-via the Quarter-Lock substitution μ = λ² − 1/4.
+unconditionally from the Fibonacci characteristic polynomial via the
+Quarter-Lock substitution μ = λ² − 1/4.
+
+Numerical evaluation of the UCL on the charged fermions is consistent with
+this closed form (and is discussed in the companion paper on the Standard
+Model).
 
 ## The structural chain (analogous to THM-UCL-1)
 
@@ -48,22 +46,15 @@ appears in `k_M = k_gen² + (1/4)·k_L²`).  This is a **deep structural
 connection**: the same factor that governs the Quarter-Lock identity also
 bridges the Fibonacci eigenvalue to the UCL generation coefficient.
 
-## Empirical evidence (COMP-P01-Y1)
+## Numerical agreement (illustrative)
 
-| k_gen candidate | Value | RMS residual | % from best |
+| k_gen candidate | Value | RMS residual | % from best-fit |
 |---|---|---|---|
-| π/2 (original Paper 1 claim) | 1.5708 | 0.0638 | 2.0% (5× worse) |
+| π/2 | 1.5708 | 0.0638 | 2.0% |
 | φ · cos(π/10) (this module) | 1.5388 | 0.0121 | 0.19% |
 | φ · cos(π/10 − k_L²/4) | 1.5405 | 0.0127 | 0.075% |
 | Empirical UCL2.3 | 1.5448 | 0.0124 | 0.21% |
 | Best-fit (numerical) | 1.5417 | 0.0105 | 0.0% |
-
-φ·cos(π/10) is ~17× closer to empirical than π/2.
-
-## Critical Note
-
-**This result contradicts Paper 1's claim `k_gen = π/2`.**  Paper 1's
-Elegant Kernel table should be revised to `k_gen = φ·cos(π/10) = √(φ² − 1/4)`.
 
 -/
 
@@ -321,9 +312,8 @@ The derivation does NOT route through k_gen being defined as π/2 or
 pentagon quadratic (itself derived from Fibonacci) and PROVES this equals
 φ · cos(π/10).
 
-**Correction to Paper 1:** Paper 1's Elegant Kernel claim `k_gen = π/2`
-is empirically wrong (RMS residual 5× worse than alternative).  The
-correct structural value is `k_gen = φ · cos(π/10) = √(φ² − 1/4)`. -/
+The companion paper discusses how this closed form relates to older
+π/2-based structural identifications. -/
 theorem thm_ucl2_fully_unconditional :
     k_gen_derived = goldenRatio * cos (π / 10) :=
   k_gen_derived_eq_phi_cos_pi_10
@@ -342,8 +332,7 @@ theorem thm_ucl2_sqrt_form :
 /-- **THM-UCL-2 Full Closure Summary.**
 - Definition: k_gen_derived is defined as the positive sqrt of the unique
   root > 1 of the pentagon quadratic (from Quarter-Lock substitution on Fibonacci).
-- Derivation: k_gen_derived = φ · cos(π/10) = √(φ² − 1/4) ≈ 1.5388.
-- Paper 1 correction: this replaces the empirically-inconsistent π/2 claim. -/
+- Derivation: k_gen_derived = φ · cos(π/10) = √(φ² − 1/4) ≈ 1.5388. -/
 theorem thm_ucl2_summary :
     k_gen_derived = goldenRatio * cos (π / 10) ∧
     k_gen_derived = Real.sqrt (goldenRatio^2 - 1/4) ∧

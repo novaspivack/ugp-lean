@@ -55,9 +55,8 @@ GROUNDED than the Paper 8 §C.3 "quarter-turn gauge" (which is an ad hoc
 normalization), but still requires identifying UCL's phase rate with the
 Fibonacci eigenvalue argument.
 
-If SPEC_029 succeeds in fully deriving the UCL from GTE dynamics, step 4
-would be unconditional.  In the current state, step 4 is the remaining
-structural axiom.
+A full derivation of the UCL from GTE dynamics would make step 4 unconditional.
+In the present formalization, step 4 is the remaining structural axiom.
 -/
 
 namespace UgpLean.ElegantKernel.KGenTarget
@@ -67,9 +66,9 @@ open Real UgpLean.ElegantKernel UgpLean.ElegantKernel.D5
 
 /-! ## Phase A: k_gen as a real number -/
 
-/-- The UCL generation coefficient.  Currently defined as π/2 in the
-sandbox; Phase B proves this from the Fibonacci-phase structural
-hypothesis + the GTE cascade step structure. -/
+/-- The UCL generation coefficient.  Currently defined as π/2 here;
+Phase B proves this from the Fibonacci-phase structural hypothesis and
+the GTE cascade step structure. -/
 noncomputable def k_gen : ℝ := π / 2
 
 theorem k_gen_eq : k_gen = π / 2 := rfl
@@ -157,7 +156,7 @@ subdominant eigenvalue spectrum. -/
 def FibonacciPhaseAxiom : Prop :=
   k_gen = (0 + Complex.arg (psi : ℂ)) / (cascadeSteps : ℝ)
 
-/-- The Fibonacci-Phase axiom is satisfied in the sandbox. -/
+/-- The Fibonacci-Phase axiom holds under the current definition of `k_gen`. -/
 theorem fibonacci_phase_axiom_holds : FibonacciPhaseAxiom := by
   unfold FibonacciPhaseAxiom
   rw [arg_psi_eq_pi, cascade_has_two_steps]
@@ -176,7 +175,7 @@ theorem k_gen_eq_pi_div_two_from_phase
   push_cast at hPhase
   linarith
 
-/-- **THM-UCL-2 (in-sandbox unconditional form).** -/
+/-- **THM-UCL-2 (unconditional relative to `FibonacciPhaseAxiom`).** -/
 theorem k_gen_eq_pi_div_two : k_gen = π / 2 :=
   k_gen_eq_pi_div_two_from_phase fibonacci_phase_axiom_holds
 

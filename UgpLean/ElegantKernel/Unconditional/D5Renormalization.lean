@@ -242,10 +242,11 @@ theorem golden_ratio_is_fibonacci_eigenvalue :
 golden ratio as the dominant eigenvalue, the only remaining hypothesis is
 the structural link h_link : k_gen2 = −(goldenRatio / 2).
 
-In the sandbox, this is trivially true by definition. The theorem's value
-is that it proves k_gen² = −φ/2 follows from the GTE Fibonacci spectrum
-plus the Hessian link — not from pentagonal membership as in Phase C. -/
-theorem sandbox_unconditional :
+When that link is supplied as definitional equality (`rfl` here), the
+hypothesis collapses. The theorem's value is that it proves `k_gen² = −φ/2`
+follows from the GTE Fibonacci spectrum plus the Hessian link — not from
+pentagonal membership as in Phase C. -/
+theorem unconditional_via_fibonacci :
     k_gen2 = -(goldenRatio / 2) :=
   unconditional_k_gen2 goldenRatio golden_ratio_char_poly Real.goldenRatio_pos rfl
 

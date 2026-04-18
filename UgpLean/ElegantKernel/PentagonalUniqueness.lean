@@ -155,10 +155,10 @@ theorem k_gen2_eq_neg_phi_half_from_membership_and_sign
     k_gen2 = -(goldenRatio / 2) :=
   unique_negative_pentagon_root k_gen2 hmem hneg
 
-/-- **Sanity check:**  The sandbox-defined `k_gen2 = −φ/2` satisfies both
+/-- **Sanity check:**  The definition `k_gen2 = −φ/2` satisfies both
 Phase C hypotheses trivially.  This establishes that Phase C's hypotheses
-are logically consistent and that the sandbox value witnesses them. -/
-theorem sandbox_satisfies_phase_C :
+are logically consistent for the packaged value. -/
+theorem definition_satisfies_phase_C :
     k_gen2 ∈ PentagonRealParts ∧ k_gen2 < 0 := by
   refine ⟨?_, ?_⟩
   · unfold PentagonRealParts
@@ -188,11 +188,11 @@ theorem D5_implies_Phase_C (h : D5PentagonHessian) :
     rw [h2]
     exact neg_phi_div_two_neg
 
-/-- **Net Phase C theorem:**  combining the sandbox witness with the
+/-- **Net Phase C theorem:**  combining the definition witness with the
 membership-and-sign uniqueness, we recover `k_gen² = −φ/2` under the
 strongest available structural hypotheses. -/
 theorem k_gen2_eq_neg_phi_half_phase_C : k_gen2 = -(goldenRatio / 2) := by
-  obtain ⟨hmem, hneg⟩ := sandbox_satisfies_phase_C
+  obtain ⟨hmem, hneg⟩ := definition_satisfies_phase_C
   exact k_gen2_eq_neg_phi_half_from_membership_and_sign hmem hneg
 
 end UgpLean.ElegantKernel.Pent

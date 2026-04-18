@@ -60,8 +60,8 @@ under it.  Concretely, we state:
 and derive `k_gen² = −φ/2` conditional on `D5PentagonHessian`.
 
 Because Phase A already established `k_gen₂ = −φ/2 = cos(4π/5)` by
-definition, `D5PentagonHessian` is satisfied in the sandbox; we provide an
-`instance` witnessing this.  Phase B2 replaces the trivial instance with a
+definition, `D5PentagonHessian` holds for the packaged `k_gen2`; we provide
+a theorem witnessing this.  Phase B2 replaces the trivial witness with a
 genuine derivation from L_model structure.
 -/
 
@@ -105,7 +105,8 @@ theorem k_gen2_eq_neg_phi_half_from_D5
   exact cos_4pi_div_five_eq_neg_phi_half
 
 /-- **THM-UCL-1 (Phase B1 combined).**  Combining the D₅ axiom (trivially
-witnessed in the sandbox) with the conditional theorem: `k_gen² = −φ/2`. -/
+witnessed for the packaged definition) with the conditional theorem:
+`k_gen² = −φ/2`. -/
 theorem k_gen2_eq_neg_phi_half : k_gen2 = -(goldenRatio / 2) :=
   k_gen2_eq_neg_phi_half_from_D5 d5_pentagon_hessian_holds
 

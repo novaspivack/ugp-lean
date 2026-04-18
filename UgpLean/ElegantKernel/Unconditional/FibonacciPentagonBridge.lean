@@ -133,8 +133,9 @@ theorem thm_ucl1_from_golden_ratio
 /-! ## The algebraic core (independent of k_gen2 definition)
 
 These theorems are stated for an ARBITRARY real number satisfying the
-structural hypothesis, not for the sandbox-defined k_gen2. This makes
-them reusable in any context where the Fibonacci-Hessian link holds. -/
+structural hypothesis, not specifically for the `k_gen2` definition in
+`KGen2`. This makes them reusable in any context where the Fibonacci-Hessian
+link holds. -/
 
 /-- For any real k = −λ/2 with λ² − λ − 1 = 0 and λ > 0: k = −φ/2.
 Standalone version independent of the `k_gen2` definition. -/
