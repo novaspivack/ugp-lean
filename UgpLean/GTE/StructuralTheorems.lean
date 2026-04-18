@@ -167,7 +167,7 @@ theorem lepton_mirror_fiber :
 /-- The "necessary loop": when a mirror pair exists at a ridge, the b₁-quotient
     contains an orbit of size 2 under the mirror involution. -/
 theorem mirror_pair_induces_loop (n b₂ q₂ : ℕ)
-    (h : MirrorDualPair n b₂ q₂) (hne : b₂ ≠ q₂) :
+    (_h : MirrorDualPair n b₂ q₂) (hne : b₂ ≠ q₂) :
     -- The orbit {(b₂,q₂),(q₂,b₂)} has size 2
     ({(b₂, q₂), (q₂, b₂)} : Finset (ℕ × ℕ)).card = 2 ∧
     -- Both map to the same b₁
@@ -220,28 +220,97 @@ lattice of prime sets: F(P) = {primes occurring in orbits indexed by primes of P
 By Tarski's fixed-point theorem (Mathlib: `OrderHom.lfp`), any monotone operator
 on a complete lattice has a fixed point.
 
-We formalize this for finite prime sets via the Knaster-Tarski theorem.
+We formalize this for the natural carrier `Set ℕ`, which is the complete lattice
+on which the fingerprint operator is intrinsically defined (prime patterns are
+not a priori bounded).
+
+**Historical note.**  A previous version of this theorem stated the claim on
+`Finset ℕ` with only a monotonicity hypothesis.  That version is actually
+**false** — e.g. `F(P) = P ∪ {(P.max).getD 0 + 1}` is monotone on `Finset ℕ`
+but has no fixed point because each iterate grows by one element.  On
+`Finset ℕ` a boundedness hypothesis is required.  We provide both versions
+below: the general `Set ℕ` form (provable from Mathlib's Tarski without
+extra hypotheses) and the bounded `Finset ℕ` form (provable by restriction
+to a finite Boolean sublattice).
 -/
 
-/-- **Fingerprint fixed-point** (Tarski): any monotone function on a complete
-    lattice has a least fixed point. Applied to prime pattern operators in UGP.
+/-- **Fingerprint fixed-point** (Tarski, `Set ℕ` form):
+    any monotone function on `Set ℕ` has a fixed point.
+    Applied to the UGP structural fingerprint operator on prime patterns.
 
-    Here we state the abstract version: a monotone endomorphism on
-    `Finset ℕ` (ordered by inclusion) has a fixed point.
-    Proof: by Tarski's theorem (from Mathlib via `OrderHom.lfp`). -/
+    Proof: Mathlib's `OrderHom.lfp` applied to the bundled monotone map. -/
 theorem fingerprint_fixed_point_exists
+    (F : Set ℕ → Set ℕ)
+    (hF : Monotone F) :
+    ∃ P : Set ℕ, F P = P :=
+  let F' : Set ℕ →o Set ℕ := ⟨F, hF⟩
+  ⟨OrderHom.lfp F', OrderHom.map_lfp F'⟩
+
+/-- **Bounded fingerprint fixed-point** (`Finset ℕ` form):
+    any monotone function `F : Finset ℕ → Finset ℕ` that maps into a fixed
+    bounded range `B` has a fixed point `P ⊆ B`.
+
+    Rationale: on `Finset ℕ` alone, monotonicity is insufficient for a fixed
+    point (see historical note above).  The boundedness hypothesis
+    `hBound : ∀ P, F P ⊆ B` restricts F to the finite Boolean lattice
+    `{P : Finset ℕ | P ⊆ B}`, on which Knaster-Tarski applies. -/
+theorem fingerprint_fixed_point_bounded
     (F : Finset ℕ → Finset ℕ)
-    (_hF : ∀ P Q : Finset ℕ, P ⊆ Q → F P ⊆ F Q) :
-    ∃ P : Finset ℕ, F P = P := by
-  -- Proof: By Tarski's fixed-point theorem applied to (Set ℕ, ⊆).
-  -- The monotone extension F' : Set ℕ → Set ℕ has a least fixed point.
-  -- Since F maps Finset ℕ → Finset ℕ and each Finset ℕ is a finite set,
-  -- the least fixed point is realized by a (possibly infinite) set.
-  -- For the finite-set version, we need F to be bounded — an additional hypothesis.
-  -- Here we prove the weaker abstract form using Tarski on Set ℕ,
-  -- noting that Finset ℕ is a sub-lattice.
-  -- Full proof: Knaster-Tarski, see Tarski 1955, Mathlib Order.FixedPoints.
-  sorry -- Tarski: proven in theory, mechanization via OrderHom.lfp in Set ℕ
+    (hF : ∀ P Q : Finset ℕ, P ⊆ Q → F P ⊆ F Q)
+    (B : Finset ℕ)
+    (hBound : ∀ P, F P ⊆ B) :
+    ∃ P : Finset ℕ, P ⊆ B ∧ F P = P := by
+  -- Iterate F from ∅ upward.  By monotonicity the chain is increasing;
+  -- by boundedness it lives in the finite Boolean sublattice {P | P ⊆ B};
+  -- by pigeonhole (cardinalities bounded by B.card) it stabilizes.
+  let chain : ℕ → Finset ℕ := fun n => Nat.rec ∅ (fun _ p => F p) n
+  have chain_mono : ∀ n, chain n ⊆ chain (n + 1) := by
+    intro n
+    induction n with
+    | zero => simp [chain]
+    | succ k ih =>
+      simp only [chain]
+      exact hF _ _ ih
+  have chain_bounded : ∀ n, chain n ⊆ B := by
+    intro n
+    induction n with
+    | zero => simp [chain]
+    | succ k _ => exact hBound _
+  -- The chain is an increasing sequence in the finite Boolean lattice 2^B.
+  -- By pigeonhole (the cardinalities are bounded), it must stabilize.
+  have card_bound : ∀ n, (chain n).card ≤ B.card := by
+    intro n; exact Finset.card_le_card (chain_bounded n)
+  -- Cardinalities are non-decreasing along the chain
+  have card_mono : ∀ n, (chain n).card ≤ (chain (n+1)).card := by
+    intro n; exact Finset.card_le_card (chain_mono n)
+  -- In a strictly increasing sequence bounded by B.card, by pigeonhole some
+  -- consecutive pair must have equal cardinality. Combined with set-inclusion,
+  -- this gives equality of sets, hence a fixed point.
+  have : ∃ n, (chain n).card = (chain (n+1)).card := by
+    by_contra h
+    push_neg at h
+    have strict : ∀ n, (chain n).card < (chain (n+1)).card := fun n =>
+      lt_of_le_of_ne (card_mono n) (h n)
+    -- The cardinality sequence is strictly increasing, so chain(B.card + 1).card
+    -- is > B.card + 1, contradicting card_bound.
+    have : ∀ n, n ≤ (chain n).card := by
+      intro n
+      induction n with
+      | zero => simp
+      | succ k ih =>
+        calc k + 1 ≤ (chain k).card + 1 := Nat.succ_le_succ ih
+          _ ≤ (chain (k+1)).card := strict k
+    have hcontra : B.card + 1 ≤ (chain (B.card + 1)).card := this (B.card + 1)
+    have : (chain (B.card + 1)).card ≤ B.card := card_bound (B.card + 1)
+    omega
+  obtain ⟨n, hn⟩ := this
+  refine ⟨chain n, chain_bounded n, ?_⟩
+  -- chain n ⊆ chain (n+1) and equal cardinalities ⟹ equal sets
+  have eq_sets : chain n = chain (n+1) :=
+    Finset.eq_of_subset_of_card_le (chain_mono n) hn.ge
+  -- chain (n+1) = F (chain n) by definition
+  show F (chain n) = chain n
+  simpa [chain] using eq_sets.symm
 
 -- ════════════════════════════════════════════════════════════════
 -- §5  Decidability Phase Transition
