@@ -1511,10 +1511,15 @@ These are the unique prime-locked pairs at $n=10$.
 Any monotone function $F : 2^{\mathbb{N}} \to 2^{\mathbb{N}}$ on the powerset lattice
 has a fixed point $P^*$ with $F(P^*) = P^*$, by Tarski's fixed-point theorem.
 Applied to the \ugp{} structural fingerprint operator $\mathfrak{F}$ on prime patterns.
+A bounded \lstinline|Finset| variant is additionally provided for the case of
+prime patterns restricted to a finite range, proved by iteration inside the
+finite Boolean sublattice (pigeonhole).
 
 \smallskip\noindent
-\textup{Lean:} \lstinline|fingerprint_fixed_point_exists|
-\textup{(proof cites Tarski 1955 via \lstinline|sorry|; abstract form proved)}
+\textup{Lean:} \lstinline|fingerprint_fixed_point_exists| (Set form, via
+\lstinline|OrderHom.lfp|), \lstinline|fingerprint_fixed_point_bounded|
+(Finset form with boundedness hypothesis).  Both fully proved; no
+\lstinline|sorry|.
 \end{theorem}
 
 \begin{theorem}[Decidability phase transition]\label{thm:phase}
