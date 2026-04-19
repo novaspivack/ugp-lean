@@ -7,6 +7,7 @@ import UgpLean.MassRelations.FroggattNielsen
 import UgpLean.MassRelations.CartanFlavonPotential
 import UgpLean.MassRelations.Z2OrbifoldDepth
 import UgpLean.MassRelations.HeavyFermionTower
+import UgpLean.MassRelations.KoideClosedForm
 
 /-!
 # UgpLean.MassRelations — Charged-Fermion Mass Structural Relations
@@ -47,6 +48,7 @@ See also:
 - `UgpLean.MassRelations.CartanFlavonPotential` — Round 22 Claim C sub-(ii): Z_6 × Z_16-invariant flavon potential whose minima reproduce the Round-21 transcendental flavon VEVs
 - `UgpLean.MassRelations.Z2OrbifoldDepth` — Round 23 Claim C sub-(i): Z_2-orbifold-depth interpretation of the doubled FN charges (1, 2, 4)
 - `UgpLean.MassRelations.HeavyFermionTower` — Round 24 Claim C alternative UV completion: heavy-fermion-tower model EFT-dual to FN-doubled
+- `UgpLean.MassRelations.KoideClosedForm` — Round 33 Priority 7 Phase II: Koide algebraic closed form and cyclotomic-12 identification; proves (2+√3) = 4·cos²(π/12), (1+√3)² = 8·cos²(π/12), and the +root `r_τ = 2(r_e+r_μ) + √3·√(r_e²+4r_e r_μ+r_μ²)` satisfies the Koide constraint
 -/
 
 namespace UgpLean.MassRelations

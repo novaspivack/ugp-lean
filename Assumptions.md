@@ -98,6 +98,15 @@ remains Claim C, open research.
 
 **Round 31 update (β = π/8 STRUCTURALLY FIXED):** Priority 5 (β discrimination among π/8, 2/5, 1/φ²) is closed.  `UgpLean.MassRelations.FroggattNielsen.beta_TT_equals_pi_div_eight` proves the structural identity `−log(ε_2) = π/8`, so β is not an empirical fit parameter but rather derived from the Round-22 Cartan-potential global minimum at φ_2 = −π/8.  Empirical discrimination at current PDG precision ALREADY rules out β = 2/5 (6.7σ, dominated by precise m_t) and β = 1/φ² (3.6σ); π/8 fits at 2.5σ consistent with data.  No alternative candidate has a comparable structural derivation in the framework.  See ugp-physics Lab Notes 31.
 
+**Round 33 update (Priority 7 Phase II — Koide):** Paper 1 OP(vii) / 4.4 — the longest-standing Koide-relation open problem — sees structural progress but not yet full closure.  `UgpLean.MassRelations.KoideClosedForm` adds seven theorems:
+- `cos_sq_pi_div_twelve` (cos²(π/12) = (2+√3)/4)
+- `two_plus_sqrt3_eq` ((2+√3) = 4·cos²(π/12))
+- `one_plus_sqrt3_sq` and `one_plus_sqrt3_sq_eq_eight_cos_sq` ((1+√3)² = 8·cos²(π/12))
+- `koide_solved_form_root` (closed form r_τ = 2(r_e+r_μ) + √3·√(r_e²+4r_e r_μ+r_μ²))
+- `koide_quadratic_discriminant_form` and `koide_iff_twoS_sq_eq_threeN` (45°-cone reformulation).
+
+Empirical (COMP-P01-GGG): PDG lepton vector at 44.99974° (0.95 arcsec from 45°); m_τ predicted from (m_e, m_μ) at 61 ppm = 0.91σ_PDG (within PDG 1σ).  Koide is structurally identified as a cyclotomic-12 algebraic identity, same atom family as α = π/6 in Round 13's TT derivation.  Full Phase III/IV flow construction (03_SPEC) is still open.  See ugp-physics Lab Notes 33.
+
 **Round 21 update (FIRST UV-COMPLETION REALISED):** Claim C now has a
 concrete physics model.  `UgpLean.MassRelations.FroggattNielsen` implements
 a **two-flavon Froggatt-Nielsen model with doubled FN charges**, reproducing

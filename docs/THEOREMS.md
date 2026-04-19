@@ -340,3 +340,22 @@ Includes Round 12 baseline + Rounds 17–18 VV three-factor extensions.
 **Status of physical-bridge "FormulaHolds" theorems:** Both `UpLeptonFormulaHolds` and (analogous) "VV holds on physical masses" theorems remain `True → trivial` placeholders in their respective modules, pending Lean formalization of E_base→physical-mass conversion.  See ugp-physics 02_SPEC §D.4.
 
 **Track D status (TT mechanism):** Compact-SU(3) character interpretation of the TT 2^g structure was definitively ruled out in Round 16 (algebraic integers vs transcendental targets); GUT CG rep-dim search ruled out in Round 15 (density-dominated null).  Best remaining candidate: binary cascade of π/6 phase shifts with 2^g accumulation per generation (under construction).
+
+### Koide Algebraic Closed Form — Priority 7 Phase II (`UgpLean.MassRelations.KoideClosedForm`) — Round 33
+
+Structural progress on Paper 1 OP(vii) / 4.4 (Koide relation).  Round RR established no 2-parameter family of S_3-equivariant q-preserving LINEAR operators with rational UGP entries exists.  Round 33 attacks the nonlinear/algebraic layer:
+1. **R33-A (geometric):** Koide Q = 2/3 ⟺ v makes a 45° angle with the democratic axis (1,1,1)/√3.  PDG lepton v is at 44.99974° (0.95 arcsec from π/4).
+2. **R33-B (algebraic):** Koide-consistent r_τ is the +root of the quadratic z² − 4z(x+y) + (x²+y²−4xy) = 0, i.e. `r_τ = 2(r_e+r_μ) + √3·√(r_e²+4 r_e r_μ+r_μ²)`.  Predicts m_τ = 1.776969 GeV from PDG m_e, m_μ, i.e. 61 ppm = 0.91σ_PDG.
+3. **R33-C (cyclotomic):** The coefficients are EXACT cyclotomic-12 UGP atoms: (2+√3) = 4·cos²(π/12); (1+√3)² = 8·cos²(π/12).  Koide lives in the same π/12 family as α = π/6 (Round 13's TT derivation).
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **cos_sq_pi_div_twelve** | KoideClosedForm | cos²(π/12) = (2+√3)/4 (half-angle of cos(π/6) = √3/2) |
+| **two_plus_sqrt3_eq** | KoideClosedForm | **R33-C leading coefficient:** (2+√3) = 4·cos²(π/12) (Koide ~ cyclotomic-12) |
+| **one_plus_sqrt3_sq** | KoideClosedForm | (1+√3)² = 2·(2+√3) (algebraic expansion) |
+| **one_plus_sqrt3_sq_eq_eight_cos_sq** | KoideClosedForm | **R33-C subleading coefficient:** (1+√3)² = 8·cos²(π/12); combined with `two_plus_sqrt3_eq` gives (1+√3) = 2√2·cos(π/12) |
+| **koide_solved_form_root** | KoideClosedForm | **R33-B closed form:** `koideQuadratic x y (2(x+y) + √3·√(x²+4xy+y²)) = 0` (the +root of the z-quadratic; PDG m_τ prediction at 0.91σ_PDG, 61 ppm) |
+| **koide_quadratic_discriminant_form** | KoideClosedForm | koide in z-discriminant form equivalence: `z² − 4z(x+y) + (x² + y² − 4xy) = koideQuadratic x y z` |
+| **koide_iff_twoS_sq_eq_threeN** | KoideClosedForm | **R33-A geometric:** `koideQuadratic x y z = 0 ⟺ 2(x+y+z)² = 3(x²+y²+z²)` (the 45°-cone condition on the positive octant) |
+
+OP(vii) remains partially open: these theorems establish the algebraic skeleton (solved form and cyclotomic atoms); the full UGP-native dynamical flow construction (Phase III/IV of 03_SPEC) is still to be done.

@@ -155,6 +155,7 @@ match.  See registry at `ugp-physics:specs/WORKING_NOTES/TECH_DEBT_LEAN_SORRY_RE
 | FN naturalness ε_1 < 1 ∧ ε_2 < 1 | MassRelations.FroggattNielsen | fn_naturalness | ✓ |
 | Falsifiable flavon-VEV-ratio prediction ε_1/ε_2 = e^(−5π/24) | MassRelations.FroggattNielsen | epsRatio_eq | ✓ |
 | **Round 31 / Priority 5: β = π/8 structurally fixed** (Priority 5 closure via Lean corollary) | MassRelations.FroggattNielsen | beta_TT_equals_pi_div_eight | ✓ |
+| **Round 33 / Priority 7: Koide closed form & cyclotomic-12 identification** (R33-B `koide_solved_form_root`, R33-C `two_plus_sqrt3_eq`, `one_plus_sqrt3_sq_eq_eight_cos_sq`; R33-A `koide_iff_twoS_sq_eq_threeN`) | MassRelations.KoideClosedForm | koide_solved_form_root, two_plus_sqrt3_eq, one_plus_sqrt3_sq_eq_eight_cos_sq, koide_iff_twoS_sq_eq_threeN, cos_sq_pi_div_twelve | ✓ |
 | **Round 22 — Claim C sub-(ii) (Cartan-invariant flavon potential)** | | | |
 | Z_6 generator angle = 2 × Claim-A bisector angle | MassRelations.CartanFlavonPotential | z6_generator_eq_two_times_claim_A | ✓ |
 | Z_6 / Z_16 lower bounds on potential parts | MassRelations.CartanFlavonPotential | z6_part_bounded_below, z16_part_bounded_below | ✓ |
