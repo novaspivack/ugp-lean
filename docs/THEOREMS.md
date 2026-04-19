@@ -1,6 +1,20 @@
 # ugp-lean: Theorem Catalog
 
-What ugp-lean proves. All listed theorems have **0 sorry, 0 axioms** on the core path unless noted.
+What ugp-lean proves. All listed theorems have **0 sorry, 0 axioms** on the core path unless explicitly marked ⚠.
+
+**Sorry audit (2026-04-18):** three documented sorries remain, all openly
+disclosed with citations:
+- `dickman_equidistribution_in_APs` and `crt_equidistribution_within_regime`
+  in `GTE.AnalyticArchitecture` — classical analytic-NT results (Tenenbaum
+  III.6); pending Mathlib analytic-NT infrastructure.
+- `SM_is_D_minimizer_extended` in `TE22.ScanCertificate` — finite-enumeration
+  claim pending `native_decide` over a `Fintype` instance on the universe
+  description product type.
+
+Prior integrity issue fixed 2026-04-18: the Tarski `fingerprint_fixed_point_exists`
+statement on `Finset ℕ` with only monotonicity was **false** (counter-example
+`F(P) = P ∪ {max(P)+1}`); restated on `Set ℕ` and proved via `OrderHom.lfp`;
+bounded `Finset` variant `fingerprint_fixed_point_bounded` also added.
 
 ## Core Classification (RSUC)
 
@@ -115,6 +129,19 @@ What ugp-lean proves. All listed theorems have **0 sorry, 0 axioms** on the core
 | **localDensity_3..43** | ResonantFactory | ρ_F(p) for good primes p ≤ 43 |
 | **hasse_check_no_obstruction** | ResonantFactory | ρ_F(p) < p for all checked primes |
 
+## Analytic Architecture (documented statements)
+
+Statements supporting the Selberg–Delange architecture for the one-factor sum.
+Classical analytic-NT results from Tenenbaum III.6; Lean proofs pending
+Mathlib analytic-NT infrastructure (Dickman function asymptotics, character
+sum estimates).
+
+| Theorem | Module | Status |
+|---------|--------|--------|
+| **qminus_qplus_coprime** | AnalyticArchitecture | ✓ algebraic, proved zero-sorry |
+| **dickman_equidistribution_in_APs** | AnalyticArchitecture | ⚠ sorry — Tenenbaum III.6, Mathlib infra gap |
+| **crt_equidistribution_within_regime** | AnalyticArchitecture | ⚠ sorry — depends on Dickman + CRT |
+
 ## Resolved Conjectures (7 of 10)
 
 | Theorem | Module | Statement |
@@ -126,6 +153,19 @@ What ugp-lean proves. All listed theorems have **0 sorry, 0 axioms** on the core
 | **sharp_boundary_proved** | Conjectures | Decidable + RE-hard, both proved |
 | **kernel_compatibility_proved** | Conjectures | Quarter-Lock is unconditional algebraic identity |
 | **global_c_attractor_proved** | Conjectures | c reaches 2^n−1 in one step via even_step_c_invariance |
+
+## GTE Structural Theorems
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **mirror_fiber_two** | StructuralTheorems | \|{(b₂,q₂),(q₂,b₂)}\| = 2 when b₂ ≠ q₂ |
+| **mirror_pair_induces_loop** | StructuralTheorems | Mirror-dual pair induces orbit of size 2 under involution |
+| **minimality_duality_n10** | StructuralTheorems | At n=10, MDL pair is {(24,42), (42,24)} |
+| **only_survivors_n10** | StructuralTheorems | Prime-locked ridge survivors at n=10 are exactly {(24,42), (42,24)} |
+| **fingerprint_fixed_point_exists** | StructuralTheorems | Monotone F : Set ℕ → Set ℕ has a fixed point (Tarski via `OrderHom.lfp`) |
+| **fingerprint_fixed_point_bounded** | StructuralTheorems | Monotone F : Finset ℕ → Finset ℕ bounded by B has fixed point P ⊆ B (Knaster-Tarski on finite Boolean sublattice) |
+| **decidability_phase_transition** | StructuralTheorems | Local decidability ∧ global (Turing) universality |
+| **leptonSeed_is_lex_min_residual** | StructuralTheorems | LeptonSeed lex-minimal c in residual triples at n=10 |
 
 ## Open Conjectures (3 of 10)
 

@@ -4,7 +4,16 @@
 **Mathlib:** v4.29.0-rc6 (via `lakefile.lean`)  
 **Build:** `lake build` from this directory  
 **Root import:** `UgpLean.lean`  
-**Last verified:** 2026-04-13 — matches `lean-toolchain` and Mathlib pin; theorem table below.
+**Last verified:** 2026-04-18 — matches `lean-toolchain` and Mathlib pin; theorem table below.
+
+**2026-04-18 integrity fix:** `fingerprint_fixed_point_exists` (Tarski) restated
+on `Set ℕ` (the natural complete lattice for unbounded prime patterns) and proven
+via Mathlib's `OrderHom.lfp`.  The previous `Finset ℕ`-with-only-monotonicity
+statement was **false** (counter-example: `F(P) = P ∪ {max(P)+1}` monotone, no
+fixed point).  A bounded `Finset ℕ` variant `fingerprint_fixed_point_bounded` is
+also provided for the restricted-range case.  Both are zero-sorry and depend
+only on Mathlib standard axioms.  Paper `ugp_lean_formalization.tex` updated to
+match.  See registry at `ugp-physics:specs/WORKING_NOTES/TECH_DEBT_LEAN_SORRY_REGISTRY.md`.
 
 **Companion:** The UGP Formalization paper (`NEMS_PAPERS/UGP_GTE_Formalization/`) provides a complete theorem-indexed table mapping every definition and theorem to ugp-lean modules. Use it as the definitive paper-level reference for the artifact.
 
@@ -44,6 +53,13 @@
 | TE22 coupling predictions are algebraically independent of SM data | TE22.ScanCertificate | ugp_coupling_predictions_are_independent | ✓ |
 | UGP g1²/g2² prediction within 2% of SM@Mz | TE22.ScanCertificate | ugp_g1g2_prediction_close_to_SM | ✓ |
 | TE22 SM D-minimizer (framework) | TE22.ScanCertificate | SM_is_D_minimizer_extended | ⚠ sorry (native_decide pending) |
+| **GTE Structural Theorems** | | | |
+| Mirror orbit size 2 (involution) | GTE.StructuralTheorems | mirror_fiber_two, mirror_pair_induces_loop | ✓ |
+| Minimality-duality at n=10 | GTE.StructuralTheorems | minimality_duality_n10, only_survivors_n10 | ✓ |
+| **Fingerprint fixed-point (Tarski, Set form)** | GTE.StructuralTheorems | fingerprint_fixed_point_exists | ✓ |
+| **Fingerprint fixed-point (bounded Finset form)** | GTE.StructuralTheorems | fingerprint_fixed_point_bounded | ✓ |
+| Decidability phase transition | GTE.StructuralTheorems | decidability_phase_transition, local_decidability | ✓ |
+| LeptonSeed lex-minimal at n=10 | GTE.StructuralTheorems | leptonSeed_is_lex_min_residual | ✓ |
 | **Monograph additions** | | | |
 | Ridge remainder lock | Core.RidgeRigidity | ridge_remainder_lock, m2_canonical | ✓ |
 | Quotient-gap 13 | Core.RidgeRigidity | quotient_gap_13, survivor_gap_* | ✓ |
@@ -109,3 +125,7 @@
 | Local density ρ_F(p) for p ≤ 43 (Hasse check) | GTE.ResonantFactory | localDensity_3..43 | ✓ |
 | No local obstruction (singular series S > 0) | GTE.ResonantFactory | hasse_check_no_obstruction | ✓ |
 | Product algebra: F(t) = Q₋(t)·Q₊(t), both > 0 | GTE.ResonantFactory | factory_product_factorization | ✓ |
+| **Analytic architecture (statements with cited proofs)** | | | |
+| Dickman equidistribution in arithmetic progressions | GTE.AnalyticArchitecture | dickman_equidistribution_in_APs | ⚠ sorry (Tenenbaum III.6 — Mathlib infra gap) |
+| CRT equidistribution within independence regime | GTE.AnalyticArchitecture | crt_equidistribution_within_regime | ⚠ sorry (Tenenbaum III.6 + CRT — Mathlib infra gap) |
+| Q₋(t) ⊥ Q₊(t) coprime (algebraic, proved) | GTE.AnalyticArchitecture | qminus_qplus_coprime | ✓ |
