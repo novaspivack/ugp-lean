@@ -149,6 +149,11 @@ match.  See registry at `ugp-physics:specs/WORKING_NOTES/TECH_DEBT_LEAN_SORRY_RE
 | β-free identity from cascade (Δg=1: π/3) | MassRelations.BinaryCascade | cascade_delta_1_to_2 | ✓ |
 | β-free identity from cascade (Δg=2: 2π/3) | MassRelations.BinaryCascade | cascade_delta_2_to_3 | ✓ |
 | β-free identity from cascade (Δg=3: π, Gelfond) | MassRelations.BinaryCascade | cascade_delta_1_to_3 | ✓ |
+| **Round 21 — Claim C (Froggatt-Nielsen two-flavon UV completion)** | | | |
+| **Claim C theorem:** FN model reproduces TT exactly (g ≥ 1) | MassRelations.FroggattNielsen | fnLogYukawaRatio_eq_TT | ✓ |
+| FN log-Yukawa prediction equals binary cascade state (UV completion) | MassRelations.FroggattNielsen | fnLogYukawaRatio_eq_cascade | ✓ |
+| FN naturalness ε_1 < 1 ∧ ε_2 < 1 | MassRelations.FroggattNielsen | fn_naturalness | ✓ |
+| Falsifiable flavon-VEV-ratio prediction ε_1/ε_2 = e^(−5π/24) | MassRelations.FroggattNielsen | epsRatio_eq | ✓ |
 | **Round 12 baseline VV CG identity** | | | |
 | dim(45_SU5)/dim(126_SO10) = 5/14 | MassRelations.ClebschGordan | gut_ratio_45_over_126 | ✓ |
 | **Rounds 17–18 — VV three-factor structural decomposition** | | | |

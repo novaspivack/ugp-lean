@@ -64,6 +64,7 @@ hypotheses about physical content.
 | MR-D5 | GUT representation dimensions: `dim_45_SU5 := 45`, `dim_126_SO10 := 126`, `dim_adj_SU3 := 8`, `dim_U1_Y := 1`, etc. | MassRelations.ClebschGordan | definition (textbook values) |
 | MR-D6 | Hypercharge: `Y_Q_doublet_num := 1`, `Y_Q_doublet_den := 6` (SM convention Y = Q − I_3) | MassRelations.ClebschGordan | definition (SM convention) |
 | MR-D7 | Binary phase cascade: `cascadeState 0 := π/6 + π/8`, `cascadeState (g+1) := cascadeState g + 2^g · (π/6)` | MassRelations.BinaryCascade | definition (Round 19) |
+| MR-D8 | Froggatt-Nielsen flavon-VEV logs: `log_eps_1 := -π/3`, `log_eps_2 := -π/8`; charge differences `Δq1 g := -2^(g-1)`, `Δq2 _ := -1`; FN log-Yukawa prediction `Δq1 g · log_eps_1 + Δq2 g · log_eps_2` | MassRelations.FroggattNielsen | definition (Round 21) |
 
 ### Interpretive claims (NOT proved as physical content)
 
@@ -91,3 +92,14 @@ shifts with 2^g accumulation per generation.
 The *physical* realisation (which UV mechanism — U(1) flavor charge doubling,
 heavy-fermion tower, affine Cartan translation — implements the cascade)
 remains Claim C, open research.
+
+**Round 21 update (FIRST UV-COMPLETION REALISED):** Claim C now has a
+concrete physics model.  `UgpLean.MassRelations.FroggattNielsen` implements
+a **two-flavon Froggatt-Nielsen model with doubled FN charges**, reproducing
+TT exactly via theorem `fnLogYukawaRatio_eq_TT`.  Lepton FN_1 charges
+follow the doubling pattern (1, 2, 4) per generation; up-type FN_1 are all
+zero; flavon VEVs are `ε_1 = e^(−π/3)`, `ε_2 = e^(−π/8)` (both < 1,
+FN-natural).  Three residual structural questions logged for Round 22+:
+(i) why doubled charges; (ii) why transcendental VEVs; (iii) why two
+flavons.  Possible link to Claim A: π/3 = 2·π/6 ties ε_1's exponent to
+the SU(3)_flavor Cartan-bisector angle.

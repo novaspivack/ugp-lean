@@ -258,6 +258,27 @@ flagged as Claim C, an open Round-19+ research question.
 | **cascade_delta_2_to_3** | BinaryCascade | cascadeState 3 − cascadeState 2 = 2π/3 (β-free identity) |
 | **cascade_delta_1_to_3** | BinaryCascade | cascadeState 3 − cascadeState 1 = π (Gelfond's β-free identity) |
 
+### Froggatt-Nielsen UV completion — Claim C (`UgpLean.MassRelations.FroggattNielsen`) — Round 21
+
+First concrete UV-physics-model realisation of the binary cascade. Two
+U(1)_FN flavor symmetries with flavon VEVs ε_1 = e^(−π/3), ε_2 = e^(−π/8)
+(both < 1, FN-natural) and integer FN charges with **doubling pattern**
+on lepton FN_1: charges (1, 2, 4) per generation; up-type FN_1 = (0, 0, 0);
+constant FN_2 difference = 1.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **fnLogYukawaRatio_eq_TT** | FroggattNielsen | **Claim C theorem:** FN log-Yukawa-ratio prediction = UpLeptonFormula g (π/8) for g ≥ 1 (algebraic exact match) |
+| **fnLogYukawaRatio_eq_cascade** | FroggattNielsen | FN-predicted log-Yukawa = binary cascade state for g ≥ 1 (FN as UV completion of cascade) |
+| **fn_naturalness** | FroggattNielsen | ε_1 < 1 and ε_2 < 1 (standard FN naturalness condition `<Φ>/Λ < 1`) |
+| **epsRatio_eq** | FroggattNielsen | ε_1 / ε_2 = e^(−5π/24) (falsifiable structural prediction for any UV completion) |
+
+**Honest open questions for Round 22+:**
+- Why doubled FN charges (1, 2, 4) instead of standard (0, 1, 2, 3)?
+- Why transcendental flavon VEVs e^(−π/3), e^(−π/8) instead of rational ratios?
+  (π/3 = 2·π/6 ties to Claim A's SU(3) Cartan-bisector angle — possible structural link)
+- Why exactly 2 flavons, not 1 or 3?
+
 ### GUT Clebsch-Gordan Structure (`UgpLean.MassRelations.ClebschGordan`)
 
 Includes Round 12 baseline + Rounds 17–18 VV three-factor extensions.

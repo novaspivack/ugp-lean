@@ -97,6 +97,7 @@ Abandoned or reformulated targets: document in `EXP_ABANDONED.md`.
   - `MassRelations/SU3FlavorCartan.lean` (Claim A: π/6 from A_2 geometry)
   - `MassRelations/ClebschGordan.lean` (GUT dimension table + Round 17–18 VV three-factor structural theorems)
   - `MassRelations/BinaryCascade.lean` (Round 19 Claim B candidate: TT as binary phase cascade with 2^g doubling)
+  - `MassRelations/FroggattNielsen.lean` (Round 21 Claim C: two-flavon FN model with doubled charges reproduces TT exactly)
 - `docs/DEFENSIBILITY_*.md` — defensibility ledgers.
 - `docs/THEOREMS.md` — full theorem catalog (kept in sync with Lean modules).
 - `docs/MODULES.md` — module reference (kept in sync).

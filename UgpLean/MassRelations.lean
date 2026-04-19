@@ -3,6 +3,7 @@ import UgpLean.MassRelations.DownRational
 import UgpLean.MassRelations.ClebschGordan
 import UgpLean.MassRelations.SU3FlavorCartan
 import UgpLean.MassRelations.BinaryCascade
+import UgpLean.MassRelations.FroggattNielsen
 
 /-!
 # UgpLean.MassRelations — Charged-Fermion Mass Structural Relations
@@ -39,6 +40,7 @@ See also:
 - `UgpLean.MassRelations.ClebschGordan` — GUT Lie-group integer table + Round 17–18 VV three-factor structural theorems
 - `UgpLean.MassRelations.SU3FlavorCartan` — Round 13 Claim A (α = π/6 from A_2 geometry)
 - `UgpLean.MassRelations.BinaryCascade` — Round 19 Claim B candidate: TT formula as binary phase cascade with 2^g doubling per step
+- `UgpLean.MassRelations.FroggattNielsen` — Round 21 Claim C UV completion: two-flavon FN model with doubled charges reproducing TT exactly
 -/
 
 namespace UgpLean.MassRelations
