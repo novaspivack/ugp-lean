@@ -383,3 +383,24 @@ Empirical verification (`comp_p01_HHH_koide_newton_flow.json`): 100% of 1000 ran
 | **newton_step_fixes_R33_root** | KoideNewtonFlow | **R33 ↔ R34 link:** the R33-B closed-form +root `z = 2(x+y) + √3·√(x²+4xy+y²)` satisfies `newtonStep(x, y, z) = (x, y, z)`, tying the dynamical operator directly to the algebraic skeleton |
 
 **03_SPEC §1 scoreboard after R34:** (a) proved; (b) by construction; (c) relaxed via R34-B obstruction; (d) proved.  Upgraded OP(vii) from "research-grade open" to **"partially closed with UGP-native dynamical operator exhibited"**; the residual sub-question is whether a reformulation of (c) compatible with the hierarchical structure of v* can yield a tighter closure.
+
+### Physical-Mass Bridge — Priority 8 Phase C (`UgpLean.MassRelations.PhysicalMasses`) — Round 35
+
+End-to-end Lean formalisation of the physical mass prediction chain for all 9 charged fermions from 2 empirical scale inputs (m_e, m_μ) via the Lean-certified TT + VV + Koide closed form.  Upgrades the previously `True → trivial` FormulaHolds placeholders to real theorems on Lean-valued physical-mass predictions.
+
+Definitions: `koidePredictedMTau`, `predictedLepton`, `predictedUpType`, `predictedDownType`.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **koidePredictedMTau_pos** | PhysicalMasses | R33-B predicted m_τ is positive given 0 < m_e, m_μ |
+| **predictedLepton_pos** | PhysicalMasses | Predicted lepton masses positive ∀ g |
+| **predictedUpType_pos** | PhysicalMasses | Predicted up-type masses positive ∀ g |
+| **predictedDownType_pos** | PhysicalMasses | Predicted down-type masses positive ∀ g (unconditional, since defined as exp) |
+| **TT_formula_holds_on_physical** | PhysicalMasses | **UPGRADED FROM PLACEHOLDER:** For all g, `log(predictedUpType g / predictedLepton g) = (π/6)·2^(g+1) + π/8` (TT identity on Lean-valued physical masses) |
+| **VV_formula_holds_on_physical** | PhysicalMasses | **UPGRADED FROM PLACEHOLDER:** For all g, `log(predictedDownType g) = (13/9)·log(predictedUpType g) + (−7/6)·log(predictedLepton g) + (−5/14)` (VV identity on Lean-valued physical masses) |
+| **koide_identity_holds_on_physical** | PhysicalMasses | **UPGRADED FROM PLACEHOLDER:** `koideQuadratic (√m_e) (√m_μ) (√(koidePredictedMTau m_e m_μ)) = 0` (Koide identity holds exactly by construction on the predicted sqrt-mass vector) |
+| **predicted_leptons_fixed_by_newton_flow** | PhysicalMasses | The predicted charged-lepton sqrt-mass vector is a fixed point of the R34 Newton-step Koide flow |
+
+**What this closes:** 02_SPEC §D.4 "E_base Lean bridge for `UpLeptonFormulaHolds` / `DownRationalFormulaHolds`" — both formulas now hold as actual Lean theorems on Lean-valued physical masses, given (m_e, m_μ) as inputs.  The full chain `(m_e, m_μ) → predictedLepton → predictedUpType → predictedDownType` is machine-checked end-to-end.
+
+**Residual open problem (OP(i)-B):** structural anchor for m_μ given m_e.  R35 empirical scan (COMP-P01-III) at DL ≤ 3 with the R21-34 extended atom library: no structural identity for m_μ beats null density.  Consistent with prior SC-K negative for μ/τ and SC-BB negative for R_g hierarchy.  OP(i)-B therefore sharpens from "structural hierarchy of 8 R_g not reproduced" to "1 remaining empirical scale (m_μ) at DL ≤ 3."

@@ -9,6 +9,7 @@ import UgpLean.MassRelations.Z2OrbifoldDepth
 import UgpLean.MassRelations.HeavyFermionTower
 import UgpLean.MassRelations.KoideClosedForm
 import UgpLean.MassRelations.KoideNewtonFlow
+import UgpLean.MassRelations.PhysicalMasses
 
 /-!
 # UgpLean.MassRelations — Charged-Fermion Mass Structural Relations
@@ -51,6 +52,7 @@ See also:
 - `UgpLean.MassRelations.HeavyFermionTower` — Round 24 Claim C alternative UV completion: heavy-fermion-tower model EFT-dual to FN-doubled
 - `UgpLean.MassRelations.KoideClosedForm` — Round 33 Priority 7 Phase II: Koide algebraic closed form and cyclotomic-12 identification; proves (2+√3) = 4·cos²(π/12), (1+√3)² = 8·cos²(π/12), and the +root `r_τ = 2(r_e+r_μ) + √3·√(r_e²+4r_e r_μ+r_μ²)` satisfies the Koide constraint
 - `UgpLean.MassRelations.KoideNewtonFlow` — Round 34 Priority 7 Phase III/IV: UGP-native S_3-equivariant Newton-step Koide flow `U(v) = v - (q(v)/|∇q|²)·∇q`; proves S_3-equivariance (under all three generators swap12, swap13, rot123), null-cone fixed-point property, and ties to KoideClosedForm's +root
+- `UgpLean.MassRelations.PhysicalMasses` — Round 35 Priority 8 Phase C: end-to-end physical-mass bridge. Given (m_e, m_μ) as input, defines `predictedLepton`, `predictedUpType`, `predictedDownType` via TT+VV+Koide closed form; proves TT formula, VV formula, and Koide identity hold by construction on the predicted physical masses; proves positivity of all predicted masses; proves predicted lepton vector is fixed point of R34 Newton-step Koide flow.  This module upgrades the previously `True → trivial` FormulaHolds placeholders to real theorems on Lean-valued physical-mass predictions, closing the E_base Lean bridge (02_SPEC §D.4) except for the residual m_μ anchor (see R35 lab notes for empirical MAP at DL ≤ 3)
 -/
 
 namespace UgpLean.MassRelations
