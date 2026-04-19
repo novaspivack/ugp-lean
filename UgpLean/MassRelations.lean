@@ -2,6 +2,7 @@ import UgpLean.MassRelations.UpLeptonCyclotomic
 import UgpLean.MassRelations.DownRational
 import UgpLean.MassRelations.ClebschGordan
 import UgpLean.MassRelations.SU3FlavorCartan
+import UgpLean.MassRelations.BinaryCascade
 
 /-!
 # UgpLean.MassRelations — Charged-Fermion Mass Structural Relations
@@ -35,8 +36,9 @@ reduce to 2 independent inputs (m_e, m_μ).
 See also:
 - `UgpLean.MassRelations.UpLeptonCyclotomic` — TT formula module
 - `UgpLean.MassRelations.DownRational` — VV formula module
-- `UgpLean.MassRelations.ClebschGordan` — GUT Lie-group integer table
+- `UgpLean.MassRelations.ClebschGordan` — GUT Lie-group integer table + Round 17–18 VV three-factor structural theorems
 - `UgpLean.MassRelations.SU3FlavorCartan` — Round 13 Claim A (α = π/6 from A_2 geometry)
+- `UgpLean.MassRelations.BinaryCascade` — Round 19 Claim B candidate: TT formula as binary phase cascade with 2^g doubling per step
 -/
 
 namespace UgpLean.MassRelations

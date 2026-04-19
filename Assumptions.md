@@ -63,6 +63,7 @@ hypotheses about physical content.
 | MR-D4 | `angleToAlpha1 v := Real.arctan (v.2 / v.1)` (arctan of slope) | MassRelations.SU3FlavorCartan | definition (Round 13) |
 | MR-D5 | GUT representation dimensions: `dim_45_SU5 := 45`, `dim_126_SO10 := 126`, `dim_adj_SU3 := 8`, `dim_U1_Y := 1`, etc. | MassRelations.ClebschGordan | definition (textbook values) |
 | MR-D6 | Hypercharge: `Y_Q_doublet_num := 1`, `Y_Q_doublet_den := 6` (SM convention Y = Q − I_3) | MassRelations.ClebschGordan | definition (SM convention) |
+| MR-D7 | Binary phase cascade: `cascadeState 0 := π/6 + π/8`, `cascadeState (g+1) := cascadeState g + 2^g · (π/6)` | MassRelations.BinaryCascade | definition (Round 19) |
 
 ### Interpretive claims (NOT proved as physical content)
 
@@ -83,3 +84,10 @@ and the COMPACT-SU(3) character mechanism was definitively ruled out.  See
 ugp-physics Lab Notes 21 for full reasoning.  Best remaining candidate
 mechanism (Lab Notes 21 §6 Option a) is the binary cascade of π/6 phase
 shifts with 2^g accumulation per generation.
+
+**Round 19 update:** the binary cascade is now Lean-formalised in
+`UgpLean.MassRelations.BinaryCascade` (theorem `cascadeState_eq_TT`).  The
+*mathematical* equivalence between the cascade and the TT formula is proved.
+The *physical* realisation (which UV mechanism — U(1) flavor charge doubling,
+heavy-fermion tower, affine Cartan translation — implements the cascade)
+remains Claim C, open research.

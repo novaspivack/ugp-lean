@@ -96,6 +96,7 @@ Abandoned or reformulated targets: document in `EXP_ABANDONED.md`.
   - `MassRelations/DownRational.lean` (VV formula + γ-free identity + combined-formula arithmetic)
   - `MassRelations/SU3FlavorCartan.lean` (Claim A: π/6 from A_2 geometry)
   - `MassRelations/ClebschGordan.lean` (GUT dimension table + Round 17–18 VV three-factor structural theorems)
+  - `MassRelations/BinaryCascade.lean` (Round 19 Claim B candidate: TT as binary phase cascade with 2^g doubling)
 - `docs/DEFENSIBILITY_*.md` — defensibility ledgers.
 - `docs/THEOREMS.md` — full theorem catalog (kept in sync with Lean modules).
 - `docs/MODULES.md` — module reference (kept in sync).

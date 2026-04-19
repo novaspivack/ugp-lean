@@ -141,6 +141,14 @@ match.  See registry at `ugp-physics:specs/WORKING_NOTES/TECH_DEBT_LEAN_SORRY_RE
 | **Claim A:** angle(α_1, ω_1) = π/6 in A_2 Cartan | MassRelations.SU3FlavorCartan | angle_alpha1_omega1_eq_pi_div_six | ✓ |
 | Half-opening angle of A_2 Weyl chamber = π/6 (alias) | MassRelations.SU3FlavorCartan | a2_weyl_chamber_half_opening | ✓ |
 | ω_1 lies strictly interior to fundamental Weyl chamber | MassRelations.SU3FlavorCartan | omega1_in_weyl_chamber_interior | ✓ |
+| **Round 19 — Claim B candidate (TT as binary phase cascade)** | | | |
+| Per-step increment of binary cascade = 2^g · (π/6) | MassRelations.BinaryCascade | cascade_increment | ✓ |
+| Closed-form solution: cascadeState g = (π/6)·2^g + π/8 | MassRelations.BinaryCascade | cascadeState_closed_form | ✓ |
+| **Cascade reproduces TT formula exactly** | MassRelations.BinaryCascade | cascadeState_eq_TT | ✓ |
+| Increment-doubles property (signature of 2^g) | MassRelations.BinaryCascade | cascade_increment_doubles | ✓ |
+| β-free identity from cascade (Δg=1: π/3) | MassRelations.BinaryCascade | cascade_delta_1_to_2 | ✓ |
+| β-free identity from cascade (Δg=2: 2π/3) | MassRelations.BinaryCascade | cascade_delta_2_to_3 | ✓ |
+| β-free identity from cascade (Δg=3: π, Gelfond) | MassRelations.BinaryCascade | cascade_delta_1_to_3 | ✓ |
 | **Round 12 baseline VV CG identity** | | | |
 | dim(45_SU5)/dim(126_SO10) = 5/14 | MassRelations.ClebschGordan | gut_ratio_45_over_126 | ✓ |
 | **Rounds 17–18 — VV three-factor structural decomposition** | | | |

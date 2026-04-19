@@ -240,6 +240,24 @@ Lab Notes 11, 17, 18, 19, 20, 21, 22 for full dialectical derivation.
 | **a2_weyl_chamber_half_opening** | SU3FlavorCartan | Half-opening angle of A_2 fundamental Weyl chamber = π/6 (alias of Claim A) |
 | **omega1_in_weyl_chamber_interior** | SU3FlavorCartan | ω_1 lies strictly in the interior of the fundamental Weyl chamber (0 < π/6 < π/3) |
 
+### Binary Phase Cascade — Claim B candidate (`UgpLean.MassRelations.BinaryCascade`) — Round 19
+
+Constructive realisation of the "binary cascade of π/6 phase shifts" mechanism
+preferred by MDL after Round 16's rule-out of compact-SU(3) character theory.
+This module proves the **mathematical** equivalence of the cascade and TT;
+**physical** realisation (which UV mechanism implements the cascade) is
+flagged as Claim C, an open Round-19+ research question.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **cascade_increment** | BinaryCascade | cascadeState (g+1) − cascadeState g = 2^g · (π/6) (per-step increment doubles per generation) |
+| **cascadeState_closed_form** | BinaryCascade | cascadeState g = (π/6)·2^g + π/8 (closed-form by induction) |
+| **cascadeState_eq_TT** | BinaryCascade | **cascade reproduces TT exactly:** cascadeState g = UpLeptonFormula g (π/8) |
+| **cascade_increment_doubles** | BinaryCascade | (g+2 − g+1) increment = 2 · (g+1 − g) increment (signature of 2^g structure) |
+| **cascade_delta_1_to_2** | BinaryCascade | cascadeState 2 − cascadeState 1 = π/3 (β-free identity) |
+| **cascade_delta_2_to_3** | BinaryCascade | cascadeState 3 − cascadeState 2 = 2π/3 (β-free identity) |
+| **cascade_delta_1_to_3** | BinaryCascade | cascadeState 3 − cascadeState 1 = π (Gelfond's β-free identity) |
+
 ### GUT Clebsch-Gordan Structure (`UgpLean.MassRelations.ClebschGordan`)
 
 Includes Round 12 baseline + Rounds 17–18 VV three-factor extensions.
