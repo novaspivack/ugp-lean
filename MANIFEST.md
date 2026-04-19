@@ -38,6 +38,7 @@ match.  See registry at `ugp-physics:specs/WORKING_NOTES/TECH_DEBT_LEAN_SORRY_RE
 | Elegant Kernel k_L² | ElegantKernel | k_L2, k_L2_pos | ✓ |
 | GTE canonical orbit | GTE.Evolution, GTE.Orbit | canonical_orbit_triples, canonical_orbit_three_steps | ✓ |
 | Sieve Extended n∈[5,30] | Compute.SieveExtended | mirrorDualCount_10 | ✓ |
+| **Ridge Minimality: n=10 smallest** | Compute.SieveBelow10 | ridgeSurvivors_{5..9}_empty, n10_is_minimal_admissible_ridge, ridge_minimality_and_existence | ✓ |
 | MirrorEquivClass equiv | Core.Disconfirmation | MirrorEquivClass.isEquiv | ✓ |
 | Papers citable stubs | Papers.Paper25, Papers.UGPMain | rsuc, n10_survivors | ✓ |
 | **Phase 4** | | | |
