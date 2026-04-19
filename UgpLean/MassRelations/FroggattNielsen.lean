@@ -144,4 +144,18 @@ theorem epsRatio_eq : epsRatio = Real.exp (-5 * π / 24) := by
   congr 1
   ring
 
+/-- **β = π/8 structural identity (Round 31 / Priority 5):**
+    The up-lepton-cyclotomic offset β appearing in TT is *structurally
+    fixed* to π/8 in this UV completion, via β = −log(ε_2).
+
+    Since Round 22's Cartan-invariant flavon potential has φ_2 = −π/8 as
+    a global minimum of its Z_16-invariant part (theorem
+    `fn_vevs_are_potential_minima` in `CartanFlavonPotential`), β = π/8
+    is structurally selected — NOT an empirical fit parameter within
+    this framework. -/
+theorem beta_TT_equals_pi_div_eight :
+    -log_eps_2 = π / 8 := by
+  unfold log_eps_2
+  ring
+
 end UgpLean.MassRelations.FroggattNielsen

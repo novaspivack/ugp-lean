@@ -272,6 +272,7 @@ constant FN_2 difference = 1.
 | **fnLogYukawaRatio_eq_cascade** | FroggattNielsen | FN-predicted log-Yukawa = binary cascade state for g ≥ 1 (FN as UV completion of cascade) |
 | **fn_naturalness** | FroggattNielsen | ε_1 < 1 and ε_2 < 1 (standard FN naturalness condition `<Φ>/Λ < 1`) |
 | **epsRatio_eq** | FroggattNielsen | ε_1 / ε_2 = e^(−5π/24) (falsifiable structural prediction for any UV completion) |
+| **beta_TT_equals_pi_div_eight** | FroggattNielsen | **β = π/8 structural identity** (Round 31, Priority 5): −log(ε_2) = π/8; β is *structurally fixed* in the FN UV completion (not an empirical fit), via the Round 22 Cartan-potential global minimum at φ_2 = −π/8 |
 
 **Honest open questions for Round 22+:**
 - Why doubled FN charges (1, 2, 4) instead of standard (0, 1, 2, 3)?

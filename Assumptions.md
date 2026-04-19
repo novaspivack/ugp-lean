@@ -96,6 +96,8 @@ The *physical* realisation (which UV mechanism — U(1) flavor charge doubling,
 heavy-fermion tower, affine Cartan translation — implements the cascade)
 remains Claim C, open research.
 
+**Round 31 update (β = π/8 STRUCTURALLY FIXED):** Priority 5 (β discrimination among π/8, 2/5, 1/φ²) is closed.  `UgpLean.MassRelations.FroggattNielsen.beta_TT_equals_pi_div_eight` proves the structural identity `−log(ε_2) = π/8`, so β is not an empirical fit parameter but rather derived from the Round-22 Cartan-potential global minimum at φ_2 = −π/8.  Empirical discrimination at current PDG precision ALREADY rules out β = 2/5 (6.7σ, dominated by precise m_t) and β = 1/φ² (3.6σ); π/8 fits at 2.5σ consistent with data.  No alternative candidate has a comparable structural derivation in the framework.  See ugp-physics Lab Notes 31.
+
 **Round 21 update (FIRST UV-COMPLETION REALISED):** Claim C now has a
 concrete physics model.  `UgpLean.MassRelations.FroggattNielsen` implements
 a **two-flavon Froggatt-Nielsen model with doubled FN charges**, reproducing

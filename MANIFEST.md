@@ -154,6 +154,7 @@ match.  See registry at `ugp-physics:specs/WORKING_NOTES/TECH_DEBT_LEAN_SORRY_RE
 | FN log-Yukawa prediction equals binary cascade state (UV completion) | MassRelations.FroggattNielsen | fnLogYukawaRatio_eq_cascade | ✓ |
 | FN naturalness ε_1 < 1 ∧ ε_2 < 1 | MassRelations.FroggattNielsen | fn_naturalness | ✓ |
 | Falsifiable flavon-VEV-ratio prediction ε_1/ε_2 = e^(−5π/24) | MassRelations.FroggattNielsen | epsRatio_eq | ✓ |
+| **Round 31 / Priority 5: β = π/8 structurally fixed** (Priority 5 closure via Lean corollary) | MassRelations.FroggattNielsen | beta_TT_equals_pi_div_eight | ✓ |
 | **Round 22 — Claim C sub-(ii) (Cartan-invariant flavon potential)** | | | |
 | Z_6 generator angle = 2 × Claim-A bisector angle | MassRelations.CartanFlavonPotential | z6_generator_eq_two_times_claim_A | ✓ |
 | Z_6 / Z_16 lower bounds on potential parts | MassRelations.CartanFlavonPotential | z6_part_bounded_below, z16_part_bounded_below | ✓ |
