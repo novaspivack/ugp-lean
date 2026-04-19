@@ -98,6 +98,9 @@ Abandoned or reformulated targets: document in `EXP_ABANDONED.md`.
   - `MassRelations/ClebschGordan.lean` (GUT dimension table + Round 17–18 VV three-factor structural theorems)
   - `MassRelations/BinaryCascade.lean` (Round 19 Claim B candidate: TT as binary phase cascade with 2^g doubling)
   - `MassRelations/FroggattNielsen.lean` (Round 21 Claim C: two-flavon FN model with doubled charges reproduces TT exactly)
+  - `MassRelations/CartanFlavonPotential.lean` (Round 22 Claim C sub-(ii): Z_6 × Z_16-invariant Cartan potential whose minima reproduce FN flavon VEVs)
+  - `MassRelations/Z2OrbifoldDepth.lean` (Round 23 Claim C sub-(i): Z_2-orbifold-depth interpretation of doubled FN charges)
+  - `MassRelations/HeavyFermionTower.lean` (Round 24 Claim C Candidate 2: heavy-fermion-tower EFT-dual to FN-doubled)
 - `docs/DEFENSIBILITY_*.md` — defensibility ledgers.
 - `docs/THEOREMS.md` — full theorem catalog (kept in sync with Lean modules).
 - `docs/MODULES.md` — module reference (kept in sync).

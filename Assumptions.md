@@ -65,6 +65,9 @@ hypotheses about physical content.
 | MR-D6 | Hypercharge: `Y_Q_doublet_num := 1`, `Y_Q_doublet_den := 6` (SM convention Y = Q − I_3) | MassRelations.ClebschGordan | definition (SM convention) |
 | MR-D7 | Binary phase cascade: `cascadeState 0 := π/6 + π/8`, `cascadeState (g+1) := cascadeState g + 2^g · (π/6)` | MassRelations.BinaryCascade | definition (Round 19) |
 | MR-D8 | Froggatt-Nielsen flavon-VEV logs: `log_eps_1 := -π/3`, `log_eps_2 := -π/8`; charge differences `Δq1 g := -2^(g-1)`, `Δq2 _ := -1`; FN log-Yukawa prediction `Δq1 g · log_eps_1 + Δq2 g · log_eps_2` | MassRelations.FroggattNielsen | definition (Round 21) |
+| MR-D9 | Cartan-torus flavon potential: `cartanFlavonPotential a b φ_1 φ_2 := -a · cos(6 φ_1) - b · cos(16 φ_2)`; Z_6 generator angle = π/3 (= 2 · Claim-A π/6); Z_16 generator angle = π/8 | MassRelations.CartanFlavonPotential | definition (Round 22) |
+| MR-D10 | Z_2-orbifold depth function: `binaryTreeDepth g := 2^(g-1)` | MassRelations.Z2OrbifoldDepth | definition (Round 23) |
+| MR-D11 | Heavy-fermion-tower instanton action: `instantonAction g := (π/3) · 2^(g-1) + π/8` | MassRelations.HeavyFermionTower | definition (Round 24) |
 
 ### Interpretive claims (NOT proved as physical content)
 
@@ -103,3 +106,9 @@ FN-natural).  Three residual structural questions logged for Round 22+:
 (i) why doubled charges; (ii) why transcendental VEVs; (iii) why two
 flavons.  Possible link to Claim A: π/3 = 2·π/6 ties ε_1's exponent to
 the SU(3)_flavor Cartan-bisector angle.
+
+**Rounds 22–25 update (residual sub-questions partially closed):**
+- **Round 22 sub-(ii):** Cartan-invariant flavon potential `V = -a·cos(6 φ_1) - b·cos(16 φ_2)` has the FN VEVs as global minima; theorem `fn_vevs_are_potential_minima`.  Z_6 directly ties to Claim A.  Z_16 origin remains conjectural (leading candidate: SO(10) 16-spinor R-symmetry).
+- **Round 23 sub-(i):** Z_2-orbifold-depth function `2^(g-1)` matches FN charge magnitudes; theorem `binaryTreeDepth_matches_FN_charge_magnitude`.  Heterotic Z_2^n orbifold is leading candidate UV origin.
+- **Round 24 (heavy-fermion-tower):** EFT-DUAL to the FN-doubled model; not a distinct UV completion but a different formulation.  Theorem `tower_eq_FN`.
+- **Round 25 (neutrino predictions):** naive FN-doubled extension to neutrinos (q_νR = q_lep) is FALSIFIED by data (predicts 10⁵ hierarchy; observed 10–50). Modified extension with anti-doubled q_νR charges is qualitatively consistent — concrete PMNS prediction for DUNE δ_CP is open Round-26+ work. KATRIN bound m_β < 0.45 eV is trivially satisfied.

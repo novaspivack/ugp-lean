@@ -154,6 +154,17 @@ match.  See registry at `ugp-physics:specs/WORKING_NOTES/TECH_DEBT_LEAN_SORRY_RE
 | FN log-Yukawa prediction equals binary cascade state (UV completion) | MassRelations.FroggattNielsen | fnLogYukawaRatio_eq_cascade | ✓ |
 | FN naturalness ε_1 < 1 ∧ ε_2 < 1 | MassRelations.FroggattNielsen | fn_naturalness | ✓ |
 | Falsifiable flavon-VEV-ratio prediction ε_1/ε_2 = e^(−5π/24) | MassRelations.FroggattNielsen | epsRatio_eq | ✓ |
+| **Round 22 — Claim C sub-(ii) (Cartan-invariant flavon potential)** | | | |
+| Z_6 generator angle = 2 × Claim-A bisector angle | MassRelations.CartanFlavonPotential | z6_generator_eq_two_times_claim_A | ✓ |
+| Z_6 / Z_16 lower bounds on potential parts | MassRelations.CartanFlavonPotential | z6_part_bounded_below, z16_part_bounded_below | ✓ |
+| Global lower bound V(φ_1, φ_2) ≥ −a − b | MassRelations.CartanFlavonPotential | cartanFlavonPotential_ge_min | ✓ |
+| **FN VEVs (−π/3, −π/8) are global minima of Z_6 × Z_16 Cartan potential** | MassRelations.CartanFlavonPotential | fn_vevs_are_potential_minima | ✓ |
+| **Round 23 — Claim C sub-(i) (Z_2-orbifold-depth interpretation)** | | | |
+| Lepton FN_1 charges (1, 2, 4) for g = 1, 2, 3 | MassRelations.Z2OrbifoldDepth | leptonFN1_g123 | ✓ |
+| -Δq^(1)_g = 2^(g-1) = Z_2-orbifold-depth class count at depth (g-1) | MassRelations.Z2OrbifoldDepth | binaryTreeDepth_matches_FN_charge_magnitude | ✓ |
+| **Round 24 — Claim C Candidate 2 (heavy-fermion-tower EFT-dual to FN)** | | | |
+| Heavy-fermion-tower predicts same log-Yukawa-ratio as FN-doubled (EFT duality) | MassRelations.HeavyFermionTower | tower_eq_FN | ✓ |
+| Heavy-fermion-tower reproduces TT exactly (via EFT-duality with FN) | MassRelations.HeavyFermionTower | tower_eq_TT | ✓ |
 | **Round 12 baseline VV CG identity** | | | |
 | dim(45_SU5)/dim(126_SO10) = 5/14 | MassRelations.ClebschGordan | gut_ratio_45_over_126 | ✓ |
 | **Rounds 17–18 — VV three-factor structural decomposition** | | | |

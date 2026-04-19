@@ -279,6 +279,48 @@ constant FN_2 difference = 1.
   (π/3 = 2·π/6 ties to Claim A's SU(3) Cartan-bisector angle — possible structural link)
 - Why exactly 2 flavons, not 1 or 3?
 
+### Cartan-invariant Flavon Potential — Claim C sub-(ii) (`UgpLean.MassRelations.CartanFlavonPotential`) — Round 22
+
+Structural origin of the transcendental flavon VEVs from a Z_6 × Z_16-invariant
+potential on the SU(3)_flavor Cartan torus T². The Z_6 symmetry of φ_1 is
+**directly the SU(3) Weyl-chamber rotation symmetry from Claim A**
+(generator angle = 2 · π/6 = π/3). The Z_16 symmetry of φ_2 has SO(10)
+16-spinor R-symmetry as leading candidate origin (Lab Notes 25 §2.2).
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **z6_generator_eq_two_times_claim_A** | CartanFlavonPotential | Z_6 generator angle (π/3) = 2 × Claim-A bisector angle (π/6) |
+| **z6_part_bounded_below** | CartanFlavonPotential | −a · cos(6 φ_1) ≥ −a for a ≥ 0 |
+| **z16_part_bounded_below** | CartanFlavonPotential | −b · cos(16 φ_2) ≥ −b for b ≥ 0 |
+| **cartanFlavonPotential_ge_min** | CartanFlavonPotential | Global lower bound: V(φ_1, φ_2) ≥ −a − b |
+| **cartanFlavonPotential_min_at_FN_vevs** | CartanFlavonPotential | At (φ_1, φ_2) = (−π/3, −π/8), V attains lower bound −a − b |
+| **fn_vevs_are_potential_minima** | CartanFlavonPotential | **Round-21 FN flavon VEVs are global minima of the Round-22 Cartan potential** (direct identification) |
+
+### Z_2-orbifold depth — Claim C sub-(i) (`UgpLean.MassRelations.Z2OrbifoldDepth`) — Round 23
+
+Structural origin of the doubled FN charges (1, 2, 4) for lepton FN_1 as
+Z_2-orbifold depth. Generation g sits at depth (g−1) in a binary tree of
+Z_2 orbifold fixed-point classes; the number of classes at depth (g−1) is
+2^(g−1), matching the FN charge magnitude exactly.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **leptonFN1_g123** | Z2OrbifoldDepth | leptonFN1Charge (1, 2, 3) = (1, 2, 4) (concrete sequence) |
+| **binaryTreeDepth_matches_FN_charge_magnitude** | Z2OrbifoldDepth | -Δq^(1)_g = binaryTreeDepth g for g ≥ 1 (Z_2-orbifold-depth interpretation) |
+| **FN_charge_consistent_with_Z2_orbifold** | Z2OrbifoldDepth | Δq^(1)_g = -binaryTreeDepth g for g ≥ 1 (FN model is Z_2-orbifold-consistent) |
+
+### Heavy-Fermion-Tower (Claim C Candidate 2, EFT-dual to FN) (`UgpLean.MassRelations.HeavyFermionTower`) — Round 24
+
+Alternative non-perturbative UV completion of the binary cascade, **EFT-equivalent
+to the FN-doubled model** (gives identical TT predictions). Two distinct
+EFT realisations of the same UV physics, suggesting a deeper underlying
+mechanism.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **tower_eq_FN** | HeavyFermionTower | Heavy-fermion-tower instanton-action prediction = FN-doubled prediction (EFT-DUALITY for g ≥ 1) |
+| **tower_eq_TT** | HeavyFermionTower | Heavy-fermion-tower also reproduces TT exactly (via duality with FN, then FN-eq-TT) |
+
 ### GUT Clebsch-Gordan Structure (`UgpLean.MassRelations.ClebschGordan`)
 
 Includes Round 12 baseline + Rounds 17–18 VV three-factor extensions.
