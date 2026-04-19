@@ -30,9 +30,13 @@ Differencing across generations cancels β:
 
 ## Status
 
-This module states the formula and its consequences.  The structural proof
-(that α = π/6 derives from SU(3) Weyl geometry and UGP ridge structure)
-is Priority 1 of Round 12 research and is currently `sorry`.
+- Formula statement and β-free identities: proved (`ring`, `linarith`).
+- **Claim A (α = π/6 from A_2 geometry): PROVED** in
+  `UgpLean.MassRelations.SU3FlavorCartan.angle_alpha1_omega1_eq_pi_div_six`
+  (Round 13, Session 2; zero UGP-specific axioms, zero `sorry`).
+- Claim B (2^g = UGP mirror-pair doubling): TODO (Round 13 Phase 2).
+- Claim C (physics bridge from UGP cascade operators to SU(3)_flavor Cartan
+  rotation): TODO (Round 13 Phase 3; main open research front).
 -/
 
 namespace UgpLean.MassRelations.UpLeptonCyclotomic

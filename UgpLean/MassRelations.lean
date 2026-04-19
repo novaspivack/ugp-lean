@@ -1,6 +1,7 @@
 import UgpLean.MassRelations.UpLeptonCyclotomic
 import UgpLean.MassRelations.DownRational
 import UgpLean.MassRelations.ClebschGordan
+import UgpLean.MassRelations.SU3FlavorCartan
 
 /-!
 # UgpLean.MassRelations — Charged-Fermion Mass Structural Relations
@@ -35,6 +36,7 @@ See also:
 - `UgpLean.MassRelations.UpLeptonCyclotomic` — TT formula module
 - `UgpLean.MassRelations.DownRational` — VV formula module
 - `UgpLean.MassRelations.ClebschGordan` — GUT Lie-group integer table
+- `UgpLean.MassRelations.SU3FlavorCartan` — Round 13 Claim A (α = π/6 from A_2 geometry)
 -/
 
 namespace UgpLean.MassRelations
