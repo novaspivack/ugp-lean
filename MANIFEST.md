@@ -156,6 +156,7 @@ match.  See registry at `ugp-physics:specs/WORKING_NOTES/TECH_DEBT_LEAN_SORRY_RE
 | Falsifiable flavon-VEV-ratio prediction ε_1/ε_2 = e^(−5π/24) | MassRelations.FroggattNielsen | epsRatio_eq | ✓ |
 | **Round 31 / Priority 5: β = π/8 structurally fixed** (Priority 5 closure via Lean corollary) | MassRelations.FroggattNielsen | beta_TT_equals_pi_div_eight | ✓ |
 | **Round 33 / Priority 7: Koide closed form & cyclotomic-12 identification** (R33-B `koide_solved_form_root`, R33-C `two_plus_sqrt3_eq`, `one_plus_sqrt3_sq_eq_eight_cos_sq`; R33-A `koide_iff_twoS_sq_eq_threeN`) | MassRelations.KoideClosedForm | koide_solved_form_root, two_plus_sqrt3_eq, one_plus_sqrt3_sq_eq_eight_cos_sq, koide_iff_twoS_sq_eq_threeN, cos_sq_pi_div_twelve | ✓ |
+| **Round 34 / Priority 7 Phase III/IV: UGP-native Koide Newton-step flow** (03_SPEC §1 (a)+(b)+(d) partial win; null-cone attractor; R34-B structural obstruction) | MassRelations.KoideNewtonFlow | newton_flow_fixes_null_cone, newton_flow_swap12_equivariant, newton_flow_swap13_equivariant, newton_flow_rot123_equivariant, newton_step_fixes_R33_root, q_eq_koideQuadratic (+ 9 supporting equivariance lemmas for q, gradQ, normSq) | ✓ |
 | **Round 22 — Claim C sub-(ii) (Cartan-invariant flavon potential)** | | | |
 | Z_6 generator angle = 2 × Claim-A bisector angle | MassRelations.CartanFlavonPotential | z6_generator_eq_two_times_claim_A | ✓ |
 | Z_6 / Z_16 lower bounds on potential parts | MassRelations.CartanFlavonPotential | z6_part_bounded_below, z16_part_bounded_below | ✓ |

@@ -359,3 +359,27 @@ Structural progress on Paper 1 OP(vii) / 4.4 (Koide relation).  Round RR establi
 | **koide_iff_twoS_sq_eq_threeN** | KoideClosedForm | **R33-A geometric:** `koideQuadratic x y z = 0 ⟺ 2(x+y+z)² = 3(x²+y²+z²)` (the 45°-cone condition on the positive octant) |
 
 OP(vii) remains partially open: these theorems establish the algebraic skeleton (solved form and cyclotomic atoms); the full UGP-native dynamical flow construction (Phase III/IV of 03_SPEC) is still to be done.
+
+### Koide Newton-Step Flow — Priority 7 Phase III/IV (`UgpLean.MassRelations.KoideNewtonFlow`) — Round 34
+
+Completes 03_SPEC Phase III/IV for OP(vii) in the **(a) + (b) + (d)** partial-win pattern explicitly flagged in 03_SPEC §1.  Constructs the UGP-native S_3-equivariant operator
+```
+U(v) := v − (q(v) / |∇q(v)|²) · ∇q(v)
+```
+whose fixed-point set is exactly the Koide null cone `{v : q(v) = 0}`, partially closing OP(vii) at the "dynamical operator exists" level.  Exact-q-conservation off-cone (item (c)) is RELAXED to "q strictly decreases" — the R34-B structural obstruction (the asymmetric +/−/− root pattern at v* at hierarchy level) shows this relaxation is necessary: no S_3-equivariant polynomial operator with v* as a nontrivial fixed point AND exact q-conservation off-cone can exist.
+
+Empirical verification (`comp_p01_HHH_koide_newton_flow.json`): 100% of 1000 random v ∈ [0.01, 5.0]³ converge to the null cone (|q| < 1e-10) within 5 Newton iterations; S_3-equivariance holds to machine precision (2.3e-15 max error over 200 random v × 6 permutations); all 6 S_3-permutations of PDG v* are fixed to ~5e-6 (Koide's own PDG imperfection).
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **newton_flow_fixes_null_cone** | KoideNewtonFlow | **03_SPEC §1 (d) + relaxed (c):** q(v) = 0 → newtonStep v = v (null cone is pointwise fixed; v* and its 6 S_3-orbit permutations are fixed points within Koide's own PDG imperfection) |
+| **q_swap12_eq**, **q_swap13_eq**, **q_rot123_eq** | KoideNewtonFlow | q is S_3-invariant (under the three generators of S_3 acting as coordinate permutations on ℝ³) |
+| **gradQ_swap12_eq**, **gradQ_swap13_eq**, **gradQ_rot123_eq** | KoideNewtonFlow | ∇q is S_3-equivariant (commutes with the three S_3 generators) |
+| **normSq_swap12_eq**, **normSq_swap13_eq**, **normSq_rot123_eq** | KoideNewtonFlow | Euclidean norm squared is S_3-invariant |
+| **newton_flow_swap12_equivariant** | KoideNewtonFlow | **03_SPEC §1 (a) swap12 case:** U(swap12 v) = swap12(U v) |
+| **newton_flow_swap13_equivariant** | KoideNewtonFlow | **03_SPEC §1 (a) swap13 case:** U(swap13 v) = swap13(U v) |
+| **newton_flow_rot123_equivariant** | KoideNewtonFlow | **03_SPEC §1 (a) rot123 case:** U(rot123 v) = rot123(U v); full S_3-equivariance follows from these three generator cases |
+| **q_eq_koideQuadratic** | KoideNewtonFlow | Bridges R34's `q` to R33's `koideQuadratic` (they agree as functions on ℝ³) |
+| **newton_step_fixes_R33_root** | KoideNewtonFlow | **R33 ↔ R34 link:** the R33-B closed-form +root `z = 2(x+y) + √3·√(x²+4xy+y²)` satisfies `newtonStep(x, y, z) = (x, y, z)`, tying the dynamical operator directly to the algebraic skeleton |
+
+**03_SPEC §1 scoreboard after R34:** (a) proved; (b) by construction; (c) relaxed via R34-B obstruction; (d) proved.  Upgraded OP(vii) from "research-grade open" to **"partially closed with UGP-native dynamical operator exhibited"**; the residual sub-question is whether a reformulation of (c) compatible with the hierarchical structure of v* can yield a tighter closure.
