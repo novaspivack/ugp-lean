@@ -130,3 +130,24 @@ match.  See registry at `ugp-physics:specs/WORKING_NOTES/TECH_DEBT_LEAN_SORRY_RE
 | Dickman equidistribution in arithmetic progressions | GTE.AnalyticArchitecture | dickman_equidistribution_in_APs | ⚠ sorry (Tenenbaum III.6 — Mathlib infra gap) |
 | CRT equidistribution within independence regime | GTE.AnalyticArchitecture | crt_equidistribution_within_regime | ⚠ sorry (Tenenbaum III.6 + CRT — Mathlib infra gap) |
 | Q₋(t) ⊥ Q₊(t) coprime (algebraic, proved) | GTE.AnalyticArchitecture | qminus_qplus_coprime | ✓ |
+| **Mass Relations (Round 12 + Rounds 13–18)** | | | |
+| TT formula β-free identity Δg=1 (= π/3) | MassRelations.UpLeptonCyclotomic | interGenerationIdentity_1_to_2 | ✓ |
+| TT formula β-free identity Δg=2 (= 2π/3) | MassRelations.UpLeptonCyclotomic | interGenerationIdentity_2_to_3 | ✓ |
+| TT formula β-free identity Δg=3 (= π, Gelfond) | MassRelations.UpLeptonCyclotomic | interGenerationIdentity_1_to_3 | ✓ |
+| VV formula γ-free identity Δg=1 | MassRelations.DownRational | gammaFreeIdentity_delta_1 | ✓ |
+| Combined formula arithmetic identities | MassRelations.DownRational | combined_lepton_exponent_equals_5_18, combined_cyclotomic_coefficient, combined_constant_139_630 | ✓ |
+| **Round 13 Phase 1 — Claim A (α = π/6 from A_2 geometry)** | | | |
+| Algebraic lemma (√3/6)/(1/2) = (√3)⁻¹ | MassRelations.SU3FlavorCartan | omega1_slope_eq_inv_sqrt_three | ✓ |
+| **Claim A:** angle(α_1, ω_1) = π/6 in A_2 Cartan | MassRelations.SU3FlavorCartan | angle_alpha1_omega1_eq_pi_div_six | ✓ |
+| Half-opening angle of A_2 Weyl chamber = π/6 (alias) | MassRelations.SU3FlavorCartan | a2_weyl_chamber_half_opening | ✓ |
+| ω_1 lies strictly interior to fundamental Weyl chamber | MassRelations.SU3FlavorCartan | omega1_in_weyl_chamber_interior | ✓ |
+| **Round 12 baseline VV CG identity** | | | |
+| dim(45_SU5)/dim(126_SO10) = 5/14 | MassRelations.ClebschGordan | gut_ratio_45_over_126 | ✓ |
+| **Rounds 17–18 — VV three-factor structural decomposition** | | | |
+| 9 = dim(SU(3)_C adj) + dim(U(1)_Y) (gauge bosons coupling to d_R) | MassRelations.ClebschGordan | nine_eq_gluon_plus_photon_dim | ✓ |
+| **VV α:** 1 + rank(SU(5))/9 = 13/9 | MassRelations.ClebschGordan | alpha_VV_structural | ✓ |
+| **VV β:** −(1 + Y_Q_doublet) = −7/6 with Y_Q = 1/6 | MassRelations.ClebschGordan | beta_VV_structural | ✓ |
+| SO(10) 126 → SU(5) branching arithmetic (1+5+10+15+45+50 = 126) | MassRelations.ClebschGordan | so10_126_branching_sum | ✓ |
+| **VV γ:** −dim(45)/dim(126) = −5/14 | MassRelations.ClebschGordan | gamma_VV_structural | ✓ |
+| **Round 18 link:** gcd(45,126) = 9 = dim SU(3)_C adj + dim U(1)_Y (axiom-free, by `decide`) | MassRelations.ClebschGordan | alpha_gamma_shared_gcd | ✓ |
+| VV coefficients packaged: (13/9, −7/6, −5/14) | MassRelations.ClebschGordan | VV_coefficients_rational | ✓ |

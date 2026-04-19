@@ -203,3 +203,58 @@ sum estimates).
 | C2 | Continued-fraction Fibonacci lift | UGP Paper Updates |
 | C3 | δ_UGP formula, b₁=73 unique | JMP Math Foundations |
 | C4 | g₁²,g₂²,g₃² from invariants | JMP Math Foundations |
+
+## Mass Relations (Round 12 + Rounds 13–18 research)
+
+Charged-fermion mass-relation modules formalising the TT (up-to-lepton cyclotomic)
+and VV (down-type rational) structural identities discovered 2026-04-19.
+All theorems below are zero-sorry; axiom signatures = standard Mathlib
+{propext, Classical.choice, Quot.sound} unless noted.  See ugp-physics
+Lab Notes 11, 17, 18, 19, 20, 21, 22 for full dialectical derivation.
+
+### TT — Up-Lepton Cyclotomic Identity (`UgpLean.MassRelations.UpLeptonCyclotomic`)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **interGenerationIdentity_1_to_2** | UpLeptonCyclotomic | UpLeptonFormula 2 β − UpLeptonFormula 1 β = π/3 (β-free, by `ring`) |
+| **interGenerationIdentity_2_to_3** | UpLeptonCyclotomic | UpLeptonFormula 3 β − UpLeptonFormula 2 β = 2π/3 (β-free, by `ring`) |
+| **interGenerationIdentity_1_to_3** | UpLeptonCyclotomic | UpLeptonFormula 3 β − UpLeptonFormula 1 β = π (Gelfond, by `linarith`) |
+| **alpha_equals_su3_weyl_bisector** | UpLeptonCyclotomic | su3WeylBisectorAngle = π/6 (`rfl`) |
+| **beta_equals_pi_over_8** | UpLeptonCyclotomic | betaCandidate1 = π/8 (`rfl`) |
+
+### VV — Down-Rational Mass Identity (`UgpLean.MassRelations.DownRational`)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **gammaFreeIdentity_delta_1** | DownRational | γ-free formula across g=1 → g=2 (by `linarith`) |
+| **combined_lepton_exponent_equals_5_18** | DownRational | 13/9 − 7/6 = 5/18 (by `norm_num`) |
+| **combined_cyclotomic_coefficient** | DownRational | (13/9)·(π/6) = 13π/54 (by `ring`) |
+| **combined_constant_139_630** | DownRational | (13/9)·(2/5) + (−5/14) = 139/630 (by `norm_num`) |
+
+### Claim A — A_2 / SU(3) Cartan Geometry (`UgpLean.MassRelations.SU3FlavorCartan`) — Round 13 Phase 1
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **omega1_slope_eq_inv_sqrt_three** | SU3FlavorCartan | (√3/6) / (1/2) = (√3)⁻¹ (algebraic lemma) |
+| **angle_alpha1_omega1_eq_pi_div_six** | SU3FlavorCartan | **Claim A:** angle between A_2 simple root α_1 and fundamental weight ω_1 = π/6 |
+| **a2_weyl_chamber_half_opening** | SU3FlavorCartan | Half-opening angle of A_2 fundamental Weyl chamber = π/6 (alias of Claim A) |
+| **omega1_in_weyl_chamber_interior** | SU3FlavorCartan | ω_1 lies strictly in the interior of the fundamental Weyl chamber (0 < π/6 < π/3) |
+
+### GUT Clebsch-Gordan Structure (`UgpLean.MassRelations.ClebschGordan`)
+
+Includes Round 12 baseline + Rounds 17–18 VV three-factor extensions.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **gut_ratio_45_over_126** | ClebschGordan | 45 · 14 = 126 · 5 (i.e., dim(45_SU5)/dim(126_SO10) = 5/14) |
+| **nine_eq_gluon_plus_photon_dim** | ClebschGordan | dim(SU(3)_C adjoint) + dim(U(1)_Y) = 9 (= number of gauge bosons coupling to d_R, s_R, b_R as SU(2)_L singlets) |
+| **alpha_VV_structural** | ClebschGordan | **VV α:** 1 + rank(SU(5))/(dim SU(3)_C adjoint + dim U(1)_Y) = 13/9 |
+| **beta_VV_structural** | ClebschGordan | **VV β:** −(1 + Y_Q_doublet) = −7/6  (Y_Q = 1/6) |
+| **so10_126_branching_sum** | ClebschGordan | 1 + 5 + 10 + 15 + 45 + 50 = 126 (SO(10) 126 → SU(5) branching arithmetic; confirms 45_SU5 is a subrep of 126_SO10) |
+| **gamma_VV_structural** | ClebschGordan | **VV γ:** −dim(45_SU5)/dim(126_SO10) = −5/14 |
+| **alpha_gamma_shared_gcd** | ClebschGordan | **Round 18:** Nat.gcd(45, 126) = dim(SU(3)_C adjoint) + dim(U(1)_Y) = 9 (no axioms, by `decide`) |
+| **VV_coefficients_rational** | ClebschGordan | (13/9, −7/6, −5/14) packaged with structural identifications |
+
+**Status of physical-bridge "FormulaHolds" theorems:** Both `UpLeptonFormulaHolds` and (analogous) "VV holds on physical masses" theorems remain `True → trivial` placeholders in their respective modules, pending Lean formalization of E_base→physical-mass conversion.  See ugp-physics 02_SPEC §D.4.
+
+**Track D status (TT mechanism):** Compact-SU(3) character interpretation of the TT 2^g structure was definitively ruled out in Round 16 (algebraic integers vs transcendental targets); GUT CG rep-dim search ruled out in Round 15 (density-dominated null).  Best remaining candidate: binary cascade of π/6 phase shifts with 2^g accumulation per generation (under construction).

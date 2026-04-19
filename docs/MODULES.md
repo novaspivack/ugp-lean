@@ -103,3 +103,18 @@ UgpLean.lean
 | **Paper25** | Citable stubs for Paper 25 |
 | **UGPMain** | Citable stubs for UGP Main |
 | **NemSBridge** | GTESpace instance, RSUC for nems-lean |
+
+### Mass Relations Layer (Round 12 + Rounds 13–18)
+
+Charged-fermion mass-relation modules formalising the TT (up-to-lepton cyclotomic)
+and VV (down-type rational) structural identities discovered 2026-04-19.
+Hub module `MassRelations` re-exports the formulas; submodules contain the
+specific theorems.  All zero-sorry; standard Mathlib axioms only.
+
+| Module | Purpose |
+|--------|---------|
+| **MassRelations** | Hub: re-exports `UpLeptonFormula`, `DownRationalFormula`, `CombinedFormula`. Imports all four submodules. |
+| **MassRelations.UpLeptonCyclotomic** | TT formula `log(m_{u,g}/m_{l,g}) = (π/6)·2^g + β`; three β-free inter-generational identities (Δg=1,2,3 → π/3, 2π/3, π); β candidates (π/8, 2/5, 1/φ²). |
+| **MassRelations.DownRational** | VV formula `log(m_{d,g}) = (13/9)·log(m_{u,g}) + (−7/6)·log(m_{l,g}) + (−5/14)`; γ-free Δg=1 identity; combined-formula arithmetic identities. |
+| **MassRelations.ClebschGordan** | GUT representation-dimension table (SU(2), SU(3), SU(5), SO(10) ranks, fundamental dims, adjoint dims, key Higgs reps). Round 12 `gut_ratio_45_over_126`. **Rounds 17–18 extension:** VV three-factor structural theorems — α (rank/d_R-channels), β (hypercharge), γ (45-in-126 subrep), shared-gcd link, packaged `VV_coefficients_rational`. |
+| **MassRelations.SU3FlavorCartan** (Round 13 Phase 1) | **Claim A theorem:** angle between A_2 simple root α_1 and fundamental weight ω_1 = π/6.  Direct 2D Euclidean construction bypassing abstract Mathlib RootSystem infrastructure.  Includes chamber-interior bonus theorem. |

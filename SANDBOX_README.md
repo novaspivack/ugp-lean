@@ -25,6 +25,25 @@ Target theorems (see SPEC_028_TP1 §3):
 - **THM-UCL-4:** `k_L_base_independent_form` (linear-L coefficient via GTE equilibrium)
 - **THM-UCL-5:** `k_const_structural_form` (after historical investigation of −0.15203 vs −1/(2π) discrepancy)
 
+### Round 12 + Rounds 13–18 additional scope (charged-fermion mass relations)
+
+Added 2026-04-19 alongside the original UCL-coefficient program (see ugp-physics
+spec EPIC_CLUSTER7_RESEARCH_GRADE for full programme):
+
+- **TT formula** (`UgpLean.MassRelations.UpLeptonCyclotomic`): `log(m_{u,g}/m_{l,g}) = (π/6)·2^g + β`; three β-free inter-generational identities proved.
+- **VV formula** (`UgpLean.MassRelations.DownRational`): `log(m_{d,g}) = (13/9)·log(m_{u,g}) + (-7/6)·log(m_{l,g}) + (-5/14)`; γ-free identity + combined-formula arithmetic proved.
+- **Claim A — Round 13 Phase 1** (`UgpLean.MassRelations.SU3FlavorCartan`): angle between A_2 simple root α_1 and fundamental weight ω_1 = π/6. **Machine-proved**, zero sorry, only standard Mathlib axioms.
+- **VV three-factor structural decomposition — Rounds 17–18** (`UgpLean.MassRelations.ClebschGordan` extension): all three VV coefficients identified with exact structural rationals (`alpha_VV_structural`, `beta_VV_structural`, `gamma_VV_structural`); `alpha_gamma_shared_gcd` (axiom-free, `decide`-only) proves the non-trivial Round-18 link `gcd(45, 126) = 9 = dim(SU(3)_C adj) + dim(U(1)_Y)`.
+- **Hub** (`UgpLean.MassRelations`): re-exports formulas; documents status of each submodule.
+
+These follow the same port-back protocol as the UCL targets above.  Currently
+**not yet ported back** to `~/ugp-lean` — port-back planned bundled with the
+next consolidated Paper 1 update pass per ugp-physics 02_SPEC §I.
+
+**Status of Track D (TT mechanism, Claims B/C):** compact-SU(3) character interpretation definitively ruled out (Round 16); GUT CG rep-dim search density-dominated (Round 15). Best remaining candidate: binary cascade of π/6 phase shifts. Under construction.
+
+**Status of Track F (VV three-factor decomposition):** structurally complete in Lean (Rounds 17–18); awaiting unified-Lagrangian derivation for full landmark integration.
+
 ## Protocol
 
 ### Before any Lean proof work on a target
@@ -70,11 +89,23 @@ Abandoned or reformulated targets: document in `EXP_ABANDONED.md`.
 
 ## Files in this sandbox
 
-- `UgpLean/ElegantKernel/` — target-theorem files (one per target).
+- `UgpLean/ElegantKernel/` — original UCL target-theorem files (one per target).
+- `UgpLean/MassRelations/` — Round 12 + Rounds 13–18 charged-fermion mass-relation modules:
+  - `MassRelations.lean` (hub, re-exports)
+  - `MassRelations/UpLeptonCyclotomic.lean` (TT formula + β-free identities)
+  - `MassRelations/DownRational.lean` (VV formula + γ-free identity + combined-formula arithmetic)
+  - `MassRelations/SU3FlavorCartan.lean` (Claim A: π/6 from A_2 geometry)
+  - `MassRelations/ClebschGordan.lean` (GUT dimension table + Round 17–18 VV three-factor structural theorems)
 - `docs/DEFENSIBILITY_*.md` — defensibility ledgers.
-- `EXP_AXIOMS.md` — any temporary experimental axioms (must be empty before port-back).
+- `docs/THEOREMS.md` — full theorem catalog (kept in sync with Lean modules).
+- `docs/MODULES.md` — module reference (kept in sync).
+- `MANIFEST.md` — paper-to-Lean-theorem mapping (kept in sync).
+- `Assumptions.md` — premise ledger including MassRelations definitions and interpretive flags.
+- `EXP_AXIOMS.md` — any temporary experimental axioms (must be empty before port-back; currently empty).
 - `EXP_ABANDONED.md` — documentation of targets that failed defensibility or Lean proof attempts.
 - `SANDBOX_README.md` — this file.
+
+**Doc-sync rule (added 2026-04-19):** every Lean module addition or theorem addition in this sandbox MUST be reflected in `MANIFEST.md`, `docs/THEOREMS.md`, `docs/MODULES.md`, and `Assumptions.md` (where applicable) in the SAME COMMIT.  Backlog of un-documented theorems is unacceptable; if discovered, fix immediately.
 
 ## Relationship to main ugp-lean
 
