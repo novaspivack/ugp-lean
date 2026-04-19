@@ -43,6 +43,13 @@ both openly disclosed with precise citations:
 |---------|--------|-----------|
 | **ridge_10** | RidgeDefs | ridge 10 = 1008 |
 | **ridgeSurvivors_10** | Sieve | ridgeSurvivorsFinset 10 = {(24,42), (42,24)} |
+| **ridgeSurvivors_5_empty** | SieveBelow10 | ridgeSurvivorsFinset 5 = ∅ |
+| **ridgeSurvivors_6_empty** | SieveBelow10 | ridgeSurvivorsFinset 6 = ∅ |
+| **ridgeSurvivors_7_empty** | SieveBelow10 | ridgeSurvivorsFinset 7 = ∅ |
+| **ridgeSurvivors_8_empty** | SieveBelow10 | ridgeSurvivorsFinset 8 = ∅ |
+| **ridgeSurvivors_9_empty** | SieveBelow10 | ridgeSurvivorsFinset 9 = ∅ |
+| **n10_is_minimal_admissible_ridge** | SieveBelow10 | ∀ n, 5 ≤ n → n < 10 → ridgeSurvivorsFinset n = ∅ |
+| **ridge_minimality_and_existence** | SieveBelow10 | (∀ n, 5≤n → n<10 → survivors=∅) ∧ (survivors at 10 = {(24,42),(42,24)}) |
 | **ridge_remainder_lock** | RidgeRigidity | (2^10−1) % b₂ = 15 for b₂∣1008, b₂≥16 |
 | **m2_canonical** | RidgeRigidity | (2^10−1) % 42 = 15 |
 | **quotient_gap_13** | RidgeRigidity | q₂ − q₁ = 13 when q₂ ≥ 13 |
