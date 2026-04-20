@@ -594,8 +594,8 @@ For all $n$ and all triples~$t$:
 \mathsf{CandidatesAt}\;n.
 \]
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|theoremA_general|
+\begin{leanref} \lstinline|theoremA_general|
+\end{leanref}
 \end{theorem}
 
 \begin{proof}[Proof sketch]
@@ -610,8 +610,8 @@ $n = 10$, the proof reduces to six \texttt{native\_decide} calls.
 $\mathsf{Residual} = \mathsf{Candidates}$.  That is, every candidate
 triple passes the unified sieve.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|theoremB|
+\begin{leanref} \lstinline|theoremB|
+\end{leanref}
 \end{theorem}
 
 \begin{proof}[Proof sketch]
@@ -630,8 +630,8 @@ Under the unified sieve at $n = 10$:
   of the residual.
 \end{enumerate}
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|rsuc_theorem|
+\begin{leanref} \lstinline|rsuc_theorem|
+\end{leanref}
 \end{theorem}
 
 \begin{proof}[Proof sketch]
@@ -669,8 +669,8 @@ The canonical orbit at $n = 10$ is fully determined by the update map:
 Each component of $G_2$ and $G_3$ is computed from the update map
 formulas applied to the previous generation.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|orbit_determined_by_T|
+\begin{leanref} \lstinline|orbit_determined_by_T|
+\end{leanref}
 \end{theorem}
 
 The proof verifies eleven equalities by \texttt{native\_decide} after
@@ -685,8 +685,8 @@ For all $n \ge 5$ and all $b_2$ with $b_2 \mid \Rn$ and $b_2 \ge 16$:
 That is, the even step immediately following a ridge hit leaves~$c$
 unchanged.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|even_step_c_invariance|
+\begin{leanref} \lstinline|even_step_c_invariance|
+\end{leanref}
 \end{theorem}
 
 \begin{proof}
@@ -700,9 +700,9 @@ b_2 = 15$.  Therefore $b_2 \cdot q_2 = (2^n - 1) - 15 = 2^n - 16 =
 At $n = 10$, $b_2 = 42$: the strict even-step output is
 $c_3 = 1023 = c_2$, not $65535$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|c3_strict_eq_c2_at_n10|,
+\begin{leanref} \lstinline|c3_strict_eq_c2_at_n10|,
 \lstinline|paper_c3_is_illustrative_not_strict|
+\end{leanref}
 \end{corollary}
 
 \paragraph{Derived quantities.}
@@ -741,8 +741,8 @@ For all $n \ge 5$ and all $b_2$ with $b_2 \mid \Rn$ and $b_2 \ge 16$:
   (2^n - 1) \bmod b_2 = 15.
 \]
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|ridge_remainder_lock_general|
+\begin{leanref} \lstinline|ridge_remainder_lock_general|
+\end{leanref}
 \end{theorem}
 
 \begin{proof}
@@ -757,8 +757,8 @@ For all $q_2 \ge 13$:
 $q_2 - q_1(q_2) = 13$,
 where $q_1(q_2) = q_2 - 13$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|quotient_gap_all|
+\begin{leanref} \lstinline|quotient_gap_all|
+\end{leanref}
 \end{theorem}
 
 This is definitional ($q_1 = q_2 - g$ with $g = 13$) but the
@@ -768,8 +768,8 @@ formalization makes the level-independence explicit.
 For all $b_2, q_2 \in \N$:
 $b_1(b_2, q_2) = b_1(q_2, b_2)$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|mirror_b1_invariance|
+\begin{leanref} \lstinline|mirror_b1_invariance|
+\end{leanref}
 \end{theorem}
 
 \begin{proof}
@@ -782,8 +782,8 @@ For fixed $b_2 \ge 1$ and $q_2, q_2' \ge 14$ with $q_2 < q_2'$:
 $c_1(b_2, q_2) < c_1(b_2, q_2')$.
 That is, $c_1$ is strictly increasing in~$q_2$ for fixed~$b_2$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|c1_monotone_in_q2|
+\begin{leanref} \lstinline|c1_monotone_in_q2|
+\end{leanref}
 \end{theorem}
 
 \begin{proof}
@@ -796,32 +796,32 @@ in~$q_2$, so their product is too.
 For all $a, b \in \N$:
 $\gcd(2^a - 1, 2^b - 1) = 2^{\gcd(a,b)} - 1$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|mersenne_gcd_identity|
+\begin{leanref} \lstinline|mersenne_gcd_identity|
 \textup{(from Mathlib)}
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Arithmetic identity]\label{thm:arith137}
 $2 \cdot b_1 - a_2 = 2 \cdot 73 - 9 = 137$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|alpha_echo|
+\begin{leanref} \lstinline|alpha_echo|
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Linear $b$-growth]\label{thm:b-growth}
 After $t$ even steps from $b_2 = 42$:
 $b_{2t+1} = 42 + t \cdot \Fib_{13} = 42 + 233t$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|b_linear_growth|, \lstinline|b_growth_one|
+\begin{leanref} \lstinline|b_linear_growth|, \lstinline|b_growth_one|
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Monotone $c$-values]\label{thm:c-mono}
 Along the canonical orbit: $c_1 < c_2 < c_3$, i.e.,
 $823 < 1023 < 65535$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|c_values_strictly_monotone|
+\begin{leanref} \lstinline|c_values_strictly_monotone|
+\end{leanref}
 \end{theorem}
 
 % ═══════════════════════════════════════════════════════════════
@@ -840,8 +840,8 @@ $b \ge 16$, $q \ge 3$, $n \ge 5$ such that
   p &= (b + q + 20) \cdot q + 20. \label{eq:ugpprime-formula}
 \end{align}
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|IsUGPPrime|
+\begin{leanref} \lstinline|IsUGPPrime|
+\end{leanref}
 \end{definition}
 
 The constraint~\eqref{eq:ugpprime-ridge} restricts the witness pair
@@ -854,8 +854,8 @@ proves that the two formulations are equal.
 \begin{theorem}[\ugp{} primes exist]\label{thm:ugp-exist}
 There exists a \ugp{} prime.  Constructive witness: $823$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|ugp_primes_exist|
+\begin{leanref} \lstinline|ugp_primes_exist|
+\end{leanref}
 \end{theorem}
 
 \begin{proof}
@@ -887,16 +887,16 @@ witnesses verified by \texttt{native\_decide}:
 \end{tabular}
 \end{center}
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|ten_ugp_primes|
+\begin{leanref} \lstinline|ten_ugp_primes|
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[\ugp{} primes at three levels]\label{thm:ugp-levels}
 \ugp{} primes exist at three distinct ridge levels: $n = 10$, $n = 13$,
 and $n = 16$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|ugp_primes_at_three_levels|
+\begin{leanref} \lstinline|ugp_primes_at_three_levels|
+\end{leanref}
 \end{theorem}
 
 \paragraph{Computational data.}
@@ -910,8 +910,8 @@ UGP prime formula.
 \begin{conjecture}[\ugp{} prime infinitude]\label{conj:ugp-inf}
 There are infinitely many \ugp{} primes.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|UGPPrimeInfinitudeConjecture|
+\begin{leanref} \lstinline|UGPPrimeInfinitudeConjecture|
+\end{leanref}
 \end{conjecture}
 
 This would follow from the mirror-dual conjecture
@@ -931,8 +931,8 @@ There exist rational coefficients $k_M, k_{G_2} \in \Q$ such that
 \]
 where $k_L^2 = 7/512$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|quarterLockLaw|
+\begin{leanref} \lstinline|quarterLockLaw|
+\end{leanref}
 \end{theorem}
 
 The proof exhibits $k_{G_2} = 7/2048$ and $k_M = 7/1024$, then
@@ -942,8 +942,8 @@ verifies the identity by \texttt{ring}.
 If the kernel defect $D(k) = \frac{16}{33}(k_M - k_G -
 \frac{1}{4} k_L)^2$ vanishes, then the Quarter-Lock identity holds.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|quarterLockStability_holds|
+\begin{leanref} \lstinline|quarterLockStability_holds|
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Elegant Kernel]\label{thm:ek}
@@ -955,10 +955,10 @@ The model parameter $L_{\mathrm{model}} = \log_2(2000/3)$ satisfies
 $L_{\mathrm{model}} = \log_2\bigl((D_1 \cdot 5^3) / 3\bigr)$,
 where $D_1 = 16$, $5^3 = 125$, and $3$ is the orbit length.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|k_L2_eq|, \lstinline|k_L2_from_ugp1_s|,
+\begin{leanref} \lstinline|k_L2_eq|, \lstinline|k_L2_from_ugp1_s|,
 \lstinline|block_denom_in_half_ridge_interval|,
 \lstinline|L_model_from_gauge_structure|
+\end{leanref}
 \end{theorem}
 
 \subsection{UCL Unconditional Closure}\label{subsec:ucl-unconditional}
@@ -984,10 +984,10 @@ via the substitution $k_{\rm gen} = \pi/2$, verified by
 and the identity $k_{\rm gen}^2 = 1 + \cos(\pi/6)/2$ (from
 \lstinline|k_gen_sq_derived_eq_phi_plus_3_4|).
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|thm_ucl1_fully_unconditional|,
+\begin{leanref} \lstinline|thm_ucl1_fully_unconditional|,
 \lstinline|thm_ucl1_cosine_form|
 \textup{(in \texttt{ElegantKernel/Unconditional/FullClosure})}
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[UCL$_2$ --- $k_{\rm gen}^{(2)} = \cos(4\pi/5)$, unconditional]\label{thm:ucl2}
@@ -995,12 +995,12 @@ The second-generation kernel coupling $k_{\rm gen}^{(2)}$ equals
 $\cos(4\pi/5) = -(1+\sqrt{5})/4 = -\varphi/2$, the unique
 negative root of the pentagon quadratic $\mu^2 + \mu/2 - 1/4 = 0$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|k_gen2_derived_satisfies_poly|,
+\begin{leanref} \lstinline|k_gen2_derived_satisfies_poly|,
 \lstinline|k_gen2_derived_unique_characterization|,
 \lstinline|cos_4pi_div_five_eq_neg_phi_half|
 \textup{(in \texttt{ElegantKernel/KGen2},
 \texttt{ElegantKernel/Unconditional/KGenFullClosure})}
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Full UCL closure, unconditional]\label{thm:ucl-full}
@@ -1010,10 +1010,10 @@ $k_{\rm gen} = \pi/2$, $k_{\rm gen}^{(2)} = \cos(4\pi/5)$,
 pentagon--$D_5$ consistency) are simultaneously satisfiable with
 the certified rational/real witnesses and are derived---not assumed.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|full_closure_summary|,
+\begin{leanref} \lstinline|full_closure_summary|,
 \lstinline|complete_derivation|
 \textup{(in \nolinkurl{ElegantKernel/Unconditional/FullClosure})}
+\end{leanref}
 \end{theorem}
 
 \noindent
@@ -1045,9 +1045,9 @@ $(\sqrt{x}+\sqrt{y}+\sqrt{z})^2 = 2(x+y+z)$ holds if and only if
 $(2S)^2 = 3N$, where $S = \sqrt{x}+\sqrt{y}+\sqrt{z}$ and $N = x+y+z$.
 This is the algebraic normal form used to state the closed-form solution.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|koide_iff_twoS_sq_eq_threeN|
+\begin{leanref} \lstinline|koide_iff_twoS_sq_eq_threeN|
 \textup{(in \texttt{MassRelations.KoideClosedForm})}
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Koide solved form]\label{thm:koide-solved}
@@ -1059,11 +1059,11 @@ third mass is:
 \]
 expressed via the cyclotomic-12 angle $\cos^2(\pi/12) = (2+\sqrt{3})/4$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|koide_solved_form_root|,
+\begin{leanref} \lstinline|koide_solved_form_root|,
 \lstinline|cos_sq_pi_div_twelve|,
 \lstinline|two_plus_sqrt3_eq|
 \textup{(in \texttt{MassRelations.KoideClosedForm})}
+\end{leanref}
 \end{theorem}
 
 \subsection{$S_3$-equivariant Newton flow}
@@ -1079,12 +1079,12 @@ coordinates and the 3-cycle all commute with the flow
 \lstinline|newton_flow_swap13_equivariant|,
 \lstinline|newton_flow_rot123_equivariant|).
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|newton_flow_fixes_null_cone|,
+\begin{leanref} \lstinline|newton_flow_fixes_null_cone|,
 \lstinline|newton_flow_swap12_equivariant|,
 \lstinline|newton_flow_swap13_equivariant|,
 \lstinline|newton_flow_rot123_equivariant|
 \textup{(in \texttt{MassRelations.KoideNewtonFlow})}
+\end{leanref}
 \end{theorem}
 
 \subsection{Binary cascade and physical spectrum}
@@ -1099,11 +1099,11 @@ and the cumulative state has the closed form $b_g = 2^{g-1} b_1$.
 Generation-to-generation increments $\Delta_1, \Delta_2, \Delta_{13}$
 are machine-certified.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|cascadeState_closed_form|,
+\begin{leanref} \lstinline|cascadeState_closed_form|,
 \lstinline|cascade_increment_doubles|,
 \lstinline|cascade_delta_1_to_3|
 \textup{(in \texttt{MassRelations.BinaryCascade})}
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Physical spectrum positivity]\label{thm:spectrum-pos}
@@ -1116,10 +1116,10 @@ The up-type predicted mass is strictly positive for any positive $(m_e, m_\mu)$
 All three positivity results are unconditional under the sole hypothesis
 $m_e > 0$, $m_\mu > 0$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|koidePredictedMTau_pos|,
+\begin{leanref} \lstinline|koidePredictedMTau_pos|,
 \lstinline|predictedLepton_pos|, \lstinline|predictedUpType_pos|
 \textup{(in \texttt{MassRelations.PhysicalMasses})}
+\end{leanref}
 \end{theorem}
 
 \paragraph{SU(3) and flavour structure.}
@@ -1181,9 +1181,9 @@ After one full round (P1–P4), the visible bit at each site satisfies:
 \]
 where $f_{110}$ is the Rule~110 local rule.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|uwca_sweep_implements_rule110|
+\begin{leanref} \lstinline|uwca_sweep_implements_rule110|
 \textup{(in \texttt{Universality.UWCASimulation})}
+\end{leanref}
 \end{theorem}
 
 \begin{proof}[Proof sketch]
@@ -1199,8 +1199,8 @@ The truth table is independently verified: \lstinline|uwca_tile_verification|.
 \begin{theorem}[UGP Turing universality]\label{thm:turing}
 The \ugp{} substrate is Turing-universal.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|ugp_is_turing_universal|
+\begin{leanref} \lstinline|ugp_is_turing_universal|
+\end{leanref}
 \end{theorem}
 
 \begin{keybox}{Why this Turing universality is non-vacuous}
@@ -1257,10 +1257,10 @@ stack of prior tape configurations and proves exact one-step invertibility
 The 5-tile \uwca{} set implementing Rule~110 is minimal: removing any single
 minterm $u \in S_{110} = \{1,2,3,5,6\}$ causes wrong output at neighborhood~$u$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|rule110_tiles_are_minimal|,
+\begin{leanref} \lstinline|rule110_tiles_are_minimal|,
 \lstinline|rule110_each_tile_essential|
 \textup{(in \texttt{GTE.UniquenessCertificates})}
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Symmetry group is $\mathbb{Z}/2\mathbb{Z}$]\label{thm:z2-symmetry}
@@ -1269,11 +1269,11 @@ $\mathbb{Z}/2\mathbb{Z}$ on any ridge fiber: it has order~2, the fiber has
 exactly~2 elements when $b_2\ne q_2$, and no order-3 or higher loops exist
 (algebraic impossibility: if $b_2 q_2 = R$ and $b_2 r_2 = R$ then $q_2 = r_2$).
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|mirror_symmetry_group_is_Z2|,
+\begin{leanref} \lstinline|mirror_symmetry_group_is_Z2|,
 \lstinline|no_order_3_loop|,
 \lstinline|mirror_fiber_no_third_element|
 \textup{(in \texttt{GTE.UniquenessCertificates})}
+\end{leanref}
 \end{theorem}
 
 \subsection{Self-reference theorems}
@@ -1286,35 +1286,35 @@ In any SRI system, for any transformer $F : \mathsf{Code} \to
 \mathsf{Obj}$, there exists $p : \mathsf{Obj}$ with
 $p \simeq F(\mathsf{quote}(p))$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|ugp_lawvere_fixed_point|
+\begin{leanref} \lstinline|ugp_lawvere_fixed_point|
 \textup{(from nems-lean~\cite{nemsLean2025})}
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Kleene recursion]\label{thm:kleene}
 In any program system with s-m-n, for any congruent
 $F : \N \to \N$, there exists $e$ with $e \simeq F(e)$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|ugp_kleene_recursion_theorem|
+\begin{leanref} \lstinline|ugp_kleene_recursion_theorem|
 \textup{(from nems-lean~\cite{nemsLean2025})}
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Rice's theorem]\label{thm:rice}
 No non-trivial extensional property of programs in an acceptable
 programming system is decidable.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|ugp_rice_theorem|
+\begin{leanref} \lstinline|ugp_rice_theorem|
 \textup{(from aps-rice-lean~\cite{apsRiceLean2025})}
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Halting undecidability]\label{thm:halting}
 The halting problem for acceptable programming systems is undecidable.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|ugp_halting_undecidable|
+\begin{leanref} \lstinline|ugp_halting_undecidable|
 \textup{(from aps-rice-lean~\cite{apsRiceLean2025})}
+\end{leanref}
 \end{theorem}
 
 \paragraph{Decidability boundary.}
@@ -1333,8 +1333,8 @@ A \emph{mirror-dual pair} at level~$n$ is a pair $(b_2, q_2)$ with
 $b_2 \cdot q_2 = 2^n - 16$, $b_2 < q_2$, both $\ge 16$, such that
 \emph{both} $c_1(b_2, q_2)$ and $c_1(q_2, b_2)$ are prime.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|MirrorDualPair|
+\begin{leanref} \lstinline|MirrorDualPair|
+\end{leanref}
 \end{definition}
 
 Each mirror-dual pair witnesses two \ugp{} primes simultaneously
@@ -1356,16 +1356,16 @@ $n$ & $(b_2, q_2)$ & $c_1(b_2,q_2)$ & $c_1(q_2,b_2)$ \\
 \end{tabular}
 \end{center}
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|five_mirror_dual_pairs|
+\begin{leanref} \lstinline|five_mirror_dual_pairs|
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Divisor count unboundedness]\label{thm:tau-unbounded}
 For any $k \in \N$, there exists $n$ such that
 $\tau(2^n - 16) \ge k$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|card_divisors_ridge_unbounded|
+\begin{leanref} \lstinline|card_divisors_ridge_unbounded|
+\end{leanref}
 \end{theorem}
 
 \begin{proof}
@@ -1393,8 +1393,8 @@ For all $n \ge 5$:
   \tau(2^n - 16) \;=\; 5 \cdot \tau(2^{n-4} - 1).
 \]
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|tau_ridge_exact|
+\begin{leanref} \lstinline|tau_ridge_exact|
+\end{leanref}
 \end{theorem}
 
 \begin{proof}
@@ -1416,8 +1416,8 @@ ridge levels, and quantifies precisely how much.
 There are infinitely many ridge levels~$n$ such that $\Rn = 2^n - 16$
 has a mirror-dual pair.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|MirrorDualConjecture|
+\begin{leanref} \lstinline|MirrorDualConjecture|
+\end{leanref}
 \end{conjecture}
 
 \paragraph{Heuristic analysis.}
@@ -1456,8 +1456,8 @@ For all $b_2, q_2 \in \N$ with $q_2 \ge 13$:
 The intercept $B(q)$ depends only on~$q_2$, making $c_1$ affine in
 the divisor~$b_2$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|branch_linearization|, \lstinline|branchIntercept|
+\begin{leanref} \lstinline|branch_linearization|, \lstinline|branchIntercept|
+\end{leanref}
 \end{theorem}
 
 \begin{definition}[Resonant factory]\label{def:factory}
@@ -1468,16 +1468,16 @@ The \emph{resonant factory} produces gap-2 candidate pairs via:
 with $L = 13{,}501{,}400$, $D_- = 119{,}511 = 3^2 \cdot 7^2 \cdot 271$,
 $D_+ = 119{,}513$ (prime).
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|factoryL|, \lstinline|factoryDm|,
+\begin{leanref} \lstinline|factoryL|, \lstinline|factoryDm|,
 \lstinline|factoryDp|, \lstinline|factoryDp_prime|
+\end{leanref}
 \end{definition}
 
 \begin{theorem}[Gap-2 property]\label{thm:gap2}
 $Q_+(t) - Q_-(t) = 2$ for all~$t$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|factory_gap_two|
+\begin{leanref} \lstinline|factory_gap_two|
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Hasse check --- no local obstruction]\label{thm:hasse}
@@ -1488,9 +1488,9 @@ values are machine-verified: e.g.,
 $\rho_F(37) = 4$, $\rho_F(43) = 4$ (both quadratics split),
 $\rho_F(3) = 1$ (bad prime: $3 \mid D_-$).
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|localDensity_3| through \lstinline|localDensity_43|,
+\begin{leanref} \lstinline|localDensity_3| through \lstinline|localDensity_43|,
 \lstinline|hasse_check_no_obstruction|
+\end{leanref}
 \end{theorem}
 
 % ═══════════════════════════════════════════════════════════════
@@ -1517,9 +1517,9 @@ Equivalently, $c_1(b_2, q_2) \bmod b_1 = 20$.
 By $b_1$-symmetry (\cref{thm:mirror-b1}), the same holds for the
 reversed pair: $c_1(q_2, b_2) \equiv 20 \pmod{b_1}$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|c1Val_mod_b1|, \lstinline|mirror_c1_mod_b1|,
+\begin{leanref} \lstinline|c1Val_mod_b1|, \lstinline|mirror_c1_mod_b1|,
 \lstinline|mirror_pair_shared_residue|
+\end{leanref}
 \end{theorem}
 
 \begin{proof}
@@ -1547,9 +1547,9 @@ and $b_2 \le q_2$:
 \]
 In particular, $b_1 \mid \bigl(c_1(b_2,q_2) - c_1(q_2,b_2)\bigr)$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|mirror_shift_formula|,
+\begin{leanref} \lstinline|mirror_shift_formula|,
 \lstinline|mirror_shift_divides_b1|
+\end{leanref}
 \end{theorem}
 
 \begin{proof}
@@ -1578,11 +1578,11 @@ At $n = 10$ with mirror pair $(b_2, q_2) = (24, 42)$:
   2137 - 823 \;=\; 73 \times 18 \;=\; 1314 \;=\; 2 \cdot 3^2 \cdot 73.
 \]
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|lepton_shift_is_18_times_b1|,
+\begin{leanref} \lstinline|lepton_shift_is_18_times_b1|,
 \lstinline|lepton_shift_val|,
 \lstinline|lepton_shift_factored|,
 \lstinline|mirror_shift_factored| \textup{(in \texttt{GTE.MirrorShift})}
+\end{leanref}
 \end{theorem}
 
 The factor $18 = q_2 - b_2 = 42 - 24$ is precisely the gap between
@@ -1661,8 +1661,8 @@ For $R > 0$ and $q > 0$, the \emph{output gap} is:
 \]
 This is the real extension of $c_1(R/q,\, q)$ to positive reals.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|ugpOutputGap|
+\begin{leanref} \lstinline|ugpOutputGap|
+\end{leanref}
 \end{definition}
 
 \begin{theorem}[Derivative of the output gap]\label{thm:deriv}
@@ -1671,8 +1671,8 @@ For $R > 0$ and $q > 0$:
   g_R'(q) = \frac{13R}{q^2} + 2q - 6.
 \]
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|ugpOutputGap_deriv|
+\begin{leanref} \lstinline|ugpOutputGap_deriv|
+\end{leanref}
 \end{theorem}
 
 \begin{proof}
@@ -1688,8 +1688,8 @@ For $q \ge 14$ and $R > 0$:
   g_R'(q) \ge 22.
 \]
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|ugp_deriv_lower_bound|
+\begin{leanref} \lstinline|ugp_deriv_lower_bound|
+\end{leanref}
 \end{theorem}
 
 \begin{proof}
@@ -1720,12 +1720,12 @@ $\varphi + (-\varphi^{-1}) = 1$ (trace) and $\varphi \cdot (-\varphi^{-1}) = -1$
 Both roots satisfy $x^2 - x - 1 = 0$.  Perturbations transverse to the dominant
 eigenvector decay at rate $\varphi^{-2}$ per coarse two-step.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|fib_companion_char_poly|,
+\begin{leanref} \lstinline|fib_companion_char_poly|,
 \lstinline|golden_ratio_minimal_poly|,
 \lstinline|fib_eigenvalue_product|,
 \lstinline|fib_eigenvalue_sum|,
 \lstinline|fib_contraction_rate|
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Loop topology from mirror pairs]\label{thm:loop}
@@ -1734,9 +1734,9 @@ $\{(b_2,q_2), (q_2,b_2)\}$ under the mirror involution $\sigma$, and both elemen
 map to the same $b_1 = b_2 + q_2 + 7$.  The orbit has cardinality~2.
 At $n=10$: the fiber $\{(24,42),(42,24)\}$ has cardinality~2 and maps to $b_1 = 73$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|mirror_fiber_two|, \lstinline|mirror_pair_induces_loop|,
+\begin{leanref} \lstinline|mirror_fiber_two|, \lstinline|mirror_pair_induces_loop|,
 \lstinline|lepton_mirror_fiber|
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Minimality-duality at $n=10$]\label{thm:min-dual}
@@ -1745,9 +1745,9 @@ $823$ (MDL-minimal, $823 < 2137$) and $2137$ (mirror-dual).
 Their difference is $1314 = 18 \cdot 73 = 2 \cdot 3^2 \cdot 73$.
 These are the unique prime-locked pairs at $n=10$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|minimality_duality_n10|, \lstinline|n10_unique_mirror_pair|,
+\begin{leanref} \lstinline|minimality_duality_n10|, \lstinline|n10_unique_mirror_pair|,
 \lstinline|only_survivors_n10|
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Fingerprint fixed-point]\label{thm:fingerprint}
@@ -1758,11 +1758,11 @@ A bounded \lstinline|Finset| variant is additionally provided for the case of
 prime patterns restricted to a finite range, proved by iteration inside the
 finite Boolean sublattice (pigeonhole).
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|fingerprint_fixed_point_exists| (Set form, via
+\begin{leanref} \lstinline|fingerprint_fixed_point_exists| (Set form, via
 \lstinline|OrderHom.lfp|), \lstinline|fingerprint_fixed_point_bounded|
 (Finset form with boundedness hypothesis).  Both fully proved; no
 \lstinline|sorry|.
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Decidability phase transition]\label{thm:phase}
@@ -1776,8 +1776,8 @@ The \gte{} trajectory exhibits a sharp decidability boundary:
   theorem (\cref{thm:turing}).
 \end{enumerate}
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|local_decidability|, \lstinline|decidability_phase_transition|
+\begin{leanref} \lstinline|local_decidability|, \lstinline|decidability_phase_transition|
+\end{leanref}
 \end{theorem}
 
 \noindent
@@ -1818,11 +1818,11 @@ The formula $2 b_1 - a_2 = 2b_1 - (19-n)$ depends on $n$; computing it at
 the MDL-minimal pairs at $n=13$ and $n=16$ yields $412$ and $3215$ (not prime),
 so $137$ is the unique prime from this formula at the smallest mirror-dual level.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|derivation_of_137|,
+\begin{leanref} \lstinline|derivation_of_137|,
 \lstinline|derivation_of_137_structural|,
 \lstinline|alpha_echo_per_level|
 \textup{(in \texttt{GTE.UniquenessCertificates})}
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Orbit non-periodicity]\label{thm:non-periodic}
@@ -1831,9 +1831,9 @@ strictly increasing ($c_1 < c_2 < c_3$), so no state repeats.  The general
 principle: any trajectory with strictly monotone $c$-coordinates satisfies
 $G_t \ne G_{t+T}$ for all $t, T$ with $T > 0$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|orbit_c_strictly_monotone|,
+\begin{leanref} \lstinline|orbit_c_strictly_monotone|,
 \lstinline|orbit_not_eventually_periodic_from_monotonicity|
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[MDL canonical seeds at $n=10,13,16$]\label{thm:mdl-multi}
@@ -1843,11 +1843,11 @@ $n=13$: $(1,209,9007)$;\quad
 $n=16$: $(1,1609,46681)$.
 These satisfy $823 < 9007 < 46681$ (MDL monotone across levels).
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|mdl_c1_n10_is_823|,
+\begin{leanref} \lstinline|mdl_c1_n10_is_823|,
 \lstinline|mdl_c1_n13_is_9007|,
 \lstinline|mdl_c1_n16_is_46681|,
 \lstinline|canonical_seeds_certified|
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Order classification]\label{thm:orders}
@@ -1855,9 +1855,9 @@ Ridge levels are classified as order-0 (no prime-locked seed), order-1 (prime-lo
 but no mirror pair), or order-2 (mirror pair).  Machine-verified:
 $n=10$~(order-2), $n=11$~(order-0), $n=12$~(order-1), $n=13$~(order-2).
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|n10_is_order_2|, \lstinline|n11_is_order_0|,
+\begin{leanref} \lstinline|n10_is_order_2|, \lstinline|n11_is_order_0|,
 \lstinline|n12_is_order_1|, \lstinline|n13_is_order_2|
+\end{leanref}
 \end{theorem}
 
 \begin{theorem}[Singular series lower bound]\label{thm:singular-series}
@@ -1870,9 +1870,9 @@ local factors at good primes $p \in \{13, 23, 29, 31, 37, 41, 43\}$:
 This is a rigorous lower bound on the mirror-dual singular series $\mathfrak{S}$,
 establishing $\mathfrak{S} > 0$ from certified local data.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|singular_series_partial_lower_bound|,
+\begin{leanref} \lstinline|singular_series_partial_lower_bound|,
 \lstinline|singular_series_partial_positive|
+\end{leanref}
 \end{theorem}
 
 % ═══════════════════════════════════════════════════════════════
@@ -1892,8 +1892,8 @@ admits a mirror-dual pair.  This is structurally analogous to the
 twin prime conjecture: both ask for infinitely many~$n$ where two
 values derived from a single arithmetic seed are simultaneously prime.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|MirrorDualConjecture|
+\begin{leanref} \lstinline|MirrorDualConjecture|
+\end{leanref}
 \end{conjecture}
 
 \begin{conjecture}[\ugp{} Prime Infinitude]\label{conj:ugp-inf-final}
@@ -1901,8 +1901,8 @@ There are infinitely many \ugp{} primes.  This would follow immediately
 from the Mirror-Dual Conjecture, since each mirror-dual pair witnesses
 two \ugp{} primes.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|UGPPrimeInfinitudeConjecture|
+\begin{leanref} \lstinline|UGPPrimeInfinitudeConjecture|
+\end{leanref}
 \end{conjecture}
 
 \begin{conjecture}[$\mu$-Flip Distance]\label{conj:mu-flip-final}
@@ -1911,14 +1911,14 @@ $\gcd(a,r) = 1$ contains infinitely many squarefree integers.
 Formally: for all $a > 0$, $\gcd(a,r) = 1$, and $N \in \N$,
 there exists $n \ge N$ with $n \equiv r \pmod{a}$ and $n$ squarefree.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|MuFlipDistanceConjecture|
+\begin{leanref} \lstinline|MuFlipDistanceConjecture|
 
 \smallskip\noindent
 \textit{Status note.} The underlying fact is known unconditionally
 (Estermann, 1931), but the formal \lean{} proof is not yet mechanized.
 This is an open \emph{formalization} target rather than an open
 mathematical problem.
+\end{leanref}
 \end{conjecture}
 
 \begin{conjecture}[$\mu$-Flip Bounded Gap]\label{conj:mu-flip-gap}
@@ -1926,8 +1926,8 @@ There exists a universal constant $C > 0$ such that for every
 $a > 0$, $\gcd(a,r) = 1$, and $N \in \N$, the interval $[N, N + Ca]$
 contains a squarefree integer $n \equiv r \pmod{a}$.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|MuFlipBoundedGapConjecture|
+\begin{leanref} \lstinline|MuFlipBoundedGapConjecture|
+\end{leanref}
 \end{conjecture}
 
 \begin{conjecture}[Asymptotic sparsity of prime-locked levels]\label{conj:sparsity}
@@ -1940,10 +1940,10 @@ giving $\mathbb{E}[N(X)] \lesssim C\ln X$ while $X$ grows linearly.
 Formally stated as $\mathsf{AsymptoticSparsityConjecture}$; the supporting
 harmonic bound $\sum_{n=10}^{59} 1/n < 3$ is certified.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|AsymptoticSparsityConjecture|,
+\begin{leanref} \lstinline|AsymptoticSparsityConjecture|,
 \lstinline|harmonic_bound_certified|
 \textup{(in \texttt{GTE.UniquenessCertificates})}
+\end{leanref}
 \end{conjecture}
 
 \begin{conjecture}[UGP orbital zeta factorization]\label{conj:zeta}
@@ -1958,11 +1958,11 @@ $\sum_{k=1}^{10} p_k^{-2}$ is a certified rational lower bound.
 The local factor $E_{73} = 1 - 2/(73 \cdot 72) > 0$ is certified from the
 $\rho_F$ identity. Full proof requires Hecke $L$-function theory.
 
-\smallskip\noindent
-\textup{Lean:} \lstinline|UGPZetaFactorizationConjecture|,
+\begin{leanref} \lstinline|UGPZetaFactorizationConjecture|,
 \lstinline|ugp_zeta_partial_sum_s2|,
 \lstinline|ugp_local_factor_p73_positive|
 \textup{(in \texttt{GTE.UniquenessCertificates})}
+\end{leanref}
 \end{conjecture}
 
 \begin{table}[ht]
