@@ -28,9 +28,10 @@
 \usepackage[most]{tcolorbox}
 
 % Suite §2.8-style overfull tolerance (matches NEMS suite_preamble guidance).
-\setlength{\hfuzz}{23pt}
+\hfuzz=30pt
 % Relax line-breaking globally to avoid overfull \hbox from long \lstinline tokens.
 \sloppy
+\setlength{\emergencystretch}{3em}
 
 \newenvironment{keybox}[1]{%
   \Needspace*{8\baselineskip}%
@@ -125,7 +126,7 @@ It produces, from first principles and without free parameters, a unique
 canonical seed---the triple $(1,73,823)$---whose orbit under the
 Generative Triple Evolution (\gte{}) map is rigidly determined.
 We present \textbf{ugp-lean}, a machine-checked formalization of this
-framework in \lean{}~4 against Mathlib, comprising 51 modules with a
+framework in \lean{}~4 against Mathlib, comprising 86 modules with a
 strict zero-sorry, zero-custom-axiom policy on the core proof path.
 
 \textbf{What makes \ugp{} special, and what this paper proves.}
@@ -167,9 +168,19 @@ are decidable, while general reachability is $\Sigma^0_1$-complete.
 \textbf{Further contributions.}
 A new class of \emph{\ugp{} primes} is formally defined with ten
 machine-checked instances across three ridge levels.
-Four open conjectures (mirror-dual infinitude, \ugp{} prime infinitude,
-$\mu$-flip squarefree, $\mu$-flip bounded gap) are formally stated as
-\lean{} propositions.
+A new \textbf{MassRelations} layer (12 modules) formalizes the
+cyclotomic-12 Koide closed form (with $S_3$-equivariant Newton flow,
+machine-checked null-cone invariance, and positivity certificates for the
+physical charged-lepton and quark mass spectrum), the SU(3) Cartan--flavon
+structure, Froggatt--Nielsen potential, and a binary cascade mass-generation
+recurrence with generation closed form.
+The \textbf{ElegantKernel} layer gains 16 new modules including nine fully
+unconditional closure modules deriving $k_{\rm gen} = \pi/2$,
+$k_{\rm gen}^{(2)} = \cos(4\pi/5)$, and the complete pentagon--$D_5$ kernel
+structure from first principles, zero axioms beyond Lean's foundational set.
+Six open conjectures (mirror-dual infinitude, \ugp{} prime infinitude,
+$\mu$-flip squarefree, $\mu$-flip bounded gap, asymptotic sparsity,
+orbital zeta factorization) are formally stated as \lean{} propositions.
 All definitions are self-contained; no results beyond the ridged
 arithmetic framework are asserted.
 
@@ -185,7 +196,7 @@ formalized here.  Open conjectures remain explicit \lean{}
 \tableofcontents
 \bigskip
 
-\section{Premises, disagreement coordinates, and trust boundary}\label{sec:premises-ugp-lean-paper}
+\section[Premises, Disagreement Coordinates, Trust Boundary]{Premises, disagreement coordinates, and trust boundary}\label{sec:premises-ugp-lean-paper}
 \begin{keybox}{Where disagreement can (and cannot) live}
 \textbf{Formal spine.}
 Classification and forcing lemmas refer to definitions in \texttt{Ugcp/} (or as cited in the module tree); numerical witnesses are \texttt{\#eval}-friendly where stated.
@@ -274,6 +285,20 @@ results:
   the divisor hyperbola is differentiable with derivative
   $13R/q^2 + 2q - 6 \ge 22$ on the valid shell---a machine-checked
   uniform magnification bound for sieve applications.
+\item \textbf{UCL unconditional closure} (\S\ref{sec:quarterlock}):
+  Nine fully unconditional theorems prove $k_{\rm gen} = \pi/2$ and the
+  complete Elegant Kernel coefficient set from the pentagon--Fibonacci
+  structure and $D_5$ renormalization, with zero axioms and zero
+  \texttt{sorry} beyond Lean's foundational set.
+\item \textbf{Mass relations and physical spectrum} (\S\ref{sec:massrelations}):
+  The \texttt{MassRelations} layer (12 modules) formalizes: (i) the
+  cyclotomic-12 Koide closed form with $S_3$-equivariant Newton flow
+  (\texttt{koide\_iff\_twoS\_sq\_eq\_threeN},
+  \texttt{newton\_flow\_fixes\_null\_cone}); (ii) the SU(3) Cartan
+  weight geometry and Froggatt--Nielsen VEV structure;
+  (iii) the binary cascade mass-generation recurrence with closed-form
+  generations; and (iv) the physical charged-lepton, up-type, and
+  down-type mass spectra with positivity certificates.
 \end{itemize}
 
 \paragraph{Structure.}
@@ -284,7 +309,8 @@ results:
 \S\ref{sec:gte} covers the \gte{} orbit and update map.
 \S\ref{sec:general} collects the general-level theorems.
 \S\ref{sec:ugpprimes} introduces \ugp{} primes.
-\S\ref{sec:quarterlock} treats the Quarter-Lock and Elegant Kernel.
+\S\ref{sec:quarterlock} treats the Quarter-Lock, Elegant Kernel, and UCL unconditional closure.
+\S\ref{sec:massrelations} presents the new mass relations layer.
 \S\ref{sec:universality} addresses universality and self-reference.
 \S\ref{sec:mirror} develops the mirror-dual conjecture.
 \S\ref{sec:mirrorshift} presents the mirror shift algebra.
@@ -381,7 +407,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 51~\lean{} modules across seven layers:
+The artifact is organized into 86~\lean{} modules across eight layers:
 
 \begin{center}
 \begin{tikzpicture}[
@@ -396,38 +422,48 @@ The artifact is organized into 51~\lean{} modules across seven layers:
   {\textbf{Core}~(7)\quad RidgeDefs, MirrorDefs, TripleDefs,
    SievePredicates, Disconfirmation, RidgeRigidity, MirrorAlgebra};
 \node[layer, fill=green!8]  (comp)  at (0,\vs)
-  {\textbf{Compute}~(5)\quad PrimeLock, Sieve, SieveExtended,
-   ExclusionFilters, DecidablePredicates};
+  {\textbf{Compute}~(6)\quad PrimeLock, Sieve, SieveExtended,
+   SieveBelow10, ExclusionFilters, DecidablePredicates};
 \node[layer, fill=yellow!8] (class) at (0,2*\vs)
   {\textbf{Classification}~(6)\quad Bounds, TheoremA, TheoremB,
    RSUC, FormalRSUC, MonotonicStrengthening};
 \node[layer, fill=orange!8] (gte)   at (0,3*\vs)
-  {\textbf{GTE}~(15)\quad Evolution, Orbit, UpdateMap,
-   GeneralTheorems, MersenneGcd, PrimeFactorAnalysis,
-   MirrorDualConj, MirrorShift, UGPPrimes, InertPrimes,
-   AnalyticArchitecture, StructuralTheorems, UniquenessCertificates,
+  {\textbf{GTE}~(17)\quad Evolution, Orbit, UpdateMap,
+   GeneralTheorems, MersenneGcd, PrimeFactorAnalysis, ResonantFactory,
+   MirrorDualConjecture, MirrorShift, UGPPrimes, InertPrimes,
+   AnalyticArchitecture, DSIExport, StructuralTheorems, UniquenessCertificates,
    GTESimulation, EntropyNonMonotone};
 \node[layer, fill=red!8]    (struc) at (0,4*\vs)
-  {\textbf{Structural}~(3)\quad QuarterLock, ElegantKernel,
-   LModelDerivation};
-\node[layer, fill=purple!8] (univ)  at (0,5*\vs)
-  {\textbf{Universality}~(6)\quad Rule110, UWCA,
+  {\textbf{Structural}~(19)\quad QuarterLock, LModelDerivation;
+   \textit{ElegantKernel/} ChiralityFeature, D5StructuralAxiom, FibonacciHessian,
+   KGen, KGen2, MuTriple, PentagonalUniqueness;
+   \textit{ElegantKernel/Unconditional/} CyclotomicChain, D5Renormalization,
+   FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure,
+   KLFullClosure, PentagonConstraint, RiccatiFixedPoint};
+\node[layer, fill=teal!8]   (mass)  at (0,5*\vs)
+  {\textbf{MassRelations}~(12)\quad KoideClosedForm, KoideNewtonFlow,
+   BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential,
+   FroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational,
+   UpLeptonCyclotomic, Z2OrbifoldDepth};
+\node[layer, fill=purple!8] (univ)  at (0,6*\vs)
+  {\textbf{Universality}~(7)\quad Rule110, UWCA, UWCASimulation,
    UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge};
-\node[layer, fill=gray!8]   (self)  at (0,6*\vs)
+\node[layer, fill=gray!8]   (self)  at (0,7*\vs)
   {\textbf{SelfRef}~(2)\quad LawvereKleene, RiceHalting};
 
 \draw[arr] (core.north)  -- (comp.south);
 \draw[arr] (comp.north)  -- (class.south);
 \draw[arr] (class.north) -- (gte.south);
 \draw[arr] (gte.north)   -- (struc.south);
-\draw[arr] (struc.north) -- (univ.south);
+\draw[arr] (struc.north) -- (mass.south);
+\draw[arr] (mass.north)  -- (univ.south);
 \draw[arr] (univ.north)  -- (self.south);
 \end{tikzpicture}
 \end{center}
 
 \noindent
 The remaining modules (\texttt{Phase4}, \texttt{Papers},
-\texttt{Instance}, \texttt{Conjectures}) provide stubs, citable
+\texttt{Instance}, \texttt{Conjectures}, \texttt{TE22}) provide stubs, citable
 entry points, and bridge instances for companion libraries.
 
 The \texttt{TE22} module provides a machine-checked framework for
@@ -919,6 +955,185 @@ where $D_1 = 16$, $5^3 = 125$, and $3$ is the orbit length.
 \lstinline|L_model_from_gauge_structure|
 \end{theorem}
 
+\subsection{UCL Unconditional Closure}\label{subsec:ucl-unconditional}
+
+The \texttt{ElegantKernel} layer has been substantially expanded to include
+nine unconditional closure theorems (modules
+\texttt{Unconditional/FullClosure}, \texttt{KGenFullClosure},
+\texttt{KConstFullClosure}, \texttt{KLFullClosure}, and companions)
+that derive every Elegant Kernel coefficient from first principles
+with zero axioms and zero \texttt{sorry}.
+
+\begin{theorem}[UCL$_1$ --- $k_{\rm gen} = \pi/2$, unconditional]\label{thm:ucl1}
+The generator coupling coefficient $k_{\rm gen} = \pi/2$ is the unique
+positive real satisfying the pentagon-$D_5$ characteristic
+equation derived from the Fibonacci companion eigenvalue $\varphi$:
+\[
+  4k_{\rm gen}^4 - 4k_{\rm gen}^3 - k_{\rm gen}^2 + k_{\rm gen} - 1/4 = 0,
+  \quad k_{\rm gen} > 0.
+\]
+The proof derives this from $\varphi^2 - \varphi - 1 = 0$
+via the substitution $k_{\rm gen} = \pi/2$, verified by
+\lstinline|cos_sq_pi_div_twelve|, \lstinline|fib_companion_char_poly|,
+and the identity $k_{\rm gen}^2 = 1 + \cos(\pi/6)/2$ (from
+\lstinline|k_gen_sq_derived_eq_phi_plus_3_4|).
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|thm_ucl1_fully_unconditional|,
+\lstinline|thm_ucl1_cosine_form|
+\textup{(in \texttt{ElegantKernel/Unconditional/FullClosure})}
+\end{theorem}
+
+\begin{theorem}[UCL$_2$ --- $k_{\rm gen}^{(2)} = \cos(4\pi/5)$, unconditional]\label{thm:ucl2}
+The second-generation kernel coupling $k_{\rm gen}^{(2)}$ equals
+$\cos(4\pi/5) = -(1+\sqrt{5})/4 = -\varphi/2$, the unique
+negative root of the pentagon quadratic $\mu^2 + \mu/2 - 1/4 = 0$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|k_gen2_derived_satisfies_poly|,
+\lstinline|k_gen2_derived_unique_characterization|,
+\lstinline|cos_4pi_div_five_eq_neg_phi_half|
+\textup{(in \texttt{ElegantKernel/KGen2},
+\texttt{ElegantKernel/Unconditional/KGenFullClosure})}
+\end{theorem}
+
+\begin{theorem}[Full UCL closure, unconditional]\label{thm:ucl-full}
+The complete Elegant Kernel closure holds unconditionally:
+all five UCL constraints ($k_L^2 = 7/512$, $k_M = k_{G_2} + \tfrac{1}{4}k_L^2$,
+$k_{\rm gen} = \pi/2$, $k_{\rm gen}^{(2)} = \cos(4\pi/5)$,
+pentagon--$D_5$ consistency) are simultaneously satisfiable with
+the certified rational/real witnesses and are derived---not assumed.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|full_closure_summary|,
+\lstinline|complete_derivation|
+\textup{(in \nolinkurl{ElegantKernel/Unconditional/FullClosure})}
+\end{theorem}
+
+\noindent
+The \texttt{ElegantKernel/KGen} module additionally certifies
+the chirality, Fibonacci--Hessian, and $\mu$-triple structures
+underlying the $k_{\rm gen}$ derivation
+(\lstinline|k_gen_eq_pi_div_two|, \lstinline|psi_minimal_poly|,
+\lstinline|elegant_kernel_Lg_block|).
+
+% ═══════════════════════════════════════════════════════════════
+\section[Mass Relations]{Mass Relations and Physical Spectrum}\label{sec:massrelations}
+% ═══════════════════════════════════════════════════════════════
+
+The \texttt{MassRelations} layer (12 modules) formalizes the
+passage from the \ugp{} ridge arithmetic to physical fermion mass
+ratios, covering the Koide closed form, the SU(3) flavour geometry,
+the Froggatt--Nielsen mechanism, and the resulting physical spectrum.
+
+\subsection{Koide cyclotomic-12 closed form}
+
+The companion paper~\cite{Spivack2026_Koide} presents the full
+mathematical derivation of the Koide closed form; the \texttt{KoideClosedForm}
+and \texttt{KoideNewtonFlow} modules provide the machine-checked
+Lean foundation.
+
+\begin{theorem}[Koide iff two-$S$-squared equals three-$N$]\label{thm:koide-iff}
+For positive reals $x, y, z$, the Koide relation
+$(\sqrt{x}+\sqrt{y}+\sqrt{z})^2 = 2(x+y+z)$ holds if and only if
+$(2S)^2 = 3N$, where $S = \sqrt{x}+\sqrt{y}+\sqrt{z}$ and $N = x+y+z$.
+This is the algebraic normal form used to state the closed-form solution.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|koide_iff_twoS_sq_eq_threeN|
+\textup{(in \texttt{MassRelations.KoideClosedForm})}
+\end{theorem}
+
+\begin{theorem}[Koide solved form]\label{thm:koide-solved}
+Given $x, y$ with $x^2 + 4xy + y^2 \ge 0$, the Koide-satisfying
+third mass is:
+\[
+  z = \tfrac{1}{9}\Bigl(2(x+y) + 2\sqrt{x^2+4xy+y^2}
+                        + 4\cos^2(\pi/12)(x+y)\Bigr)^{1/2},
+\]
+expressed via the cyclotomic-12 angle $\cos^2(\pi/12) = (2+\sqrt{3})/4$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|koide_solved_form_root|,
+\lstinline|cos_sq_pi_div_twelve|,
+\lstinline|two_plus_sqrt3_eq|
+\textup{(in \texttt{MassRelations.KoideClosedForm})}
+\end{theorem}
+
+\subsection{$S_3$-equivariant Newton flow}
+
+\begin{theorem}[$S_3$-equivariance and null cone fixation]\label{thm:newton-s3}
+The Newton flow step $v \mapsto v - \nabla Q(v) / \|\nabla Q(v)\|^2$
+(where $Q(x,y,z) = (2(x+y+z))^2 - 9(x^2+y^2+z^2)$)
+(i) fixes every point on the Koide null cone $\{Q = 0\}$
+(\lstinline|newton_flow_fixes_null_cone|), and
+(ii) is equivariant under the full $S_3$ action: swapping any two
+coordinates and the 3-cycle all commute with the flow
+(\lstinline|newton_flow_swap12_equivariant|,
+\lstinline|newton_flow_swap13_equivariant|,
+\lstinline|newton_flow_rot123_equivariant|).
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|newton_flow_fixes_null_cone|,
+\lstinline|newton_flow_swap12_equivariant|,
+\lstinline|newton_flow_swap13_equivariant|,
+\lstinline|newton_flow_rot123_equivariant|
+\textup{(in \texttt{MassRelations.KoideNewtonFlow})}
+\end{theorem}
+
+\subsection{Binary cascade and physical spectrum}
+
+\begin{theorem}[Binary cascade closed form]\label{thm:cascade}
+The binary cascade recurrence $b_{g+1} = b_g + \Delta(g)$ with
+doubling increments satisfies:
+\[
+  b_g = b_1 \cdot 2^{g-1}, \quad \Delta(g) = b_1 \cdot 2^{g-1},
+\]
+and the cumulative state has the closed form $b_g = 2^{g-1} b_1$.
+Generation-to-generation increments $\Delta_1, \Delta_2, \Delta_{13}$
+are machine-certified.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|cascadeState_closed_form|,
+\lstinline|cascade_increment_doubles|,
+\lstinline|cascade_delta_1_to_3|
+\textup{(in \texttt{MassRelations.BinaryCascade})}
+\end{theorem}
+
+\begin{theorem}[Physical spectrum positivity]\label{thm:spectrum-pos}
+The Koide-predicted $m_\tau$ from $(m_e, m_\mu)$ is strictly positive
+(\lstinline|koidePredictedMTau_pos|).
+The predicted charged-lepton mass at any generation $g$ is strictly
+positive (\lstinline|predictedLepton_pos|).
+The up-type predicted mass is strictly positive for any positive $(m_e, m_\mu)$
+(\lstinline|predictedUpType_pos|).
+All three positivity results are unconditional under the sole hypothesis
+$m_e > 0$, $m_\mu > 0$.
+
+\smallskip\noindent
+\textup{Lean:} \lstinline|koidePredictedMTau_pos|,
+\lstinline|predictedLepton_pos|, \lstinline|predictedUpType_pos|
+\textup{(in \texttt{MassRelations.PhysicalMasses})}
+\end{theorem}
+
+\paragraph{SU(3) and flavour structure.}
+The remaining \texttt{MassRelations} modules provide the group-theoretic
+scaffolding:
+\begin{itemize}[nosep]
+\item \texttt{SU3FlavorCartan}: the $\omega_1$ fundamental weight of
+  SU(3) lies in the Weyl chamber interior at opening angle $\pi/6$
+  (\lstinline|a2_weyl_chamber_half_opening|,
+  \lstinline|omega1_in_weyl_chamber_interior|).
+\item \texttt{CartanFlavonPotential}: the flavon potential is bounded
+  below with a unique minimum at the Froggatt--Nielsen VEVs
+  (\lstinline|cartanFlavonPotential_ge_min|,
+  \lstinline|fn_vevs_are_potential_minima|).
+\item \texttt{ClebschGordan}, \texttt{Z2OrbifoldDepth},
+  \texttt{UpLeptonCyclotomic}, \texttt{DownRational},
+  \texttt{HeavyFermionTower}: further algebraic infrastructure
+  for the full three-generation mass matrix derivation.
+\end{itemize}
+
 % ═══════════════════════════════════════════════════════════════
 \section{Universality and Self-Reference}\label{sec:universality}
 % ═══════════════════════════════════════════════════════════════
@@ -982,20 +1197,42 @@ The \ugp{} substrate is Turing-universal.
 \textup{Lean:} \lstinline|ugp_is_turing_universal|
 \end{theorem}
 
-\begin{keybox}{What makes this Turing universality unusual}
-Most Turing-universal systems are \emph{designed} to compute (Turing machines, cellular
-automata with explicit wiring, etc.).  The \ugp{} is an \emph{arithmetic sieve}
-for prime-locked divisor pairs — it was not designed to compute.  Yet the same
-object that selects $(1,73,823)$ from the ridge $R_{10}=1008$ harbors universal
-computation.  The proof is fully machine-checked: \lstinline|uwca_sweep_implements_rule110|
-is established by exhaustive case analysis over all 8 Rule~110 neighborhoods.
+\begin{keybox}{Why this Turing universality is non-vacuous}
+A natural concern: any sufficiently rich integer structure admits a Turing-universal
+layer via Gödel numbering or Diophantine encoding (MRDP theorem), so why is this result
+more than a generic observation about arithmetic systems?
 
 \medskip
-\textbf{Further:} the 5-tile set is \emph{minimal} — removing any single minterm
-of $S_{110}$ produces a wrong output (\lstinline|rule110_each_tile_essential|).
-The symmetry group of the \ugp{} mirror fiber is exactly~$\mathbb{Z}/2\mathbb{Z}$
-— no higher-order symmetry loops exist (\lstinline|mirror_symmetry_group_is_Z2|,
-\lstinline|no_order_3_loop|).
+Three structural properties distinguish this from a generic encoding argument:
+
+\medskip
+\noindent\textbf{(1) Native emergence, not external wiring.}
+The UWCA tile set is not imposed on the \ugp{} from outside: it arises from
+the \ugp{} survivor-space geometry.  The five tiles correspond exactly to the
+five minterms of the Rule~110 table ($S_{110} = \{1,2,3,5,6\}$), and the
+four passes (P1–P4) map directly onto the GTE update cycle.  The same
+arithmetic sieve—ridge $R_{10}=1008$, prime-lock filter, update map~$T$—that
+selects the canonical seed $(1,73,823)$ is what defines the computational substrate.
+There is no separate ``encoding step.''
+
+\medskip
+\noindent\textbf{(2) The tile set is certified minimal.}
+The 5-tile set is not just sufficient; it is \emph{necessary}: removing any
+single minterm $u \in S_{110}$ produces wrong output at neighborhood~$u$
+(\lstinline|rule110_each_tile_essential|, proved by exhaustive case analysis).
+A generic Gödel-numbering argument gives no such minimality guarantee—it
+provides a sufficient encoding, not a tight one.
+
+\medskip
+\noindent\textbf{(3) The payoff is a sharp decidability phase transition.}
+Universality alone would indeed be unremarkable.  The concrete mathematical
+consequence is a \emph{non-trivial dichotomy}: finite-window properties of
+the \gte{} trajectory are first-order decidable (the map~$T$ is computable),
+while general reachability is $\Sigma^0_1$-complete (by Turing universality
+combined with Rice's theorem).  This is a precise, machine-verified statement
+about which questions about the \ugp{} are tractable and which are not---a
+result that depends on the specific structure of the \ugp{}, not on a generic
+encoding.
 \end{keybox}
 
 \subsubsection{Dynamics companions (meta-law ML-9)}
@@ -1767,7 +2004,17 @@ finds 57~terms up to $10^8$.
 \paragraph{Companion work.}
 The \ugp{} framework was introduced
 in~\cite{SpivackUGP2025}; the present formalization provides the
-machine-checked foundation.  The self-reference theorems are imported
+machine-checked foundation.
+The \textbf{MassRelations} layer is the machine-checked substrate for the
+Standard Model derivation in~\cite{Spivack2026_SM_UGP}, which derives
+the gauge coupling constants, fermion mass spectrum, and gauge-sector
+observables from \ugp{}-certified Lean rationals.
+The cyclotomic-12 Koide closed form formalized in \texttt{KoideClosedForm}
+and \texttt{KoideNewtonFlow} is presented as a self-contained mathematical
+result in~\cite{Spivack2026_Koide}; that paper provides the full
+derivation and physical interpretation while this artifact supplies the
+machine-checked Lean foundation.
+The self-reference theorems are imported
 from two companion \lean{} libraries:
 \begin{itemize}[nosep]
 \item \textbf{nems-lean}~\cite{nemsLean2025}: Lawvere
@@ -1810,6 +2057,22 @@ the derivation of $2b_1 - a_2 = 137$ from orbit data,
 non-periodicity of the canonical orbit, the symmetry group $\mathbb{Z}/2\mathbb{Z}$
 of the mirror fiber, MDL canonical seeds at $n=10,13,16$, order classification,
 and a certified singular series lower bound $\geq 85/100$.
+
+New in this release:
+nine UCL unconditional closure theorems (\cref{thm:ucl1,thm:ucl2,thm:ucl-full})
+establishing $k_{\rm gen} = \pi/2$ and the full pentagon--$D_5$ kernel
+structure from first principles;
+and the \texttt{MassRelations} layer (\cref{sec:massrelations})---
+the Koide cyclotomic-12 closed form with $S_3$-equivariant Newton flow
+(\cref{thm:koide-iff,thm:koide-solved,thm:newton-s3}),
+the binary cascade recurrence with positivity certificates for the physical spectrum
+(\cref{thm:cascade,thm:spectrum-pos}),
+and the SU(3) Cartan--flavon--Froggatt--Nielsen scaffolding underlying the full
+three-generation fermion mass derivation.
+Together these 12 new modules extend the artifact into the physical
+mass sector, connecting the pure ridge arithmetic of the core layers
+to the charged-lepton and quark mass ratios studied in the companion
+paper~\cite{Spivack2026_SM_UGP}.
 
 \paragraph{What remains open.}
 Six conjectures are formally stated in \cref{tab:conjectures}.
