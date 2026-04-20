@@ -33,6 +33,12 @@
 \sloppy
 \setlength{\emergencystretch}{3em}
 
+% Left-justified environment for Lean module citation lines (avoids stretched
+% inter-word spacing caused by unbreakable \lstinline tokens in a justified paragraph).
+\newenvironment{leanref}%
+  {\par\smallskip\noindent\begingroup\raggedright\textup{Lean:}~}%
+  {\par\endgroup}
+
 \newenvironment{keybox}[1]{%
   \Needspace*{8\baselineskip}%
   \begin{tcolorbox}[
@@ -417,7 +423,7 @@ The artifact is organized into 86~\lean{} modules across eight layers:
   arr/.style={-{Stealth[length=5pt]}, thick, gray!60},
   >=Stealth
 ]
-\def\vs{1.55}
+\def\vs{2.2}
 \node[layer, fill=blue!8]   (core)  at (0,0)
   {\textbf{Core}~(7)\quad RidgeDefs, MirrorDefs, TripleDefs,
    SievePredicates, Disconfirmation, RidgeRigidity, MirrorAlgebra};
@@ -2025,9 +2031,6 @@ from two companion \lean{} libraries:
   halting undecidability for acceptable programming systems, proved from
   the s-m-n theorem and a diagonal argument.
 \end{itemize}
-The companion \textbf{primes-in-greedy-B3}~\cite{primesB3Lean2025}
-provides a related $B_3$ prime result: every prime appears in the greedy
-multiplicative $B_3$ sequence (OEIS~A079852).
 
 % ═══════════════════════════════════════════════════════════════
 \section{Conclusion}\label{sec:conclusion}
