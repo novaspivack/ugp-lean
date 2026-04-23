@@ -93,6 +93,30 @@ both openly disclosed with precise citations:
 | **L_model_eq_log_wedge_form** | LModelDerivation | L_model = log₂((wedge2Factor · wedge5Factor) / orbitLength) |
 | **L_model_from_gauge_structure** | LModelDerivation | L_model = log₂((D₁ · 125) / 3) from D₁, 5³, orbit length 3 |
 
+## Lepton Mass Prediction Pipeline (EPIC 8, 2026-04-20)
+
+Module `MassRelations.LeptonMassPrediction`. Zero sorry.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **predictedLeptonMass_zero** | MassRelations.LeptonMassPrediction | predictedLeptonMass m_e θ 0 = m_e |
+| **muon_a_value_is_nine** | MassRelations.LeptonMassPrediction | canonicalGen2.a = 9 |
+| **koide_angle_equals_two_ninths** | MassRelations.LeptonMassPrediction | koideThetaUGP = 2/9 |
+| **koide_angle_equals_two_over_muon_a** | MassRelations.LeptonMassPrediction | koideThetaUGP = 2/canonicalGen2.a |
+| **epic_8_lepton_mass_structural_summary** | MassRelations.LeptonMassPrediction | Bundle: angle=2/muon_a ∧ muon_a=9 ∧ Q=2/3 for any θ |
+
+## VV Coefficient Structural Identifications (EPIC 8, 2026-04-20)
+
+Module `MassRelations.DownRational` §§5-6 (extended). Zero sorry.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **beta_d_from_hypercharge** | MassRelations.DownRational | β_d = -(1+Y_Q) = -7/6, Y_Q=1/6 |
+| **alpha_d_from_su5_rank** | MassRelations.DownRational | α_d = 1+rank(SU5)/9 = 13/9 |
+| **alpha_d_from_su3_weyl** | MassRelations.DownRational | α_d = (\|W(SU3)\|+7)/9 |
+| **gamma_d_from_gut_dims** | MassRelations.DownRational | γ_d = -dim(45)/dim(126) = -5/14 |
+| **VV_coefficients_structural_summary** | MassRelations.DownRational | Bundle: all 3 VV coefficient identifications |
+
 ## Koide Angle and β Derivation (EPIC 8, 2026-04-20)
 
 Module `MassRelations.KoideAngle` + extended `MassRelations.UpLeptonCyclotomic` §5.
