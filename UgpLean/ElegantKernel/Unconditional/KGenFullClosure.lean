@@ -345,4 +345,43 @@ theorem thm_ucl2_summary :
    k_gen_derived_gt_one,
    by rw [k_gen_derived_sq]; exact k_gen_sq_derived_eq_phi_plus_3_4⟩
 
+/-! ## §9. Pentagon–Hexagon Bridge -/
+
+/-- **Pentagon–Hexagon Bridge Corollary.**
+
+The sum of the two Elegant-Kernel generation-scaling constants equals
+φ times the difference of the pentagonal (D₅, π/10) and hexagonal (D₆, π/3)
+cyclotomic cosines:
+
+  `k_gen_derived + k_gen2 = φ · (cos(π/10) − cos(π/3))`
+
+**Proof:** Immediate from `thm_ucl2_fully_unconditional` (k_gen = φcos(π/10)),
+`k_gen2_eq_neg_phi_half` (k_gen2 = −φ/2), and `cos_pi_div_three` (cos(π/3) = 1/2).
+
+**Structural meaning:** Both Elegant-Kernel generation constants are
+derived from the same GTE Fibonacci spectrum via the Quarter-Lock
+substitution, yet their sum = φ·(cos(π/10) − cos(π/3)) simultaneously
+encodes:
+- **cos(π/10)**: the D₅ pentagonal angle (36°), source of k_gen via the
+  Fibonacci characteristic polynomial.
+- **cos(π/3) = 1/2**: the D₆ hexagonal angle (60°), source of k_gen2 and
+  also the TT-formula coefficient α = π/6 (SU(3)_flavor Weyl chamber bisector,
+  proved in `SU3FlavorCartan.angle_alpha1_omega1_eq_pi_div_six`).
+
+This identity is the algebraic bridge linking the pentagonal Fibonacci
+structure of the Elegant Kernel to the hexagonal SU(3) Weyl symmetry of
+the TT inter-sector mass formula. It was discovered computationally in
+EPIC 8 COMP-P01-EBF-04 (2026-04-20) and provides the missing algebraic
+connection for `13_SPEC` Phase 3 Approach 3D. -/
+theorem k_gen_pentagon_hexagon_bridge :
+    k_gen_derived + k_gen2 = goldenRatio * (cos (π / 10) - cos (π / 3)) := by
+  rw [thm_ucl2_fully_unconditional, k_gen2_eq_neg_phi_half, cos_pi_div_three]
+  ring
+
+/-- Equivalent form: k_gen + k_gen2 = φ·(cos(π/10) − 1/2). -/
+theorem k_gen_pentagon_hexagon_bridge_half :
+    k_gen_derived + k_gen2 = goldenRatio * (cos (π / 10) - 1 / 2) := by
+  rw [thm_ucl2_fully_unconditional, k_gen2_eq_neg_phi_half]
+  ring
+
 end UgpLean.ElegantKernel.Unconditional.KGenFullClosure
