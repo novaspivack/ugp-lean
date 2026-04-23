@@ -370,9 +370,11 @@ encodes:
 
 This identity is the algebraic bridge linking the pentagonal Fibonacci
 structure of the Elegant Kernel to the hexagonal SU(3) Weyl symmetry of
-the TT inter-sector mass formula. It was discovered computationally in
-EPIC 8 COMP-P01-EBF-04 (2026-04-20) and provides the missing algebraic
-connection for `13_SPEC` Phase 3 Approach 3D. -/
+the TT inter-sector mass formula.  The sum k_gen + k_gen2 simultaneously
+encodes both the D₅ pentagonal angle (π/10, from the Fibonacci spectrum via
+the Quarter-Lock substitution) and the D₆ hexagonal angle (π/3 = 2·(π/6),
+the SU(3)_flavor Weyl chamber bisector scaled by 2), providing the algebraic
+connection between these two independent symmetry structures. -/
 theorem k_gen_pentagon_hexagon_bridge :
     k_gen_derived + k_gen2 = goldenRatio * (cos (π / 10) - cos (π / 3)) := by
   rw [thm_ucl2_fully_unconditional, k_gen2_eq_neg_phi_half, cos_pi_div_three]

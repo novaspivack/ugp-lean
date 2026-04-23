@@ -9,11 +9,21 @@ import UgpLean.MassRelations.KoideClosedForm
 /-!
 # UgpLean.MassRelations.KoideAngle — The Koide Angle θ = 2/a₂
 
-## Overview (EPIC 8, 2026-04-20)
+## Overview
 
-θ = 2/a₂ = 2/9, where a₂ = canonicalGen2.a = 9 is the muon GTE a-value.
-Koide(θ=2/9) gives m_μ/m_e at 9.8 ppm, m_τ/m_μ at 60.5 ppm (within 1σ PDG).
-The Koide relation Q = 2/3 holds for the ENTIRE one-parameter family.
+The Koide charged-lepton parametrisation
+
+    √m_g = A · (1 + √2 · cos(θ + 2πg/3))   for g = 0, 1, 2
+
+correctly predicts all three lepton mass ratios to sub-100-ppm precision
+when the phase equals
+
+    θ = 2/a₂ = 2/9
+
+where a₂ = `canonicalGen2.a = 9` is the a-component of the muon GTE triple,
+a Lean-certified RSUC structural constant.
+
+The Koide relation Q = 2/3 holds algebraically for every value of θ.
 
 ## Theorems proved (zero sorry, zero hypotheses)
 
@@ -41,10 +51,8 @@ theorem koide_angle_from_gte_structure :
     koideThetaUGP = 2 / (UgpLean.canonicalGen2.a : ℝ) := by
   unfold koideThetaUGP UgpLean.canonicalGen2; norm_num
 
-/-! ## §2. Trig lemmas using explicit Real.cos -/
+/-! ## §2. Trigonometric auxiliary lemmas -/
 
--- Both lemmas use open-Real names in their types (for readability)
--- but prove using explicit Real. prefixes internally
 private theorem cos_2pi3 (θ : ℝ) :
     Real.cos (θ + 2 * Real.pi / 3) =
     -(1/2) * Real.cos θ - (Real.sqrt 3 / 2) * Real.sin θ := by
@@ -67,7 +75,7 @@ theorem cos_sq_sum_three_120 (θ : ℝ) :
   rw [cos_2pi3, cos_4pi3]
   have hsc : Real.sin θ ^ 2 + Real.cos θ ^ 2 = 1 := Real.sin_sq_add_cos_sq θ
   have hs3 : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 3)
-  -- Full-LHS algebraic identity (avoids associativity issues with rw)
+  -- The identity is stated over the full LHS to facilitate rewriting.
   have alg :
     Real.cos θ ^ 2 +
     (-(1/2) * Real.cos θ - (Real.sqrt 3 / 2) * Real.sin θ) ^ 2 +
@@ -112,8 +120,12 @@ theorem koide_Q_two_thirds (θ : ℝ) :
     (koideR θ 0 + koideR θ 1 + koideR θ 2) ^ 2 = 2 / 3 := by
   rw [koide_rg_sum, koide_rg_sq_sum]; norm_num
 
-/-! ## §4. Structural observation -/
+/-! ## §4. Summary -/
 
+/-- **Summary.** The Koide angle is 2/canonicalGen2.a, and for any θ the
+    Koide parametrisation satisfies Q = 2/3.  Hence if the physical Koide
+    phase equals 2/a₂, the Koide relation Q = 2/3 holds structurally, not
+    merely empirically. -/
 theorem koide_angle_structural_observation :
     koideThetaUGP = 2 / (canonicalGen2.a : ℝ) ∧
     (∀ θ : ℝ, (koideR θ 0 ^ 2 + koideR θ 1 ^ 2 + koideR θ 2 ^ 2) /

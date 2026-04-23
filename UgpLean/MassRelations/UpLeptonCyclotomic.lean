@@ -34,9 +34,10 @@ Differencing across generations cancels β:
 - **Claim A (α = π/6 from A_2 geometry): PROVED** in
   `UgpLean.MassRelations.SU3FlavorCartan.angle_alpha1_omega1_eq_pi_div_six`
   (Round 13, Session 2; zero UGP-specific axioms, zero `sorry`).
-- Claim B (2^g = UGP mirror-pair doubling): TODO (Round 13 Phase 2).
-- Claim C (physics bridge from UGP cascade operators to SU(3)_flavor Cartan
-  rotation): TODO (Round 13 Phase 3; main open research front).
+- Claim B (2^g = UGP mirror-pair doubling): open — requires formalising the
+  generation-doubling step from the ridge mirror-pair structure.
+- Claim C (physics bridge: UGP cascade operators act as SU(3)_flavor Cartan
+  rotation): open — the main outstanding structural derivation for the TT formula.
 -/
 
 namespace UgpLean.MassRelations.UpLeptonCyclotomic
@@ -54,9 +55,9 @@ noncomputable def su3WeylBisectorAngle : ℝ := π / 6
 def generationBitDepth (g : ℕ) : ℕ := 2 ^ g
 
 /-- Candidate β values for the TT formula. -/
-noncomputable def betaCandidate1 : ℝ := π / 8    -- 0.44% max-frac-err (tightest)
-noncomputable def betaCandidate2 : ℝ := 2 / 5    -- 1.18%
-noncomputable def betaCandidate3 : ℝ := 1 / goldenRatio ^ 2  -- 1.40%
+noncomputable def betaCandidate1 : ℝ := π / 8          -- best-fit: 0.44% max residual
+noncomputable def betaCandidate2 : ℝ := 2 / 5          -- second candidate: 1.18%
+noncomputable def betaCandidate3 : ℝ := 1 / goldenRatio ^ 2  -- third candidate: 1.40%
 
 /-- Abstract claim: the TT formula holds on the charged-lepton-to-up-type
     log-mass ratios for all three generations within PDG precision.  Numerical
@@ -82,10 +83,10 @@ theorem interGenerationIdentity_1_to_3 (β : ℝ) :
   have h' := interGenerationIdentity_2_to_3 β
   linarith
 
-/-- Trivial identity: the α definition. -/
+/-- The SU(3)_flavor Weyl bisector angle equals π/6 (by definition). -/
 theorem alpha_equals_su3_weyl_bisector : su3WeylBisectorAngle = π / 6 := by rfl
 
-/-- Trivial identity: β candidate 1. -/
+/-- The leading TT offset candidate equals π/8 (by definition). -/
 theorem beta_equals_pi_over_8 : betaCandidate1 = π / 8 := by rfl
 
 /-! ## §5. Structural derivation of β = π/8 from α and C₂(SU3) -/
@@ -100,12 +101,12 @@ noncomputable def c2SU3Fund : ℝ := 4 / 3
     The TT formula offset equals the SU(3)_flavor Weyl bisector angle
     (α = π/6) divided by the SU(3) fundamental Casimir C₂(SU3) = 4/3.
 
-    Physical interpretation: β is α suppressed by the SU(3) gauge coupling
-    strength (C₂(SU3) = 4/3).  Both TT constants — α and β — are therefore
-    determined by the SU(3)_flavor structure: α is the Weyl bisector angle,
-    and β = α/C₂(SU3) is its gauge-suppressed counterpart.
+    Physical interpretation: both TT constants α and β are determined by
+    SU(3)_flavor geometry.  α = π/6 is the Weyl chamber bisector angle
+    (proved in `SU3FlavorCartan`), and β = α/C₂(SU3) is the same angle
+    reduced by the SU(3) fundamental Casimir invariant.
 
-    This is a purely algebraic theorem: zero hypotheses, zero sorry. -/
+    Zero hypotheses, zero sorry. -/
 theorem beta_eq_alpha_div_c2_su3 :
     betaCandidate1 = su3WeylBisectorAngle / c2SU3Fund := by
   unfold betaCandidate1 su3WeylBisectorAngle c2SU3Fund; ring
