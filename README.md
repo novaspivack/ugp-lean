@@ -56,8 +56,9 @@ Additional modules (`Phase4`, `Papers`, `Instance`, `Conjectures`, `TE22`) provi
 - `quarterLockLaw` — k_M = k_gen2 + ¼k_L²
 
 **UCL Unconditional Closure (ElegantKernel layer)**
-- `thm_ucl1_fully_unconditional` — k_gen = π/2 is the unique positive root of the pentagon-D₅ characteristic equation; derived unconditionally
-- `k_gen2_derived_satisfies_poly` — k_gen⁽²⁾ = cos(4π/5) = −φ/2, unique negative root of the pentagon quadratic
+- `thm_ucl2_fully_unconditional` — k_gen = φ·cos(π/10) = √(φ²−1/4) ≈ 1.5388; derived zero-hypothesis via Quarter-Lock substitution on Fibonacci char poly (replaces outdated conditional π/2 value in `KGen.lean`)
+- `k_gen2_eq_neg_phi_half` — k_gen2 = −φ/2 = cos(4π/5); unique negative root of the pentagon quadratic 4k²+2k−1=0
+- `k_gen_pentagon_hexagon_bridge` — k_gen + k_gen2 = φ·(cos(π/10) − cos(π/3)); bridges D₅ pentagonal (Fibonacci) and D₆ hexagonal (SU(3) Weyl) symmetries; proved 2026-04-20 from `thm_ucl2_fully_unconditional` + `k_gen2_eq_neg_phi_half` + Mathlib `cos_pi_div_three`
 - `full_closure_summary` — All five UCL constraints simultaneously satisfiable; complete Elegant Kernel closure holds unconditionally
 
 **Mass Relations (MassRelations layer)**

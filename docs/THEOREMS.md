@@ -2,7 +2,7 @@
 
 What ugp-lean proves. All listed theorems have **0 sorry, 0 axioms** on the core path unless explicitly marked ⚠.
 
-**Sorry audit (2026-04-18):** **only two** sorries remain in the codebase,
+**Sorry audit (2026-04-20):** **only two** sorries remain in the codebase,
 both openly disclosed with precise citations:
 - `dickman_equidistribution_in_APs` and `crt_equidistribution_within_regime`
   in `GTE.AnalyticArchitecture` — classical analytic-NT results (Tenenbaum
@@ -92,6 +92,23 @@ both openly disclosed with precise citations:
 | **L_model_eq_log_residual** | LModelDerivation | L_model = log₂(residualProduct), residual = (2⁴·5³)/3 |
 | **L_model_eq_log_wedge_form** | LModelDerivation | L_model = log₂((wedge2Factor · wedge5Factor) / orbitLength) |
 | **L_model_from_gauge_structure** | LModelDerivation | L_model = log₂((D₁ · 125) / 3) from D₁, 5³, orbit length 3 |
+
+## UCL Unconditional Closure (k_gen, k_gen2, Pentagon–Hexagon Bridge)
+
+All theorems in this section have **zero hypotheses, zero sorry, Mathlib-only axioms**.  
+Module: `ElegantKernel.Unconditional.KGenFullClosure` (§§1–9). Committed 2026-04-20.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **thm_ucl2_fully_unconditional** | ElegantKernel.Unconditional.KGenFullClosure | k_gen_derived = φ·cos(π/10) = √(φ²−¼) ≈ 1.5388; derived via Quarter-Lock substitution μ=λ²−¼ on Fibonacci char poly |
+| **thm_ucl2_sqrt_form** | ElegantKernel.Unconditional.KGenFullClosure | k_gen_derived = √(φ²−¼) (equivalent form) |
+| **thm_ucl2_summary** | ElegantKernel.Unconditional.KGenFullClosure | k_gen_derived = φcos(π/10) ∧ = √(φ²−¼) ∧ > 0 ∧ > 1 ∧ k_gen² = φ+¾ |
+| **k_gen2_eq_neg_phi_half** | ElegantKernel.KGen2 | k_gen2 = −φ/2 (by definition; also = cos(4π/5)) |
+| **thm_ucl1_unconditional** | ElegantKernel.Unconditional.FibonacciPentagonBridge | If k_gen2 = −λ_dom/2 and λ_dom satisfies Fibonacci char poly, then k_gen2 = −φ/2 |
+| **k_gen_pentagon_hexagon_bridge** | ElegantKernel.Unconditional.KGenFullClosure | k_gen_derived + k_gen2 = φ·(cos(π/10) − cos(π/3)); bridges D₅ pentagonal (Fibonacci/Quarter-Lock) and D₆ hexagonal (SU(3) Weyl/TT formula α=π/6) symmetries |
+| **k_gen_pentagon_hexagon_bridge_half** | ElegantKernel.Unconditional.KGenFullClosure | k_gen_derived + k_gen2 = φ·(cos(π/10) − ½) (equivalent half-angle form) |
+
+> **Note on k_gen = π/2 (KGen.lean):** The file `ElegantKernel.KGen` defines `k_gen := π/2` under a conditional "FibonacciPhaseAxiom" that is tautological. This older path is superseded by `thm_ucl2_fully_unconditional` in `KGenFullClosure`. The value π/2 was also corrected in the SM paper (commit 3762f9e4, ugp-physics) and in `theoretical_coefficients.json`. The canonical value is **φ·cos(π/10) ≈ 1.5388**, not π/2 ≈ 1.5708.
 
 ## Exclusion Filters
 

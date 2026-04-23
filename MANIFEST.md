@@ -4,7 +4,7 @@
 **Mathlib:** v4.29.0-rc6 (via `lakefile.lean`)  
 **Build:** `lake build` from this directory  
 **Root import:** `UgpLean.lean`  
-**Last verified:** 2026-04-18 — matches `lean-toolchain` and Mathlib pin; theorem table below.
+**Last verified:** 2026-04-20 — matches `lean-toolchain` and Mathlib pin; theorem table below. Pentagon–Hexagon Bridge theorem added (k_gen + k_gen2 = φ·(cos π/10 − cos π/3), commit b4358c6).
 
 **2026-04-18 integrity fix:** `fingerprint_fixed_point_exists` (Tarski) restated
 on `Set ℕ` (the natural complete lattice for unbounded prime patterns) and proven
@@ -36,6 +36,10 @@ match.  See registry at `ugp-physics:specs/WORKING_NOTES/TECH_DEBT_LEAN_SORRY_RE
 | Quarter-Lock Law | QuarterLock | quarterLockLaw | ✓ |
 | k_L² = 7/512 from UGP structure | ElegantKernel | k_L2_eq, k_L2_from_ugp1_s, block_denom_in_half_ridge_interval | ✓ |
 | Elegant Kernel k_L² | ElegantKernel | k_L2, k_L2_pos | ✓ |
+| **THM-UCL-2 (k_gen): k_gen = φ·cos(π/10)** | ElegantKernel.Unconditional.KGenFullClosure | thm_ucl2_fully_unconditional | ✓ (zero hyp, zero sorry; 2026-04-20) |
+| k_gen2 = −φ/2 | ElegantKernel.KGen2 | k_gen2_eq_neg_phi_half | ✓ |
+| **Pentagon–Hexagon Bridge: k_gen + k_gen2 = φ·(cos π/10 − cos π/3)** | ElegantKernel.Unconditional.KGenFullClosure | k_gen_pentagon_hexagon_bridge, k_gen_pentagon_hexagon_bridge_half | ✓ (zero hyp, zero sorry; 2026-04-20) |
+| THM-UCL-1 (k_gen2 from Fibonacci Hessian) | ElegantKernel.Unconditional.FibonacciPentagonBridge | thm_ucl1_unconditional, fibonacci_hessian_determines_value | ✓ |
 | GTE canonical orbit | GTE.Evolution, GTE.Orbit | canonical_orbit_triples, canonical_orbit_three_steps | ✓ |
 | Sieve Extended n∈[5,30] | Compute.SieveExtended | mirrorDualCount_10 | ✓ |
 | **Ridge Minimality: n=10 smallest** | Compute.SieveBelow10 | ridgeSurvivors_{5..9}_empty, n10_is_minimal_admissible_ridge, ridge_minimality_and_existence | ✓ |
