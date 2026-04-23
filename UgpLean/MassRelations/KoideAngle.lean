@@ -302,7 +302,41 @@ theorem N_c_determines_everything :
   · unfold UgpLean.leptonB; decide
   · unfold koideThetaUGP; norm_num
 
-/-! ## §8. Summary -/
+/-! ## §8. Neutrino seesaw exponent (EPIC 11, 2026-04-20)
+
+    The Koide angle appears not only in the charged-lepton mass formula but also
+    as the correction term in the neutrino seesaw mass formula:
+
+        m_ν_g ∝ b_g^{N_c + θ_Koide} = b_g^{3 + 2/9} = b_g^{29/9}
+
+    where b_g ∈ {5, 11, 19} are the Braid Atlas right-handed neutrino b-values.
+    This exponent predicts Δm²₂₁/Δm²₃₁ ≈ 0.0295 (NuFIT-5.2) to 0.4%
+    precision with normal hierarchy.  The derivation of WHY this exponent
+    applies to the Majorana sector is an open problem (EPIC 11 Round 4). -/
+
+/-- The neutrino seesaw exponent equals N_c + θ_Koide = 29/9.
+    This is the same Koide angle that organises the charged-lepton spectrum
+    (EPIC 9), now appearing as a correction to the N_c-cube seesaw law. -/
+def nuSeesawExponent : ℚ := 29 / 9
+
+theorem nu_seesaw_exponent_value : nuSeesawExponent = 29 / 9 := rfl
+
+theorem nu_seesaw_exponent_from_Nc :
+    nuSeesawExponent = 3 + (3^2 - 1 : ℚ) / (4 * 3^2) := by
+  unfold nuSeesawExponent; norm_num
+
+/-- The neutrino seesaw exponent equals N_c plus the Koide angle. -/
+theorem nu_seesaw_exponent_eq_Nc_plus_koide_theta :
+    (nuSeesawExponent : ℝ) = 3 + koideThetaUGP := by
+  unfold nuSeesawExponent koideThetaUGP; norm_num
+
+/-- The neutrino seesaw exponent is also N_c + strand_count / N_c²,
+    where strand_count = (N_c²-1)/4 = 2 from EPIC 9. -/
+theorem nu_seesaw_exponent_from_strand_count :
+    nuSeesawExponent = 3 + (3^2 - 1 : ℚ) / 4 / 3^2 := by
+  unfold nuSeesawExponent; norm_num
+
+/-! ## §10. Summary -/
 
 /-- **Summary.** The Koide angle is 2/canonicalGen2.a, and for any θ the
     Koide parametrisation satisfies Q = 2/3.  Hence if the physical Koide
