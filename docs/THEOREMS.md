@@ -117,6 +117,31 @@ Module `MassRelations.DownRational` §§5-6 (extended). Zero sorry.
 | **gamma_d_from_gut_dims** | MassRelations.DownRational | γ_d = -dim(45)/dim(126) = -5/14 |
 | **VV_coefficients_structural_summary** | MassRelations.DownRational | Bundle: all 3 VV coefficient identifications |
 
+## Complete N_c Structural Chain (EPIC 9, 2026-04-20)
+
+Modules `MassRelations.KoideAngle` (extended). Commits 95adbdf, f44e635, c9db18d.
+All zero sorry, zero hypotheses. N_c = 3 determines all SM fermion structural constants.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **muon_a_eq_color_rank_squared** | MassRelations.KoideAngle | canonicalGen2.a = 3^2 = 9 |
+| **lepton_a_values_nc_pattern** | MassRelations.KoideAngle | {a_e,a_μ,a_τ} = {N_c^0,(N_c²+1)/2,N_c²} |
+| **lepton_a_values_in_nc_set** | MassRelations.KoideAngle | all lepton a-values ∈ {1,(N_c²+1)/2,N_c²} |
+| **max_lepton_a_eq_nc_squared** | MassRelations.KoideAngle | max{a_e,a_μ,a_τ} = N_c² = 9 |
+| **lepton_b1_from_N_c** | MassRelations.KoideAngle | leptonB = N_c^4 − (N_c²+1)/2 − N_c = 73 |
+| **delta_from_N_c** | MassRelations.KoideAngle | ugp1_s = N_c + (N_c²−1)/2 = 7 |
+| **top_a_from_N_c** | MassRelations.KoideAngle | leptonB + 3 = N_c^4 − (N_c²+1)/2 = 76 |
+| **delta_b1_eq_511** | MassRelations.KoideAngle | ugp1_s × leptonB = 511 |
+| **strand_count_eq_su_nc_adj_div_4** | MassRelations.KoideAngle | (N_c²−1)/4 = 2 = lepton strand count |
+| **koide_angle_from_N_c_pure** | MassRelations.KoideAngle | koideThetaUGP = (N_c²−1)/(4N_c²) = 2/9 |
+| **koide_angle_three_forms** | MassRelations.KoideAngle | All three formulas equal 2/9 |
+| **N_c_determines_everything** | MassRelations.KoideAngle | Full chain: step∧strand∧δ∧b₁∧θ all from N_c |
+
+> **Key identity**: θ = (N_c²−1)/(4N_c²) = dim(SU(N_c))/(4N_c²) = 8/36 = 2/9.  
+> Combined with `SM_gauge_uniquely_selected` (N_c=3 from PSC): complete axiom-level derivation.
+
+---
+
 ## Koide Angle and β Derivation (EPIC 8, 2026-04-20)
 
 Module `MassRelations.KoideAngle` + extended `MassRelations.UpLeptonCyclotomic` §5.
