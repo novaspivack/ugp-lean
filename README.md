@@ -55,6 +55,11 @@ Additional modules (`Phase4`, `Papers`, `Instance`, `Conjectures`, `TE22`) provi
 - `canonical_orbit_triples` — (1,73,823) → (9,42,1023) → (5,275,65535)
 - `quarterLockLaw` — k_M = k_gen2 + ¼k_L²
 
+**13_SPEC Claim C — Formal proof (MassRelations.ClaimCBridge, 2026-04-20)**
+- `claim_C_formal` — cascadeState g = angleToAlpha1(ω₁) · 2^g + π/8; formal Claim C proved by combining Claim A (π/6 = SU(3) Weyl bisector) and Claim B (binary cascade doubles per generation); zero hypotheses, zero sorry
+- `k_gen2_encodes_double_weyl_bisector` — k_gen2 = −φ · cos(2 · Weyl bisector); bridges Elegant Kernel to SU(3) geometry
+- `pentagon_hexagon_TT_unified_bridge` — all five structural facts simultaneously: TT formula, Weyl bisector, k_gen2 = −φcos(2Weyl), k_gen = φcos(π/10), Pentagon-Hexagon Bridge
+
 **UCL Unconditional Closure (ElegantKernel layer)**
 - `thm_ucl2_fully_unconditional` — k_gen = φ·cos(π/10) = √(φ²−1/4) ≈ 1.5388; derived zero-hypothesis via Quarter-Lock substitution on Fibonacci char poly (replaces outdated conditional π/2 value in `KGen.lean`)
 - `k_gen2_eq_neg_phi_half` — k_gen2 = −φ/2 = cos(4π/5); unique negative root of the pentagon quadratic 4k²+2k−1=0

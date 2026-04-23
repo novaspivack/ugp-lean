@@ -93,6 +93,23 @@ both openly disclosed with precise citations:
 | **L_model_eq_log_wedge_form** | LModelDerivation | L_model = log₂((wedge2Factor · wedge5Factor) / orbitLength) |
 | **L_model_from_gauge_structure** | LModelDerivation | L_model = log₂((D₁ · 125) / 3) from D₁, 5³, orbit length 3 |
 
+## 13_SPEC Claim C — TT Formula = Weyl Bisector × Binary Cascade
+
+All theorems zero sorry, zero hypotheses. Module: `MassRelations.ClaimCBridge`. Committed 2026-04-20.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **claim_C_formal** | MassRelations.ClaimCBridge | cascadeState g = angleToAlpha1 omega1 · 2^g + π/8 (formal Claim C: Claim A ⊗ Claim B) |
+| **claim_C_via_su3_const** | MassRelations.ClaimCBridge | cascadeState g = su3WeylBisectorAngle · 2^g + π/8 |
+| **claim_C_increment_is_weyl_scaled** | MassRelations.ClaimCBridge | step(g→g+1) = Weyl bisector · 2^g |
+| **k_gen2_encodes_double_weyl_bisector** | MassRelations.ClaimCBridge | k_gen2 = −φ · cos(2 · Weyl_bisector) = −φ · cos(π/3) |
+| **pentagon_hexagon_TT_unified_bridge** | MassRelations.ClaimCBridge | Conjunction of all 5 structural facts: TT ∧ Weyl ∧ k_gen2=−φcos(2Weyl) ∧ k_gen=φcos(π/10) ∧ Pentagon-Hexagon Bridge |
+| **k_gen2_is_neg_phi_cos_double_TT_coeff** | MassRelations.ClaimCBridge | k_gen2 = −φ · cos(2·(π/6)) |
+
+> **Note:** "Formal Claim C" proves the TT formula coefficient IS the SU(3) Weyl bisector and the 2^g structure comes from the binary cascade. The physical question (WHY the GTE cascade acts as a Weyl rotation) remains interpretive — the formal mathematical content is now Lean-certified.
+
+---
+
 ## UCL Unconditional Closure (k_gen, k_gen2, Pentagon–Hexagon Bridge)
 
 All theorems in this section have **zero hypotheses, zero sorry, Mathlib-only axioms**.  

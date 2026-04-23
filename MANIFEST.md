@@ -36,6 +36,9 @@ match.  See registry at `ugp-physics:specs/WORKING_NOTES/TECH_DEBT_LEAN_SORRY_RE
 | Quarter-Lock Law | QuarterLock | quarterLockLaw | ✓ |
 | k_L² = 7/512 from UGP structure | ElegantKernel | k_L2_eq, k_L2_from_ugp1_s, block_denom_in_half_ridge_interval | ✓ |
 | Elegant Kernel k_L² | ElegantKernel | k_L2, k_L2_pos | ✓ |
+| **13_SPEC Claim C (formal): TT = Weyl·2^g** | MassRelations.ClaimCBridge | claim_C_formal, claim_C_via_su3_const, claim_C_increment_is_weyl_scaled | ✓ (zero hyp, zero sorry; 2026-04-20) |
+| **k_gen2 encodes doubled Weyl bisector** | MassRelations.ClaimCBridge | k_gen2_encodes_double_weyl_bisector, k_gen2_is_neg_phi_cos_double_TT_coeff | ✓ (zero hyp, zero sorry; 2026-04-20) |
+| **Unified Pentagon–Hexagon–TT bridge** | MassRelations.ClaimCBridge | pentagon_hexagon_TT_unified_bridge | ✓ (zero hyp, zero sorry; 2026-04-20) |
 | **THM-UCL-2 (k_gen): k_gen = φ·cos(π/10)** | ElegantKernel.Unconditional.KGenFullClosure | thm_ucl2_fully_unconditional | ✓ (zero hyp, zero sorry; 2026-04-20) |
 | k_gen2 = −φ/2 | ElegantKernel.KGen2 | k_gen2_eq_neg_phi_half | ✓ |
 | **Pentagon–Hexagon Bridge: k_gen + k_gen2 = φ·(cos π/10 − cos π/3)** | ElegantKernel.Unconditional.KGenFullClosure | k_gen_pentagon_hexagon_bridge, k_gen_pentagon_hexagon_bridge_half | ✓ (zero hyp, zero sorry; 2026-04-20) |
