@@ -10,9 +10,9 @@ import UgpLean.ElegantKernel.Unconditional.KGenFullClosure
 /-!
 # UgpLean.MassRelations.ClaimCBridge — Formal Claim C and Pentagon–Hexagon–TT Bridge
 
-**13_SPEC Claim C (formal).**  Proved 2026-04-20.
+** Claim C (formal).** Proved.
 
-This module proves the formal mathematical content of Claim C of 13_SPEC:
+This module proves the formal mathematical content of Claim C of :
 *the TT formula generation coefficient is the SU(3)_flavor Weyl chamber
 bisector angle π/6, and the 2^g generation structure comes from the binary
 phase cascade.*
@@ -30,14 +30,14 @@ phase cascade.*
 Additionally, this module proves that the Elegant Kernel generation-squared
 coefficient `k_gen2 = −φ/2` encodes **twice** the SU(3) Weyl bisector angle:
 
-  `k_gen2 = −φ · cos(2 · (SU(3) Weyl bisector))  =  −φ · cos(π/3)  =  −φ/2`
+ `k_gen2 = −φ · cos(2 · (SU(3) Weyl bisector)) = −φ · cos(π/3) = −φ/2`
 
 This connects the previously separate results:
-- `k_gen = φ · cos(π/10)`  (D₅ pentagonal; from `KGenFullClosure`)
-- `k_gen2 = −φ · cos(π/3)  =  −φ · cos(2·(π/6))`  (D₆ hexagonal, doubled TT angle)
-- `k_gen + k_gen2 = φ·(cos(π/10) − cos(π/3))`  (Pentagon–Hexagon Bridge, `KGenFullClosure` §9)
-- `cascadeState g  =  (π/6) · 2^g + π/8`  (binary cascade = TT formula)
-- `angleToAlpha1 omega1  =  π/6`  (Claim A, `SU3FlavorCartan`)
+- `k_gen = φ · cos(π/10)` (D₅ pentagonal; from `KGenFullClosure`)
+- `k_gen2 = −φ · cos(π/3) = −φ · cos(2·(π/6))` (D₆ hexagonal, doubled TT angle)
+- `k_gen + k_gen2 = φ·(cos(π/10) − cos(π/3))` (Pentagon–Hexagon Bridge, `KGenFullClosure` §9)
+- `cascadeState g = (π/6) · 2^g + π/8` (binary cascade = TT formula)
+- `angleToAlpha1 omega1 = π/6` (Claim A, `SU3FlavorCartan`)
 
 All five facts together: the Elegant Kernel simultaneously encodes the
 pentagonal (Fibonacci/Quarter-Lock) and hexagonal (SU(3) Weyl/TT) symmetries,
@@ -46,7 +46,7 @@ whose per-step angle is exactly the SU(3)_flavor Weyl chamber bisector.
 
 ## Axiom inventory
 
-Zero sorry.  Axioms = {propext, Classical.choice, Quot.sound} (standard Mathlib).
+Zero sorry. Axioms = {propext, Classical.choice, Quot.sound} (standard Mathlib).
 -/
 
 namespace UgpLean.MassRelations.ClaimCBridge
@@ -67,7 +67,7 @@ SU(3)_flavor Weyl chamber bisector angle `angleToAlpha1 omega1 = π/6`
 (Claim A) times the generation bit-depth `2^g` (Claim B), plus the
 constant `β = π/8`:
 
-  `cascadeState g = (SU(3) Weyl bisector) · 2^g + π/8`
+ `cascadeState g = (SU(3) Weyl bisector) · 2^g + π/8`
 
 **Proof:** Immediate from `cascadeState_closed_form` (Claim B) and
 `angle_alpha1_omega1_eq_pi_div_six` (Claim A). -/
@@ -78,14 +78,14 @@ theorem claim_C_formal (g : ℕ) :
   exact cascadeState_closed_form g
 
 /-- Equivalent form: the TT cascade uses `su3WeylBisectorAngle = π/6`
-    (the constant defined in `UpLeptonCyclotomic`). -/
+ (the constant defined in `UpLeptonCyclotomic`). -/
 theorem claim_C_via_su3_const (g : ℕ) :
     cascadeState g = su3WeylBisectorAngle * (2 : ℝ)^g + π / 8 := by
   unfold su3WeylBisectorAngle
   exact cascadeState_closed_form g
 
 /-- The TT increment from generation g to g+1 equals the Weyl bisector angle
-    scaled by 2^g.  The doubling-per-generation structure is SU(3)-intrinsic. -/
+ scaled by 2^g. The doubling-per-generation structure is SU(3)-intrinsic. -/
 theorem claim_C_increment_is_weyl_scaled (g : ℕ) :
     cascadeState (g + 1) - cascadeState g =
     angleToAlpha1 omega1 * (2 : ℝ)^g := by
@@ -99,10 +99,10 @@ theorem claim_C_increment_is_weyl_scaled (g : ℕ) :
 
 The UCL generation-squared coefficient satisfies:
 
-  `k_gen2 = −φ · cos(2 · (SU(3) Weyl bisector))`
+ `k_gen2 = −φ · cos(2 · (SU(3) Weyl bisector))`
 
 That is, `k_gen2` is negative φ times the cosine of **twice** the SU(3)_flavor
-Weyl chamber bisector angle.  This connects three independently-derived facts:
+Weyl chamber bisector angle. This connects three independently-derived facts:
 1. `k_gen2 = −φ/2` (from `k_gen2_eq_neg_phi_half`, Fibonacci Hessian derivation)
 2. `cos(π/3) = 1/2` (standard; `Real.cos_pi_div_three`)
 3. `angleToAlpha1 omega1 = π/6` (Claim A, `SU3FlavorCartan`)
@@ -121,11 +121,11 @@ theorem k_gen2_encodes_double_weyl_bisector :
 
 All five key structural facts simultaneously:
 
-1. `cascadeState g = (π/6)·2^g + π/8`         (TT formula = binary cascade)
-2. `π/6 = angleToAlpha1 omega1`                (Claim A: Weyl bisector)
-3. `k_gen2 = −φ·cos(2·(π/6))`                  (k_gen2 = double-Weyl)
-4. `k_gen_derived = φ·cos(π/10)`               (k_gen = pentagon, Claim B prior work)
-5. `k_gen_derived + k_gen2 = φ·(cos(π/10)−cos(π/3))`  (Pentagon–Hexagon Bridge) -/
+1. `cascadeState g = (π/6)·2^g + π/8` (TT formula = binary cascade)
+2. `π/6 = angleToAlpha1 omega1` (Claim A: Weyl bisector)
+3. `k_gen2 = −φ·cos(2·(π/6))` (k_gen2 = double-Weyl)
+4. `k_gen_derived = φ·cos(π/10)` (k_gen = pentagon, Claim B prior work)
+5. `k_gen_derived + k_gen2 = φ·(cos(π/10)−cos(π/3))` (Pentagon–Hexagon Bridge) -/
 theorem pentagon_hexagon_TT_unified_bridge (g : ℕ) :
     -- (1) TT formula from binary cascade
     cascadeState g = (π / 6) * (2 : ℝ)^g + π / 8 ∧
@@ -147,7 +147,7 @@ theorem pentagon_hexagon_TT_unified_bridge (g : ℕ) :
 /-! ## §4. Corollary: TT coefficient, k_gen2, and Weyl bisector are related -/
 
 /-- The TT coefficient π/6 and k_gen2 = −φ/2 satisfy:
-    k_gen2 = −φ · cos(2 · (TT coefficient)). -/
+ k_gen2 = −φ · cos(2 · (TT coefficient)). -/
 theorem k_gen2_is_neg_phi_cos_double_TT_coeff :
     k_gen2 = -(goldenRatio * cos (2 * (π / 6))) := by
   rw [show (2 : ℝ) * (π / 6) = π / 3 by ring, cos_pi_div_three, k_gen2_eq_neg_phi_half]

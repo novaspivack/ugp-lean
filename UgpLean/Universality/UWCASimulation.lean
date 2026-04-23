@@ -18,35 +18,35 @@ implement exactly one Rule 110 step on the visible C-bits.
 ## The UWCA Round
 
 Each site carries registers:
-  C : Bool   — the "committed" visible bit (the CA cell)
-  L : Bool   — left neighbor rail
-  R : Bool   — right neighbor rail
-  M : Fin 8 → Bool  — one match flag per minterm in S₁₁₀
-  N : Bool   — next-bit accumulator
+ C : Bool — the "committed" visible bit (the CA cell)
+ L : Bool — left neighbor rail
+ R : Bool — right neighbor rail
+ M : Fin 8 → Bool — one match flag per minterm in S₁₁₀
+ N : Bool — next-bit accumulator
 
 One full UWCA round = four synchronous passes over a finite tape:
-  P1 (neighbor distribution):  L_i := C_{i-1}, R_i := C_{i+1}
-  P2 (minterm detection):       M_i^u := [L_i=l] ∧ [C_i=c] ∧ [R_i=r]  for each u=(l,c,r) ∈ S
-  P3 (OR-accumulation):         N_i := ⋁_{u ∈ S} M_i^u
-  P4 (commit and clear):        C_i := N_i, all auxiliaries := false
+ P1 (neighbor distribution): L_i := C_{i-1}, R_i := C_{i+1}
+ P2 (minterm detection): M_i^u := [L_i=l] ∧ [C_i=c] ∧ [R_i=r] for each u=(l,c,r) ∈ S
+ P3 (OR-accumulation): N_i := ⋁_{u ∈ S} M_i^u
+ P4 (commit and clear): C_i := N_i, all auxiliaries := false
 
 ## Theorems
 
 1. `uwca_P3_eq_rule110` (**key lemma**): after P1–P3, N_i = rule110Output(C_{i-1}, C_i, C_{i+1}).
-   This is fully proved by case analysis over all 8 neighborhoods.
+ This is fully proved by case analysis over all 8 neighborhoods.
 
 2. `uwca_sweep_implements_rule110` (**sweep correctness**): after one full round,
-   the new C_i equals rule110Output applied to the old triple.
+ the new C_i equals rule110Output applied to the old triple.
 
 3. `uwca_sweep_correct_all` (**all sites**): for a tape of any length with periodic
-   boundary, every site is updated correctly.
+ boundary, every site is updated correctly.
 
 4. `uwca_tile_verification` (**exhaustive 8-case check**): machine-verified truth table.
 
 ## Boundary handling
 
 For a finite tape of length L, we use periodic boundary:
-  C_{-1} = C_{L-1},  C_L = C_0.
+ C_{-1} = C_{L-1}, C_L = C_0.
 
 Reference: UGP Paper §UWCA (Thm. thm:uwca-universal), formal proof section.
 -/
@@ -54,7 +54,7 @@ Reference: UGP Paper §UWCA (Thm. thm:uwca-universal), formal proof section.
 namespace UgpLean.Universality
 
 -- ════════════════════════════════════════════════════════════════
--- §1  UWCA site state
+-- §1 UWCA site state
 -- ════════════════════════════════════════════════════════════════
 
 /-- The full register state at a single UWCA site. -/
@@ -67,7 +67,7 @@ structure UWCASite where
   deriving DecidableEq
 
 /-- The binary sector: a site is "clean" if all auxiliary registers are false.
-    Only C is unconstrained. -/
+ Only C is unconstrained. -/
 def UWCASite.clean (s : UWCASite) : Prop :=
   s.L = false ∧ s.R = false ∧ (∀ u : Fin 8, s.M u = false) ∧ s.N = false
 
@@ -79,7 +79,7 @@ def Tape.inBinarySector {L : ℕ} (tape : Tape L) : Prop :=
   ∀ i : Fin L, (tape i).clean
 
 -- ════════════════════════════════════════════════════════════════
--- §2  The four passes
+-- §2 The four passes
 -- ════════════════════════════════════════════════════════════════
 
 /-- Extract the C-bit at position i, with periodic boundary (wrapping). -/
@@ -96,7 +96,7 @@ def decodeNeighborhood (u : Fin 8) : Bool × Bool × Bool :=
   (u.val / 4 % 2 == 1, u.val / 2 % 2 == 1, u.val % 2 == 1)
 
 /-- P1: Neighbor distribution. Write C_{i-1} and C_{i+1} into L_i and R_i.
-    Uses periodic boundary. -/
+ Uses periodic boundary. -/
 def P1 {L : ℕ} [NeZero L] (tape : Tape L) : Tape L :=
   fun i =>
     let s := tape i
@@ -106,7 +106,7 @@ def P1 {L : ℕ} [NeZero L] (tape : Tape L) : Tape L :=
     { s with L := left, R := right }
 
 /-- P2: Minterm detection. For each neighborhood u, set M^u_i iff the
-    (L_i, C_i, R_i) triple matches u exactly. -/
+ (L_i, C_i, R_i) triple matches u exactly. -/
 def P2 {L : ℕ} (tape : Tape L) : Tape L :=
   fun i =>
     let s := tape i
@@ -134,20 +134,20 @@ def uwcaRound {L : ℕ} [NeZero L] (tape : Tape L) : Tape L :=
   P4 (P3 (P2 (P1 tape)))
 
 -- ════════════════════════════════════════════════════════════════
--- §3  Key lemma: P3 output = Rule 110 output
+-- §3 Key lemma: P3 output = Rule 110 output
 -- ════════════════════════════════════════════════════════════════
 
 /-- **Key lemma**: after P1+P2+P3, N_i = rule110Output applied to
-    (C_{i-1}, C_i, C_{i+1}).
+ (C_{i-1}, C_i, C_{i+1}).
 
-    The proof is by exhaustive case analysis over all 8 neighborhoods.
-    Each case checks that:
-    - exactly one M^u flag is set (the one matching the actual neighborhood)
-    - that flag is in S₁₁₀ iff rule110Output = 1
-    This is the core of the UWCA simulation proof.
+ The proof is by exhaustive case analysis over all 8 neighborhoods.
+ Each case checks that:
+ - exactly one M^u flag is set (the one matching the actual neighborhood)
+ - that flag is in S₁₁₀ iff rule110Output = 1
+ This is the core of the UWCA simulation proof.
 
-    Note: this lemma works on a single site given its L, C, R values
-    (after P1 has distributed neighbors). -/
+ Note: this lemma works on a single site given its L, C, R values
+ (after P1 has distributed neighbors). -/
 theorem uwca_P3_eq_rule110 (l c r : Bool) :
     let u := neighborhoodIndex l c r
     -- After P2: M^u is set iff u matches (l, c, r)
@@ -163,12 +163,12 @@ theorem uwca_P3_eq_rule110 (l c r : Bool) :
   decide
 
 -- ════════════════════════════════════════════════════════════════
--- §4  Exhaustive 8-case truth table verification
+-- §4 Exhaustive 8-case truth table verification
 -- ════════════════════════════════════════════════════════════════
 
 /-- **Machine-verified Rule 110 truth table** via the UWCA minterm computation.
-    All 8 neighborhoods checked explicitly:
-      000→0, 001→1, 010→1, 011→1, 100→0, 101→1, 110→1, 111→0 -/
+ All 8 neighborhoods checked explicitly:
+ 000→0, 001→1, 010→1, 011→1, 100→0, 101→1, 110→1, 111→0 -/
 theorem uwca_tile_verification :
     -- 000 → 0
     rule110Output (neighborhoodIndex false false false) = false ∧
@@ -189,15 +189,15 @@ theorem uwca_tile_verification :
   native_decide
 
 -- ════════════════════════════════════════════════════════════════
--- §5  Binary sector invariance
+-- §5 Binary sector invariance
 -- ════════════════════════════════════════════════════════════════
 
 /-- **Binary-sector invariance**: if a tape is in the binary sector,
-    one UWCA round returns it to the binary sector.
+ one UWCA round returns it to the binary sector.
 
-    The proof: P1 sets L,R from C bits (both Bool); P2 computes Boolean conjunctions;
-    P3 computes Boolean OR; P4 resets all auxiliaries to false.
-    Hence all auxiliaries are false after P4. -/
+ The proof: P1 sets L,R from C bits (both Bool); P2 computes Boolean conjunctions;
+ P3 computes Boolean OR; P4 resets all auxiliaries to false.
+ Hence all auxiliaries are false after P4. -/
 theorem uwca_sector_invariant {L : ℕ} [NeZero L] (tape : Tape L)
     (_h : tape.inBinarySector) :
     (uwcaRound tape).inBinarySector := by
@@ -208,20 +208,20 @@ theorem uwca_sector_invariant {L : ℕ} [NeZero L] (tape : Tape L)
   refine ⟨rfl, rfl, fun _ => rfl, rfl⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §6  Sweep correctness
+-- §6 Sweep correctness
 -- ════════════════════════════════════════════════════════════════
 
 /-- **Sweep correctness**: after one UWCA round, the C-bit at each site equals
-    rule110Output applied to the triple of old C-bits at (i-1, i, i+1).
+ rule110Output applied to the triple of old C-bits at (i-1, i, i+1).
 
-    This is the main simulation theorem:
-      C_i^{new} = f₁₁₀(C_{i-1}^{old}, C_i^{old}, C_{i+1}^{old})
+ This is the main simulation theorem:
+ C_i^{new} = f₁₁₀(C_{i-1}^{old}, C_i^{old}, C_{i+1}^{old})
 
-    Proof:
-    - P1 writes C_{i-1} and C_{i+1} into L_i and R_i (neighbor distribution)
-    - P2 sets exactly the flag for the matching neighborhood
-    - P3 ORs the S₁₁₀ flags = rule110Output (by uwca_P3_eq_rule110)
-    - P4 commits N to C -/
+ Proof:
+ - P1 writes C_{i-1} and C_{i+1} into L_i and R_i (neighbor distribution)
+ - P2 sets exactly the flag for the matching neighborhood
+ - P3 ORs the S₁₁₀ flags = rule110Output (by uwca_P3_eq_rule110)
+ - P4 commits N to C -/
 theorem uwca_sweep_implements_rule110 {L : ℕ} [NeZero L]
     (tape : Tape L) (_h : tape.inBinarySector) (i : Fin L) :
     let hL : 0 < L := Nat.pos_of_ne_zero (NeZero.ne L)
@@ -243,7 +243,7 @@ theorem uwca_sweep_implements_rule110 {L : ℕ} [NeZero L]
   simp [rule110Output, Bool.toNat]
 
 -- ════════════════════════════════════════════════════════════════
--- §7  Concrete instance: 4-cell tape
+-- §7 Concrete instance: 4-cell tape
 -- ════════════════════════════════════════════════════════════════
 
 /-- Construct an initial tape from C-bits only (all auxiliaries false). -/
@@ -262,8 +262,8 @@ def tapeCRow {L : ℕ} (tape : Tape L) : Fin L → Bool :=
   fun i => (tape i).C
 
 /-- **Concrete 4-cell Rule 110 output**: given the row [1,1,0,1],
-    Rule 110 with periodic boundary produces [1,0,1,1].
-    Verified by computing rule110Output at each of the 4 neighborhoods. -/
+ Rule 110 with periodic boundary produces [1,0,1,1].
+ Verified by computing rule110Output at each of the 4 neighborhoods. -/
 theorem uwca_4cell_example :
     -- row = [1,1,0,1], periodic: neighbor of site 0 is site 3
     -- site 0: (row[3],row[0],row[1]) = (1,1,1) → 0... wait let's compute:

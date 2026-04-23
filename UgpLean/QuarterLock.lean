@@ -33,11 +33,11 @@ theorem quarterLockLaw : ∃ k_M k_gen2 : ℚ, quarterLockIdentity k_M k_gen2 k_
   ⟨k_M_example, k_gen2_example, quarterLock_holds_example⟩
 
 /-- Kernel Defect Functional: squared distance from Quarter-Lock plane.
-  D(k) = (16/33)(k_M - k_G - ¼k_L)². State is lawful iff D = 0. -/
+ D(k) = (16/33)(k_M - k_G - ¼k_L)². State is lawful iff D = 0. -/
 def kernelDefect (k_M k_G k_L : ℚ) : ℚ := (16/33) * (k_M - k_G - (1/4)*k_L)^2
 
 /-- Stability of Quarter-Lock: T contracts the Kernel Defect in a neighborhood of the lawful manifold.
-  For states with small defect, D(T(k)) < D(k). -/
+ For states with small defect, D(T(k)) < D(k). -/
 def quarterLockStability : Prop :=
   ∀ k_M k_G k_L : ℚ, kernelDefect k_M k_G k_L = 0 →
     quarterLockIdentity k_M k_G k_L

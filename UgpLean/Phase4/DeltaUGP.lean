@@ -18,8 +18,8 @@ namespace UgpLean.Phase4
 open UgpLean
 
 /-- Universal Instantiation Factor formula (rational approximation).
-  Exact: δ_UGP = (1/b₁)(-1/(k_gen2 + ¼k_L²) + (7/4)(k_L²/k_gen2)).
-  At b₁=73, δ_UGP ≈ 0.0165991566 -/
+ Exact: δ_UGP = (1/b₁)(-1/(k_gen2 + ¼k_L²) + (7/4)(k_L²/k_gen2)).
+ At b₁=73, δ_UGP ≈ 0.0165991566 -/
 def deltaUGPFormula (b1 : ℕ) : Prop := b1 = 73  -- Only b₁=73 satisfies Stage 2
 
 /-- At n=10, only b₁=73 matches the δ_UGP constraint among survivors. -/
@@ -29,8 +29,8 @@ theorem leptonB_matches_deltaUGP : deltaUGPFormula leptonB := by
   unfold deltaUGPFormula leptonB; native_decide
 
 /-- Numeric δ_UGP at b₁=73 using Quarter-Lock constants.
-  δ = (1/73)(-1/(k_gen2 + ¼k_L²) + (7/4)(k_L²/k_gen2)) with k_gen2=7/2048, k_L²=7/512.
-  Denominator is non-zero. -/
+ δ = (1/73)(-1/(k_gen2 + ¼k_L²) + (7/4)(k_L²/k_gen2)) with k_gen2=7/2048, k_L²=7/512.
+ Denominator is non-zero. -/
 def deltaUGP_numeric_at_73 : ℚ :=
   (1/73 : ℚ) * ((-1)/(k_gen2_example + (1/4 : ℚ) * k_L2) + (7/4 : ℚ) * (k_L2 / k_gen2_example))
 

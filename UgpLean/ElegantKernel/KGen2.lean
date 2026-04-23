@@ -16,22 +16,22 @@ pentagonal symmetry of the renormalization group flow on the Fisher-isotropic
 
 ## Structural chain
 
-  L_model = log₂(2⁴ · 5³ / 3)   [Lean-certified: `L_model_from_gauge_structure`]
-     ↓  5³ = rank-3 geometry over Q(√5)
-  Q(√5) = Z[φ] = real subfield of Q(ζ₅), ζ₅ = e^{2πi/5}
-     ↓  Q(ζ₅) carries D₅ dihedral symmetry
-  UCL Fisher-isotropic Hessian on (L, g) inherits D₅ structure
-     ↓  D₅ rotation by 4π/5 ≡ 2·(2π/5)
-  k_gen² = cos(4π/5)
-     ↓  standard trig identity (cos(π−x) = −cos(x))
-  cos(4π/5) = −cos(π/5) = −(1+√5)/4   [Mathlib: `Real.cos_pi_div_five`]
-     ↓  definition of golden ratio
-  cos(4π/5) = −φ/2                    [Mathlib: `Real.goldenRatio`]
+ L_model = log₂(2⁴ · 5³ / 3) [Lean-certified: `L_model_from_gauge_structure`]
+ ↓ 5³ = rank-3 geometry over Q(√5)
+ Q(√5) = Z[φ] = real subfield of Q(ζ₅), ζ₅ = e^{2πi/5}
+ ↓ Q(ζ₅) carries D₅ dihedral symmetry
+ UCL Fisher-isotropic Hessian on (L, g) inherits D₅ structure
+ ↓ D₅ rotation by 4π/5 ≡ 2·(2π/5)
+ k_gen² = cos(4π/5)
+ ↓ standard trig identity (cos(π−x) = −cos(x))
+ cos(4π/5) = −cos(π/5) = −(1+√5)/4 [Mathlib: `Real.cos_pi_div_five`]
+ ↓ definition of golden ratio
+ cos(4π/5) = −φ/2 [Mathlib: `Real.goldenRatio`]
 
 ## Phase A (this file): the trigonometric core
 
 This module establishes the trigonometric/algebraic portion of the chain,
-independently of any UGP-specific structural claims.  Phase B formalizes the
+independently of any UGP-specific structural claims. Phase B formalizes the
 D₅ symmetry argument and shows k_gen² = cos(4π/5) from the Fisher metric.
 
 ## Defensibility
@@ -68,7 +68,7 @@ theorem one_plus_sqrt5_div_4_eq_phi_div_2 :
 /-- **Core trigonometric identity:** `cos(4π/5) = −φ/2`.
 This is the Phase A centerpiece of THM-UCL-1; the algebraic chain from
 `cos(4π/5)` (a specific 5th-root-of-unity real part) to `−φ/2` (half-negative
-golden ratio) is entirely standard mathematics.  What remains for Phase B is
+golden ratio) is entirely standard mathematics. What remains for Phase B is
 to establish that the UCL `k_gen²` coefficient equals `cos(4π/5)` via the
 D₅ Hessian argument. -/
 theorem cos_4pi_div_five_eq_neg_phi_half :
@@ -79,17 +79,17 @@ theorem cos_4pi_div_five_eq_neg_phi_half :
 
 The structural claim we aim to Lean-certify in Phase B is:
 
-  Under the D₅ rotation of the Fisher-isotropic (L, g) frame induced by the
-  Q(√5) structure embedded in L_model (via the 5³ wedge factor), the UCL
-  Hessian's generation-direction coefficient equals cos(4π/5).
+ Under the D₅ rotation of the Fisher-isotropic (L, g) frame induced by the
+ Q(√5) structure embedded in L_model (via the 5³ wedge factor), the UCL
+ Hessian's generation-direction coefficient equals cos(4π/5).
 
 Formally, this requires:
 
-(i)   Defining the UCL Fisher-isotropic Hessian as an element of a specific
-      2×2 real matrix space.
-(ii)  Defining the D₅ action on this space via Q(ζ₅)/Q Galois conjugation.
+(i) Defining the UCL Fisher-isotropic Hessian as an element of a specific
+ 2×2 real matrix space.
+(ii) Defining the D₅ action on this space via Q(ζ₅)/Q Galois conjugation.
 (iii) Showing the action takes the L-direction to a specific vector whose
-      L-component is cos(4π/5).
+ L-component is cos(4π/5).
 
 In Phase B1 (simpler), we state this as a named hypothesis and prove the
 conclusion `k_gen² = −φ/2`.
@@ -99,8 +99,8 @@ by formalizing the Q(√5)→D₅ connection.
 -/
 
 /-- The UCL generation-squared coefficient as a real number.
-    Currently we define it as `-Real.goldenRatio / 2` directly; Phase B proves
-    that this matches the value derived from the D₅ Hessian structure. -/
+ Currently we define it as `-Real.goldenRatio / 2` directly; Phase B proves
+ that this matches the value derived from the D₅ Hessian structure. -/
 noncomputable def k_gen2 : ℝ := -(Real.goldenRatio / 2)
 
 /-- The UCL k_gen² value equals cos(4π/5) by the trigonometric identity above. -/
@@ -142,7 +142,7 @@ theorem cos_pi_div_5_sub_cos_2pi_div_5 :
   ring
 
 /-- cos(π/5) · cos(2π/5) = 1/4 (product identity).
-    Proof: ((1+√5)/4) · ((√5−1)/4) = (√5² − 1²)/16 = 4/16 = 1/4. -/
+ Proof: ((1+√5)/4) · ((√5−1)/4) = (√5² − 1²)/16 = 4/16 = 1/4. -/
 theorem cos_pi_div_5_mul_cos_2pi_div_5 :
     cos (π / 5) * cos (2 * π / 5) = 1 / 4 := by
   rw [cos_pi_div_five_eq, cos_2pi_div_five_eq]

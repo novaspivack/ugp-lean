@@ -19,37 +19,37 @@ structure of Q(ζ₅).
 ## The chain
 
 1. The GTE even-step Fibonacci companion matrix has eigenvalues {φ, −1/φ},
-   where φ = (1+√5)/2 (Lean-certified).
+ where φ = (1+√5)/2 (Lean-certified).
 
 2. φ generates Q(√5) = ℚ(φ), the real subfield of Q(ζ₅).
 
 3. The five primitive 5th roots of unity ζ₅^k have real parts:
-   {1, cos(2π/5), cos(4π/5), cos(6π/5), cos(8π/5)}
-   = {1, (φ−1)/2, −φ/2, −φ/2, (φ−1)/2}
-   = {1, (φ−1)/2, −φ/2}  (three distinct values, Lean-certified).
+ {1, cos(2π/5), cos(4π/5), cos(6π/5), cos(8π/5)}
+ = {1, (φ−1)/2, −φ/2, −φ/2, (φ−1)/2}
+ = {1, (φ−1)/2, −φ/2} (three distinct values, Lean-certified).
 
 4. cos(4π/5) = −φ/2 (Lean-certified in Phase A, `cos_4pi_div_five_eq_neg_phi_half`).
 
 5. The substitution x = −φ/2 gives 4x² + 2x − 1 = 0 (Lean-certified in
-   `neg_phi_half_satisfies_min_poly`).
+ `neg_phi_half_satisfies_min_poly`).
 
 6. −φ/2 is the unique negative root of 4x² + 2x − 1 = 0 (Lean-certified
-   in `unique_negative_root_of_min_poly`).
+ in `unique_negative_root_of_min_poly`).
 
 ## What this module adds
 
 The new content is:
 
 (a) The explicit algebraic identities linking φ, −φ/2, cos(4π/5),
-    and the pentagon minimal polynomial roots, stated as a SINGLE
-    combined theorem.
+ and the pentagon minimal polynomial roots, stated as a SINGLE
+ combined theorem.
 
 (b) A formalization of why the "squared" root ζ₅² selects the coefficient:
-    the even-step involves TWO applications of the basic Fibonacci step,
-    hence the relevant D₅ element is ζ₅² (not ζ₅¹), and Re(ζ₅²) = cos(4π/5) = −φ/2.
+ the even-step involves TWO applications of the basic Fibonacci step,
+ hence the relevant D₅ element is ζ₅² (not ζ₅¹), and Re(ζ₅²) = cos(4π/5) = −φ/2.
 
 (c) The complete derivation chain from GTE eigenvalue to k_gen² in one
-    self-contained theorem.
+ self-contained theorem.
 -/
 
 namespace UgpLean.ElegantKernel.Unconditional.Cyclotomic
@@ -106,8 +106,8 @@ theorem cos_4pi_5_is_doubled_cos_2pi_5 :
 
 /-- The doubling formula applied to cos(2π/5) = (φ−1)/2 gives
 cos(4π/5) = 2((φ−1)/2)² − 1 = (φ² − 2φ + 1)/2 − 1
-           = ((φ+1) − 2φ + 1)/2 − 1   (using φ² = φ+1)
-           = (2 − φ)/2 − 1 = −φ/2.
+ = ((φ+1) − 2φ + 1)/2 − 1 (using φ² = φ+1)
+ = (2 − φ)/2 − 1 = −φ/2.
 
 This explicitly shows the "doubling" computation. -/
 theorem cos_4pi_5_via_doubling_and_fibonacci :
@@ -159,11 +159,11 @@ renormalization symmetry — the coefficient is uniquely determined to be
 −φ/2 = cos(4π/5), the real part of the squared primitive 5th root of unity.
 
 The full derivation chain:
-  GTE Fibonacci eigenvalue φ
-    → φ² − φ − 1 = 0 (char poly)
-    → 4(−φ/2)² + 2(−φ/2) − 1 = 0 (substitution x = −λ/2)
-    → −φ/2 is the unique negative root
-    → k_gen² = −φ/2 = cos(4π/5) ∈ PentagonRealParts
+ GTE Fibonacci eigenvalue φ
+ → φ² − φ − 1 = 0 (char poly)
+ → 4(−φ/2)² + 2(−φ/2) − 1 = 0 (substitution x = −λ/2)
+ → −φ/2 is the unique negative root
+ → k_gen² = −φ/2 = cos(4π/5) ∈ PentagonRealParts
 -/
 theorem thm_ucl1_strongest (lam_dom : ℝ)
     (h_fib : lam_dom^2 - lam_dom - 1 = 0)

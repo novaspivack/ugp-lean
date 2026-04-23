@@ -4,7 +4,7 @@ import UgpLean.ElegantKernel
 # UgpLean.Phase4.GaugeCouplings — g₁², g₂², g₃² from Invariants
 
 Bare gauge couplings at UGP unification scale:
-  g₁² = 16/125, g₂² = 2329/5400, g₃² = 41075281/27648000
+ g₁² = 16/125, g₂² = 2329/5400, g₃² = 41075281/27648000
 
 From group-specific invariants: U(1) 3-volume, SU(2) harmonic mean, SU(3) Vandermonde.
 
@@ -14,7 +14,7 @@ Reference: JMP Math Foundations §3, First Principles SM
 namespace UgpLean.Phase4
 
 /-- U(1) discrete invariant: D₁ = 1/(k_a k_b k_c)² = 16 from charge 3-volume.
-  From Möbius coefficients (1/8, -3/2, 4/3); V_charge = -1/4, so D₁ = 16 = 2⁴. -/
+ From Möbius coefficients (1/8, -3/2, 4/3); V_charge = -1/4, so D₁ = 16 = 2⁴. -/
 def D1 : ℕ := 16
 
 /-- Bare g₁² = 16/125 (U(1) at unification scale). -/
@@ -34,19 +34,19 @@ theorem g2Sq_bare_eq : g2Sq_bare = 2329/5400 := rfl
 theorem g3Sq_bare_eq : g3Sq_bare = 41075281/27648000 := rfl
 
 /-- SU(2) invariant from harmonic mean of squared face areas.
-  D₂ = 2329/432. -/
+ D₂ = 2329/432. -/
 def D2_invariant : ℚ := 2329/432
 
 /-- SU(3) invariant: squared Vandermonde discriminant.
-  D₃ = 41075281/1327104. -/
+ D₃ = 41075281/1327104. -/
 def D3_invariant : ℚ := 41075281/1327104
 
 /-- SU(2) Harmonic Mean Uniqueness: f symmetric, conditions ⇒ harmonic mean.
-  Reference: JMP Math Foundations Thm A.1 -/
+ Reference: JMP Math Foundations Thm A.1 -/
 def SU2_harmonic_mean_uniqueness : Prop := True
 
 /-- SU(3) Vandermonde Uniqueness: g antisymmetric ⇒ Vandermonde.
-  Reference: JMP Math Foundations Thm A.2 -/
+ Reference: JMP Math Foundations Thm A.2 -/
 def SU3_Vandermonde_uniqueness : Prop := True
 
 end UgpLean.Phase4

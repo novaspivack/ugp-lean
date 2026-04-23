@@ -9,35 +9,35 @@ import Mathlib.Tactic.Ring
 /-!
 # UgpLean.MassRelations.KoideClosedForm — Koide Algebraic Closed Form
 
-**Round 33, Phase II of Priority 7 (03_SPEC / OP(vii)) — structural progress on
+** of Priority 7 — structural progress on
 the Koide charged-lepton relation.**
 
 ## Context
 
 Paper 1 Open Problem (vii) / 4.4: exhibit a UGP-native dynamical origin for the
 Koide relation
-  `Q(v) := (m_e + m_μ + m_τ) / (√m_e + √m_μ + √m_τ)^2 = 2/3`
+ `Q(v) := (m_e + m_μ + m_τ) / (√m_e + √m_μ + √m_τ)^2 = 2/3`
 where `v = (√m_e, √m_μ, √m_τ)` is the charged-lepton sqrt-mass vector.
 
-Round RR (Phase I) established that no 2-parameter family of S_3-equivariant
+Round RR established that no 2-parameter family of S_3-equivariant
 q-conserving LINEAR operators with rational UGP entries exists (only 4 isolated
-trivial operators). Round 33 attacks the NONLINEAR layer.
+trivial operators). attacks the NONLINEAR layer.
 
-## Round 33 claims (R33-A, R33-B, R33-C)
+## claims (R33-A, R33-B, R33-C)
 
 **R33-A (Geometric reformulation).** Koide's `Q = 2/3` is EXACTLY the statement
 that `v` makes a 45° angle with the democratic axis `ê = (1,1,1)/√3`:
 
-    Q(v) = 2/3  ⟺  angle(v, ê) = π/4
+ Q(v) = 2/3 ⟺ angle(v, ê) = π/4
 
-Empirically (COMP-P01-GGG): PDG lepton vector is at 44.99974°, i.e. 0.95 arcsec
+Empirically : PDG lepton vector is at 44.99974°, i.e. 0.95 arcsec
 from π/4.
 
 **R33-B (Algebraic closed form).** Given `r_e, r_μ` with `x = r_e, y = r_μ`,
 the Koide-consistent value of `r_τ` (the positive root of the quadratic
 z^2 − 4z(x+y) + (x^2 + y^2 − 4xy) = 0) is:
 
-    r_τ = 2(r_e + r_μ) + √3 · √(r_e^2 + 4 r_e r_μ + r_μ^2).
+ r_τ = 2(r_e + r_μ) + √3 · √(r_e^2 + 4 r_e r_μ + r_μ^2).
 
 Empirically: predicts `m_τ = 1.776969 GeV` from PDG `m_e, m_μ` vs PDG
 `m_τ = 1.77686 GeV`, i.e. 61 ppm = 0.91σ_PDG.
@@ -45,10 +45,10 @@ Empirically: predicts `m_τ = 1.776969 GeV` from PDG `m_e, m_μ` vs PDG
 **R33-C (Cyclotomic-12 identification).** The coefficients in R33-B's solved
 form are NOT arbitrary surds but exact cyclotomic-12 UGP atoms:
 
-    (2 + √3) = 4 · cos²(π/12)        (proved here, `two_plus_sqrt3_eq`)
-    (1 + √3) = 2√2 · cos(π/12)       (proved here, `one_plus_sqrt3_eq`)
+ (2 + √3) = 4 · cos²(π/12) (proved here, `two_plus_sqrt3_eq`)
+ (1 + √3) = 2√2 · cos(π/12) (proved here, `one_plus_sqrt3_eq`)
 
-This ties Koide to the same π/12 family as α = π/6 in Round 13's TT derivation
+This ties Koide to the same π/12 family as α = π/6 in 's TT derivation
 (`SU3FlavorCartan.angle_alpha1_omega1_eq_pi_div_six`). Koide is NOT numerical
 coincidence; it is a cyclotomic-12 algebraic identity on the charged-lepton
 sqrt-mass vector.
@@ -57,13 +57,13 @@ sqrt-mass vector.
 
 - R33-C cyclotomic identities: **proved** (this module).
 - R33-A angle reformulation: **proved** as algebraic equivalence here; full
-  `arccos/arctan` reformulation deferred to future work.
+ `arccos/arctan` reformulation deferred to future work.
 - R33-B closed-form solution: the algebraic content is the quadratic's positive
-  root; the formula itself is a one-line algebraic identity proved as
-  `koide_solved_form_root`.
+ root; the formula itself is a one-line algebraic identity proved as
+ `koide_solved_form_root`.
 - Full R33 Koide-flow operator (Paper 1 OP(vii) full theorem): **still open**.
-  R33 establishes the algebraic skeleton; the dynamical UGP-native flow
-  constructing this skeleton remains Phase III/IV work.
+ R33 establishes the algebraic skeleton; the dynamical UGP-native flow
+ constructing this skeleton remains /IV work.
 
 ## See also
 
@@ -159,8 +159,8 @@ theorem koide_quadratic_discriminant_form (x y z : ℝ) :
 
 /-- **R33-A core algebraic identity.** Let `v = (x, y, z)` and define
 `S = x + y + z` (the democratic projection up to 1/√3) and `N = x² + y² + z²`
-(the squared norm).  Then
-  `koideQuadratic x y z = 0  ⟺  2·S² = 3·N`,
+(the squared norm). Then
+ `koideQuadratic x y z = 0 ⟺ 2·S² = 3·N`,
 which is `(S/√N)² = 3/2` = `3·cos²(angle(v, ê)) = 3/2`, i.e.
 `cos²(angle) = 1/2`, i.e. `angle = π/4`.
 

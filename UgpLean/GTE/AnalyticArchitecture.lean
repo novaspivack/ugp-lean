@@ -13,15 +13,15 @@ proof architecture for the one-factor sum Σ_t λ(Q₋(t)).
 
 The two lemmas are:
 1. **Dickman equidistribution in arithmetic progressions** (§1):
-   The independence regime I(T) = {t ≤ T : P⁺(Q₋(t)) > Q₋(t)^(2/3)}
-   equidistributes across residue classes mod q with density ρ(3/2) ≈ 0.8282.
-   Proof: Tenenbaum, Introduction to Analytic and Probabilistic Number Theory,
-   Chapter III.6, Theorem 3.3 (smooth numbers in polynomial values).
+ The independence regime I(T) = {t ≤ T : P⁺(Q₋(t)) > Q₋(t)^(2/3)}
+ equidistributes across residue classes mod q with density ρ(3/2) ≈ 0.8282.
+ Proof: Tenenbaum, Introduction to Analytic and Probabilistic Number Theory,
+ Chapter III.6, Theorem 3.3 (smooth numbers in polynomial values).
 
 2. **CRT equidistribution within the independence regime** (§2):
-   For squarefree n with gcd(rad(n), q) = 1, the fiber S_n(T) equidistributes
-   across residue classes mod q with O(1) error (independent of n, T, j).
-   Proof: Standard CRT + Dickman uniformity.
+ For squarefree n with gcd(rad(n), q) = 1, the fiber S_n(T) equidistributes
+ across residue classes mod q with O(1) error (independent of n, T, j).
+ Proof: Standard CRT + Dickman uniformity.
 
 Both proofs are classical but require substantial real-analytic machinery
 (Laplace transforms, Dickman function asymptotics, character sum estimates)
@@ -44,7 +44,7 @@ namespace UgpLean
 open Nat
 
 -- ════════════════════════════════════════════════════════════════
--- §1  Largest prime factor and independence regime
+-- §1 Largest prime factor and independence regime
 -- ════════════════════════════════════════════════════════════════
 
 /-- Largest prime factor of n: the supremum of n.primeFactors (returns 0 for n ≤ 1). -/
@@ -52,25 +52,25 @@ noncomputable def largestPrimeFactor (n : ℕ) : ℕ :=
   n.primeFactors.sup id
 
 /-- The independence regime at level T: integers t ≤ T where the
-    largest prime factor of Q₋(t) exceeds Q₋(t)^(2/3).
+ largest prime factor of Q₋(t) exceeds Q₋(t)^(2/3).
 
-    For t in this regime, the LPF isolation theorem guarantees that
-    P⁺(Q₋(t)) appears exactly once in the factorization of Q₋(t),
-    giving λ(Q₋(t)) = −λ(Q₋(t)/P⁺(Q₋(t))). -/
+ For t in this regime, the LPF isolation theorem guarantees that
+ P⁺(Q₋(t)) appears exactly once in the factorization of Q₋(t),
+ giving λ(Q₋(t)) = −λ(Q₋(t)/P⁺(Q₋(t))). -/
 noncomputable def independenceRegime (T : ℕ) : Finset ℕ :=
   (Finset.range T).filter fun t =>
     let q := factoryQm t
     (largestPrimeFactor q : ℝ) > (q : ℝ) ^ ((2 : ℝ) / 3)
 
 -- ════════════════════════════════════════════════════════════════
--- §2  Dickman equidistribution in arithmetic progressions
+-- §2 Dickman equidistribution in arithmetic progressions
 -- ════════════════════════════════════════════════════════════════
 
 /-!
 ## Dickman-in-APs Lemma
 
 **Statement.** For Q₋(t) = L·t² + D₋ and any coprime modulus q with 0 < q,
-  lim_{T → ∞} |I(T) ∩ {t ≤ T : t ≡ r (mod q)}| / (T/q) = ρ(3/2)
+ lim_{T → ∞} |I(T) ∩ {t ≤ T : t ≡ r (mod q)}| / (T/q) = ρ(3/2)
 
 uniformly in r ∈ {0, ..., q−1}, where ρ is the Dickman function.
 
@@ -87,13 +87,13 @@ Number Theory*, 3rd ed., AMS GSM 163, 2015. Chapter III.6, Theorem 3.3.
 
 /-- **[Analytic — statement only, proof cites Tenenbaum III.6 Thm 3.3]**
 
-    Dickman equidistribution in arithmetic progressions for Q₋:
-    the independence regime equidistributes across residue classes.
+ Dickman equidistribution in arithmetic progressions for Q₋:
+ the independence regime equidistributes across residue classes.
 
-    For any q > 0 and r < q:
-      lim_{T→∞} |{t ≤ T : t ∈ I(T) ∧ t ≡ r (mod q)}| / (T/q) = ρ(3/2)
+ For any q > 0 and r < q:
+ lim_{T→∞} |{t ≤ T : t ∈ I(T) ∧ t ≡ r (mod q)}| / (T/q) = ρ(3/2)
 
-    where ρ(3/2) is the Dickman function value at 3/2. -/
+ where ρ(3/2) is the Dickman function value at 3/2. -/
 theorem dickman_equidistribution_in_APs
     (q : ℕ) (hq : 0 < q) (r : ℕ) (hr : r < q) :
     Filter.Tendsto
@@ -110,7 +110,7 @@ theorem dickman_equidistribution_in_APs
   sorry
 
 -- ════════════════════════════════════════════════════════════════
--- §3  CRT equidistribution within the independence regime
+-- §3 CRT equidistribution within the independence regime
 -- ════════════════════════════════════════════════════════════════
 
 /-!
@@ -118,7 +118,7 @@ theorem dickman_equidistribution_in_APs
 
 **Statement.** For squarefree n with gcd(rad(n), q) = 1:
 the fiber S_n(T) = {t ∈ I(T) : m_unram(t) = n} satisfies
-  |{t ∈ S_n(T) : t ≡ j (mod q)}| = |S_n(T)|/q ± q
+ |{t ∈ S_n(T) : t ≡ j (mod q)}| = |S_n(T)|/q ± q
 
 with the ±q error uniform in n, j, T.
 
@@ -131,17 +131,17 @@ follows from Dickman equidistribution (§2).
 -/
 
 /-- The unramified cofactor fiber: t-values in I(T) where m_unram(t) = n.
-    (Stated abstractly; the precise definition of m_unram requires the
-     full prime factorization of Q₋(t), which is computationally intensive.) -/
+ (Stated abstractly; the precise definition of m_unram requires the
+ full prime factorization of Q₋(t), which is computationally intensive.) -/
 noncomputable def fiberUnram (T _n : ℕ) : Finset ℕ :=
   (independenceRegime T).filter fun _t =>
     True  -- placeholder: actual condition is m_unram(factoryQm t) = n
 
 /-- **[Analytic — statement only, proof cites Tenenbaum III.6 + CRT]**
 
-    CRT equidistribution within the independence regime:
-    for squarefree n coprime to q, the fiber S_n(T) distributes
-    uniformly across residue classes mod q with O(q) absolute error. -/
+ CRT equidistribution within the independence regime:
+ for squarefree n coprime to q, the fiber S_n(T) distributes
+ uniformly across residue classes mod q with O(q) absolute error. -/
 theorem crt_equidistribution_within_regime
     (q n : ℕ) (hq : 0 < q) (hn : Squarefree n)
     (hcop : Nat.Coprime n.sqrt q) (j : ℕ) (hj : j < q) :
@@ -156,12 +156,12 @@ theorem crt_equidistribution_within_regime
   sorry
 
 -- ════════════════════════════════════════════════════════════════
--- §4  Proved algebraic inputs (no sorry)
+-- §4 Proved algebraic inputs (no sorry)
 -- ════════════════════════════════════════════════════════════════
 
 /-- The coprimality Q₋(t) ⊥ Q₊(t) holds for ALL t.
-    This is the key structural fact enabling the prime decoupling.
-    Proof: gcd(Q₋(t), Q₊(t)) | Q₊(t) − Q₋(t) = 2. Both are odd, so gcd = 1. -/
+ This is the key structural fact enabling the prime decoupling.
+ Proof: gcd(Q₋(t), Q₊(t)) | Q₊(t) − Q₋(t) = 2. Both are odd, so gcd = 1. -/
 theorem qminus_qplus_coprime (t : ℕ) : Nat.Coprime (factoryQm t) (factoryQp t) := by
   have hgap : factoryQp t = factoryQm t + 2 := factory_gap_two t
   -- Both Q₋(t) and Q₊(t) are odd
@@ -191,27 +191,27 @@ theorem qminus_qplus_coprime (t : ℕ) : Nat.Coprime (factoryQm t) (factoryQp t)
   omega
 
 /-- The Liouville product factorization: λ(F(t)) = λ(Q₋(t))·λ(Q₊(t)).
-    This follows from the product algebra identity F = Q₋·Q₊ and
-    complete multiplicativity of λ. -/
+ This follows from the product algebra identity F = Q₋·Q₊ and
+ complete multiplicativity of λ. -/
 theorem liouville_product_factorization (t : ℕ) :
     factoryF t = factoryQm t * factoryQp t :=
   factory_product_factorization t
 
 /-- The sieve dimension κ_unram is strictly positive (≥ 1/1000).
-    This is the key input for the Selberg–Delange theorem.
-    Proved in InertPrimes via the certified split prime partial sum. -/
+ This is the key input for the Selberg–Delange theorem.
+ Proved in InertPrimes via the certified split prime partial sum. -/
 theorem kappa_unram_is_positive : (0 : ℚ) < 2 / (29 * 28) + 2 / (31 * 30) +
     2 / (37 * 36) + 2 / (41 * 40) + 2 / (43 * 42) := by
   norm_num
 
 -- ════════════════════════════════════════════════════════════════
--- §5  Dickman function value
+-- §5 Dickman function value
 -- ════════════════════════════════════════════════════════════════
 
 /-- The Dickman function at u = 3/2: ρ(3/2) = 1 − log(3/2).
-    For u ∈ [1,2]: ρ(u) = 1 − log u (the explicit formula).
-    Numerically: ρ(3/2) ≈ 0.5946. Note: the actual proportion in
-    the independence regime uses the u=3/2 value for the exponent 2/3. -/
+ For u ∈ [1,2]: ρ(u) = 1 − log u (the explicit formula).
+ Numerically: ρ(3/2) ≈ 0.5946. Note: the actual proportion in
+ the independence regime uses the u=3/2 value for the exponent 2/3. -/
 noncomputable def dickmanThreeHalves : ℝ := 1 - Real.log (3 / 2)
 
 /-- ρ(3/2) is strictly positive. -/

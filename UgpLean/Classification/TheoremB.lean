@@ -17,7 +17,7 @@ Reference: UGP_LEAN_PROGRAM_ROADMAP §3.2, §1.4
 namespace UgpLean
 
 /-- For t ∈ CandidatesAt n, QuarterLockRigidAt and RelationalAnchorAt hold by construction (from the
-  survivor pair); only SemanticFloor varies. So UnifiedAdmissibleAt n t ↔ SemanticFloor t. -/
+ survivor pair); only SemanticFloor varies. So UnifiedAdmissibleAt n t ↔ SemanticFloor t. -/
 theorem mem_CandidatesAt_imp_sieve (n : ℕ) (t : Triple) (h : t ∈ CandidatesAt n) :
     UnifiedAdmissibleAt n t ↔ SemanticFloor t := by
   constructor
@@ -51,7 +51,7 @@ def Residual : Finset Triple :=
   Candidates.filter (fun t => decUnifiedAdmissible t = true)
 
 /-- For t ∈ Candidates, decUnifiedAdmissible t = decSemanticFloor t (QuarterLock and RelationalAnchor
-  hold for the 6 triples). -/
+ hold for the 6 triples). -/
 theorem decUnifiedAdmissible_of_mem_Candidates (t : Triple) (h : t ∈ Candidates) :
     decUnifiedAdmissible t = decSemanticFloor t := by
   simp only [Candidates, Finset.mem_insert, Finset.mem_singleton] at h

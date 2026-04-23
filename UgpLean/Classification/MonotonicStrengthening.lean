@@ -27,7 +27,7 @@ theorem residual_monotone (f₁ f₂ : Triple → Bool)
   exact ⟨ht.1, himp t ht.2⟩
 
 /-- Strengthening decSemanticFloor, decQuarterLockRigid, or decRelationalAnchor
-  (by replacing with a stronger decidable predicate) cannot add survivors to Residual. -/
+ (by replacing with a stronger decidable predicate) cannot add survivors to Residual. -/
 theorem strengthening_cannot_add_survivors
     (fSF fQL fRA : Triple → Bool)
     (hsf : ∀ t, fSF t = true → decSemanticFloor t = true)

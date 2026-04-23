@@ -10,65 +10,65 @@ import UgpLean.MassRelations.KoideClosedForm
 /-!
 # UgpLean.MassRelations.KoideNewtonFlow — UGP-Native Koide Flow
 
-**Round 34, Priority 7 Phase III/IV of 03_SPEC (OP(vii)).**  Constructs a
+**, Priority 7 /IV of (OP(vii)).** Constructs a
 concrete UGP-native S_3-equivariant discrete-time operator whose fixed-point
 set is the Koide null cone `{v : q(v) = 0}`, partially closing OP(vii) in the
-03_SPEC §1 pattern **(a) + (b) + (d) without (c)**.
+ §1 pattern **(a) + (b) + (d) without (c)**.
 
 ## The operator
 
 For `v = (x, y, z) ∈ ℝ³` define
 
-  `q(v) := x² + y² + z² − 4(xy + yz + zx)`     (Koide null quadric; Round 6)
-  `∇q(v)_i := 2·v_i − 4·(v_j + v_k)`           (gradient, S_3-equivariant)
-  `U(v) := v − (q(v) / |∇q(v)|²) · ∇q(v)`       (orthogonal-projection step)
+ `q(v) := x² + y² + z² − 4(xy + yz + zx)` (Koide null quadric; )
+ `∇q(v)_i := 2·v_i − 4·(v_j + v_k)` (gradient, S_3-equivariant)
+ `U(v) := v − (q(v) / |∇q(v)|²) · ∇q(v)` (orthogonal-projection step)
 
 `U` is the single Newton step for the constraint equation `q(v) = 0`.
 
 ## What this module proves
 
 1. **S_3-equivariance** (`newton_flow_S3_equivariant`) — `U(σv) = σU(v)` for
-   every coordinate permutation `σ ∈ S_3` acting on ℝ³.  Established via
-   the observation that both `q` and `∇q` are S_3-equivariant.
+ every coordinate permutation `σ ∈ S_3` acting on ℝ³. Established via
+ the observation that both `q` and `∇q` are S_3-equivariant.
 
 2. **Null cone is the fixed set** (`newton_flow_fixes_null_cone`) — if
-   `q(v) = 0` then `U(v) = v`.  Hence the PDG charged-lepton sqrt-mass
-   vector and all 6 of its S_3-permutations (which lie on the null cone
-   to within Koide's own PDG imperfection ~1e-4) are UGP-native fixed
-   points of U.
+ `q(v) = 0` then `U(v) = v`. Hence the PDG charged-lepton sqrt-mass
+ vector and all 6 of its S_3-permutations (which lie on the null cone
+ to within Koide's own PDG imperfection ~1e-4) are UGP-native fixed
+ points of U.
 
 3. **UGP-native construction** — U is built from polynomial operations of
-   degree ≤ 2 and a single scalar division.  No non-UGP atoms appear.
+ degree ≤ 2 and a single scalar division. No non-UGP atoms appear.
 
 4. **Structural obstruction** (`no_S3_equivariant_exact_q_preserver_with_nontrivial_v_star`,
-   conceptual lemma) — the hierarchical plus-minus-minus root structure at v*
-   (r_τ = F_+(r_e, r_μ), r_μ = F_−(r_e, r_τ), r_e = F_−(r_μ, r_τ); see
-   the empirical verification in `comp_p01_HHH_koide_newton_flow.py`)
-   is ASYMMETRIC under S_3.  This is the reason OP(vii) cannot be closed
-   by a *linear* q-preserver (Round RR, already known) and cannot be
-   closed by a *nonlinear* polynomial q-preserver either unless the
-   exact-q-conservation requirement (c) is relaxed — as we do here.
+ conceptual lemma) — the hierarchical plus-minus-minus root structure at v*
+ (r_τ = F_+(r_e, r_μ), r_μ = F_−(r_e, r_τ), r_e = F_−(r_μ, r_τ); see
+ the empirical verification in `comp_p01_HHH_koide_newton_flow.py`)
+ is ASYMMETRIC under S_3. This is the reason OP(vii) cannot be closed
+ by a *linear* q-preserver (Round RR, already known) and cannot be
+ closed by a *nonlinear* polynomial q-preserver either unless the
+ exact-q-conservation requirement (c) is relaxed — as we do here.
 
 ## Relation to R33
 
 R33 gave the algebraic skeleton of Koide (closed form + cyclotomic-12
-identification of coefficients).  R34 gives the dynamical operator that
+identification of coefficients). R34 gives the dynamical operator that
 realises that skeleton: the null cone IS the attractor of U, and the
 closed-form root structure of R33 is the parametric description of the
 fixed-point set.
 
 ## Status of OP(vii) / 4.4 after R34
 
-- 03_SPEC §1 item (a) S_3-equivariance: **proved** (`newton_flow_S3_equivariant`).
-- 03_SPEC §1 item (b) UGP-native: **established by construction**.
-- 03_SPEC §1 item (c) exact q-conservation OFF the null cone: **RELAXED**
-  (replaced by "q strictly decreases along the orbit"; full closure with (c)
-  as originally stated is obstructed by the R34-B hierarchy argument).
-- 03_SPEC §1 item (d) v* is a fixed point: **proved** (since q(v*) ≈ 0
-  at PDG, v* is in the null cone, which is the fixed set).
+- §1 item (a) S_3-equivariance: **proved** (`newton_flow_S3_equivariant`).
+- §1 item (b) UGP-native: **established by construction**.
+- §1 item (c) exact q-conservation OFF the null cone: **RELAXED**
+ (replaced by "q strictly decreases along the orbit"; full closure with (c)
+ as originally stated is obstructed by the R34-B hierarchy argument).
+- §1 item (d) v* is a fixed point: **proved** (since q(v*) ≈ 0
+ at PDG, v* is in the null cone, which is the fixed set).
 
-This is 03_SPEC §1's explicitly-identified "partial win" pattern
-(a)+(b)+(d).  The remaining residual open problem is NOT whether a
+This is §1's explicitly-identified "partial win" pattern
+(a)+(b)+(d). The remaining residual open problem is NOT whether a
 UGP-native Koide flow exists (it does — this module), but whether
 a version of (c) compatible with the hierarchical structure of v*
 can be formulated as a sensible theorem target.
@@ -104,7 +104,7 @@ def normSq (w : ℝ × ℝ × ℝ) : ℝ :=
   a^2 + b^2 + c^2
 
 /-- The Newton-step Koide flow operator
-  `U(v) := v - (q(v) / |∇q(v)|²) · ∇q(v)`.
+ `U(v) := v - (q(v) / |∇q(v)|²) · ∇q(v)`.
 
 Uses Mathlib's convention `x / 0 = 0`, so `U(0) = 0` without an explicit
 branch (the only point at which `|∇q| = 0` is the origin; at all other
@@ -117,10 +117,10 @@ def newtonStep (v : ℝ × ℝ × ℝ) : ℝ × ℝ × ℝ :=
 
 /-! ## R34-A: fixed-point property on the null cone -/
 
-/-- **R34-A (null-cone fixed set).**  If `q(v) = 0`, then `U(v) = v`.
+/-- **R34-A (null-cone fixed set).** If `q(v) = 0`, then `U(v) = v`.
 
 This is the core property: the Koide null cone is pointwise fixed by the
-Newton-step flow.  In particular the PDG charged-lepton sqrt-mass vector
+Newton-step flow. In particular the PDG charged-lepton sqrt-mass vector
 (which lies on the cone to within Koide's own PDG imperfection) and all
 six of its S_3-permutations are UGP-native fixed points.
 -/
@@ -216,7 +216,7 @@ theorem normSq_rot123_eq (v : ℝ × ℝ × ℝ) : normSq (rot123 v) = normSq v 
   unfold normSq rot123
   ring
 
-/-- **R34-A (S_3-equivariance, swap12 case).**  `U(σ v) = σ U(v)` for σ = (1 2). -/
+/-- **R34-A (S_3-equivariance, swap12 case).** `U(σ v) = σ U(v)` for σ = (1 2). -/
 theorem newton_flow_swap12_equivariant (v : ℝ × ℝ × ℝ) :
     newtonStep (swap12 v) = swap12 (newtonStep v) := by
   obtain ⟨x, y, z⟩ := v
@@ -227,7 +227,7 @@ theorem newton_flow_swap12_equivariant (v : ℝ × ℝ × ℝ) :
   · ring
   · ring
 
-/-- **R34-A (S_3-equivariance, swap13 case).**  `U(σ v) = σ U(v)` for σ = (1 3). -/
+/-- **R34-A (S_3-equivariance, swap13 case).** `U(σ v) = σ U(v)` for σ = (1 3). -/
 theorem newton_flow_swap13_equivariant (v : ℝ × ℝ × ℝ) :
     newtonStep (swap13 v) = swap13 (newtonStep v) := by
   obtain ⟨x, y, z⟩ := v
@@ -238,7 +238,7 @@ theorem newton_flow_swap13_equivariant (v : ℝ × ℝ × ℝ) :
   · ring
   · ring
 
-/-- **R34-A (S_3-equivariance, rot123 case).**  `U(σ v) = σ U(v)` for σ = (1 2 3). -/
+/-- **R34-A (S_3-equivariance, rot123 case).** `U(σ v) = σ U(v)` for σ = (1 2 3). -/
 theorem newton_flow_rot123_equivariant (v : ℝ × ℝ × ℝ) :
     newtonStep (rot123 v) = rot123 (newtonStep v) := by
   obtain ⟨x, y, z⟩ := v
@@ -258,9 +258,9 @@ theorem q_eq_koideQuadratic (v : ℝ × ℝ × ℝ) :
   unfold q koideQuadratic
   ring
 
-/-- **Newton step fixes R33-B closed-form root.**  If
-  `z = 2(x+y) + √3·√(x²+4xy+y²)` (the +root of the Koide z-quadratic given x,y),
-  then `(x, y, z)` is a fixed point of `newtonStep`.
+/-- **Newton step fixes R33-B closed-form root.** If
+ `z = 2(x+y) + √3·√(x²+4xy+y²)` (the +root of the Koide z-quadratic given x,y),
+ then `(x, y, z)` is a fixed point of `newtonStep`.
 
 This ties R34's dynamical operator to R33's algebraic closed form. -/
 theorem newton_step_fixes_R33_root (x y : ℝ) (hxy : 0 ≤ x^2 + 4*x*y + y^2) :

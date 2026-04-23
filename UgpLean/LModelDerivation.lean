@@ -54,8 +54,8 @@ theorem residualProduct_eq_2000_over_3 : residualProduct = 2000/3 := by
   norm_num
 
 /-- L_model equals the base-2 log of the residual product.
-  This is the main derivation theorem: L_model arises from the orbit-invariant
-  factors (2⁴, 5³, 1/3) surviving the UGP topos/gauge quotient. -/
+ This is the main derivation theorem: L_model arises from the orbit-invariant
+ factors (2⁴, 5³, 1/3) surviving the UGP topos/gauge quotient. -/
 theorem L_model_eq_log_residual :
     L_model = Real.logb 2 residualProduct := by
   rw [residualProduct_eq_2000_over_3]

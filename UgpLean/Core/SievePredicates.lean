@@ -33,7 +33,7 @@ def QuarterLockRigidAt (n : ℕ) (t : Triple) : Prop :=
     t.b = b1FromPair b₂ q₂ ∧ t.c = c1FromPair (b1FromPair b₂ q₂) (q1FromQ2 q₂)
 
 /-- Relational Anchor at level n: (b,c) arise from mirror-dual pairs at n; triple has a mirror.
-  For n=10: t.b = 73 ∧ t.c ∈ {823, 2137}. -/
+ For n=10: t.b = 73 ∧ t.c ∈ {823, 2137}. -/
 def RelationalAnchorAt (n : ℕ) (t : Triple) : Prop :=
   ∃ b₂ q₂ : ℕ, isMirrorDualSurvivorAt n b₂ q₂ ∧ t.b = b1FromPair b₂ q₂ ∧
     (t.c = c1FromPair (b1FromPair b₂ q₂) (q1FromQ2 q₂) ∨ t.c = c1FromPair (b1FromPair q₂ b₂) (q1FromQ2 b₂))
@@ -48,7 +48,7 @@ def RelationalAnchor (t : Triple) : Prop := t.b = leptonB ∧ (t.c = leptonC1 �
 def UnifiedAdmissible (t : Triple) : Prop := UnifiedAdmissibleAt 10 t
 
 /-- Formal predicates (SF₀, QL₀, RA₀): purely mathematical, no physics terminology.
-  Used for unconditional RSUC; interpretation lemmas bridge to physics semantics. -/
+ Used for unconditional RSUC; interpretation lemmas bridge to physics semantics. -/
 def SF₀ (t : Triple) : Prop := SemanticFloor t
 def QL₀ (t : Triple) : Prop := QuarterLockRigid t
 def RA₀ (t : Triple) : Prop := RelationalAnchor t

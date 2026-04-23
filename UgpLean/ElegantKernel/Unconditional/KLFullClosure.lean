@@ -24,51 +24,51 @@ in the GTE dynamics.
 ## The structural chain (parallel to THM-UCL-1 / THM-UCL-2)
 
 For THM-UCL-1 (k_gen² = −φ/2):
-  Fibonacci  --[substitution x = −λ/2]-->  pentagon poly  --[unique neg root]-->  −φ/2
+ Fibonacci --[substitution x = −λ/2]--> pentagon poly --[unique neg root]--> −φ/2
 
 For THM-UCL-2 (k_gen = φ·cos(π/10)):
-  Fibonacci  --[substitution μ = λ² − 1/4]-->  pentagon quartic  --[unique > 1 root]-->  φ²−1/4 --[sqrt]--> φ·cos(π/10)
+ Fibonacci --[substitution μ = λ² − 1/4]--> pentagon quartic --[unique > 1 root]--> φ²−1/4 --[sqrt]--> φ·cos(π/10)
 
 For THM-UCL-4 (k_L, this module):
-  Fibonacci-order 2   ---+
-  State-constraint 3  ---+--[balance: 2·L + 3·ln(φ) = 0]--[unique solution]--> −(3/2)·ln(φ) = L*
-  ln(φ) from Fibonacci+
-  k_L² = 7/512 -------+--[k_L = −2·k_L²·L*]--> k_L = 21·ln(φ)/512
+ Fibonacci-order 2 ---+
+ State-constraint 3 ---+--[balance: 2·L + 3·ln(φ) = 0]--[unique solution]--> −(3/2)·ln(φ) = L*
+ ln(φ) from Fibonacci+
+ k_L² = 7/512 -------+--[k_L = −2·k_L²·L*]--> k_L = 21·ln(φ)/512
 
 ## The GTE balance equation
 
 Two sub-dynamics compete at equilibrium:
 
 - **Φ (Fibonacci sub-dynamic):** 2nd-order recurrence `a_{n} = a_{n−1} + a_{n−2}`.
-  Dominant log-eigenvalue: `ln(φ)`.  Order: **D_Φ = 2**.
+ Dominant log-eigenvalue: `ln(φ)`. Order: **D_Φ = 2**.
 - **Γ (state-constraint sub-dynamic):** 3rd-order constraint (the GTE triple
-  (b, q, c) has 3 components).  Order: **D_Γ = 3**.
+ (b, q, c) has 3 components). Order: **D_Γ = 3**.
 
 Equilibrium balance (physical statement):
 
-  `D_Φ · L* + D_Γ · ln(φ) = 0`
+ `D_Φ · L* + D_Γ · ln(φ) = 0`
 
 i.e. `2·L* + 3·ln(φ) = 0`, giving `L* = −(3/2)·ln(φ)` as the unique solution.
 
 **Lean-certified sources for the two integers:**
 - `D_Φ = 2`: the Fibonacci characteristic polynomial `φ² − φ − 1 = 0` is a
-  degree-2 polynomial (the power `2` appearing explicitly in the exponent).
+ degree-2 polynomial (the power `2` appearing explicitly in the exponent).
 - `D_Γ = 3 = canonicalOrbit.length` (`UgpLean.GTE.Orbit.canonicalOrbit_length`,
-  already Lean-certified zero-sorry).
+ already Lean-certified zero-sorry).
 
 The balance equation itself is the UGP physical principle and is taken as a
-structural characterization.  What Lean proves is that, GIVEN this principle,
+structural characterization. What Lean proves is that, GIVEN this principle,
 L* is uniquely determined as −(3/2)·ln(φ).
 
 ## Defensibility checklist
 
 - **(A) Pre-specification:** both integers (2, 3) come from pre-existing
-  GTE Lean theorems, not from the target value.
+ GTE Lean theorems, not from the target value.
 - **(B) Non-trivial chain:** ln(φ) is an irrational non-trivial intermediate.
 - **(C) Independent predictions:** L* also determines `k_const =
-  k_const' + k_L² · L*²` and Higgs `b_real = c_H · exp(L*) = c_H · φ^(−3/2)`.
+ k_const' + k_L² · L*²` and Higgs `b_real = c_H · exp(L*) = c_H · φ^(−3/2)`.
 - **(D) Rigidity:** narrow-basis saturation null (±p/q · {ln(φ), ln(2),
-  ln(3), 1, φ, 1/φ, π/4, √φ}) yields a UNIQUE hit at 0.1% — `−(3/2)·ln(φ)`.
+ ln(3), 1, φ, 1/φ, π/4, √φ}) yields a UNIQUE hit at 0.1% — `−(3/2)·ln(φ)`.
 - **(E) Saturation:** 0% at 0.1 % in narrow log-basis.
 - **(F) Falsifiable:** L* wrong ⟹ k_L, k_const, Higgs b_real all wrong.
 
@@ -84,7 +84,7 @@ namespace UgpLean.ElegantKernel.Unconditional.KLFullClosure
 open UgpLean
 
 -- We avoid `open Real` to prevent auto-binding `goldenRatio` as an implicit
--- argument when it's not in scope.  Use `Real.goldenRatio` everywhere.
+-- argument when it's not in scope. Use `Real.goldenRatio` everywhere.
 
 /-- Shorthand: `Real.goldenRatio`. -/
 local notation "φ" => Real.goldenRatio
@@ -96,7 +96,7 @@ This is the exponent `2` in the characteristic polynomial `φ² − φ − 1 = 0
 def D_Phi : ℕ := 2
 
 /-- **D_Γ = 3**: the state-constraint sub-dynamic is third-order (GTE triple
-has 3 components).  Equals `canonicalOrbit.length`, already Lean-certified. -/
+has 3 components). Equals `canonicalOrbit.length`, already Lean-certified. -/
 def D_Gamma : ℕ := 3
 
 /-- D_Γ equals the canonical orbit length (lepton → gen2 → gen3). -/
@@ -117,7 +117,7 @@ theorem D_Phi_is_fibonacci_order :
 At dynamical equilibrium, the Fibonacci-mode contribution and the
 state-constraint contribution balance:
 
-  D_Φ · L* + D_Γ · ln(φ) = 0
+ D_Φ · L* + D_Γ · ln(φ) = 0
 
 For positive integers D_Φ, D_Γ (with D_Φ > 0), this linear equation has a
 unique real solution `L* = −(D_Γ / D_Φ) · ln(φ)`. -/
@@ -145,11 +145,11 @@ theorem exists_balance_solution :
 
 /-! ## §3. The derived L* via Classical.choose
 
-Defined opaquely as "some L satisfying the GTE balance equation."  The theorem
+Defined opaquely as "some L satisfying the GTE balance equation." The theorem
 `L_star_derived_eq` DERIVES that this L equals `−(3/2)·ln(φ)`. -/
 
-/-- **The derived L*.**  Defined opaquely as a solution to the GTE balance
-equation `2·L + 3·ln(φ) = 0`.  Does NOT mention `goldenRatio` directly
+/-- **The derived L*.** Defined opaquely as a solution to the GTE balance
+equation `2·L + 3·ln(φ) = 0`. Does NOT mention `goldenRatio` directly
 (other than through the balance equation's structural appearance). -/
 noncomputable def L_star_derived : ℝ :=
   Classical.choose exists_balance_solution
@@ -182,13 +182,13 @@ theorem L_star_derived_structural :
 
 /-! ## §4. The derived k_L
 
-k_L is defined structurally as `−2 · k_L² · L*`.  Since `k_L² = 7/512` is
+k_L is defined structurally as `−2 · k_L² · L*`. Since `k_L² = 7/512` is
 Lean-certified and `L_star_derived = −(3/2)·ln(φ)` is derived above, we
 get the closed form `k_L = 21·ln(φ)/512`. -/
 
-/-- **The derived k_L.**  `k_L = −2 · k_L² · L_star_derived`.
+/-- **The derived k_L.** `k_L = −2 · k_L² · L_star_derived`.
 
-This is the THEORETICAL structural form.  Its value is DERIVED below. -/
+This is the THEORETICAL structural form. Its value is DERIVED below. -/
 noncomputable def k_L_derived : ℝ :=
   -2 * (k_L2 : ℝ) * L_star_derived
 
@@ -231,7 +231,7 @@ Zero hypotheses in the sense that every input is Lean-certified:
 - `D_Γ = canonicalOrbit.length = 3` Lean-certified.
 - `D_Φ = 2` (Fibonacci recurrence order).
 - The balance equation is the UGP physical principle; its unique solution
-  is derived by elementary linear algebra.
+ is derived by elementary linear algebra.
 
 The definition of `k_L_derived` uses `Classical.choose` on the balance-equation
 existence, so the value is DERIVED, not assumed. -/
@@ -239,7 +239,7 @@ theorem thm_ucl4_fully_unconditional :
     k_L_derived = (21 / 512 : ℝ) * Real.log Real.goldenRatio :=
   k_L_derived_closed_form
 
-/-- **THM-UCL-4 Summary.**  Four equivalent forms of k_L:
+/-- **THM-UCL-4 Summary.** Four equivalent forms of k_L:
 1. Closed rational·log: `21·ln(φ)/512`.
 2. Dual-path structural: `−2·k_L²·L_star_derived`.
 3. Quarter-Lock sourced: `−2·k_L²·(−D_Γ/D_Φ·ln(φ))`.

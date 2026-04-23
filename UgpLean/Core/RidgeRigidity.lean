@@ -13,7 +13,7 @@ Reference: UGP Main Paper lem:m2, thm:gap13-all, prop:rema-gap
 namespace UgpLean
 
 /-- At n=10, c₂ = 2^n - 1 = 1023. For b₂|R with b₂≥16, m₂ = c₂ % b₂ = 15.
-  Since 1023 = 15 + 1008 and b₂|1008, we have 1023 ≡ 15 (mod b₂). -/
+ Since 1023 = 15 + 1008 and b₂|1008, we have 1023 ≡ 15 (mod b₂). -/
 theorem ridge_remainder_lock (b₂ : ℕ) (hb : b₂ ∣ ridge 10) (hmin : strictRidgeMin ≤ b₂) :
     (2^10 - 1) % b₂ = 15 := by
   rw [ridge_10] at hb

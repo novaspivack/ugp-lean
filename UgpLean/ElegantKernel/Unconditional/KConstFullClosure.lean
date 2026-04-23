@@ -13,28 +13,28 @@ import UgpLean.ElegantKernel.Unconditional.KLFullClosure
 
 The UCL constant coefficient `k_const ≈ −0.15203` has the closed form
 
-  **k_const = k_const' + k_L² · L*²**
+ **k_const = k_const' + k_L² · L*²**
 
 where:
 - `k_const' = −1/(2π)` is the "centered" constant (Bekenstein-Fisher gauge
-  normalization on the U(1) angle period 2π);
+ normalization on the U(1) angle period 2π);
 - `k_L² = 7/512` (Lean-certified in `UgpLean.ElegantKernel`);
 - `L* = −(3/2)·ln(φ)` (Lean-certified in `UgpLean.ElegantKernel.Unconditional.KLFullClosure`).
 
 Equivalently:
 
-  **k_const = −1/(2π) + (63/2048) · (ln φ)²**
+ **k_const = −1/(2π) + (63/2048) · (ln φ)²**
 
 ## Note on the apparent "numerical discrepancy"
 
 The tabulated value `k_const = −0.15203` and the centered gauge value
 `k_const' = −1/(2π) = −0.15915` can look inconsistent if read as the same
-quantity.  **They are not contradictory: they differ by the centering
-shift.**  Both are correct in their roles:
+quantity. **They are not contradictory: they differ by the centering
+shift.** Both are correct in their roles:
 - The paper **table** gives the uncentered constant in the original UCL
-  basis: `k_const = −0.15203`.
+ basis: `k_const = −0.15203`.
 - The paper **text** gives the centered constant in the mirror-barycenter
-  basis: `k_const' = −1/(2π) = −0.15915`.
+ basis: `k_const' = −1/(2π) = −0.15915`.
 
 The two are related by `k_const = k_const' + k_L²·L*²`, and numerically
 `k_L² · L*² = (7/512) · (9/4) · (ln φ)² = 63·(ln φ)² / 2048 ≈ 0.00712`,
@@ -46,24 +46,24 @@ their algebraic relationship.
 ## The structural chain (parallel to THM-UCL-1/2/4)
 
 For THM-UCL-5 (this module):
-  Gauge period 2π  --[equation 2π·x + 1 = 0]--[unique root]-->  −1/(2π) = k_const'
-  k_L² · L*² (from THM-UCL-4 ingredients)     --[centering shift]-->  add
-  k_const = −1/(2π) + (63/2048)·(ln φ)²
+ Gauge period 2π --[equation 2π·x + 1 = 0]--[unique root]--> −1/(2π) = k_const'
+ k_L² · L*² (from THM-UCL-4 ingredients) --[centering shift]--> add
+ k_const = −1/(2π) + (63/2048)·(ln φ)²
 
 ## Defensibility
 
 - **(A) Pre-specification:** the gauge period 2π is a pre-specified
-  constant in any U(1)-based formulation (Mathlib `Real.pi`).  The
-  "2π·x + 1 = 0" equation is the Bekenstein-Fisher gauge normalization.
+ constant in any U(1)-based formulation (Mathlib `Real.pi`). The
+ "2π·x + 1 = 0" equation is the Bekenstein-Fisher gauge normalization.
 - **(B) Non-trivial chain:** (ln φ)² is the non-trivial intermediate
-  (inherited from THM-UCL-4).
+ (inherited from THM-UCL-4).
 - **(C) Independent predictions:** the centering identity links k_const
-  to k_const', k_L², and L*, all independently Lean-certified.
+ to k_const', k_L², and L*, all independently Lean-certified.
 - **(D) Rigidity:** narrow-basis saturation for k_const' = −1/(2π) at
-  0.1% is essentially unique in {±1/(n·π)} for small n.
+ 0.1% is essentially unique in {±1/(n·π)} for small n.
 - **(E) Saturation:** low.
 - **(F) Falsifiable:** centering identity is exact; any deviation signals
-  an error.
+ an error.
 -/
 
 namespace UgpLean.ElegantKernel.Unconditional.KConstFullClosure
@@ -100,7 +100,7 @@ theorem gauge_equation_unique (x : ℝ)
 /-- **The derived centered constant `k_const'`.**
 
 Defined opaquely as the unique solution of the 2π-gauge normalization
-equation `2π·x + 1 = 0`.  The value `−1/(2π)` is DERIVED, not assumed. -/
+equation `2π·x + 1 = 0`. The value `−1/(2π)` is DERIVED, not assumed. -/
 noncomputable def k_const_prime_derived : ℝ :=
   Classical.choose exists_gauge_solution
 
@@ -118,11 +118,11 @@ theorem k_const_prime_derived_eq :
 
 In the original UCL basis (uncentered), the constant term gains a
 k_L²·L*² contribution from the coordinate shift to the mirror-barycenter
-(centered) basis.  This is pure algebra. -/
+(centered) basis. This is pure algebra. -/
 
 /-- **The derived uncentered constant `k_const`.**
 
-Defined structurally as the centered constant shifted by `k_L² · L*²`.  All
+Defined structurally as the centered constant shifted by `k_L² · L*²`. All
 three ingredients are Lean-certified:
 - `k_const_prime_derived` via gauge uniqueness (this module, §1).
 - `k_L2` via UGP ridge geometry (`UgpLean.ElegantKernel.k_L2_eq`).
@@ -136,8 +136,8 @@ theorem k_const_derived_structural :
 
 /-- **k_const_derived expressed via closed-form constants.**
 
-  `k_const = −1/(2π) + (7/512) · (9/4) · (ln φ)²
-          = −1/(2π) + (63/2048) · (ln φ)²`. -/
+ `k_const = −1/(2π) + (7/512) · (9/4) · (ln φ)²
+ = −1/(2π) + (63/2048) · (ln φ)²`. -/
 theorem k_const_derived_closed_form :
     k_const_derived =
       -(1 / (2 * Real.pi)) + (63 / 2048 : ℝ) * (Real.log Real.goldenRatio)^2 := by
@@ -174,7 +174,7 @@ theorem thm_ucl5_fully_unconditional :
       -(1 / (2 * Real.pi)) + (63 / 2048 : ℝ) * (Real.log Real.goldenRatio)^2 :=
   k_const_derived_closed_form
 
-/-- **THM-UCL-5 Summary.**  Four equivalent forms of k_const:
+/-- **THM-UCL-5 Summary.** Four equivalent forms of k_const:
 1. Two-term closed form: `−1/(2π) + (63/2048)·(ln φ)²`.
 2. Three-ingredient: `−1/(2π) + (7/512)·(−(3/2)·ln φ)²`.
 3. Structural: `k_const' + k_L² · L*²`.
@@ -207,7 +207,7 @@ theorem centering_identity :
   ring
 
 /-- Both values of k_const appearing in the paper are simultaneously correct;
-they are related by an exact algebraic identity, not by an approximation.  -/
+they are related by an exact algebraic identity, not by an approximation. -/
 theorem kernel_table_vs_text_consistency :
     k_const_derived + (1 / (2 * Real.pi)) =
       (63 / 2048 : ℝ) * (Real.log Real.goldenRatio)^2 := by

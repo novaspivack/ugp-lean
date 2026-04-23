@@ -19,19 +19,19 @@ namespace UgpLean.Universality
 variable {L : ℕ} [NeZero L]
 
 /-- Augmented forward step: apply `uwcaRound` to the current tape and push the pre-image
-    onto the history stack. -/
+ onto the history stack. -/
 def uwcaAugmentedFwd (cur : Tape L) (hist : List (Tape L)) : Tape L × List (Tape L) :=
   (uwcaRound cur, cur :: hist)
 
 /-- Dummy tape (only needed to make `uwcaAugmentedBwd` total on the empty-history branch;
-    `uwca_augmented_left_inverse` never hits this branch). -/
+ `uwca_augmented_left_inverse` never hits this branch). -/
 def defaultTape : Tape L :=
   fun _ =>
     { C := false, L := false, R := false, M := fun _ => false, N := false }
 
 /-- Inverse on reachable augmented states: pop the saved pre-image off the history stack.
-    The `newTape` argument is ignored (the committed UWCA output is redundant once the
-    history lane is present). -/
+ The `newTape` argument is ignored (the committed UWCA output is redundant once the
+ history lane is present). -/
 def uwcaAugmentedBwd (_newTape : Tape L) (hist : List (Tape L)) : Tape L × List (Tape L) :=
   match hist with
   | [] => (defaultTape, [])

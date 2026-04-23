@@ -5,9 +5,9 @@ import UgpLean.Core.RidgeDefs
 # UgpLean.Core.MirrorDefs — Mirror Duality and UGP-1 Formulas
 
 For a strict-ridge factor pair (b₂, q₂) with R_n = b₂ * q₂:
-- b₁ = b₂ + q₂ + s  (with s=7 for UGP-1)
-- q₁ = q₂ - g       (with g=13 for UGP-1)
-- c₁ = b₁ * q₁ + t  (with t=20 for UGP-1)
+- b₁ = b₂ + q₂ + s (with s=7 for UGP-1)
+- q₁ = q₂ - g (with g=13 for UGP-1)
+- c₁ = b₁ * q₁ + t (with t=20 for UGP-1)
 
 Reference: UGP Paper, main_n10_ridge.py
 -/

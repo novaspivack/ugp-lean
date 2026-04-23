@@ -38,7 +38,7 @@ theorem mirror_prime_lock :
   exact ⟨prime_823, prime_2137⟩
 
 /-- Prime-lock reduces to a divisor test: c₁ is determined entirely by b₂|R.
-  c₁ = (b₂ + R/b₂ + 7)(R/b₂ - 13) + 20 where R = 2^n - 16. -/
+ c₁ = (b₂ + R/b₂ + 7)(R/b₂ - 13) + 20 where R = 2^n - 16. -/
 theorem c1_from_divisor (n : ℕ) (b₂ q₂ : ℕ) (_hprod : b₂ * q₂ = ridge n) :
     c1FromPair (b1FromPair b₂ q₂) (q1FromQ2 q₂) =
     (b₂ + q₂ + ugp1_s) * (q₂ - ugp1_g) + ugp1_t := by

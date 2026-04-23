@@ -12,18 +12,18 @@ Formalizes the deterministic update map T from the UGP paper (Def. 2.5).
 
 The map T : G_t → G_{t+1} evolves integer triples (a, b, c) via parity-dependent
 rules. From state G_t = (a_t, b_t, c_t) we derive:
-  q_t := c_t / b_t     (integer division)
-  m_t := c_t % b_t     (remainder)
+ q_t := c_t / b_t (integer division)
+ m_t := c_t % b_t (remainder)
 
 Odd step (t odd):
-  a_{t+1} = m_t - (n + 2 - t)
-  b_{t+1} = b_t - (m_t + q_t)
-  c_{t+1} = 2^n - 1                    (ridge jump to Mersenne)
+ a_{t+1} = m_t - (n + 2 - t)
+ b_{t+1} = b_t - (m_t + q_t)
+ c_{t+1} = 2^n - 1 (ridge jump to Mersenne)
 
 Even step (t even) — STRICT RULE:
-  a_{t+1} = m_t - (n + 2 - t)
-  b_{t+1} = b_t + F_{|q_t - q_{t-1}|}  (Fibonacci lift)
-  c_{t+1} = b_t * q_t + 15             (NOT a Mersenne jump)
+ a_{t+1} = m_t - (n + 2 - t)
+ b_{t+1} = b_t + F_{|q_t - q_{t-1}|} (Fibonacci lift)
+ c_{t+1} = b_t * q_t + 15 (NOT a Mersenne jump)
 
 IMPORTANT: The paper's figure shows c₃ = 65535 = 2^16 - 1 as an "illustrative
 Mersenne ladder" — this is NOT what the strict per-step rule produces. Under the
@@ -32,8 +32,8 @@ forces m_t = 15, this equals b_t * q_t + 15 = (c_t - 15) + 15 = c_t = 2^n - 1.
 So c is UNCHANGED on the even step immediately after a ridge hit.
 
 Key theorem proved here (§11):
-  For any UGP-1 admissible seed at level n ≥ 5, the even step immediately
-  following the ridge step satisfies c_{t+1} = c_t = 2^n - 1.
+ For any UGP-1 admissible seed at level n ≥ 5, the even step immediately
+ following the ridge step satisfies c_{t+1} = c_t = 2^n - 1.
 
 This is a general theorem proved from ridge_remainder_lock_general, not just n=10.
 
@@ -43,13 +43,13 @@ We also prove:
 3. Gen 1 isolation from Mersenne c-values
 
 Reference: UGP Paper Def. 2.5, Prop. 5.1, Section 4;
-           UGP & GTE Exact Specification §4.3, §5 (implementation note)
+ UGP & GTE Exact Specification §4.3, §5 (implementation note)
 -/
 
 namespace UgpLean
 
 -- ════════════════════════════════════════════════════════════════
--- §1  Derived quantities
+-- §1 Derived quantities
 -- ════════════════════════════════════════════════════════════════
 
 /-- Quotient: q_t = c_t / b_t -/
@@ -59,11 +59,11 @@ def gteQuotient (c b : ℕ) : ℕ := c / b
 def gteRemainder (c b : ℕ) : ℕ := c % b
 
 -- ════════════════════════════════════════════════════════════════
--- §2  Odd step (t=1): G₁ → G₂
+-- §2 Odd step (t=1): G₁ → G₂
 -- ════════════════════════════════════════════════════════════════
 
 /-- Odd-step a-update: a_{t+1} = m_t - (n + 2 - t).
-    At t=1, n=10: a₂ = m₁ - (10 + 2 - 1) = m₁ - 11. -/
+ At t=1, n=10: a₂ = m₁ - (10 + 2 - 1) = m₁ - 11. -/
 def oddStepA (m n t : ℕ) : ℕ := m - (n + 2 - t)
 
 /-- Odd-step b-update: b_{t+1} = b_t - (m_t + q_t). -/
@@ -73,18 +73,18 @@ def oddStepB (b m q : ℕ) : ℕ := b - (m + q)
 def oddStepC (n : ℕ) : ℕ := 2^n - 1
 
 -- ════════════════════════════════════════════════════════════════
--- §3  Even step (t=2): G₂ → G₃
+-- §3 Even step (t=2): G₂ → G₃
 -- ════════════════════════════════════════════════════════════════
 
 /-- Even-step a-update: a_{t+1} = m_t - (n + 2 - t).
-    At t=2, n=10: a₃ = m₂ - (10 + 2 - 2) = m₂ - 10. -/
+ At t=2, n=10: a₃ = m₂ - (10 + 2 - 2) = m₂ - 10. -/
 def evenStepA (m n t : ℕ) : ℕ := m - (n + 2 - t)
 
 /-- Even-step b-update: b_{t+1} = b_t + F_{|q_t - q_{t-1}|}. -/
 def evenStepB (b : ℕ) (fib_gap : ℕ) : ℕ := b + fib_gap
 
 -- ════════════════════════════════════════════════════════════════
--- §4  Worked orbit verification at n=10
+-- §4 Worked orbit verification at n=10
 -- ════════════════════════════════════════════════════════════════
 
 /-- At G₁ = (1, 73, 823): q₁ = 823 / 73 = 11, m₁ = 823 mod 73 = 20. -/
@@ -121,17 +121,17 @@ theorem quotient_gap_13_worked :
     gteQuotient 1023 42 - gteQuotient 823 73 = 13 := by native_decide
 
 /-- The even step from G₂ = (9,42,1023) produces G₃ = (5,275,65535).
-    c₃ = 2^16 - 1 = 65535 (Mersenne jump from c₂ = 2^10 - 1). -/
+ c₃ = 2^16 - 1 = 65535 (Mersenne jump from c₂ = 2^10 - 1). -/
 theorem even_step_produces_g3 :
     evenStepA (gteRemainder 1023 42) 10 2 = 5 ∧
     evenStepB 42 (Nat.fib 13) = 275 ∧
     (2^16 - 1 : ℕ) = 65535 := by native_decide
 
 /-- MAIN THEOREM: The update map T, applied to the Lepton Seed (1,73,823)
-    at n=10, deterministically produces the canonical orbit
-    (1,73,823) → (9,42,1023) → (5,275,65535).
+ at n=10, deterministically produces the canonical orbit
+ (1,73,823) → (9,42,1023) → (5,275,65535).
 
-    This is Proposition 5.1 of the UGP paper. -/
+ This is Proposition 5.1 of the UGP paper. -/
 theorem update_map_produces_canonical_orbit :
     -- Step 1: derived quantities at G₁
     gteQuotient 823 73 = 11 ∧ gteRemainder 823 73 = 20 ∧
@@ -146,12 +146,12 @@ theorem update_map_produces_canonical_orbit :
   native_decide
 
 -- ════════════════════════════════════════════════════════════════
--- §5  Orbit values derived from T (replaces hardcoded postulates)
+-- §5 Orbit values derived from T (replaces hardcoded postulates)
 -- ════════════════════════════════════════════════════════════════
 
 /-- G₂ components are derived from T applied to G₁ = (1,73,823) at n=10.
-    This shows the hardcoded triple (9,42,1023) is forced by the update map,
-    not postulated. -/
+ This shows the hardcoded triple (9,42,1023) is forced by the update map,
+ not postulated. -/
 theorem g2_derived_from_T :
     canonicalGen2.a = oddStepA (gteRemainder 823 73) 10 1 ∧
     canonicalGen2.b = oddStepB 73 (gteRemainder 823 73) (gteQuotient 823 73) ∧
@@ -159,7 +159,7 @@ theorem g2_derived_from_T :
   unfold canonicalGen2; exact ⟨by native_decide, by native_decide, by native_decide⟩
 
 /-- G₃ components are derived from T applied to G₂ = (9,42,1023) at n=10.
-    This shows the hardcoded triple (5,275,65535) is forced by the update map. -/
+ This shows the hardcoded triple (5,275,65535) is forced by the update map. -/
 theorem g3_derived_from_T :
     canonicalGen3.a = evenStepA (gteRemainder 1023 42) 10 2 ∧
     canonicalGen3.b = evenStepB 42 (Nat.fib 13) ∧
@@ -167,8 +167,8 @@ theorem g3_derived_from_T :
   unfold canonicalGen3; exact ⟨by native_decide, by native_decide, by native_decide⟩
 
 /-- The canonical orbit is fully determined by T: each generation's triple
-    is computed from the previous via the update map formulas.
-    The hardcoded values in Evolution.lean are corollaries of this theorem. -/
+ is computed from the previous via the update map formulas.
+ The hardcoded values in Evolution.lean are corollaries of this theorem. -/
 theorem orbit_determined_by_T :
     gteQuotient 823 73 = 11 ∧ gteRemainder 823 73 = 20 ∧
     canonicalGen2.a = oddStepA 20 10 1 ∧
@@ -185,15 +185,15 @@ theorem orbit_determined_by_T :
          by native_decide, by native_decide, by native_decide⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §6  Ridge remainder lock (general n)
+-- §6 Ridge remainder lock (general n)
 -- ════════════════════════════════════════════════════════════════
 
 /-- Ridge remainder lock: for any b₂ | R_n with b₂ > 15,
-    (2^n - 1) mod b₂ = 15.
+ (2^n - 1) mod b₂ = 15.
 
-    Proof: R_n = 2^n - 16, so 2^n - 1 = R_n + 15.
-    Since b₂ | R_n, we have (2^n - 1) mod b₂ = 15 mod b₂ = 15
-    (because b₂ > 15 ≥ 15). -/
+ Proof: R_n = 2^n - 16, so 2^n - 1 = R_n + 15.
+ Since b₂ | R_n, we have (2^n - 1) mod b₂ = 15 mod b₂ = 15
+ (because b₂ > 15 ≥ 15). -/
 theorem ridge_remainder_lock_general (n : ℕ) (b₂ : ℕ)
     (hb : b₂ ∣ ridge n) (hmin : 16 ≤ b₂) (hn : 5 ≤ n) :
     (2^n - 1) % b₂ = 15 := by
@@ -209,7 +209,7 @@ theorem ridge_remainder_lock_general (n : ℕ) (b₂ : ℕ)
   simp [Nat.mod_eq_of_lt h15]
 
 -- ════════════════════════════════════════════════════════════════
--- §7  Mirror invariance of b₁ (general)
+-- §7 Mirror invariance of b₁ (general)
 -- ════════════════════════════════════════════════════════════════
 
 /-- Mirror invariance: b₁ = b₂ + q₂ + 7 is symmetric under (b₂,q₂) ↔ (q₂,b₂). -/
@@ -219,13 +219,13 @@ theorem mirror_b1_invariance (b₂ q₂ : ℕ) :
   omega
 
 -- ════════════════════════════════════════════════════════════════
--- §7  Mersenne gcd and cross-generation entanglement
+-- §7 Mersenne gcd and cross-generation entanglement
 -- ════════════════════════════════════════════════════════════════
 
 /-- The Mersenne gcd identity: gcd(2^a - 1, 2^b - 1) = 2^gcd(a,b) - 1.
 
-    Proved from Mathlib's Nat.pow_sub_one_gcd_pow_sub_one.
-    No axiom needed. See UgpLean.GTE.MersenneGcd for the proof. -/
+ Proved from Mathlib's Nat.pow_sub_one_gcd_pow_sub_one.
+ No axiom needed. See UgpLean.GTE.MersenneGcd for the proof. -/
 theorem mersenne_gcd_identity (a b : ℕ) :
     Nat.gcd (2^a - 1) (2^b - 1) = 2^(Nat.gcd a b) - 1 :=
   Nat.pow_sub_one_gcd_pow_sub_one 2 a b
@@ -240,17 +240,17 @@ theorem gcd_10_16 : Nat.gcd 10 16 = 2 := by native_decide
 theorem two_pow_gcd_10_16_sub_one : 2^(Nat.gcd 10 16) - 1 = 3 := by native_decide
 
 /-- Cross-generation entanglement theorem:
-    The c-values of Gen 2 (c₂ = 2^10 - 1) and Gen 3 (c₃ = 2^16 - 1)
-    share the prime factor 3 because gcd(10, 16) = 2 > 1.
+ The c-values of Gen 2 (c₂ = 2^10 - 1) and Gen 3 (c₃ = 2^16 - 1)
+ share the prime factor 3 because gcd(10, 16) = 2 > 1.
 
-    This is NOT a coincidence specific to n=10. It is forced by the
-    Mersenne gcd identity: whenever c₂ = 2^n - 1 and c₃ = 2^k - 1
-    with gcd(n, k) > 1, the c-values share the factor 2^gcd(n,k) - 1. -/
+ This is NOT a coincidence specific to n=10. It is forced by the
+ Mersenne gcd identity: whenever c₂ = 2^n - 1 and c₃ = 2^k - 1
+ with gcd(n, k) > 1, the c-values share the factor 2^gcd(n,k) - 1. -/
 theorem cross_generation_entanglement :
     1 < Nat.gcd (2^10 - 1) (2^16 - 1) := by native_decide
 
 /-- For ANY two Mersenne-like c-values 2^a - 1 and 2^b - 1 with gcd(a,b) > 1,
-    the c-values share a common factor > 1. -/
+ the c-values share a common factor > 1. -/
 theorem mersenne_entanglement_general (a b : ℕ)
     (hgcd : 1 < Nat.gcd a b) :
     1 < Nat.gcd (2^a - 1) (2^b - 1) := by
@@ -261,12 +261,12 @@ theorem mersenne_entanglement_general (a b : ℕ)
   omega
 
 -- ════════════════════════════════════════════════════════════════
--- §8  Gen 1 isolation from Mersenne c-values (general)
+-- §8 Gen 1 isolation from Mersenne c-values (general)
 -- ════════════════════════════════════════════════════════════════
 
 /-- If c₁ is prime and c₁ ∤ (2^n - 1), then c₁ is coprime to 2^n - 1.
-    This is the mechanism of Gen 1 isolation: a prime c₁ that doesn't
-    divide the Mersenne number is automatically coprime to it. -/
+ This is the mechanism of Gen 1 isolation: a prime c₁ that doesn't
+ divide the Mersenne number is automatically coprime to it. -/
 theorem prime_coprime_of_not_dvd (p m : ℕ) (hp : Nat.Prime p) (hnd : ¬ p ∣ m) :
     Nat.Coprime p m :=
   (hp.coprime_iff_not_dvd).mpr hnd
@@ -278,21 +278,21 @@ theorem c1_not_dvd_mersenne_10 : ¬ (823 ∣ (2^10 - 1 : ℕ)) := by native_deci
 theorem c1_not_dvd_mersenne_16 : ¬ (823 ∣ (2^16 - 1 : ℕ)) := by native_decide
 
 /-- Gen 1 isolation theorem: the prime c₁ = 823 is coprime to both
-    Mersenne c-values in the orbit. -/
+ Mersenne c-values in the orbit. -/
 theorem gen1_mersenne_isolation :
     Nat.Coprime 823 (2^10 - 1) ∧ Nat.Coprime 823 (2^16 - 1) :=
   ⟨prime_coprime_of_not_dvd 823 _ prime_823 c1_not_dvd_mersenne_10,
    prime_coprime_of_not_dvd 823 _ prime_823 c1_not_dvd_mersenne_16⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §9  Extremality of Mersenne capacities
+-- §9 Extremality of Mersenne capacities
 -- ════════════════════════════════════════════════════════════════
 
 /-- Mersenne numbers 2^k - 1 are extremal c-values at fixed bit-length:
-    if c = b*q + 15 and c < 2^(k+1) - 1, then c ≤ 2^k - 1,
-    with equality iff b*q = 2^k - 16.
+ if c = b*q + 15 and c < 2^(k+1) - 1, then c ≤ 2^k - 1,
+ with equality iff b*q = 2^k - 16.
 
-    (UGP Paper Prop. 5.3) -/
+ (UGP Paper Prop. 5.3) -/
 -- Mersenne extremality: if c = b*q + 15 and b*q = 2^k - 16, then c = 2^k - 1.
 -- This is the key identity: the ridge constraint b*q = R_n = 2^n - 16 forces c = 2^n - 1.
 theorem mersenne_extremal_ridge (b q k : ℕ)
@@ -304,7 +304,7 @@ theorem mersenne_extremal_ridge (b q k : ℕ)
   omega
 
 -- ════════════════════════════════════════════════════════════════
--- §10  Monotone bit-length
+-- §10 Monotone bit-length
 -- ════════════════════════════════════════════════════════════════
 
 /-- Monotone bit-length: c₁ < c₂ < c₃ along the canonical orbit. -/
@@ -316,7 +316,7 @@ theorem c_values_bitlengths :
     Nat.log 2 823 = 9 ∧ Nat.log 2 1023 = 9 ∧ Nat.log 2 65535 = 15 := by native_decide
 
 -- ════════════════════════════════════════════════════════════════
--- §11  The strict even-step c-invariance theorem (GENERAL)
+-- §11 The strict even-step c-invariance theorem (GENERAL)
 -- ════════════════════════════════════════════════════════════════
 
 /-!
@@ -326,12 +326,12 @@ This is the key general result. The paper's figure shows c₃ = 65535 = 2^16 - 1
 as an "illustrative Mersenne ladder jump." But the strict per-step rule (UGP & GTE
 Exact Specification §4.3) gives:
 
-  c_{t+1} = b_t * q_t + 15    (even step, non-ridge)
+ c_{t+1} = b_t * q_t + 15 (even step, non-ridge)
 
 After a ridge step, c_t = 2^n - 1 and m_t = c_t mod b_t = 15 (ridge lock).
 Therefore:
-  b_t * q_t = c_t - m_t = (2^n - 1) - 15 = 2^n - 16
-  c_{t+1}   = b_t * q_t + 15 = (2^n - 16) + 15 = 2^n - 1 = c_t
+ b_t * q_t = c_t - m_t = (2^n - 1) - 15 = 2^n - 16
+ c_{t+1} = b_t * q_t + 15 = (2^n - 16) + 15 = 2^n - 1 = c_t
 
 The c-value is UNCHANGED on the even step immediately after a ridge hit.
 This is a theorem, not a coincidence — it follows directly from the ridge lock.
@@ -341,7 +341,7 @@ This is a theorem, not a coincidence — it follows directly from the ridge lock
 def evenStepC (b q : ℕ) : ℕ := b * q + 15
 
 /-- After a ridge step, c_t = 2^n - 1 and m_t = 15.
-    Therefore b_t * q_t = c_t - m_t = 2^n - 16. -/
+ Therefore b_t * q_t = c_t - m_t = 2^n - 16. -/
 theorem ridge_bq_eq_ridge_value (n b : ℕ) (hn : 5 ≤ n)
     (hb : b ∣ ridge n) (hmin : 16 ≤ b) :
     b * (( 2^n - 1) / b) = 2^n - 16 := by
@@ -351,7 +351,7 @@ theorem ridge_bq_eq_ridge_value (n b : ℕ) (hn : 5 ≤ n)
     linarith
   have hridge : ridge n = 2^n - 16 := rfl
   -- b divides 2^n - 16, so b divides 2^n - 1 - 15
-  -- (2^n - 1) / b = (2^n - 16 + 15) / b = (2^n - 16) / b  (since b > 15, 15 < b)
+  -- (2^n - 1) / b = (2^n - 16 + 15) / b = (2^n - 16) / b (since b > 15, 15 < b)
   -- because (2^n - 1) = b * ((2^n-16)/b) + 15
   have hmod : (2^n - 1) % b = 15 := ridge_remainder_lock_general n b hb hmin hn
   have hdiv : (2^n - 1) = b * ((2^n - 1) / b) + (2^n - 1) % b :=
@@ -360,13 +360,13 @@ theorem ridge_bq_eq_ridge_value (n b : ℕ) (hn : 5 ≤ n)
   omega
 
 /-- MAIN THEOREM (General): Under the strict GTE rule, the even step immediately
-    following a ridge step at level n leaves c unchanged.
+ following a ridge step at level n leaves c unchanged.
 
-    Proof: c_{t+1} = b * q + 15 = b * ((2^n-1)/b) + 15 = (2^n-16) + 15 = 2^n-1 = c_t.
+ Proof: c_{t+1} = b * q + 15 = b * ((2^n-1)/b) + 15 = (2^n-16) + 15 = 2^n-1 = c_t.
 
-    This holds for ALL n ≥ 5 and ALL valid ridge divisors b.
-    The paper's c₃ = 65535 = 2^16-1 is an illustrative Mersenne ladder figure,
-    not the output of the strict per-step rule. -/
+ This holds for ALL n ≥ 5 and ALL valid ridge divisors b.
+ The paper's c₃ = 65535 = 2^16-1 is an illustrative Mersenne ladder figure,
+ not the output of the strict per-step rule. -/
 theorem even_step_c_invariance (n b : ℕ) (hn : 5 ≤ n)
     (hb : b ∣ ridge n) (hmin : 16 ≤ b) :
     evenStepC b ((2^n - 1) / b) = 2^n - 1 := by
@@ -385,15 +385,15 @@ theorem c3_strict_eq_c2_at_n10 :
   exact even_step_c_invariance 10 42 (by norm_num) hb (by norm_num)
 
 /-- The c₃ = 65535 in the paper's figure is the NEXT Mersenne target
-    (2^16 - 1), not the strict even-step output. The strict output is 1023 = c₂.
-    This theorem certifies the distinction. -/
+ (2^16 - 1), not the strict even-step output. The strict output is 1023 = c₂.
+ This theorem certifies the distinction. -/
 theorem paper_c3_is_illustrative_not_strict :
     evenStepC 42 ((2^10 - 1) / 42) = 1023 ∧  -- strict rule: c stays at 1023
     (1023 : ℕ) ≠ 65535 := by                  -- not the illustrated 65535
   exact ⟨by native_decide, by norm_num⟩
 
 /-- The general pattern: for any ridge level n ≥ 5, the strict even step
-    immediately after the ridge hit returns c = 2^n - 1 (unchanged). -/
+ immediately after the ridge hit returns c = 2^n - 1 (unchanged). -/
 theorem even_step_c_is_mersenne (n b : ℕ) (hn : 5 ≤ n)
     (hb : b ∣ ridge n) (hmin : 16 ≤ b) :
     ∃ k, evenStepC b ((2^n - 1) / b) = 2^k - 1 :=

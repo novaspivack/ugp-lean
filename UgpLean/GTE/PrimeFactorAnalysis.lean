@@ -23,13 +23,12 @@ These are concrete, decidable facts about the n=10 orbit. They support the
 hypothesis that generation count is limited by exhaustion of multiplicative
 orthogonality as Mersenne-like c-values accumulate shared prime factors.
 
-Reference: UGP_PRIME_ANALYSIS_LAB_NOTES.md Phase 9
 -/
 
 namespace UgpLean
 
 -- ════════════════════════════════════════════════════════════════
--- §1  c-value factorizations
+-- §1 c-value factorizations
 -- ════════════════════════════════════════════════════════════════
 
 /-- c₂ = 1023 = 3 × 11 × 31 -/
@@ -50,7 +49,7 @@ theorem compositeness_growth :
   ⟨prime_823, c2_not_prime, c3_not_prime⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §2  Gen 1 multiplicative isolation
+-- §2 Gen 1 multiplicative isolation
 -- ════════════════════════════════════════════════════════════════
 
 /-- 823 is coprime to 9 (Gen 2 parity) -/
@@ -76,7 +75,7 @@ theorem coprime_73_1023 : Nat.Coprime 73 1023 := by native_decide
 theorem coprime_73_65535 : Nat.Coprime 73 65535 := by native_decide
 
 /-- Gen 1 multiplicative isolation: the Lepton Seed c-value (823) shares
-    no prime factor with any component of Gen 2 or Gen 3. -/
+ no prime factor with any component of Gen 2 or Gen 3. -/
 theorem gen1_isolated :
     Nat.Coprime 823 9 ∧ Nat.Coprime 823 42 ∧ Nat.Coprime 823 1023 ∧
     Nat.Coprime 823 5 ∧ Nat.Coprime 823 275 ∧ Nat.Coprime 823 65535 :=
@@ -91,7 +90,7 @@ theorem gen1_ladder_isolated :
          by native_decide, by native_decide, by native_decide⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §3  Gen 2 ↔ Gen 3 entanglement
+-- §3 Gen 2 ↔ Gen 3 entanglement
 -- ════════════════════════════════════════════════════════════════
 
 /-- Gen 2 and Gen 3 c-values share factor 3: gcd(1023, 65535) = 3. -/
@@ -114,7 +113,7 @@ theorem a2_c3_share_3 : Nat.gcd 9 65535 = 3 := by native_decide
 theorem b2_c3_share_3 : Nat.gcd 42 65535 = 3 := by native_decide
 
 /-- Cross-generation entanglement: Gen 2 and Gen 3 share primes {3, 11}
-    through multiple component pairs. -/
+ through multiple component pairs. -/
 theorem gen2_gen3_entangled :
     Nat.gcd 1023 65535 = 3 ∧
     Nat.gcd 275 1023 = 11 ∧
@@ -123,7 +122,7 @@ theorem gen2_gen3_entangled :
   ⟨c2_c3_share_3, b3_c2_share_11, a2_c3_share_3, b2_c3_share_3⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §4  Divisibility by 3: the dominant shared factor
+-- §4 Divisibility by 3: the dominant shared factor
 -- ════════════════════════════════════════════════════════════════
 
 /-- 3 divides c₂ = 1023 -/
@@ -141,7 +140,7 @@ theorem three_separates_gen1 :
   ⟨not_dvd_3_c1, dvd_3_c2, dvd_3_c3⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §5  Orbit element factorizations
+-- §5 Orbit element factorizations
 -- ════════════════════════════════════════════════════════════════
 
 theorem factor_9 : (9 : ℕ) = 3 ^ 2 := by norm_num
@@ -149,7 +148,7 @@ theorem factor_42 : (42 : ℕ) = 2 * 3 * 7 := by norm_num
 theorem factor_275 : (275 : ℕ) = 5 ^ 2 * 11 := by norm_num
 
 -- ════════════════════════════════════════════════════════════════
--- §6  UGP prime sequence anchors
+-- §6 UGP prime sequence anchors
 -- ════════════════════════════════════════════════════════════════
 
 /-!

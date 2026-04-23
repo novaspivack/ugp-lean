@@ -16,10 +16,10 @@ Phase B2 provided the Fibonacci form and cyclotomic-discriminant connection.
 This Phase C module replaces the **specific-value** D₅ axiom with a
 **structural-membership + sign** characterization:
 
-    Axiom S₁ (pentagonal membership):
-      k_gen² is a real part of some fifth root of unity.
-    Axiom S₂ (stability / concavity):
-      k_gen² < 0.
+ Axiom S₁ (pentagonal membership):
+ k_gen² is a real part of some fifth root of unity.
+ Axiom S₂ (stability / concavity):
+ k_gen² < 0.
 
 Under these two axioms — each of which is more structural than specifying
 the value — **k_gen² = −φ/2 is uniquely forced**.
@@ -37,15 +37,15 @@ stance.
 Phase C's axioms `k_gen² ∈ {ζ₅^k real parts}` + `k_gen² < 0` are:
 
 1. **Structural:** pentagonal membership is a symmetry statement
-   (invariance under D₅).  It does not specify which of the 5 (3 distinct)
-   values is chosen.
+ (invariance under D₅). It does not specify which of the 5 (3 distinct)
+ values is chosen.
 
 2. **Physical:** k_gen² < 0 is the concavity condition — the UCL's generation
-   direction must be a "stable" (contracting) direction at the RG fixed
-   point.  Without it, the flow would be unstable.
+ direction must be a "stable" (contracting) direction at the RG fixed
+ point. Without it, the flow would be unstable.
 
 Together these axioms are weaker than specifying `cos(4π/5)` (they admit
-every pentagon real part a priori).  **The uniqueness theorem here shows
+every pentagon real part a priori). **The uniqueness theorem here shows
 that they are ENOUGH — the additional structural constraint forces the
 specific value.**
 
@@ -72,7 +72,7 @@ def PentagonRealParts : Set ℝ :=
   {1, (goldenRatio - 1) / 2, -(goldenRatio / 2)}
 
 /-- Each of the five explicit D₅ vertex cosines is a member of
-`PentagonRealParts`.  Together these five cases cover the whole D₅ orbit. -/
+`PentagonRealParts`. Together these five cases cover the whole D₅ orbit. -/
 theorem pentagon_root_0_mem : cos (0 : ℝ) ∈ PentagonRealParts := by
   unfold PentagonRealParts
   left
@@ -114,7 +114,7 @@ theorem neg_phi_div_two_neg : -(goldenRatio / 2) < 0 := by
   have : goldenRatio > 0 := Real.goldenRatio_pos
   linarith
 
-/-- **Uniqueness of the negative pentagon real part.**  Among the three
+/-- **Uniqueness of the negative pentagon real part.** Among the three
 distinct D₅ real parts `{1, (φ − 1)/2, −φ/2}`, **only `−φ/2` is negative**.
 The values `1` and `(φ − 1)/2` are both strictly positive. -/
 theorem unique_negative_pentagon_root (x : ℝ)
@@ -138,15 +138,15 @@ theorem unique_negative_pentagon_root (x : ℝ)
 Under the two structural hypotheses:
 
  (S₁) `k_gen²` is a real part of some fifth root of unity (pentagonal
-      membership, encoding D₅ cyclotomic symmetry);
+ membership, encoding D₅ cyclotomic symmetry);
 
  (S₂) `k_gen² < 0` (stability / concavity, encoding physical requirement
-      that the UCL fixed point is contracting in the generation direction);
+ that the UCL fixed point is contracting in the generation direction);
 
 **the UCL generation-squared coefficient equals `−φ/2` uniquely.**
 
 This is the strongest closure achievable without deriving the UCL ansatz
-itself from GTE first principles.  The two hypotheses are more structural
+itself from GTE first principles. The two hypotheses are more structural
 than Phase B1's specific-value axiom `k_gen² = cos(4π/5)`: membership is a
 pure symmetry statement, and sign is a pure stability statement. -/
 theorem k_gen2_eq_neg_phi_half_from_membership_and_sign
@@ -155,8 +155,8 @@ theorem k_gen2_eq_neg_phi_half_from_membership_and_sign
     k_gen2 = -(goldenRatio / 2) :=
   unique_negative_pentagon_root k_gen2 hmem hneg
 
-/-- **Sanity check:**  The definition `k_gen2 = −φ/2` satisfies both
-Phase C hypotheses trivially.  This establishes that Phase C's hypotheses
+/-- **Sanity check:** The definition `k_gen2 = −φ/2` satisfies both
+Phase C hypotheses trivially. This establishes that Phase C's hypotheses
 are logically consistent for the packaged value. -/
 theorem definition_satisfies_phase_C :
     k_gen2 ∈ PentagonRealParts ∧ k_gen2 < 0 := by
@@ -170,8 +170,8 @@ theorem definition_satisfies_phase_C :
 /-! ## Relation to Phase B1 and B2 -/
 
 /-- Phase B1's specific-value axiom `k_gen² = cos(4π/5)` IMPLIES Phase C's
-membership + sign hypotheses.  (Phase C is weaker hypothesis, stronger
-conclusion — no, actually same conclusion but weaker hypothesis.)  This
+membership + sign hypotheses. (Phase C is weaker hypothesis, stronger
+conclusion — no, actually same conclusion but weaker hypothesis.) This
 shows Phase C genuinely SUBSUMES Phase B1. -/
 theorem D5_implies_Phase_C (h : D5PentagonHessian) :
     k_gen2 ∈ PentagonRealParts ∧ k_gen2 < 0 := by
@@ -188,7 +188,7 @@ theorem D5_implies_Phase_C (h : D5PentagonHessian) :
     rw [h2]
     exact neg_phi_div_two_neg
 
-/-- **Net Phase C theorem:**  combining the definition witness with the
+/-- **Net Phase C theorem:** combining the definition witness with the
 membership-and-sign uniqueness, we recover `k_gen² = −φ/2` under the
 strongest available structural hypotheses. -/
 theorem k_gen2_eq_neg_phi_half_phase_C : k_gen2 = -(goldenRatio / 2) := by

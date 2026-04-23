@@ -16,13 +16,13 @@ namespace UgpLean.Universality
 open UgpLean
 
 /-- The intersection of UWCA programs and UGP constraint at n=10
-    contains exactly one MDL-minimal equivalence class: the Lepton Seed (1,73,823).
+ contains exactly one MDL-minimal equivalence class: the Lepton Seed (1,73,823).
 
-    Formal content: the residual seed at n=10 is unique (RSUC theorem), and
-    among the six candidates, the MDL-minimal one is the LeptonSeed.
-    The UWCA substrate is universal (proved in UWCAembedsRule110),
-    so the unique seed runs on a universal substrate — establishing the
-    "architecture bridge" between algebraic uniqueness and computational universality. -/
+ Formal content: the residual seed at n=10 is unique (RSUC theorem), and
+ among the six candidates, the MDL-minimal one is the LeptonSeed.
+ The UWCA substrate is universal (proved in UWCAembedsRule110),
+ so the unique seed runs on a universal substrate — establishing the
+ "architecture bridge" between algebraic uniqueness and computational universality. -/
 def uniqueness_of_physical_program : Prop :=
   -- The MDL-minimal triple at n=10 is the LeptonSeed (1, 73, 823),
   -- and the UWCA substrate is Turing-universal.

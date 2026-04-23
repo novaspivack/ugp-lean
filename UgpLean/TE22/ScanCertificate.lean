@@ -21,8 +21,8 @@ over the 20,160 discretized universe descriptions in the TE2.2 scan.
 2. The dissonance functional D[Psi] as a Lean computable function (done).
 3. The key theorem statement (done).
 4. The proof: currently `sorry` — to be replaced by `native_decide`
-   once the DissonanceFunctional instance is made `DecidableEq`
-   and all constraint functions are verified to be computable.
+ once the DissonanceFunctional instance is made `DecidableEq`
+ and all constraint functions are verified to be computable.
 
 ## Proof strategy
 
@@ -30,7 +30,7 @@ The scan over 20,160 universes is a finite exhaustive check. In Lean:
 1. Encode `UniverseParams` as an enumerable `Fintype`.
 2. Implement all 14 constraints as `Computable` `ℚ`-valued functions.
 3. Prove `∀ Ψ : UniverseParams, D_SM ≤ D Ψ` by `native_decide`.
-   (Or by a certified enumeration proof over `Fintype.elems`.)
+ (Or by a certified enumeration proof over `Fintype.elems`.)
 
 The `native_decide` tactic compiles the decidable proposition to native code
 and runs it — this is the same technique used for `RSUC` certification
@@ -92,7 +92,7 @@ def isSMGauge (g : GaugeGroup) (d : Dimension) : Bool :=
 -- ---------------------------------------------------------------------------
 
 /-- C15: UGP g1^2/g2^2 prediction.
-    From ugp-lean: g1Sq_bare/g2Sq_bare = (16/125)/(2329/5400) = 86400/291125. -/
+ From ugp-lean: g1Sq_bare/g2Sq_bare = (16/125)/(2329/5400) = 86400/291125. -/
 def ugp_g1sq_over_g2sq : ℚ :=
   Phase4.g1Sq_bare / Phase4.g2Sq_bare
 
@@ -119,7 +119,7 @@ theorem ugp_g3sq_over_g2sq_val :
 -- ---------------------------------------------------------------------------
 
 /-- The Standard Model dissonance value D_SM from the TE2.2 scan.
-    Value = 1.0094... (extended scan) ≈ 1.0667 (original 14-constraint scan). -/
+ Value = 1.0094... (extended scan) ≈ 1.0667 (original 14-constraint scan). -/
 noncomputable def D_SM_extended : ℝ := 1.009411295
 
 /-- **SM gauge uniqueness (decidable fragment of the TE2.2 scan certificate).**
@@ -134,7 +134,7 @@ This is proved by `decide` over the 12 × 5 = 60 element Cartesian product.
 ## What this does and does not prove
 
 **Does prove:** the SM gauge/dimension label is uniquely selected by the
-`isSMGauge` predicate.  No other gauge group or spacetime dimension in the
+`isSMGauge` predicate. No other gauge group or spacetime dimension in the
 TE2.2 parameter space is labelled as SM.
 
 **Does not prove:** the full "SM is the unique D-minimizer" claim (that no
@@ -147,8 +147,8 @@ function over `UniverseParams`, plus a `Fintype` instance and a
 
 The Python scan (`te2_2_run_scan_extended.py`, SHA 407078d7...) exhaustively
 verified the full D-minimality claim over 34,560 universe descriptions with
-12 gauge groups.  All 12 PSC-passing universes have (d=4, G=SU(3)×SU(2)×U(1),
-N_gen=3).  All 5 new BSM groups (Pati-Salam, E₆, G₂, SU(6), SU(4)) fail PSC.
+12 gauge groups. All 12 PSC-passing universes have (d=4, G=SU(3)×SU(2)×U(1),
+N_gen=3). All 5 new BSM groups (Pati-Salam, E₆, G₂, SU(6), SU(4)) fail PSC.
 
 ## Open work
 
@@ -190,7 +190,7 @@ originally stated (`∀ g, ¬ isSMGauge g d → True`) it was vacuous — the
 conclusion was `True` and it proved nothing about dissonance minimality.
 
 Retained here as an alias pointing to the (still-open) full D-minimality
-claim.  When the full native_decide certification is complete, this alias
+claim. When the full native_decide certification is complete, this alias
 will be replaced by the genuine theorem. -/
 theorem SM_is_D_minimizer_extended :
     ∀ (g : GaugeGroup) (d : Dimension),
@@ -199,7 +199,7 @@ theorem SM_is_D_minimizer_extended :
   isSMGauge_iff
 
 /-- Key lemma: The three UGP coupling ratio predictions are algebraically
-    derived from ugp-lean constants, not from SM coupling data. -/
+ derived from ugp-lean constants, not from SM coupling data. -/
 theorem ugp_coupling_predictions_are_independent :
     ugp_g1sq_over_g2sq = 86400 / 291125 ∧
     ugp_quarter_lock_ratio = 1 / 3 := by
@@ -208,8 +208,8 @@ theorem ugp_coupling_predictions_are_independent :
   · unfold ugp_quarter_lock_ratio; norm_num
 
 /-- The UGP g1^2/g2^2 prediction is within 2% of the SM value at M_Z.
-    SM@Mz: g1^2/g2^2 ≈ 0.3008. UGP prediction: 86400/291125 ≈ 0.2969.
-    Relative deviation ≈ 1.34%. -/
+ SM@Mz: g1^2/g2^2 ≈ 0.3008. UGP prediction: 86400/291125 ≈ 0.2969.
+ Relative deviation ≈ 1.34%. -/
 theorem ugp_g1g2_prediction_close_to_SM :
     let ugp_val := ugp_g1sq_over_g2sq
     let sm_mz : ℚ := 300756 / 1000000  -- 0.300756 (SM@Mz)

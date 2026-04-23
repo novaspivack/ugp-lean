@@ -12,14 +12,14 @@ import UgpLean.LModelDerivation
 In Phase A (`UgpLean.ElegantKernel.KGen2`), we Lean-certified the trigonometric
 core:
 
-    cos(4π/5) = −φ/2                (zero sorry)
+ cos(4π/5) = −φ/2 (zero sorry)
 
-The target theorem THM-UCL-1 is `k_gen² = −φ/2`.  The gap between Phase A and
+The target theorem THM-UCL-1 is `k_gen² = −φ/2`. The gap between Phase A and
 the target is the **structural claim** that k_gen² equals `cos(4π/5)` — i.e.,
 the real part of a primitive 5th root of unity squared.
 
 This module formalizes that structural claim as a **named hypothesis**
-(`D5PentagonHessian`) and proves the target conditionally.  Phase B2 will
+(`D5PentagonHessian`) and proves the target conditionally. Phase B2 will
 derive the hypothesis from `L_model`'s Lean-certified Q(√5) structure.
 
 ## Why the claim is structurally sound (Phase B2 preview)
@@ -27,24 +27,24 @@ derive the hypothesis from `L_model`'s Lean-certified Q(√5) structure.
 The hypothesis is not ad hoc:
 
 1. `L_model = log₂(2⁴ · 5³ / 3)` is Lean-certified (see
-   `UgpLean.LModelDerivation.L_model_from_gauge_structure`).
+ `UgpLean.LModelDerivation.L_model_from_gauge_structure`).
 
 2. The 5³ factor is documented in ugp-lean as *"continuous wedge factor 5³
-   from rank-3 geometry over Q(√5)"*.  The UGP framework's continuous sector
-   therefore embeds over the quadratic field Q(√5).
+ from rank-3 geometry over Q(√5)"*. The UGP framework's continuous sector
+ therefore embeds over the quadratic field Q(√5).
 
 3. Q(√5) = ℤ[φ], the integer ring of the golden field, is the real subfield
-   of the 5th cyclotomic field Q(ζ₅) where ζ₅ = e^{2πi/5}.
+ of the 5th cyclotomic field Q(ζ₅) where ζ₅ = e^{2πi/5}.
 
 4. The natural D₅ dihedral symmetry of Q(ζ₅) acts on the UCL's continuous
-   (L, g) sector.  The five primitive real parts are
-       cos(0), cos(2π/5), cos(4π/5), cos(6π/5), cos(8π/5)
-   = {1, (√5−1)/4, −(1+√5)/4, −(1+√5)/4, (√5−1)/4}
-   = {1, (φ−1)/2, −φ/2, −φ/2, (φ−1)/2}.
+ (L, g) sector. The five primitive real parts are
+ cos(0), cos(2π/5), cos(4π/5), cos(6π/5), cos(8π/5)
+ = {1, (√5−1)/4, −(1+√5)/4, −(1+√5)/4, (√5−1)/4}
+ = {1, (φ−1)/2, −φ/2, −φ/2, (φ−1)/2}.
 
 5. The UCL generation coefficient `k_gen²` is identified with the **second
-   non-trivial real root**, −φ/2 = cos(4π/5), corresponding to ζ₅² (the
-   square of the primitive generator).
+ non-trivial real root**, −φ/2 = cos(4π/5), corresponding to ζ₅² (the
+ square of the primitive generator).
 
 Phase B2 will make step 5 rigorous by constructing the Fisher-isotropic
 Hessian of the GTE-linearized UCL and showing its g-eigenvalue matches this
@@ -53,15 +53,15 @@ specific D₅ cyclotomic root.
 ## Phase B1 (this module)
 
 We package the D₅ claim as a `Prop`-valued hypothesis and prove the target
-under it.  Concretely, we state:
+under it. Concretely, we state:
 
-    D5PentagonHessian : Prop  -- the axiom k_gen² = cos(4π/5)
+ D5PentagonHessian : Prop -- the axiom k_gen² = cos(4π/5)
 
 and derive `k_gen² = −φ/2` conditional on `D5PentagonHessian`.
 
 Because Phase A already established `k_gen₂ = −φ/2 = cos(4π/5)` by
 definition, `D5PentagonHessian` holds for the packaged `k_gen2`; we provide
-a theorem witnessing this.  Phase B2 replaces the trivial witness with a
+a theorem witnessing this. Phase B2 replaces the trivial witness with a
 genuine derivation from L_model structure.
 -/
 
@@ -71,7 +71,7 @@ open Real UgpLean.ElegantKernel
 
 /-! ## The D₅ pentagonal Hessian axiom -/
 
-/-- **The D₅ Hessian axiom.**  In the Fisher-isotropic frame of the UCL on the
+/-- **The D₅ Hessian axiom.** In the Fisher-isotropic frame of the UCL on the
 (L, g) plane, the generation-squared coefficient `k_gen²` equals
 `cos(4π/5)`, which is the real part of ζ₅² (the square of the primitive 5th
 root of unity).
@@ -96,7 +96,7 @@ theorem d5_pentagon_hessian_holds : D5PentagonHessian :=
 
 /-! ## The conditional theorem -/
 
-/-- **THM-UCL-1 (Phase B1 form).**  Under the D₅ Hessian axiom, the UCL
+/-- **THM-UCL-1 (Phase B1 form).** Under the D₅ Hessian axiom, the UCL
 generation-squared coefficient equals −φ/2 (negative half the golden ratio). -/
 theorem k_gen2_eq_neg_phi_half_from_D5
     (hD5 : D5PentagonHessian) : k_gen2 = -(goldenRatio / 2) := by
@@ -104,7 +104,7 @@ theorem k_gen2_eq_neg_phi_half_from_D5
   rw [hD5]
   exact cos_4pi_div_five_eq_neg_phi_half
 
-/-- **THM-UCL-1 (Phase B1 combined).**  Combining the D₅ axiom (trivially
+/-- **THM-UCL-1 (Phase B1 combined).** Combining the D₅ axiom (trivially
 witnessed for the packaged definition) with the conditional theorem:
 `k_gen² = −φ/2`. -/
 theorem k_gen2_eq_neg_phi_half : k_gen2 = -(goldenRatio / 2) :=
@@ -112,8 +112,8 @@ theorem k_gen2_eq_neg_phi_half : k_gen2 = -(goldenRatio / 2) :=
 
 /-! ## Support theorems: characterisation of the D₅ pentagon roots -/
 
-/-- The five real parts of `{ζ₅^k : k = 0, …, 4}`.  These are the roots of
-the Chebyshev identity / 5th-roots-of-unity real-part equation.  The set is
+/-- The five real parts of `{ζ₅^k : k = 0, …, 4}`. These are the roots of
+the Chebyshev identity / 5th-roots-of-unity real-part equation. The set is
 `{1, cos(2π/5), cos(4π/5), cos(6π/5), cos(8π/5)} =
 {1, (φ−1)/2, −φ/2, −φ/2, (φ−1)/2}`.
 
@@ -147,7 +147,7 @@ rather than one of two equivalent options. -/
 theorem phi_minus_one_half_ne_neg_phi_half :
     (goldenRatio - 1) / 2 ≠ -(goldenRatio / 2) := by
   intro h
-  -- (φ - 1)/2 = -φ/2  ⇒  φ - 1 = -φ  ⇒  2φ = 1  ⇒  φ = 1/2
+  -- (φ - 1)/2 = -φ/2 ⇒ φ - 1 = -φ ⇒ 2φ = 1 ⇒ φ = 1/2
   have h1 : goldenRatio - 1 = -goldenRatio := by linarith
   have h2 : 2 * goldenRatio = 1 := by linarith
   -- But goldenRatio > 1 since (1 + √5)/2 > 1 because √5 > 1 (since 5 > 1).

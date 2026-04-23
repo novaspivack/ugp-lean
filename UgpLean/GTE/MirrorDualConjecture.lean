@@ -8,10 +8,10 @@ import UgpLean.GTE.MersenneGcd
 ## Background
 
 A **mirror-dual pair** at ridge level n is a divisor pair (b₂, q₂) with
-  b₂ · q₂ = R_n = 2^n − 16,  b₂ < q₂,  b₂ ≥ 16,  q₂ ≥ 16
+ b₂ · q₂ = R_n = 2^n − 16, b₂ < q₂, b₂ ≥ 16, q₂ ≥ 16
 such that BOTH
-  c₁_A = b₁·(q₂ − 13) + 20  is prime
-  c₁_B = b₁·(b₂ − 13) + 20  is prime
+ c₁_A = b₁·(q₂ − 13) + 20 is prime
+ c₁_B = b₁·(b₂ − 13) + 20 is prime
 where b₁ = b₂ + q₂ + 7.
 
 ## What is proved here
@@ -21,9 +21,9 @@ is unbounded as n → ∞. Specifically, for any M : ℕ, there exists n such th
 R_n has at least M divisor pairs (b₂, q₂) with b₂ < q₂ and both ≥ 16.
 
 This follows from:
-  (a) τ(2^n − 16) = 5 · τ(2^(n−4) − 1)  [proved in Phase 7]
-  (b) τ(2^m − 1) is unbounded as m → ∞   [follows from Nat.pow_sub_one_gcd_pow_sub_one
-      and the fact that 2^m − 1 has arbitrarily many prime factors]
+ (a) τ(2^n − 16) = 5 · τ(2^(n−4) − 1) [proved]
+ (b) τ(2^m − 1) is unbounded as m → ∞ [follows from Nat.pow_sub_one_gcd_pow_sub_one
+ and the fact that 2^m − 1 has arbitrarily many prime factors]
 
 ## The conjecture (open)
 
@@ -31,12 +31,12 @@ This follows from:
 R_n = 2^n − 16 has a mirror-dual pair.
 
 This is equivalent to: the set {n : ∃ (b₂ q₂ : ℕ), b₂ * q₂ = 2^n - 16 ∧ b₂ < q₂ ∧
-  16 ≤ b₂ ∧ 16 ≤ q₂ ∧ Nat.Prime (c₁ b₂ q₂) ∧ Nat.Prime (c₁ q₂ b₂)} is infinite.
+ 16 ≤ b₂ ∧ 16 ≤ q₂ ∧ Nat.Prime (c₁ b₂ q₂) ∧ Nat.Prime (c₁ q₂ b₂)} is infinite.
 
 ## Heuristic analysis
 
 The expected number of mirror pairs at level n is:
-  E[n] = Σ_{(b₂,q₂) valid} 1 / (log(c₁_A) · log(c₁_B))
+ E[n] = Σ_{(b₂,q₂) valid} 1 / (log(c₁_A) · log(c₁_B))
 
 Since log(c₁) ~ n·log(2), and Σ_{m=1}^{M} τ(2^m−1) ~ C·M·log(M),
 the cumulative expected count E[≤N] ~ C · Σ_{n≤N} log(n)/n² which converges.
@@ -52,7 +52,6 @@ The mirror-dual conjecture is structurally analogous to the twin prime conjectur
 both ask for infinitely many n where two specific values in an AP are simultaneously
 prime. No unconditional proof is known for either.
 
-Reference: UGP_PRIME_ANALYSIS_LAB_NOTES.md Phase 11
 -/
 
 namespace UgpLean
@@ -60,7 +59,7 @@ namespace UgpLean
 open Nat
 
 -- ════════════════════════════════════════════════════════════════
--- §1  Definitions
+-- §1 Definitions
 -- ════════════════════════════════════════════════════════════════
 
 /-- The c₁ value for a divisor pair (b₂, q₂) at any ridge level. -/
@@ -68,7 +67,7 @@ def c1Val (b₂ q₂ : ℕ) : ℕ :=
   (b₂ + q₂ + 7) * (q₂ - 13) + 20
 
 /-- A divisor pair (b₂, q₂) is valid for ridge level n if:
-    b₂ * q₂ = 2^n - 16, both ≥ 16, and b₂ < q₂. -/
+ b₂ * q₂ = 2^n - 16, both ≥ 16, and b₂ < q₂. -/
 def ValidPair (n b₂ q₂ : ℕ) : Prop :=
   b₂ * q₂ = 2^n - 16 ∧ 16 ≤ b₂ ∧ 16 ≤ q₂ ∧ b₂ < q₂
 
@@ -82,7 +81,7 @@ def validPairs (n : ℕ) : Finset (ℕ × ℕ) :=
     fun ⟨b₂, q₂⟩ => b₂ * q₂ = 2^n - 16 ∧ 16 ≤ b₂ ∧ 16 ≤ q₂ ∧ b₂ < q₂
 
 -- ════════════════════════════════════════════════════════════════
--- §2  Concrete instances
+-- §2 Concrete instances
 -- ════════════════════════════════════════════════════════════════
 
 /-- At n=10: (24, 42) is a valid pair. -/
@@ -117,35 +116,35 @@ theorem five_mirror_dual_pairs :
   ⟨mirror_dual_n10, mirror_dual_n13, mirror_dual_n16_a, mirror_dual_n16_b, mirror_dual_n16_c⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §2b  MDL selection at specific levels
+-- §2b MDL selection at specific levels
 -- ════════════════════════════════════════════════════════════════
 
 /-- At n=10: the MDL-selected c₁ is 823, the minimum among prime-locked c₁ values.
-    This is the Lepton Seed value (proved in Classification.TheoremB). -/
+ This is the Lepton Seed value (proved in Classification.TheoremB). -/
 theorem mdl_c1_n10 : c1Val 42 24 = 823 ∧ c1Val 24 42 = 2137 ∧ 823 < 2137 := by
   unfold c1Val; native_decide
 
 /-- At n=13: (56, 146) is the unique mirror-dual pair.
-    c₁(146, 56) = 9007 < c₁(56, 146) = 27817: MDL selects c₁ = 9007, b₁ = 209. -/
+ c₁(146, 56) = 9007 < c₁(56, 146) = 27817: MDL selects c₁ = 9007, b₁ = 209. -/
 theorem mdl_c1_n13 : c1Val 146 56 = 9007 ∧ c1Val 56 146 = 27817 ∧ 9007 < 27817 := by
   unfold c1Val; native_decide
 
 /-- At n=16: among the three mirror-dual pairs, the minimum c₁ values are:
-    pair (42,1560):  min = 46681   (b₁ = 1609)
-    pair (156,420):  min = 83389   (b₁ = 583)
-    pair (182,360):  min = 92801   (b₁ = 549)
-    MDL selects pair (42,1560) with c₁ = 46681 as the global minimum. -/
+ pair (42,1560): min = 46681 (b₁ = 1609)
+ pair (156,420): min = 83389 (b₁ = 583)
+ pair (182,360): min = 92801 (b₁ = 549)
+ MDL selects pair (42,1560) with c₁ = 46681 as the global minimum. -/
 theorem mdl_c1_n16 :
     c1Val 1560 42 = 46681 ∧ c1Val 420 156 = 83389 ∧ c1Val 360 182 = 92801 ∧
     46681 < 83389 ∧ 83389 < 92801 := by
   unfold c1Val; native_decide
 
 /-- MDL selection is consistent across levels: the selected c₁ values
-    are strictly increasing with n. -/
+ are strictly increasing with n. -/
 theorem mdl_c1_monotone : 823 < 9007 ∧ 9007 < 46681 := by omega
 
 -- ════════════════════════════════════════════════════════════════
--- §3  τ_valid is unbounded (Theorem 1)
+-- §3 τ_valid is unbounded (Theorem 1)
 -- ════════════════════════════════════════════════════════════════
 
 /-- Key identity: 2^n - 16 = 16 * (2^(n-4) - 1) for n ≥ 4. -/
@@ -162,7 +161,7 @@ theorem ridge_factorization (n : ℕ) (hn : 4 ≤ n) :
     _ = 16 * (2^(n-4) - 1) := by omega
 
 /-- The number of divisors of 2^n - 16 is at least the number of divisors
-    of 2^(n-4) - 1, for n ≥ 5. -/
+ of 2^(n-4) - 1, for n ≥ 5. -/
 theorem card_divisors_ridge_ge (n : ℕ) (hn : 5 ≤ n) :
     (Nat.divisors (2^(n-4) - 1)).card ≤ (Nat.divisors (2^n - 16)).card := by
   apply Finset.card_le_card
@@ -258,7 +257,7 @@ theorem card_divisors_ridge_unbounded :
         · omega
 
 -- ════════════════════════════════════════════════════════════════
--- §3b  Exact divisor count formula: τ(Rₙ) = 5 · τ(2^(n−4) − 1)
+-- §3b Exact divisor count formula: τ(Rₙ) = 5 · τ(2^(n−4) − 1)
 -- ════════════════════════════════════════════════════════════════
 
 /-- 2 and 2^(b+1) − 1 are coprime (2^(b+1) − 1 is always odd). -/
@@ -285,15 +284,15 @@ theorem coprime_pow2_mersenne (a : ℕ) {b : ℕ} (hb : 1 ≤ b) :
 theorem tau_16 : (Nat.divisors 16).card = 5 := by native_decide
 
 /-- **Exact divisor-count formula.** For n ≥ 5,
-    τ(2^n − 16) = 5 · τ(2^(n−4) − 1).
+ τ(2^n − 16) = 5 · τ(2^(n−4) − 1).
 
-    This follows from three facts:
-    1. 2^n − 16 = 16 · (2^(n−4) − 1)        [ridge_factorization]
-    2. gcd(16, 2^(n−4) − 1) = 1               [coprime: power of 2 vs. odd]
-    3. τ is multiplicative on coprimes          [Nat.Coprime.card_divisors_mul]
+ This follows from three facts:
+ 1. 2^n − 16 = 16 · (2^(n−4) − 1) [ridge_factorization]
+ 2. gcd(16, 2^(n−4) − 1) = 1 [coprime: power of 2 vs. odd]
+ 3. τ is multiplicative on coprimes [Nat.Coprime.card_divisors_mul]
 
-    This strictly strengthens `card_divisors_ridge_unbounded` from
-    "τ(Rₙ) grows without bound" to "τ(Rₙ) equals this explicit function." -/
+ This strictly strengthens `card_divisors_ridge_unbounded` from
+ "τ(Rₙ) grows without bound" to "τ(Rₙ) equals this explicit function." -/
 theorem tau_ridge_exact (n : ℕ) (hn : 5 ≤ n) :
     (Nat.divisors (2^n - 16)).card = 5 * (Nat.divisors (2^(n-4) - 1)).card := by
   rw [ridge_factorization n (by omega)]
@@ -303,19 +302,19 @@ theorem tau_ridge_exact (n : ℕ) (hn : 5 ≤ n) :
   rw [Nat.Coprime.card_divisors_mul hcop, tau_16]
 
 -- ════════════════════════════════════════════════════════════════
--- §4  The mirror-dual conjecture (stated, not proved)
+-- §4 The mirror-dual conjecture (stated, not proved)
 -- ════════════════════════════════════════════════════════════════
 
 /-- The Mirror-Dual Conjecture: there are infinitely many ridge levels
-    with mirror-dual pairs.
+ with mirror-dual pairs.
 
-    This is an open problem, analogous to the twin prime conjecture.
-    It is supported by:
-    1. Computational evidence: 30 pairs found for n ≤ 50
-    2. Heuristic analysis: expected count grows (slowly) with n
-    3. τ_valid is unbounded (proved above), so the "raw material" exists
+ This is an open problem, analogous to the twin prime conjecture.
+ It is supported by:
+ 1. Computational evidence: 30 pairs found for n ≤ 50
+ 2. Heuristic analysis: expected count grows (slowly) with n
+ 3. τ_valid is unbounded (proved above), so the "raw material" exists
 
-    A proof would require new techniques beyond current sieve methods. -/
+ A proof would require new techniques beyond current sieve methods. -/
 def MirrorDualConjecture : Prop :=
   ∀ N : ℕ, ∃ n : ℕ, N ≤ n ∧ ∃ b₂ q₂ : ℕ, MirrorDualPair n b₂ q₂
 
@@ -341,31 +340,31 @@ theorem conjecture_implies_many_levels (h : MirrorDualConjecture) (k : ℕ) :
          · exact hS m hm⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §5  Heuristic expected count (stated as a real analysis fact)
+-- §5 Heuristic expected count (stated as a real analysis fact)
 -- ════════════════════════════════════════════════════════════════
 
 /-!
 ## Heuristic Analysis (not formalized)
 
 The expected number of mirror-dual pairs at level n is:
-  E[n] = Σ_{(b₂,q₂) valid at n} 1 / (log(c₁_A(b₂,q₂)) · log(c₁_B(b₂,q₂)))
+ E[n] = Σ_{(b₂,q₂) valid at n} 1 / (log(c₁_A(b₂,q₂)) · log(c₁_B(b₂,q₂)))
 
 Since c₁ ~ b₁² ~ (2^(n/2))² = 2^n, we have log(c₁) ~ n·log(2).
 
 The cumulative expected count satisfies:
-  E[≤N] ~ C · Σ_{n≤N} τ_valid(2^n-16) / (n·log(2))²
+ E[≤N] ~ C · Σ_{n≤N} τ_valid(2^n-16) / (n·log(2))²
 
 Using τ(2^n-16) = 5·τ(2^(n-4)-1) and the known average
-  (1/M) · Σ_{m=1}^{M} τ(2^m-1) ~ C'·log(M),
+ (1/M) · Σ_{m=1}^{M} τ(2^m-1) ~ C'·log(M),
 we get E[≤N] ~ C'' · Σ_{n≤N} log(n)/n² which CONVERGES.
 
 Therefore: the expected count is FINITE (not infinite).
 The conjecture is heuristically plausible but not heuristically necessary.
 
 Computational data (n ≤ 50):
-  Actual pairs: 30
-  Naive heuristic: 5.4
-  Ratio (singular series correction): ~5.5
+ Actual pairs: 30
+ Naive heuristic: 5.4
+ Ratio (singular series correction): ~5.5
 -/
 
 end UgpLean

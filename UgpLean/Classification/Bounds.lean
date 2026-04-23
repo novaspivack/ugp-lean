@@ -15,7 +15,7 @@ Reference: PAPER_25_UPGRADE_PLAN, pipeline.py
 namespace UgpLean
 
 /-- Candidates at level n: triples (a, b₁, c) where (b₂,q₂) ∈ ridgeSurvivorsFinset n,
-  b₁ = b1FromPair b₂ q₂, c is either c₁ from (b₂,q₂) or (q₂,b₂), and a ∈ {1,5,9}. -/
+ b₁ = b1FromPair b₂ q₂, c is either c₁ from (b₂,q₂) or (q₂,b₂), and a ∈ {1,5,9}. -/
 def CandidatesAt (n : ℕ) : Finset Triple :=
   (ridgeSurvivorsFinset n).biUnion (fun p =>
     let b₁ := b1FromPair p.1 p.2

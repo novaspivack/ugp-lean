@@ -39,8 +39,8 @@ theorem rule110Tiles_match_rule110 (t : UWCATile) (h : t ∈ rule110Tiles) :
   all_goals simp only [Finset.mem_insert, Finset.mem_singleton]; native_decide
 
 /-- A single UWCA sweep applies Rule 110 to each site.
-    One round (P1–P4) implements exactly one Rule 110 step.
-    Proved in UWCASimulation.uwca_sweep_implements_rule110. -/
+ One round (P1–P4) implements exactly one Rule 110 step.
+ Proved in UWCASimulation.uwca_sweep_implements_rule110. -/
 def UWCA_single_sweep_correctness : Prop :=
   ∀ (L : ℕ) [NeZero L] (tape : Fin L → Bool) (i : Fin L),
     let hL : 0 < L := Nat.pos_of_ne_zero (NeZero.ne L)
@@ -52,7 +52,7 @@ def UWCA_single_sweep_correctness : Prop :=
         (tape ⟨(i.val + 1) % L, Nat.mod_lt _ hL⟩))
 
 /-- UWCA simulates Rule 110. The survivor topos contains a finite-local subsystem
-    isomorphic to Rule 110. Proved in UWCASimulation. -/
+ isomorphic to Rule 110. Proved in UWCASimulation. -/
 def UWCA_embeds_Rule110 : Prop := True  -- Structural marker; real content in uwca_simulates_rule110_real
 
 end UgpLean.Universality

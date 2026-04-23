@@ -15,9 +15,9 @@ import UgpLean.GTE.StructuralTheorems
 
 An older conditional route in `KGen.lean` fixes `k_gen = π/2` under a
 structural hypothesis (the "quarter-turn gauge" / Fibonacci-phase
-identification).  This module instead derives the closed form
+identification). This module instead derives the closed form
 
-  **k_gen = φ · cos(π/10) = φ · sin(2π/5) = √(φ² − 1/4) ≈ 1.5388**
+ **k_gen = φ · cos(π/10) = φ · sin(2π/5) = √(φ² − 1/4) ≈ 1.5388**
 
 unconditionally from the Fibonacci characteristic polynomial via the
 Quarter-Lock substitution μ = λ² − 1/4.
@@ -35,14 +35,14 @@ For k_gen² (THM-UCL-1):
 4. Unique negative root → k_gen² = −φ/2
 
 For k_gen (THM-UCL-2, this module):
-1. Fibonacci: φ² − φ − 1 = 0                                 [Lean-certified]
-2. **Quarter-Lock substitution** μ = λ² − 1/4                [algebraic]
-3. Pentagon quadratic for k_gen²: 16μ² − 40μ + 5 = 0         [derived]
-4. Unique root > 1 of 16μ² − 40μ + 5 → k_gen² = φ² − 1/4     [quadratic formula]
+1. Fibonacci: φ² − φ − 1 = 0 [Lean-certified]
+2. **Quarter-Lock substitution** μ = λ² − 1/4 [algebraic]
+3. Pentagon quadratic for k_gen²: 16μ² − 40μ + 5 = 0 [derived]
+4. Unique root > 1 of 16μ² − 40μ + 5 → k_gen² = φ² − 1/4 [quadratic formula]
 5. Positivity: k_gen = √(k_gen²) = √(φ² − 1/4) = φ·cos(π/10) [square root]
 
 The "1/4" in the substitution IS the Quarter-Lock factor (same 1/4 that
-appears in `k_M = k_gen² + (1/4)·k_L²`).  This is a **deep structural
+appears in `k_M = k_gen² + (1/4)·k_L²`). This is a **deep structural
 connection**: the same factor that governs the Quarter-Lock identity also
 bridges the Fibonacci eigenvalue to the UCL generation coefficient.
 
@@ -72,17 +72,17 @@ theorem fib_char_poly : (goldenRatio : ℝ)^2 - goldenRatio - 1 = 0 :=
 /-! ## §2. The Quarter-Lock substitution μ = λ² − 1/4
 
 Starting from the Fibonacci char poly λ² − λ − 1 = 0, the substitution
-μ = λ² − 1/4 gives a polynomial in μ.  Explicitly:
+μ = λ² − 1/4 gives a polynomial in μ. Explicitly:
 
-  If λ² = λ + 1, then μ = λ + 3/4, so λ = μ − 3/4.
-  Squaring: λ² = (μ − 3/4)² = μ² − (3/2)μ + 9/16.
-  But λ² = λ + 1 = μ + 1/4.
-  Equating: μ² − (3/2)μ + 9/16 = μ + 1/4.
-  Simplifying: μ² − (5/2)μ + 5/16 = 0.
-  Multiplying by 16: 16μ² − 40μ + 5 = 0.
+ If λ² = λ + 1, then μ = λ + 3/4, so λ = μ − 3/4.
+ Squaring: λ² = (μ − 3/4)² = μ² − (3/2)μ + 9/16.
+ But λ² = λ + 1 = μ + 1/4.
+ Equating: μ² − (3/2)μ + 9/16 = μ + 1/4.
+ Simplifying: μ² − (5/2)μ + 5/16 = 0.
+ Multiplying by 16: 16μ² − 40μ + 5 = 0.
 -/
 
-/-- **The Quarter-Lock substitution derivation.**  The substitution
+/-- **The Quarter-Lock substitution derivation.** The substitution
 μ = λ² − 1/4 applied to the Fibonacci char poly λ² − λ − 1 = 0 yields
 the pentagon quadratic 16μ² − 40μ + 5 = 0. -/
 theorem pentagon_quadratic_from_fib (lam : ℝ)
@@ -118,7 +118,7 @@ theorem phi_sq_minus_quarter_gt_one :
 /-! ## §3. Roots of the pentagon quadratic 16μ² − 40μ + 5 = 0 -/
 
 /-- Both roots of the pentagon quadratic 16μ² − 40μ + 5 = 0 are explicitly:
-(5 + 2√5)/4 and (5 − 2√5)/4.  Quadratic formula: discriminant 1600 − 320 = 1280
+(5 + 2√5)/4 and (5 − 2√5)/4. Quadratic formula: discriminant 1600 − 320 = 1280
 = 16·80, √1280 = 16√5, so roots = (40 ± 16√5)/32 = (5 ± 2√5)/4. -/
 theorem roots_of_pentagon_quadratic (mu : ℝ)
     (h : 16 * mu^2 - 40 * mu + 5 = 0) :
@@ -131,7 +131,7 @@ theorem roots_of_pentagon_quadratic (mu : ℝ)
   · left; linarith
   · right; linarith
 
-/-- (5 − 2√5)/4 is strictly less than 1.  Since 2√5 > 1 (since 5 > 1/4), we have
+/-- (5 − 2√5)/4 is strictly less than 1. Since 2√5 > 1 (since 5 > 1/4), we have
 5 − 2√5 < 5 − 1 = 4, so (5 − 2√5)/4 < 1. -/
 theorem small_root_lt_one : (5 - 2 * √5) / 4 < 1 := by
   have hsqrt_gt : √(5 : ℝ) > 1 := by
@@ -165,7 +165,7 @@ theorem exists_root_gt_one_pentagon_quadratic :
    phi_sq_minus_quarter_satisfies_pentagon,
    phi_sq_minus_quarter_gt_one⟩
 
-/-- **The derived k_gen² value.**  Defined as the unique root > 1 of the
+/-- **The derived k_gen² value.** Defined as the unique root > 1 of the
 pentagon quadratic 16μ² − 40μ + 5 = 0, which is itself derived from the
 Fibonacci char poly via the Quarter-Lock substitution μ = λ² − 1/4.
 
@@ -200,8 +200,8 @@ theorem k_gen_sq_derived_eq_phi_plus_3_4 :
 
 /-! ## §5. The derived k_gen (positive square root) -/
 
-/-- **The derived k_gen value.**  Defined as the positive square root of
-`k_gen_sq_derived`.  Does not mention `goldenRatio` or `π` directly. -/
+/-- **The derived k_gen value.** Defined as the positive square root of
+`k_gen_sq_derived`. Does not mention `goldenRatio` or `π` directly. -/
 noncomputable def k_gen_derived : ℝ :=
   Real.sqrt k_gen_sq_derived
 
@@ -229,7 +229,7 @@ theorem k_gen_derived_gt_one : k_gen_derived > 1 := by
 
 /-! ## §6. Connection to φ · cos(π/10) -/
 
-/-- φ · cos(π/10) > 0.  Both factors positive. -/
+/-- φ · cos(π/10) > 0. Both factors positive. -/
 theorem phi_cos_pi_10_pos : goldenRatio * cos (π / 10) > 0 := by
   apply mul_pos Real.goldenRatio_pos
   apply Real.cos_pos_of_mem_Ioo
@@ -245,7 +245,7 @@ theorem phi_cos_pi_10_pos : goldenRatio * cos (π / 10) > 0 := by
 
 Proof: cos(π/10) = sin(2π/5) (complementary angle).
 sin²(2π/5) = 1 - cos²(2π/5) = 1 - ((√5-1)/4)² = (5+√5)/8 after expansion.
-(φ · cos(π/10))² = φ² · sin²(2π/5).  With φ² = (3+√5)/2, we get
+(φ · cos(π/10))² = φ² · sin²(2π/5). With φ² = (3+√5)/2, we get
 (3+√5)/2 · (5+√5)/8 = ((3+√5)(5+√5))/16 = (15 + 3√5 + 5√5 + 5)/16 = (20+8√5)/16 = (5+2√5)/4.
 And φ² - 1/4 = (3+√5)/2 - 1/4 = (6+2√5-1)/4 = (5+2√5)/4. ✓ -/
 theorem phi_cos_pi_10_sq_direct :
@@ -280,7 +280,7 @@ theorem k_gen_derived_eq_phi_cos_pi_10 :
     rw [h_sq_derived, h_sq_cos]
   have h_derived_nonneg : k_gen_derived ≥ 0 := k_gen_derived_nonneg
   have h_cos_nonneg : goldenRatio * cos (π / 10) ≥ 0 := le_of_lt phi_cos_pi_10_pos
-  -- a² = b² and a, b ≥ 0  ⟹  a = b.  Via (a-b)(a+b) = 0.
+  -- a² = b² and a, b ≥ 0 ⟹ a = b. Via (a-b)(a+b) = 0.
   have h_diff : (k_gen_derived - goldenRatio * cos (π / 10)) *
                 (k_gen_derived + goldenRatio * cos (π / 10)) = 0 := by
     have : k_gen_derived^2 - (goldenRatio * cos (π / 10))^2 = 0 := by linarith
@@ -308,7 +308,7 @@ Lean-certified:
 - The trigonometric identity cos(π/10)² derivation (Phase A infrastructure)
 
 The derivation does NOT route through k_gen being defined as π/2 or
-φ·cos(π/10).  It defines k_gen_derived via the unique root > 1 of the
+φ·cos(π/10). It defines k_gen_derived via the unique root > 1 of the
 pentagon quadratic (itself derived from Fibonacci) and PROVES this equals
 φ · cos(π/10).
 
@@ -331,7 +331,7 @@ theorem thm_ucl2_sqrt_form :
 
 /-- **THM-UCL-2 Full Closure Summary.**
 - Definition: k_gen_derived is defined as the positive sqrt of the unique
-  root > 1 of the pentagon quadratic (from Quarter-Lock substitution on Fibonacci).
+ root > 1 of the pentagon quadratic (from Quarter-Lock substitution on Fibonacci).
 - Derivation: k_gen_derived = φ · cos(π/10) = √(φ² − 1/4) ≈ 1.5388. -/
 theorem thm_ucl2_summary :
     k_gen_derived = goldenRatio * cos (π / 10) ∧
@@ -353,7 +353,7 @@ The sum of the two Elegant-Kernel generation-scaling constants equals
 φ times the difference of the pentagonal (D₅, π/10) and hexagonal (D₆, π/3)
 cyclotomic cosines:
 
-  `k_gen_derived + k_gen2 = φ · (cos(π/10) − cos(π/3))`
+ `k_gen_derived + k_gen2 = φ · (cos(π/10) − cos(π/3))`
 
 **Proof:** Immediate from `thm_ucl2_fully_unconditional` (k_gen = φcos(π/10)),
 `k_gen2_eq_neg_phi_half` (k_gen2 = −φ/2), and `cos_pi_div_three` (cos(π/3) = 1/2).
@@ -363,14 +363,14 @@ derived from the same GTE Fibonacci spectrum via the Quarter-Lock
 substitution, yet their sum = φ·(cos(π/10) − cos(π/3)) simultaneously
 encodes:
 - **cos(π/10)**: the D₅ pentagonal angle (36°), source of k_gen via the
-  Fibonacci characteristic polynomial.
+ Fibonacci characteristic polynomial.
 - **cos(π/3) = 1/2**: the D₆ hexagonal angle (60°), source of k_gen2 and
-  also the TT-formula coefficient α = π/6 (SU(3)_flavor Weyl chamber bisector,
-  proved in `SU3FlavorCartan.angle_alpha1_omega1_eq_pi_div_six`).
+ also the TT-formula coefficient α = π/6 (SU(3)_flavor Weyl chamber bisector,
+ proved in `SU3FlavorCartan.angle_alpha1_omega1_eq_pi_div_six`).
 
 This identity is the algebraic bridge linking the pentagonal Fibonacci
 structure of the Elegant Kernel to the hexagonal SU(3) Weyl symmetry of
-the TT inter-sector mass formula.  The sum k_gen + k_gen2 simultaneously
+the TT inter-sector mass formula. The sum k_gen + k_gen2 simultaneously
 encodes both the D₅ pentagonal angle (π/10, from the Fibonacci spectrum via
 the Quarter-Lock substitution) and the D₆ hexagonal angle (π/3 = 2·(π/6),
 the SU(3)_flavor Weyl chamber bisector scaled by 2), providing the algebraic

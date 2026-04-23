@@ -16,8 +16,8 @@ namespace UgpLean
 
 /-- The Mersenne GCD identity: gcd(2^a - 1, 2^b - 1) = 2^gcd(a,b) - 1.
 
-    This is the a=2 case of Mathlib's Nat.pow_sub_one_gcd_pow_sub_one.
-    No custom axioms required. -/
+ This is the a=2 case of Mathlib's Nat.pow_sub_one_gcd_pow_sub_one.
+ No custom axioms required. -/
 theorem mersenne_gcd_identity_proved (a b : ℕ) :
     Nat.gcd (2^a - 1) (2^b - 1) = 2^(Nat.gcd a b) - 1 :=
   Nat.pow_sub_one_gcd_pow_sub_one 2 a b

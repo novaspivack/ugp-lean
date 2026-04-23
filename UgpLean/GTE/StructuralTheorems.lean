@@ -15,27 +15,27 @@ This module formalizes five structural theorems from the UGP paper that
 are unique to the UGP framework and not covered elsewhere:
 
 1. **Fibonacci renormalization spectrum** (thm:fib-spectrum): The companion
-   matrix ℛ = [[1,1],[1,0]] has eigenvalues φ and −φ⁻¹, and perturbations
-   orthogonal to the dominant eigenvector decay at rate φ⁻² per two-step.
+ matrix ℛ = [[1,1],[1,0]] has eigenvalues φ and −φ⁻¹, and perturbations
+ orthogonal to the dominant eigenvector decay at rate φ⁻² per two-step.
 
 2. **Loop topology from mirror pairs** (prop:loop): Any mirror-dual pair
-   induces a canonical 2-node loop in the b₁-quotient graph of the ridge.
+ induces a canonical 2-node loop in the b₁-quotient graph of the ridge.
 
 3. **Minimality-duality** (thm:minimality-duality): The MDL-minimal c₁ value
-   and the mirror-dual c₁ value are the unique two prime-locked outputs from
-   the n=10 survivor pair (24,42).
+ and the mirror-dual c₁ value are the unique two prime-locked outputs from
+ the n=10 survivor pair (24,42).
 
 4. **Fingerprint fixed-point** (thm:fingerprint-fixed-points): By Tarski's
-   fixed-point theorem, any monotone operator on prime patterns has a fixed
-   point. Applied to the UGP structural fingerprint operator.
+ fixed-point theorem, any monotone operator on prime patterns has a fixed
+ point. Applied to the UGP structural fingerprint operator.
 
 5. **Decidability phase transition** (thm:decidability-transition): A sharp
-   boundary between finite-window (decidable) and infinite-horizon (RE-hard)
-   properties of the GTE trajectory.
+ boundary between finite-window (decidable) and infinite-horizon (RE-hard)
+ properties of the GTE trajectory.
 
 Reference: UGP Paper §III, §IV, §V; thm:fib-spectrum, prop:loop,
-           thm:minimality-duality, thm:fingerprint-fixed-points,
-           thm:decidability-transition
+ thm:minimality-duality, thm:fingerprint-fixed-points,
+ thm:decidability-transition
 -/
 
 namespace UgpLean
@@ -43,7 +43,7 @@ namespace UgpLean
 open Nat
 
 -- ════════════════════════════════════════════════════════════════
--- §1  Fibonacci Renormalization Spectrum
+-- §1 Fibonacci Renormalization Spectrum
 -- ════════════════════════════════════════════════════════════════
 
 /-!
@@ -55,14 +55,14 @@ Its characteristic polynomial λ² − λ − 1 = 0 has roots φ = (1+√5)/2
 and −φ⁻¹ = (1−√5)/2.
 
 Key algebraic facts (all over ℤ or ℚ):
-  - char poly of [[1,1],[1,0]] is λ² − λ − 1
-  - The product of roots = −1 (determinant)
-  - The sum of roots = 1 (trace)
-  - Both roots satisfy x² = x + 1
+ - char poly of [[1,1],[1,0]] is λ² − λ − 1
+ - The product of roots = −1 (determinant)
+ - The sum of roots = 1 (trace)
+ - Both roots satisfy x² = x + 1
 -/
 
 /-- The Fibonacci companion matrix characteristic polynomial is λ² − λ − 1.
-    Verified: for M = [[1,1],[1,0]], det(λI − M) = λ² − λ − 1. -/
+ Verified: for M = [[1,1],[1,0]], det(λI − M) = λ² − λ − 1. -/
 theorem fib_companion_char_poly :
     -- trace([[1,1],[1,0]]) = 1, det([[1,1],[1,0]]) = 0·1 - 1·1 = -1
     -- char poly = λ² - λ - 1
@@ -100,7 +100,7 @@ theorem fib_eigenvalue_sum :
     (1 + Real.sqrt 5) / 2 + (1 - Real.sqrt 5) / 2 = 1 := by ring
 
 /-- Contraction rate: ψ² = ψ + 1 (ψ = (1-√5)/2 satisfies the minimal polynomial).
-    Note: |ψ| = (√5-1)/2 ≈ 0.618 < 1, so ψ² ≈ 0.382 < 1, giving decay. -/
+ Note: |ψ| = (√5-1)/2 ≈ 0.618 < 1, so ψ² ≈ 0.382 < 1, giving decay. -/
 theorem fib_contraction_rate :
     ((1 - Real.sqrt 5) / 2) ^ 2 = (1 - Real.sqrt 5) / 2 + 1 := by
   have h5 := sqrt5_sq'
@@ -108,18 +108,18 @@ theorem fib_contraction_rate :
   rw [this, h5]; ring
 
 /-- The dominant Fibonacci number F₁₃ = 233 appears in the UGP b-growth.
-    This is the Fibonacci lift index fixed by the quotient gap 13.
-    Verified: Nat.fib 13 = 233. -/
+ This is the Fibonacci lift index fixed by the quotient gap 13.
+ Verified: Nat.fib 13 = 233. -/
 theorem fib13_is_233 : Nat.fib 13 = 233 := by native_decide
 
 /-- The UGP Fibonacci rigidity: the quotient gap q₂ − q₁ = 13 forces
-    the Fibonacci lift F₁₃ = 233. Both are machine-certified. -/
+ the Fibonacci lift F₁₃ = 233. Both are machine-certified. -/
 theorem ugp_fibonacci_rigidity :
     ugp1_g = 13 ∧ Nat.fib ugp1_g = 233 := by
   exact ⟨rfl, by unfold ugp1_g; native_decide⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §2  Loop Topology from Mirror Pairs
+-- §2 Loop Topology from Mirror Pairs
 -- ════════════════════════════════════════════════════════════════
 
 /-!
@@ -155,7 +155,7 @@ theorem mirror_preserves_b1 (b₂ q₂ : ℕ) :
   (mirror_b1_invariance b₂ q₂).symm
 
 /-- At n=10, the unique mirror-dual pair {(24,42),(42,24)} forms a 2-element fiber
-    over b₁ = 73. The mirror involution acts freely on this fiber. -/
+ over b₁ = 73. The mirror involution acts freely on this fiber. -/
 theorem lepton_mirror_fiber :
     ({(24, 42), (42, 24)} : Finset (ℕ × ℕ)).card = 2 ∧
     b1FromPair 24 42 = 73 ∧ b1FromPair 42 24 = 73 := by
@@ -165,7 +165,7 @@ theorem lepton_mirror_fiber :
   · native_decide
 
 /-- The "necessary loop": when a mirror pair exists at a ridge, the b₁-quotient
-    contains an orbit of size 2 under the mirror involution. -/
+ contains an orbit of size 2 under the mirror involution. -/
 theorem mirror_pair_induces_loop (n b₂ q₂ : ℕ)
     (_h : MirrorDualPair n b₂ q₂) (hne : b₂ ≠ q₂) :
     -- The orbit {(b₂,q₂),(q₂,b₂)} has size 2
@@ -175,16 +175,16 @@ theorem mirror_pair_induces_loop (n b₂ q₂ : ℕ)
   exact ⟨mirror_fiber_two b₂ q₂ hne, mirror_b1_invariance b₂ q₂⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §3  Minimality-Duality at n=10
+-- §3 Minimality-Duality at n=10
 -- ════════════════════════════════════════════════════════════════
 
 /-- **Minimality-duality at n=10**: the two prime-locked c₁ values from the
-    mirror pair (24,42) are exactly 823 (MDL-minimal) and 2137 (mirror-dual).
-    823 < 2137 so 823 is the unique lex-min representative.
+ mirror pair (24,42) are exactly 823 (MDL-minimal) and 2137 (mirror-dual).
+ 823 < 2137 so 823 is the unique lex-min representative.
 
-    This is thm:minimality-duality from the UGP paper:
-    the MDL principle selects the unique minimum, and the mirror pair
-    provides the dual. -/
+ This is thm:minimality-duality from the UGP paper:
+ the MDL principle selects the unique minimum, and the mirror pair
+ provides the dual. -/
 theorem minimality_duality_n10 :
     c1Val 42 24 = 823 ∧ c1Val 24 42 = 2137 ∧
     Nat.Prime 823 ∧ Nat.Prime 2137 ∧
@@ -195,7 +195,7 @@ theorem minimality_duality_n10 :
   all_goals native_decide
 
 /-- The n=10 mirror pair is the ONLY prime-locked pair at n=10
-    (follows from only_survivors_n10 and mirror_dual_n10). -/
+ (follows from only_survivors_n10 and mirror_dual_n10). -/
 theorem n10_unique_mirror_pair :
     ∀ b₂ q₂ : ℕ,
       b₂ * q₂ = 1008 → 16 ≤ b₂ → 16 ≤ q₂ →
@@ -209,7 +209,7 @@ theorem n10_unique_mirror_pair :
   exact only_survivors_n10 b₂ q₂ hprod hb hq hc
 
 -- ════════════════════════════════════════════════════════════════
--- §4  Fingerprint Fixed-Point (Tarski)
+-- §4 Fingerprint Fixed-Point (Tarski)
 -- ════════════════════════════════════════════════════════════════
 
 /-!
@@ -224,21 +224,21 @@ We formalize this for the natural carrier `Set ℕ`, which is the complete latti
 on which the fingerprint operator is intrinsically defined (prime patterns are
 not a priori bounded).
 
-**Historical note.**  A previous version of this theorem stated the claim on
-`Finset ℕ` with only a monotonicity hypothesis.  That version is actually
+**Historical note.** A previous version of this theorem stated the claim on
+`Finset ℕ` with only a monotonicity hypothesis. That version is actually
 **false** — e.g. `F(P) = P ∪ {(P.max).getD 0 + 1}` is monotone on `Finset ℕ`
-but has no fixed point because each iterate grows by one element.  On
-`Finset ℕ` a boundedness hypothesis is required.  We provide both versions
+but has no fixed point because each iterate grows by one element. On
+`Finset ℕ` a boundedness hypothesis is required. We provide both versions
 below: the general `Set ℕ` form (provable from Mathlib's Tarski without
 extra hypotheses) and the bounded `Finset ℕ` form (provable by restriction
 to a finite Boolean sublattice).
 -/
 
 /-- **Fingerprint fixed-point** (Tarski, `Set ℕ` form):
-    any monotone function on `Set ℕ` has a fixed point.
-    Applied to the UGP structural fingerprint operator on prime patterns.
+ any monotone function on `Set ℕ` has a fixed point.
+ Applied to the UGP structural fingerprint operator on prime patterns.
 
-    Proof: Mathlib's `OrderHom.lfp` applied to the bundled monotone map. -/
+ Proof: Mathlib's `OrderHom.lfp` applied to the bundled monotone map. -/
 theorem fingerprint_fixed_point_exists
     (F : Set ℕ → Set ℕ)
     (hF : Monotone F) :
@@ -247,20 +247,20 @@ theorem fingerprint_fixed_point_exists
   ⟨OrderHom.lfp F', OrderHom.map_lfp F'⟩
 
 /-- **Bounded fingerprint fixed-point** (`Finset ℕ` form):
-    any monotone function `F : Finset ℕ → Finset ℕ` that maps into a fixed
-    bounded range `B` has a fixed point `P ⊆ B`.
+ any monotone function `F : Finset ℕ → Finset ℕ` that maps into a fixed
+ bounded range `B` has a fixed point `P ⊆ B`.
 
-    Rationale: on `Finset ℕ` alone, monotonicity is insufficient for a fixed
-    point (see historical note above).  The boundedness hypothesis
-    `hBound : ∀ P, F P ⊆ B` restricts F to the finite Boolean lattice
-    `{P : Finset ℕ | P ⊆ B}`, on which Knaster-Tarski applies. -/
+ Rationale: on `Finset ℕ` alone, monotonicity is insufficient for a fixed
+ point (see historical note above). The boundedness hypothesis
+ `hBound : ∀ P, F P ⊆ B` restricts F to the finite Boolean lattice
+ `{P : Finset ℕ | P ⊆ B}`, on which Knaster-Tarski applies. -/
 theorem fingerprint_fixed_point_bounded
     (F : Finset ℕ → Finset ℕ)
     (hF : ∀ P Q : Finset ℕ, P ⊆ Q → F P ⊆ F Q)
     (B : Finset ℕ)
     (hBound : ∀ P, F P ⊆ B) :
     ∃ P : Finset ℕ, P ⊆ B ∧ F P = P := by
-  -- Iterate F from ∅ upward.  By monotonicity the chain is increasing;
+  -- Iterate F from ∅ upward. By monotonicity the chain is increasing;
   -- by boundedness it lives in the finite Boolean sublattice {P | P ⊆ B};
   -- by pigeonhole (cardinalities bounded by B.card) it stabilizes.
   let chain : ℕ → Finset ℕ := fun n => Nat.rec ∅ (fun _ p => F p) n
@@ -313,7 +313,7 @@ theorem fingerprint_fixed_point_bounded
   simpa [chain] using eq_sets.symm
 
 -- ════════════════════════════════════════════════════════════════
--- §5  Decidability Phase Transition
+-- §5 Decidability Phase Transition
 -- ════════════════════════════════════════════════════════════════
 
 /-!
@@ -321,9 +321,9 @@ theorem fingerprint_fixed_point_bounded
 
 The UGP paper (thm:decidability-transition) establishes a sharp boundary:
 - **Local decidability**: any property of the GTE trajectory restricted to
-  a finite window of states and a finite time horizon is decidable.
+ a finite window of states and a finite time horizon is decidable.
 - **Global undecidability**: general reachability questions about the
-  infinite-horizon trajectory are Σ⁰₁-complete.
+ infinite-horizon trajectory are Σ⁰₁-complete.
 
 The local side is already implicit (the GTE is computable).
 The global side follows from Turing universality (proved in UWCAembedsRule110).
@@ -332,14 +332,14 @@ Here we formalize the local decidability direction precisely.
 -/
 
 /-- The GTE trajectory is computable: applying T n times to a state is a
-    total computable function. Hence any property of finite windows is decidable. -/
+ total computable function. Hence any property of finite windows is decidable. -/
 theorem gte_trajectory_computable (n : ℕ) :
     ∃ (f : Triple → Triple), ∀ (G : Triple),
       f G = n.rec G (fun _ prev => prev) := by
   exact ⟨fun G => n.rec G (fun _ prev => prev), fun G => rfl⟩
 
 /-- **Local decidability**: for any decidable property P of triples,
-    the question "does the GTE satisfy P at step k from G?" is decidable. -/
+ the question "does the GTE satisfy P at step k from G?" is decidable. -/
 theorem local_decidability
     (P : Triple → Prop) [DecidablePred P]
     (G : Triple) (k : ℕ) :
@@ -347,14 +347,14 @@ theorem local_decidability
   Classical.em _
 
 /-- **Sharp boundary (statement)**: there exist reachability questions about the
-    GTE that are undecidable. This follows from Turing universality.
+ GTE that are undecidable. This follows from Turing universality.
 
-    Precisely: since the UWCA substrate (and hence the GTE) is Turing-universal
-    (proved in UWCAembedsRule110), there exist target configurations U such that
-    the question "does the GTE ever reach U?" is RE-complete.
+ Precisely: since the UWCA substrate (and hence the GTE) is Turing-universal
+ (proved in UWCAembedsRule110), there exist target configurations U such that
+ the question "does the GTE ever reach U?" is RE-complete.
 
-    The proof cites ugp_is_turing_universal + Rice's theorem.
-    Full mechanization requires the UWCA-to-APS bridge. -/
+ The proof cites ugp_is_turing_universal + Rice's theorem.
+ Full mechanization requires the UWCA-to-APS bridge. -/
 theorem decidability_phase_transition :
     -- Local: finite properties of the trajectory are classically decidable
     (∀ (P : Triple → Prop) (G : Triple) (k : ℕ),
@@ -364,15 +364,15 @@ theorem decidability_phase_transition :
   ⟨fun _P _G _k => Classical.em _, UgpLean.Universality.ugp_turing_universal⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §6  MDL Minimality of the Canonical Orbit
+-- §6 MDL Minimality of the Canonical Orbit
 -- ════════════════════════════════════════════════════════════════
 
 /-- **MDL minimality**: among all residual triples at n=10, the LeptonSeed
-    (1, 73, 823) is the lexicographically minimal one.
+ (1, 73, 823) is the lexicographically minimal one.
 
-    The six candidates have a = 1,5,9 and c = 823 or 2137.
-    Lex order (c,b,a) with c first: 823 < 2137 selects the 823-group,
-    and within that, a=1 is minimal. -/
+ The six candidates have a = 1,5,9 and c = 823 or 2137.
+ Lex order (c,b,a) with c first: 823 < 2137 selects the 823-group,
+ and within that, a=1 is minimal. -/
 theorem leptonSeed_is_lex_min_residual :
     -- Among all 6 residual triples, LeptonSeed has minimal c-value
     LeptonSeed.c ≤ LeptonMirror.c ∧

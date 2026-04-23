@@ -13,7 +13,7 @@ import UgpLean.MassRelations.KoideNewtonFlow
 /-!
 # UgpLean.MassRelations.PhysicalMasses — End-to-End Physical-Mass Bridge
 
-**Round 35, Priority 8 Phase C — Lean formalisation of the physical mass
+**, Priority 8 Phase C — Lean formalisation of the physical mass
 prediction chain for all 9 charged fermions from 2 empirical inputs
 (m_e, m_μ) via TT + VV + Koide closed-form.**
 
@@ -26,39 +26,39 @@ predicted masses.
 
 Given positive real inputs `m_e, m_μ : ℝ` (PDG values), we define:
 
-  `predictedLepton g` for g = 0, 1, 2 as:
-    g = 0 → m_e
-    g = 1 → m_μ
-    g = 2 → (R33-B Koide closed-form) m_τ prediction
+ `predictedLepton g` for g = 0, 1, 2 as:
+ g = 0 → m_e
+ g = 1 → m_μ
+ g = 2 → (R33-B Koide closed-form) m_τ prediction
 
-  `predictedUpType g` via TT formula: m_lep_g · exp((π/6)·2^(g+1) + π/8)
+ `predictedUpType g` via TT formula: m_lep_g · exp((π/6)·2^(g+1) + π/8)
 
-  `predictedDownType g` via VV formula:
-    exp((13/9)·log(m_up_g) + (-7/6)·log(m_lep_g) + (-5/14))
+ `predictedDownType g` via VV formula:
+ exp((13/9)·log(m_up_g) + (-7/6)·log(m_lep_g) + (-5/14))
 
 ## Theorems proved
 
 1. **`TT_formula_holds_on_physical`** — the TT formula
-   `log(m_up_g / m_lep_g) = (π/6)·2^(g+1) + π/8` holds by construction on
-   `(predictedUpType g, predictedLepton g)`.
+ `log(m_up_g / m_lep_g) = (π/6)·2^(g+1) + π/8` holds by construction on
+ `(predictedUpType g, predictedLepton g)`.
 
 2. **`VV_formula_holds_on_physical`** — the VV formula
-   `log(m_down_g) = (13/9)·log(m_up_g) + (-7/6)·log(m_lep_g) + (-5/14)`
-   holds by construction on the predicted down-type / up-type / lepton.
+ `log(m_down_g) = (13/9)·log(m_up_g) + (-7/6)·log(m_lep_g) + (-5/14)`
+ holds by construction on the predicted down-type / up-type / lepton.
 
 3. **`koide_identity_holds_on_physical`** — the R33-B Koide closed form
-   `koideQuadratic r_e r_μ r_τ = 0` holds exactly on the predicted
-   charged-lepton sqrt-mass vector.
+ `koideQuadratic r_e r_μ r_τ = 0` holds exactly on the predicted
+ charged-lepton sqrt-mass vector.
 
 4. **`predicted_masses_positive`** — all predicted masses are positive
-   (needed for well-definedness of log-based formulas downstream).
+ (needed for well-definedness of log-based formulas downstream).
 
 This closes the last "True → trivial" placeholder in the
-`UgpLean.MassRelations.*` collection.  The full chain
+`UgpLean.MassRelations.*` collection. The full chain
 
-    (m_e, m_μ) → predictedLepton → predictedUpType → predictedDownType
+ (m_e, m_μ) → predictedLepton → predictedUpType → predictedDownType
 
-is now Lean-checked end-to-end.  No empirical tables are consulted
+is now Lean-checked end-to-end. No empirical tables are consulted
 during the derivation; only the two scalar inputs (m_e, m_μ) are
 treated as external data.
 
@@ -70,7 +70,7 @@ Lean-certified structural formulas (TT, VV) + 1 Lean-certified closed
 form (Koide R33-B) + 2 empirical scale inputs (m_e, m_μ)."
 
 The residual open sub-question is whether (m_e, m_μ) can themselves
-be related via a UGP-native structural identity.  COMP-P01-III (R35)
+be related via a UGP-native structural identity. (R35)
 confirms that at DL ≤ 3 with the R21-34 extended atom library, no such
 identity emerges that beats null density — consistent with the prior
 SC-BB and SC-K negative results for leptons beyond m_e ≈ δ·b_1 keV.
@@ -94,7 +94,7 @@ open Real
 /-! ## Core definitions -/
 
 /-- The R33-B Koide-predicted tau mass given (m_e, m_μ) via the +root
-closed form.  Returns the squared quantity (physical mass), so that
+closed form. Returns the squared quantity (physical mass), so that
 `sqrt`-unwrapping happens exactly once. -/
 def koidePredictedMTau (m_e m_mu : ℝ) : ℝ :=
   let re := Real.sqrt m_e
@@ -159,7 +159,7 @@ theorem predictedDownType_pos (m_e m_mu : ℝ) (g : Nat) :
 
 /-! ## TT formula holds on physical masses -/
 
-/-- **TT formula on physical masses (structural theorem).**  For all
+/-- **TT formula on physical masses (structural theorem).** For all
 generations g, the logarithm of the predicted up-type-to-lepton mass
 ratio equals the R12 cyclotomic TT formula
 `log(m_up_g / m_lep_g) = (π/6)·2^(g+1) + π/8`. -/
@@ -175,7 +175,7 @@ theorem TT_formula_holds_on_physical {m_e m_mu : ℝ} (he : 0 < m_e) (hmu : 0 < 
 
 /-! ## VV formula holds on physical masses -/
 
-/-- **VV formula on physical masses (structural theorem).**  For all
+/-- **VV formula on physical masses (structural theorem).** For all
 generations g, the predicted down-type mass satisfies the R12 VV
 log-linear identity
 `log(m_d_g) = (13/9)·log(m_u_g) + (-7/6)·log(m_lep_g) + (-5/14)`. -/

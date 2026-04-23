@@ -4,8 +4,8 @@ import UgpLean.Universality.UWCAembedsRule110
 # UgpLean.Universality.TuringUniversal — UGP Turing Universality
 
 The UGP substrate is Turing-universal via:
-  1. UWCA simulates Rule 110 (proved in UWCAembedsRule110)
-  2. Rule 110 is Turing-universal (Cook 2004, cited)
+ 1. UWCA simulates Rule 110 (proved in UWCAembedsRule110)
+ 2. Rule 110 is Turing-universal (Cook 2004, cited)
 
 Reference: PRE Dynamics & Universality, Architecture of a Computable Universe
 -/

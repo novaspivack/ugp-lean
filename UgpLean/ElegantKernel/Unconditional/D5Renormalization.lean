@@ -188,9 +188,9 @@ unconditionally.
 
 Hypotheses:
 - lam_dom : the dominant eigenvalue of the GTE Fibonacci companion matrix
-- h_fib : lam_dom² − lam_dom − 1 = 0  (Lean-certified)
-- h_pos : lam_dom > 0  (dominant eigenvalue is positive)
-- h_link : k_gen2 = −(lam_dom / 2)  (Hessian-from-linearization structural link)
+- h_fib : lam_dom² − lam_dom − 1 = 0 (Lean-certified)
+- h_pos : lam_dom > 0 (dominant eigenvalue is positive)
+- h_link : k_gen2 = −(lam_dom / 2) (Hessian-from-linearization structural link)
 
 Conclusion: k_gen2 = −(goldenRatio / 2). -/
 theorem unconditional_k_gen2 (lam_dom : ℝ)

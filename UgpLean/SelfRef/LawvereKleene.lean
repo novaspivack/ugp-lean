@@ -19,15 +19,15 @@ instances.
 ## What is proved here
 
 1. The master fixed-point theorem (MFP-1) is available from SelfReference.
-   In any SRI system, for any transformer F : Code → Obj, there exists
-   p : Obj with p ≃ F(quote p). This is the abstract Lawvere fixed-point.
+ In any SRI system, for any transformer F : Code → Obj, there exists
+ p : Obj with p ≃ F(quote p). This is the abstract Lawvere fixed-point.
 
 2. Kleene's recursion theorem: in any program system with s-m-n, for any
-   total function f : ℕ → ℕ, there exists e with φ_e ≃ φ_{f(e)}.
+ total function f : ℕ → ℕ, there exists e with φ_e ≃ φ_{f(e)}.
 
 3. UGP-specific statement: the GTE update map T, viewed as a transformer
-   on triples, has a fixed point — the canonical orbit is the fixed point
-   of the two-step block T² restricted to UGP-1 admissible states.
+ on triples, has a fixed point — the canonical orbit is the fixed point
+ of the two-step block T² restricted to UGP-1 admissible states.
 
 ## Relationship to the UGP paper
 
@@ -46,16 +46,16 @@ to the UWCA program space.
 namespace UgpLean
 
 -- ════════════════════════════════════════════════════════════════
--- §1  Re-export the master fixed-point theorem
+-- §1 Re-export the master fixed-point theorem
 -- ════════════════════════════════════════════════════════════════
 
 /-- The Master Fixed-Point Theorem (Lawvere form), re-exported from
-    SelfReference.Core.FixedPoint.
+ SelfReference.Core.FixedPoint.
 
-    In any SRI' system, for any transformer F : Code → Obj, there exists
-    p : Obj such that p ≃ F(quote p).
+ In any SRI' system, for any transformer F : Code → Obj, there exists
+ p : Obj such that p ≃ F(quote p).
 
-    This is thm:lawvere-ugp from the UGP paper (§13). -/
+ This is thm:lawvere-ugp from the UGP paper (§13). -/
 theorem ugp_lawvere_fixed_point
     {Obj : Type*} {Code : Type*} [S : SelfReference.SRI0' Obj Code]
     (F : Code → Obj) :
@@ -63,7 +63,7 @@ theorem ugp_lawvere_fixed_point
   SelfReference.SRI0'.master_fixed_point F
 
 /-- Unityped corollary: in any CSRI system, for any congruent F : α → α,
-    there exists d : α with d ≃ F d. -/
+ there exists d : α with d ≃ F d. -/
 theorem ugp_lawvere_unityped
     {α : Type*} [S : SelfReference.CSRI α]
     (F : α → α)
@@ -76,16 +76,16 @@ theorem ugp_lawvere_unityped
   SelfReference.CSRI.master_fixed_point F hF hquote_id hrun_cong
 
 -- ════════════════════════════════════════════════════════════════
--- §2  Kleene's recursion theorem
+-- §2 Kleene's recursion theorem
 -- ════════════════════════════════════════════════════════════════
 
 /-- Kleene's Recursion Theorem, re-exported from
-    SelfReference.Instances.Kleene.
+ SelfReference.Instances.Kleene.
 
-    In any program system with s-m-n, for any congruent F : ℕ → ℕ,
-    there exists an index e such that e ≃ F(e).
+ In any program system with s-m-n, for any congruent F : ℕ → ℕ,
+ there exists an index e such that e ≃ F(e).
 
-    This is thm:ugp-recursion from the UGP paper (§13). -/
+ This is thm:ugp-recursion from the UGP paper (§13). -/
 theorem ugp_kleene_recursion_theorem
     (P : SelfReference.Instances.Kleene.ProgramSystem)
     (F : ℕ → ℕ)
@@ -94,7 +94,7 @@ theorem ugp_kleene_recursion_theorem
   SelfReference.Instances.Kleene.kleene_recursion_theorem P F hF
 
 /-- Rogers' fixed-point theorem: for any congruent f : ℕ → ℕ,
-    there exists e with e ≃ f(e). -/
+ there exists e with e ≃ f(e). -/
 theorem ugp_rogers_fixed_point
     (P : SelfReference.Instances.Kleene.ProgramSystem)
     (f : ℕ → ℕ)
@@ -103,7 +103,7 @@ theorem ugp_rogers_fixed_point
   SelfReference.Instances.Kleene.rogers_fixed_point P f hf
 
 -- ════════════════════════════════════════════════════════════════
--- §3  UGP-specific self-reference statement
+-- §3 UGP-specific self-reference statement
 -- ════════════════════════════════════════════════════════════════
 
 /-!
@@ -129,12 +129,12 @@ the content of the Universality.ArchitectureBridge module.
 
 /-- The UGP substrate supports self-referential fixed points.
 
-    For any program system P derived from the UWCA substrate (which is Turing-universal),
-    and any congruent transformation F of programs, there exists a fixed-point program e.
+ For any program system P derived from the UWCA substrate (which is Turing-universal),
+ and any congruent transformation F of programs, there exists a fixed-point program e.
 
-    This is an immediate consequence of ugp_kleene_recursion_theorem applied to the
-    UWCA-derived program system. The statement here uses a concrete program system
-    (ProgramSystem from SelfReference.Instances.Kleene) as the witness. -/
+ This is an immediate consequence of ugp_kleene_recursion_theorem applied to the
+ UWCA-derived program system. The statement here uses a concrete program system
+ (ProgramSystem from SelfReference.Instances.Kleene) as the witness. -/
 theorem ugp_supports_self_reference
     (P : SelfReference.Instances.Kleene.ProgramSystem)
     (F : ℕ → ℕ)

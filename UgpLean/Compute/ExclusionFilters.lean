@@ -31,8 +31,8 @@ theorem exclude_36 : ¬ Nat.Prime (c1FromPair (b1FromPair 36 28) (q1FromQ2 28)) 
 theorem exclude_63 : ¬ Nat.Prime (c1FromPair (b1FromPair 63 16) (q1FromQ2 16)) := by native_decide
 
 /-- At n=10, the only strict-ridge divisor pairs yielding prime c₁ are (24,42) and (42,24).
-    This is a corollary of ridgeSurvivors_10 (Compute.Sieve): the survivor finset equals
-    exactly {(24,42),(42,24)}, and the six exclusion theorems above certify all non-survivors. -/
+ This is a corollary of ridgeSurvivors_10 (Compute.Sieve): the survivor finset equals
+ exactly {(24,42),(42,24)}, and the six exclusion theorems above certify all non-survivors. -/
 theorem only_survivors_n10 :
     ∀ b₂ q₂ : ℕ,
       b₂ * q₂ = 1008 → 16 ≤ b₂ → 16 ≤ q₂ →

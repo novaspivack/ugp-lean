@@ -19,7 +19,7 @@ the golden ratio and the quadratic structure of the UCL.
 1. The Riccati map f(r) = 1 + 1/r has unique positive fixed point r* = φ.
 2. f'(φ) = −1/φ² (contraction rate at the fixed point).
 3. The linearization spectrum {−1/φ², 1} controls the quadratic form
-   structure near the fixed point.
+ structure near the fixed point.
 
 ## Connection to Paper 8 §C.4
 
@@ -85,7 +85,7 @@ theorem inv_golden_ratio_sq :
 
 /-! ## §2. Derivative of the Riccati map at the fixed point
 
-f(r) = 1 + 1/r → f'(r) = −1/r².  At r = φ: f'(φ) = −1/φ².
+f(r) = 1 + 1/r → f'(r) = −1/r². At r = φ: f'(φ) = −1/φ².
 
 This is the linearization rate of the GTE even-step at the fixed point.
 |f'(φ)| = 1/φ² = 2 − φ ≈ 0.382 < 1, confirming contraction. -/
@@ -128,22 +128,22 @@ theorem riccati_contraction :
 
 The Riccati contraction rate is −1/φ² = −(2−φ). The relation to −φ/2:
 
-  −φ/2 = −φ/2
-  −1/φ² = −(2−φ) = φ − 2
+ −φ/2 = −φ/2
+ −1/φ² = −(2−φ) = φ − 2
 
 These are DIFFERENT values: −φ/2 ≈ −0.809 while −1/φ² ≈ −0.382.
 
 The relation between them is:
-  −φ/2 = (−1/φ² − 1) · φ / 2 ... no, let me compute.
+ −φ/2 = (−1/φ² − 1) · φ / 2 ... no, let me compute.
 
 Actually, the connection is through the QUADRATIC structure:
-  −1/φ² = 2 − φ = 2 − (1+√5)/2 = (3−√5)/2
+ −1/φ² = 2 − φ = 2 − (1+√5)/2 = (3−√5)/2
 
 And −φ/2 = −(1+√5)/4.
 
 These satisfy:
-  (−1/φ²) + φ = 2   (trivially, since −1/φ² = 2−φ)
-  (−φ/2) · (−2) = φ  (trivially)
+ (−1/φ²) + φ = 2 (trivially, since −1/φ² = 2−φ)
+ (−φ/2) · (−2) = φ (trivially)
 
 The deeper connection: both arise from the Fibonacci char poly.
 −1/φ² is the squared subdominant eigenvalue (contraction rate).
@@ -155,7 +155,7 @@ cyclotomic structure, which relates the eigenvalue to its
 corresponding cosine real-part.
 
 The specific algebraic identity that makes the connection:
-  cos(4π/5) = −(1+√5)/4 = −φ/2
+ cos(4π/5) = −(1+√5)/4 = −φ/2
 
 This is NOT the contraction rate −1/φ²; rather, it comes from
 the EMBEDDING of Q(√5) into Q(ζ₅) via the cyclotomic structure.

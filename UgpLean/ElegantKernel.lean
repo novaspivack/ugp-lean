@@ -14,9 +14,9 @@ Fixed algebraic constants for the Universal Calibration Law (UCL).
 The derivation proceeds in two steps (Paper 06, JMP Math Foundations §2.5.4):
 
 **Step 1 — Numerator = 7 = ugp1_s:**
-The UGP mirror-invariance relation is  `b₁ = b₂ + q₂ + s`  where `s = ugp1_s = 7`
-(proved: `ugp1_params`).  The offset `s = 7` encodes the minimal symmetry-breaking
-term preserving prime-lock under mirror duality.  In the Paper 06 interpretation,
+The UGP mirror-invariance relation is `b₁ = b₂ + q₂ + s` where `s = ugp1_s = 7`
+(proved: `ugp1_params`). The offset `s = 7` encodes the minimal symmetry-breaking
+term preserving prime-lock under mirror duality. In the Paper 06 interpretation,
 `det G_∠ = s = 7`; this is an interpretive identification (not separately
 machine-checked), but the value `7 = ugp1_s` is certified.
 
@@ -25,14 +25,14 @@ The GTE dynamics operate via a two-step block at the canonical level n=10.
 The half-ridge scale is `ridge(10) / 2 = 1008 / 2 = 504`.
 The nearest power of 2 is `2^9 = 512`.
 We prove: `504 ≤ 512` and `512 < 2 · 504` (i.e., 512 is the nearest power of 2
-above half-ridge, and within factor 2).  The choice of `2^9` as the normalization
+above half-ridge, and within factor 2). The choice of `2^9` as the normalization
 is therefore the unique power of 2 in the interval [ridge(10)/2, ridge(10)).
 `k_L2 = ugp1_s / 2^9 = 7/512` is the ratio of the symmetry-breaking offset to
 this block-scale denominator.
 
 **Precision note:** The denominator `2^9 = 512` is NOT exactly `ridge(10)/2 = 504`.
 The 1.6% gap is an explicit residual of the discrete-to-continuous bridge that
-Paper 06 acknowledges.  The Lean proofs below establish the exact value `7/512`
+Paper 06 acknowledges. The Lean proofs below establish the exact value `7/512`
 and the structural argument for `2^9`; they do not claim `504 = 512`.
 
 Reference: JMP Math Foundations §2.5.4, First Principles SM, Reflexive Reality Appendix
@@ -71,12 +71,12 @@ theorem block_denom_above_half_ridge : 504 < k_L2_denom := by
   unfold k_L2_denom; norm_num
 
 /-- 2^9 = 512 is within a factor 2 of the half-ridge scale 504,
-    making it the unique power of 2 in the interval [504, 2·504 = 1008 = ridge(10)). -/
+ making it the unique power of 2 in the interval [504, 2·504 = 1008 = ridge(10)). -/
 theorem block_denom_within_factor_two_of_half_ridge : k_L2_denom < 2 * 504 := by
   unfold k_L2_denom; norm_num
 
 /-- 2^9 is the unique power of 2 in the interval (ridge(10)/2, ridge(10)]:
-    504 < 512 ≤ 1008. -/
+ 504 < 512 ≤ 1008. -/
 theorem block_denom_in_half_ridge_interval :
     ridge 10 / 2 < k_L2_denom ∧ k_L2_denom ≤ ridge 10 := by
   constructor
@@ -93,7 +93,7 @@ theorem k_L2_lt_one : k_L2 < 1 := by
   rw [k_L2_eq]; norm_num
 
 /-- The mirror-invariance offset equals k_L²'s integer numerator:
-    ugp1_s = 7 = 7 (numerator of 7/512). -/
+ ugp1_s = 7 = 7 (numerator of 7/512). -/
 theorem k_L2_from_ugp1_s :
     k_L2 = (ugp1_s : ℚ) / k_L2_denom := rfl
 

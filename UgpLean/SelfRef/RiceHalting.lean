@@ -16,13 +16,13 @@ APS library (aps-rice-lean) and states the UGP-specific instances.
 ## What is proved here
 
 1. Rice's theorem: no non-trivial extensional property of UGP programs
-   is decidable. (Imported from APS.Rice.)
+ is decidable. (Imported from APS.Rice.)
 
 2. Halting undecidability: the halting problem for UGP programs is
-   undecidable. (Imported from APS.Rice.)
+ undecidable. (Imported from APS.Rice.)
 
 3. UGP reachability undecidability: general reachability in the UGP
-   substrate is RE-hard. (Follows from Turing universality + Rice.)
+ substrate is RE-hard. (Follows from Turing universality + Rice.)
 
 ## Relationship to the UGP paper
 
@@ -38,14 +38,14 @@ This follows from Turing universality via a standard reduction.
 namespace UgpLean
 
 -- ════════════════════════════════════════════════════════════════
--- §1  Re-export Rice's theorem
+-- §1 Re-export Rice's theorem
 -- ════════════════════════════════════════════════════════════════
 
 /-- Rice's Theorem for Acceptable Programming Systems, re-exported
-    from APS.Rice.
+ from APS.Rice.
 
-    No non-trivial extensional property of programs is decidable.
-    This is thm:rice-ugp from the UGP paper (§4). -/
+ No non-trivial extensional property of programs is decidable.
+ This is thm:rice-ugp from the UGP paper (§4). -/
 theorem ugp_rice_theorem
     (aps : AcceptableProgrammingSystem) [HasRepresentableComp aps]
     (P : (ℕ →. ℕ) → Prop)
@@ -62,13 +62,13 @@ theorem ugp_rice_theorem
   rice_theorem aps P p_ext p_non diag_rep smn_rep
 
 -- ════════════════════════════════════════════════════════════════
--- §2  Halting undecidability
+-- §2 Halting undecidability
 -- ════════════════════════════════════════════════════════════════
 
 /-- Halting Undecidability for Acceptable Programming Systems,
-    re-exported from APS.Rice.
+ re-exported from APS.Rice.
 
-    The halting problem is undecidable. -/
+ The halting problem is undecidable. -/
 theorem ugp_halting_undecidable
     (aps : AcceptableProgrammingSystem) [HasRepresentableComp aps]
     (diverge_halt_rep : ∀ (d : ℕ → Bool),
@@ -80,7 +80,7 @@ theorem ugp_halting_undecidable
   halting_undecidable aps diverge_halt_rep
 
 -- ════════════════════════════════════════════════════════════════
--- §3  UGP reachability undecidability (thm:j35-undec)
+-- §3 UGP reachability undecidability (thm:j35-undec)
 -- ════════════════════════════════════════════════════════════════
 
 /-!
@@ -94,7 +94,7 @@ This follows from:
 1. ugp_is_turing_universal: UGP simulates any Turing machine
 2. ugp_halting_undecidable: halting is undecidable in any APS
 3. Reduction: reachability of a specific target state = halting of
-   the simulated Turing machine
+ the simulated Turing machine
 
 We state this as a consequence theorem. The full proof requires
 the UWCA-to-APS bridge (connecting the UWCA program space to the
@@ -102,15 +102,15 @@ AcceptableProgrammingSystem interface).
 -/
 
 /-- General reachability in the UGP substrate is undecidable.
-    This is thm:j35-undec from the UGP paper (§4).
+ This is thm:j35-undec from the UGP paper (§4).
 
-    Follows from Turing universality: since UGP simulates any TM,
-    a decider for UGP reachability would decide TM halting.
+ Follows from Turing universality: since UGP simulates any TM,
+ a decider for UGP reachability would decide TM halting.
 
-    The full formal proof requires the UWCA-to-APS bridge connecting
-    the UWCA program space to the AcceptableProgrammingSystem interface.
-    That bridge is in Universality.ArchitectureBridge and is deferred.
-    We state the theorem here as a consequence of the architecture. -/
+ The full formal proof requires the UWCA-to-APS bridge connecting
+ the UWCA program space to the AcceptableProgrammingSystem interface.
+ That bridge is in Universality.ArchitectureBridge and is deferred.
+ We state the theorem here as a consequence of the architecture. -/
 theorem ugp_reachability_undecidable_from_turing
     (aps : AcceptableProgrammingSystem) [HasRepresentableComp aps]
     (diverge_halt_rep : ∀ (d : ℕ → Bool),

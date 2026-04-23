@@ -5,39 +5,39 @@ import Mathlib.NumberTheory.Real.GoldenRatio
 /-!
 # UgpLean.MassRelations.UpLeptonCyclotomic — TT formula
 
-The up-type-to-lepton cyclotomic mass relation (COMP-P01-TT):
+The up-type-to-lepton cyclotomic mass relation :
 
-    log(m_{u_g} / m_{lep_g}) = (π/6) · 2^g + β   for g = 1, 2, 3
+ log(m_{u_g} / m_{lep_g}) = (π/6) · 2^g + β for g = 1, 2, 3
 
 ## Structural interpretation (conjectural)
 
-- `π/6` is the SU(3) Weyl-chamber interior bisector angle.  The SU(3) root
-  system has roots at angles {0, ±π/3, ±2π/3, π}; the Weyl chamber has
-  angular extent π/3, and π/6 is the bisector of that chamber.
-- `2^g` is the generation bit-depth.  At ridge level n = 10, the mirror
-  pair `(24, 42)` doubles its effective structural content per GTE step.
-- `β` is a sub-leading UGP-atom constant.  Empirical LS fit favours
-  β = π/8 (0.44% max-frac-err), with 2/5 and 1/φ² as alternative
-  UGP-native candidates at 1.1% and 1.4% respectively.
+- `π/6` is the SU(3) Weyl-chamber interior bisector angle. The SU(3) root
+ system has roots at angles {0, ±π/3, ±2π/3, π}; the Weyl chamber has
+ angular extent π/3, and π/6 is the bisector of that chamber.
+- `2^g` is the generation bit-depth. At ridge level n = 10, the mirror
+ pair `(24, 42)` doubles its effective structural content per GTE step.
+- `β` is a sub-leading UGP-atom constant. Empirical LS fit favours
+ β = π/8 (0.44% max-frac-err), with 2/5 and 1/φ² as alternative
+ UGP-native candidates at 1.1% and 1.4% respectively.
 
 ## Zero-parameter consequences (β-free)
 
 Differencing across generations cancels β:
 
-- log(m_c · m_e / (m_u · m_μ)) = π/3     (PDG: 0.17% match)
-- log(m_t · m_μ / (m_c · m_τ)) = 2π/3    (PDG: 0.37% match)
-- log(m_t · m_e / (m_u · m_τ)) = π       (PDG: 0.19% match, Gelfond)
+- log(m_c · m_e / (m_u · m_μ)) = π/3 (PDG: 0.17% match)
+- log(m_t · m_μ / (m_c · m_τ)) = 2π/3 (PDG: 0.37% match)
+- log(m_t · m_e / (m_u · m_τ)) = π (PDG: 0.19% match, Gelfond)
 
 ## Status
 
 - Formula statement and β-free identities: proved (`ring`, `linarith`).
 - **Claim A (α = π/6 from A_2 geometry): PROVED** in
-  `UgpLean.MassRelations.SU3FlavorCartan.angle_alpha1_omega1_eq_pi_div_six`
-  (Round 13, Session 2; zero UGP-specific axioms, zero `sorry`).
+ `UgpLean.MassRelations.SU3FlavorCartan.angle_alpha1_omega1_eq_pi_div_six`
+ (; zero UGP-specific axioms, zero `sorry`).
 - Claim B (2^g = UGP mirror-pair doubling): open — requires formalising the
-  generation-doubling step from the ridge mirror-pair structure.
+ generation-doubling step from the ridge mirror-pair structure.
 - Claim C (physics bridge: UGP cascade operators act as SU(3)_flavor Cartan
-  rotation): open — the main outstanding structural derivation for the TT formula.
+ rotation): open — the main outstanding structural derivation for the TT formula.
 -/
 
 namespace UgpLean.MassRelations.UpLeptonCyclotomic
@@ -60,8 +60,8 @@ noncomputable def betaCandidate2 : ℝ := 2 / 5          -- second candidate: 1.
 noncomputable def betaCandidate3 : ℝ := 1 / goldenRatio ^ 2  -- third candidate: 1.40%
 
 /-- Abstract claim: the TT formula holds on the charged-lepton-to-up-type
-    log-mass ratios for all three generations within PDG precision.  Numerical
-    verification lives outside Lean (in COMP-P01-TT json artifact). -/
+ log-mass ratios for all three generations within PDG precision. Numerical
+ verification lives outside Lean (in json artifact). -/
 theorem UpLeptonFormulaHolds : True := trivial
 
 /-- β-free inter-generational identity at Δg = 1. -/
@@ -96,23 +96,23 @@ noncomputable def c2SU3Fund : ℝ := 4 / 3
 
 /-- **β = α / C₂(SU3)** — structural derivation of the TT offset.
 
-    β = (π/6) / (4/3) = (π/6) × (3/4) = π/8.
+ β = (π/6) / (4/3) = (π/6) × (3/4) = π/8.
 
-    The TT formula offset equals the SU(3)_flavor Weyl bisector angle
-    (α = π/6) divided by the SU(3) fundamental Casimir C₂(SU3) = 4/3.
+ The TT formula offset equals the SU(3)_flavor Weyl bisector angle
+ (α = π/6) divided by the SU(3) fundamental Casimir C₂(SU3) = 4/3.
 
-    Physical interpretation: both TT constants α and β are determined by
-    SU(3)_flavor geometry.  α = π/6 is the Weyl chamber bisector angle
-    (proved in `SU3FlavorCartan`), and β = α/C₂(SU3) is the same angle
-    reduced by the SU(3) fundamental Casimir invariant.
+ Physical interpretation: both TT constants α and β are determined by
+ SU(3)_flavor geometry. α = π/6 is the Weyl chamber bisector angle
+ (proved in `SU3FlavorCartan`), and β = α/C₂(SU3) is the same angle
+ reduced by the SU(3) fundamental Casimir invariant.
 
-    Zero hypotheses, zero sorry. -/
+ Zero hypotheses, zero sorry. -/
 theorem beta_eq_alpha_div_c2_su3 :
     betaCandidate1 = su3WeylBisectorAngle / c2SU3Fund := by
   unfold betaCandidate1 su3WeylBisectorAngle c2SU3Fund; ring
 
 /-- Equivalent form: β = α × C₂(SU2).
-    Since C₂(SU2, fundamental) = 3/4 = 1/C₂(SU3), we have β = α × C₂(SU2). -/
+ Since C₂(SU2, fundamental) = 3/4 = 1/C₂(SU3), we have β = α × C₂(SU2). -/
 noncomputable def c2SU2Fund : ℝ := 3 / 4
 
 theorem beta_eq_alpha_times_c2_su2 :
@@ -126,7 +126,7 @@ theorem alpha_over_beta_eq_c2_su3 :
   field_simp [Real.pi_ne_zero]; norm_num
 
 /-- The SU(2)/SU(3) Casimir ratio: C₂(SU2) × C₂(SU3) = 1.
-    (The two Casimirs are reciprocals.) -/
+ (The two Casimirs are reciprocals.) -/
 theorem c2_su2_times_c2_su3_eq_one :
     c2SU2Fund * c2SU3Fund = 1 := by
   unfold c2SU2Fund c2SU3Fund; norm_num

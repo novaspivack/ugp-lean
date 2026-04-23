@@ -14,7 +14,7 @@ See `EntropyNonMonotone` for Shannon entropy along this trajectory (ML-9 compani
 namespace UgpLean
 
 /-- One GTE transition at global step index `t ≥ 1` (the first transition off the seed is `t = 1`).
-    `qPrev` must be `some` on every even `t` in valid runs starting from the Lepton Seed. -/
+ `qPrev` must be `some` on every even `t` in valid runs starting from the Lepton Seed. -/
 def gteTransition (n t : ℕ) (qPrev : Option ℕ) (tri : Triple) : Triple × Option ℕ :=
   let b := tri.b; let c := tri.c
   let q := gteQuotient c b

@@ -63,7 +63,7 @@ theorem MirrorEquiv_obs_eq (t₁ t₂ : Triple) (h : MirrorEquiv t₁ t₂) : ob
   exact Prod.ext ha hb
 
 /-- Canonical (MDL-minimal) representative of the residual: always LeptonSeed.
-  For t in the residual (b=73, c∈{823,2137}, a∈{1,5,9}), the global lex-min is LeptonSeed. -/
+ For t in the residual (b=73, c∈{823,2137}, a∈{1,5,9}), the global lex-min is LeptonSeed. -/
 def canon (t : Triple) : Triple :=
   if t.b = leptonB ∧ (t.c = leptonC1 ∨ t.c = mirrorC1) ∧ t.a ∈ ({1, 5, 9} : Finset ℕ)
   then LeptonSeed else t

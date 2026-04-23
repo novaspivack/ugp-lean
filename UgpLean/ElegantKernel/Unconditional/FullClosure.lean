@@ -15,13 +15,13 @@ import UgpLean.ElegantKernel.Unconditional.FibonacciPentagonBridge
 This module provides the FULL unconditional closure of THM-UCL-1 by:
 
 1. Defining `k_gen2_derived` as an ALGEBRAIC function of the GTE
-   Fibonacci eigenvalue — NOT as `-(goldenRatio/2)` by fiat.
+ Fibonacci eigenvalue — NOT as `-(goldenRatio/2)` by fiat.
 
 2. Proving `k_gen2_derived = -(goldenRatio/2)` from the Fibonacci
-   characteristic polynomial alone.
+ characteristic polynomial alone.
 
 3. Showing the derivation chain uses ZERO hypotheses beyond what
-   is already Lean-certified in the GTE structural theorems.
+ is already Lean-certified in the GTE structural theorems.
 
 ## The key idea
 
@@ -31,18 +31,18 @@ that DERIVES the value.
 
 We define:
 
-  k_gen2_derived := the unique negative root of 4x² + 2x − 1
+ k_gen2_derived := the unique negative root of 4x² + 2x − 1
 
 where 4x² + 2x − 1 = 0 is the pentagon minimal polynomial, which is
 itself obtained from the Fibonacci characteristic polynomial λ² − λ − 1
 via the substitution x = −λ/2.
 
 The derivation chain:
-  GTE even-step Fibonacci companion matrix
-    → eigenvalue φ satisfying φ² − φ − 1 = 0   [Lean-certified]
-    → substitution x = −φ/2 gives 4x² + 2x − 1 = 0   [proved algebraically]
-    → unique negative root is −φ/2   [proved by quadratic formula]
-    → k_gen2_derived = −φ/2   [QED]
+ GTE even-step Fibonacci companion matrix
+ → eigenvalue φ satisfying φ² − φ − 1 = 0 [Lean-certified]
+ → substitution x = −φ/2 gives 4x² + 2x − 1 = 0 [proved algebraically]
+ → unique negative root is −φ/2 [proved by quadratic formula]
+ → k_gen2_derived = −φ/2 [QED]
 
 No circular reasoning: k_gen2_derived is NOT defined as −φ/2.
 It is defined as the negative root of a polynomial that arises from
@@ -53,7 +53,7 @@ root equals −φ/2.
 
 ✓ The unconditional derivation compiles without `sorry`.
 ✓ The dependency chain does NOT route through `k_gen2` being DEFINED
-  as `-(goldenRatio/2)`.
+ as `-(goldenRatio/2)`.
 ✓ `#print axioms` shows only Mathlib standard axioms on the main theorems.
 ✓ The file builds in the project CI sense (`lake build`).
 -/
@@ -98,8 +98,8 @@ theorem pentagon_poly_from_fibonacci :
 
 We define k_gen2_derived NOT as -(goldenRatio/2) but as a value
 characterized by two properties:
-  (P1) It satisfies the pentagon minimal polynomial 4x² + 2x − 1 = 0.
-  (P2) It is negative.
+ (P1) It satisfies the pentagon minimal polynomial 4x² + 2x − 1 = 0.
+ (P2) It is negative.
 
 These properties uniquely determine the value (proved below).
 The motivation for (P1) is the Fibonacci-to-pentagon algebraic bridge.
@@ -152,9 +152,9 @@ theorem k_gen2_derived_unique_characterization (k : ℝ)
 This is the FULL UNCONDITIONAL CLOSURE.
 
 The proof chain:
-1. k_gen2_derived satisfies 4x² + 2x − 1 = 0   [from Fibonacci char poly]
-2. k_gen2_derived < 0                             [from φ > 0]
-3. The unique negative root of 4x² + 2x − 1 is −φ/2   [quadratic formula]
+1. k_gen2_derived satisfies 4x² + 2x − 1 = 0 [from Fibonacci char poly]
+2. k_gen2_derived < 0 [from φ > 0]
+3. The unique negative root of 4x² + 2x − 1 is −φ/2 [quadratic formula]
 4. Therefore k_gen2_derived = −φ/2. -/
 
 /-- **THM-UCL-1 (FULLY UNCONDITIONAL).**
@@ -223,11 +223,11 @@ to −φ/2, with every step explicit. -/
 /-- **Complete self-contained derivation.**
 
 Starting from the Lean-certified Fibonacci eigenvalue:
-1. φ² − φ − 1 = 0  →  4(−φ/2)² + 2(−φ/2) − 1 = 0  (substitution)
-2. φ > 0  →  −φ/2 < 0  (sign)
-3. (unique negative root of 4x²+2x−1)  =  −φ/2  (quadratic formula)
-4. −φ/2 = cos(4π/5)  (trig identity, Phase A)
-5. cos(4π/5) ∈ PentagonRealParts  (Phase C infrastructure)
+1. φ² − φ − 1 = 0 → 4(−φ/2)² + 2(−φ/2) − 1 = 0 (substitution)
+2. φ > 0 → −φ/2 < 0 (sign)
+3. (unique negative root of 4x²+2x−1) = −φ/2 (quadratic formula)
+4. −φ/2 = cos(4π/5) (trig identity, Phase A)
+5. cos(4π/5) ∈ PentagonRealParts (Phase C infrastructure)
 
 All five steps are Lean-certified, zero sorry, zero hypotheses. -/
 theorem complete_derivation :

@@ -9,22 +9,22 @@ import UgpLean.GTE.MirrorDualConjecture
 
 The resonant packet factory (UGP twin-prime program, note 048) produces
 exact gap-2 pairs Q₋(t), Q₊(t) for every integer t, where:
-  Q₋(t) = L·t² + D₋
-  Q₊(t) = L·t² + D₊ = Q₋(t) + 2
+ Q₋(t) = L·t² + D₋
+ Q₊(t) = L·t² + D₊ = Q₋(t) + 2
 with L = 13501400, D₋ = 119511, D₊ = 119513.
 
 ## What is proved here
 
 1. **Branch linearization:** c₁(M/q, q) is affine in M/q with slope (q−13)
-   and intercept B(q) = (q+7)(q−13)+20.
+ and intercept B(q) = (q+7)(q−13)+20.
 
 2. **Factory quadratic definitions and gap-2 property:** Q₊(t) − Q₋(t) = 2.
 
 3. **Local density (Hasse check):** For each good prime p ≤ 43,
-   ρ_F(p) = #{t mod p : F(t) ≡ 0 (mod p)} is computed exactly.
+ ρ_F(p) = #{t mod p : F(t) ≡ 0 (mod p)} is computed exactly.
 
 4. **Product algebra identity:** F(t) = Q₋(t)·Q₊(t) is a factored quartic,
-   and λ(F(t)) = λ(Q₋(t))·λ(Q₊(t)) by complete multiplicativity of λ.
+ and λ(F(t)) = λ(Q₋(t))·λ(Q₊(t)) by complete multiplicativity of λ.
 
 Reference: UGP twin-prime program notes 042, 048, 049, 055, 059
 -/
@@ -34,15 +34,15 @@ namespace UgpLean
 open Nat
 
 -- ════════════════════════════════════════════════════════════════
--- §1  Branch linearization
+-- §1 Branch linearization
 -- ════════════════════════════════════════════════════════════════
 
 /-- The intercept of the branch linearization: B(q) = (q+7)(q-13)+20. -/
 def branchIntercept (q : ℕ) : ℕ := (q + 7) * (q - 13) + 20
 
 /-- Branch linearization identity: c₁(b₂, q₂) = b₂·(q₂ − 13) + B(q₂).
-    This shows c₁ is affine in b₂ with slope (q₂ − 13) and
-    intercept B(q₂) = (q₂+7)(q₂−13)+20, which depends only on q₂. -/
+ This shows c₁ is affine in b₂ with slope (q₂ − 13) and
+ intercept B(q₂) = (q₂+7)(q₂−13)+20, which depends only on q₂. -/
 theorem branch_linearization (b₂ q₂ : ℕ) (_hq : 13 ≤ q₂) :
     c1Val b₂ q₂ = b₂ * (q₂ - 13) + branchIntercept q₂ := by
   unfold c1Val branchIntercept
@@ -61,7 +61,7 @@ theorem branch_linearization_n10 : c1Val 42 24 = 42 * 11 + 361 := by
 
 
 -- ════════════════════════════════════════════════════════════════
--- §2  Resonant factory definitions
+-- §2 Resonant factory definitions
 -- ════════════════════════════════════════════════════════════════
 
 /-- The factory scale parameter L = 13501400. -/
@@ -83,7 +83,7 @@ def factoryQp (t : ℕ) : ℕ := factoryL * t^2 + factoryDp
 def factoryF (t : ℕ) : ℕ := factoryQm t * factoryQp t
 
 /-- **Gap-2 property:** Q₊(t) − Q₋(t) = 2 for all t.
-    This is the structural source of the twin-prime gap. -/
+ This is the structural source of the twin-prime gap. -/
 theorem factory_gap_two (t : ℕ) : factoryQp t = factoryQm t + 2 := by
   unfold factoryQp factoryQm factoryDp factoryDm; omega
 
@@ -104,11 +104,11 @@ theorem factoryL_factored : factoryL = 2^3 * 5^2 * 11 * 17 * 19^2 := by
   unfold factoryL; norm_num
 
 -- ════════════════════════════════════════════════════════════════
--- §3  Local density / Hasse check
+-- §3 Local density / Hasse check
 -- ════════════════════════════════════════════════════════════════
 
 /-- The root count of F mod p, computed with reduced residues
-    L mod p, D₋ mod p, D₊ mod p for efficient kernel evaluation. -/
+ L mod p, D₋ mod p, D₊ mod p for efficient kernel evaluation. -/
 def rootCountFmod (Lp Dmp Dpp p : ℕ) : ℕ :=
   ((Finset.range p).filter (fun t => ((Lp * (t * t) + Dmp) * (Lp * (t * t) + Dpp)) % p = 0)).card
 
@@ -147,8 +147,8 @@ theorem factory_residues_correct :
     13501400 % 23 = 9 ∧ 119511 % 23 = 3 ∧ 119513 % 23 = 5 := by native_decide
 
 /-- No local obstruction: for every good prime p ≤ 43,
-    ρ_F(p) < p, i.e., F(t) does not vanish identically mod any prime.
-    This is necessary for the singular series S > 0. -/
+ ρ_F(p) < p, i.e., F(t) does not vanish identically mod any prime.
+ This is necessary for the singular series S > 0. -/
 theorem hasse_check_no_obstruction :
     rootCountFmod 2 0 2 3 < 3 ∧
     rootCountFmod 3 0 2 7 < 7 ∧
@@ -157,16 +157,16 @@ theorem hasse_check_no_obstruction :
   refine ⟨?_, ?_, ?_, ?_⟩ <;> native_decide
 
 -- ════════════════════════════════════════════════════════════════
--- §4  Product algebra identity
+-- §4 Product algebra identity
 -- ════════════════════════════════════════════════════════════════
 
 /-- **Product algebra factorization.**
-    F(t) = Q₋(t) · Q₊(t), and both factors are positive for t ≥ 0.
+ F(t) = Q₋(t) · Q₊(t), and both factors are positive for t ≥ 0.
 
-    This is the formal content of Proposition 1 in note 059:
-    the factory quartic factors through the product algebra A = K₋ × K₊.
-    Since the Liouville function λ is completely multiplicative,
-    λ(F(t)) = λ(Q₋(t)) · λ(Q₊(t)). -/
+ This is the formal content of Proposition 1 in note 059:
+ the factory quartic factors through the product algebra A = K₋ × K₊.
+ Since the Liouville function λ is completely multiplicative,
+ λ(F(t)) = λ(Q₋(t)) · λ(Q₊(t)). -/
 theorem factory_product_factorization (t : ℕ) :
     factoryF t = factoryQm t * factoryQp t := rfl
 
@@ -179,7 +179,7 @@ theorem factoryQp_pos (t : ℕ) : 0 < factoryQp t := by
   unfold factoryQp factoryL factoryDp; omega
 
 -- ════════════════════════════════════════════════════════════════
--- §5  Concrete factory witnesses
+-- §5 Concrete factory witnesses
 -- ════════════════════════════════════════════════════════════════
 
 /-- F(1) = Q₋(1) · Q₊(1) = 13620911 · 13620913. -/
@@ -190,13 +190,13 @@ theorem factoryF_1 : factoryF 1 = 13620911 * 13620913 := by
 theorem factory_gap_2_at_1 : factoryQp 1 = factoryQm 1 + 2 := factory_gap_two 1
 
 -- ════════════════════════════════════════════════════════════════
--- §6  Quadratic field discriminants and conductors
+-- §6 Quadratic field discriminants and conductors
 -- ════════════════════════════════════════════════════════════════
 
 /-!
 The factory pair (Q₋, Q₊) is associated to two quadratic fields:
-  K₋ = ℚ(√(−101354))  with disc(K₋) = −405416 = −2³·11·17·271
-  K₊ = ℚ(√(−44697862)) with disc(K₊) = −178791448 = −2³·11·17·119513
+ K₋ = ℚ(√(−101354)) with disc(K₋) = −405416 = −2³·11·17·271
+ K₊ = ℚ(√(−44697862)) with disc(K₊) = −178791448 = −2³·11·17·119513
 
 The Kronecker characters χ₋(p) = (disc(K₋)/p) and χ₊(p) = (disc(K₊)/p)
 control the splitting of primes in K₋ and K₊ respectively, and in turn
@@ -239,7 +239,7 @@ theorem factoryQm_ramified_primes :
   unfold factoryL factoryDm; norm_num
 
 -- ════════════════════════════════════════════════════════════════
--- §7  Extended local density: rho_F(p) for primes 47–113
+-- §7 Extended local density: rho_F(p) for primes 47–113
 -- ════════════════════════════════════════════════════════════════
 
 /-!
@@ -263,7 +263,7 @@ theorem localDensity_71 : rootCountFmod (factoryL % 71) (factoryDm % 71) (factor
   native_decide
 
 /-- ρ_F(73) = 2. (χ₋=−1, χ₊=+1: Q₋ inert, Q₊ splits mod 73)
-    Note: b₁ = 73 is the UGP ladder parameter. -/
+ Note: b₁ = 73 is the UGP ladder parameter. -/
 theorem localDensity_73 : rootCountFmod (factoryL % 73) (factoryDm % 73) (factoryDp % 73) 73 = 2 := by
   native_decide
 
@@ -284,13 +284,13 @@ theorem localDensity_113 : rootCountFmod (factoryL % 113) (factoryDm % 113) (fac
   native_decide
 
 -- ════════════════════════════════════════════════════════════════
--- §8  The ρ_F = 2 + χ₋ + χ₊ identity (machine-verified instances)
+-- §8 The ρ_F = 2 + χ₋ + χ₊ identity (machine-verified instances)
 -- ════════════════════════════════════════════════════════════════
 
 /-!
 For each good prime p (not dividing 2·L·D₋·D₊), the identity
 
-  ρ_F(p) = 2 + χ₋(p) + χ₊(p)
+ ρ_F(p) = 2 + χ₋(p) + χ₊(p)
 
 holds, where χ±(p) = Kronecker(disc(K±)/p) ∈ {−1, 0, +1}.
 For unramified primes χ±(p) ∈ {−1, +1}.
@@ -302,7 +302,7 @@ are the algebraic structure constants certified in §6.
 -/
 
 /-- At p=13: χ₋(13)=−1 (inert in K₋), χ₊(13)=+1 (split in K₊), so ρ_F=2.
-    The residues disc(K₋) mod 13 = 2 and disc(K₊) mod 13 = 9 are nonzero (unramified). -/
+ The residues disc(K₋) mod 13 = 2 and disc(K₊) mod 13 = 9 are nonzero (unramified). -/
 theorem chi_values_p13 :
     (-405416 : ℤ) % 13 = 2 ∧ (-178791448 : ℤ) % 13 = 9 := by native_decide
 
@@ -317,8 +317,8 @@ theorem discKminus_coprime_to_key_primes :
     (-405416 : ℤ) % 109 ≠ 0 ∧ (-405416 : ℤ) % 113 ≠ 0 := by native_decide
 
 /-- **ρ_F identity at good primes ≤ 113.**
-    For each good prime p in this range, ρ_F(p) matches 2 + χ₋(p) + χ₊(p).
-    Machine-verified by exhaustive root count vs. discriminant Jacobi symbol. -/
+ For each good prime p in this range, ρ_F(p) matches 2 + χ₋(p) + χ₊(p).
+ Machine-verified by exhaustive root count vs. discriminant Jacobi symbol. -/
 theorem rhoF_identity_verified :
     -- (p, rho_F(p), 2+chi_-(p)+chi_+(p)) — all equal
     rootCountFmod (factoryL%13)  (factoryDm%13)  (factoryDp%13)  13  = 2 ∧
@@ -339,7 +339,7 @@ theorem rhoF_identity_verified :
   native_decide
 
 /-- Doubly-inert prime p=71: ρ_F(71) = 0.
-    This is the only prime ≤ 113 where F(t) is never divisible by p. -/
+ This is the only prime ≤ 113 where F(t) is never divisible by p. -/
 theorem doubly_inert_71 : rootCountFmod (factoryL % 71) (factoryDm % 71) (factoryDp % 71) 71 = 0 := by
   native_decide
 

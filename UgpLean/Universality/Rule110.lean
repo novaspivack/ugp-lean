@@ -6,7 +6,7 @@ import Mathlib.Tactic.FinCases
 # UgpLean.Universality.Rule110 — Elementary CA Rule 110
 
 Rule 110: Wolfram code 110 = 0b01101110. Truth table (L,C,R) → output:
-  111→0, 110→1, 101→1, 100→0, 011→1, 010→1, 001→1, 000→0
+ 111→0, 110→1, 101→1, 100→0, 011→1, 010→1, 001→1, 000→0
 
 The minterm set of ones: S_110 = {110, 101, 011, 010, 001}.
 
@@ -20,7 +20,7 @@ namespace UgpLean.Universality
 def Neighborhood := Fin 8
 
 /-- Rule 110: Wolfram code 110. Output for each of 8 neighborhoods.
-  Index: 7=111, 6=110, 5=101, 4=100, 3=011, 2=010, 1=001, 0=000 -/
+ Index: 7=111, 6=110, 5=101, 4=100, 3=011, 2=010, 1=001, 0=000 -/
 def rule110Output (i : Fin 8) : Bool :=
   match i.val with
   | 0 => false   -- 000
@@ -44,8 +44,8 @@ theorem rule110_output_iff_minterm (i : Fin 8) :
   fin_cases i <;> native_decide
 
 /-- Cook (2004) "Universality in Elementary Cellular Automaton Rule 110":
-  Rule 110 can simulate any Turing machine. We cite this as an external result.
-  Full formalization of the reduction would require a separate project. -/
+ Rule 110 can simulate any Turing machine. We cite this as an external result.
+ Full formalization of the reduction would require a separate project. -/
 def Rule110CookUniversality : Prop := True  -- Cited; not proved here
 
 end UgpLean.Universality

@@ -46,11 +46,11 @@ the UCL coefficient and the GTE linearization spectrum.
 
 This is more structural than Phase C's S₁ because:
 1. It derives from a DYNAMICAL property (GTE linearization) rather
-   than a STATIC property (set membership).
+ than a STATIC property (set membership).
 2. It connects two independently certified quantities (the UCL
-   coefficient and the Fibonacci eigenvalue) via a concrete formula.
+ coefficient and the Fibonacci eigenvalue) via a concrete formula.
 3. It has a clear physical interpretation: the UCL curvature is
-   controlled by the renormalization flow's dominant mode.
+ controlled by the renormalization flow's dominant mode.
 -/
 
 namespace UgpLean.ElegantKernel.Unconditional

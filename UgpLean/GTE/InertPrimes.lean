@@ -11,23 +11,23 @@ equation L·t² + D₋ ≡ 0 (mod p) has no solution — i.e. p never divides
 any value Q₋(t). We prove:
 
 1. **General theorem** (`qm_no_root_of_legendreSym_neg_one`): if p ∤ L,
-   p ∤ D₋, and the Legendre symbol (−L·D₋ / p) = −1, then p ∤ Q₋(t)
-   for all t. This is the algebraic source of inertness.
+ p ∤ D₋, and the Legendre symbol (−L·D₋ / p) = −1, then p ∤ Q₋(t)
+ for all t. This is the algebraic source of inertness.
 
 2. **Concrete instances**: for each of the 15 inert unramified primes
-   p ∈ {13, 23, 53, 59, 61, 71, 73, 79, 83, 101, 103, 107, 127, 131, 137},
-   the fact ∀ t : ZMod p, L%p · t² + D₋%p ≠ 0 is machine-verified.
+ p ∈ {13, 23, 53, 59, 61, 71, 73, 79, 83, 101, 103, 107, 127, 131, 137},
+ the fact ∀ t : ZMod p, L%p · t² + D₋%p ≠ 0 is machine-verified.
 
 3. **Conjunction**: `qm_inert_primes_certified` packages all 15 instances.
 
 4. **Kappa lower bound**: `kappa_unram_lower_bound` gives a certified
-   rational lower bound on the Selberg–Delange sieve dimension
-   κ_unram = Σ_{p split unram} 2/(p(p−1)).
+ rational lower bound on the Selberg–Delange sieve dimension
+ κ_unram = Σ_{p split unram} 2/(p(p−1)).
 
 ## Proof of the general theorem
 
 If p | L·t² + D₋, then L·t² ≡ −D₋ (mod p). Multiplying by L:
-  (L·t)² ≡ −L·D₋ (mod p).
+ (L·t)² ≡ −L·D₋ (mod p).
 But legendreSym p (−L·D₋) = −1 means −L·D₋ is not a square in ZMod p,
 so (L·t)² = −L·D₋ has no solution. Contradiction.
 
@@ -47,16 +47,16 @@ namespace UgpLean
 open ZMod Nat
 
 -- ════════════════════════════════════════════════════════════════
--- §1  General Inert Prime Theorem
+-- §1 General Inert Prime Theorem
 -- ════════════════════════════════════════════════════════════════
 
 /-- **General Inert Prime Theorem for Q₋.**
-    If p is an odd prime not dividing L or D₋, and the Legendre symbol
-    (−L·D₋ / p) = −1 (i.e. −L·D₋ is not a square mod p), then p never
-    divides Q₋(t) = L·t² + D₋ for any natural number t.
+ If p is an odd prime not dividing L or D₋, and the Legendre symbol
+ (−L·D₋ / p) = −1 (i.e. −L·D₋ is not a square mod p), then p never
+ divides Q₋(t) = L·t² + D₋ for any natural number t.
 
-    Proof: p | Q₋(t) forces (L·t)² ≡ −L·D₋ (mod p), contradicting
-    the Legendre condition. -/
+ Proof: p | Q₋(t) forces (L·t)² ≡ −L·D₋ (mod p), contradicting
+ the Legendre condition. -/
 theorem qm_no_root_of_legendreSym_neg_one
     (p : ℕ) [hp : Fact p.Prime]
     (_hpL : ¬(p ∣ factoryL))
@@ -96,12 +96,12 @@ theorem qm_no_root_of_legendreSym_neg_one
   linear_combination -key
 
 -- ════════════════════════════════════════════════════════════════
--- §2  Concrete instances via native_decide
+-- §2 Concrete instances via native_decide
 -- ════════════════════════════════════════════════════════════════
 
 /-!
 For each inert unramified prime p, we prove:
-  ∀ t : ZMod p, (L%p : ZMod p) * t^2 + (D₋%p : ZMod p) ≠ 0
+ ∀ t : ZMod p, (L%p : ZMod p) * t^2 + (D₋%p : ZMod p) ≠ 0
 
 This is equivalent to: p does not divide Q₋(t) for any t.
 The proof is by exhaustive kernel evaluation (ZMod p is a Fintype).
@@ -132,7 +132,7 @@ theorem qm_no_root_mod_71 : ∀ t : ZMod 71, (40 : ZMod 71) * t ^ 2 + 18 ≠ 0 :
   native_decide
 
 /-- p = 73 is inert for Q₋: no t satisfies Q₋(t) ≡ 0 (mod 73).
-    This is the UGP mirror prime: 73 = b₁ from the Lepton Seed. -/
+ This is the UGP mirror prime: 73 = b₁ from the Lepton Seed. -/
 theorem qm_no_root_mod_73 : ∀ t : ZMod 73, (50 : ZMod 73) * t ^ 2 + 10 ≠ 0 := by
   native_decide
 
@@ -169,7 +169,7 @@ theorem qm_no_root_mod_137 : ∀ t : ZMod 137, (50 : ZMod 137) * t ^ 2 + 47 ≠ 
   native_decide
 
 -- ════════════════════════════════════════════════════════════════
--- §3  Residue correctness certificates
+-- §3 Residue correctness certificates
 -- ════════════════════════════════════════════════════════════════
 
 /-- The residues used in the concrete instances match L = 13501400 and D₋ = 119511. -/
@@ -192,12 +192,12 @@ theorem inert_prime_residues_correct :
   native_decide
 
 -- ════════════════════════════════════════════════════════════════
--- §4  Conjunction: all 15 instances certified
+-- §4 Conjunction: all 15 instances certified
 -- ════════════════════════════════════════════════════════════════
 
 /-- **All 15 certified inert primes for Q₋.**
-    For each p in {13,23,53,59,61,71,73,79,83,101,103,107,127,131,137},
-    the quadratic L·t² + D₋ has no root mod p. -/
+ For each p in {13,23,53,59,61,71,73,79,83,101,103,107,127,131,137},
+ the quadratic L·t² + D₋ has no root mod p. -/
 theorem qm_inert_primes_certified :
     (∀ t : ZMod 13,  (3   : ZMod 13)  * t ^ 2 + 2   ≠ 0) ∧
     (∀ t : ZMod 23,  (9   : ZMod 23)  * t ^ 2 + 3   ≠ 0) ∧
@@ -221,29 +221,29 @@ theorem qm_inert_primes_certified :
    qm_no_root_mod_127, qm_no_root_mod_131, qm_no_root_mod_137⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §5  Sieve dimension lower bound
+-- §5 Sieve dimension lower bound
 -- ════════════════════════════════════════════════════════════════
 
 /-!
 The Selberg–Delange sieve dimension for the unramified part is:
-  κ_unram = Σ_{p split unram} ρ₋(p) / (p(p−1))
-           = Σ_{p split unram} 2 / (p(p−1))
+ κ_unram = Σ_{p split unram} ρ₋(p) / (p(p−1))
+ = Σ_{p split unram} 2 / (p(p−1))
 
 where the sum is over primes p with χ₋(p) = +1 (split in K₋),
 p ∤ L·D₋ (unramified). The split primes ≤ 137 are:
-  {29, 31, 37, 41, 43, 47, 67, 89, 97, 109, 113}
+ {29, 31, 37, 41, 43, 47, 67, 89, 97, 109, 113}
 
 A certified rational lower bound from these 11 primes:
-  κ_unram ≥ 2/812 + 2/930 + 2/1332 + 2/1640 + 2/1806 +
-             2/2162 + 2/4422 + 2/7832 + 2/9312 + 2/11772 + 2/12656
-           = (sum computed by native_decide)
+ κ_unram ≥ 2/812 + 2/930 + 2/1332 + 2/1640 + 2/1806 +
+ 2/2162 + 2/4422 + 2/7832 + 2/9312 + 2/11772 + 2/12656
+ = (sum computed by native_decide)
 
 The full sum to p ≤ 100000 ≈ 0.01180 (consistent with twins-notes value 0.01170).
 -/
 
 /-- The split unramified primes ≤ 137 contribute at least 1/1000 to κ_unram.
-    Split primes: p ∈ {29, 31, 37, 41, 43, 47, 67, 89, 97, 109, 113}.
-    Each contributes 2/(p(p-1)). Certified as a rational inequality. -/
+ Split primes: p ∈ {29, 31, 37, 41, 43, 47, 67, 89, 97, 109, 113}.
+ Each contributes 2/(p(p-1)). Certified as a rational inequality. -/
 theorem kappa_unram_lower_bound :
     (1 : ℚ) / 1000 ≤
       2 / (29 * 28) + 2 / (31 * 30) + 2 / (37 * 36) + 2 / (41 * 40) +

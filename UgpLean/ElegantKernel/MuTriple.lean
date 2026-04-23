@@ -15,8 +15,8 @@ is structurally forced by its relationship to the Lean-certified bare SU(3)
 gauge coupling `g3Sq_bare_eq` (zero sorry) and the U(1) bare coupling
 `g1Sq_bare_eq_D1_over_125` (zero sorry), through two Vieta-like identities:
 
-  (product)       k_a * k_b * k_c   = -1/4,  so 1/(k_a k_b k_c)² = 16 = D_1 = 125 * g₁²_bare.
-  (Vandermonde²)  ∏_{i<j} (k_i - k_j)² = 41075281/1327104 = D_3 = (125/6) * g₃²_bare.
+ (product) k_a * k_b * k_c = -1/4, so 1/(k_a k_b k_c)² = 16 = D_1 = 125 * g₁²_bare.
+ (Vandermonde²) ∏_{i<j} (k_i - k_j)² = 41075281/1327104 = D_3 = (125/6) * g₃²_bare.
 
 These two identities simultaneously pin the triple to a Lean-certified pair of
 upstream objects (D_1, D_3 both derivable from Lean-certified gauge couplings).
@@ -27,15 +27,15 @@ identities, the triple is uniquely determined.
 ## Defensibility ledger
 
 See `docs/DEFENSIBILITY_THM_UCL_3.md` (SHA 218dd9ce3ae57bb4...) for the full
-Phase 1.5 defensibility analysis.  Key results:
+Phase 1.5 defensibility analysis. Key results:
 - Criterion (A) pre-specification: PASS via g3Sq_bare_eq (Lean-certified
-  independently of the UCL).
+ independently of the UCL).
 - Criterion (C) independent predictions: PASS strongly — α_s(M_Z) blind at
-  +0.36σ (COMP-P01-D) and 9-fermion UCL fit at 4×10⁻⁵ % RMS.
+ +0.36σ and 9-fermion UCL fit at 4×10⁻⁵ % RMS.
 - Criterion (D) rigidity: 32 exact-equality triples in denom ≤ 12 basis;
-  all related by translation + sign; unique under min-max|num| + sign.
+ all related by translation + sign; unique under min-max|num| + sign.
 - Criterion (E) sparsity: narrow-basis saturation 3.9% at 10 ppm for rational
-  triple basis; categorically non-saturating at exact rational equality.
+ triple basis; categorically non-saturating at exact rational equality.
 
 ## Development status
 
@@ -106,7 +106,7 @@ theorem sum_squares_eq_D2_scaled :
 /-! ## Structural identity 3: Vandermonde² → SU(3) invariant D₃ -/
 
 /-- The squared Vandermonde discriminant of (k_a, k_b, k_c):
-    ∏_{i<j} (k_i - k_j)². -/
+ ∏_{i<j} (k_i - k_j)². -/
 def vandermonde_sq (x y z : ℚ) : ℚ :=
   ((x - y) * (y - z) * (x - z))^2
 
@@ -132,12 +132,12 @@ theorem vandermonde_sq_eq_g3_sq_bare_scaled :
 The UCL Möbius triple (k_a, k_b, k_c) = (1/8, −3/2, 4/3) simultaneously
 encodes **all three** Standard Model gauge-group invariants D_1, D_2, D_3 via
 three distinct symmetric functions:
-  (i)   1/(k_a · k_b · k_c)² = D_1 = 16         (U(1), via product)
-  (ii)  (4/3) · (k_a² + k_b² + k_c²) = D_2       (SU(2), via sum of squares)
-  (iii) Vandermonde²((k_a, k_b, k_c)) = D_3      (SU(3), via squared Vandermonde)
+ (i) 1/(k_a · k_b · k_c)² = D_1 = 16 (U(1), via product)
+ (ii) (4/3) · (k_a² + k_b² + k_c²) = D_2 (SU(2), via sum of squares)
+ (iii) Vandermonde²((k_a, k_b, k_c)) = D_3 (SU(3), via squared Vandermonde)
 
 All three of D_1, D_2, D_3 are Lean-certified as bare-coupling components in
-`UgpLean.Phase4.GaugeCouplings`.  The UCL Möbius triple is therefore
+`UgpLean.Phase4.GaugeCouplings`. The UCL Möbius triple is therefore
 structurally triply-determined by the gauge sector: it is NOT an independent
 empirical fit but the UCL-coefficient instantiation of all three Lean-certified
 gauge invariants. -/
@@ -163,8 +163,8 @@ theorem k_sum_pairs_eq :
   unfold k_a k_b k_c; norm_num
 
 /-- The cubic polynomial whose roots are exactly (k_a, k_b, k_c):
-    `mu_poly(t) = 48t³ + 2t² − 97t + 12`
-    (i.e. `48 · (t − 1/8)(t + 3/2)(t − 4/3)`). -/
+ `mu_poly(t) = 48t³ + 2t² − 97t + 12`
+ (i.e. `48 · (t − 1/8)(t + 3/2)(t − 4/3)`). -/
 def mu_poly (t : ℚ) : ℚ := 48 * t^3 + 2 * t^2 - 97 * t + 12
 
 /-- `mu_poly` factors as `48 (t − 1/8)(t + 3/2)(t − 4/3)`. -/
@@ -201,7 +201,7 @@ theorem mu_triple_unique_from_sym (x y z : ℚ)
     (y = 1/8 ∨ y = -3/2 ∨ y = 4/3) ∧
     (z = 1/8 ∨ z = -3/2 ∨ z = 4/3) := by
   -- Each of x, y, z is a root of the cubic with the given elementary
-  -- symmetric polynomials.  We identify the cubic with `mu_poly`.
+  -- symmetric polynomials. We identify the cubic with `mu_poly`.
   -- From Vieta: 48·(s−x)(s−y)(s−z) = 48·s³ + 2·s² − 97·s + 12 for all s
   have vieta : ∀ s : ℚ,
       48 * (s - x) * (s - y) * (s - z) = 48 * s^3 + 2 * s^2 - 97 * s + 12 := by
@@ -240,9 +240,9 @@ theorem mu_triple_unique_from_sym (x y z : ℚ)
 
 /-! ## Core THM-UCL-3: structural forcing + uniqueness -/
 
-/-- **THM-UCL-3 (main).**  Every rational triple (x, y, z) whose elementary
+/-- **THM-UCL-3 (main).** Every rational triple (x, y, z) whose elementary
 symmetric polynomials match those of (1/8, −3/2, 4/3) has each entry in the
-set `{1/8, −3/2, 4/3}`.  Combined with `mu_triple_three_gauge_identities`,
+set `{1/8, −3/2, 4/3}`. Combined with `mu_triple_three_gauge_identities`,
 this expresses the UCL Möbius triple as the unique-up-to-permutation rational
 triple compatible with the Lean-certified gauge-invariant structural content
 D_1, D_2, D_3. -/
