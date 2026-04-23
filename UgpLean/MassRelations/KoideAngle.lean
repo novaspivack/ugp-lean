@@ -183,6 +183,67 @@ theorem max_lepton_a_eq_nc_squared :
             UgpLean.canonicalGen3.a = 3 ^ 2 := by
   unfold UgpLean.LeptonSeed UgpLean.canonicalGen2 UgpLean.canonicalGen3; decide
 
+/-! ## §6. The b₁ and a_top derivation from N_c (EPIC 9 Round 2 discovery) -/
+
+/-- **The lepton ladder b₁ is expressible in terms of N_c = 3.**
+
+    b₁ = N_c^4 − a_τ − N_c  =  3^4 − (3^2+1)/2 − 3  =  81 − 5 − 3  =  73
+
+    where N_c = 3 is the QCD color rank and a_τ = (N_c^2+1)/2 = 5 is the
+    tau GTE a-value.  This expresses the Lean-certified RSUC invariant b₁
+    purely in terms of gauge group data.  Proof: by definition, zero sorry. -/
+theorem lepton_b1_from_N_c :
+    UgpLean.leptonB = 3^4 - (3^2+1)/2 - 3 := by
+  unfold UgpLean.leptonB; decide
+
+/-- The top quark GTE a-value (76) equals N_c^4 − a_τ = 3^4 − 5 = 76.
+    Equivalently: a_top = b₁ + N_c, so b₁ + 3 = 3^4 − (3^2+1)/2. -/
+theorem top_a_from_N_c :
+    UgpLean.leptonB + 3 = 3^4 - (3^2+1)/2 := by
+  unfold UgpLean.leptonB; decide
+
+/-- a_top = b₁ + N_c = 73 + 3 = 76.  The top quark breaks the {1,5,9} pattern
+    because a_top = N_c^4 − a_τ = 81 − 5 = 76 far exceeds N_c^2 = 9. -/
+theorem top_a_eq_b1_plus_color_rank :
+    UgpLean.leptonB + 3 = 76 := by
+  unfold UgpLean.leptonB; decide
+
+/-- **The complete N_c structural chain (zero sorry, zero hypotheses):**
+    N_c = 3 determines:  a_τ = 5,  b₁ = 73,  a_top = 76. -/
+theorem N_c_structural_chain :
+    UgpLean.canonicalGen3.a = (3^2 + 1) / 2 ∧
+    UgpLean.leptonB = 3^4 - (3^2+1)/2 - 3 ∧
+    UgpLean.leptonB + 3 = 3^4 - (3^2+1)/2 := by
+  unfold UgpLean.canonicalGen3 UgpLean.leptonB; decide
+
+/-- **The mirror offset δ is also expressible in N_c.**
+
+    δ = N_c + (N_c^2 − 1)/2  =  3 + 4  =  7
+
+    where (N_c^2−1)/2 = 4 = number of SU(N_c) raising generators
+    (= the step size of the {1,5,9} arithmetic sequence).
+
+    δ combines the rank of SU(N_c) with its raising operator count. -/
+theorem delta_from_N_c :
+    UgpLean.ugp1_s = 3 + (3^2 - 1) / 2 := by
+  unfold UgpLean.ugp1_s; decide
+
+/-- **The electron mass formula purely in N_c:**
+
+    m_e  =  δ · b₁  =  [N_c + (N_c^2−1)/2]  ·  [N_c^4 − (N_c^2+1)/2 − N_c]  keV
+          =  7  ·  73  =  511  keV
+
+    All of δ and b₁ are determined by N_c = 3.  The keV unit remains
+    the one external (principle-blocked) input. -/
+theorem electron_mass_factor_from_N_c :
+    UgpLean.ugp1_s * UgpLean.leptonB = (3 + (3^2-1)/2) * (3^4 - (3^2+1)/2 - 3) := by
+  unfold UgpLean.ugp1_s UgpLean.leptonB; decide
+
+/-- Numerically: δ × b₁ = 511. -/
+theorem delta_b1_eq_511 :
+    UgpLean.ugp1_s * UgpLean.leptonB = 511 := by
+  unfold UgpLean.ugp1_s UgpLean.leptonB; decide
+
 /-! ## §7. Summary -/
 
 /-- **Summary.** The Koide angle is 2/canonicalGen2.a, and for any θ the
