@@ -93,6 +93,24 @@ both openly disclosed with precise citations:
 | **L_model_eq_log_wedge_form** | LModelDerivation | L_model = log₂((wedge2Factor · wedge5Factor) / orbitLength) |
 | **L_model_from_gauge_structure** | LModelDerivation | L_model = log₂((D₁ · 125) / 3) from D₁, 5³, orbit length 3 |
 
+## Koide Angle and β Derivation (EPIC 8, 2026-04-20)
+
+Module `MassRelations.KoideAngle` + extended `MassRelations.UpLeptonCyclotomic` §5.
+All zero sorry, zero hypotheses. Commit f7d6ac2.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **koide_angle_eq_two_ninths** | MassRelations.KoideAngle | koideThetaUGP = 2/9 |
+| **koide_angle_from_gte_structure** | MassRelations.KoideAngle | koideThetaUGP = 2/canonicalGen2.a |
+| **cos_sum_three_120** | MassRelations.KoideAngle | Σcos(θ+2πg/3)=0 |
+| **cos_sq_sum_three_120** | MassRelations.KoideAngle | Σcos²(θ+2πg/3)=3/2 |
+| **koide_Q_two_thirds** | MassRelations.KoideAngle | Q=(Σr²)/(Σr)²=2/3 for any θ |
+| **beta_eq_alpha_div_c2_su3** | MassRelations.UpLeptonCyclotomic | β = α/C₂(SU3) = (π/6)/(4/3) = π/8 |
+| **beta_eq_alpha_times_c2_su2** | MassRelations.UpLeptonCyclotomic | β = α×C₂(SU2) = π/8 |
+| **alpha_over_beta_eq_c2_su3** | MassRelations.UpLeptonCyclotomic | α/β = C₂(SU3) = 4/3 |
+
+---
+
 ## 13_SPEC Claim C — TT Formula = Weyl Bisector × Binary Cascade
 
 All theorems zero sorry, zero hypotheses. Module: `MassRelations.ClaimCBridge`. Committed 2026-04-20.
