@@ -1,4 +1,5 @@
 import UgpLean.MassRelations.UpLeptonCyclotomic
+import UgpLean.MassRelations.ClaimCBridge
 import UgpLean.MassRelations.DownRational
 import UgpLean.MassRelations.ClebschGordan
 import UgpLean.MassRelations.SU3FlavorCartan
