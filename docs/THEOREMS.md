@@ -105,6 +105,23 @@ Module `MassRelations.LeptonMassPrediction`. Zero sorry.
 | **koide_angle_equals_two_over_muon_a** | MassRelations.LeptonMassPrediction | koideThetaUGP = 2/canonicalGen2.a |
 | **epic_8_lepton_mass_structural_summary** | MassRelations.LeptonMassPrediction | Bundle: angle=2/muon_a ∧ muon_a=9 ∧ Q=2/3 for any θ |
 
+## VV Unified N_c Formula (EPIC 10, 2026-04-20)
+
+Module `MassRelations.DownRational` §7 (extended). Commit 48af4c9. Zero sorry.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **alpha_d_from_N_c** | MassRelations.DownRational | α_d = 1+(N_c+1)/N_c² = 13/9 |
+| **beta_d_from_N_c** | MassRelations.DownRational | β_d = -(1+1/(2N_c)) = -7/6 |
+| **gamma_d_from_N_c** | MassRelations.DownRational | γ_d = -(N_c+2)/(2(N_c²-2)) = -5/14 |
+| **VV_unified_from_N_c** | MassRelations.DownRational | All three from N_c: α∧β∧γ = rational(N_c) |
+
+> N_c²-2 = δ = 7, so γ_d = -(N_c+2)/(2δ). Combined with EPIC 9, both the  
+> Koide lepton sector (θ = (N_c²-1)/(4N_c²)) and the VV quark sector  
+> are controlled by N_c = 3. EPIC 10 algebraic gate PASSED.
+
+---
+
 ## VV Coefficient Structural Identifications (EPIC 8, 2026-04-20)
 
 Module `MassRelations.DownRational` §§5-6 (extended). Zero sorry.
