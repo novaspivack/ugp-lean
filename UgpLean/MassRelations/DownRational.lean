@@ -98,4 +98,75 @@ theorem combined_cyclotomic_coefficient :
 theorem combined_constant_139_630 :
     (13 : ℚ) / 9 * (2 / 5) + (-5 / 14) = 139 / 630 := by norm_num
 
+/-! ## §5. Structural identification of the VV coefficients
+
+The three VV coefficients (α_d = 13/9, β_d = −7/6, γ_d = −5/14) each admit
+an exact structural interpretation in terms of GUT group theory and SM
+hypercharge.  This section states those identifications as proved rational
+identities.
+
+- α_d = 13/9 combines SU(5) rank and SU(3) Weyl group order.
+- β_d = −7/6 = −(1 + Y_Q), where Y_Q = 1/6 is the SM left-handed quark
+  hypercharge.
+- γ_d = −5/14 = −dim(45_SU(5)) / dim(126_SO(10)), a Higgs-representation ratio.
+
+The rational identities below are algebraically exact (zero sorry).  The
+physical claim that these GUT quantities are the correct origins of the VV
+coefficients is a separate physical-theory claim (see 14_SPEC Phase 3 in
+ugp-physics), which these Lean theorems support at the algebraic level. -/
+
+/-- The SM left-handed quark-doublet hypercharge. -/
+def Y_Q_left : ℚ := 1 / 6
+
+/-- β_d = −(1 + Y_Q_left). -/
+theorem beta_d_from_hypercharge : beta_d = -(1 + Y_Q_left) := by
+  unfold beta_d Y_Q_left; norm_num
+
+/-- The rank of SU(5). -/
+def rank_SU5 : ℕ := 4
+
+/-- α_d = 1 + rank(SU(5))/9. -/
+theorem alpha_d_from_su5_rank : alpha_d = 1 + (rank_SU5 : ℚ) / 9 := by
+  unfold alpha_d rank_SU5; norm_num
+
+/-- The order of the Weyl group of SU(3), |W(SU(3))| = |S₃| = 6. -/
+def weyl_SU3_order : ℕ := 6
+
+/-- α_d = (|W(SU(3))| + 7) / 9. -/
+theorem alpha_d_from_su3_weyl : alpha_d = ((weyl_SU3_order : ℚ) + 7) / 9 := by
+  unfold alpha_d weyl_SU3_order; norm_num
+
+/-- Dimension of the SU(5) 45 representation (Georgi-Jarlskog Higgs). -/
+def dim_45_SU5 : ℕ := 45
+
+/-- Dimension of the SO(10) 126 representation (Majorana Higgs). -/
+def dim_126_SO10 : ℕ := 126
+
+/-- γ_d = −dim(45_SU(5)) / dim(126_SO(10)) = −45/126 = −5/14. -/
+theorem gamma_d_from_gut_dims :
+    gamma_d = -(dim_45_SU5 : ℚ) / dim_126_SO10 := by
+  unfold gamma_d dim_45_SU5 dim_126_SO10; norm_num
+
+/-! ## §6. Unified VV structural summary -/
+
+/-- **Unified VV structural summary.**
+
+    Each of the three VV coefficients (α_d, β_d, γ_d) admits an exact
+    rational identification with a specific GUT or SM gauge quantity:
+
+    - α_d = 1 + rank(SU(5))/9            = 13/9
+    - β_d = −(1 + Y_Q_left)               = −7/6  (SM quark doublet hypercharge)
+    - γ_d = −dim(45_SU5) / dim(126_SO10)  = −5/14 (GUT Higgs dimension ratio)
+
+    These identifications are algebraically exact.  Whether a single
+    unified Yukawa-texture Lagrangian or RG-flow argument produces all
+    three coefficients simultaneously is an open physical question
+    (14_SPEC in ugp-physics); the present theorem certifies the algebraic
+    skeleton of the answer. -/
+theorem VV_coefficients_structural_summary :
+    alpha_d = 1 + (rank_SU5 : ℚ) / 9 ∧
+    beta_d  = -(1 + Y_Q_left) ∧
+    gamma_d = -(dim_45_SU5 : ℚ) / dim_126_SO10 :=
+  ⟨alpha_d_from_su5_rank, beta_d_from_hypercharge, gamma_d_from_gut_dims⟩
+
 end UgpLean.MassRelations.DownRational
