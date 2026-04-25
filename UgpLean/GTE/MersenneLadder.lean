@@ -48,7 +48,7 @@ connecting the Mersenne jump to the QCD colour rank Nc = 3.
 ## Reference
 
 UGP paper Def. 2.5, the Mersenne ladder postulate (§ implementation note);
-Spec 013 (EPIC 15, specs/IN-PROCESS/EPIC_15_NEW_DIRECTIONS/).
+the UGP foundational monograph and companion papers.
 -/
 
 namespace UgpLean
@@ -276,7 +276,7 @@ theorem canonicalGen3_phys_values :
 
  NOTE: This conjecture is stated as a Lean Prop (open; not yet proved).
  The proof would require formalizing "description length" over Nc-polynomial
- expressions — the subject of Spec 006 (Algebraic Saturation Barrier). -/
+ expressions over N_c-polynomial families. -/
 def MersenneLadderUniqueness : Prop :=
   ∀ (Nc : ℕ), Nc = 3 →
   ∀ f : ℕ → ℕ,
