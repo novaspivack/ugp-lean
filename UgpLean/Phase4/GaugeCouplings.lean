@@ -49,4 +49,48 @@ def SU2_harmonic_mean_uniqueness : Prop := True
  Reference: JMP Math Foundations Thm A.2 -/
 def SU3_Vandermonde_uniqueness : Prop := True
 
+-- ════════════════════════════════════════════════════════════════
+-- Electroweak mixing predictions from bare couplings
+-- ════════════════════════════════════════════════════════════════
+
+/-- The Weinberg angle prediction from UGP bare couplings (tree-level).
+ Using the standard hypercharge normalization (Convention A: g₁ = g_Y),
+ the Weinberg angle is sin²θ_W = g₁²/(g₁²+g₂²).
+
+ UGP prediction (exact rational):
+   sin²θ_W = (16/125) / (16/125 + 2329/5400) = 3456/15101
+
+ PDG value (MS-bar at M_Z): 0.23121
+ UGP tree-level prediction: 3456/15101 = 0.22886 (1.0% below PDG)
+ The ~1% discrepancy is the two-loop radiative correction, consistent
+ with the m_W prediction (−1.28σ after two-loop, −36σ at tree-level). -/
+def sin2_theta_W_bare : ℚ := g1Sq_bare / (g1Sq_bare + g2Sq_bare)
+
+theorem sin2_theta_W_bare_eq : sin2_theta_W_bare = 3456/15101 := by
+  unfold sin2_theta_W_bare g1Sq_bare g2Sq_bare; norm_num
+
+/-- The UGP Weinberg angle is between 0 and 1. -/
+theorem sin2_theta_W_bare_bounds : 0 < sin2_theta_W_bare ∧ sin2_theta_W_bare < 1 := by
+  unfold sin2_theta_W_bare; constructor <;> norm_num [g1Sq_bare, g2Sq_bare]
+
+/-- Equivalently: cos²θ_W = g₂²/(g₁²+g₂²). -/
+def cos2_theta_W_bare : ℚ := g2Sq_bare / (g1Sq_bare + g2Sq_bare)
+
+/-- sin²θ_W + cos²θ_W = 1 (Pythagorean identity). -/
+theorem sin2_plus_cos2_eq_one :
+    sin2_theta_W_bare + cos2_theta_W_bare = 1 := by
+  unfold sin2_theta_W_bare cos2_theta_W_bare g1Sq_bare g2Sq_bare; norm_num
+
+/-- The electromagnetic coupling from g₁ and g₂:
+ 1/α_EM = 1/α₂ + 1/α₁ at tree level, equivalent to
+ 4π/α_EM = (g₁² + g₂²)²/(g₁²·g₂²) up to overall normalization. -/
+def alpha_em_numerator_bare : ℚ :=
+  g1Sq_bare * g2Sq_bare / (g1Sq_bare + g2Sq_bare)
+
+/-- The g₁²/g₂² ratio (Convention A). PDG: sin²/(1-sin²) ≈ 0.3008. -/
+def g1_over_g2_sq_bare : ℚ := g1Sq_bare / g2Sq_bare
+
+theorem g1_over_g2_sq_bare_eq : g1_over_g2_sq_bare = 3456 / 11645 := by
+  unfold g1_over_g2_sq_bare g1Sq_bare g2Sq_bare; norm_num
+
 end UgpLean.Phase4
