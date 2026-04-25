@@ -154,7 +154,115 @@ theorem c3_phys_entanglement_from_exponent_gcd :
   exact mersenne_gcd_identity_proved 10 16
 
 -- ════════════════════════════════════════════════════════════════
--- §5  Open conjecture: uniqueness of T_phys under MDL constraints
+-- §5  Fibonacci structure: the arithmetic criterion for k' = 16
+-- ════════════════════════════════════════════════════════════════
+
+/-!
+## The double-Fibonacci criterion
+
+The Mersenne exponents in the canonical orbit form a consecutive pair of
+doubled Fibonacci numbers: n = 2·F(5) = 10 and k' = 2·F(6) = 16.
+
+This gives a clean arithmetic criterion that singles out k' = 16 over k = 12:
+  • 12 is NOT a double Fibonacci number (no Fibonacci equals 6)
+  • 16 = 2·F(6) IS the smallest double Fibonacci number > 10 = 2·F(5)
+
+The full Fibonacci orbit structure at n=10, Nc=3:
+  F(4) = 3 = Nc         (QCD colour rank)
+  F(5) = 5, 2·F(5) = 10 = n   (ridge level = double Fibonacci)
+  F(6) = 8 = Nc²-1      (dim(SU(Nc)) = number of gluons)
+  2·F(6) = 16 = k'      (physics Mersenne exponent = double Fibonacci)
+  F(7) = 13             (quotient gap, proved as fib13_is_233 in ugp-lean)
+
+The jump k'-n = 2·F(6) - 2·F(5) = 2·F(4) = 2·Nc = 6 by Fibonacci recurrence
+F(m+1) = F(m) + F(m-1), giving F(6) - F(5) = F(4) = 3 = Nc.
+-/
+
+/-- n = 10 is twice the 5th Fibonacci number. -/
+theorem ridge_n_is_double_fib5 : 2 * Nat.fib 5 = 10 := by native_decide
+
+/-- k' = 16 is twice the 6th Fibonacci number. -/
+theorem kprime_is_double_fib6 : 2 * Nat.fib 6 = 16 := by native_decide
+
+/-- The Mersenne exponent jump 6 = 2·F(4) = 2·Nc.
+ This follows from the Fibonacci recurrence F(6) - F(5) = F(4) = 3 = Nc. -/
+theorem mersenne_jump_is_double_fib4 : 2 * Nat.fib 6 - 2 * Nat.fib 5 = 2 * Nat.fib 4 := by
+  native_decide
+
+/-- Nc = F(4): the QCD colour rank is the 4th Fibonacci number. -/
+theorem Nc_is_fib4 : (3 : ℕ) = Nat.fib 4 := by native_decide
+
+/-- dim(SU(Nc)) = Nc²-1 = 8 = F(6): the number of gluons is the 6th Fibonacci number. -/
+theorem dim_SU_Nc_is_fib6 : (3 : ℕ)^2 - 1 = Nat.fib 6 := by native_decide
+
+/-- F(7) = 13: the quotient gap in the UGP orbit is the 7th Fibonacci number.
+ (Connects to `fib13_is_233` / `ugp_fibonacci_rigidity` in ugp-lean.) -/
+theorem quotient_gap_is_fib7 : Nat.fib 7 = 13 := by native_decide
+
+/-- The key uniqueness criterion: there is no double Fibonacci number strictly
+ between n=10 and k'=16. The consecutive double Fibonacci pair is (10, 16).
+
+ Proof: double Fibonacci numbers up to 20 are {2, 2, 4, 6, 10, 16, ...}.
+ Between 10 and 16 there are none, so k'=16 is the unique minimal choice. -/
+theorem no_double_fib_between_n_and_kprime :
+    ∀ m : ℕ, ¬ (10 < 2 * Nat.fib m ∧ 2 * Nat.fib m < 16) := by
+  intro m ⟨h1, h2⟩
+  -- All Fibonacci values up to m=8 can be checked by native_decide
+  -- For m ≥ 8, Nat.fib m ≥ Nat.fib 8 = 21, so 2*fib m ≥ 42 > 16
+  by_cases hm : m ≤ 8
+  · interval_cases m <;> simp [Nat.fib] at h1 h2
+  · have hbig : Nat.fib m ≥ Nat.fib 8 := Nat.fib_mono (by omega)
+    have : Nat.fib 8 = 21 := by native_decide
+    omega
+
+/-- Corollary: k = 12 is NOT a double Fibonacci number, so it fails the criterion. -/
+theorem k_12_not_double_fib : ∀ m : ℕ, 2 * Nat.fib m ≠ 12 := by
+  intro m
+  by_cases hm : m ≤ 8
+  · interval_cases m <;> simp [Nat.fib]
+  · have hbig : Nat.fib m ≥ Nat.fib 8 := Nat.fib_mono (by omega)
+    have : Nat.fib 8 = 21 := by native_decide
+    omega
+
+/-- The physics Mersenne exponent k' = 2·F(6) is the smallest double Fibonacci
+ number strictly greater than n = 2·F(5). -/
+theorem kprime_is_minimal_double_fib_above_n :
+    ∀ m : ℕ, 2 * Nat.fib m > 10 → 2 * Nat.fib m ≥ 16 := by
+  intro m hm
+  by_cases hle : m ≤ 8
+  · interval_cases m <;> simp [Nat.fib] at hm ⊢
+  · have hbig : Nat.fib m ≥ Nat.fib 8 := Nat.fib_mono (by omega)
+    have : Nat.fib 8 = 21 := by native_decide
+    omega
+
+-- ════════════════════════════════════════════════════════════════
+-- §6  Connecting canonicalGen3 to evenStepC_phys
+-- ════════════════════════════════════════════════════════════════
+
+/-- The c-component of canonicalGen3 equals evenStepC_phys 10 3.
+ This is the bridge between the hardcoded definition (Evolution.lean) and
+ the T_phys extension rule. -/
+theorem canonicalGen3_c_eq_evenStepC_phys :
+    canonicalGen3.c = evenStepC_phys 10 3 := by
+  unfold canonicalGen3 evenStepC_phys; norm_num
+
+/-- The physics-interpreted canonical triple at generation 3.
+ Defined using the T_phys Mersenne-ladder rule rather than a hardcoded value.
+ Proved equal to canonicalGen3, so all theorems about canonicalGen3 apply. -/
+def canonicalGen3_phys : Triple := ⟨5, 275, evenStepC_phys 10 3⟩
+
+/-- The physics definition equals the hardcoded definition. -/
+theorem canonicalGen3_phys_eq_canonicalGen3 :
+    canonicalGen3_phys = canonicalGen3 := by
+  unfold canonicalGen3_phys canonicalGen3 evenStepC_phys; norm_num
+
+/-- canonicalGen3_phys has the expected component values. -/
+theorem canonicalGen3_phys_values :
+    canonicalGen3_phys.a = 5 ∧ canonicalGen3_phys.b = 275 ∧ canonicalGen3_phys.c = 65535 := by
+  unfold canonicalGen3_phys evenStepC_phys; norm_num
+
+-- ════════════════════════════════════════════════════════════════
+-- §7  Open conjecture: uniqueness of T_phys under MDL constraints
 -- ════════════════════════════════════════════════════════════════
 
 /-- The uniqueness conjecture for the Mersenne-ladder extension.
