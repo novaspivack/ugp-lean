@@ -23,6 +23,7 @@ import UgpLean.GTE.UpdateMap
 import UgpLean.GTE.MersenneGcd
 import UgpLean.GTE.MersenneLadder
 import UgpLean.BraidAtlas.ChargeTheorem
+import UgpLean.GTE.FiberBundle
 import UgpLean.GTE.MirrorDualConjecture
 import UgpLean.GTE.MirrorShift
 import UgpLean.GTE.GeneralTheorems
