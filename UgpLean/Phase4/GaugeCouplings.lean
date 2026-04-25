@@ -81,11 +81,16 @@ theorem sin2_plus_cos2_eq_one :
     sin2_theta_W_bare + cos2_theta_W_bare = 1 := by
   unfold sin2_theta_W_bare cos2_theta_W_bare g1Sq_bare g2Sq_bare; norm_num
 
-/-- The electromagnetic coupling from g₁ and g₂:
- 1/α_EM = 1/α₂ + 1/α₁ at tree level, equivalent to
- 4π/α_EM = (g₁² + g₂²)²/(g₁²·g₂²) up to overall normalization. -/
+/-- The EM coupling numerator: g₁²·g₂²/(g₁²+g₂²) × (1/4π) = α_EM.
+ From e = g₂ sinθ_W: α_EM = g₂² sin²θ_W / 4π = g₁²g₂² / ((g₁²+g₂²)·4π). -/
 def alpha_em_numerator_bare : ℚ :=
   g1Sq_bare * g2Sq_bare / (g1Sq_bare + g2Sq_bare)
+
+/-- Tree-level 1/α_EM formula: 4π(g₁²+g₂²)/(g₁²g₂²) = 4π/α_EM.
+ Prediction: 1/α_EM = 4π×0.5593/0.05521 ≈ 127.31 (PDG 127.952, 0.50% off). -/
+theorem alpha_em_formula_exact :
+    (g1Sq_bare + g2Sq_bare) / (g1Sq_bare * g2Sq_bare) = 377525 / 37264 := by
+  unfold g1Sq_bare g2Sq_bare; norm_num
 
 /-- The g₁²/g₂² ratio (Convention A). PDG: sin²/(1-sin²) ≈ 0.3008. -/
 def g1_over_g2_sq_bare : ℚ := g1Sq_bare / g2Sq_bare
