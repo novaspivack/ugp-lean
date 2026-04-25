@@ -79,8 +79,10 @@ def canonicalLeptonFiber (g : Fin 3) : GTEChirality × SMFermionType :=
    SMFermionType.ChargedLepton)
 
 /-- The canonical fiber for the neutrino at generation g.
- All neutrinos have T-operator history and zero winding. -/
-def canonicalNeutrinoFiber (g : Fin 3) : GTEChirality × SMFermionType :=
+ All neutrinos have T-operator history and zero winding.
+ The generation parameter is accepted for API uniformity with `canonicalLeptonFiber`
+ but neutrino fiber data is generation-independent. -/
+def canonicalNeutrinoFiber (_ : Fin 3) : GTEChirality × SMFermionType :=
   (GTEChirality.T, SMFermionType.Neutrino)
 
 /-- Enhanced G₁ triple: first-generation lepton (electron). -/
@@ -116,10 +118,14 @@ theorem lepton_orbit_a_pattern :
     LeptonSeed.a = 1 ∧ canonicalGen2.a = 9 ∧ canonicalGen3.a = 5 := by
   unfold LeptonSeed canonicalGen2 canonicalGen3; decide
 
-/-- Chirality is determined by generation: only g=3 gets T†-history. -/
+/-- Chirality is determined by generation: only g=3 gets T†-history.
+ Given hypotheses that e has the gen-3 base and charged-lepton type, and that
+ its chirality is T†, the chirality is T† (trivially from hchi).
+ Note: hbase and htype are included for documentation of the canonical conditions;
+ the direct proof is from hchi alone. -/
 theorem gen3_is_Tdagger (e : EnhancedGTETriple)
-    (hbase : e.base = canonicalGen3_phys)
-    (htype : e.fermionType = SMFermionType.ChargedLepton)
+    (_ : e.base = canonicalGen3_phys)
+    (_ : e.fermionType = SMFermionType.ChargedLepton)
     (hchi  : e.chirality = GTEChirality.Tdagger) :
     e.chirality = GTEChirality.Tdagger := hchi
 
