@@ -4,6 +4,7 @@ import UgpLean.GTE.UpdateMap
 import UgpLean.GTE.MersenneLadder
 import UgpLean.GTE.StructuralTheorems
 import UgpLean.ElegantKernel.Unconditional.PentagonConstraint
+import Mathlib.NumberTheory.Real.GoldenRatio
 
 /-!
 # UgpLean.GTE.LinearResponse — UGP Linear Response and Fibonacci Renormalization
@@ -132,5 +133,37 @@ theorem fib_transverse_decay_sq :
         · linarith [abs_nonneg ((1 - Real.sqrt 5) / 2)]
         · exact h
     _ = 1 := one_pow 2
+
+-- ════════════════════════════════════════════════════════════════
+-- §5  The PSC contraction rate: |ψ| = 1/φ (Proof Obligation A1 for IPT)
+-- ════════════════════════════════════════════════════════════════
+
+/-- The subdominant Fibonacci eigenvalue is negative: ψ = (1-√5)/2 < 0. -/
+theorem fib_subdominant_is_negative : (1 - Real.sqrt 5) / 2 < 0 := by
+  have : 1 < Real.sqrt 5 := by
+    have := Real.sqrt_lt_sqrt (by norm_num : (0:ℝ) ≤ 1) (by norm_num : (1:ℝ) < 5)
+    rwa [Real.sqrt_one] at this
+  linarith
+
+/-- The absolute value of the subdominant eigenvalue equals the reciprocal of φ:
+   |ψ| = (√5-1)/2 = 1/φ.
+
+ Proof: from fib_eigenvalue_product (φ × ψ = -1) and φ > 0:
+   φ × (-ψ) = 1, so (-ψ) = 1/φ, so |ψ| = 1/φ.
+
+ This is **Proof Obligation A1** for the IPT derivation: the PSC
+ self-model update has contraction rate 1/φ per step. -/
+theorem abs_psi_eq_inv_phi :
+    |(1 - Real.sqrt 5) / 2| = 1 / Real.goldenRatio := by
+  have h5 : Real.sqrt 5 ^ 2 = 5 := Real.sq_sqrt (by norm_num : (5:ℝ) ≥ 0)
+  have hs_pos : 0 < Real.sqrt 5 := Real.sqrt_pos.mpr (by norm_num)
+  have hs_gt1 : 1 < Real.sqrt 5 := by
+    have := Real.sqrt_lt_sqrt (by norm_num : (0:ℝ) ≤ 1) (by norm_num : (1:ℝ) < 5)
+    rwa [Real.sqrt_one] at this
+  have hphi_pos : 0 < Real.goldenRatio := Real.goldenRatio_pos
+  have hphi_ne : Real.goldenRatio ≠ 0 := ne_of_gt hphi_pos
+  rw [abs_of_neg (by linarith), Real.goldenRatio]
+  field_simp
+  nlinarith [h5]
 
 end UgpLean.GTE

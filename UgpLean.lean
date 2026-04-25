@@ -29,6 +29,7 @@ import UgpLean.NullDiscipline.SaturationBarrier
 import UgpLean.NullDiscipline.TheoremEligibility
 import UgpLean.GTE.ScaleConnection
 import UgpLean.MassRelations.ScaleTransport
+import UgpLean.IPT.InformationProfitThreshold
 import UgpLean.GTE.MirrorDualConjecture
 import UgpLean.GTE.MirrorShift
 import UgpLean.GTE.GeneralTheorems
