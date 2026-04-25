@@ -120,6 +120,49 @@ theorem koide_Q_two_thirds (θ : ℝ) :
     (koideR θ 0 + koideR θ 1 + koideR θ 2) ^ 2 = 2 / 3 := by
   rw [koide_rg_sum, koide_rg_sq_sum]; norm_num
 
+/-! ## §3b. S₃ equal-norm decomposition
+
+Under the S₃ decomposition ℝ³ = 1 ⊕ 2, the democratic (trivial) part has
+norm squared |v₁|² = (Σv_g)²/3 and the standard (2D) part has
+norm squared |v₂|² = Σv_g² − (Σv_g)²/3.
+
+The key structural fact: **|v₁|² = |v₂|² = 3 for every θ**.
+This is algebraic: it follows from Σv_g = 3 and Σv_g² = 6, both proved above.
+The Koide condition Q = 2/3 is equivalent to |v₁|² = |v₂|².
+-/
+
+/-- The S₃ trivial-representation norm squared equals 3, for every θ.
+ This is the norm squared of the democratic component v₁ = (Σv_g/√3)·ê. -/
+theorem koide_v1_sq_eq_three (θ : ℝ) :
+    (koideR θ 0 + koideR θ 1 + koideR θ 2) ^ 2 / 3 = 3 := by
+  rw [koide_rg_sum]; norm_num
+
+/-- The S₃ standard-representation norm squared equals 3, for every θ.
+ This is |v₂|² = Σv_g² − |v₁|², the norm of the non-democratic component. -/
+theorem koide_v2_sq_eq_three (θ : ℝ) :
+    (koideR θ 0 ^ 2 + koideR θ 1 ^ 2 + koideR θ 2 ^ 2) -
+    (koideR θ 0 + koideR θ 1 + koideR θ 2) ^ 2 / 3 = 3 := by
+  rw [koide_rg_sum, koide_rg_sq_sum]; norm_num
+
+/-- **S₃ Equal-Norm Theorem**: |v₁|² = |v₂|² = 3 for every θ.
+ The Koide parametrisation v_g = 1 + √2·cos(θ + 2πg/3) places the
+ sqrt-mass vector in exact S₃ balance between the trivial (democratic)
+ and standard (2D) representations of S₃, for EVERY value of θ.
+ This is a purely algebraic identity; θ = 2/9 selects the physical lepton masses
+ but the S₃ balance holds unconditionally. -/
+theorem koide_equal_norm (θ : ℝ) :
+    (koideR θ 0 + koideR θ 1 + koideR θ 2) ^ 2 / 3 =
+    (koideR θ 0 ^ 2 + koideR θ 1 ^ 2 + koideR θ 2 ^ 2) -
+    (koideR θ 0 + koideR θ 1 + koideR θ 2) ^ 2 / 3 := by
+  rw [koide_rg_sum, koide_rg_sq_sum]; norm_num
+
+/-- Corollary: every vector in the Koide parametrisation family satisfies Q = 2/3
+ directly from the S₃ equal-norm condition. -/
+theorem koide_Q_from_equal_norm (θ : ℝ) :
+    let S  := koideR θ 0 + koideR θ 1 + koideR θ 2
+    let S2 := koideR θ 0 ^ 2 + koideR θ 1 ^ 2 + koideR θ 2 ^ 2
+    S2 / S ^ 2 = 2 / 3 := koide_Q_two_thirds θ
+
 /-! ## §4. The N_c² connection -/
 
 /-- **The muon interaction complexity equals the square of the QCD color number.**
