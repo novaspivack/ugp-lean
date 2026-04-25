@@ -961,17 +961,27 @@ The following classifications are machine-certified with zero sorry:
 % ═══════════════════════════════════════════════════════════════
 
 The \texttt{IPT.InformationProfitThreshold} module derives the information profit threshold
-from three structural premises within the MFRR formal model.
+from three structural premises.  Two are from the MFRR/PSC framework (A2, A3); one is
+a \ugp{}-derived fact (A1), established as \lstinline|abs_psi_eq_inv_phi| in
+\texttt{GTE.LinearResponse} (\S\ref{subsec:linear-response}).
+The formula $\rho_{\rm crit} = 1 + \ln\varphi/(2\ln 2\pi)$ is therefore a point of
+contact between the \ugp{} orbit structure ($\varphi$ enters via the GTE Fibonacci
+spectrum) and the MFRR adjudication geometry ($2\pi$ enters via the $U(1)$ phase space).
 
 \begin{theorem}[IPT derivation]\label{thm:ipt-lean}
 Given:
 \begin{enumerate}[nosep,label=(A\arabic*)]
-\item The PSC contraction rate equals the inverse golden ratio: $|\psi| = 1/\varphi$
-  (\lstinline|abs_psi_eq_inv_phi|, derived from the Fibonacci companion matrix spectrum);
-\item The adjudication entropy of the $U(1)$ gauge group equals $H(U(1)) = \ln(2\pi)$
-  (\lstinline|A2_adjudication_entropy|, from unitary $U(1)$ phase space);
-\item PSC time-reversal symmetry splits the overhead equally: $1/2$ forward, $1/2$ backward
-  (\lstinline|A3_forward_backward_split|);
+\item \textbf{[\ugp{}-derived]} The PSC contraction rate equals the inverse golden ratio:
+  $|\psi| = 1/\varphi$.
+  This is a consequence of the \ugp{} canonical orbit's Fibonacci renormalization spectrum
+  (proved as \lstinline|fib_transverse_decay_sq| and \lstinline|abs_psi_eq_inv_phi|
+  in \texttt{GTE.LinearResponse});
+\item \textbf{[MFRR/PSC premise]} The adjudication entropy of the $U(1)$ gauge group
+  equals $H(U(1)) = \ln(2\pi)$: Transputation events are unitary on their degenerate
+  subspace, placing the adjudication state space on the unit phase circle $[0,2\pi)$
+  (\lstinline|A2_adjudication_entropy|);
+\item \textbf{[MFRR/PSC premise]} PSC time-reversal symmetry splits the overhead equally:
+  $1/2$ forward, $1/2$ backward (\lstinline|A3_forward_backward_split|);
 \end{enumerate}
 the threshold
 \[
@@ -988,11 +998,14 @@ follows as a necessary consequence, machine-checked with zero sorry.
 \end{leanref}
 \end{theorem}
 
-\paragraph{Scope.}
-Theorem~\ref{thm:ipt-lean} is theorem-grade \emph{within the formal PSC/Fibonacci/$U(1)$-entropy model}.
-The three premises A1--A3 are structural inputs to the derivation; whether they correctly
-abstract a given physical or biological system is an empirical question separate from the
-formal proof.
+\paragraph{Provenance and scope.}
+Premise A1 is a \ugp{} theorem (the GTE orbit's Fibonacci contraction rate); premises A2
+and A3 are MFRR/PSC structural inputs.
+The formula is theorem-grade \emph{within the combined formal model}: given the \ugp{}
+orbit's Fibonacci geometry and the MFRR $U(1)$ adjudication architecture, the threshold
+value $1 + \ln\varphi/(2\ln 2\pi)$ is a necessary consequence.
+Whether A2 and A3 correctly abstract a given physical or biological system is an empirical
+question separate from the formal proof.
 
 % ═══════════════════════════════════════════════════════════════
 \section{Gauge Coupling Extensions}\label{sec:gaugecoupling-ext}
