@@ -874,8 +874,20 @@ $\tau(R_{10}) = 30$, $\tau(R_{13}) = 20$, $\tau(R_{16}) = 120$.
 \section{Braid Atlas Charge Structure}\label{sec:braidatlas}
 % ═══════════════════════════════════════════════════════════════
 
-The \texttt{BraidAtlas.ChargeTheorem} module derives electric charge from
-the topological invariants of braid processes.
+The \texttt{BraidAtlas.ChargeTheorem} module proves that electric charge
+is recovered from braid winding numbers via $Q = W_g/N_c$.
+
+\paragraph{Provenance.}
+The winding numbers $W(e) = -3$, $W(\nu) = 0$, $W(u) = +2$, $W(d) = -1$
+are inputs from the Braid Atlas topological analysis~\cite{Spivack2026_SM_UGP}:
+they are the writhe-based invariants of the four SM fermion braid genotypes
+as established in the companion paper, not derived from the \ugp{} ridge
+arithmetic within this module.
+The value $N_c = 3$ is supplied by \texttt{SM\_gauge\_uniquely\_selected}
+in \texttt{TE22.ScanCertificate} (PSC axioms).  The module's contribution
+is to \emph{formally prove} that these assigned winding values reproduce exact
+SM charges and that anomaly cancellation in the winding language
+forces $N_c = 3$.
 
 \begin{theorem}[Electric charge from winding number]\label{thm:charge-winding}
 At $N_c = 3$, with SM fermion winding numbers
@@ -910,8 +922,13 @@ the QCD colour rank taking its observed value.
 \section{Null Discipline Formalization}\label{sec:nulldiscipline}
 % ═══════════════════════════════════════════════════════════════
 
-The \texttt{NullDiscipline} layer machine-classifies the programme's own
-results by their evidential grade.
+The \texttt{NullDiscipline} layer provides a formal evidential-grade classification
+of results arising from the \ugp{} programme.  The \emph{objects} being classified
+(the URC algebraic-closure basis, the VV mass-coefficient formula, the charge-winding
+theorem) are \ugp{} constructs established in earlier sections.  The classification
+machinery itself---saturation density, the TEC four-gate predicate---is pure
+methodology: it is not derived from the \ugp{} arithmetic, but applied to \ugp{}
+results to distinguish theorem-grade from computationally-certified outputs.
 
 \subsection{Algebraic saturation barrier (\texttt{SaturationBarrier})}\label{subsec:saturation}
 
@@ -1540,15 +1557,21 @@ $\dim(126_{\mathrm{SO}(10)}) = 2N_c^2\delta = 126$ (cross-sector bridge).
 \subsection{Seesaw index as GUT representation defect (\texttt{SeesawIndex})}\label{subsec:seesawindex}
 
 \begin{theorem}[Seesaw index = gauge/matter defect]\label{thm:seesaw-index}
-The integer $29$ equals the gauge/matter representation defect of the
-PSC-selected GUT group:
+The integer $29$, established as the neutrino seesaw numerator by the \ugp{}
+$N_c$ structural chain (Theorem~\ref{thm:seesaw-closure}), has the following
+GUT-representation interpretation:
 \[
   29 \;=\; \dim(\mathbf{adj}_{SO(10)}) - \dim(\mathbf{spinor}_{SO(10)})
      \;=\; 45 - 16.
 \]
-The seesaw exponent $29/9$ is therefore the ratio of this representation defect
-to $N_c^2$, unifying all three structural decompositions of Theorem~\ref{thm:seesaw-closure}
-under a single geometric interpretation.
+Here $\mathbf{adj}_{SO(10)}$ is the gauge (adjoint) representation and
+$\mathbf{spinor}_{SO(10)} = \mathbf{16}$ is the fundamental matter (Weyl fermion)
+representation.  The identity $45 - 16 = 29$ is pure group theory
+(checked by \lstinline|norm_num|); its significance is that the \ugp{}-derived
+integer $29$ coincides with the gauge/matter representation defect of the
+PSC-selected GUT group $SO(10)$.  The seesaw exponent $29/9$ is therefore
+the ratio of this defect to $N_c^2$, unifying all three structural decompositions
+of Theorem~\ref{thm:seesaw-closure} under a single GUT-geometric interpretation.
 
 \begin{leanref} \lstinline|seesaw_index_is_gauge_matter_defect|
 \textup{(in \texttt{MassRelations.SeesawIndex})}
