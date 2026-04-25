@@ -428,60 +428,60 @@ The artifact is organized into 99~\lean{} modules across eleven layers:
                 align=center, minimum height=0.65cm,
                 font=\footnotesize, inner sep=4pt},
   arr/.style={-{Stealth[length=5pt]}, thick, gray!60},
-  >=Stealth
+  >=Stealth,
+  node distance=0.28cm
 ]
-\def\vs{2.2}
-\node[layer, fill=blue!8]   (core)  at (0,0)
+\node[layer, fill=blue!8]   (core)
   {\textbf{Core}~(7)\quad RidgeDefs, MirrorDefs, TripleDefs,
    SievePredicates, Disconfirmation, RidgeRigidity, MirrorAlgebra};
-\node[layer, fill=green!8]  (comp)  at (0,\vs)
+\node[layer, fill=green!8,  below=of core]  (comp)
   {\textbf{Compute}~(6)\quad PrimeLock, Sieve, SieveExtended,
    SieveBelow10, ExclusionFilters, DecidablePredicates};
-\node[layer, fill=yellow!8] (class) at (0,2*\vs)
+\node[layer, fill=yellow!8, below=of comp] (class)
   {\textbf{Classification}~(6)\quad Bounds, TheoremA, TheoremB,
    RSUC, FormalRSUC, MonotonicStrengthening};
-\node[layer, fill=orange!8] (gte)   at (0,3*\vs)
+\node[layer, fill=orange!8, below=of class] (gte)
   {\textbf{GTE}~(21)\quad Evolution, Orbit, UpdateMap,
    GeneralTheorems, MersenneGcd, PrimeFactorAnalysis, ResonantFactory,
    MirrorDualConjecture, MirrorShift, UGPPrimes, InertPrimes,
    AnalyticArchitecture, DSIExport, StructuralTheorems, UniquenessCertificates,
    GTESimulation, EntropyNonMonotone,
    \textbf{MersenneLadder, FiberBundle, LinearResponse, ScaleConnection}};
-\node[layer, fill=red!8]    (struc) at (0,4*\vs)
+\node[layer, fill=red!8,    below=of gte]  (struc)
   {\textbf{Structural}~(19)\quad QuarterLock, LModelDerivation;
    \textit{ElegantKernel/} ChiralityFeature, D5StructuralAxiom, FibonacciHessian,
    KGen, KGen2, MuTriple, PentagonalUniqueness;
    \textit{ElegantKernel/Unconditional/} CyclotomicChain, D5Renormalization,
    FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure,
    KLFullClosure, PentagonConstraint, RiccatiFixedPoint};
-\node[layer, fill=teal!8]   (mass)  at (0,5*\vs)
+\node[layer, fill=teal!8,   below=of struc] (mass)
   {\textbf{MassRelations}~(17)\quad KoideClosedForm, KoideNewtonFlow,
    BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential,
    FroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational,
    UpLeptonCyclotomic, Z2OrbifoldDepth,
    \textbf{KoideAngle, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex}};
-\node[layer, fill=cyan!6]   (braid)  at (0,6*\vs)
+\node[layer, fill=cyan!6,   below=of mass]  (braid)
   {\textbf{BraidAtlas}~(1)\quad \textbf{ChargeTheorem}};
-\node[layer, fill=lime!6]   (null)  at (0,7*\vs)
+\node[layer, fill=lime!6,   below=of braid] (null)
   {\textbf{NullDiscipline}~(2)\quad \textbf{SaturationBarrier, TheoremEligibility}};
-\node[layer, fill=violet!6]   (ipt)  at (0,8*\vs)
+\node[layer, fill=violet!6, below=of null]  (ipt)
   {\textbf{IPT}~(1)\quad \textbf{InformationProfitThreshold}};
-\node[layer, fill=purple!8] (univ)  at (0,9*\vs)
+\node[layer, fill=purple!8, below=of ipt]   (univ)
   {\textbf{Universality}~(7)\quad Rule110, UWCA, UWCASimulation,
    UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge};
-\node[layer, fill=gray!8]   (self)  at (0,10*\vs)
+\node[layer, fill=gray!8,   below=of univ]  (self)
   {\textbf{SelfRef}~(2)\quad LawvereKleene, RiceHalting};
 
-\draw[arr] (core.north)  -- (comp.south);
-\draw[arr] (comp.north)  -- (class.south);
-\draw[arr] (class.north) -- (gte.south);
-\draw[arr] (gte.north)   -- (struc.south);
-\draw[arr] (struc.north) -- (mass.south);
-\draw[arr] (mass.north)  -- (braid.south);
-\draw[arr] (braid.north) -- (null.south);
-\draw[arr] (null.north)  -- (ipt.south);
-\draw[arr] (ipt.north)   -- (univ.south);
-\draw[arr] (univ.north)  -- (self.south);
+\draw[arr] (core.south)  -- (comp.north);
+\draw[arr] (comp.south)  -- (class.north);
+\draw[arr] (class.south) -- (gte.north);
+\draw[arr] (gte.south)   -- (struc.north);
+\draw[arr] (struc.south) -- (mass.north);
+\draw[arr] (mass.south)  -- (braid.north);
+\draw[arr] (braid.south) -- (null.north);
+\draw[arr] (null.south)  -- (ipt.north);
+\draw[arr] (ipt.south)   -- (univ.north);
+\draw[arr] (univ.south)  -- (self.north);
 \end{tikzpicture}
 \end{center}
 
