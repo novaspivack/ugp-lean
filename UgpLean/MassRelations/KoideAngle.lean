@@ -287,6 +287,26 @@ theorem delta_b1_eq_511 :
     UgpLean.ugp1_s * UgpLean.leptonB = 511 := by
   unfold UgpLean.ugp1_s UgpLean.leptonB; decide
 
+/-- δ × b₁ = 2^(N_c²) − 1: the electron mass factor is the (N_c²)-th Mersenne number.
+ The Mersenne exponent is N_c² = 9, so δ·b₁ = 2^9 − 1 = 511.
+ This places the electron mass on the Mersenne ladder together with
+ c₂ = 2^10 − 1 = 1023 and c₃ = 2^16 − 1 = 65535. -/
+theorem delta_b1_is_mersenne_Nc_sq :
+    UgpLean.ugp1_s * UgpLean.leptonB = 2^(3^2) - 1 := by
+  unfold UgpLean.ugp1_s UgpLean.leptonB; norm_num
+
+/-- The three Mersenne numbers in the canonical orbit and electron mass are
+ governed by consecutive Mersenne exponents from N_c:
+   δ·b₁ = 2^(N_c²)   − 1 = 511    (electron mass factor)
+   c₂   = 2^(N_c²+1) − 1 = 1023   (generation-2 capacity)
+   c₃   = 2^(N_c²+7) − 1 = 65535  (generation-3 capacity, Mersenne ladder) -/
+theorem mersenne_ladder_three_values :
+    UgpLean.ugp1_s * UgpLean.leptonB = 2^9  - 1 ∧
+    UgpLean.canonicalGen2.c              = 2^10 - 1 ∧
+    UgpLean.canonicalGen3.c              = 2^16 - 1 := by
+  unfold UgpLean.ugp1_s UgpLean.leptonB UgpLean.canonicalGen2 UgpLean.canonicalGen3
+  norm_num
+
 /-! ## §7. The Koide angle from N_c alone -/
 
 /-- **The strand count is dim(SU(N_c))/4.**
