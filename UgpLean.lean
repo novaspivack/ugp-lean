@@ -30,6 +30,7 @@ import UgpLean.NullDiscipline.TheoremEligibility
 import UgpLean.GTE.ScaleConnection
 import UgpLean.MassRelations.ScaleTransport
 import UgpLean.IPT.InformationProfitThreshold
+import UgpLean.MassRelations.SeesawIndex
 import UgpLean.GTE.MirrorDualConjecture
 import UgpLean.GTE.MirrorShift
 import UgpLean.GTE.GeneralTheorems
