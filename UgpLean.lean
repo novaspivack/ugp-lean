@@ -27,6 +27,8 @@ import UgpLean.GTE.FiberBundle
 import UgpLean.GTE.LinearResponse
 import UgpLean.NullDiscipline.SaturationBarrier
 import UgpLean.NullDiscipline.TheoremEligibility
+import UgpLean.GTE.ScaleConnection
+import UgpLean.MassRelations.ScaleTransport
 import UgpLean.GTE.MirrorDualConjecture
 import UgpLean.GTE.MirrorShift
 import UgpLean.GTE.GeneralTheorems
