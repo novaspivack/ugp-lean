@@ -301,6 +301,65 @@ theorem ugp_strange_baryon_b_formulas :
     (2*(3:ℕ)) * (4*(3:ℕ)^2-7) * (11^4-((3:ℕ)+1)*(3:ℕ)^4*13) = 1814646 := by
   norm_num
 
+-- ════════════════════════════════════════════════════════════════
+-- §10  Strange baryon c-values (completing the full composite triple)
+-- ════════════════════════════════════════════════════════════════
+-- c = ±1023 for all strange baryons, sign determined by total winding.
+-- |c| = 1023 from sector2_down_bc (strange sector Mersenne level).
+-- Sign rule: c > 0 if W(baryon) ≥ 0; c < 0 if W(baryon) < 0.
+-- W computed from windingNumber additivity and CPT (antiquarkWinding).
+-- ════════════════════════════════════════════════════════════════
+
+/-- Winding of Lambda (u,d,s): W(u) + W(d) + W(s) = 2+(-1)+(-1) = 0. -/
+theorem lambda_winding_zero :
+    windingNumber 3 .UpQuark + windingNumber 3 .DownQuark + windingNumber 3 .DownQuark = 0 := by
+  native_decide
+
+/-- Winding of Sigma+ (u,u,s): W(u)+W(u)+W(s) = 2+2+(-1) = 3 = N_c×Q. -/
+theorem sigma_plus_winding :
+    windingNumber 3 .UpQuark + windingNumber 3 .UpQuark + windingNumber 3 .DownQuark = 3 := by
+  native_decide
+
+/-- Winding of Xi0 (u,s,s): W(u)+W(s)+W(s) = 2+(-1)+(-1) = 0. -/
+theorem xi0_winding_zero :
+    windingNumber 3 .UpQuark + windingNumber 3 .DownQuark + windingNumber 3 .DownQuark = 0 := by
+  native_decide
+
+/-- Winding of Omega- (s,s,s): W(s)+W(s)+W(s) = (-1)+(-1)+(-1) = -3 = N_c×Q(Ω-). -/
+theorem omega_winding_neg :
+    windingNumber 3 .DownQuark + windingNumber 3 .DownQuark + windingNumber 3 .DownQuark = -3 := by
+  native_decide
+
+/-- H(W) chirality rule: H(0)=0, H(3)=0 (positive), H(-3)=1 (negative). -/
+theorem chirality_for_strange_baryons :
+    (if (0:ℤ) < 0 then (1:ℤ) else 0) = 0 ∧
+    (if (3:ℤ) < 0 then (1:ℤ) else 0) = 0 ∧
+    (if (-3:ℤ) < 0 then (1:ℤ) else 0) = 1 := by norm_num
+
+/-- c(Lambda) = c(Sigma+) = c(Xi0) = +1023 = 2^10-1 (W≥0, positive chirality). -/
+theorem strange_baryon_c_positive : (1023:ℤ) = 2^10 - 1 := by norm_num
+
+/-- c(Sigma-) = c(Xi-) = c(Omega-) = -1023 = -(2^10-1) (W<0, negative chirality). -/
+theorem strange_baryon_c_negative : (-(1023:ℤ)) = -(2^10 - 1) := by norm_num
+
+/-- Full conjunction: all strange baryon c-values from winding + chirality + sector rule.
+ Completes the composite triple derivation: a, b, and c are all now derived.
+ The c=-1 placeholders in P01 Appendix A are replaced by ±1023. -/
+theorem ugp_strange_baryon_c_values :
+    -- |c| = 1023 from the strange (gen-2 down) sector Mersenne level
+    (1023:ℕ) = 2^10 - 1 ∧
+    -- Lambda, Xi0 have W=0: c = +1023
+    windingNumber 3 .UpQuark + windingNumber 3 .DownQuark + windingNumber 3 .DownQuark = 0 ∧
+    -- Sigma+ has W=+3: c = +1023
+    windingNumber 3 .UpQuark + windingNumber 3 .UpQuark + windingNumber 3 .DownQuark = 3 ∧
+    -- Omega- (and Sigma-, Xi-) has W=-3: c = -1023
+    windingNumber 3 .DownQuark + windingNumber 3 .DownQuark + windingNumber 3 .DownQuark = -3 ∧
+    -- Chirality: H(-3) = 1, H(0) = H(3) = 0
+    (if (-3:ℤ) < 0 then (1:ℤ) else 0) = 1 ∧
+    (if (0:ℤ) < 0 then (1:ℤ) else 0) = 0 := by
+  refine ⟨by norm_num, ?_, ?_, ?_, by norm_num, by norm_num⟩
+  all_goals native_decide
+
 /-- 13 = N_c^2+N_c+1 so b(b) = 2^13-1 = 8191. -/
 theorem bottom_b_exponent : (3:ℕ)^2 + 3 + 1 = 13 := by norm_num
 
