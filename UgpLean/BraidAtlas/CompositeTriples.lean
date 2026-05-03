@@ -242,8 +242,38 @@ theorem muon_b_eq_2Nc_delta : 2 * (3:ℕ) * 7 = 42 := by norm_num
 /-- b(s quark) = 2*N_c*(2^(2N_c-1)-1) = 186. -/
 theorem strange_b_formula : 2 * (3:ℕ) * (2^(2*3-1) - 1) = 186 := by norm_num
 
+/-- b(s quark) = 2^delta + 2*(4*N_c^2-delta) = 186.
+ [NEW from Wolfram Alpha: 186 = 2^7 + 58 = 2^delta + 2*seesaw_numerator
+  where 29 = 4*N_c^2-delta is the neutrino seesaw numerator (Lean-certified).] -/
+theorem strange_b_formula_wolfram :
+    2^(7:ℕ) + 2*(4*(3:ℕ)^2 - 7) = 186 := by norm_num
+
+/-- b(s) satisfies: b(s) × 4*a_u = proton_b_correction^2 - 1.
+ [From Wolfram Alpha: "186 divides 61^2-1 = 3720 = 20×186"
+  where 61 = b1-N_c(N_c+1) is the proton b-correction.] -/
+theorem strange_b_via_proton_correction :
+    (186 : ℕ) * (4 * 5) = 61^2 - 1 := by norm_num
+
+/-- The seesaw numerator 29 = 4*N_c^2-delta appears in b(s). -/
+theorem strange_b_contains_seesaw :
+    2^(7:ℕ) + 2*(4*(3:ℕ)^2 - 7) = 186 ∧ (4*(3:ℕ)^2 - 7 = 29) := by norm_num
+
 /-- b(b quark) = 2^(N_c^2+N_c+1)-1 = 8191 (Mersenne prime, 13 = N_c^2+N_c+1). -/
 theorem bottom_b_formula : 2^((3:ℕ)^2 + 3 + 1) - 1 = 8191 := by norm_num
+
+/-- b(Lambda baryon, u,d,s) = (N_c+1) × b(ν_μR)^2 × (b₁+2N_c) = 38236.
+ [From factorization: 38236 = 4 × 11^2 × 79 where:
+   N_c+1 = 4, b(ν_μR) = 11 (second seesaw b-value, Braid Atlas),
+   b₁+2N_c = 73+6 = 79 (lepton seed b plus 2N_c)]
+ The Lambda baryon's b-value involves the SQUARE of the
+ muon-neutrino right-handed b-value — connecting strange baryons to
+ the neutrino sector through the Braid Atlas. -/
+theorem lambda_b_formula :
+    ((3:ℕ)+1) * 11^2 * ((73:ℕ)+2*3) = 38236 := by norm_num
+
+/-- 79 = b₁ + 2N_c = 73 + 6, a bridge constant in Lambda's b-value. -/
+theorem lambda_b_bridge_constant :
+    (73:ℕ) + 2*3 = 79 := by norm_num
 
 /-- 13 = N_c^2+N_c+1 so b(b) = 2^13-1 = 8191. -/
 theorem bottom_b_exponent : (3:ℕ)^2 + 3 + 1 = 13 := by norm_num
