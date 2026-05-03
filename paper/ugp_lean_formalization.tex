@@ -918,6 +918,63 @@ the QCD colour rank taking its observed value.
 \end{leanref}
 \end{theorem}
 
+% ───────────────────────────────────────────────────────────
+\subsection{Composite braid c-rule}\label{subsec:composite-braids}
+% ───────────────────────────────────────────────────────────
+
+The \texttt{BraidAtlas.CompositeTriples} module extends the charge--winding
+framework to composite hadrons, proving three structural properties that
+ground the reflexive-closure correlation of Ref.~\cite{Spivack2026_Closure24}.
+
+\paragraph{Writhe composition.}
+The winding number is additive; CPT conjugation reverses the sign for antiquarks.
+
+\begin{theorem}[Meson winding is zero]\label{thm:meson-winding}
+For any SM fermion type $f$, the quark-antiquark (meson) winding sum vanishes:
+\[
+  W_g(q) + W_g(\bar{q}) = W_g(q) - W_g(q) = 0.
+\]
+Consequently, the chirality encoding $H(\mathrm{Wr}) = 0$ and the $c$-component
+of any meson GTE triple is \emph{real and positive}.
+
+\begin{leanref}
+\lstinline|meson_winding_zero|,
+\lstinline|meson_c_real_positive|,
+\lstinline|baryon_c_real_of_nonneg_charge|
+\textup{(in \texttt{BraidAtlas.CompositeTriples})}
+\end{leanref}
+\end{theorem}
+
+\paragraph{Proton and neutron winding.}
+As a concrete verification that reproduces the GTE cascade result $c = 15$
+for the proton and neutron (Paper~01 Appendix~A):
+
+\begin{theorem}[Proton and neutron winding at $N_c = 3$]\label{thm:proton-neutron-winding}
+\begin{align*}
+W(u) + W(u) + W(d) &= 3 = N_c \cdot Q(p), \\
+W(u) + W(d) + W(d) &= 0 = N_c \cdot Q(n).
+\end{align*}
+The confinement Mersenne level $c = 15 = 2^4 - 1$ is the lowest Mersenne composite
+level and is consistent with $c < 1023$ (tier-1 assignment, Lean-certified).
+
+\begin{leanref}
+\lstinline|proton_winding_eq_Nc_times_Q|,
+\lstinline|neutron_winding_eq_Nc_times_Q|,
+\lstinline|confinement_mersenne_level|,
+\lstinline|proton_neutron_c_eq_15_in_confinement_tier|
+\textup{(in \texttt{BraidAtlas.CompositeTriples})}
+\end{leanref}
+\end{theorem}
+
+\paragraph{Full composite c-rule conjunction.}
+The theorem \lstinline|ugp_composite_braid_c_rule| (zero sorry) bundles all
+five structural facts: meson winding zero, $c$ real-positive, and all three
+Mersenne tier boundaries as arithmetic consequences of $N_c = 3$.
+Status: \textbf{Category~A} for the winding and chirality theorems;
+\textbf{Category~A/D} for the sector assignment of specific hadrons
+(empirically validated by the $r = -0.981$ correlation in Ref.~\cite{Spivack2026_Closure24};
+axiomatic derivation of the sector assignment rule is future work).
+
 % ═══════════════════════════════════════════════════════════════
 \section{Null Discipline Formalization}\label{sec:nulldiscipline}
 % ═══════════════════════════════════════════════════════════════

@@ -146,3 +146,13 @@ match.  See registry at `ugp-physics:specs/WORKING_NOTES/TECH_DEBT_LEAN_SORRY_RE
 | Tier-2/tier-3 boundary = 2^(n+2·Nc)−1 (n=10, Nc=3) | GTE.MersenneLadder | tier23_boundary_from_ridge_and_Nc | ✓ |
 | Lepton c-cascade spans all three tiers | GTE.MersenneLadder | lepton_c_values_span_all_tiers | ✓ |
 | **Full tier structure conjunction** (all 7 facts, zero sorry) | GTE.MersenneLadder | ugp_rc_tier_structure | ✓ |
+| **Composite Braid c-Rule (Paper 24 Category A upgrade)** | | | |
+| Antiquark winding = −W(quark) (CPT reversal) | BraidAtlas.CompositeTriples | antiquark_winding_is_negation | ✓ |
+| Meson winding = 0: W(q) + W(q̄) = 0 | BraidAtlas.CompositeTriples | meson_winding_zero | ✓ |
+| H(0) = 0 → c is real+positive for mesons | BraidAtlas.CompositeTriples | meson_c_real_positive | ✓ |
+| Baryon c real+positive for Q ≥ 0 | BraidAtlas.CompositeTriples | baryon_c_real_of_nonneg_charge | ✓ |
+| Proton winding: W(u)+W(u)+W(d) = 3 = N_c·Q | BraidAtlas.CompositeTriples | proton_winding_eq_Nc_times_Q | ✓ |
+| Neutron winding: W(u)+W(d)+W(d) = 0 = N_c·Q | BraidAtlas.CompositeTriples | neutron_winding_eq_Nc_times_Q | ✓ |
+| Confinement tier: 15 = 2^4-1 (new Mersenne level) | BraidAtlas.CompositeTriples | confinement_mersenne_level | ✓ |
+| Proton/neutron c=15 in confinement tier (c < 1023) | BraidAtlas.CompositeTriples | proton_neutron_c_eq_15_in_confinement_tier | ✓ |
+| **Full composite c-rule conjunction** (zero sorry) | BraidAtlas.CompositeTriples | ugp_composite_braid_c_rule | ✓ |

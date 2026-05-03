@@ -341,6 +341,27 @@ n = 38; RC predicate not yet formalized in Lean).
 | **lepton_c_values_span_all_tiers** | GTE.MersenneLadder | LeptonSeed.c < 1023, c₂ = 1023, c₃ = 65535 |
 | **ugp_rc_tier_structure** | GTE.MersenneLadder | Full conjunction of all 7 tier facts (zero sorry) |
 
+## Composite Braid c-Rule (Paper 24 — Category A upgrade)
+
+New module `BraidAtlas.CompositeTriples` formalizes the composition law for
+composite hadron GTE triples. Status: **Category A** (writhe theorem + chirality
+corollary + confinement Mersenne level, all zero sorry); **Category A/D** for
+the sector assignment of specific hadrons (empirically validated by P01 Appendix A
+proton/neutron c=15, and Paper 24 RC correlation r = −0.981 for max-|c| rule,
+p = 2.1×10⁻²⁷; axiomatic derivation of sector assignment is future work).
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **antiquark_winding_is_negation** | BraidAtlas.CompositeTriples | W(q̄) = −W(q) (CPT reversal) |
+| **meson_winding_zero** | BraidAtlas.CompositeTriples | W(q) + W(q̄) = 0 for all quark types |
+| **meson_c_real_positive** | BraidAtlas.CompositeTriples | H(0) = 0, so c is real+positive for mesons |
+| **baryon_c_real_of_nonneg_charge** | BraidAtlas.CompositeTriples | c real+positive for baryons with Q ≥ 0 |
+| **proton_winding_eq_Nc_times_Q** | BraidAtlas.CompositeTriples | W(u)+W(u)+W(d) = 3 = N_c·Q(proton) |
+| **neutron_winding_eq_Nc_times_Q** | BraidAtlas.CompositeTriples | W(u)+W(d)+W(d) = 0 = N_c·Q(neutron) |
+| **confinement_mersenne_level** | BraidAtlas.CompositeTriples | 15 = 2^4−1 (lowest composite Mersenne level) |
+| **proton_neutron_c_eq_15_in_confinement_tier** | BraidAtlas.CompositeTriples | 15 < 1023 (proton/neutron in tier 1) |
+| **ugp_composite_braid_c_rule** | BraidAtlas.CompositeTriples | Full composite c-rule conjunction (zero sorry) |
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |
