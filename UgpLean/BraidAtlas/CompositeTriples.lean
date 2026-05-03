@@ -228,5 +228,3 @@ theorem ugp_nucleon_b_formula :
     ((3 : ℕ)^2 * (5 * 2^((3:ℕ)^2 - 1) - 7 - 2) + (3 - 1) = 11441) ∧
     ((11459 : ℕ) - 11441 = 2 * (3:ℕ)^2) ∧
     ((73 : ℕ) - 3 * (3 + 1) = 7 * 3^2 - (3 - 1)) := by norm_num
-
-end UgpLean.BraidAtlas.CompositeTriples
