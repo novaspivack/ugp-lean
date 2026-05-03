@@ -138,3 +138,11 @@ match.  See registry at `ugp-physics:specs/WORKING_NOTES/TECH_DEBT_LEAN_SORRY_RE
 | Dickman equidistribution in arithmetic progressions | GTE.AnalyticArchitecture | dickman_equidistribution_in_APs | ⚠ sorry (Tenenbaum III.6 — Mathlib infra gap) |
 | CRT equidistribution within independence regime | GTE.AnalyticArchitecture | crt_equidistribution_within_regime | ⚠ sorry (Tenenbaum III.6 + CRT — Mathlib infra gap) |
 | Q₋(t) ⊥ Q₊(t) coprime (algebraic, proved) | GTE.AnalyticArchitecture | qminus_qplus_coprime | ✓ |
+| **RC Tier Structure (Paper 24)** | | | |
+| Tier-1/tier-2 boundary 1023 = 2^10 - 1 (Mersenne) | GTE.MersenneLadder | tier12_boundary_is_mersenne_10 | ✓ |
+| Tier-2/tier-3 boundary 65535 = 2^16 - 1 (Mersenne) | GTE.MersenneLadder | tier23_boundary_is_mersenne_16 | ✓ |
+| Tier boundaries strictly ordered: 1023 < 65535 | GTE.MersenneLadder | tier_boundaries_strictly_ordered | ✓ |
+| Both tier boundaries are Mersenne numbers 2^k − 1 | GTE.MersenneLadder | tier_boundaries_are_mersenne | ✓ |
+| Tier-2/tier-3 boundary = 2^(n+2·Nc)−1 (n=10, Nc=3) | GTE.MersenneLadder | tier23_boundary_from_ridge_and_Nc | ✓ |
+| Lepton c-cascade spans all three tiers | GTE.MersenneLadder | lepton_c_values_span_all_tiers | ✓ |
+| **Full tier structure conjunction** (all 7 facts, zero sorry) | GTE.MersenneLadder | ugp_rc_tier_structure | ✓ |

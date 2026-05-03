@@ -323,6 +323,24 @@ sum estimates).
 | **ugpOutputGap_continuousOn_Icc** | DSIExport | Continuous on compact subsets |
 | **UGPWall1Export** | DSIExport | Packaged export for DSI SmallSymmetricMVTBundle |
 
+## RC Tier Structure (Paper 24: Substrate Depth and Self-Generated Mass)
+
+These theorems certify the arithmetic tier boundaries of the reflexive-closure
+analysis (Spivack 2026, Paper 24). Status: **Category A** (arithmetic bounds
+derived from Lean-certified GTE cascade); **Category A/D** for the empirical
+RC correlation (computational COMP-EP18 backed, r = −0.944 p = 6.7×10⁻¹⁹
+n = 38; RC predicate not yet formalized in Lean).
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **tier12_boundary_is_mersenne_10** | GTE.MersenneLadder | 1023 = 2^10 − 1 |
+| **tier23_boundary_is_mersenne_16** | GTE.MersenneLadder | 65535 = 2^16 − 1 |
+| **tier_boundaries_strictly_ordered** | GTE.MersenneLadder | 1023 < 65535 |
+| **tier_boundaries_are_mersenne** | GTE.MersenneLadder | ∃k₁ k₂, 1023 = 2^k₁−1 ∧ 65535 = 2^k₂−1 |
+| **tier23_boundary_from_ridge_and_Nc** | GTE.MersenneLadder | 65535 = 2^(10+2·3)−1 (N_c=3) |
+| **lepton_c_values_span_all_tiers** | GTE.MersenneLadder | LeptonSeed.c < 1023, c₂ = 1023, c₃ = 65535 |
+| **ugp_rc_tier_structure** | GTE.MersenneLadder | Full conjunction of all 7 tier facts (zero sorry) |
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |
