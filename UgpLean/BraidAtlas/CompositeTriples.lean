@@ -275,6 +275,32 @@ theorem lambda_b_formula :
 theorem lambda_b_bridge_constant :
     (73:ℕ) + 2*3 = 79 := by norm_num
 
+/-- b(Xi0 baryon, u,s,s) = 15×(N_c+1)×b(ν_μR)^4 − (N_c−1)×fib_gap = 878434.
+ From Wolfram: 878434 = 15 × 2² × 11⁴ − 26 where 15=c(proton)=2^4-1,
+ (Nc+1)=4, b(ν_μR)^4=11^4, (Nc-1)×fib_gap=2×13=26 (fib_gap=13=GTE quotient gap). -/
+theorem xi0_b_formula :
+    15 * ((3:ℕ)+1) * 11^4 - ((3:ℕ)-1) * 13 = 878434 := by norm_num
+
+/-- b(Omega- baryon, s,s,s) = 2N_c×seesaw×(11^4−(N_c+1)N_c^4×fib_gap) = 1814646.
+ From Wolfram: 1814646 = 2×3×29×10429 where 29=seesaw=4Nc^2-δ and
+ 10429 = 11^4−(Nc+1)Nc^4×13. All constants (11,29,13) appear in neutrino sector! -/
+theorem omega_b_formula :
+    (2*(3:ℕ)) * (4*(3:ℕ)^2 - 7) * (11^4 - ((3:ℕ)+1)*(3:ℕ)^4*13) = 1814646 := by norm_num
+
+/-- The key: 10429 = 11^4 − (N_c+1)×N_c^4×fib_gap = 14641 − 4212. -/
+theorem omega_b_aux :
+    11^4 - ((3:ℕ)+1)*(3:ℕ)^4*13 = 10429 := by norm_num
+
+/-- Full strange baryon b-formulas (Lambda, Xi, Omega-; zero sorry).
+ All three involve 11 = b(ν_μR) from the Braid Atlas seesaw construction,
+ and 13 = fib_gap from the GTE canonical orbit. The seesaw numbers
+ {11, 29} connect strange baryons to the neutrino sector. -/
+theorem ugp_strange_baryon_b_formulas :
+    ((3:ℕ)+1) * 11^2 * ((73:ℕ)+2*3) = 38236 ∧
+    15 * ((3:ℕ)+1) * 11^4 - ((3:ℕ)-1)*13 = 878434 ∧
+    (2*(3:ℕ)) * (4*(3:ℕ)^2-7) * (11^4-((3:ℕ)+1)*(3:ℕ)^4*13) = 1814646 := by
+  norm_num
+
 /-- 13 = N_c^2+N_c+1 so b(b) = 2^13-1 = 8191. -/
 theorem bottom_b_exponent : (3:ℕ)^2 + 3 + 1 = 13 := by norm_num
 
