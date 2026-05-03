@@ -162,3 +162,7 @@ match.  See registry at `ugp-physics:specs/WORKING_NOTES/TECH_DEBT_LEAN_SORRY_RE
 | b(neutron) = proton_b − 2N_c² = 11441 | BraidAtlas.CompositeTriples | neutron_b_formula | ✓ |
 | b(p)−b(n) = 2N_c² = 18 | BraidAtlas.CompositeTriples | proton_neutron_b_diff | ✓ |
 | **Full nucleon b-formula conjunction** (zero sorry) | BraidAtlas.CompositeTriples | ugp_nucleon_b_formula | ✓ |
+| b(Sigma+) = (b(s)+a_u×seesaw)×(b(s)+a_u×seesaw+(a_u×(Nc²-1))²) = 639161 | BraidAtlas.CompositeTriples | sigma_plus_b_formula | ✓ |
+| |S|=1 sector b: Lambda=Sigma0=Sigma-=38236 | BraidAtlas.CompositeTriples | strange_baryon_s1_b_eq_lambda | ✓ |
+| |S|=2 sector b: Xi0=Xi-=878434 | BraidAtlas.CompositeTriples | strange_baryon_s2_b_eq_xi | ✓ |
+| **All 9 light baryon b-formulas** (full conjunction, zero sorry) | BraidAtlas.CompositeTriples | ugp_all_baryon_b_formulas | ✓ |

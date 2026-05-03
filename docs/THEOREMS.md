@@ -380,6 +380,10 @@ derivations: `b₁ − N_c(N_c+1) = 73 − 12 = 61` and `δ·N_c² − (N_c−1)
 | **neutron_b_formula** | BraidAtlas.CompositeTriples | Same − 2N_c² = 11441 |
 | **proton_neutron_b_diff** | BraidAtlas.CompositeTriples | 11459 − 11441 = 2N_c² = 18 |
 | **ugp_nucleon_b_formula** | BraidAtlas.CompositeTriples | Full (a,b,c) conjunction for p and n (zero sorry) |
+| **sigma_plus_b_formula** | BraidAtlas.CompositeTriples | b(Σ+)=(b(s)+a_u×seesaw)×(…)=639161 |
+| **strange_baryon_s1_b_eq_lambda** | BraidAtlas.CompositeTriples | |S|=1 sector b: Lambda=Sigma0=Sigma-=38236 |
+| **strange_baryon_s2_b_eq_xi** | BraidAtlas.CompositeTriples | |S|=2 sector b: Xi0=Xi-=878434 |
+| **ugp_all_baryon_b_formulas** | BraidAtlas.CompositeTriples | All 9 light baryon b-values (full conjunction, zero sorry) |
 
 ## External Citations (Not Formalized)
 
