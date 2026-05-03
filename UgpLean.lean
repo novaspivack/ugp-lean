@@ -23,6 +23,7 @@ import UgpLean.GTE.UpdateMap
 import UgpLean.GTE.MersenneGcd
 import UgpLean.GTE.MersenneLadder
 import UgpLean.BraidAtlas.ChargeTheorem
+import UgpLean.BraidAtlas.CompositeTriples
 import UgpLean.GTE.FiberBundle
 import UgpLean.GTE.LinearResponse
 import UgpLean.NullDiscipline.SaturationBarrier
