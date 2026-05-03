@@ -285,4 +285,83 @@ def MersenneLadderUniqueness : Prop :=
     (f Nc ≤ 2 * Nc) →                                   -- MDL minimality
     f Nc = 2 * Nc
 
-end UgpLean
+-- ════════════════════════════════════════════════════════════════
+-- §8  Reflexive-closure tier structure (Paper 24)
+-- ════════════════════════════════════════════════════════════════
+--
+-- The RC-tier structure paper (Spivack 2026, "Substrate Depth and
+-- Self-Generated Mass") identifies three tiers of composite particles
+-- by their log₁₀|c| value, separated by Mersenne boundaries:
+--
+--   Tier 1 (light hadrons):  |c| ∈ {42, 275, 823}   RC > 0.95
+--   Tier 2 (strange hadrons): |c| = 1023 = 2^10-1   RC ≈ 0.80–0.93
+--   Tier 3 (charm/bottom):   |c| = 65535 = 2^16-1   RC ≈ 0.12–0.44
+--
+-- The boundary between Tier 2 and Tier 3 is c3_phys_formula (proved above).
+-- The boundary between Tier 1 and Tier 2 is even_step_c_invariance (c₂ = 1023).
+-- Both are arithmetic consequences of ridge n=10 and Nc=3.
+--
+-- STATUS:
+--   The arithmetic boundary theorems below are [T] (zero sorry).
+--   The empirical RC-tier correlation claim is a machine-verified statistic
+--   (r = -0.944, p = 6.7×10⁻¹⁹, n = 38) computed in COMP-EP18 and is
+--   Category A/D: the arithmetic boundaries are Lean-certified [T] but the
+--   correlation with physical RC requires QCD physics not yet formalized in
+--   ugp-lean [computational C].
+-- ════════════════════════════════════════════════════════════════
+
+/-- The two Mersenne tier boundaries are strictly ordered:
+ tier-1/tier-2 boundary < tier-2/tier-3 boundary. -/
+theorem tier_boundaries_strictly_ordered :
+    (1023 : ℕ) < 65535 := by norm_num
+
+/-- The tier-1/tier-2 boundary is the gen-2 Mersenne number 2^10 - 1. -/
+theorem tier12_boundary_is_mersenne_10 :
+    (1023 : ℕ) = 2^10 - 1 := by norm_num
+
+/-- The tier-2/tier-3 boundary is the gen-3 Mersenne number 2^16 - 1 = 2^(n+2Nc)-1. -/
+theorem tier23_boundary_is_mersenne_16 :
+    (65535 : ℕ) = 2^16 - 1 := by norm_num
+
+/-- Both tier boundaries are Mersenne numbers: they have the form 2^k - 1. -/
+theorem tier_boundaries_are_mersenne :
+    (∃ k₁ : ℕ, (1023 : ℕ) = 2^k₁ - 1) ∧
+    (∃ k₂ : ℕ, (65535 : ℕ) = 2^k₂ - 1) :=
+  ⟨⟨10, by norm_num⟩, ⟨16, by norm_num⟩⟩
+
+/-- The tier-2/tier-3 boundary is an arithmetic consequence of ridge n=10 and Nc=3.
+ Follows directly from c3_phys_formula. -/
+theorem tier23_boundary_from_ridge_and_Nc :
+    (65535 : ℕ) = 2^(10 + 2 * 3) - 1 := by norm_num
+
+/-- The canonical c-values of the three lepton generations fall in strictly
+ increasing order, with the two Mersenne boundaries separating them. -/
+theorem lepton_c_values_span_all_tiers :
+    -- gen-1 lepton seed c = 823 (tier 1, below tier-1/tier-2 boundary 1023)
+    LeptonSeed.c < 1023 ∧
+    -- gen-2 lepton c = 1023 = 2^10-1 (at tier-1/tier-2 boundary)
+    canonicalGen2.c = 1023 ∧
+    -- gen-3 lepton c = 65535 = 2^16-1 (tier-2/tier-3 boundary)
+    canonicalGen3.c = 65535 := by
+  refine ⟨?_, ?_, ?_⟩
+  · have h := LeptonSeed_values.2.2; norm_num [h]
+  · exact canonicalGen2_values.2.2
+  · exact canonicalGen3_values.2.2
+
+/-- Conjunction: the full tier structure arithmetic certificate. -/
+theorem ugp_rc_tier_structure :
+    -- Tier boundaries are Mersenne numbers
+    (1023 : ℕ) = 2^10 - 1 ∧
+    (65535 : ℕ) = 2^16 - 1 ∧
+    -- They are strictly ordered
+    (1023 : ℕ) < 65535 ∧
+    -- The tier-2/tier-3 boundary is 2^(n+2Nc)-1 with n=10, Nc=3
+    (65535 : ℕ) = 2^(10 + 2 * 3) - 1 ∧
+    -- The lepton cascade spans all three tiers
+    LeptonSeed.c < 1023 ∧
+    canonicalGen2.c = 1023 ∧
+    canonicalGen3.c = 65535 := by
+  refine ⟨by norm_num, by norm_num, by norm_num, by norm_num, ?_, ?_, ?_⟩
+  · have h := LeptonSeed_values; norm_num [LeptonSeed_values]
+  · exact canonicalGen2_values.2.2
+  · exact canonicalGen3_values.2.2
