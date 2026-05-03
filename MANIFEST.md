@@ -156,3 +156,9 @@ match.  See registry at `ugp-physics:specs/WORKING_NOTES/TECH_DEBT_LEAN_SORRY_RE
 | Confinement tier: 15 = 2^4-1 (new Mersenne level) | BraidAtlas.CompositeTriples | confinement_mersenne_level | ✓ |
 | Proton/neutron c=15 in confinement tier (c < 1023) | BraidAtlas.CompositeTriples | proton_neutron_c_eq_15_in_confinement_tier | ✓ |
 | **Full composite c-rule conjunction** (zero sorry) | BraidAtlas.CompositeTriples | ugp_composite_braid_c_rule | ✓ |
+| **a-component min-rule (proton, neutron)** | BraidAtlas.CompositeTriples | proton_a_eq_min, neutron_a_eq_min | ✓ |
+| Correction 61 via two independent paths | BraidAtlas.CompositeTriples | proton_b_correction_from_lepton_seed, proton_b_correction_from_delta, proton_b_correction_agreement | ✓ |
+| **b(proton) = N_c²·(a_u·2^{N_c²−1}−δ)+(N_c−1) = 11459** | BraidAtlas.CompositeTriples | proton_b_formula | ✓ |
+| b(neutron) = proton_b − 2N_c² = 11441 | BraidAtlas.CompositeTriples | neutron_b_formula | ✓ |
+| b(p)−b(n) = 2N_c² = 18 | BraidAtlas.CompositeTriples | proton_neutron_b_diff | ✓ |
+| **Full nucleon b-formula conjunction** (zero sorry) | BraidAtlas.CompositeTriples | ugp_nucleon_b_formula | ✓ |

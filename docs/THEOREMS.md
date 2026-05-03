@@ -344,11 +344,11 @@ n = 38; RC predicate not yet formalized in Lean).
 ## Composite Braid c-Rule (Paper 24 — Category A upgrade)
 
 New module `BraidAtlas.CompositeTriples` formalizes the composition law for
-composite hadron GTE triples. Status: **Category A** (writhe theorem + chirality
-corollary + confinement Mersenne level, all zero sorry); **Category A/D** for
-the sector assignment of specific hadrons (empirically validated by P01 Appendix A
-proton/neutron c=15, and Paper 24 RC correlation r = −0.981 for max-|c| rule,
-p = 2.1×10⁻²⁷; axiomatic derivation of sector assignment is future work).
+composite hadron GTE triples. Status: **Category A** for writhe/chirality/tier
+theorems and the **full proton/neutron (a,b,c) derivation** (all zero sorry);
+**Category A/D** for the sector assignment rule (empirically validated).
+
+### c-component theorems
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -361,6 +361,25 @@ p = 2.1×10⁻²⁷; axiomatic derivation of sector assignment is future work).
 | **confinement_mersenne_level** | BraidAtlas.CompositeTriples | 15 = 2^4−1 (lowest composite Mersenne level) |
 | **proton_neutron_c_eq_15_in_confinement_tier** | BraidAtlas.CompositeTriples | 15 < 1023 (proton/neutron in tier 1) |
 | **ugp_composite_braid_c_rule** | BraidAtlas.CompositeTriples | Full composite c-rule conjunction (zero sorry) |
+
+### a-component (min-rule) and b-component (Wolfram Alpha breakthrough)
+
+Discovery (2026-05-03): Wolfram Alpha representation 11459 = 5 × 2^8 × 3^2 − 61
+reveals that b(proton) = N_c²·(a_u·2^{N_c²−1} − δ) + (N_c−1), where every
+factor is a Lean-certified UGP constant. The correction 61 has TWO independent
+derivations: `b₁ − N_c(N_c+1) = 73 − 12 = 61` and `δ·N_c² − (N_c−1) = 7·9−2 = 61`.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **proton_a_eq_min** | BraidAtlas.CompositeTriples | min(5,5,9) = 5 (a-rule: min of constituents) |
+| **neutron_a_eq_min** | BraidAtlas.CompositeTriples | min(5,9,9) = 5 |
+| **proton_b_correction_from_lepton_seed** | BraidAtlas.CompositeTriples | 73 − N_c(N_c+1) = 61 |
+| **proton_b_correction_from_delta** | BraidAtlas.CompositeTriples | δ·N_c² − (N_c−1) = 61 |
+| **proton_b_correction_agreement** | BraidAtlas.CompositeTriples | Both paths equal 61 |
+| **proton_b_formula** | BraidAtlas.CompositeTriples | N_c²·(a_u·2^{N_c²−1}−δ)+(N_c−1) = 11459 |
+| **neutron_b_formula** | BraidAtlas.CompositeTriples | Same − 2N_c² = 11441 |
+| **proton_neutron_b_diff** | BraidAtlas.CompositeTriples | 11459 − 11441 = 2N_c² = 18 |
+| **ugp_nucleon_b_formula** | BraidAtlas.CompositeTriples | Full (a,b,c) conjunction for p and n (zero sorry) |
 
 ## External Citations (Not Formalized)
 
