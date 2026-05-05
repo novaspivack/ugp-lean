@@ -385,6 +385,49 @@ derivations: `b₁ − N_c(N_c+1) = 73 − 12 = 61` and `δ·N_c² − (N_c−1)
 | **strange_baryon_s2_b_eq_xi** | BraidAtlas.CompositeTriples | |S|=2 sector b: Xi0=Xi-=878434 |
 | **ugp_all_baryon_b_formulas** | BraidAtlas.CompositeTriples | All 9 light baryon b-values (full conjunction, zero sorry) |
 
+## Asymptotic Sparsity (P25, 2026-05-05)
+
+New module `Phase4.AsymptoticSparsity` proves the Asymptotic Sparsity Theorem (P25 §4):
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **ridge_ge_8176** | Phase4.AsymptoticSparsity | ridge n ≥ 8176 for n ≥ 13 |
+| **stage2_survivor_10** | Phase4.AsymptoticSparsity | (24,42) is Stage-1 survivor at n=10 with b₁=73 |
+| **no_stage2_at_4..12** | Phase4.AsymptoticSparsity | For each n ∈ {4,5,6,7,8,9,11,12}, no element of ridgeSurvivorsFinset n has b₁=73 (native_decide) |
+| **no_stage2_large_n** | Phase4.AsymptoticSparsity | For n ≥ 13, AM-GM → b₁ = b₂+q₂+7 ≥ 187 ≠ 73 (nlinarith over ℤ) |
+| **asymptotic_sparsity** | Phase4.AsymptoticSparsity | Combined: (n=10,b₁=73) is the unique Stage-2 survivor across all n ≥ 4 |
+
+## Positive Root Theorem (P25, 2026-05-05)
+
+New module `Phase4.PositiveRootTheorem` proves T6 (P25 §5):
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **g1_num_val** | Phase4.PositiveRootTheorem | g₁² numerator = 16 (native_decide) |
+| **g2_num_val** | Phase4.PositiveRootTheorem | g₂² numerator = 2329 (native_decide) |
+| **g3_num_val** | Phase4.PositiveRootTheorem | g₃² numerator = 41075281 (native_decide) |
+| **g2_factor** | Phase4.PositiveRootTheorem | 2329 = 17 × 137 (norm_num) |
+| **g3_perfect_sq** | Phase4.PositiveRootTheorem | 41075281 = (13×17×29)² (norm_num) |
+| **su14,su18,su30** | Phase4.PositiveRootTheorem | c(SU(14)₁)=13, c(SU(18)₁)=17, c(SU(30)₁)=29 |
+| **positive_root_theorem** | Phase4.PositiveRootTheorem | SU(N)₁ factor count in numerator(g²_G) = |Φ⁺(G)| for all G |
+| **prime_29_cross_sector** | Phase4.PositiveRootTheorem | 4·N_c²−δ = 29 = c(SU(30)₁): same integer in seesaw and gauge sectors |
+
+## Galois Layer Stability (P25, 2026-05-05)
+
+New module `GaloisStructure.CyclotomicLayers` proves the Galois Stability Theorem (P25 §7):
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **two_cos_pi12_sq** | GaloisStructure.CyclotomicLayers | (2·cos(π/12))² = 2 + √3 |
+| **two_cos_pi10_sq** | GaloisStructure.CyclotomicLayers | (2·cos(π/10))² = 2 + φ |
+| **p10_at_cos_pi12** | GaloisStructure.CyclotomicLayers | p₁₀(2cos(π/12)) = 2−√3 exactly |
+| **p12_at_cos_pi10** | GaloisStructure.CyclotomicLayers | p₁₂(2cos(π/10)) = φ−2 exactly |
+| **two_minus_sqrt3_ne_zero** | GaloisStructure.CyclotomicLayers | 2−√3 ≠ 0 |
+| **goldenRatio_minus_two_ne_zero** | GaloisStructure.CyclotomicLayers | φ−2 ≠ 0 |
+| **galois_layer_stability** | GaloisStructure.CyclotomicLayers | p₁₀(2cos(π/12))≠0 ∧ p₁₂(2cos(π/10))≠0: layers in different Galois orbits |
+| **galois_cross_eval_values** | GaloisStructure.CyclotomicLayers | Exact evaluation values (2−√3, φ−2) |
+| **strand_count_eq_two** | GaloisStructure.CyclotomicLayers | (N_c²−1)/4 = 2 = strand_count |
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |

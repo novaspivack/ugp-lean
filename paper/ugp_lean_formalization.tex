@@ -132,7 +132,7 @@ It produces, from first principles and without free parameters, a unique
 canonical seed---the triple $(1,73,823)$---whose orbit under the
 Generative Triple Evolution (\gte{}) map is rigidly determined.
 We present \textbf{ugp-lean}, a machine-checked formalization of this
-framework in \lean{}~4 against Mathlib, comprising 100 modules with a
+framework in \lean{}~4 against Mathlib, comprising 103 modules with a
 strict zero-sorry, zero-custom-axiom policy on the core proof path.
 
 \textbf{What makes \ugp{} special, and what this paper proves.}
@@ -420,7 +420,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 100~\lean{} modules across eleven layers:
+The artifact is organized into 103~\lean{} modules across eleven layers:
 
 \begin{center}
 \begin{tikzpicture}[
@@ -1143,6 +1143,82 @@ Under the hypercharge convention, $\sin^2\!\theta_W = g_1^2/(g_1^2 + g_2^2)$
 and the $\sim 1\%$ discrepancy from the PDG value $0.23121$ is consistent
 with tree-level threshold corrections of the same magnitude as the $m_W$
 discrepancy, which is resolved by standard two-loop SM running.
+
+% ═══════════════════════════════════════════════════════════════
+\subsection{Asymptotic Sparsity and Positive Root Theorem (P25, 2026)}
+\label{subsec:p25}
+% ═══════════════════════════════════════════════════════════════
+
+Two new modules in \texttt{Phase4} certify the main results of the
+companion investigation paper (P25: \emph{The Arithmetic Uniqueness
+of the Standard Model}).
+
+\paragraph{Asymptotic Sparsity (\texttt{Phase4.AsymptoticSparsity}).}
+The \textbf{Asymptotic Sparsity Theorem} proves that the joint constraint
+of arithmetic admissibility (Stage-1 mirror-dual sieve on $R_n = 2^n - 16$)
+and physical viability (Stage-2 $b_1 = 73$ match) has exactly one solution
+across all ridge levels:
+
+\begin{theorem}[Asymptotic Sparsity]\label{thm:sparsity}
+$(n{=}10,\, b_1{=}73,\, \mathrm{seed} = (1,73,823))$ is the unique joint
+constraint solution.
+\begin{leanref} \lstinline|asymptotic_sparsity|
+\textup{(in \texttt{Phase4.AsymptoticSparsity})}
+\end{leanref}
+\end{theorem}
+
+The proof combines:
+(i) a finite computational check for $n \in [4,12]$
+(\texttt{native\_decide} on \texttt{ridgeSurvivorsFinset~n}), and
+(ii) an analytic bound for $n \ge 13$: AM-GM over $\mathbb{Z}$ yields
+$b_2 + q_2 \ge 180$ from $b_2 q_2 \ge 8176$ and $b_2, q_2 \ge 16$,
+so $b_1 = b_2+q_2+7 \ge 187 \ne 73$.
+
+\paragraph{Positive Root Theorem (\texttt{Phase4.PositiveRootTheorem}).}
+The \textbf{Positive Root Theorem} (T6 in P25) proves that the number of
+$\mathrm{SU}(N)_1$ WZW factors in the bare coupling numerator equals
+$|\Phi^+(G)|$ for each SM gauge group $G$.
+
+\begin{theorem}[Positive Root Theorem]\label{thm:posroot}
+\begin{align*}
+\mathrm{num}(g_1^2) &= 16 = 2^4 \quad |\Phi^+(\mathrm{U}(1))| = 0 \\
+\mathrm{num}(g_2^2) &= 17 \cdot 137 \quad |\Phi^+(\mathrm{SU}(2))| = 1 \\
+\mathrm{num}(g_3^2) &= (13 \cdot 17 \cdot 29)^2 \quad |\Phi^+(\mathrm{SU}(3))| = 3
+\end{align*}
+\begin{leanref} \lstinline|positive_root_theorem|
+\textup{(in \texttt{Phase4.PositiveRootTheorem})}
+\end{leanref}
+\end{theorem}
+
+% ═══════════════════════════════════════════════════════════════
+\subsection{Galois Layer Stability (\texttt{GaloisStructure.CyclotomicLayers})}
+\label{subsec:galois}
+% ═══════════════════════════════════════════════════════════════
+
+The new module \texttt{GaloisStructure.CyclotomicLayers} proves the
+\textbf{Galois Stability Theorem} (P25 \S7): the UGP algebraic layers
+(kernel, TT/$A_2$, Koide) are Galois-stable subsets of
+$\mathbb{Q}(\zeta_{120})$.
+
+The proof establishes that $2\cos(\pi/10)$ (kernel layer) and
+$2\cos(\pi/12)$ (Koide layer) satisfy \emph{different} minimal polynomials
+over $\mathbb{Q}$ by computing the exact cross-polynomial evaluations:
+
+\begin{theorem}[Galois Layer Stability]\label{thm:galois}
+\[
+  p_{10}(2\cos(\pi/12)) = 2 - \sqrt{3} \ne 0, \qquad
+  p_{12}(2\cos(\pi/10)) = \varphi - 2 \ne 0
+\]
+where $p_{10}(x) = x^4 - 5x^2 + 5$ (kernel) and $p_{12}(x) = x^4 - 4x^2 + 1$ (Koide).
+\begin{leanref} \lstinline|galois_layer_stability|
+\textup{(in \texttt{GaloisStructure.CyclotomicLayers})}
+\end{leanref}
+\end{theorem}
+
+The two nonzero evaluations are proved from the double-angle formula and
+$\mathrm{mul\_self\_sqrt}$; the golden ratio $\varphi < 2$ follows from
+$(3 - \sqrt{5})^2 \ge 0$ by \texttt{nlinarith}.
+
 
 % ═══════════════════════════════════════════════════════════════
 \section{General-Level Theorems}\label{sec:general}
