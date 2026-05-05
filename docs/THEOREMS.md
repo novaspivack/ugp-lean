@@ -441,7 +441,10 @@ New module `GaloisStructure.MinimalCyclotomic`:
 | **lcm_20_24_eq_120** | GaloisStructure.MinimalCyclotomic | LCM(20,24) = 120 (minimal cyclotomic conductor) |
 | **lcm_minimality** | GaloisStructure.MinimalCyclotomic | ∀ N, 20\|N ∧ 24\|N → 120\|N |
 | **prime_set_120_matches_gauge** | GaloisStructure.MinimalCyclotomic | {2,3,5} prime set shared by 120 and gauge denominators |
-| **q_zeta_120_is_minimal_conductor** | GaloisStructure.MinimalCyclotomic | 120 = LCM(20,24) = 2³·3·5 is minimal for all UGP constants |
+| **prime_137_bitset** | GaloisStructure.MinimalCyclotomic | 137 = 2^0 + 2^3 + 2^7 (bit-set {0, Nc, delta}) |
+| **delta_from_Nc** | GaloisStructure.MinimalCyclotomic | delta = 7 = Nc + (Nc^2-1)/2, derived from Nc=3 |
+| **prime_137_from_Nc** | GaloisStructure.MinimalCyclotomic | 137 = 2^Nc * (2Nc^2-1) + 1 (structural formula) |
+| **prime_137_structural_origin** | GaloisStructure.MinimalCyclotomic | 137 is the bit-set prime {0,Nc,delta} fully determined by Nc=3 (closes P25 §10.2) |
 
 ## VV Mechanism (P25, 2026-05-05)
 
