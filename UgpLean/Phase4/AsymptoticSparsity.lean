@@ -27,6 +27,26 @@ namespace UgpLean.Phase4.AsymptoticSparsity
 
 open UgpLean
 
+/-! ## Part 0: Trivial case n < 4 -/
+
+/-- For n < 4, ridge n = 0 in Nat, so no divisor pair with b₂,q₂ ≥ 16 exists.
+  Any `isMirrorDualSurvivorAt n b₂ q₂` for n < 4 is False (vacuously true). -/
+theorem no_survivor_small_n (n b₂ q₂ : ℕ) (hn : n < 4)
+    (hsurv : isMirrorDualSurvivorAt n b₂ q₂) : False := by
+  obtain ⟨hprod, hb₂, _, hq₂, _⟩ := hsurv
+  -- ridge n = 2^n - 16 = 0 for n ≤ 3 (Nat truncation)
+  have hridge : ridge n = 0 := by
+    unfold ridge
+    have hpow : 2 ^ n ≤ 16 := by
+      calc 2 ^ n ≤ 2 ^ 3 := Nat.pow_le_pow_right (by norm_num) (by omega)
+        _ = 8 := by norm_num
+        _ ≤ 16 := by norm_num
+    omega
+  -- b₂ * q₂ = 0, but b₂ ≥ 16 and q₂ ≥ 16 → contradiction
+  rw [hridge] at hprod
+  have : b₂ * q₂ ≥ 16 * 16 := Nat.mul_le_mul hb₂ hq₂
+  omega
+
 /-! ## Part 1: Finite check n ∈ [4,12] -/
 
 /-- At n=10, the pair (24,42) is a survivor with b₁=24+42+7=73. -/
@@ -103,5 +123,27 @@ theorem asymptotic_sparsity :
   ⟨stage2_survivor_10.1, stage2_survivor_10.2,
    no_stage2_finite,
    fun n b₂ q₂ hn h => no_stage2_large_n n b₂ q₂ hn h⟩
+
+/-! ## The Complete Universal Theorem -/
+
+/-- **Asymptotic Sparsity — Universal Form:**
+  For ALL n : ℕ, the unique solution to the joint Stage-1+Stage-2 constraint is
+  n=10, b₂=24, q₂=42, b₁=73.
+  This is the strongest form: a single ∀ n : ℕ statement with no range restriction. -/
+theorem asymptotic_sparsity_universal :
+    -- Existence: n=10 is a solution
+    isMirrorDualSurvivorAt 10 24 42 ∧ 24 + 42 + 7 = 73 ∧
+    -- Uniqueness: for ALL n, if (b₂,q₂) is a survivor with b₁=73, then n=10
+    ∀ n b₂ q₂ : ℕ, isMirrorDualSurvivorAt n b₂ q₂ → b₂ + q₂ + 7 = 73 → n = 10 := by
+  refine ⟨stage2_survivor_10.1, stage2_survivor_10.2, ?_⟩
+  intro n b₂ q₂ hsurv hb1
+  by_contra hne
+  -- Three cases: n < 4, n ∈ [4,12]\{10}, n ≥ 13
+  rcases Nat.lt_or_ge n 4 with hn4 | hn4
+  · exact (no_survivor_small_n n b₂ q₂ hn4 hsurv).elim
+  · rcases Nat.lt_or_ge n 13 with hn12 | hn13
+    · have hn12' : n ≤ 12 := by omega
+      exact no_stage2_finite n hn4 hn12' hne b₂ q₂ hsurv (by omega)
+    · exact absurd hb1 (no_stage2_large_n n b₂ q₂ hn13 hsurv)
 
 end UgpLean.Phase4.AsymptoticSparsity

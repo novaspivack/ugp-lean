@@ -395,7 +395,8 @@ New module `Phase4.AsymptoticSparsity` proves the Asymptotic Sparsity Theorem (P
 | **stage2_survivor_10** | Phase4.AsymptoticSparsity | (24,42) is Stage-1 survivor at n=10 with b₁=73 |
 | **no_stage2_at_4..12** | Phase4.AsymptoticSparsity | For each n ∈ {4,5,6,7,8,9,11,12}, no element of ridgeSurvivorsFinset n has b₁=73 (native_decide) |
 | **no_stage2_large_n** | Phase4.AsymptoticSparsity | For n ≥ 13, AM-GM → b₁ = b₂+q₂+7 ≥ 187 ≠ 73 (nlinarith over ℤ) |
-| **asymptotic_sparsity** | Phase4.AsymptoticSparsity | Combined: (n=10,b₁=73) is the unique Stage-2 survivor across all n ≥ 4 |
+| **asymptotic_sparsity_universal** | Phase4.AsymptoticSparsity | **For ALL n : ℕ**, (n=10,b₁=73) is the UNIQUE Stage-2 survivor. Single ∀n theorem combining finite check + AM-GM + trivial small-n case. |
+| **no_survivor_small_n** | Phase4.AsymptoticSparsity | For n < 4, isMirrorDualSurvivorAt is False (ridge n = 0, no valid pairs) |
 
 ## Positive Root Theorem (P25, 2026-05-05)
 
@@ -427,6 +428,31 @@ New module `GaloisStructure.CyclotomicLayers` proves the Galois Stability Theore
 | **galois_layer_stability** | GaloisStructure.CyclotomicLayers | p₁₀(2cos(π/12))≠0 ∧ p₁₂(2cos(π/10))≠0: layers in different Galois orbits |
 | **galois_cross_eval_values** | GaloisStructure.CyclotomicLayers | Exact evaluation values (2−√3, φ−2) |
 | **strand_count_eq_two** | GaloisStructure.CyclotomicLayers | (N_c²−1)/4 = 2 = strand_count |
+
+## Minimal Cyclotomic Field + Fibonacci-Ridge Structure (P25, 2026-05-05)
+
+New module `GaloisStructure.MinimalCyclotomic`:
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **c2_mersenne_exponent** | GaloisStructure.MinimalCyclotomic | 1023 = 2^(2*F(5)) - 1: n_ridge is the c₂ Mersenne exponent |
+| **mersenne_ladder_structure** | GaloisStructure.MinimalCyclotomic | {4,10,16} = {2F(3),2F(5),2F(6)}, step=2Nc (native_decide) |
+| **n_ridge_structural_position** | GaloisStructure.MinimalCyclotomic | 10 = 2F(5) = (4+16)/2; F(6)-F(5)=F(4)=Nc; Nc^2-1=F(6) |
+| **lcm_20_24_eq_120** | GaloisStructure.MinimalCyclotomic | LCM(20,24) = 120 (minimal cyclotomic conductor) |
+| **lcm_minimality** | GaloisStructure.MinimalCyclotomic | ∀ N, 20\|N ∧ 24\|N → 120\|N |
+| **prime_set_120_matches_gauge** | GaloisStructure.MinimalCyclotomic | {2,3,5} prime set shared by 120 and gauge denominators |
+| **q_zeta_120_is_minimal_conductor** | GaloisStructure.MinimalCyclotomic | 120 = LCM(20,24) = 2³·3·5 is minimal for all UGP constants |
+
+## VV Mechanism (P25, 2026-05-05)
+
+New module `MassRelations.VVMechanism`:
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **vv_exponents** | MassRelations.VVMechanism | (13/9)=1+4/9, (-7/6)=-(1+1/6), (-5/14)=-45/126: group-theory identities |
+| **log_of_power_law** | MassRelations.VVMechanism | If f=C·u^α·l^β then log(f)=α·log(u)+β·log(l)+log(C) (pure algebra) |
+| **vv_mechanism_algebraic** | MassRelations.VVMechanism | GUT power law + UCL log map → log-linear VV relation (zero sorry) |
+| **dim_126_eq_two_Nc_sq_delta** | MassRelations.VVMechanism | 126 = 2·Nc²·δ (connects VV to seesaw structure) |
 
 ## External Citations (Not Formalized)
 

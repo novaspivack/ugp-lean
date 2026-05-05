@@ -59,6 +59,8 @@ import UgpLean.Phase4.PR1
 import UgpLean.Phase4.AsymptoticSparsity
 import UgpLean.Phase4.PositiveRootTheorem
 import UgpLean.GaloisStructure.CyclotomicLayers
+import UgpLean.GaloisStructure.MinimalCyclotomic
+import UgpLean.MassRelations.VVMechanism
 import UgpLean.Universality.Rule110
 import UgpLean.Universality.UWCA
 import UgpLean.Universality.UWCASimulation
@@ -83,7 +85,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.QuarterLock`          — k_M = k_gen2 + ¼k_L²
 - `UgpLean.ElegantKernel`        — k_L² = 7/512, L_model
 - `UgpLean.LModelDerivation`     — L_model derived from D₁, 5³, orbit length 3
-- `UgpLean.Phase4.*`             — DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity, PositiveRootTheorem
+- `UgpLean.Phase4.*`             — DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity (all n), PositiveRootTheorem
 - `UgpLean.GaloisStructure.*`    — CyclotomicLayers (Galois stability of UGP layers in Q(ζ₁₂₀))
 - `UgpLean.Universality.*`       — Rule110, UWCA, UWCAHistoryReversible, Turing universality, Architecture bridge
 - `UgpLean.Papers.*`             — Paper25, UGPMain (citable stubs)
