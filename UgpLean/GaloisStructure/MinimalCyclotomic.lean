@@ -32,14 +32,14 @@ open UgpLean
 /-- c2 = 1023 = 2^10 - 1 = 2^(2*F(5)) - 1. The ridge level is the Mersenne exponent of c2. -/
 theorem c2_mersenne_exponent : (1023 : Nat) = 2 ^ (2 * Nat.fib 5) - 1 := by native_decide
 
-/-- The three Mersenne exponents {4, 10, 16} = {2*F(3), 2*F(5), 2*F(6)}.
-  They are symmetric around n_ridge = 10 with step 2*Nc = 6. -/
+/-- The three Mersenne exponents {4, 10, 16} equal {2·F(3), 2·F(5), 2·F(6)},
+  forming an arithmetic sequence centered on n_ridge = 10 with step 2·N_c = 6. -/
 theorem mersenne_ladder_structure :
-    2 * Nat.fib 3 = 4 /- first rung -/ /\
-    2 * Nat.fib 5 = 10 /- second rung = n_ridge -/ /\
-    2 * Nat.fib 6 = 16 /- third rung -/ /\
-    2 * Nat.fib 6 - 2 * Nat.fib 5 = 6 /- step = 2*Nc -/ /\
-    2 * Nat.fib 5 - 2 * Nat.fib 3 = 6 := /- symmetric -/
+    2 * Nat.fib 3 = 4 ∧            -- first rung:  2·F(3)
+    2 * Nat.fib 5 = 10 ∧           -- second rung: 2·F(5) = n_ridge
+    2 * Nat.fib 6 = 16 ∧           -- third rung:  2·F(6)
+    2 * Nat.fib 6 - 2 * Nat.fib 5 = 6 ∧  -- step = 2·N_c
+    2 * Nat.fib 5 - 2 * Nat.fib 3 = 6 := -- step = 2·N_c (symmetric)
   by native_decide
 
 /-- Nc = 3 = F(4). The QCD colour rank is the 4th Fibonacci number. -/
@@ -51,12 +51,13 @@ theorem mersenne_step_eq_two_Nc : 2 * Nat.fib 4 = 6 := by native_decide
 /-- dim(SU(Nc)) = Nc^2 - 1 = 8 = F(6). Number of gluons is the 6th Fibonacci number. -/
 theorem gluon_count_is_fib6 : (3 : Nat)^2 - 1 = Nat.fib 6 := by native_decide
 
-/-- n_ridge = 10 is the center of the Mersenne sequence {4,10,16},
-  equals 2*F(5), and the step 2*Nc = 2*F(4) = F(6)-F(5) by Fibonacci recurrence. -/
+/-- n_ridge = 10 equals 2·F(5), sits at the center of the Mersenne arithmetic
+  sequence {4, 10, 16}, and the step 2·N_c = 2·F(4) arises from the Fibonacci
+  recurrence F(6) − F(5) = F(4) = N_c = 3. -/
 theorem n_ridge_structural_position :
-    10 = 2 * Nat.fib 5 /\
-    10 = (4 + 16) / 2 /\
-    Nat.fib 6 - Nat.fib 5 = Nat.fib 4 /\
+    10 = 2 * Nat.fib 5 ∧
+    10 = (4 + 16) / 2 ∧
+    Nat.fib 6 - Nat.fib 5 = Nat.fib 4 ∧
     (3 : Nat)^2 - 1 = Nat.fib 6 :=
   by native_decide
 
@@ -88,16 +89,16 @@ theorem factorization_120 : (120 : ℕ) = 2^3 * 3 * 5 := by norm_num
 /-- The prime set {2,3,5} of 120 matches the gauge coupling denominators:
     g1 denom = 5^3 = 125, g2 denom = 2^3*3^3*5^2 = 5400, g3 denom = 2^13*3^3*5^3. -/
 theorem prime_set_120_matches_gauge :
-    5 ∣ 125 /\
-    (2 ∣ 5400 /\ 3 ∣ 5400 /\ 5 ∣ 5400) /\
-    (2 ∣ 27648000 /\ 3 ∣ 27648000 /\ 5 ∣ 27648000) /\
-    ¬(7 ∣ 120) /\ ¬(11 ∣ 120) /\ ¬(7 ∣ 125) /\ ¬(7 ∣ 5400) := by decide
+    5 ∣ 125 ∧
+    (2 ∣ 5400 ∧ 3 ∣ 5400 ∧ 5 ∣ 5400) ∧
+    (2 ∣ 27648000 ∧ 3 ∣ 27648000 ∧ 5 ∣ 27648000) ∧
+    ¬(7 ∣ 120) ∧ ¬(11 ∣ 120) ∧ ¬(7 ∣ 125) ∧ ¬(7 ∣ 5400) := by decide
 
 /-- Summary: Q(zeta_120) is the minimal cyclotomic field for UGP.
   120 = LCM(20, 24) = 2^3*3*5. Prime set matches gauge denominators. -/
 theorem q_zeta_120_is_minimal_conductor :
-    20 ∣ 120 /\ 24 ∣ 120 /\ 12 ∣ 120 /\
-    Nat.lcm 20 24 = 120 /\
+    20 ∣ 120 ∧ 24 ∣ 120 ∧ 12 ∣ 120 ∧
+    Nat.lcm 20 24 = 120 ∧
     (120 : ℕ) = 2^3 * 3 * 5 :=
   ⟨by decide, by decide, by decide, by native_decide, by norm_num⟩
 
