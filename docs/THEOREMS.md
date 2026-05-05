@@ -446,6 +446,26 @@ New module `GaloisStructure.MinimalCyclotomic`:
 | **prime_137_from_Nc** | GaloisStructure.MinimalCyclotomic | 137 = 2^Nc * (2Nc^2-1) + 1 (structural formula) |
 | **prime_137_structural_origin** | GaloisStructure.MinimalCyclotomic | 137 is the bit-set prime {0,Nc,delta} fully determined by Nc=3 (closes P25 §10.2) |
 
+## Unconditional Rigidity — EPIC 22 (2026-05-05)
+
+### b1=73 Forced at n=10 + δ_target as Structural Prediction
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **b1_unique_at_n10** | Phase4.AsymptoticSparsity | ∀ survivors at n=10: b2+q2+7=73 (both pairs give 73, native_decide) |
+| **b1_forced_eq_73** | Phase4.AsymptoticSparsity | isMirrorDualSurvivorAt 10 b2 q2 → b2+q2+7=73 |
+| **delta_structural_prediction** | Phase4.DeltaUGP | b1=73 arithmetically forced → δ_structural = C_alg/73 is a structural prediction |
+| **b1_in_delta_is_sieve_forced** | Phase4.DeltaUGP | leptonB = 73 (certified, supports prediction interpretation) |
+
+### VV All Coefficients from N_c = 3 — Module MassRelations.VVAllCoefficientsFromNc
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **dim_45_su_Nc_plus_2** | MassRelations.VVAllCoefficientsFromNc | 45 = (Nc+2)(2Nc+3) for Nc=3 (norm_num) |
+| **dim_126_so_2Nc_plus_4** | MassRelations.VVAllCoefficientsFromNc | 126 = C(2(Nc+2),Nc+2)/2 for Nc=3 (native_decide) |
+| **vv_gamma_from_Nc** | MassRelations.VVAllCoefficientsFromNc | γ_d = -5/14 = -(Nc+2)(2Nc+3)/[C(2Nc+4,Nc+2)/2] (norm_num) |
+| **vv_all_coefficients_from_Nc** | MassRelations.VVAllCoefficientsFromNc | All 3 VV exponents (13/9, -7/6, -5/14) from Nc=3 alone (zero sorry) |
+
 ## VV Mechanism (P25, 2026-05-05)
 
 New module `MassRelations.VVMechanism`:

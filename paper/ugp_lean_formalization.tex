@@ -132,7 +132,7 @@ It produces, from first principles and without free parameters, a unique
 canonical seed---the triple $(1,73,823)$---whose orbit under the
 Generative Triple Evolution (\gte{}) map is rigidly determined.
 We present \textbf{ugp-lean}, a machine-checked formalization of this
-framework in \lean{}~4 against Mathlib, comprising 103 modules with a
+framework in \lean{}~4 against Mathlib, comprising 107 modules with a
 strict zero-sorry, zero-custom-axiom policy on the core proof path.
 
 \textbf{What makes \ugp{} special, and what this paper proves.}
@@ -420,7 +420,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 103~\lean{} modules across eleven layers:
+The artifact is organized into 107~\lean{} modules across eleven layers:
 
 \begin{center}
 \begin{tikzpicture}[
@@ -1157,22 +1157,31 @@ of the Standard Model}).
 The \textbf{Asymptotic Sparsity Theorem} proves that the joint constraint
 of arithmetic admissibility (Stage-1 mirror-dual sieve on $R_n = 2^n - 16$)
 and physical viability (Stage-2 $b_1 = 73$ match) has exactly one solution
-across all ridge levels:
+across all ridge levels $n \in \mathbb{N}$:
 
 \begin{theorem}[Asymptotic Sparsity]\label{thm:sparsity}
 $(n{=}10,\, b_1{=}73,\, \mathrm{seed} = (1,73,823))$ is the unique joint
-constraint solution.
-\begin{leanref} \lstinline|asymptotic_sparsity|
+constraint solution for all $n \in \mathbb{N}$.
+\begin{leanref} \lstinline|asymptotic_sparsity_universal|
 \textup{(in \texttt{Phase4.AsymptoticSparsity})}
 \end{leanref}
 \end{theorem}
 
 The proof combines:
 (i) a finite computational check for $n \in [4,12]$
-(\texttt{native\_decide} on \texttt{ridgeSurvivorsFinset~n}), and
-(ii) an analytic bound for $n \ge 13$: AM-GM over $\mathbb{Z}$ yields
-$b_2 + q_2 \ge 180$ from $b_2 q_2 \ge 8176$ and $b_2, q_2 \ge 16$,
-so $b_1 = b_2+q_2+7 \ge 187 \ne 73$.
+(\texttt{native\_decide} on \texttt{ridgeSurvivorsFinset~n}),
+(ii) an analytic bound for $n \ge 13$: AM-GM yields $b_1 \ge 187 \ne 73$, and
+(iii) the trivial case $n < 4$: $\mathrm{ridge}~n = 0$ in $\mathbb{N}$, no valid pairs.
+
+A key structural corollary certifies that $b_1 = 73$ is \emph{arithmetically forced}
+by the divisor structure of $R_{10} = 1008$: both Stage-1 survivor pairs at $n = 10$
+give $b_1 = 24+42+7 = 42+24+7 = 73$ identically, with no reference to the physical
+viability condition.  Consequently, $\delta_{\rm structural} = C_{\rm alg}/73 \approx 0.016609$
+is a structural \emph{prediction} matching CODATA to $0.062\%$.
+
+\begin{leanref} \lstinline|b1_unique_at_n10|, \lstinline|b1_in_delta_is_sieve_forced|
+\textup{(in \texttt{Phase4.AsymptoticSparsity}, \texttt{Phase4.DeltaUGP})}
+\end{leanref}
 
 \paragraph{Positive Root Theorem (\texttt{Phase4.PositiveRootTheorem}).}
 The \textbf{Positive Root Theorem} (T6 in P25) proves that the number of
@@ -1187,6 +1196,22 @@ $|\Phi^+(G)|$ for each SM gauge group $G$.
 \end{align*}
 \begin{leanref} \lstinline|positive_root_theorem|
 \textup{(in \texttt{Phase4.PositiveRootTheorem})}
+\end{leanref}
+\end{theorem}
+
+\paragraph{VV Exponents from $N_c$ (\texttt{MassRelations.VVAllCoefficientsFromNc}).}
+The new module \texttt{MassRelations.VVAllCoefficientsFromNc} closes the VV Yukawa
+mechanism completely: all three down-quark VV exponents are derived from $N_c = 3$
+alone.
+
+\begin{theorem}[VV Exponents from $N_c$]
+\begin{align*}
+\alpha_d &= 1 + (N_c{+}1)/N_c^2 = 13/9, \quad \beta_d = -(1 + 1/(2N_c)) = -7/6, \\
+\gamma_d &= -(N_c{+}2)(2N_c{+}3) / [\tbinom{2N_c+4}{N_c+2}/2] = -5/14.
+\end{align*}
+\begin{leanref} \lstinline|vv_all_coefficients_from_Nc|,
+\lstinline|dim_45_su_Nc_plus_2|, \lstinline|dim_126_so_2Nc_plus_4|
+\textup{(in \texttt{MassRelations.VVAllCoefficientsFromNc})}
 \end{leanref}
 \end{theorem}
 
