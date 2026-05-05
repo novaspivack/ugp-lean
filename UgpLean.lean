@@ -62,6 +62,7 @@ import UgpLean.Phase4.PositiveRootTheorem
 import UgpLean.GaloisStructure.CyclotomicLayers
 import UgpLean.GaloisStructure.MinimalCyclotomic
 import UgpLean.MassRelations.VVMechanism
+import UgpLean.MassRelations.VVAllCoefficientsFromNc
 import UgpLean.Universality.Rule110
 import UgpLean.Universality.UWCA
 import UgpLean.Universality.UWCASimulation

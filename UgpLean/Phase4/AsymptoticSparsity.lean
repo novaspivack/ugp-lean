@@ -108,7 +108,21 @@ theorem no_stage2_large_n (n b₂ q₂ : ℕ) (hn : n ≥ 13)
     nlinarith [sq_nonneg ((b₂ : ℤ) - q₂)]
   exact_mod_cast by omega
 
-/-! ## The Main Theorem -/
+/-! ## The Unique b₁ at n=10: b₁ is Arithmetically Forced -/
+
+/-- At n=10, EVERY mirror-dual survivor (b₂, q₂) gives b₁ = b₂+q₂+7 = 73.
+  This means b₁=73 is arithmetically forced by the divisor structure of R₁₀=1008,
+  with NO reference to the physical viability condition δ_target. -/
+theorem b1_unique_at_n10 : ∀ p ∈ ridgeSurvivorsFinset 10, p.1 + p.2 + 7 = 73 := by
+  native_decide
+
+/-- Corollary: both n=10 survivor pairs give the same b₁ = 73.
+  The physical viability condition (Stage-2) therefore amounts to checking that
+  73 satisfies δ_UGP(73) ≈ δ_target — i.e., C_alg/73 is a structural prediction. -/
+theorem b1_forced_eq_73 (b₂ q₂ : ℕ) (hsurv : isMirrorDualSurvivorAt 10 b₂ q₂) :
+    b₂ + q₂ + 7 = 73 := by
+  have hmem := (isMirrorDualSurvivorAt_iff 10 b₂ q₂).mp hsurv
+  exact b1_unique_at_n10 (b₂, q₂) hmem
 
 /-- **Asymptotic Sparsity Theorem:**
   (n=10, b₂=24, q₂=42, b₁=73) is the UNIQUE Stage-2 survivor across all n ≥ 4. -/
