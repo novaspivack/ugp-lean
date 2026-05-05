@@ -25,6 +25,7 @@ import UgpLean.GTE.MersenneLadder
 import UgpLean.BraidAtlas.ChargeTheorem
 import UgpLean.BraidAtlas.CompositeTriples
 import UgpLean.BraidAtlas.ChiralitySquaring
+import UgpLean.BraidAtlas.ChargeDerivation
 import UgpLean.GTE.FiberBundle
 import UgpLean.GTE.LinearResponse
 import UgpLean.NullDiscipline.SaturationBarrier
