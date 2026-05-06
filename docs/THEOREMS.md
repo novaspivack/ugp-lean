@@ -510,7 +510,7 @@ Lean-certified MDL theorem: among the four arithmetic solutions, only
 
 ## Galois-Protection Non-Renormalization (2026-05-05) — Module Phase4.GaloisProtection
 
-New module `Phase4.GaloisProtection` (111th module).
+New module `Phase4.GaloisProtection`.
 Formalises the Galois-protection one-loop cancellation theorem.
 
 | Theorem | Module | Statement |

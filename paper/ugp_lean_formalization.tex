@@ -132,7 +132,7 @@ It produces, from first principles and without free parameters, a unique
 canonical seed---the triple $(1,73,823)$---whose orbit under the
 Generative Triple Evolution (\gte{}) map is rigidly determined.
 We present \textbf{ugp-lean}, a machine-checked formalization of this
-framework in \lean{}~4 against Mathlib, comprising 111 modules with a
+framework in \lean{}~4 against Mathlib, comprising 112 modules with a
 strict zero-sorry, zero-custom-axiom policy on the core proof path.
 
 \textbf{What makes \ugp{} special, and what this paper proves.}
@@ -420,7 +420,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 111~\lean{} modules across twelve layers:
+The artifact is organized into 112~\lean{} modules across twelve layers:
 
 \begin{center}
 \begin{tikzpicture}[
@@ -490,7 +490,9 @@ The artifact is organized into 111~\lean{} modules across twelve layers:
 \noindent
 The remaining modules (\texttt{Phase4}, \texttt{Papers},
 \texttt{Instance}, \texttt{Conjectures}, \texttt{TE22}) provide stubs, citable
-entry points, and bridge instances for companion libraries.
+entry points, bridge instances, and the precision-derivation theorems:
+\texttt{Phase4.GaloisProtection} (one-loop non-renormalization) and
+\texttt{Phase4.TwoLoopCoefficient} (two-loop color coefficient $= 8/9$).
 
 The \texttt{TE22} module provides a machine-checked framework for
 the TE2.2 PSC universe scan result.
@@ -1205,7 +1207,7 @@ color coefficient is $C_2 \times 2/N_c = 8/9$.
 The 0.33\% discrepancy is within the double-precision accuracy of the
 $b_{1,\mathrm{req}}$ chain recorded in
 \texttt{uniqueness/canonical\_run/delta\_noncircular.json}.
-The structural identification closes O3 of the EPIC~25 precision derivation
+The structural identification closes O3 of the precision derivation
 programme.
 
 % ═══════════════════════════════════════════════════════════════
