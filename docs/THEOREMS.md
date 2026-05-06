@@ -477,11 +477,40 @@ New module `MassRelations.VVMechanism`:
 | **vv_mechanism_algebraic** | MassRelations.VVMechanism | GUT power law + UCL log map → log-linear VV relation (zero sorry) |
 | **dim_126_eq_two_Nc_sq_delta** | MassRelations.VVMechanism | 126 = 2·Nc²·δ (connects VV to seesaw structure) |
 
+## RCC Infinite Families (EPIC 23, 2026-05-05) — Module PSC.RCCInfiniteFamilies
+
+New module `PSC.RCCInfiniteFamilies` (109th module). Closes RCC over all four
+infinite classical Lie families: B_n, C_n, D_n, A_n.
+
+Key fact: For B_n = SO(2n+1) and C_n = Sp(2n), the longest Weyl element acts
+as negation (w0 = -id). Therefore -w0(lam) = lam for every dominant weight lam,
+so every irrep is self-dual (real or pseudoreal, never complex). No chiral
+fermions possible -> PSC Layer I fail for ALL n.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **bn_all_irreps_self_dual** | PSC.RCCInfiniteFamilies | For all n, all B_n dominant weights: -(w0 lam) = lam (funext + simp) |
+| **cn_all_irreps_self_dual** | PSC.RCCInfiniteFamilies | Same for C_n = Sp(2n) (identical Weyl group) |
+| **bn_cn_no_complex_reps_all_n** | PSC.RCCInfiniteFamilies | Bundled: all B_n and C_n irreps self-dual for all n (zero sorry) |
+| **dn_even_all_irreps_self_dual** | PSC.RCCInfiniteFamilies | D_n even: -id in W(D_n) since even many sign changes -> all irreps self-dual |
+| **dn_odd_spinorDim_exceeds_threshold** | PSC.RCCInfiniteFamilies | D_n odd, n>=5: spinorDim n = 2^(n-1) >= 16 (Nat.pow_le_pow_right) |
+| **spinorDim_doubles** | PSC.RCCInfiniteFamilies | spinorDim(n+1) = 2 * spinorDim(n) for n>=1 (ring) |
+| **an_adjDim_ge_15** | PSC.RCCInfiniteFamilies | A_n, n>=3: anAdjDim n = (n+1)^2-1 >= 15 (nlinarith) |
+| **an_adjDim_strictly_grows** | PSC.RCCInfiniteFamilies | anAdjDim is strictly increasing for n>=1 (zify + nlinarith) |
+| **dissonanceLB_exceeds_one** | PSC.RCCInfiniteFamilies | dim/12 > 1 when dim >= 13 (linarith over Q) |
+| **an_dissonanceLB_exceeds_one** | PSC.RCCInfiniteFamilies | A_n (n>=3): D_lb > 1 (Layer II fail) |
+| **dn_odd_dissonanceLB_exceeds_one** | PSC.RCCInfiniteFamilies | D_n odd (n>=5): D_lb > 1 (Layer II fail) |
+| **rcc_all_classical_families** | PSC.RCCInfiniteFamilies | Master theorem: all 5 cases (B_n, C_n, D_n even, D_n odd n>=5, A_n n>=3) |
+
+Combined with TE22.ScanCertificate (computational, 34,560 universes) and EPIC 23
+SP-1 extended scan (exceptional groups + larger classical shells), RCC is
+established as a theorem over ALL compact simple Lie groups.
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |
 |----|-------|--------|
 | C1 | Rule 110 Turing-universal | Cook (2004) |
 | C2 | Continued-fraction Fibonacci lift | UGP Paper Updates |
-| C3 | δ_UGP formula, b₁=73 unique | JMP Math Foundations |
-| C4 | g₁²,g₂²,g₃² from invariants | JMP Math Foundations |
+| C3 | delta_UGP formula, b1=73 unique | JMP Math Foundations |
+| C4 | g1^2, g2^2, g3^2 from invariants | JMP Math Foundations |

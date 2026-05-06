@@ -72,6 +72,7 @@ import UgpLean.Universality.UWCAembedsRule110
 import UgpLean.Universality.TuringUniversal
 import UgpLean.Universality.ArchitectureBridge
 import UgpLean.TE22.ScanCertificate
+import UgpLean.PSC.RCCInfiniteFamilies
 
 /-!
 # UgpLean — Universal Generative Principle: Lean 4 Formalization
@@ -94,6 +95,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Papers.*`             — Paper25, UGPMain (citable stubs)
 
 - `UgpLean.TE22.*`               — ScanCertificate (TE2.2 PSC scan framework, UGP coupling predictions)
+- `UgpLean.PSC.*`                — RCCInfiniteFamilies (RCC closed over all infinite classical families; B_n/C_n w0=-id, D_n/A_n dimension bounds)
 
 **Non-circularity:** Core/ does not import Compute/. See README.md.
 -/

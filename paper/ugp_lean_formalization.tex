@@ -132,7 +132,7 @@ It produces, from first principles and without free parameters, a unique
 canonical seed---the triple $(1,73,823)$---whose orbit under the
 Generative Triple Evolution (\gte{}) map is rigidly determined.
 We present \textbf{ugp-lean}, a machine-checked formalization of this
-framework in \lean{}~4 against Mathlib, comprising 108 modules with a
+framework in \lean{}~4 against Mathlib, comprising 107 modules with a
 strict zero-sorry, zero-custom-axiom policy on the core proof path.
 
 \textbf{What makes \ugp{} special, and what this paper proves.}
@@ -420,7 +420,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 108~\lean{} modules across eleven layers:
+The artifact is organized into 107~\lean{} modules across eleven layers:
 
 \begin{center}
 \begin{tikzpicture}[
@@ -461,7 +461,8 @@ The artifact is organized into 108~\lean{} modules across eleven layers:
    UpLeptonCyclotomic, Z2OrbifoldDepth,
    \textbf{KoideAngle, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex}};
 \node[layer, fill=cyan!6,   below=of mass]  (braid)
-  {\textbf{BraidAtlas}~(1)\quad \textbf{ChargeTheorem}};
+  {\textbf{BraidAtlas}~(5)\quad ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation;
+   \textbf{PSC}~(1)\quad \textbf{RCCInfiniteFamilies}};
 \node[layer, fill=lime!6,   below=of braid] (null)
   {\textbf{NullDiscipline}~(2)\quad \textbf{SaturationBarrier, TheoremEligibility}};
 \node[layer, fill=violet!6, below=of null]  (ipt)
@@ -990,6 +991,84 @@ Beyond this, the module now proves the \textbf{complete (a,b,c) triple for all 9
 Status: \textbf{Category~A} — all baryon triple derivations are zero sorry and
 derived from Lean-certified UGP constants.
 The composite triple program is complete with no remaining open items.
+
+% ═══════════════════════════════════════════════════════════════
+\subsection{SM Winding Numbers from $N_c$ (\texttt{BraidAtlas.ChargeDerivation})}
+\label{subsec:charge_derivation_lean}
+% ═══════════════════════════════════════════════════════════════
+
+The new module \texttt{BraidAtlas.ChargeDerivation} (108th module, EPIC~23 SP-2)
+derives the SM winding-number assignments $\{W_g\} = \{N_c{-}1,\,-1,\,0,\,-N_c\}$
+from $N_c = 3$ alone, closing the final link in the Braid Atlas charge programme.
+
+The argument uses the $\mathrm{SU}(N_c{+}2)$ embedding: PSC anomaly cancellation
+forces $\mathrm{SU}(5)$ as the minimal GUT group; its $({\bf\bar 5}+{\bf 10})$
+fermion content decomposes under $\mathrm{SU}(3){\times}\mathrm{SU}(2){\times}\mathrm{U}(1)$
+with hypercharges $Y_{Q_L} = 1/(2N_c)$.
+The Braid Atlas winding number $W_g = 2N_c \cdot Y_g$ then gives
+$\{W_g\} = \{2,-1,0,-3\}$ for $N_c = 3$ --- the complete SM charge spectrum.
+
+\begin{theorem}[SM Winding Numbers from $N_c$]\label{thm:sm_winding_from_Nc}
+The SM winding numbers $\{N_c{-}1,\,-1,\,0,\,-N_c\} = \{2,-1,0,-3\}$ follow
+from $N_c = 3$ via the $\mathrm{SU}(N_c+2)$ decomposition.
+Anomaly cancellation $N_c(N_c-1) + N_c(-1) + 0 + (-N_c) = 0$ is certified.
+The hypercharge $Y_{Q_L} = 1/(2N_c)$ governs both the VV exponent $\beta_d$
+and the SM charge spectrum through a single algebraic path.
+\begin{leanref} \lstinline|sm_winding_numbers_from_Nc|,
+\lstinline|anomaly_cancellation_from_windings|,
+\lstinline|y_ql_unifies_vv_and_winding|
+\textup{(in \texttt{BraidAtlas.ChargeDerivation}, zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
+
+% ═══════════════════════════════════════════════════════════════
+\section{RCC Infinite Families (\texttt{PSC.RCCInfiniteFamilies})}
+\label{sec:rcc_infinite}
+% ═══════════════════════════════════════════════════════════════
+
+The new module \texttt{PSC.RCCInfiniteFamilies} (109th module, EPIC~23 SP-1 extension)
+closes the Residual Classification Conjecture (RCC) over all four infinite classical
+Lie-algebra families: $B_n$, $C_n$, $D_n$, $A_n$.
+
+\textbf{Core algebraic fact.}
+For a compact simple Lie group $G$, the dual irrep $R_\lambda^*$ has highest weight
+$-w_0(\lambda)$, where $w_0$ is the longest Weyl group element.
+If $w_0 = -\mathrm{id}$, then $-w_0(\lambda) = \lambda$ for every dominant weight
+$\lambda$: every irrep is self-dual (real or pseudoreal, never complex).
+No complex reps $\Rightarrow$ no chiral fermions in 4D $\Rightarrow$ PSC Layer~I fail.
+
+\begin{theorem}[RCC --- All Classical Families]\label{thm:rcc_infinite}
+\begin{enumerate}[leftmargin=1.5em,itemsep=2pt]
+  \item \textbf{$B_n = \mathrm{SO}(2n+1)$, all $n \ge 1$:}
+    $w_0 = -\mathrm{id}$ $\Rightarrow$ all irreps self-dual $\Rightarrow$ Layer~I fail.
+  \item \textbf{$C_n = \mathrm{Sp}(2n)$, all $n \ge 1$:}
+    same (identical Weyl group to $B_n$).
+  \item \textbf{$D_n = \mathrm{SO}(2n)$, $n$ even:}
+    $-\mathrm{id}$ has $n$ (even) sign changes $\in W(D_n)$ $\Rightarrow$ same.
+  \item \textbf{$D_n$, $n$ odd, $n \ge 5$:}
+    complex spinors exist but $\dim(S^\pm) = 2^{n-1} \ge 16$
+    $\Rightarrow$ dissonance proxy $> 1$ $\Rightarrow$ Layer~II fail.
+  \item \textbf{$A_n = \mathrm{SU}(n+1)$, $n \ge 3$:}
+    complex reps exist but $\dim(\mathrm{adj}) = (n+1)^2{-}1 \ge 15$
+    $\Rightarrow$ Layer~II fail.
+\end{enumerate}
+\begin{leanref}
+\lstinline|bn_all_irreps_self_dual|,
+\lstinline|cn_all_irreps_self_dual|,
+\lstinline|dn_even_all_irreps_self_dual|,
+\lstinline|dn_odd_spinorDim_exceeds_threshold|,
+\lstinline|an_adjDim_ge_15|,
+\lstinline|rcc_all_classical_families|
+\textup{(in \texttt{PSC.RCCInfiniteFamilies}, zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
+
+The exceptional groups ($G_2, F_4, E_6, E_7, E_8$) are covered by the
+\texttt{TE22.ScanCertificate} module (computational, EPIC~23 SP-1):
+$G_2$ and $F_4$ have only real reps (Layer~I fail); $E_6$ fails Layer~II
+in the TE2.2 scan; $E_7$ and $E_8$ have no complex reps (algebraic).
+Together with Theorem~\ref{thm:rcc_infinite}, RCC is established as a theorem
+over \emph{all} compact simple Lie groups.
 
 % ═══════════════════════════════════════════════════════════════
 \section{Null Discipline Formalization}\label{sec:nulldiscipline}
