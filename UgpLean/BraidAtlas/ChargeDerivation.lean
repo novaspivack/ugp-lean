@@ -19,7 +19,7 @@ The logical chain:
 Key: Y_{Q_L} = 1/(2N_c) = 1/6 is already Lean-certified (via `vv_beta` in VVMechanism).
 The winding numbers complete the structural derivation: charges → windings → Q = W/N_c.
 
-Reference: P17 §4 (Braid Atlas), P25 §9.4, EPIC 23 SP-2
+Reference: P17 §4 (Braid Atlas), P25 §9.4 (deeper-theory companion)
 -/
 
 namespace UgpLean.BraidAtlas.ChargeDerivation

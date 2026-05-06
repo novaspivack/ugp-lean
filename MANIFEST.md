@@ -19,8 +19,8 @@ match.  See registry at `ugp-physics:specs/WORKING_NOTES/TECH_DEBT_LEAN_SORRY_RE
 
 | Paper / Source | Lean Module | Lean Theorem | Status |
 |----------------|-------------|--------------|--------|
-| ML-9 / SPEC_04_06: coarse entropy non-monotone on 8→9 step prefix (Lepton GTE sim, n=10) | GTE.GTESimulation; GTE.EntropyNonMonotone | gte_entropy_prefix8_gt_prefix9; Hpred8_gt_Hpred9 | ✓ |
-| SPEC_04_06 T2: UWCA + history stack, backward ∘ forward = id | Universality.UWCAHistoryReversible | uwca_augmented_left_inverse; uwca_history_lane_step_reversible | ✓ |
+| Coarse entropy non-monotone on 8→9 step prefix (Lepton GTE sim, n=10) | GTE.GTESimulation; GTE.EntropyNonMonotone | gte_entropy_prefix8_gt_prefix9; Hpred8_gt_Hpred9 | ✓ |
+| UWCA + history stack, backward ∘ forward = id | Universality.UWCAHistoryReversible | uwca_augmented_left_inverse; uwca_history_lane_step_reversible | ✓ |
 | UGP Main, ridge Rₙ = 2ⁿ − 16 | Core.RidgeDefs | ridge_def, ridge_10 | ✓ |
 | UGP Main, mirror (b₂,q₂) ↦ (b₁,q₁,c₁) | Core.MirrorDefs | b1FromPair, q1FromQ2, c1FromPair | ✓ |
 | UGP Main, prime-lock c₁ prime | Compute.PrimeLock | prime_823, prime_2137 | ✓ |

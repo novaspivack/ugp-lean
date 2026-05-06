@@ -38,7 +38,7 @@ D_lb = dim(adj)/12 > 1 = D_SM threshold, so Layer II eliminates all A_n with n �
 
 All four infinite families are covered.  The exceptional groups G₂, F₄, E₆, E₇, E₈
 are covered by the TE2.2 and extended computational certificate
-(`UgpLean.TE22.ScanCertificate`, EPIC 23 SP-1).
+(`UgpLean.TE22.ScanCertificate`, extended computational certificate).
 
 Together these establish:
   **Theorem (RCC — Complete):** The SM gauge group SU(3)×SU(2)×U(1) is the

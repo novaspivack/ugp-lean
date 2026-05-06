@@ -37,7 +37,7 @@ def deltaUGP_numeric_at_73 : ℚ :=
 theorem deltaUGP_numeric_well_defined : deltaUGP_numeric_at_73 = deltaUGP_numeric_at_73 := rfl
 
 /-!
-## δ_target as Structural Prediction (EPIC 22)
+## δ_target as Structural Prediction
 
 Since b₁=73 is arithmetically forced by the n=10 ridge sieve (see `Phase4.AsymptoticSparsity.b1_forced_eq_73`),
 the physical viability condition amounts to checking that C_alg/73 ≈ δ_CODATA.

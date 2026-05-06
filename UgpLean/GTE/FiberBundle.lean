@@ -30,7 +30,7 @@ canonical orbit.
 
 ## Reference
 
-P17 (Canonical Braid Atlas v2.0); Spec 014 (EPIC 15).
+P17 (Canonical Braid Atlas v2.0).
 -/
 
 namespace UgpLean.GTE

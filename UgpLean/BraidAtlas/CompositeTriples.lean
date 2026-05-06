@@ -395,7 +395,7 @@ theorem sector_b_strictly_ordered :
     (42:ℕ) < 186 ∧ (186:ℕ) < 275 ∧ (275:ℕ) < 8191 := by norm_num
 
 /-- Full combined sector rule: all (b,c) sector pairs certified (zero sorry).
- Closes both remaining gaps from EPIC 19:
+ Closes both remaining gaps from the composite-triple program:
    (1) meson b-formula — sector rule gives b for all meson sectors
    (2) axiomatic sector assignment — max-gen → (b,c) all Lean-provable -/
 theorem ugp_composite_sector_rule :

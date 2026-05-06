@@ -93,7 +93,7 @@ both openly disclosed with precise citations:
 | **L_model_eq_log_wedge_form** | LModelDerivation | L_model = log₂((wedge2Factor · wedge5Factor) / orbitLength) |
 | **L_model_from_gauge_structure** | LModelDerivation | L_model = log₂((D₁ · 125) / 3) from D₁, 5³, orbit length 3 |
 
-## Lepton Mass Prediction Pipeline (EPIC 8, 2026-04-20)
+## Lepton Mass Prediction Pipeline (2026-04-20)
 
 Module `MassRelations.LeptonMassPrediction`. Zero sorry.
 
@@ -105,7 +105,7 @@ Module `MassRelations.LeptonMassPrediction`. Zero sorry.
 | **koide_angle_equals_two_over_muon_a** | MassRelations.LeptonMassPrediction | koideThetaUGP = 2/canonicalGen2.a |
 | **epic_8_lepton_mass_structural_summary** | MassRelations.LeptonMassPrediction | Bundle: angle=2/muon_a ∧ muon_a=9 ∧ Q=2/3 for any θ |
 
-## VV Unified N_c Formula (EPIC 10, 2026-04-20)
+## VV Unified N_c Formula (2026-04-20)
 
 Module `MassRelations.DownRational` §7 (extended). Commit 48af4c9. Zero sorry.
 
@@ -116,13 +116,13 @@ Module `MassRelations.DownRational` §7 (extended). Commit 48af4c9. Zero sorry.
 | **gamma_d_from_N_c** | MassRelations.DownRational | γ_d = -(N_c+2)/(2(N_c²-2)) = -5/14 |
 | **VV_unified_from_N_c** | MassRelations.DownRational | All three from N_c: α∧β∧γ = rational(N_c) |
 
-> N_c²-2 = δ = 7, so γ_d = -(N_c+2)/(2δ). Combined with EPIC 9, both the  
-> Koide lepton sector (θ = (N_c²-1)/(4N_c²)) and the VV quark sector  
-> are controlled by N_c = 3. EPIC 10 algebraic gate PASSED.
+> N_c²-2 = δ = 7, so γ_d = -(N_c+2)/(2δ). Combined with the N_c structural chain,
+> both the Koide lepton sector (θ = (N_c²-1)/(4N_c²)) and the VV quark sector
+> are controlled by N_c = 3.
 
 ---
 
-## VV Coefficient Structural Identifications (EPIC 8, 2026-04-20)
+## VV Coefficient Structural Identifications (2026-04-20)
 
 Module `MassRelations.DownRational` §§5-6 (extended). Zero sorry.
 
@@ -134,7 +134,7 @@ Module `MassRelations.DownRational` §§5-6 (extended). Zero sorry.
 | **gamma_d_from_gut_dims** | MassRelations.DownRational | γ_d = -dim(45)/dim(126) = -5/14 |
 | **VV_coefficients_structural_summary** | MassRelations.DownRational | Bundle: all 3 VV coefficient identifications |
 
-## Complete N_c Structural Chain (EPIC 9, 2026-04-20)
+## Complete N_c Structural Chain (2026-04-20)
 
 Modules `MassRelations.KoideAngle` (extended). Commits 95adbdf, f44e635, c9db18d.
 All zero sorry, zero hypotheses. N_c = 3 determines all SM fermion structural constants.
@@ -159,7 +159,7 @@ All zero sorry, zero hypotheses. N_c = 3 determines all SM fermion structural co
 
 ---
 
-## Koide Angle and β Derivation (EPIC 8, 2026-04-20)
+## Koide Angle and β Derivation (2026-04-20)
 
 Module `MassRelations.KoideAngle` + extended `MassRelations.UpLeptonCyclotomic` §5.
 All zero sorry, zero hypotheses. Commit f7d6ac2.
@@ -446,7 +446,7 @@ New module `GaloisStructure.MinimalCyclotomic`:
 | **prime_137_from_Nc** | GaloisStructure.MinimalCyclotomic | 137 = 2^Nc * (2Nc^2-1) + 1 (structural formula) |
 | **prime_137_structural_origin** | GaloisStructure.MinimalCyclotomic | 137 is the bit-set prime {0,Nc,delta} fully determined by Nc=3 (closes P25 §10.2) |
 
-## Unconditional Rigidity — EPIC 22 (2026-05-05)
+## Unconditional Rigidity (2026-05-05)
 
 ### b1=73 Forced at n=10 + δ_target as Structural Prediction
 
@@ -479,7 +479,7 @@ New module `MassRelations.VVMechanism`:
 
 ## Neutrino Froggatt-Nielsen Texture (2026-05-05) — Module MassRelations.NeutrinoFroggattNielsen
 
-New module `MassRelations.NeutrinoFroggattNielsen` (110th module).
+New module `MassRelations.NeutrinoFroggattNielsen`.
 Selects the structural FN texture for the b^(29/9) seesaw exponent under
 UGP axiom A3 (Compression / MDL).
 
@@ -510,7 +510,7 @@ Lean-certified MDL theorem: among the four arithmetic solutions, only
 
 ## RCC Infinite Families (2026-05-05) — Module PSC.RCCInfiniteFamilies
 
-New module `PSC.RCCInfiniteFamilies` (109th module). Closes RCC over all four
+New module `PSC.RCCInfiniteFamilies`. Closes RCC over all four
 infinite classical Lie families: B_n, C_n, D_n, A_n.
 
 Key fact: For B_n = SO(2n+1) and C_n = Sp(2n), the longest Weyl element acts
@@ -533,8 +533,8 @@ fermions possible -> PSC Layer I fail for ALL n.
 | **dn_odd_dissonanceLB_exceeds_one** | PSC.RCCInfiniteFamilies | D_n odd (n>=5): D_lb > 1 (Layer II fail) |
 | **rcc_all_classical_families** | PSC.RCCInfiniteFamilies | Master theorem: all 5 cases (B_n, C_n, D_n even, D_n odd n>=5, A_n n>=3) |
 
-Combined with TE22.ScanCertificate (computational, 34,560 universes) and EPIC 23
-SP-1 extended scan (exceptional groups + larger classical shells), RCC is
+Combined with TE22.ScanCertificate (computational, 34,560 universes) and the
+extended scan certificate (exceptional Lie groups + larger classical shells), RCC is
 established as a theorem over ALL compact simple Lie groups.
 
 ## External Citations (Not Formalized)
