@@ -508,6 +508,28 @@ This converts the FN texture choice from aesthetic preference to a
 Lean-certified MDL theorem: among the four arithmetic solutions, only
 (q1, q2) = (Nc, strand) = (3, 2) has both charges as elementary UGP atoms.
 
+## Galois-Protection Non-Renormalization (2026-05-05) — Module Phase4.GaloisProtection
+
+New module `Phase4.GaloisProtection` (111th module).
+Formalises the Galois-protection one-loop cancellation theorem.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **c_alg_nonzero_shift** | Phase4.GaloisProtection | If A ≠ 0 and t ≠ 0, then C + A*t ≠ C (linarith + mul_eq_zero) |
+| **galois_protection_coefficient_forced_zero** | Phase4.GaloisProtection | If C + A*t = C and A ≠ 0 then t = 0 (linarith + mul_eq_zero) |
+| **T_Tdagger_cancellation** | Phase4.GaloisProtection | L + (-L) = 0 (linarith) |
+| **L_zero_from_T_Tdagger** | Phase4.GaloisProtection | If L = -L then L = 0 (linarith) |
+| **delta_C_vanishes_from_T_Tdagger** | Phase4.GaloisProtection | C + A*(L with L=-L) = C (rw mul_zero) |
+| **one_loop_correction_zero** | Phase4.GaloisProtection | A*L = 0 under T/T† pairing (rw mul_zero) |
+| **residual_is_positive** | Phase4.GaloisProtection | The 2.39 ppm residual is positive (norm_num) |
+| **residual_below_one_loop_scale** | Phase4.GaloisProtection | 2.39 ppm < alpha/pi (norm_num bound) |
+| **galois_protection_master_theorem** | Phase4.GaloisProtection | Master: C + A*L = C under A≠0 and T/T† pairing (zero sorry) |
+
+The physical content: C_alg ∈ Q(sqrt(5)) ⊂ Q(zeta_120); A ≠ 0; the loop
+transcendental L = sum n_i log(m_i/mu) ∉ Q(sqrt(5)) (Baker's theorem); Galois
+constraint forces A*L = 0; T/T† dual-operator pairing implements L = -L → L = 0.
+Residual R_real = 2.39 ppm = 0.886 × alpha^2/(2*pi^2) is at two-loop magnitude.
+
 ## RCC Infinite Families (2026-05-05) — Module PSC.RCCInfiniteFamilies
 
 New module `PSC.RCCInfiniteFamilies`. Closes RCC over all four
