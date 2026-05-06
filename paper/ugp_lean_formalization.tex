@@ -132,7 +132,7 @@ It produces, from first principles and without free parameters, a unique
 canonical seed---the triple $(1,73,823)$---whose orbit under the
 Generative Triple Evolution (\gte{}) map is rigidly determined.
 We present \textbf{ugp-lean}, a machine-checked formalization of this
-framework in \lean{}~4 against Mathlib, comprising 107 modules with a
+framework in \lean{}~4 against Mathlib, comprising 110 modules with a
 strict zero-sorry, zero-custom-axiom policy on the core proof path.
 
 \textbf{What makes \ugp{} special, and what this paper proves.}
@@ -420,7 +420,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 107~\lean{} modules across eleven layers:
+The artifact is organized into 110~\lean{} modules across twelve layers:
 
 \begin{center}
 \begin{tikzpicture}[
@@ -455,11 +455,12 @@ The artifact is organized into 107~\lean{} modules across eleven layers:
    FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure,
    KLFullClosure, PentagonConstraint, RiccatiFixedPoint};
 \node[layer, fill=teal!8,   below=of struc] (mass)
-  {\textbf{MassRelations}~(17)\quad KoideClosedForm, KoideNewtonFlow,
+  {\textbf{MassRelations}~(18)\quad KoideClosedForm, KoideNewtonFlow,
    BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential,
    FroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational,
    UpLeptonCyclotomic, Z2OrbifoldDepth,
-   \textbf{KoideAngle, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex}};
+   \textbf{KoideAngle, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex,
+   NeutrinoFroggattNielsen}};
 \node[layer, fill=cyan!6,   below=of mass]  (braid)
   {\textbf{BraidAtlas}~(5)\quad ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation;
    \textbf{PSC}~(1)\quad \textbf{RCCInfiniteFamilies}};
@@ -1069,6 +1070,51 @@ $G_2$ and $F_4$ have only real reps (Layer~I fail); $E_6$ fails Layer~II
 in the TE2.2 scan; $E_7$ and $E_8$ have no complex reps (algebraic).
 Together with Theorem~\ref{thm:rcc_infinite}, RCC is established as a theorem
 over \emph{all} compact simple Lie groups.
+
+% ═══════════════════════════════════════════════════════════════
+\section{Neutrino FN Texture Selection (\texttt{MassRelations.NeutrinoFroggattNielsen})}
+\label{sec:neutrino_fn}
+% ═══════════════════════════════════════════════════════════════
+
+The new module \texttt{MassRelations.NeutrinoFroggattNielsen} (110th module)
+formalises the structural texture-selection step underlying the
+$b^{29/9}$ Majorana mass scaling of the right-handed neutrino sector
+(companion physics paper~\cite{SpivackNeutrino}).
+
+\paragraph{Setup.}
+In a two-flavon $U(1)_1 \times U(1)_2$ Froggatt--Nielsen framework with
+flavon VEVs $\langle\Phi_1\rangle\propto b_g$ and
+$\langle\Phi_2\rangle\propto b_g^{1/N_c^2}$, a right-handed neutrino with
+FN charges $(q_1, q_2)$ acquires a Majorana mass $M_R(g) \propto b_g^{q_1 + q_2/N_c^2}$.
+The Braid-Atlas seesaw exponent $29/9$ is reproduced when
+$q_1 + q_2/N_c^2 = 29/9$.  At $N_c = 3$ this admits exactly four
+non-negative integer solutions, $(q_1, q_2) \in \{(0,29),(1,20),(2,11),(3,2)\}$.
+
+\paragraph{MDL singleton-atomicity.}
+A charge $q$ is \emph{singleton-atomic in $N_c$} when it equals one of the
+elementary $N_c$-primitives $\{N_c, N_c-1, N_c+1, N_c^2, N_c^2-1, \mathrm{strand}\}$,
+where $\mathrm{strand} = (N_c^2-1)/4$ is the Braid Atlas strand count.  A
+singleton-atomic charge has unit MDL cost; compound charges
+($4N_c^2 - \delta$, $N_c^2 + \mathrm{strand}$, $2(N_c^2+1)$) have higher cost.
+
+\begin{theorem}[FN texture uniqueness under MDL]
+Among the four solutions of $q_1 + q_2/N_c^2 = 29/9$ at $N_c = 3$, exactly
+one has both charges singleton-atomic: $(q_1, q_2) = (N_c, \mathrm{strand}) = (3, 2)$.
+The alternatives $(0, 29)$, $(1, 20)$, $(2, 11)$ each carry at least one
+compound charge.
+\begin{leanref}
+\lstinline|fn_solutions_satisfy_eq|,
+\lstinline|fn_solutions_are_complete|,
+\lstinline|fn_texture_3_2_is_unique_singleton_atomic|,
+\lstinline|fn_structural_texture_existence_and_uniqueness|
+\textup{(in \texttt{MassRelations.NeutrinoFroggattNielsen}, zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
+
+The proof enumerates the four solutions, applies \texttt{decide} on each,
+and verifies that exactly one pair $(3, 2)$ has both charges in the
+singleton-atomic set.  This converts the texture choice from an aesthetic
+preference into a Lean-certified MDL theorem.
 
 % ═══════════════════════════════════════════════════════════════
 \section{Null Discipline Formalization}\label{sec:nulldiscipline}

@@ -477,7 +477,38 @@ New module `MassRelations.VVMechanism`:
 | **vv_mechanism_algebraic** | MassRelations.VVMechanism | GUT power law + UCL log map → log-linear VV relation (zero sorry) |
 | **dim_126_eq_two_Nc_sq_delta** | MassRelations.VVMechanism | 126 = 2·Nc²·δ (connects VV to seesaw structure) |
 
-## RCC Infinite Families (EPIC 23, 2026-05-05) — Module PSC.RCCInfiniteFamilies
+## Neutrino Froggatt-Nielsen Texture (2026-05-05) — Module MassRelations.NeutrinoFroggattNielsen
+
+New module `MassRelations.NeutrinoFroggattNielsen` (110th module).
+Selects the structural FN texture for the b^(29/9) seesaw exponent under
+UGP axiom A3 (Compression / MDL).
+
+Setup: two-flavon U(1)_1 x U(1)_2 with M_R(g) ~ b_g^(q1 + q2/Nc^2).
+The b^(29/9) law requires q1 + q2/Nc^2 = 29/9; at Nc=3 this admits
+exactly four non-negative integer solutions in [0,6] x [0,30]:
+{(0,29), (1,20), (2,11), (3,2)}.
+
+A charge is "singleton-atomic in Nc" if it equals one of
+{Nc, Nc-1, Nc+1, Nc^2, Nc^2-1, strand=(Nc^2-1)/4}.
+Pair singleton-atomic = both components singleton-atomic.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **fnEqAtNc3** | MassRelations.NeutrinoFroggattNielsen | FN charge equation 9 q1 + q2 = 29 (the form of q1 + q2/Nc^2 = 29/9 at Nc=3) |
+| **fn_solutions_satisfy_eq** | MassRelations.NeutrinoFroggattNielsen | Each pair in {(0,29),(1,20),(2,11),(3,2)} satisfies the equation |
+| **fn_solutions_are_complete** | MassRelations.NeutrinoFroggattNielsen | Every non-negative integer solution with q1<=6, q2<=30 is in the list (interval_cases + omega + decide) |
+| **texture_3_2_is_singleton_atomic** | MassRelations.NeutrinoFroggattNielsen | (3, 2) has both charges singleton-atomic |
+| **texture_0_29_not_singleton_atomic** | MassRelations.NeutrinoFroggattNielsen | (0, 29) lacks singleton-atomic charge q2 = 29 |
+| **texture_1_20_not_singleton_atomic** | MassRelations.NeutrinoFroggattNielsen | (1, 20) lacks singleton-atomic charge q2 = 20 |
+| **texture_2_11_not_singleton_atomic** | MassRelations.NeutrinoFroggattNielsen | (2, 11) lacks singleton-atomic charge q2 = 11 |
+| **fn_texture_3_2_is_unique_singleton_atomic** | MassRelations.NeutrinoFroggattNielsen | Among the four FN solutions, exactly (q1, q2) = (3, 2) is singleton-atomic |
+| **fn_structural_texture_existence_and_uniqueness** | MassRelations.NeutrinoFroggattNielsen | Bundled exists-unique form |
+
+This converts the FN texture choice from aesthetic preference to a
+Lean-certified MDL theorem: among the four arithmetic solutions, only
+(q1, q2) = (Nc, strand) = (3, 2) has both charges as elementary UGP atoms.
+
+## RCC Infinite Families (2026-05-05) — Module PSC.RCCInfiniteFamilies
 
 New module `PSC.RCCInfiniteFamilies` (109th module). Closes RCC over all four
 infinite classical Lie families: B_n, C_n, D_n, A_n.

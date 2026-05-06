@@ -46,7 +46,7 @@ Together these establish:
   PSC layers in 4D with 3 generations.  Every other compact simple group fails
   Layer I (no complex reps) or Layer II (D > D_SM).
 
-Zero `sorry`.  Module: 109th in UgpLean.
+Zero `sorry`.
 -/
 
 namespace PSC.RCCInfiniteFamilies
