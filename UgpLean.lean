@@ -66,6 +66,7 @@ import UgpLean.MassRelations.VVMechanism
 import UgpLean.MassRelations.VVAllCoefficientsFromNc
 import UgpLean.MassRelations.NeutrinoFroggattNielsen
 import UgpLean.Phase4.GaloisProtection
+import UgpLean.Phase4.TwoLoopCoefficient
 import UgpLean.Universality.Rule110
 import UgpLean.Universality.UWCA
 import UgpLean.Universality.UWCASimulation
@@ -100,6 +101,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.PSC.*`                — RCCInfiniteFamilies (RCC closed over all infinite classical families; B_n/C_n w0=-id, D_n/A_n dimension bounds)
 - `UgpLean.MassRelations.NeutrinoFroggattNielsen` — MDL-unique FN texture (q1, q2) = (N_c, strand) for b^(29/9)
 - `UgpLean.Phase4.GaloisProtection` — Galois-protection non-renormalization theorem; one-loop cancellation from T/T† pairing
+- `UgpLean.Phase4.TwoLoopCoefficient` — two-loop color coefficient (Nc²-1)/Nc² = 8/9; O3 structural identification
 
 **Non-circularity:** Core/ does not import Compute/. See README.md.
 -/
