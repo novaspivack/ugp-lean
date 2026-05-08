@@ -66,7 +66,7 @@ theorem qm_no_root_of_legendreSym_neg_one
   -- legendreSym.eq_neg_one_iff : legendreSym p a = -1 ↔ ¬IsSquare (↑a : ZMod p)
   have hnsq : ¬IsSquare ((-(↑factoryL * ↑factoryDm : ℤ) : ZMod p)) := by
     have := (legendreSym.eq_neg_one_iff (p := p) (a := -(↑factoryL * ↑factoryDm : ℤ))).mp hleg
-    convert this using 1; push_cast; ring
+    convert this using 1; push_cast; ring_nf
   intro t hdvd
   apply hnsq
   -- p | Q₋(t) means (Q₋(t) : ZMod p) = 0

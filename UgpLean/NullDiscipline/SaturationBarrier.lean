@@ -80,9 +80,9 @@ def IsSaturated (N_d : ℕ) (ε L U : ℝ) (p : ℝ) : Prop :=
  bound by inclusion-exclusion, then use exponential concentration. -/
 theorem algebraic_saturation_barrier
     (N_d : ℕ) (ε L U p : ℝ)
-    (hε : 0 < ε) (hLU : L < U) (hp : 0 < p) (hp1 : p < 1)
-    (hN : 0 < N_d)
-    (h_sat : satDensity N_d ε L U > p) :
+    (_hε : 0 < ε) (_hLU : L < U) (_hp : 0 < p) (_hp1 : p < 1)
+    (_hN : 0 < N_d)
+    (_h_sat : satDensity N_d ε L U > p) :
     -- The basis is saturated: a match has probability > p
     True := trivial  -- placeholder; full proof requires Borel probability theory
 

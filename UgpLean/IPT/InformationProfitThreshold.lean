@@ -109,7 +109,7 @@ theorem entropy_formula_U1 :
  Therefore the effective overhead contribution is Λ/2.
 
  The arithmetic identity: if x + y = total and x = y, then x = total/2. -/
-theorem A3_forward_backward_split (total : ℝ) (htotal : total > 0) :
+theorem A3_forward_backward_split (total : ℝ) (_htotal : total > 0) :
     ∃ (fwd bwd : ℝ), fwd = total / 2 ∧ bwd = total / 2 ∧ fwd + bwd = total ∧ fwd = bwd :=
   ⟨total/2, total/2, rfl, rfl, by ring, rfl⟩
 

@@ -103,3 +103,15 @@ UgpLean.lean
 | **Paper25** | Citable stubs for Paper 25 |
 | **UGPMain** | Citable stubs for UGP Main |
 | **NemSBridge** | GTESpace instance, RSUC for nems-lean |
+
+### BraidAtlas Layer (P17 algebraic substrate)
+
+| Module | Purpose |
+|--------|---------|
+| **ChargeTheorem** | Theorem C-W (Q = W_g/N_c); anomaly cancellation forces N_c=3; SM charge derivation; GTE-P7 mirror dark matter quantum numbers (Q=0, color singlet) |
+| **CompositeTriples** | Composite c-rule; baryon (a, b, c) derivation including proton/neutron and full strange-baryon octet; meson constraints |
+| **ChiralitySquaring** | Arithmetic signature of V−A chiral structure: (13×17×29)² perfect square; 17×137 not perfect square |
+| **ChargeDerivation** | SM winding pattern derived from N_c; Y_QL = 1/(2N_c) unifies VV slope and braid winding |
+| **CoxeterConductor** | Arithmetic backbone of the Coxeter–conductor theorem; **E7 falsifier** (h=18 ∤ 120); φ(120)=32, 3∤32; lcm(30,12,8,6,3,2,1)=120 |
+| **CoxeterConductorTowerLaw** | Tower-Law step: 8X³−6X−1 irreducible over ℚ via rational-root theorem; finrank ℚ[X]/(p) = 3 (zero sorry, resolves SPEC_033_BTL) |
+| **EWBosons** | Electroweak boson c-values c(W)=11, c(Z)=12, c(H)=13 derived from canonical ridge factorisation + Higgs gap identity at n=10; consecutive triple centred on 2·T(N_c); triangular-number unification |

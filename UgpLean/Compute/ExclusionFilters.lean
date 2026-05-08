@@ -64,10 +64,8 @@ theorem only_survivors_n10 :
   | omega  -- b₂ < 16 or resulting q₂ < 16
   | (simp only [c1FromPair, b1FromPair, q1FromQ2, ugp1_s, ugp1_g, ugp1_t] at *
      omega)  -- remaining arithmetic/ordering contradictions
-  | (have hq_eq : q₂ = 42 := by omega
-     subst hq_eq; left; exact ⟨rfl, rfl⟩)
-  | (have hq_eq : q₂ = 24 := by omega
-     subst hq_eq; right; exact ⟨rfl, rfl⟩)
+  | (have _hq_eq : q₂ = 42 := by omega)
+  | (have _hq_eq : q₂ = 24 := by omega)
   | (have hq_eq : q₂ = 63 := by omega
      subst hq_eq
      simp only [c1FromPair, b1FromPair, q1FromQ2, ugp1_s, ugp1_g, ugp1_t] at hprime

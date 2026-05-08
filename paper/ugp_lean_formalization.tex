@@ -132,7 +132,7 @@ It produces, from first principles and without free parameters, a unique
 canonical seed---the triple $(1,73,823)$---whose orbit under the
 Generative Triple Evolution (\gte{}) map is rigidly determined.
 We present \textbf{ugp-lean}, a machine-checked formalization of this
-framework in \lean{}~4 against Mathlib, comprising 112 modules with a
+framework in \lean{}~4 against Mathlib, comprising 115 modules with a
 strict zero-sorry, zero-custom-axiom policy on the core proof path.
 
 \textbf{What makes \ugp{} special, and what this paper proves.}
@@ -420,7 +420,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 112~\lean{} modules across twelve layers:
+The artifact is organized into 115~\lean{} modules across twelve layers:
 
 \begin{center}
 \begin{tikzpicture}[
@@ -462,7 +462,8 @@ The artifact is organized into 112~\lean{} modules across twelve layers:
    \textbf{KoideAngle, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex,
    NeutrinoFroggattNielsen}};
 \node[layer, fill=cyan!6,   below=of mass]  (braid)
-  {\textbf{BraidAtlas}~(5)\quad ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation;
+  {\textbf{BraidAtlas}~(7)\quad ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation,
+   \textbf{CoxeterConductor, CoxeterConductorTowerLaw, EWBosons};
    \textbf{PSC}~(1)\quad \textbf{RCCInfiniteFamilies}};
 \node[layer, fill=lime!6,   below=of braid] (null)
   {\textbf{NullDiscipline}~(2)\quad \textbf{SaturationBarrier, TheoremEligibility}};
@@ -1023,6 +1024,106 @@ and the SM charge spectrum through a single algebraic path.
 \textup{(in \texttt{BraidAtlas.ChargeDerivation}, zero \texttt{sorry})}
 \end{leanref}
 \end{theorem}
+
+% ═══════════════════════════════════════════════════════════════
+\subsection{Coxeter--Conductor Theorem (\texttt{BraidAtlas.CoxeterConductor},
+            \texttt{BraidAtlas.CoxeterConductorTowerLaw})}
+\label{sec:coxeter_conductor}
+% ═══════════════════════════════════════════════════════════════
+
+The pair of modules \texttt{BraidAtlas.CoxeterConductor} and
+\texttt{BraidAtlas.CoxeterConductorTowerLaw} certify the arithmetic core
+of the \emph{Coxeter--conductor theorem}: the affine Toda mass spectrum
+of a simple Lie algebra $G$ lies in $\mathbb{Q}(\zeta_{120})$ iff its
+Coxeter number $h(G)$ divides~$120$.
+
+\paragraph{Positive direction.}
+For $G \in \{E_8, E_6, F_4, G_2, B_4\}$ with $h \in \{30, 12, 6, 8\}$,
+each Coxeter number divides $120$ and
+$\mathrm{lcm}(30, 12, 8, 6, 3, 2, 1) = 120$, so $\mathbb{Q}(\zeta_{120})$
+is the minimal cyclotomic field containing every physically realised
+Toda spectrum (\lstinline|positive_coxeter_conductor|).
+
+\paragraph{$E_7$ falsifier.}
+$E_7$ has $h = 18 \nmid 120$.  The mass ratios involve
+$\mathbb{Q}(\cos(\pi/9)) = \mathbb{Q}(\zeta_{18})^+$ of degree
+$\varphi(18)/2 = 3$ over $\mathbb{Q}$, while
+$[\mathbb{Q}(\zeta_{120}):\mathbb{Q}] = \varphi(120) = 32$.  Since
+$3 \nmid 32$, the Tower Law forbids the embedding
+$\mathbb{Q}(\cos(\pi/9)) \subseteq \mathbb{Q}(\zeta_{120})$.
+
+\begin{theorem}[Coxeter--Conductor, $E_7$ Tower-Law obstruction]
+\label{thm:coxeter_conductor_e7}
+The minimal polynomial $8X^3 - 6X - 1$ of $2\cos(\pi/9)$ over $\mathbb{Q}$
+is irreducible, the quotient field
+$\mathbb{Q}[X]/\langle 8X^3-6X-1\rangle$ has $\mathbb{Q}$-dimension exactly~$3$,
+and $\varphi(120) = 32$ is not divisible by~$3$.  Therefore $E_7$ Toda
+masses lie outside $\mathbb{Q}(\zeta_{120})$.
+\begin{leanref}
+\lstinline|p_rat_irreducible|,
+\lstinline|finrank_p_rat_quot|,
+\lstinline|e7_tower_law_complete|,
+\lstinline|e7_coxeter_conductor_obstruction|
+\textup{(in \texttt{BraidAtlas.CoxeterConductorTowerLaw}/\texttt{CoxeterConductor},
+zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
+
+The proof uses Mathlib's rational-root theorem (\texttt{num\_dvd\_of\_is\_root},
+\texttt{den\_dvd\_of\_is\_root}) to verify all eight rational candidates
+$\pm 1, \pm \tfrac{1}{2}, \pm \tfrac{1}{4}, \pm \tfrac{1}{8}$, then concludes
+irreducibility from \texttt{Polynomial.irreducible\_of\_degree\_le\_three\_of\_not\_isRoot}.
+The dimension claim uses
+\texttt{finrank\_quotient\_span\_eq\_natDegree} on the
+quotient form $\mathbb{Q}[X]/\langle p\rangle$, which avoids the
+\texttt{AdjoinRoot} typeclass-synthesis obstruction noted in the
+companion lab notes.
+
+% ═══════════════════════════════════════════════════════════════
+\subsection{Electroweak boson c-values (\texttt{BraidAtlas.EWBosons})}
+\label{sec:ewbosons_lean}
+% ═══════════════════════════════════════════════════════════════
+
+The \texttt{BraidAtlas.EWBosons} module derives the electroweak massive
+boson c-values $c(W)=11$, $c(Z)=12$, $c(H)=13$ from two structural
+identities at the canonical ridge level $n = 10$:
+\begin{align*}
+  q_2(\text{canonical}) &= 2N_c(N_c+1), \\
+  \mathrm{ugp1}_g       &= N_c(N_c+1) + 1.
+\end{align*}
+Substituting $N_c = 3$ yields the consecutive-integer window
+$\{c(W), c(Z), c(H)\} = \{N_c(N_c+1)-1, N_c(N_c+1), N_c(N_c+1)+1\}
+= \{11, 12, 13\}$ centred on $N_c(N_c+1)=12$.
+
+\paragraph{Triangular-number unification.}
+Both structural identities admit a single geometric reading via the
+triangular number $T(N_c) = N_c(N_c+1)/2$: the EW c-window is centred
+on $2T(N_c)$, with $q_2(\text{canonical}) = 4T(N_c)$ and
+$\mathrm{ugp1}_g = 2T(N_c) + 1$.
+
+\begin{theorem}[EW boson c-value derivation]
+\label{thm:ewbosons}
+At $N_c = 3$ and the unique RSUC fixed point $(s, g, t) = (7, 13, 20)$,
+the canonical ridge factorisation $42 \times 24 = 1008 = R_{10}$ and
+the gap identity $\mathrm{ugp1}_g = 13$ force
+\[
+  c(W) = 11, \quad c(Z) = 12, \quad c(H) = 13,
+\]
+which is the unique consecutive triple drawn from the orbital constants
+at $n = 10$.
+\begin{leanref}
+\lstinline|ew_boson_c_value_theorem|,
+\lstinline|ew_c_consecutive_window|,
+\lstinline|ew_c_window_unique|,
+\lstinline|ew_triangular_unification|,
+\lstinline|ew_ugp_axiom_derivation|
+\textup{(in \texttt{BraidAtlas.EWBosons}, zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
+
+This closes the last Category B item in the Braid Atlas (P17): the
+charged-current ($W$), neutral-current ($Z$), and Higgs c-values are
+now derived from \ugp{} axioms rather than postulated.
 
 % ═══════════════════════════════════════════════════════════════
 \section{RCC Infinite Families (\texttt{PSC.RCCInfiniteFamilies})}

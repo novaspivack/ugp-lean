@@ -578,6 +578,110 @@ Combined with TE22.ScanCertificate (computational, 34,560 universes) and the
 extended scan certificate (exceptional Lie groups + larger classical shells), RCC is
 established as a theorem over ALL compact simple Lie groups.
 
+## Coxeter–Conductor Theorem (2026-05-08) — Modules BraidAtlas.CoxeterConductor & CoxeterConductorTowerLaw
+
+New modules `BraidAtlas.CoxeterConductor` and `BraidAtlas.CoxeterConductorTowerLaw`
+formalise the arithmetic core of the Coxeter–conductor theorem: the affine Toda
+mass spectrum of a simple Lie algebra G lies in Q(ζ₁₂₀) iff its Coxeter number
+h(G) divides 120. Proves the **E7 falsifier** via the Tower Law obstruction.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **phi_120** | BraidAtlas.CoxeterConductor | Euler totient φ(120) = 32 = [Q(ζ₁₂₀):Q] (native_decide) |
+| **phi_18** | BraidAtlas.CoxeterConductor | Euler totient φ(18) = 6 = [Q(ζ₁₈):Q] (native_decide) |
+| **q_zeta18_real_degree** | BraidAtlas.CoxeterConductor | [Q(ζ₁₈)⁺ : Q] = φ(18)/2 = 3 (native_decide) |
+| **three_not_dvd_32** | BraidAtlas.CoxeterConductor | 3 ∤ 32 (key Tower Law obstruction, norm_num) |
+| **e8_coxeter_dvd, e6_coxeter_dvd, f4_coxeter_dvd, g2_coxeter_dvd, b4_coxeter_dvd** | BraidAtlas.CoxeterConductor | Coxeter numbers of E8 (30), E6/F4 (12), G2 (6), B4 (8) all divide 120 (norm_num) |
+| **e7_coxeter_not_dvd** | BraidAtlas.CoxeterConductor | **KEY FALSIFIER**: E7 Coxeter number 18 ∤ 120 (norm_num) |
+| **nine_dvd_18_not_120** | BraidAtlas.CoxeterConductor | Root cause: 9 \| 18 but 9 ∤ 120 (norm_num) |
+| **full_lcm_all_coxeter** | BraidAtlas.CoxeterConductor | lcm(30, 12, 8, 6, 3, 2, 1) = 120 (native_decide) |
+| **min_poly_cos_pi9_no_rational_roots** | BraidAtlas.CoxeterConductor | 8X³−6X−1 has no rational roots (8 candidate checks via rcases + norm_num) |
+| **e7_coxeter_conductor_obstruction** | BraidAtlas.CoxeterConductor | Composite arithmetic obstruction (zero sorry) |
+| **positive_coxeter_conductor** | BraidAtlas.CoxeterConductor | Composite Q(ζ₁₂₀) containment for E8/E6/F4/G2/B4 (zero sorry) |
+| **p_int_natDegree** | BraidAtlas.CoxeterConductorTowerLaw | natDegree of 8X³−6X−1 over ℤ = 3 (compute_degree!) |
+| **p_rat_natDegree** | BraidAtlas.CoxeterConductorTowerLaw | natDegree over ℚ = 3 (natDegree_map_of_leadingCoeff_ne_zero) |
+| **p_rat_no_roots** | BraidAtlas.CoxeterConductorTowerLaw | No rational root via num/den_dvd_of_is_root + 8 candidate checks |
+| **p_rat_irreducible** | BraidAtlas.CoxeterConductorTowerLaw | Irreducible over ℚ (irreducible_of_degree_le_three_of_not_isRoot) |
+| **p_rat_q_natDegree** | BraidAtlas.CoxeterConductorTowerLaw | Quotient-form polynomial natDegree = 3 (compute_degree!) |
+| **finrank_p_rat_quot** | BraidAtlas.CoxeterConductorTowerLaw | [ℚ[X]/(8X³−6X−1) : ℚ] = 3 (zero sorry, resolves SPEC_033_BTL) |
+| **tower_obstruction** | BraidAtlas.CoxeterConductorTowerLaw | ∀ k:ℕ, 3·k ≠ 32 (arithmetic Tower Law obstruction) |
+| **e7_arithmetic_evidence** | BraidAtlas.CoxeterConductorTowerLaw | Composite: irreducibility + degree + φ(120) = 32 + 3∤32 |
+| **e7_tower_law_complete** | BraidAtlas.CoxeterConductorTowerLaw | Complete Tower Law theorem (zero sorry, all five components) |
+
+The Tower Law step uses `finrank_quotient_span_eq_natDegree` on the quotient
+ring `ℚ[X] ⧸ Ideal.span {p_rat_q}`, bypassing the `AdjoinRoot`-instance
+synthesis obstruction noted in the lab notes (SPEC_033_BTL).
+
+## Electroweak Boson c-Values (2026-05-08) — Module BraidAtlas.EWBosons
+
+New module `BraidAtlas.EWBosons` derives the EW massive boson c-values
+{c(W), c(Z), c(H)} = {11, 12, 13} from two structural identities at the canonical
+ridge level n = 10. Closes the last Category B item in the Braid Atlas (P17).
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **ridge_10_canonical_factorisation** | BraidAtlas.EWBosons | 42 × 24 = 1008 = R₁₀ (canonical factorisation, native_decide) |
+| **ridge_10_mirror_factorisation** | BraidAtlas.EWBosons | 24 × 42 = 1008 = R₁₀ (mirror factorisation, native_decide) |
+| **q₂_canonical_eq_2NcNcPlus1** | BraidAtlas.EWBosons | **Structural Identity I**: q₂(canonical) = 2·N_c·(N_c+1) = 24 |
+| **b₂_canonical_eq_2Nc2NcPlus1** | BraidAtlas.EWBosons | b₂(canonical) = 2·N_c·(2N_c+1) = 42 |
+| **ridge_10_in_Nc** | BraidAtlas.EWBosons | R₁₀ = 4·N_c²·(N_c+1)·(2N_c+1) |
+| **ugp1_g_eq_NcNcPlus1_plus_1** | BraidAtlas.EWBosons | **Structural Identity II**: ugp1_g = N_c·(N_c+1) + 1 = 13 |
+| **c_W_eq_11, c_Z_eq_12, c_H_eq_13** | BraidAtlas.EWBosons | Numerical c-values (native_decide) |
+| **ew_c_values** | BraidAtlas.EWBosons | Composite: {c(W), c(Z), c(H)} = {11, 12, 13} |
+| **c_W_eq_NcNcPlus1_minus_1** | BraidAtlas.EWBosons | c(W) = N_c·(N_c+1) − 1 (structural form) |
+| **c_Z_eq_NcNcPlus1** | BraidAtlas.EWBosons | c(Z) = N_c·(N_c+1) (structural form) |
+| **c_H_eq_NcNcPlus1_plus_1** | BraidAtlas.EWBosons | c(H) = N_c·(N_c+1) + 1 (structural form) |
+| **ew_c_consecutive_window** | BraidAtlas.EWBosons | **Main result**: c(Z) = c(W)+1, c(H) = c(Z)+1 (consecutive triple) |
+| **ew_c_set_in_Nc_form** | BraidAtlas.EWBosons | {c(W), c(Z), c(H)} = {N_c(N_c+1)−1, N_c(N_c+1), N_c(N_c+1)+1} |
+| **ew_c_primality** | BraidAtlas.EWBosons | c(W)=11 prime ∧ c(Z)=12 not prime ∧ c(H)=13 prime |
+| **c_W_eq_q1_canonical** | BraidAtlas.EWBosons | c(W) = q₁(canonical) (cross-domain identification) |
+| **c_H_eq_q2_minus_q1** | BraidAtlas.EWBosons | c(H) = q₂ − q₁ (orbital symmetry-breaking gap) |
+| **ew_boson_c_value_theorem** | BraidAtlas.EWBosons | Composite: 10 facts including consecutive window + structural identities |
+| **orbitalConstants_n10_explicit** | BraidAtlas.EWBosons | Orbital constants at n=10 = {7, 11, 12, 13, 20, 22, 24, 35} (decide) |
+| **unique_consecutive3_in_orbital** | BraidAtlas.EWBosons | **Uniqueness**: {11, 12, 13} is the unique consecutive triple drawn from orbital constants (omega) |
+| **ew_c_window_unique** | BraidAtlas.EWBosons | MDL-uniqueness corollary: composite proof of EW c-window |
+| **triangular_Nc** | BraidAtlas.EWBosons | T(N_c) = N_c·(N_c+1)/2 = 6 at N_c=3 (native_decide) |
+| **q₂_canonical_eq_4T** | BraidAtlas.EWBosons | q₂(canonical) = 4·T(N_c) (triangular form) |
+| **ugp1_g_eq_2T_plus_1** | BraidAtlas.EWBosons | ugp1_g = 2·T(N_c) + 1 (triangular form) |
+| **ew_c_centered_on_2T** | BraidAtlas.EWBosons | EW c-window is centred on 2·T(N_c) |
+| **ew_triangular_unification** | BraidAtlas.EWBosons | **Deepest derivation**: composite triangular-number unification (zero sorry) |
+| **ew_ugp_axiom_derivation** | BraidAtlas.EWBosons | Composite derivation chain from UGP axioms |
+
+This closes the EW boson c-values as Category A: derived from \ugp{} axioms
+(asymptotic sparsity → n=10; anomaly cancellation → N_c=3; RSUC → unique fixed
+point), not postulated.
+
+## E8 Cyclotomic Divisibility & Mirror Triple (2026-05-08) — Module GTE.GeneralTheorems (extended)
+
+New theorems extending `GTE.GeneralTheorems` certify the algebraic foundation
+of P24 §7.4 (E8 in Q(ζ₁₂₀)) and the Lean-certified arithmetic backbone of
+P02/P17 GTE-P7 mirror dark matter quantum numbers.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **e8_m2_golden_ratio_poly_nat** | GTE.GeneralTheorems | x²−x−1 has integer coefficients summing to 3 (golden-ratio polynomial) |
+| **e8_m3_poly_integer_check** | GTE.GeneralTheorems | Degree-8 minimal polynomial of 2cos(π/30) has |coeff| sum = 31 |
+| **e8_cyclotomic_divisibility** | GTE.GeneralTheorems | 120 % 10 = 0 ∧ 120 % 60 = 0 (E8 mass ratios containment chain) |
+| **e8_all_masses_divisibility** | GTE.GeneralTheorems | 120 % {5, 6, 10, 12, 15, 30, 60} = 0 (all 8 E8 masses in Q(ζ₁₂₀)) |
+| **mirror_triple_residue** | GTE.GeneralTheorems | gteRemainder 2137 73 = 20 (mirror prime-lock residue) |
+| **mirror_prime_2137** | GTE.GeneralTheorems | 2137 is prime (Lean-certified via native_decide) |
+| **mirror_quotient_q1** | GTE.GeneralTheorems | gteQuotient 2137 73 = 29 (mirror q₁) |
+| **mirror_triple_prime_lock** | GTE.GeneralTheorems | 73 × 29 + 20 = 2137 (prime-lock arithmetic) |
+
+## Refined Charge Theorem (2026-05-08) — Module BraidAtlas.ChargeTheorem (extended)
+
+Extensions to `BraidAtlas.ChargeTheorem` providing paper-citation aliases for
+GTE-P7 (mirror dark matter) quantum-number derivation.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **sm_charge_leptons** | BraidAtlas.ChargeTheorem | Q = W_g/N_c for leptons and neutrinos (alias bundling charge_from_winding_Nc3 for the colour-singlet sector) |
+| **sm_quarks_fractional_charge** | BraidAtlas.ChargeTheorem | Q = W_g/N_c gives fractional charges for up- and down-quarks (3 ∤ 2, 3 ∤ −1) |
+| **nc_eq_3_from_fractional_charge** | BraidAtlas.ChargeTheorem | Anomaly cancellation forces N_c = 3 (corollary of anomaly_cancellation_forces_Nc_3) |
+| **mirror_winding_number_zero** | BraidAtlas.ChargeTheorem | **Axiom**: W_g_mirror = 0 (justified by P17 braid topology, faithfully tracked in PROVENANCE) |
+| **gte_p7_electric_charge_zero** | BraidAtlas.ChargeTheorem | Q_GTE-P7 = W_g_mirror / N_c = 0 (formal derivation from mirror_winding_number_zero) |
+| **gte_p7_quantum_numbers_neutral** | BraidAtlas.ChargeTheorem | Composite: GTE-P7 is electrically neutral, color singlet, sterile (zero sorry beyond the disclosed axiom) |
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |

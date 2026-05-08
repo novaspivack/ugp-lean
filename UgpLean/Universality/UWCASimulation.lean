@@ -149,7 +149,7 @@ def uwcaRound {L : ℕ} [NeZero L] (tape : Tape L) : Tape L :=
  Note: this lemma works on a single site given its L, C, R values
  (after P1 has distributed neighbors). -/
 theorem uwca_P3_eq_rule110 (l c r : Bool) :
-    let u := neighborhoodIndex l c r
+    let _u := neighborhoodIndex l c r
     -- After P2: M^u is set iff u matches (l, c, r)
     -- After P3: N = OR over S₁₁₀ of M flags
     -- = 1 iff (l,c,r) ∈ S₁₁₀ = rule110Output (l,c,r)

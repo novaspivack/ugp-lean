@@ -26,6 +26,9 @@ import UgpLean.BraidAtlas.ChargeTheorem
 import UgpLean.BraidAtlas.CompositeTriples
 import UgpLean.BraidAtlas.ChiralitySquaring
 import UgpLean.BraidAtlas.ChargeDerivation
+import UgpLean.BraidAtlas.CoxeterConductor
+import UgpLean.BraidAtlas.CoxeterConductorTowerLaw
+import UgpLean.BraidAtlas.EWBosons
 import UgpLean.GTE.FiberBundle
 import UgpLean.GTE.LinearResponse
 import UgpLean.NullDiscipline.SaturationBarrier
