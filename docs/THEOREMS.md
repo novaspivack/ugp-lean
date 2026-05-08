@@ -678,6 +678,7 @@ GTE-P7 (mirror dark matter) quantum-number derivation.
 | **sm_charge_leptons** | BraidAtlas.ChargeTheorem | Q = W_g/N_c for leptons and neutrinos (alias bundling charge_from_winding_Nc3 for the colour-singlet sector) |
 | **sm_quarks_fractional_charge** | BraidAtlas.ChargeTheorem | Q = W_g/N_c gives fractional charges for up- and down-quarks (3 ∤ 2, 3 ∤ −1) |
 | **nc_eq_3_from_fractional_charge** | BraidAtlas.ChargeTheorem | Anomaly cancellation forces N_c = 3 (corollary of anomaly_cancellation_forces_Nc_3) |
+| **gmn_color_singlet_neutral** | BraidAtlas.ChargeTheorem | Gell-Mann–Nishijima: T₃=0 ∧ Y=0 → Q = T₃ + Y/2 = 0 (algebraic step for GTE-P7) |
 | **mirror_winding_number_zero** | BraidAtlas.ChargeTheorem | **Axiom**: W_g_mirror = 0 (justified by P17 braid topology, faithfully tracked in PROVENANCE) |
 | **gte_p7_electric_charge_zero** | BraidAtlas.ChargeTheorem | Q_GTE-P7 = W_g_mirror / N_c = 0 (formal derivation from mirror_winding_number_zero) |
 | **gte_p7_quantum_numbers_neutral** | BraidAtlas.ChargeTheorem | Composite: GTE-P7 is electrically neutral, color singlet, sterile (zero sorry beyond the disclosed axiom) |

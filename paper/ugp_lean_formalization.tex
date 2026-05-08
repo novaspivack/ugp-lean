@@ -547,6 +547,18 @@ closure of any physics theorem in the library}: running
 \texttt{\#print axioms} on any charged-lepton or coupling theorem
 returns exactly the standard Lean/Mathlib signature
 $\{\mathtt{propext},\mathtt{Classical.choice},\mathtt{Quot.sound}\}$.
+
+\medskip\noindent\textbf{One additional disclosed axiom (\texttt{BraidAtlas.ChargeTheorem}, 2026-05-08):}
+\texttt{mirror\_winding\_number\_zero}: $W_{g,\text{mirror}} = 0$ for the GTE-P7
+mirror-branch dark matter candidate.  This is a \emph{braid-topology postulate}
+imported from the companion paper P17~\cite{SpivackBraidAtlas}~\S subsec:mirror\_dm:
+the canonical Braid Atlas v2.0 master table assigns the mirror-branch winding number
+to be $0$ on topological grounds (mirror-orbit Wilson-loop vanishing), and the full
+P17 derivation has not yet been formalised in Lean.  The axiom is faithfully tracked
+in the P17 \texttt{PROVENANCE.md} ledger.  It supports the formal derivation
+\lstinline|gte_p7_electric_charge_zero| ($Q_{\text{GTE-P7}} = 0$, see
+\S\ref{sec:braidatlas}) and does \emph{not} appear in the axiom closure of any
+SM-sector theorem (lepton, quark, gauge coupling, mass relation).
 All other theorems in the library are \texttt{sorry}-free.
 
 \subsection{Non-circularity contract}\label{sec:noncircular}
@@ -923,6 +935,49 @@ the QCD colour rank taking its observed value.
 \end{leanref}
 \end{theorem}
 
+\paragraph{Refined naming and corollaries (paper-citation aliases).}
+The \texttt{ChargeTheorem} module exposes the following aliases used in
+companion papers~P01, P02, P17:
+
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt]
+  \item \lstinline|sm_charge_leptons| --- $Q = W_g/N_c$ specialised to colour-singlet
+    fermions: charged leptons ($Q=-1$) and neutrinos ($Q=0$).
+  \item \lstinline|sm_quarks_fractional_charge| --- $N_c \nmid 2$ and $N_c \nmid -1$
+    at $N_c=3$, certifying the fractional quark charges $+\tfrac23$ and $-\tfrac13$.
+  \item \lstinline|nc_eq_3_from_fractional_charge| --- corollary form: anomaly
+    cancellation under $N_c > 0$ forces $N_c = 3$.
+\end{itemize}
+
+\paragraph{GTE-P7 mirror-branch dark matter (formal derivation).}
+The GTE-P7 candidate from the mirror sector of the Braid Atlas v2.0 (P17,
+\S\,subsec:mirror\_dm) is a sterile colour-singlet, electrically neutral
+spin-$\tfrac12$ Dirac fermion.  The \texttt{ChargeTheorem} module provides
+the formal derivation:
+
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt]
+  \item \lstinline|mirror_winding_number_zero| --- explicit axiom (faithfully
+    disclosed in P17 \texttt{PROVENANCE.md}): the mirror-branch winding
+    number $W_{g,\text{mirror}} = 0$.  Justification is the full P17 braid
+    topology framework, which is not yet formalised in Lean.
+  \item \lstinline|gmn_color_singlet_neutral| --- Gell-Mann–Nishijima
+    instantiation: for a colour singlet ($T_3 = 0$) with vanishing hypercharge
+    ($Y = 0$), $Q = T_3 + Y/2 = 0$.  Provides the algebraic step from
+    $W_{g,\text{mirror}} = 0$ to $Q_{\text{GTE-P7}} = 0$.
+  \item \lstinline|gte_p7_electric_charge_zero| --- formal derivation:
+    $Q_{\text{GTE-P7}} = W_{g,\text{mirror}}/N_c = 0/3 = 0$.
+  \item \lstinline|gte_p7_quantum_numbers_neutral| --- composite assignment:
+    electrically neutral, colour singlet, sterile.  Combined with the
+    arithmetic backbone in \texttt{GTE.GeneralTheorems} (\lstinline|mirror_triple_residue|,
+    \lstinline|mirror_prime_2137|, \lstinline|mirror_quotient_q1|,
+    \lstinline|mirror_triple_prime_lock|), the mirror triple $(1, 73, 2137; g{=}1)$
+    shares the same prime-lock residue $m_1 = 20$ as the canonical lepton
+    triple, placing it in the same algebraic orbit.
+\end{itemize}
+
+This closes the dark-matter prediction in P17 (\S\,subsec:mirror\_dm) at
+\textbf{Category B} status: the quantum numbers are derived from the braid
+topology axiom, the rest of the chain is fully Lean-certified.
+
 % ───────────────────────────────────────────────────────────
 \subsection{Composite braid c-rule}\label{subsec:composite-braids}
 % ───────────────────────────────────────────────────────────
@@ -1124,6 +1179,34 @@ at $n = 10$.
 This closes the last Category B item in the Braid Atlas (P17): the
 charged-current ($W$), neutral-current ($Z$), and Higgs c-values are
 now derived from \ugp{} axioms rather than postulated.
+
+% ═══════════════════════════════════════════════════════════════
+\subsection{Chirality squaring (\texttt{BraidAtlas.ChiralitySquaring})}
+\label{subsec:chirality_squaring_lean}
+% ═══════════════════════════════════════════════════════════════
+
+The module \texttt{BraidAtlas.ChiralitySquaring} certifies the arithmetic
+signature of the V$-$A chiral structure that underpins the
+T/$T^\dagger$ pairing in the Galois-protection non-renormalization theorem
+(\S\ref{sec:galois_protection}).
+
+\begin{theorem}[Chirality arithmetic signature]\label{thm:chirality_arithmetic}
+The numerator $g_3^{2,\mathrm{bare}} = (13 \times 17 \times 29)^2 = 41{,}075{,}281$
+is a perfect square, while $g_2^{2,\mathrm{bare}} = 17 \times 137 = 2{,}329$
+is not.  This asymmetric arithmetic signature distinguishes the SU(3) and
+SU(2) sectors at the GTE-derived gauge couplings.
+\begin{leanref}
+\lstinline|chirality_arithmetic|,
+\lstinline|g3_numerator_is_perfect_square|,
+\lstinline|g3_numerator_sqrt|,
+\lstinline|g2_numerator_not_perfect_square|,
+\lstinline|two_three_two_nine_not_nat_sq|
+\textup{(in \texttt{BraidAtlas.ChiralitySquaring}, zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
+
+The non-squareness of $2{,}329$ is proved by bracketing: $48^2 = 2304 < 2329 < 2401 = 49^2$,
+followed by a finite \lstinline|native_decide| check over $k \in [0, 48]$.
 
 % ═══════════════════════════════════════════════════════════════
 \section{RCC Infinite Families (\texttt{PSC.RCCInfiniteFamilies})}

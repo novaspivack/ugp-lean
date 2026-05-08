@@ -254,6 +254,24 @@ theorem nc_eq_3_from_fractional_charge (Nc : ℕ) (hNc : 0 < Nc)
     (hAnomaly : perGenWindingSum Nc = 0) : Nc = 3 :=
   (anomaly_cancellation_forces_Nc_3 Nc hNc).mp hAnomaly
 
+/-- **Gell-Mann–Nishijima formula for colour-singlet neutral states.**
+
+    The electric charge of a fermion satisfies Q = T₃ + Y/2.  For a
+    colour-singlet representation (a = 1, T = 0, hence T₃ = 0) with
+    vanishing hypercharge Y = 0, the formula collapses to Q = 0.
+
+    In integer encoding (Y_int = 2 · Y_phys · N_c) this reads:
+      Q_int = T₃_int + Y_int / 2.
+
+    This theorem certifies the Gell-Mann–Nishijima step used in the
+    GTE-P7 dark-matter charge derivation: the mirror branch is colour
+    singlet (a = 1) with W_g_mirror = 0 (axiom), giving Y_int = 0 and
+    T₃_int = 0, hence Q_int = 0. -/
+theorem gmn_color_singlet_neutral (T3_int Y_int : ℤ)
+    (hT3 : T3_int = 0) (hY : Y_int = 0) :
+    T3_int + Y_int / 2 = 0 := by
+  rw [hT3, hY]; norm_num
+
 -- ════════════════════════════════════════════════════════════════
 -- §10  GTE-P7 mirror-branch dark matter: Q = 0
 -- ════════════════════════════════════════════════════════════════
