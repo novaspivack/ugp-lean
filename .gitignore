@@ -16,3 +16,6 @@ paper/*.fdb_latexmk
 paper/*.fls
 paper/*.synctex.gz
 specs/
+
+# OS artifacts
+.DS_Store

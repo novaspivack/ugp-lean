@@ -22,7 +22,7 @@ arithmetic via the rational root theorem.
 5. `e7_tower_law_complete` — composite Tower Law theorem
 6. `tower_obstruction` — ∀ k:ℕ, 3×k ≠ 32 (arithmetic)
 
-## Resolution of the AdjoinRoot instance issue (SPEC_033_BTL, 2026-05-08)
+## Resolution of the AdjoinRoot instance issue (2026-05-08)
 
 `Module ℚ (AdjoinRoot p)` instance synthesis fails because `AdjoinRoot` is
 a `def` rather than `abbrev` in Mathlib. **Fix:** use the definitionally-equal
@@ -102,7 +102,7 @@ theorem p_rat_irreducible : Irreducible p_rat :=
     p_rat_deg_range p_rat_no_roots
 
 -- ════════════════════════════════════════════════════════════════
--- §4  Finrank via quotient form (zero sorry, resolves SPEC_033_BTL)
+-- §4  Finrank via quotient form (zero sorry)
 -- ════════════════════════════════════════════════════════════════
 
 /-- Direct ℚ polynomial (not a map of p_int) — avoids AdjoinRoot instance issue.

@@ -55,9 +55,6 @@ Q(ζ₁₂₀) is the MINIMAL cyclotomic field containing all physically realize
 ## References
 
 - P24 (ugp_deeper_theory.tex): §7, Galois Stability Theorem
-- SPEC_032_QZ_EVIDENCE_COLLATION.md: evidence table
-- D4 lab notes, Phase 17: PSLQ verification at 100 dps
-- research-sandbox/04_rg_universality/code/known_algebraic_tests/toda_masses.py
 -/
 
 namespace UgpLean.BraidAtlas

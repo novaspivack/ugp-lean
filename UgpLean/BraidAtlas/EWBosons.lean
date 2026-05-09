@@ -54,7 +54,6 @@ All theorems in this module: zero sorry.
 ## Reference
 
 * P17 (Braid_Atlas_v2_First_Principles.tex), §subsec:ew_bosons
-* SPEC_036_EWC_ELECTROWEAK_BOSON_C_VALUES.md
 -/
 
 namespace UgpLean.BraidAtlas

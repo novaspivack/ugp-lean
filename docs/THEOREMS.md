@@ -321,7 +321,7 @@ sum estimates).
 | **ugp_deriv_lower_bound** | DSIExport | Uniform bound: g'(q) ≥ 22 on shell |
 | **ugpOutputGap_differentiableOn** | DSIExport | Differentiable on (0,∞) |
 | **ugpOutputGap_continuousOn_Icc** | DSIExport | Continuous on compact subsets |
-| **UGPWall1Export** | DSIExport | Packaged export for DSI SmallSymmetricMVTBundle |
+| **UGPWall1Export** *(structure)* | DSIExport | Packaged export for DSI SmallSymmetricMVTBundle |
 
 ## RC Tier Structure (Paper 24: Substrate Depth and Self-Generated Mass)
 
@@ -454,7 +454,7 @@ New module `GaloisStructure.MinimalCyclotomic`:
 |---------|--------|-----------|
 | **b1_unique_at_n10** | Phase4.AsymptoticSparsity | ∀ survivors at n=10: b2+q2+7=73 (both pairs give 73, native_decide) |
 | **b1_forced_eq_73** | Phase4.AsymptoticSparsity | isMirrorDualSurvivorAt 10 b2 q2 → b2+q2+7=73 |
-| **delta_structural_prediction** | Phase4.DeltaUGP | b1=73 arithmetically forced → δ_structural = C_alg/73 is a structural prediction |
+| **delta_structural_prediction** *(def)* | Phase4.DeltaUGP | b1=73 arithmetically forced → δ_structural = C_alg/73 is a structural prediction |
 | **b1_in_delta_is_sieve_forced** | Phase4.DeltaUGP | leptonB = 73 (certified, supports prediction interpretation) |
 
 ### VV All Coefficients from N_c = 3 — Module MassRelations.VVAllCoefficientsFromNc
@@ -494,7 +494,7 @@ Pair singleton-atomic = both components singleton-atomic.
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
-| **fnEqAtNc3** | MassRelations.NeutrinoFroggattNielsen | FN charge equation 9 q1 + q2 = 29 (the form of q1 + q2/Nc^2 = 29/9 at Nc=3) |
+| **fnEqAtNc3** *(def)* | MassRelations.NeutrinoFroggattNielsen | FN charge equation 9 q1 + q2 = 29 (the form of q1 + q2/Nc^2 = 29/9 at Nc=3) |
 | **fn_solutions_satisfy_eq** | MassRelations.NeutrinoFroggattNielsen | Each pair in {(0,29),(1,20),(2,11),(3,2)} satisfies the equation |
 | **fn_solutions_are_complete** | MassRelations.NeutrinoFroggattNielsen | Every non-negative integer solution with q1<=6, q2<=30 is in the list (interval_cases + omega + decide) |
 | **texture_3_2_is_singleton_atomic** | MassRelations.NeutrinoFroggattNielsen | (3, 2) has both charges singleton-atomic |
@@ -603,14 +603,14 @@ h(G) divides 120. Proves the **E7 falsifier** via the Tower Law obstruction.
 | **p_rat_no_roots** | BraidAtlas.CoxeterConductorTowerLaw | No rational root via num/den_dvd_of_is_root + 8 candidate checks |
 | **p_rat_irreducible** | BraidAtlas.CoxeterConductorTowerLaw | Irreducible over ℚ (irreducible_of_degree_le_three_of_not_isRoot) |
 | **p_rat_q_natDegree** | BraidAtlas.CoxeterConductorTowerLaw | Quotient-form polynomial natDegree = 3 (compute_degree!) |
-| **finrank_p_rat_quot** | BraidAtlas.CoxeterConductorTowerLaw | [ℚ[X]/(8X³−6X−1) : ℚ] = 3 (zero sorry, resolves SPEC_033_BTL) |
+| **finrank_p_rat_quot** | BraidAtlas.CoxeterConductorTowerLaw | [ℚ[X]/(8X³−6X−1) : ℚ] = 3 (zero sorry) |
 | **tower_obstruction** | BraidAtlas.CoxeterConductorTowerLaw | ∀ k:ℕ, 3·k ≠ 32 (arithmetic Tower Law obstruction) |
 | **e7_arithmetic_evidence** | BraidAtlas.CoxeterConductorTowerLaw | Composite: irreducibility + degree + φ(120) = 32 + 3∤32 |
 | **e7_tower_law_complete** | BraidAtlas.CoxeterConductorTowerLaw | Complete Tower Law theorem (zero sorry, all five components) |
 
 The Tower Law step uses `finrank_quotient_span_eq_natDegree` on the quotient
 ring `ℚ[X] ⧸ Ideal.span {p_rat_q}`, bypassing the `AdjoinRoot`-instance
-synthesis obstruction noted in the lab notes (SPEC_033_BTL).
+synthesis obstruction (Mathlib `AdjoinRoot` is `def` not `abbrev`).
 
 ## Electroweak Boson c-Values (2026-05-08) — Module BraidAtlas.EWBosons
 
