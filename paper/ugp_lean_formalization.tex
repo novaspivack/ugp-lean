@@ -1541,9 +1541,11 @@ derived from the Lean-certified bare rationals $g_1^2 = 16/125$ and $g_2^2 = 232
 The tree-level electromagnetic coupling satisfies:
 \[
   \frac{1}{\alpha_{\rm EM}^{\rm bare}}
-  \;=\; \frac{(g_1 + g_2)^2}{g_1 g_2}
-  \;=\; \frac{377525}{37264} \;\approx\; 127.31.
+  \;=\; 4\pi\!\left(\frac{1}{g_1^2} + \frac{1}{g_2^2}\right)
+  \;=\; \frac{4\pi \cdot 377525}{37264} \;\approx\; 127.31.
 \]
+The Lean theorem certifies the rational part $1/g_1^2 + 1/g_2^2 = 377525/37264$;
+the $4\pi$ prefactor is the standard QFT normalisation $\alpha = g^2/(4\pi)$.
 
 \begin{leanref} \lstinline|alpha_em_formula_exact|
 \textup{(in \texttt{Phase4.GaugeCouplings})}
@@ -3155,7 +3157,7 @@ three structural premises within the formal PSC/Fibonacci/$U(1)$-entropy model.
 \noindent\textbf{Gauge coupling extensions}
 (\cref{sec:gaugecoupling-ext}):
 exact rational tree-level predictions $\sin^2\!\theta_W = 3456/15101$
-and $1/\alpha_{\rm EM} = 377525/37264$ from the certified bare couplings.
+and $1/\alpha_{\rm EM} = 4\pi \cdot 377525/37264 \approx 127.31$ from the certified bare couplings.
 
 \paragraph{What remains open.}
 Six conjectures are formally stated in \cref{tab:conjectures}.
