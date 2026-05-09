@@ -174,7 +174,7 @@ are decidable, while general reachability is $\Sigma^0_1$-complete.
 \textbf{Further contributions.}
 A new class of \emph{\ugp{} primes} is formally defined with ten
 machine-checked instances across three ridge levels.
-A \textbf{MassRelations} layer (20 modules) formalizes the
+A \textbf{MassRelations} layer (22 modules) formalizes the
 cyclotomic-12 Koide closed form, $S_3$-equivariant Newton flow,
 the $N_c$-structural chain deriving all fermion constants from the QCD colour
 rank, VV mass coefficients from SU(5)/SO(10) group theory, neutrino seesaw
@@ -308,14 +308,31 @@ results:
   structure and $D_5$ renormalization, with zero axioms and zero
   \texttt{sorry} beyond Lean's foundational set.
 \item \textbf{Mass relations and physical spectrum} (\S\ref{sec:massrelations}):
-  The \texttt{MassRelations} layer (12 modules) formalizes: (i) the
-  cyclotomic-12 Koide closed form with $S_3$-equivariant Newton flow
-  (\texttt{koide\_iff\_twoS\_sq\_eq\_threeN},
-  \texttt{newton\_flow\_fixes\_null\_cone}); (ii) the SU(3) Cartan
-  weight geometry and Froggatt--Nielsen VEV structure;
-  (iii) the binary cascade mass-generation recurrence with closed-form
-  generations; and (iv) the physical charged-lepton, up-type, and
-  down-type mass spectra with positivity certificates.
+  The \texttt{MassRelations} layer (22 modules) covers
+  (i) the Koide closed form and $S_3$-balance arithmetic identities
+  (\texttt{KoideClosedForm}, \texttt{KoideAngle}, \texttt{KoideNewtonFlow},
+  \texttt{KoideS3DiscreteIdentities}, \texttt{ClaimCBridge});
+  (ii) the SU(5)/SO(10) Yukawa power law and the VV mass mechanism, with
+  all three VV exponents derived from $N_c = 3$
+  (\texttt{VVMechanism}, \texttt{VVAllCoefficientsFromNc}, \texttt{DownRational});
+  (iii) the CKM $\theta_{23}$ structural ratio
+  $\tau(R_{10})/D_1 = 15/8$ uniquely forced at $n = 10$
+  (\texttt{CKMTheta23});
+  (iv) the binary cascade mass-generation recurrence and the physical
+  charged-lepton, up-type, and down-type mass spectra
+  (\texttt{BinaryCascade}, \texttt{PhysicalMasses}, \texttt{HeavyFermionTower},
+  \texttt{LeptonMassPrediction});
+  (v) Froggatt--Nielsen completion in both the charged-fermion and
+  neutrino sectors, with the $b^{29/9}$ neutrino seesaw FN texture
+  selected by MDL
+  (\texttt{FroggattNielsen}, \texttt{NeutrinoFroggattNielsen});
+  (vi) Clebsch--Gordan, Cartan, and SU(3) flavour geometry underpinning
+  the flavon VEV structure
+  (\texttt{ClebschGordan}, \texttt{CartanFlavonPotential}, \texttt{SU3FlavorCartan});
+  and (vii) the scale-transport, seesaw, and cyclotomic-orbifold
+  machinery linking ridge arithmetic to the physical mass spectrum
+  (\texttt{ScaleTransport}, \texttt{SeesawIndex}, \texttt{Z2OrbifoldDepth},
+  \texttt{UpLeptonCyclotomic}).
 \end{itemize}
 
 \paragraph{Structure.}
@@ -327,7 +344,7 @@ results:
 \S\ref{sec:general} collects the general-level theorems.
 \S\ref{sec:ugpprimes} introduces \ugp{} primes.
 \S\ref{sec:quarterlock} treats the Quarter-Lock, Elegant Kernel, and UCL unconditional closure.
-\S\ref{sec:massrelations} presents the new mass relations layer.
+\S\ref{sec:massrelations} presents the mass relations layer.
 \S\ref{sec:universality} addresses universality and self-reference.
 \S\ref{sec:mirror} develops the mirror-dual conjecture.
 \S\ref{sec:mirrorshift} presents the mirror shift algebra.
@@ -450,7 +467,7 @@ The artifact is organized into 118~\lean{} modules across twelve layers:
    MirrorDualConjecture, MirrorShift, UGPPrimes, InertPrimes,
    AnalyticArchitecture, DSIExport, StructuralTheorems, UniquenessCertificates,
    GTESimulation, EntropyNonMonotone,
-   \textbf{MersenneLadder, FiberBundle, LinearResponse, ScaleConnection}};
+   MersenneLadder, FiberBundle, LinearResponse, ScaleConnection};
 \node[layer, fill=red!8,    below=of gte]  (struc)
   {\textbf{Structural}~(19)\quad QuarterLock, LModelDerivation;
    \textit{ElegantKernel/} ChiralityFeature, D5StructuralAxiom, FibonacciHessian,
@@ -459,21 +476,21 @@ The artifact is organized into 118~\lean{} modules across twelve layers:
    FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure,
    KLFullClosure, PentagonConstraint, RiccatiFixedPoint};
 \node[layer, fill=teal!8,   below=of struc] (mass)
-  {\textbf{MassRelations}~(20)\quad KoideClosedForm, KoideNewtonFlow,
+  {\textbf{MassRelations}~(22)\quad KoideClosedForm, KoideNewtonFlow,
    BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential,
    FroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational,
    UpLeptonCyclotomic, Z2OrbifoldDepth,
    KoideAngle, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex,
-   NeutrinoFroggattNielsen,
-   \textbf{CKMTheta23, KoideS3DiscreteIdentities}};
+   NeutrinoFroggattNielsen, VVMechanism, VVAllCoefficientsFromNc,
+   CKMTheta23, KoideS3DiscreteIdentities};
 \node[layer, fill=cyan!6,   below=of mass]  (braid)
   {\textbf{BraidAtlas}~(7)\quad ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation,
    CoxeterConductor, CoxeterConductorTowerLaw, EWBosons;
-   \textbf{PSC}~(2)\quad RCCInfiniteFamilies, \textbf{ThreeRouteForcing}};
+   \textbf{PSC}~(2)\quad RCCInfiniteFamilies, ThreeRouteForcing};
 \node[layer, fill=lime!6,   below=of braid] (null)
-  {\textbf{NullDiscipline}~(2)\quad \textbf{SaturationBarrier, TheoremEligibility}};
+  {\textbf{NullDiscipline}~(2)\quad SaturationBarrier, TheoremEligibility};
 \node[layer, fill=violet!6, below=of null]  (ipt)
-  {\textbf{IPT}~(1)\quad \textbf{InformationProfitThreshold}};
+  {\textbf{IPT}~(1)\quad InformationProfitThreshold};
 \node[layer, fill=purple!8, below=of ipt]   (univ)
   {\textbf{Universality}~(7)\quad Rule110, UWCA, UWCASimulation,
    UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge};
@@ -2022,7 +2039,7 @@ the chirality, Fibonacci--Hessian, and $\mu$-triple structures
 \section[Mass Relations]{Mass Relations and Physical Spectrum}\label{sec:massrelations}
 % ═══════════════════════════════════════════════════════════════
 
-The \texttt{MassRelations} layer (20 modules) formalizes the
+The \texttt{MassRelations} layer (22 modules) formalizes the
 passage from the \ugp{} ridge arithmetic to physical fermion mass
 ratios, covering the Koide closed form, the SU(3) flavour geometry,
 the Froggatt--Nielsen mechanism, the resulting physical spectrum,
@@ -3244,7 +3261,7 @@ and the full pentagon--$D_5$ kernel structure derived from first principles.
 
 \medskip
 \noindent\textbf{Mass Relations layer}
-(\cref{sec:massrelations}, 20 modules):
+(\cref{sec:massrelations}, 22 modules):
 the Koide cyclotomic-12 closed form with $S_3$-equivariant Newton flow,
 the $N_c$-structural chain deriving all fermion constants from $N_c = 3$,
 VV coefficients from SU(5)/SO(10) group theory, the neutrino seesaw closure

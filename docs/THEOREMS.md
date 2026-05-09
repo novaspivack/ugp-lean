@@ -2,7 +2,7 @@
 
 What ugp-lean proves. All listed theorems have **0 sorry, 0 axioms** on the core path unless explicitly marked ⚠.
 
-**Sorry audit (2026-04-20):** **only two** sorries remain in the codebase,
+**Sorry audit:** **only two** sorries remain in the codebase,
 both openly disclosed with precise citations:
 - `dickman_equidistribution_in_APs` and `crt_equidistribution_within_regime`
   in `GTE.AnalyticArchitecture` — classical analytic-NT results (Tenenbaum
@@ -10,7 +10,7 @@ both openly disclosed with precise citations:
   asymptotics).  These are research-level formalization gaps, not
   correctness defects.
 
-**Prior integrity issues fixed 2026-04-18:**
+**Prior integrity issues fixed:**
 - **Tarski `fingerprint_fixed_point_exists`** statement on `Finset ℕ` with
   only monotonicity was **false** (counter-example `F(P) = P ∪ {max(P)+1}`);
   restated on `Set ℕ` and proved via `OrderHom.lfp`; bounded `Finset` variant
@@ -93,7 +93,7 @@ both openly disclosed with precise citations:
 | **L_model_eq_log_wedge_form** | LModelDerivation | L_model = log₂((wedge2Factor · wedge5Factor) / orbitLength) |
 | **L_model_from_gauge_structure** | LModelDerivation | L_model = log₂((D₁ · 125) / 3) from D₁, 5³, orbit length 3 |
 
-## Lepton Mass Prediction Pipeline (2026-04-20)
+## Lepton Mass Prediction Pipeline
 
 Module `MassRelations.LeptonMassPrediction`. Zero sorry.
 
@@ -105,9 +105,10 @@ Module `MassRelations.LeptonMassPrediction`. Zero sorry.
 | **koide_angle_equals_two_over_muon_a** | MassRelations.LeptonMassPrediction | koideThetaUGP = 2/canonicalGen2.a |
 | **epic_8_lepton_mass_structural_summary** | MassRelations.LeptonMassPrediction | Bundle: angle=2/muon_a ∧ muon_a=9 ∧ Q=2/3 for any θ |
 
-## VV Unified N_c Formula (2026-04-20)
+## VV Unified N_c Formula
 
-Module `MassRelations.DownRational` §7 (extended). Commit 48af4c9. Zero sorry.
+Module `MassRelations.DownRational` §7 establishes the unified
+N_c-derivation of all three VV mass coefficients. Zero sorry.
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -122,9 +123,10 @@ Module `MassRelations.DownRational` §7 (extended). Commit 48af4c9. Zero sorry.
 
 ---
 
-## VV Coefficient Structural Identifications (2026-04-20)
+## VV Coefficient Structural Identifications
 
-Module `MassRelations.DownRational` §§5-6 (extended). Zero sorry.
+Module `MassRelations.DownRational` §§5-6 supplies group-theoretic
+identifications of each VV coefficient. Zero sorry.
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -134,9 +136,9 @@ Module `MassRelations.DownRational` §§5-6 (extended). Zero sorry.
 | **gamma_d_from_gut_dims** | MassRelations.DownRational | γ_d = -dim(45)/dim(126) = -5/14 |
 | **VV_coefficients_structural_summary** | MassRelations.DownRational | Bundle: all 3 VV coefficient identifications |
 
-## Complete N_c Structural Chain (2026-04-20)
+## Complete N_c Structural Chain
 
-Modules `MassRelations.KoideAngle` (extended). Commits 95adbdf, f44e635, c9db18d.
+Module `MassRelations.KoideAngle` provides the full N_c structural chain.
 All zero sorry, zero hypotheses. N_c = 3 determines all SM fermion structural constants.
 
 | Theorem | Module | Statement |
@@ -159,10 +161,11 @@ All zero sorry, zero hypotheses. N_c = 3 determines all SM fermion structural co
 
 ---
 
-## Koide Angle and β Derivation (2026-04-20)
+## Koide Angle and β Derivation
 
-Module `MassRelations.KoideAngle` + extended `MassRelations.UpLeptonCyclotomic` §5.
-All zero sorry, zero hypotheses. Commit f7d6ac2.
+Modules `MassRelations.KoideAngle` and `MassRelations.UpLeptonCyclotomic` §5
+together derive the Koide angle and the β coefficient.
+All zero sorry, zero hypotheses.
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -179,7 +182,7 @@ All zero sorry, zero hypotheses. Commit f7d6ac2.
 
 ## 13_SPEC Claim C — TT Formula = Weyl Bisector × Binary Cascade
 
-All theorems zero sorry, zero hypotheses. Module: `MassRelations.ClaimCBridge`. Committed 2026-04-20.
+Module `MassRelations.ClaimCBridge` establishes Claim C. All theorems zero sorry, zero hypotheses.
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -197,7 +200,7 @@ All theorems zero sorry, zero hypotheses. Module: `MassRelations.ClaimCBridge`. 
 ## UCL Unconditional Closure (k_gen, k_gen2, Pentagon–Hexagon Bridge)
 
 All theorems in this section have **zero hypotheses, zero sorry, Mathlib-only axioms**.  
-Module: `ElegantKernel.Unconditional.KGenFullClosure` (§§1–9). Committed 2026-04-20.
+Module: `ElegantKernel.Unconditional.KGenFullClosure` (§§1–9).
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -343,7 +346,7 @@ n = 38; RC predicate not yet formalized in Lean).
 
 ## Composite Braid c-Rule (Paper 24 — Category A upgrade)
 
-New module `BraidAtlas.CompositeTriples` formalizes the composition law for
+Module `BraidAtlas.CompositeTriples` formalizes the composition law for
 composite hadron GTE triples. Status: **Category A** for writhe/chirality/tier
 theorems and the **full proton/neutron (a,b,c) derivation** (all zero sorry);
 **Category A/D** for the sector assignment rule (empirically validated).
@@ -364,8 +367,8 @@ theorems and the **full proton/neutron (a,b,c) derivation** (all zero sorry);
 
 ### a-component (min-rule) and b-component (Wolfram Alpha breakthrough)
 
-Discovery (2026-05-03): Wolfram Alpha representation 11459 = 5 × 2^8 × 3^2 − 61
-reveals that b(proton) = N_c²·(a_u·2^{N_c²−1} − δ) + (N_c−1), where every
+The Wolfram Alpha representation 11459 = 5 × 2^8 × 3^2 − 61 exposes the
+structural law b(proton) = N_c²·(a_u·2^{N_c²−1} − δ) + (N_c−1), where every
 factor is a Lean-certified UGP constant. The correction 61 has TWO independent
 derivations: `b₁ − N_c(N_c+1) = 73 − 12 = 61` and `δ·N_c² − (N_c−1) = 7·9−2 = 61`.
 
@@ -385,9 +388,9 @@ derivations: `b₁ − N_c(N_c+1) = 73 − 12 = 61` and `δ·N_c² − (N_c−1)
 | **strange_baryon_s2_b_eq_xi** | BraidAtlas.CompositeTriples | |S|=2 sector b: Xi0=Xi-=878434 |
 | **ugp_all_baryon_b_formulas** | BraidAtlas.CompositeTriples | All 9 light baryon b-values (full conjunction, zero sorry) |
 
-## Asymptotic Sparsity (P25, 2026-05-05)
+## Asymptotic Sparsity (P25)
 
-New module `Phase4.AsymptoticSparsity` proves the Asymptotic Sparsity Theorem (P25 §4):
+Module `Phase4.AsymptoticSparsity` proves the Asymptotic Sparsity Theorem (P25 §4):
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -398,9 +401,9 @@ New module `Phase4.AsymptoticSparsity` proves the Asymptotic Sparsity Theorem (P
 | **asymptotic_sparsity_universal** | Phase4.AsymptoticSparsity | **For ALL n : ℕ**, (n=10,b₁=73) is the UNIQUE Stage-2 survivor. Single ∀n theorem combining finite check + AM-GM + trivial small-n case. |
 | **no_survivor_small_n** | Phase4.AsymptoticSparsity | For n < 4, isMirrorDualSurvivorAt is False (ridge n = 0, no valid pairs) |
 
-## Positive Root Theorem (P25, 2026-05-05)
+## Positive Root Theorem (P25)
 
-New module `Phase4.PositiveRootTheorem` proves T6 (P25 §5):
+Module `Phase4.PositiveRootTheorem` proves T6 (P25 §5):
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -413,9 +416,9 @@ New module `Phase4.PositiveRootTheorem` proves T6 (P25 §5):
 | **positive_root_theorem** | Phase4.PositiveRootTheorem | SU(N)₁ factor count in numerator(g²_G) = |Φ⁺(G)| for all G |
 | **prime_29_cross_sector** | Phase4.PositiveRootTheorem | 4·N_c²−δ = 29 = c(SU(30)₁): same integer in seesaw and gauge sectors |
 
-## Galois Layer Stability (P25, 2026-05-05)
+## Galois Layer Stability (P25)
 
-New module `GaloisStructure.CyclotomicLayers` proves the Galois Stability Theorem (P25 §7):
+Module `GaloisStructure.CyclotomicLayers` proves the Galois Stability Theorem (P25 §7):
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -429,9 +432,10 @@ New module `GaloisStructure.CyclotomicLayers` proves the Galois Stability Theore
 | **galois_cross_eval_values** | GaloisStructure.CyclotomicLayers | Exact evaluation values (2−√3, φ−2) |
 | **strand_count_eq_two** | GaloisStructure.CyclotomicLayers | (N_c²−1)/4 = 2 = strand_count |
 
-## Minimal Cyclotomic Field + Fibonacci-Ridge Structure (P25, 2026-05-05)
+## Minimal Cyclotomic Field + Fibonacci-Ridge Structure (P25)
 
-New module `GaloisStructure.MinimalCyclotomic`:
+Module `GaloisStructure.MinimalCyclotomic` formalises the minimal cyclotomic
+conductor and the Fibonacci-ridge structural identities:
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -446,7 +450,7 @@ New module `GaloisStructure.MinimalCyclotomic`:
 | **prime_137_from_Nc** | GaloisStructure.MinimalCyclotomic | 137 = 2^Nc * (2Nc^2-1) + 1 (structural formula) |
 | **prime_137_structural_origin** | GaloisStructure.MinimalCyclotomic | 137 is the bit-set prime {0,Nc,delta} fully determined by Nc=3 (closes P25 §10.2) |
 
-## Unconditional Rigidity (2026-05-05)
+## Unconditional Rigidity
 
 ### b1=73 Forced at n=10 + δ_target as Structural Prediction
 
@@ -466,9 +470,10 @@ New module `GaloisStructure.MinimalCyclotomic`:
 | **vv_gamma_from_Nc** | MassRelations.VVAllCoefficientsFromNc | γ_d = -5/14 = -(Nc+2)(2Nc+3)/[C(2Nc+4,Nc+2)/2] (norm_num) |
 | **vv_all_coefficients_from_Nc** | MassRelations.VVAllCoefficientsFromNc | All 3 VV exponents (13/9, -7/6, -5/14) from Nc=3 alone (zero sorry) |
 
-## VV Mechanism (P25, 2026-05-05)
+## VV Mechanism (P25)
 
-New module `MassRelations.VVMechanism`:
+Module `MassRelations.VVMechanism` formalises the VV mass mechanism as a
+log-linear law derived from the SU(5)/SO(10) GUT power law:
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -477,11 +482,10 @@ New module `MassRelations.VVMechanism`:
 | **vv_mechanism_algebraic** | MassRelations.VVMechanism | GUT power law + UCL log map → log-linear VV relation (zero sorry) |
 | **dim_126_eq_two_Nc_sq_delta** | MassRelations.VVMechanism | 126 = 2·Nc²·δ (connects VV to seesaw structure) |
 
-## Neutrino Froggatt-Nielsen Texture (2026-05-05) — Module MassRelations.NeutrinoFroggattNielsen
+## Neutrino Froggatt-Nielsen Texture — Module MassRelations.NeutrinoFroggattNielsen
 
-New module `MassRelations.NeutrinoFroggattNielsen`.
-Selects the structural FN texture for the b^(29/9) seesaw exponent under
-UGP axiom A3 (Compression / MDL).
+Module `MassRelations.NeutrinoFroggattNielsen` selects the structural FN
+texture for the b^(29/9) seesaw exponent under UGP axiom A3 (Compression / MDL).
 
 Setup: two-flavon U(1)_1 x U(1)_2 with M_R(g) ~ b_g^(q1 + q2/Nc^2).
 The b^(29/9) law requires q1 + q2/Nc^2 = 29/9; at Nc=3 this admits
@@ -508,10 +512,9 @@ This converts the FN texture choice from aesthetic preference to a
 Lean-certified MDL theorem: among the four arithmetic solutions, only
 (q1, q2) = (Nc, strand) = (3, 2) has both charges as elementary UGP atoms.
 
-## Galois-Protection Non-Renormalization (2026-05-05) — Module Phase4.GaloisProtection
+## Galois-Protection Non-Renormalization — Module Phase4.GaloisProtection
 
-New module `Phase4.GaloisProtection`.
-Formalises the Galois-protection one-loop cancellation theorem.
+Module `Phase4.GaloisProtection` formalises the Galois-protection one-loop cancellation theorem.
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -530,10 +533,10 @@ transcendental L = sum n_i log(m_i/mu) ∉ Q(sqrt(5)) (Baker's theorem); Galois
 constraint forces A*L = 0; T/T† dual-operator pairing implements L = -L → L = 0.
 Residual R_real = 2.39 ppm = 0.886 × alpha^2/(2*pi^2) is at two-loop magnitude.
 
-## Two-Loop Color Coefficient (2026-05-05) — Module Phase4.TwoLoopCoefficient
+## Two-Loop Color Coefficient — Module Phase4.TwoLoopCoefficient
 
-New module `Phase4.TwoLoopCoefficient` (112th module).
-Certifies the structural identification of the two-loop coefficient in the UGP precision residual.
+Module `Phase4.TwoLoopCoefficient` certifies the structural identification of
+the two-loop coefficient in the UGP precision residual.
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -549,9 +552,9 @@ The (Nc²-1) = 8 = dim(su(3)_adj) is the gluon count; the coefficient arises
 from symmetric T/T†-two-loop diagrams (one-loop cancels by GaloisProtection).
 Verified numerically at 0.33% (within double-precision accuracy of b1_required chain).
 
-## RCC Infinite Families (2026-05-05) — Module PSC.RCCInfiniteFamilies
+## RCC Infinite Families — Module PSC.RCCInfiniteFamilies
 
-New module `PSC.RCCInfiniteFamilies`. Closes RCC over all four
+Module `PSC.RCCInfiniteFamilies` closes RCC over all four
 infinite classical Lie families: B_n, C_n, D_n, A_n.
 
 Key fact: For B_n = SO(2n+1) and C_n = Sp(2n), the longest Weyl element acts
@@ -578,12 +581,12 @@ Combined with TE22.ScanCertificate (computational, 34,560 universes) and the
 extended scan certificate (exceptional Lie groups + larger classical shells), RCC is
 established as a theorem over ALL compact simple Lie groups.
 
-## Coxeter–Conductor Theorem (2026-05-08) — Modules BraidAtlas.CoxeterConductor & CoxeterConductorTowerLaw
+## Coxeter–Conductor Theorem — Modules BraidAtlas.CoxeterConductor & CoxeterConductorTowerLaw
 
-New modules `BraidAtlas.CoxeterConductor` and `BraidAtlas.CoxeterConductorTowerLaw`
+Modules `BraidAtlas.CoxeterConductor` and `BraidAtlas.CoxeterConductorTowerLaw`
 formalise the arithmetic core of the Coxeter–conductor theorem: the affine Toda
 mass spectrum of a simple Lie algebra G lies in Q(ζ₁₂₀) iff its Coxeter number
-h(G) divides 120. Proves the **E7 falsifier** via the Tower Law obstruction.
+h(G) divides 120, and prove the **E7 falsifier** via the Tower Law obstruction.
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -612,11 +615,11 @@ The Tower Law step uses `finrank_quotient_span_eq_natDegree` on the quotient
 ring `ℚ[X] ⧸ Ideal.span {p_rat_q}`, bypassing the `AdjoinRoot`-instance
 synthesis obstruction (Mathlib `AdjoinRoot` is `def` not `abbrev`).
 
-## Electroweak Boson c-Values (2026-05-08) — Module BraidAtlas.EWBosons
+## Electroweak Boson c-Values — Module BraidAtlas.EWBosons
 
-New module `BraidAtlas.EWBosons` derives the EW massive boson c-values
+Module `BraidAtlas.EWBosons` derives the EW massive boson c-values
 {c(W), c(Z), c(H)} = {11, 12, 13} from two structural identities at the canonical
-ridge level n = 10. Closes the last Category B item in the Braid Atlas (P17).
+ridge level n = 10, closing the last Category B item in the Braid Atlas (P17).
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -651,9 +654,9 @@ This closes the EW boson c-values as Category A: derived from \ugp{} axioms
 (asymptotic sparsity → n=10; anomaly cancellation → N_c=3; RSUC → unique fixed
 point), not postulated.
 
-## E8 Cyclotomic Divisibility & Mirror Triple (2026-05-08) — Module GTE.GeneralTheorems (extended)
+## E8 Cyclotomic Divisibility & Mirror Triple — Module GTE.GeneralTheorems
 
-New theorems extending `GTE.GeneralTheorems` certify the algebraic foundation
+Theorems in `GTE.GeneralTheorems` certify the algebraic foundation
 of P24 §7.4 (E8 in Q(ζ₁₂₀)) and the Lean-certified arithmetic backbone of
 P02/P17 GTE-P7 mirror dark matter quantum numbers.
 
@@ -668,9 +671,9 @@ P02/P17 GTE-P7 mirror dark matter quantum numbers.
 | **mirror_quotient_q1** | GTE.GeneralTheorems | gteQuotient 2137 73 = 29 (mirror q₁) |
 | **mirror_triple_prime_lock** | GTE.GeneralTheorems | 73 × 29 + 20 = 2137 (prime-lock arithmetic) |
 
-## Refined Charge Theorem (2026-05-08) — Module BraidAtlas.ChargeTheorem (extended)
+## Refined Charge Theorem — Module BraidAtlas.ChargeTheorem
 
-Extensions to `BraidAtlas.ChargeTheorem` providing paper-citation aliases for
+Module `BraidAtlas.ChargeTheorem` provides paper-citation aliases for the
 GTE-P7 (mirror dark matter) quantum-number derivation.
 
 | Theorem | Module | Statement |
@@ -683,11 +686,11 @@ GTE-P7 (mirror dark matter) quantum-number derivation.
 | **gte_p7_electric_charge_zero** | BraidAtlas.ChargeTheorem | Q_GTE-P7 = W_g_mirror / N_c = 0 (formal derivation from mirror_winding_number_zero) |
 | **gte_p7_quantum_numbers_neutral** | BraidAtlas.ChargeTheorem | Composite: GTE-P7 is electrically neutral, color singlet, sterile (zero sorry beyond the disclosed axiom) |
 
-## CKM θ_23 Structural Ratio (OP v closure) (2026-05-09) — Module MassRelations.CKMTheta23
+## CKM θ_23 Structural Ratio — Module MassRelations.CKMTheta23
 
-New module `MassRelations.CKMTheta23` (EPIC_038_P7R, P01 OP(v) closure).
-Closes the open problem of why the specific ratio τ(R_10)/D_1 = 15/8 appears
-in the CKM θ_23 scaling. The ridge `R_n = 2^n − 16` admits the structural
+Module `MassRelations.CKMTheta23` certifies that the specific ratio
+τ(R_10)/D_1 = 15/8 appearing in the CKM θ_23 scaling is structurally
+forced by UGP (P01 OP(v)). The ridge `R_n = 2^n − 16` admits the structural
 Mersenne factorization `R_n = D_1 · M_(n−4)` for `n ≥ 4`, where `D_1 = 16`
 is the U(1) discrete invariant and `M_k = 2^k − 1`. At `n = 10` this gives
 `τ(R_10)/D_1 = 30/16 = 15/8`, and the ratio is unique to `n = 10` across
@@ -713,18 +716,18 @@ the canonical UGP search range `n ∈ [5, 20]`. All theorems zero sorry, zero ax
 > as the unique canonical ridge level (via
 > `kprime_is_minimal_double_fib_above_n` in the GTE layer), the CKM θ_23
 > scaling ratio is structurally derived from UGP, not data-matched.
-> EPIC_038_P7R upgrades OP(v) from Category A/D → Category A.
 
-## Koide S₃ Discrete Arithmetic-Mean Identity (OP vii partial closure) (2026-05-09) — Module MassRelations.KoideS3DiscreteIdentities
+## Koide S₃ Discrete Arithmetic-Mean Identity — Module MassRelations.KoideS3DiscreteIdentities
 
-New module `MassRelations.KoideS3DiscreteIdentities` (EPIC_038_P7R, P01 OP(vii)
-partial closure). Certifies the discrete shadow of the S₃ equal-norm Koide
-condition for the GTE lepton orbit's a-component. Where the continuous S₃
-equal-norm identity `|v_1|² = |v_2|² = 3` (see `koide_equal_norm` in
-`MassRelations.KoideAngle`) holds for every value of the Koide phase θ, the
-discrete identity holds exactly on the canonical Lean-certified orbit
-a-component sequence (1, 9, 5). Independent of N_c, of θ = 2/9, and of
-absolute normalisation. All theorems zero sorry, zero hypotheses.
+Module `MassRelations.KoideS3DiscreteIdentities` certifies the discrete
+shadow of the S₃ equal-norm Koide condition for the GTE lepton orbit's
+a-component, contributing to the partial closure of P01 OP(vii). Where
+the continuous S₃ equal-norm identity `|v_1|² = |v_2|² = 3` (see
+`koide_equal_norm` in `MassRelations.KoideAngle`) holds for every value of
+the Koide phase θ, the discrete identity holds exactly on the canonical
+Lean-certified orbit a-component sequence (1, 9, 5). Independent of N_c,
+of θ = 2/9, and of absolute normalisation. All theorems zero sorry, zero
+hypotheses.
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -740,17 +743,16 @@ absolute normalisation. All theorems zero sorry, zero hypotheses.
 > `koide_angle_from_N_c_pure` (which derives θ = 2/9 from N_c = 3 in
 > `MassRelations.KoideAngle`), this module supplies the structural-results
 > pair on which the partial closure of OP(vii) (Koide S₃ quadric forcing)
-> rests in P01. Refined target #1 from SPEC_038F is closed; remaining
-> refined targets (PDG-θ alignment to 7.4×10⁻⁶ rad, Koide-cone
-> near-attractor of UCL within 6×10⁻⁴) involve PDG real-valued masses and
-> continuous geometric arguments and are tracked separately for full OP(vii)
-> closure.
+> rests in P01. The discrete arithmetic-mean identity is certified here;
+> the remaining refined targets (PDG-θ alignment to 7.4×10⁻⁶ rad,
+> Koide-cone near-attractor of UCL within 6×10⁻⁴) involve PDG real-valued
+> masses and continuous geometric arguments and remain open for full
+> OP(vii) closure.
 
-## PSC Three-Route Forcing Capstone (OP i partial closure) (2026-05-09) — Module PSC.ThreeRouteForcing
+## PSC Three-Route Forcing Capstone — Module PSC.ThreeRouteForcing
 
-New module `PSC.ThreeRouteForcing` (EPIC_038_P7R, P01 OP(i) partial closure).
-Records the architectural shape of the residual OP(i) target as a parametric
-Lean carrier:
+Module `PSC.ThreeRouteForcing` records the architectural shape of the
+residual P01 OP(i) target as a parametric Lean carrier:
 
 > *Any closed self-referential physical theory satisfying*
 > *(i) Gödel–Turing self-reference closure,*
@@ -788,8 +790,7 @@ reflexivity-based proof and constitute smuggling). All four are left as
 > A single Lean capstone fusing the three routes into a zero-axiom iff
 > with the PSC axiom set remains the residual structural target; this
 > module records the architectural shape pending the full upstream
-> NEMS-Lean integration. Reference:
-> `papers/01_SM/.../op_i_psc/op_i_psc_findings.md` §3 and SPEC_038H_PSC.
+> NEMS-Lean integration.
 
 ## External Citations (Not Formalized)
 

@@ -136,16 +136,16 @@ UgpLean.lean
 | **CoxeterConductorTowerLaw** | Tower-Law step: 8X³−6X−1 irreducible over ℚ via rational-root theorem; finrank ℚ[X]/(p) = 3 (zero sorry, resolves SPEC_033_BTL) |
 | **EWBosons** | Electroweak boson c-values c(W)=11, c(Z)=12, c(H)=13 derived from canonical ridge factorisation + Higgs gap identity at n=10; consecutive triple centred on 2·T(N_c); triangular-number unification |
 
-### MassRelations Layer (additions, EPIC_038_P7R)
+### MassRelations Layer (CKM and Koide structural identities)
 
 | Module | Purpose |
 |--------|---------|
-| **CKMTheta23** | OP(v) closure: ridge--Mersenne identity `R_n = D_1 · M_(n−4)` for n ≥ 4; CKM θ_23 ratio τ(R_10)/D_1 = 30/16 = 15/8 at n = 10 and unique to n = 10 across [5,20]; bundled `op_v_ckm_theta23_closure` certificate (zero sorry) |
-| **KoideS3DiscreteIdentities** | OP(vii) partial closure: discrete shadow of S₃ equal-norm condition on the lepton a-component; canonical orbit a-values (a_e, a_μ, a_τ) = (1, 9, 5) satisfy `2 · a_τ = a_e + a_μ` (i.e., 2·5 = 1+9 = 10); bundled `lepton_a_discrete_S3_identity` certificate (zero sorry, zero hypotheses) |
+| **CKMTheta23** | P01 OP(v): ridge--Mersenne identity `R_n = D_1 · M_(n−4)` for n ≥ 4; CKM θ_23 ratio τ(R_10)/D_1 = 30/16 = 15/8 at n = 10 and unique to n = 10 across [5,20]; bundled `op_v_ckm_theta23_closure` certificate (zero sorry) |
+| **KoideS3DiscreteIdentities** | P01 OP(vii): discrete shadow of the S₃ equal-norm condition on the lepton a-component; canonical orbit a-values (a_e, a_μ, a_τ) = (1, 9, 5) satisfy `2 · a_τ = a_e + a_μ` (i.e., 2·5 = 1+9 = 10); bundled `lepton_a_discrete_S3_identity` certificate (zero sorry, zero hypotheses) |
 
 ### PSC Layer
 
 | Module | Purpose |
 |--------|---------|
-| **RCCInfiniteFamilies** | RCC closure over all four infinite classical Lie families (B_n, C_n, D_n, A_n): Layer I/II fail by w_0 = −id Weyl-element argument and dimension thresholds |
-| **ThreeRouteForcing** | OP(i) partial closure: parametric Lean carrier for the [Gödel–Turing ∧ Reflexive Landauer ∧ Norfleet holonomy defect] ⇔ PSC capstone; `ThreeRouteBundle (G L N : Prop)` structure + `bundle_iff_and` + conditional `psc_three_route_capstone` parametric in upstream NEMS iff (no smuggling, zero sorry, zero axioms) |
+| **RCCInfiniteFamilies** | RCC over all four infinite classical Lie families (B_n, C_n, D_n, A_n): Layer I/II fail by w_0 = −id Weyl-element argument and dimension thresholds |
+| **ThreeRouteForcing** | P01 OP(i) parametric carrier for the [Gödel–Turing ∧ Reflexive Landauer ∧ Norfleet holonomy defect] ⇔ PSC capstone; `ThreeRouteBundle (G L N : Prop)` structure + `bundle_iff_and` + conditional `psc_three_route_capstone` parametric in upstream NEMS iff (no smuggling, zero sorry, zero axioms) |
