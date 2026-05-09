@@ -57,7 +57,7 @@ theorem leptonFN1_g123 :
  reproduces (the magnitude of) the Round-21 FN charge difference Δq^(1)_g.
 
  Concretely: `|Δq^(1)_g| = 2^(g-1) = binaryTreeDepth g` for g ≥ 1. -/
-theorem binaryTreeDepth_matches_FN_charge_magnitude (g : ℕ) (hg : g ≥ 1) :
+theorem binaryTreeDepth_matches_FN_charge_magnitude (g : ℕ) (_hg : g ≥ 1) :
     -UgpLean.MassRelations.FroggattNielsen.Δq1 g = (binaryTreeDepth g : ℝ) := by
   unfold UgpLean.MassRelations.FroggattNielsen.Δq1 binaryTreeDepth
   -- Δq1 g = -(2 : ℝ)^(g-1), so -Δq1 g = (2 : ℝ)^(g-1) = (2^(g-1) : ℕ) : ℝ

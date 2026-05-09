@@ -68,6 +68,7 @@ import UgpLean.GaloisStructure.MinimalCyclotomic
 import UgpLean.MassRelations.VVMechanism
 import UgpLean.MassRelations.VVAllCoefficientsFromNc
 import UgpLean.MassRelations.NeutrinoFroggattNielsen
+import UgpLean.MassRelations.CKMTheta23
 import UgpLean.Phase4.GaloisProtection
 import UgpLean.Phase4.TwoLoopCoefficient
 import UgpLean.Universality.Rule110
@@ -79,6 +80,7 @@ import UgpLean.Universality.TuringUniversal
 import UgpLean.Universality.ArchitectureBridge
 import UgpLean.TE22.ScanCertificate
 import UgpLean.PSC.RCCInfiniteFamilies
+import UgpLean.PSC.ThreeRouteForcing
 
 /-!
 # UgpLean — Universal Generative Principle: Lean 4 Formalization

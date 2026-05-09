@@ -12,7 +12,9 @@ import UgpLean.MassRelations.Z2OrbifoldDepth
 import UgpLean.MassRelations.HeavyFermionTower
 import UgpLean.MassRelations.KoideClosedForm
 import UgpLean.MassRelations.KoideNewtonFlow
+import UgpLean.MassRelations.KoideS3DiscreteIdentities
 import UgpLean.MassRelations.PhysicalMasses
+import UgpLean.MassRelations.CKMTheta23
 
 /-!
 # UgpLean.MassRelations — Charged-Fermion Mass Structural Relations

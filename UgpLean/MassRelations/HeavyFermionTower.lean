@@ -61,7 +61,7 @@ noncomputable def towerLogYukawaRatio (g : ℕ) : ℝ := instantonAction g
 
  This proves the two UV completions are EFT-equivalent — the binary
  cascade has two distinct but equivalent realisations. -/
-theorem tower_eq_FN (g : ℕ) (hg : g ≥ 1) :
+theorem tower_eq_FN (g : ℕ) (_hg : g ≥ 1) :
     towerLogYukawaRatio g
       = UgpLean.MassRelations.FroggattNielsen.fnLogYukawaRatio g := by
   unfold towerLogYukawaRatio instantonAction
