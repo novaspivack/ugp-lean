@@ -36,7 +36,11 @@ Differencing across generations cancels γ = -5/14:
 
 ## Status
 
-Structural derivations of the coefficients are `sorry`. Priority 1 .
+Structural derivations of the coefficients are complete (zero sorry):
+the algebraic identities $\alpha_d = 1 + (\mathrm{rank}\,SU(5))/9$,
+$\beta_d = -(1 + Y_{Q_L})$, and $\gamma_d = -(\dim\,45_{SU(5)})/(\dim\,126_{SO(10)})$
+are discharged by `decide` / `norm_num` / `rfl` against the explicit GUT
+group-theory inputs encoded in this module.
 -/
 
 namespace UgpLean.MassRelations.DownRational

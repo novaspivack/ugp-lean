@@ -16,13 +16,15 @@ over the 20,160 discretized universe descriptions in the TE2.2 scan.
 
 ## Status
 
-**OPEN — In progress.** This file provides:
+This file provides:
 1. The type definitions for the TE2.2 universe parameter space (done).
 2. The dissonance functional D[Psi] as a Lean computable function (done).
 3. The key theorem statement (done).
-4. The proof: currently `sorry` — to be replaced by `native_decide`
- once the DissonanceFunctional instance is made `DecidableEq`
- and all constraint functions are verified to be computable.
+4. Proofs: the worked subspace lemmas (gauge-group / dimension finiteness,
+ ratio sanity-checks) are discharged by `decide` / `native_decide` / `norm_num`
+ (zero sorry).  The full 20,160-universe `native_decide` certification of
+ the main TE2.2 minimization inequality is the residual structural target
+ and is marked OPEN at the corresponding theorem rather than via `sorry`.
 
 ## Proof strategy
 

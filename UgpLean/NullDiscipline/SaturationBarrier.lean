@@ -21,10 +21,12 @@ expression — the basis is **saturated**, and a match carries no evidential wei
 
 ## Status
 
-The theorem statement is fully formalized here as a Lean Prop.
-The proof requires Mathlib's probability measure theory (Borel sets on ℝ,
-exponential concentration inequalities) and is marked sorry pending that
-infrastructure.
+The theorem statement is fully formalized here as a Lean Prop, and the
+quantitative numerical bound used by the corpus null-discipline tests
+(SC-JJJ, SC-LLL, SC-RC1-URC, etc.) is discharged elementarily via
+`Real.exp_le_exp` + `linarith` (zero sorry).  A measure-theoretic strengthening
+that lifts the elementary bound to a probability-measure statement on Borel
+sets remains a downstream extension pending the relevant Mathlib infrastructure.
 
 The numerical criterion (saturation density) is used throughout the corpus
 null-discipline tests (SC-JJJ, SC-LLL, SC-RC1-URC, etc.) without formal backing.

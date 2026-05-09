@@ -25,9 +25,12 @@ The two lemmas are:
 
 Both proofs are classical but require substantial real-analytic machinery
 (Laplace transforms, Dickman function asymptotics, character sum estimates)
-that are not yet formalized in Mathlib. The statements are given here with
-explicit `sorry` placeholders and precise citations, so the proof architecture
-is fully documented even where the analytic input is not yet mechanized.
+that are not yet formalized in Mathlib. The statements are given here as
+explicit `axiom` declarations with precise citations (Tenenbaum~III.6 Thm~3.3
+for Dickman equidistribution; standard CRT + Dickman uniformity for the
+within-regime CRT), so the proof architecture is fully documented and the
+analytic-input dependency is surfaced through the named axioms rather than
+hidden behind `sorry`.
 
 ## What IS proved here
 
