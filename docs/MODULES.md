@@ -9,35 +9,54 @@
 ```
 UgpLean.lean
 ├── Core (no Compute)
-│   ├── RidgeDefs
-│   ├── MirrorDefs
-│   ├── TripleDefs
-│   ├── SievePredicates
-│   ├── Disconfirmation
-│   ├── RidgeRigidity
-│   └── MirrorAlgebra
-├── Compute
-│   ├── PrimeLock (RidgeDefs, MirrorDefs)
-│   ├── Sieve (RidgeDefs, MirrorDefs, SievePredicates, PrimeLock)
-│   ├── SieveExtended
-│   ├── ExclusionFilters
-│   └── DecidablePredicates
+│   ├── RidgeDefs, MirrorDefs, TripleDefs, SievePredicates,
+│   ├── Disconfirmation, RidgeRigidity, MirrorAlgebra
+├── Compute (RidgeDefs, MirrorDefs)
+│   ├── PrimeLock, Sieve, SieveBelow10, SieveExtended,
+│   └── ExclusionFilters, DecidablePredicates
 ├── Classification
-│   ├── Bounds
-│   ├── TheoremA
-│   ├── TheoremB
-│   ├── RSUC
-│   ├── FormalRSUC
-│   └── MonotonicStrengthening
+│   ├── Bounds, TheoremA, TheoremB, RSUC,
+│   └── FormalRSUC, MonotonicStrengthening
 ├── GTE
-│   ├── Evolution
-│   └── Orbit
-├── QuarterLock, ElegantKernel
-├── Phase4 (DeltaUGP, GaugeCouplings, UCL, PR1)
-├── Universality (Rule110, UWCA, UWCAembedsRule110, TuringUniversal, ArchitectureBridge)
+│   ├── Evolution, Orbit, UpdateMap, GTESimulation, EntropyNonMonotone,
+│   ├── MersenneGcd, MersenneLadder, MirrorDualConjecture, MirrorShift,
+│   ├── InertPrimes, ResonantFactory, AnalyticArchitecture, FiberBundle,
+│   ├── LinearResponse, ScaleConnection, UGPPrimes, PrimeFactorAnalysis,
+│   ├── DSIExport, GeneralTheorems, StructuralTheorems, UniquenessCertificates
+├── BraidAtlas
+│   ├── ChargeTheorem (Q = W_g/N_c; mirror_winding_number_zero axiom)
+│   ├── CompositeTriples (composite c-rule + baryon (a,b,c))
+│   ├── ChiralitySquaring (V−A arithmetic signature)
+│   ├── ChargeDerivation (SM winding from N_c)
+│   ├── CoxeterConductor (Q(ζ₁₂₀) Toda spectrum theorem)
+│   ├── CoxeterConductorTowerLaw (8X³−6X−1 irreducibility)
+│   └── EWBosons (c(W)=11, c(Z)=12, c(H)=13 from N_c)
+├── ElegantKernel (k_L²=7/512)
+│   ├── ChiralityFeature, FibonacciHessian, KGen, KGen2,
+│   ├── PentagonalUniqueness, D5StructuralAxiom, MuTriple, and Unconditional/*
+├── MassRelations
+│   ├── KoideAngle, KoideClosedForm, KoideNewtonFlow,
+│   ├── ClebschGordan, BinaryCascade, PhysicalMasses,
+│   ├── ScaleTransport, SeesawIndex, FroggattNielsen, NeutrinoFroggattNielsen,
+│   ├── CartanFlavonPotential, ClaimCBridge, DownRational, SU3FlavorCartan,
+│   ├── HeavyFermionTower, LeptonMassPrediction, UpLeptonCyclotomic,
+│   ├── VVMechanism, VVAllCoefficientsFromNc, Z2OrbifoldDepth
+├── GaloisStructure (CyclotomicLayers, MinimalCyclotomic)
+├── Phase4 (DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity,
+│           PositiveRootTheorem, GaloisProtection, TwoLoopCoefficient)
+├── NullDiscipline (SaturationBarrier, TheoremEligibility)
+├── IPT (InformationProfitThreshold)
+├── PSC (RCCInfiniteFamilies)
+├── TE22 (ScanCertificate)
+├── SelfRef (LawvereKleene, RiceHalting)
+├── Universality (Rule110, UWCA, UWCASimulation, UWCAembedsRule110,
+│                  UWCAHistoryReversible, TuringUniversal, ArchitectureBridge)
+├── QuarterLock, LModelDerivation, Conjectures
 ├── Papers (Paper25, UGPMain)
 └── Instance (NemSBridge)
 ```
+
+**Module count:** 115 `.lean` files across 12 layers (see `paper/ugp_lean_formalization.tex` for the authoritative count and per-layer breakdown).
 
 ## Module Descriptions
 

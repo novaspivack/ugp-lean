@@ -276,52 +276,75 @@ theorem gmn_color_singlet_neutral (T3_int Y_int : ℤ)
 -- §10  GTE-P7 mirror-branch dark matter: Q = 0
 -- ════════════════════════════════════════════════════════════════
 
-/-- The mirror-branch winding number for the GTE-P7 candidate.
+/-- **Opaque mirror-branch winding number.**
 
-    From the canonical Braid Atlas v2.0 mirror sector (P17 §subsec:mirror_dm)
-    and the Lean-certified arithmetic foundation `mirror_triple_residue`
-    (`UgpLean.GTE.GeneralTheorems`), the GTE-P7 mirror triple (1, 73, 2137)
-    has winding number W_g_mirror = 0.
+    `W_g_mirror` is the braid winding number of the GTE-P7 mirror-branch
+    candidate.  We introduce it as an **opaque** integer constant — its
+    existence is assumed but Lean is forbidden from unfolding any specific
+    value during type-checking.  The actual value is fixed by the disclosed
+    axiom `mirror_winding_number_zero` below.
 
-    This is asserted as an explicit axiom because its derivation requires
-    the full P17 braid topology framework, which is not yet formalised in
-    Lean. The axiom is faithfully tracked in P17 PROVENANCE.md. -/
-axiom mirror_winding_number_zero : (0 : ℤ) = 0
+    Using `opaque` (rather than `def W_g_mirror : ℤ := 0`) is essential:
+    it prevents the axiom from being trivially provable by `rfl`, so the
+    axiom genuinely contributes content and appears in `#print axioms`
+    closures of any theorem that depends on it. -/
+opaque W_g_mirror : ℤ
+
+/-- **Disclosed axiom (P17 braid-topology postulate).**
+
+    The mirror-branch winding number `W_g_mirror` is zero.
+
+    *Justification (informal, P17 §subsec:mirror_dm):* the mirror duality
+    `(b₂, q₂) ↔ (q₂, b₂)` is an INTERNAL GTE symmetry, not an SM gauge
+    transformation; its Wilson-loop topological content vanishes and the
+    canonical Braid Atlas v2.0 master table assigns winding number 0 to
+    the GTE-P7 (mirror) sector.  The full braid-theoretic derivation has
+    not yet been formalised in Lean; this axiom is the single open entry
+    in the P17 \texttt{PROVENANCE.md} ledger. -/
+axiom mirror_winding_number_zero : W_g_mirror = 0
 
 /-- **Theorem (GTE-P7 electric charge).**
 
-    Q_GTE-P7 = W_g_mirror / N_c = 0 / 3 = 0.
-
+    The numerator of $Q_{\text{GTE-P7}} = W_{g,\text{mirror}} / N_c$ equals zero.
     Formal derivation:
-      • W_g_mirror = 0  (axiom `mirror_winding_number_zero`, justified by P17)
-      • N_c = 3         (anomaly cancellation, `nc_eq_3_from_fractional_charge`)
-      • Q = W_g / N_c   (Theorem C-W, `charge_from_winding_Nc3`)
-      ∴ Q_GTE-P7 = 0    (electric charge zero — neutral dark matter candidate). -/
-theorem gte_p7_electric_charge_zero :
-    -- The mirror winding number is zero.
-    (0 : ℤ) = 0 ∧
-    -- Therefore the electric-charge numerator at Nc = 3 is zero.
-    (3 : ℤ) * 0 = 0 :=
-  ⟨mirror_winding_number_zero, by norm_num⟩
+      • `W_g_mirror = 0`  (axiom `mirror_winding_number_zero`, P17)
+      • At any `N_c`, the numerator `W_g_mirror` is zero, hence
+        `N_c ∣ W_g_mirror` and the rational charge `W_g_mirror / N_c` is
+        an integer equal to zero. -/
+theorem gte_p7_electric_charge_zero : W_g_mirror = 0 :=
+  mirror_winding_number_zero
 
-/-- **Theorem (GTE-P7 quantum numbers): neutral, color singlet.**
+/-- **Theorem (charge formula at $N_c = 3$).**
 
-    Combining:
-      Q_GTE-P7 = 0          (electric-charge neutrality, above)
-      W_g_mirror = 0        (mirror winding zero)
-      The mirror triple shares the same residue m₁ = 20 as the canonical
-      lepton triple (Lean-certified: `mirror_triple_residue`)
+    At the physical colour rank `N_c = 3`, the electric-charge numerator
+    of GTE-P7 (which is $W_{g,\text{mirror}}$) is divisible by 3 — hence
+    Q is integer-valued (here, zero). -/
+theorem gte_p7_charge_at_Nc3 :
+    (3 : ℤ) ∣ W_g_mirror := by
+  rw [mirror_winding_number_zero]
+  exact dvd_zero _
 
-    yields the GTE-P7 quantum-number assignment: a colour-singlet,
-    electrically neutral, spin-1/2 Dirac fermion — a sterile dark-matter
-    candidate. -/
+/-- **Theorem (GTE-P7 quantum numbers): neutral, integer-charged.**
+
+    Composite assignment combining the disclosed axiom with charge-formula
+    consequences:
+      • `W_g_mirror = 0`               (electric-charge numerator zero)
+      • `N_c ∣ W_g_mirror` at any N_c (charge is integer-valued, here 0)
+      • paired with the GTE arithmetic backbone in
+        `GTE.GeneralTheorems` (`mirror_triple_residue`,
+        `mirror_prime_2137`, `mirror_quotient_q1`,
+        `mirror_triple_prime_lock`), the mirror triple shares residue
+        $m_1 = 20$ with the canonical lepton triple.
+
+    The colour-singlet (a = 1) and Dirac-fermion (spin = 1/2) parts of
+    the assignment depend on a future module formalising braid topology
+    invariants directly; this theorem captures the electric-charge part
+    that is now Lean-certified up to the single disclosed axiom. -/
 theorem gte_p7_quantum_numbers_neutral :
-    -- Electric charge zero
-    (3 : ℤ) * 0 = 0 ∧
-    -- Mirror winding zero (axiom)
-    (0 : ℤ) = 0 ∧
-    -- Color-singlet via Q = 0 (since W=0 has no colour content)
-    True :=
-  ⟨by norm_num, mirror_winding_number_zero, trivial⟩
+    W_g_mirror = 0 ∧                 -- electric-charge numerator zero
+    ((3 : ℤ) ∣ W_g_mirror) ∧         -- integer-valued at Nc = 3
+    ((1 : ℤ) ∣ W_g_mirror) := by     -- trivially divisible (placeholder)
+  refine ⟨mirror_winding_number_zero, gte_p7_charge_at_Nc3, ?_⟩
+  exact one_dvd _
 
 end UgpLean.BraidAtlas

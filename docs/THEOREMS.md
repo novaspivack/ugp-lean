@@ -296,7 +296,7 @@ sum estimates).
 | **mirror_fiber_two** | StructuralTheorems | \|{(b₂,q₂),(q₂,b₂)}\| = 2 when b₂ ≠ q₂ |
 | **mirror_pair_induces_loop** | StructuralTheorems | Mirror-dual pair induces orbit of size 2 under involution |
 | **minimality_duality_n10** | StructuralTheorems | At n=10, MDL pair is {(24,42), (42,24)} |
-| **only_survivors_n10** | StructuralTheorems | Prime-locked ridge survivors at n=10 are exactly {(24,42), (42,24)} |
+| **only_survivors_n10** | Compute.ExclusionFilters | Prime-locked ridge survivors at n=10 are exactly {(24,42), (42,24)} |
 | **fingerprint_fixed_point_exists** | StructuralTheorems | Monotone F : Set ℕ → Set ℕ has a fixed point (Tarski via `OrderHom.lfp`) |
 | **fingerprint_fixed_point_bounded** | StructuralTheorems | Monotone F : Finset ℕ → Finset ℕ bounded by B has fixed point P ⊆ B (Knaster-Tarski on finite Boolean sublattice) |
 | **decidability_phase_transition** | StructuralTheorems | Local decidability ∧ global (Turing) universality |
