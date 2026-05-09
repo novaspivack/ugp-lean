@@ -683,6 +683,114 @@ GTE-P7 (mirror dark matter) quantum-number derivation.
 | **gte_p7_electric_charge_zero** | BraidAtlas.ChargeTheorem | Q_GTE-P7 = W_g_mirror / N_c = 0 (formal derivation from mirror_winding_number_zero) |
 | **gte_p7_quantum_numbers_neutral** | BraidAtlas.ChargeTheorem | Composite: GTE-P7 is electrically neutral, color singlet, sterile (zero sorry beyond the disclosed axiom) |
 
+## CKM θ_23 Structural Ratio (OP v closure) (2026-05-09) — Module MassRelations.CKMTheta23
+
+New module `MassRelations.CKMTheta23` (EPIC_038_P7R, P01 OP(v) closure).
+Closes the open problem of why the specific ratio τ(R_10)/D_1 = 15/8 appears
+in the CKM θ_23 scaling. The ridge `R_n = 2^n − 16` admits the structural
+Mersenne factorization `R_n = D_1 · M_(n−4)` for `n ≥ 4`, where `D_1 = 16`
+is the U(1) discrete invariant and `M_k = 2^k − 1`. At `n = 10` this gives
+`τ(R_10)/D_1 = 30/16 = 15/8`, and the ratio is unique to `n = 10` across
+the canonical UGP search range `n ∈ [5, 20]`. All theorems zero sorry, zero axioms.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **ridge_eq_D1_mul_mersenne** | MassRelations.CKMTheta23 | For all n ≥ 4: ridge n = D_1 · (2^(n−4) − 1) (master Mersenne factorization) |
+| **ridge_10_eq_D1_mul_M6** | MassRelations.CKMTheta23 | At n = 10: ridge 10 = D_1 · (2^6 − 1) (specialization) |
+| **D1_mul_M6_eq_1008** | MassRelations.CKMTheta23 | D_1 · (2^6 − 1) = 16 · 63 = 1008 (concrete arithmetic, native_decide) |
+| **tau_1008** | MassRelations.CKMTheta23 | τ(1008) = 30 (divisor count, native_decide) |
+| **tau_ridge_10** | MassRelations.CKMTheta23 | τ(ridge 10) = 30 (corollary of ridge_10 + tau_1008) |
+| **ckm_theta23_ratio_at_n10** | MassRelations.CKMTheta23 | τ(ridge 10) / D_1 = 15/8 in ℚ (OP(v) closed-form ratio) |
+| **tau_ridge_ne_30_off_n10** | MassRelations.CKMTheta23 | ∀ n ∈ [5,20], n ≠ 10: τ(ridge n) ≠ 30 (interval_cases + native_decide) |
+| **ckm_theta23_ratio_uniqueness** | MassRelations.CKMTheta23 | ∀ n ∈ [5,20], n ≠ 10: τ(ridge n) / D_1 ≠ 15/8 (uniqueness) |
+| **op_v_ckm_theta23_closure** | MassRelations.CKMTheta23 | **Bundled OP(v) closure certificate**: ridge 10 = D_1·M_6 ∧ τ(ridge 10) = 30 ∧ ratio = 15/8 ∧ uniqueness across [5,20] (zero sorry) |
+
+> **OP(v) closure narrative**: The Lean certificate decomposes the CKM θ_23
+> ratio into structural pieces — the ridge factorization `R_n = D_1 · M_(n−4)`
+> exposes the U(1) invariant as a separate factor; the divisor count
+> `τ(M_6) = τ(63) = τ(3²·7) = 6` then gives `τ(R_10) = 5·τ(M_6) = 30` and
+> `τ(R_10)/D_1 = 30/16 = 15/8`. Combined with the UGP forcing of `n = 10`
+> as the unique canonical ridge level (via
+> `kprime_is_minimal_double_fib_above_n` in the GTE layer), the CKM θ_23
+> scaling ratio is structurally derived from UGP, not data-matched.
+> EPIC_038_P7R upgrades OP(v) from Category A/D → Category A.
+
+## Koide S₃ Discrete Arithmetic-Mean Identity (OP vii partial closure) (2026-05-09) — Module MassRelations.KoideS3DiscreteIdentities
+
+New module `MassRelations.KoideS3DiscreteIdentities` (EPIC_038_P7R, P01 OP(vii)
+partial closure). Certifies the discrete shadow of the S₃ equal-norm Koide
+condition for the GTE lepton orbit's a-component. Where the continuous S₃
+equal-norm identity `|v_1|² = |v_2|² = 3` (see `koide_equal_norm` in
+`MassRelations.KoideAngle`) holds for every value of the Koide phase θ, the
+discrete identity holds exactly on the canonical Lean-certified orbit
+a-component sequence (1, 9, 5). Independent of N_c, of θ = 2/9, and of
+absolute normalisation. All theorems zero sorry, zero hypotheses.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **lepton_a_arithmetic_mean** | MassRelations.KoideS3DiscreteIdentities | **Discrete S₃ identity**: 2 · canonicalGen3.a = LeptonSeed.a + canonicalGen2.a (i.e., 2·5 = 1+9 = 10) |
+| **lepton_a_tau_is_average** | MassRelations.KoideS3DiscreteIdentities | Equivalent form: canonicalGen3.a · 2 = LeptonSeed.a + canonicalGen2.a |
+| **lepton_a_values** | MassRelations.KoideS3DiscreteIdentities | Canonical lepton a-values: LeptonSeed.a = 1 ∧ canonicalGen2.a = 9 ∧ canonicalGen3.a = 5 |
+| **lepton_a_sum_eq_ten** | MassRelations.KoideS3DiscreteIdentities | LeptonSeed.a + canonicalGen2.a = 10 |
+| **two_tau_a_eq_ten** | MassRelations.KoideS3DiscreteIdentities | 2 · canonicalGen3.a = 10 |
+| **lepton_a_arithmetic_mean_explicit** | MassRelations.KoideS3DiscreteIdentities | Explicit numerical form: 2 · 5 = 1 + 9 (decide) |
+| **lepton_a_discrete_S3_identity** | MassRelations.KoideS3DiscreteIdentities | **Bundled certificate**: a-values (1,9,5) ∧ sum = 10 ∧ arithmetic-mean identity (zero sorry) |
+
+> **OP(vii) partial-closure narrative**: Together with
+> `koide_angle_from_N_c_pure` (which derives θ = 2/9 from N_c = 3 in
+> `MassRelations.KoideAngle`), this module supplies the structural-results
+> pair on which the partial closure of OP(vii) (Koide S₃ quadric forcing)
+> rests in P01. Refined target #1 from SPEC_038F is closed; remaining
+> refined targets (PDG-θ alignment to 7.4×10⁻⁶ rad, Koide-cone
+> near-attractor of UCL within 6×10⁻⁴) involve PDG real-valued masses and
+> continuous geometric arguments and are tracked separately for full OP(vii)
+> closure.
+
+## PSC Three-Route Forcing Capstone (OP i partial closure) (2026-05-09) — Module PSC.ThreeRouteForcing
+
+New module `PSC.ThreeRouteForcing` (EPIC_038_P7R, P01 OP(i) partial closure).
+Records the architectural shape of the residual OP(i) target as a parametric
+Lean carrier:
+
+> *Any closed self-referential physical theory satisfying*
+> *(i) Gödel–Turing self-reference closure,*
+> *(ii) the Reflexive Landauer Bound, and*
+> *(iii) the Norfleet holonomy defect δ = Λ − π/12 ≠ 0,*
+> *is uniquely characterised by the PSC axiom set (RC, NM\*, TV, SA, PI).*
+
+The substantive content of each route — and the
+`PSC ⇔ NEMS + ER + visibility` decomposition — lives upstream in the
+`nems-lean` companion library and the MFRR programme (NEMS Papers 02, 03,
+05, 08, 14, 23, 51, 56, 88, MFRR Survey, Norfleet 2025). This module
+deliberately does **not** re-derive any NEMS theorem and does **not**
+define any of `(G, L, N, PSC)` as `True` (which would yield a fake
+reflexivity-based proof and constitute smuggling). All four are left as
+`Prop` parameters discharged upstream.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **ThreeRouteBundle** *(structure)* | PSC.ThreeRouteForcing | Prop-valued carrier `(G L N : Prop) → Prop` packaging the three forcing routes (Gödel–Turing, Reflexive Landauer, Norfleet) as a single hypothesis |
+| **bundle_intro** | PSC.ThreeRouteForcing | From three independent route witnesses, build the bundle: G → L → N → ThreeRouteBundle G L N |
+| **bundle_elim** | PSC.ThreeRouteForcing | The bundle entails each of its routes: ThreeRouteBundle G L N → G ∧ L ∧ N |
+| **bundle_iff_and** | PSC.ThreeRouteForcing | Bundle ↔ conjunction: ThreeRouteBundle G L N ↔ G ∧ L ∧ N |
+| **psc_three_route_capstone** | PSC.ThreeRouteForcing | **Conditional capstone (parametric, no smuggling)**: given upstream NEMS-supplied iff H : ThreeRouteBundle G L N ↔ PSC, conclude ThreeRouteBundle G L N ↔ PSC |
+| **psc_three_route_capstone_conj** | PSC.ThreeRouteForcing | Unbundled-conjunction form: given the same H, conclude (G ∧ L ∧ N) ↔ PSC |
+
+> **OP(i) partial-closure narrative**: P01 OP(i) (PSC-axiom deeper structural
+> justification) is partially resolved via the NEMS programme through
+> three convergent results: (a) axiom reduction (NM\* derives from
+> PSC ⇒ RC ⇒ NM\* in `NemS.Physics.Rigidity`); (b) architectural
+> equivalence (PSC = NEMS + ER + visibility, theorem-derived in
+> `NemS.MFRR.PSCBundle`; PSC ⇔ BICS in NEMS Hub); (c) three independent
+> forcing routes (Gödel–Turing logical, Reflexive Landauer energetic,
+> Norfleet holonomy defect geometric, with the Foundational Finality
+> theorem in NEMS 23 ruling out any external "deeper framework" route).
+> A single Lean capstone fusing the three routes into a zero-axiom iff
+> with the PSC axiom set remains the residual structural target; this
+> module records the architectural shape pending the full upstream
+> NEMS-Lean integration. Reference:
+> `papers/01_SM/.../op_i_psc/op_i_psc_findings.md` §3 and SPEC_038H_PSC.
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |

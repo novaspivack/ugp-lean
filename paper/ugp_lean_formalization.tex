@@ -132,7 +132,7 @@ It produces, from first principles and without free parameters, a unique
 canonical seed---the triple $(1,73,823)$---whose orbit under the
 Generative Triple Evolution (\gte{}) map is rigidly determined.
 We present \textbf{ugp-lean}, a machine-checked formalization of this
-framework in \lean{}~4 against Mathlib, comprising 115 modules with a
+framework in \lean{}~4 against Mathlib, comprising 118 modules with a
 strict zero-sorry, zero-custom-axiom policy on the core proof path.
 
 \textbf{What makes \ugp{} special, and what this paper proves.}
@@ -174,12 +174,16 @@ are decidable, while general reachability is $\Sigma^0_1$-complete.
 \textbf{Further contributions.}
 A new class of \emph{\ugp{} primes} is formally defined with ten
 machine-checked instances across three ridge levels.
-A \textbf{MassRelations} layer (17 modules) formalizes the
+A \textbf{MassRelations} layer (20 modules) formalizes the
 cyclotomic-12 Koide closed form, $S_3$-equivariant Newton flow,
 the $N_c$-structural chain deriving all fermion constants from the QCD colour
 rank, VV mass coefficients from SU(5)/SO(10) group theory, neutrino seesaw
 closure with three structural decompositions, the Mersenne mass structure,
-mass ratio $Z$-independence, and the seesaw index as a GUT representation defect.
+mass ratio $Z$-independence, the seesaw index as a GUT representation defect,
+the CKM $\theta_{23}$ structural ratio $\tau(R_{10})/D_1 = 15/8$ uniquely
+forced at $n = 10$ via the ridge--Mersenne identity $R_n = D_1 \cdot M_{n-4}$,
+and the discrete arithmetic-mean identity $2\,a_\tau = a_e + a_\mu$ on the
+canonical lepton orbit (the $S_3$ equal-norm shadow on the $a$-component).
 The \textbf{ElegantKernel} layer gains 16 modules including nine
 unconditional closure theorems deriving $k_{\rm gen} = \varphi\cos(\pi/10)$,
 $k_{\rm gen}^{(2)} = -\varphi/2$, and the complete pentagon--$D_5$ kernel
@@ -420,7 +424,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 115~\lean{} modules across twelve layers:
+The artifact is organized into 118~\lean{} modules across twelve layers:
 
 \begin{center}
 \begin{tikzpicture}[
@@ -455,16 +459,17 @@ The artifact is organized into 115~\lean{} modules across twelve layers:
    FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure,
    KLFullClosure, PentagonConstraint, RiccatiFixedPoint};
 \node[layer, fill=teal!8,   below=of struc] (mass)
-  {\textbf{MassRelations}~(18)\quad KoideClosedForm, KoideNewtonFlow,
+  {\textbf{MassRelations}~(20)\quad KoideClosedForm, KoideNewtonFlow,
    BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential,
    FroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational,
    UpLeptonCyclotomic, Z2OrbifoldDepth,
-   \textbf{KoideAngle, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex,
-   NeutrinoFroggattNielsen}};
+   KoideAngle, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex,
+   NeutrinoFroggattNielsen,
+   \textbf{CKMTheta23, KoideS3DiscreteIdentities}};
 \node[layer, fill=cyan!6,   below=of mass]  (braid)
   {\textbf{BraidAtlas}~(7)\quad ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation,
-   \textbf{CoxeterConductor, CoxeterConductorTowerLaw, EWBosons};
-   \textbf{PSC}~(1)\quad \textbf{RCCInfiniteFamilies}};
+   CoxeterConductor, CoxeterConductorTowerLaw, EWBosons;
+   \textbf{PSC}~(2)\quad RCCInfiniteFamilies, \textbf{ThreeRouteForcing}};
 \node[layer, fill=lime!6,   below=of braid] (null)
   {\textbf{NullDiscipline}~(2)\quad \textbf{SaturationBarrier, TheoremEligibility}};
 \node[layer, fill=violet!6, below=of null]  (ipt)
@@ -1270,6 +1275,64 @@ Together with Theorem~\ref{thm:rcc_infinite}, RCC is established as a theorem
 over \emph{all} compact simple Lie groups.
 
 % ═══════════════════════════════════════════════════════════════
+\section{PSC Three-Route Forcing Capstone (\texttt{PSC.ThreeRouteForcing})}
+\label{sec:psc_three_route}
+% ═══════════════════════════════════════════════════════════════
+
+The module \texttt{PSC.ThreeRouteForcing} provides a parametric Lean carrier for
+the architectural shape of P01~\cite{Spivack2026_SM_UGP} OP(i) partial closure:
+the PSC axiom set arises uniquely from three independent forcing routes ---
+G\"odel--Turing self-reference closure (logical), the Reflexive Landauer Bound
+(energetic), and the Norfleet holonomy defect $\delta = \Lambda - \pi/12 \neq 0$
+(geometric) --- as established in the NEMS programme companion papers and the
+MFRR monograph.
+
+\textbf{Why parametric.}
+The substantive content of each route, and the
+$\text{PSC} \Leftrightarrow \text{NEMS} + \text{ER} + \text{visibility}$
+decomposition that grounds the right-hand side, is established in the
+\texttt{nems-lean} companion library and the MFRR programme; the present module
+deliberately does \emph{not} re-derive any of those theorems and does not define
+any of the four predicates $(G, L, N, \text{PSC})$ as $\text{True}$ (which would
+yield a fake reflexivity-based ``proof'' and constitute smuggling under the
+project's no-smuggling rule).  Instead, all four are left as \texttt{Prop}
+parameters discharged upstream, and the capstone is recorded here as a
+conditional iff parametric in the upstream-supplied hypothesis.
+
+\begin{theorem}[Three-route bundle and capstone]\label{thm:three_route}
+For propositions $G, L, N, \text{PSC}$ modelling the three forcing routes and
+the PSC axiom set, the bundle structure $\text{ThreeRouteBundle}\,G\,L\,N$
+is propositionally equivalent to the conjunction $G \wedge L \wedge N$
+(\lstinline|bundle_iff_and|), and the parametric capstone
+\[
+  H : \text{ThreeRouteBundle}\,G\,L\,N \;\Leftrightarrow\; \text{PSC}
+  \quad\Longrightarrow\quad
+  \text{ThreeRouteBundle}\,G\,L\,N \;\Leftrightarrow\; \text{PSC}
+\]
+holds whenever the upstream NEMS-supplied iff $H$ has been supplied as
+hypothesis (\lstinline|psc_three_route_capstone|; an unbundled-conjunction
+form \lstinline|psc_three_route_capstone_conj| is also provided).
+
+\begin{leanref}\lstinline|ThreeRouteBundle|,
+\lstinline|bundle_intro|,
+\lstinline|bundle_elim|,
+\lstinline|bundle_iff_and|,
+\lstinline|psc_three_route_capstone|,
+\lstinline|psc_three_route_capstone_conj|
+\textup{(in \texttt{PSC.ThreeRouteForcing}, zero \texttt{sorry},
+zero axioms, parametric)}\end{leanref}
+\end{theorem}
+
+\textbf{Status.}
+The structural carrier (bundle, intro/elim, iff-and, conditional capstone) is
+fully proved with zero \texttt{sorry} and zero axioms.  Closing the residual
+upstream gap --- fusing the three NEMS forcing routes into a single Lean-checked
+iff with the PSC axiom set, and clearing zero-axiom Lean status for the
+Reflexive Landauer Bound (MFRR T2, currently \texttt{\textbackslash{}tagB}) ---
+is the genuine residual OP(i) target tracked in
+\texttt{papers/01\_SM/.../op\_i\_psc/op\_i\_psc\_findings.md} \S 3.
+
+% ═══════════════════════════════════════════════════════════════
 \section{Neutrino FN Texture Selection (\texttt{MassRelations.NeutrinoFroggattNielsen})}
 \label{sec:neutrino_fn}
 % ═══════════════════════════════════════════════════════════════
@@ -1277,7 +1340,7 @@ over \emph{all} compact simple Lie groups.
 The module \texttt{MassRelations.NeutrinoFroggattNielsen}
 formalises the structural texture-selection step underlying the
 $b^{29/9}$ Majorana mass scaling of the right-handed neutrino sector
-(companion physics paper~\cite{SpivackNeutrino}).
+(companion physics paper~\cite{SpivackNeutrino2026}).
 
 \paragraph{Setup.}
 In a two-flavon $U(1)_1 \times U(1)_2$ Froggatt--Nielsen framework with
@@ -1959,10 +2022,13 @@ the chirality, Fibonacci--Hessian, and $\mu$-triple structures
 \section[Mass Relations]{Mass Relations and Physical Spectrum}\label{sec:massrelations}
 % ═══════════════════════════════════════════════════════════════
 
-The \texttt{MassRelations} layer (12 modules) formalizes the
+The \texttt{MassRelations} layer (20 modules) formalizes the
 passage from the \ugp{} ridge arithmetic to physical fermion mass
 ratios, covering the Koide closed form, the SU(3) flavour geometry,
-the Froggatt--Nielsen mechanism, and the resulting physical spectrum.
+the Froggatt--Nielsen mechanism, the resulting physical spectrum,
+the CKM $\theta_{23}$ structural ratio at the canonical ridge level
+$n = 10$, and the discrete arithmetic-mean identity on the lepton
+$a$-values that grounds the partial closure of OP(vii).
 
 \subsection{Koide cyclotomic-12 closed form}
 
@@ -2185,6 +2251,65 @@ absolute-scale predictions require an external energy anchor.
 \begin{leanref} \lstinline|mass_ratio_Z_independent|
 \textup{(in \texttt{MassRelations.ScaleTransport})}
 \end{leanref}
+\end{theorem}
+
+\subsection{CKM \texorpdfstring{$\theta_{23}$}{theta23} Structural Ratio (\texttt{MassRelations.CKMTheta23})}
+\label{sec:ckm_theta23}
+
+The module \texttt{MassRelations.CKMTheta23} closes the open problem of why the
+specific ratio $\tau(R_{10})/D_1 = 15/8$ appears in the CKM $\theta_{23}$ scaling
+(P01~\cite{Spivack2026_SM_UGP} OP(v)).  The closure rests on a structural identity
+relating the ridge $R_n = 2^n - 16$ to the discrete $U(1)$ invariant $D_1 = 16$
+and the Mersenne sequence $M_k = 2^k - 1$.
+
+\begin{theorem}[Ridge--Mersenne structural identity]\label{thm:ridge_mersenne}
+For all $n \ge 4$, $R_n = D_1 \cdot M_{n-4}$ where $M_k = 2^k - 1$.
+
+\begin{leanref}\lstinline|ridge_eq_D1_mul_mersenne|
+\textup{(in \texttt{MassRelations.CKMTheta23}, zero \texttt{sorry})}\end{leanref}
+\end{theorem}
+
+\begin{theorem}[CKM ratio at $n = 10$ and uniqueness]\label{thm:ckm_ratio_n10}
+At the canonical ridge level $n = 10$, $\tau(R_{10})/D_1 = 30/16 = 15/8$.
+Across the canonical UGP search range $n \in [5, 20]$, this ratio is
+\emph{unique} to $n = 10$: no other level in the range produces
+$\tau(R_n)/D_1 = 15/8$.  Combined with the Lean-certified UGP forcing of
+$n = 10$ as the minimal admissible ridge level, the CKM $\theta_{23}$
+scaling ratio is structurally derived from UGP, not data-matched.
+
+\begin{leanref}\lstinline|ckm_theta23_ratio_at_n10|,
+\lstinline|ckm_theta23_ratio_uniqueness|,
+\lstinline|op_v_ckm_theta23_closure|
+\textup{(in \texttt{MassRelations.CKMTheta23}, zero \texttt{sorry})}\end{leanref}
+\end{theorem}
+
+\subsection{Koide \texorpdfstring{$S_3$}{S3} Discrete Arithmetic-Mean Identity (\texttt{MassRelations.KoideS3DiscreteIdentities})}
+\label{sec:koide_s3_discrete}
+
+The module \texttt{MassRelations.KoideS3DiscreteIdentities} certifies the discrete
+shadow of the $S_3$ equal-norm Koide condition for the GTE lepton orbit's
+$a$-component, contributing to the partial closure of OP(vii) in
+P01~\cite{Spivack2026_SM_UGP}.  Where the continuous $S_3$ equal-norm identity
+$|v_{\mathbf{1}}|^2 = |v_{\mathbf{2}}|^2 = 3$ holds for every value of the Koide
+phase (Theorem~\ref{thm:koide-equal-norm}), the discrete identity holds exactly
+on the canonical Lean-certified orbit $a$-component sequence $(1, 9, 5)$.
+
+\begin{theorem}[Lepton $a$-arithmetic mean]\label{thm:lepton_a_mean}
+The tau $a$-value is the arithmetic mean of the electron and muon $a$-values
+on the canonical GTE lepton orbit:
+\[
+2 \cdot a_\tau \;=\; a_e + a_\mu \qquad \text{(i.e., } 2 \cdot 5 = 1 + 9 = 10\text{).}
+\]
+The identity is independent of $N_c$, of the Koide angle $\theta = 2/9$, and
+of any choice of absolute normalisation, and is bundled with the canonical
+$a$-values $(a_e, a_\mu, a_\tau) = (1, 9, 5)$ as the discrete shadow of the
+$S_3$ equal-norm condition.
+
+\begin{leanref}\lstinline|lepton_a_arithmetic_mean|,
+\lstinline|lepton_a_values|,
+\lstinline|lepton_a_discrete_S3_identity|
+\textup{(in \texttt{MassRelations.KoideS3DiscreteIdentities},
+zero \texttt{sorry}, zero hypotheses)}\end{leanref}
 \end{theorem}
 
 % ═══════════════════════════════════════════════════════════════
@@ -3119,13 +3244,17 @@ and the full pentagon--$D_5$ kernel structure derived from first principles.
 
 \medskip
 \noindent\textbf{Mass Relations layer}
-(\cref{sec:massrelations}, 17 modules):
+(\cref{sec:massrelations}, 20 modules):
 the Koide cyclotomic-12 closed form with $S_3$-equivariant Newton flow,
 the $N_c$-structural chain deriving all fermion constants from $N_c = 3$,
 VV coefficients from SU(5)/SO(10) group theory, the neutrino seesaw closure
 with three independent structural decompositions, the Mersenne mass structure
-($\delta b_1 = 2^{N_c^2}-1$), mass ratio $Z$-independence, and the seesaw
-index as SO(10) gauge/matter representation defect.
+($\delta b_1 = 2^{N_c^2}-1$), mass ratio $Z$-independence, the seesaw
+index as SO(10) gauge/matter representation defect, the CKM $\theta_{23}$
+structural ratio $\tau(R_{10})/D_1 = 15/8$ uniquely forced at $n = 10$
+(\cref{sec:ckm_theta23}), and the discrete arithmetic-mean identity
+$2 a_\tau = a_e + a_\mu$ on the canonical lepton orbit
+(\cref{sec:koide_s3_discrete}).
 
 \medskip
 \noindent\textbf{GTE extended structure}

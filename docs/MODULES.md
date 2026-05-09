@@ -36,6 +36,7 @@ UgpLean.lean
 │   ├── PentagonalUniqueness, D5StructuralAxiom, MuTriple, and Unconditional/*
 ├── MassRelations
 │   ├── KoideAngle, KoideClosedForm, KoideNewtonFlow,
+│   ├── KoideS3DiscreteIdentities, CKMTheta23,
 │   ├── ClebschGordan, BinaryCascade, PhysicalMasses,
 │   ├── ScaleTransport, SeesawIndex, FroggattNielsen, NeutrinoFroggattNielsen,
 │   ├── CartanFlavonPotential, ClaimCBridge, DownRational, SU3FlavorCartan,
@@ -46,7 +47,7 @@ UgpLean.lean
 │           PositiveRootTheorem, GaloisProtection, TwoLoopCoefficient)
 ├── NullDiscipline (SaturationBarrier, TheoremEligibility)
 ├── IPT (InformationProfitThreshold)
-├── PSC (RCCInfiniteFamilies)
+├── PSC (RCCInfiniteFamilies, ThreeRouteForcing)
 ├── TE22 (ScanCertificate)
 ├── SelfRef (LawvereKleene, RiceHalting)
 ├── Universality (Rule110, UWCA, UWCASimulation, UWCAembedsRule110,
@@ -56,7 +57,7 @@ UgpLean.lean
 └── Instance (NemSBridge)
 ```
 
-**Module count:** 115 `.lean` files across 12 layers (see `paper/ugp_lean_formalization.tex` for the authoritative count and per-layer breakdown).
+**Module count:** 118 `.lean` files across 12 layers (see `paper/ugp_lean_formalization.tex` for the authoritative count and per-layer breakdown).
 
 ## Module Descriptions
 
@@ -134,3 +135,17 @@ UgpLean.lean
 | **CoxeterConductor** | Arithmetic backbone of the Coxeter–conductor theorem; **E7 falsifier** (h=18 ∤ 120); φ(120)=32, 3∤32; lcm(30,12,8,6,3,2,1)=120 |
 | **CoxeterConductorTowerLaw** | Tower-Law step: 8X³−6X−1 irreducible over ℚ via rational-root theorem; finrank ℚ[X]/(p) = 3 (zero sorry, resolves SPEC_033_BTL) |
 | **EWBosons** | Electroweak boson c-values c(W)=11, c(Z)=12, c(H)=13 derived from canonical ridge factorisation + Higgs gap identity at n=10; consecutive triple centred on 2·T(N_c); triangular-number unification |
+
+### MassRelations Layer (additions, EPIC_038_P7R)
+
+| Module | Purpose |
+|--------|---------|
+| **CKMTheta23** | OP(v) closure: ridge--Mersenne identity `R_n = D_1 · M_(n−4)` for n ≥ 4; CKM θ_23 ratio τ(R_10)/D_1 = 30/16 = 15/8 at n = 10 and unique to n = 10 across [5,20]; bundled `op_v_ckm_theta23_closure` certificate (zero sorry) |
+| **KoideS3DiscreteIdentities** | OP(vii) partial closure: discrete shadow of S₃ equal-norm condition on the lepton a-component; canonical orbit a-values (a_e, a_μ, a_τ) = (1, 9, 5) satisfy `2 · a_τ = a_e + a_μ` (i.e., 2·5 = 1+9 = 10); bundled `lepton_a_discrete_S3_identity` certificate (zero sorry, zero hypotheses) |
+
+### PSC Layer
+
+| Module | Purpose |
+|--------|---------|
+| **RCCInfiniteFamilies** | RCC closure over all four infinite classical Lie families (B_n, C_n, D_n, A_n): Layer I/II fail by w_0 = −id Weyl-element argument and dimension thresholds |
+| **ThreeRouteForcing** | OP(i) partial closure: parametric Lean carrier for the [Gödel–Turing ∧ Reflexive Landauer ∧ Norfleet holonomy defect] ⇔ PSC capstone; `ThreeRouteBundle (G L N : Prop)` structure + `bundle_iff_and` + conditional `psc_three_route_capstone` parametric in upstream NEMS iff (no smuggling, zero sorry, zero axioms) |
