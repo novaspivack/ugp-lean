@@ -44,7 +44,8 @@ UgpLean.lean
 │   ├── VVMechanism, VVAllCoefficientsFromNc, Z2OrbifoldDepth
 ├── GaloisStructure (CyclotomicLayers, MinimalCyclotomic)
 ├── CyclotomicCompleteness
-│   └── CoxeterBiconditional (h|60 ↔ 2h|120 biconditional; per-algebra h|60 certs; B₄ conductor; e7_double_failure; coxeter_biconditional_summary)
+│   ├── CoxeterBiconditional (h|60 ↔ 2h|120 biconditional; per-algebra h|60 certs; B₄ conductor; e7_double_failure; coxeter_biconditional_summary)
+│   └── CyclotomicContainment (cyclotomic120_contains_primitive_root; cyclotomic_field_embedding; per-algebra AlgHom certs for G₂, F₄/E₆, E₈; zero sorry)
 ├── Phase4 (DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity,
 │           PositiveRootTheorem, GaloisProtection, TwoLoopCoefficient)
 ├── NullDiscipline (SaturationBarrier, TheoremEligibility)
@@ -59,7 +60,7 @@ UgpLean.lean
 └── Instance (NemSBridge)
 ```
 
-**Module count:** 119 `.lean` files across 13 layers (see `paper/ugp_lean_formalization.tex` for the authoritative count and per-layer breakdown).
+**Module count:** 120 `.lean` files across 13 layers (see `paper/ugp_lean_formalization.tex` for the authoritative count and per-layer breakdown).
 
 ## Module Descriptions
 
@@ -143,6 +144,7 @@ UgpLean.lean
 | Module | Purpose |
 |--------|---------|
 | **CoxeterBiconditional** | Arithmetic backbone of the Coxeter–conductor biconditional: h\|60 ↔ 2h\|120 (omega); per-algebra h\|60 certs for G₂(6), F₄(12), E₆(12), E₈(30) via norm\_num; B₄ conductor analysis (conductor=8, actual field Q(√2) ⊆ Q(ζ₈) ⊆ Q(ζ₁₂₀)); `e7_double_failure` (18∤60 AND 18∤120); `coxeter_biconditional_summary` master theorem; all zero sorry. Imports BraidAtlas.CoxeterConductor. |
+| **CyclotomicContainment** | Field-theoretic biconditional: **Theorem A** `cyclotomic120_contains_primitive_root` — for h\|60, `CyclotomicField 120 ℚ` contains a primitive 2h-th root of unity (zero sorry). **Theorem B** `cyclotomic_field_embedding` — injective ℚ-algebra embedding `CyclotomicField (2h) ℚ →ₐ[ℚ] CyclotomicField 120 ℚ` whenever h\|60 (zero sorry). Per-algebra `AlgHom` certificates: `g2_cyclotomic_embedding` (h=6), `f4_e6_cyclotomic_embedding` (h=12), `e8_cyclotomic_embedding` (h=30). Uses Mathlib `IsCyclotomicExtension`, `IsPrimitiveRoot`, `IsSplittingField`. Imports CoxeterBiconditional. |
 
 ### MassRelations Layer (CKM and Koide structural identities)
 

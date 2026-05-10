@@ -641,6 +641,29 @@ iff 2h | 120 iff h | 60.
 All theorems zero sorry. Imports `BraidAtlas.CoxeterConductor` (for `e7_coxeter_not_dvd`).
 Implements SPEC_042_CYX Track 1 (arithmetic backbone).
 
+## Cyclotomic Field Embedding — Module CyclotomicCompleteness.CyclotomicContainment
+
+Module `CyclotomicCompleteness.CyclotomicContainment` proves the field-theoretic content of
+the Coxeter–conductor theorem: for h | 60, Q(ζ_{2h}) embeds in Q(ζ₁₂₀) as a ℚ-algebra.
+This is the positive direction of the biconditional; the negative direction (h ∤ 60 ⟹ no
+embedding) is handled via Tower Law in `CoxeterConductorTowerLaw`.
+Implements SPEC_042_CYX Track C. All theorems zero sorry.
+
+**Mathlib infrastructure used:** `IsCyclotomicExtension`, `IsPrimitiveRoot`, `IsSplittingField`,
+`Polynomial.SplittingField.splits`, `isRoot_cyclotomic_iff_charZero`,
+`IsCyclotomicExtension.union_of_isPrimitiveRoot`, `IsCyclotomicExtension.splits_cyclotomic`,
+`Polynomial.IsSplittingField.lift`.
+
+| Theorem | Module | Statement / Method |
+|---------|--------|-------------------|
+| **cyclotomic120_contains_primitive_root** | CyclotomicCompleteness.CyclotomicContainment | **Theorem A**: ∀ h, h \| 60 → ∃ ζ : CyclotomicField 120 ℚ, IsPrimitiveRoot ζ (2·h). Extracts ζ₁₂₀ from `SplittingField.splits`; powers to ζ_{2h} via `IsPrimitiveRoot.pow`. Zero sorry. |
+| **cyclotomic_field_embedding** | CyclotomicCompleteness.CyclotomicContainment | **Theorem B**: ∀ h, 0 < h → h \| 60 → Nonempty (CyclotomicField (2·h) ℚ →ₐ[ℚ] CyclotomicField 120 ℚ). Uses `IsCyclotomicExtension.union_of_isPrimitiveRoot` + `IsSplittingField.lift` universal property. Zero sorry. |
+| **g2_cyclotomic_embedding** | CyclotomicCompleteness.CyclotomicContainment | Per-algebra cert for G₂: Nonempty (CyclotomicField 12 ℚ →ₐ[ℚ] CyclotomicField 120 ℚ) [h=6, 2h=12] |
+| **f4_e6_cyclotomic_embedding** | CyclotomicCompleteness.CyclotomicContainment | Per-algebra cert for F₄/E₆: Nonempty (CyclotomicField 24 ℚ →ₐ[ℚ] CyclotomicField 120 ℚ) [h=12, 2h=24] |
+| **e8_cyclotomic_embedding** | CyclotomicCompleteness.CyclotomicContainment | Per-algebra cert for E₈: Nonempty (CyclotomicField 60 ℚ →ₐ[ℚ] CyclotomicField 120 ℚ) [h=30, 2h=60] |
+
+All theorems zero sorry. Imports `CyclotomicCompleteness.CoxeterBiconditional`.
+
 ## Electroweak Boson c-Values — Module BraidAtlas.EWBosons
 
 Module `BraidAtlas.EWBosons` derives the EW massive boson c-values
