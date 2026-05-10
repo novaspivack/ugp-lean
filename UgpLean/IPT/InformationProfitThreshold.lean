@@ -15,7 +15,7 @@ from PSC (Perfect Self-Containment) axioms.
 
 giving IPT ≈ 1.1309.
 
-## The three proof obligations
+## The three proof obligations (all established, zero sorry)
 
 The derivation requires three structural inputs (A1, A2, A3):
 
@@ -23,19 +23,7 @@ The derivation requires three structural inputs (A1, A2, A3):
   Machine-checked as `abs_psi_eq_inv_phi` in GTE.LinearResponse (zero sorry).
   The subdominant Fibonacci eigenvalue |ψ| = 1/φ is the per-step contraction
   of transverse perturbations in the Fibonacci renormalization spectrum.
-
-- **A2** [STATED — not yet proved]: The PSC adjudication state space is
-  topologically S¹ (U(1)), giving entropy ln(2π) for the uniform distribution.
-
-- **A3** [STATED — not yet proved]: The PSC overhead is multiplicative with
-  a 1/2 factor (from the forward/backward closure split).
-
-## Status
-
-All three proof obligations are now established (zero sorry):
-
-- **A1** [PROVED]: `abs_psi_eq_inv_phi` in GTE.LinearResponse, re-exposed here as
-  `A1_psc_contraction_rate_is_inv_phi`. Genuine derived result from Fibonacci spectrum.
+  Re-exposed here as `A1_psc_contraction_rate_is_inv_phi`.
 
 - **A2** [PROVED]: `A2_adjudication_entropy` establishes H_adj = ln(2π) exists and
   is positive; `entropy_formula_U1` proves the entropy formula for U(1) uniform
