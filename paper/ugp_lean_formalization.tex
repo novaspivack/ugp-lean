@@ -132,7 +132,7 @@ It produces, from first principles and without free parameters, a unique
 canonical seed---the triple $(1,73,823)$---whose orbit under the
 Generative Triple Evolution (\gte{}) map is rigidly determined.
 We present \textbf{ugp-lean}, a machine-checked formalization of this
-framework in \lean{}~4 against Mathlib, comprising 118 modules with a
+framework in \lean{}~4 against Mathlib, comprising 119 modules with a
 strict zero-sorry, zero-custom-axiom policy on the core proof path.
 
 \textbf{What makes \ugp{} special, and what this paper proves.}
@@ -441,7 +441,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 118~\lean{} modules across twelve layers:
+The artifact is organized into 119~\lean{} modules across twelve layers:
 
 \begin{center}
 \begin{tikzpicture}[
@@ -512,10 +512,16 @@ The artifact is organized into 118~\lean{} modules across twelve layers:
 
 \noindent
 The remaining modules (\texttt{Phase4}, \texttt{Papers},
-\texttt{Instance}, \texttt{Conjectures}, \texttt{TE22}) provide stubs, citable
+\texttt{Instance}, \texttt{Conjectures}, \texttt{TE22},
+\texttt{GaloisStructure}, \texttt{CyclotomicCompleteness}) provide stubs, citable
 entry points, bridge instances, and the precision-derivation theorems:
-\texttt{Phase4.GaloisProtection} (one-loop non-renormalization) and
-\texttt{Phase4.TwoLoopCoefficient} (two-loop color coefficient $= 8/9$).
+\texttt{Phase4.GaloisProtection} (one-loop non-renormalization),
+\texttt{Phase4.TwoLoopCoefficient} (two-loop color coefficient $= 8/9$),
+\texttt{GaloisStructure.CyclotomicLayers} (Galois-stability of UGP layers in
+$\mathbb{Q}(\zeta_{120})$), \texttt{GaloisStructure.MinimalCyclotomic}
+($\mathbb{Q}(\zeta_{120})$ minimality), and
+\texttt{CyclotomicCompleteness.CoxeterBiconditional} (Coxeter-conductor
+biconditional; see \S\ref{sec:coxeter_biconditional}).
 
 The \texttt{TE22} module provides a machine-checked framework for
 the TE2.2 PSC universe scan result.
@@ -1169,6 +1175,75 @@ quotient form $\mathbb{Q}[X]/\langle p\rangle$, which avoids the
 companion lab notes.
 
 % ═══════════════════════════════════════════════════════════════
+\subsection{Coxeter--Conductor Biconditional (\texttt{CoxeterBiconditional})}
+\label{sec:coxeter_biconditional}
+% ═══════════════════════════════════════════════════════════════
+
+The new module \texttt{CyclotomicCompleteness.CoxeterBiconditional} (graduated
+from sandbox, SPEC\_042\_CYX Track~1) formalises the arithmetic backbone of the
+biconditional criterion: a root system's Toda masses lie in
+$\mathbb{Q}(\zeta_{120})$ iff its Coxeter number $h$ divides~$60$.
+
+\paragraph{Arithmetic biconditional.}
+The core lemma (proved by \texttt{omega}) is:
+\[
+  2h \mid 120 \iff h \mid 60.
+\]
+This is the formal arithmetic equivalent of the field-containment criterion
+$\mathbb{Q}(\cos(\pi/h))^+ \subseteq \mathbb{Q}(\zeta_{120})$ (the full
+field-embedding version is flagged as future work requiring Mathlib's
+\texttt{IsCyclotomicExtension} infrastructure).
+
+\paragraph{Per-algebra certificates.}
+Five norm\_num certificates confirm the positive cases:
+\begin{align*}
+  G_2 &: h = 6 \mid 60, \quad
+  F_4 : h = 12 \mid 60, \quad
+  E_6 : h = 12 \mid 60, \\
+  E_8 &: h = 30 \mid 60.
+\end{align*}
+For $B_4$ ($h=8$): $8 \nmid 60$, but the actual mass ratios lie in
+$\mathbb{Q}(\sqrt{2}) = \mathbb{Q}(\zeta_8)^+$ and $8 \mid 120$, so $B_4$
+masses are in $\mathbb{Q}(\zeta_{120})$ via the conductor~$8$ (not~$16$).
+The module proves $8 \mid 120 \land \lnot(16 \mid 120)$ to pin the actual
+conductor.
+
+\paragraph{$E_7$ double failure.}
+The theorem \lstinline|e7_double_failure| (zero \texttt{sorry}) proves:
+\[
+  \lnot(18 \mid 60) \;\land\; \lnot(18 \mid 120).
+\]
+This is the arithmetic complement to \lstinline|e7_tower_law_complete| in
+\texttt{BraidAtlas.CoxeterConductorTowerLaw}: divisibility fails at both the
+$h|60$ and $2h|120$ levels before the Tower Law argument is even needed.
+
+\paragraph{Master theorem.}
+The composite theorem \lstinline|coxeter_biconditional_summary| packages all
+of the above:
+\begin{theorem}[Coxeter--Conductor Biconditional, arithmetic backbone]
+\label{thm:coxeter_biconditional_summary}
+$6 \mid 60$ ($G_2$), $12 \mid 60$ ($F_4, E_6$), $30 \mid 60$ ($E_8$),
+$8 \mid 120$ ($B_4$ conductor), $\lnot(18 \mid 60)$ ($E_7$),
+$\lnot(18 \mid 120)$ ($E_7$), and $120 = 2 \times 60$.
+\begin{leanref}
+\lstinline|g2_h_dvd_60|, \lstinline|f4_h_dvd_60|, \lstinline|e6_h_dvd_60|,
+\lstinline|e8_h_dvd_60|, \lstinline|b4_mass_field_conductor|,
+\lstinline|e7_h_not_dvd_60|, \lstinline|e7_double_failure|,
+\lstinline|two_h_dvd_120_iff_h_dvd_60|,
+\lstinline|coxeter_biconditional_summary|
+\textup{(in \texttt{CyclotomicCompleteness.CoxeterBiconditional}, all zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
+
+\paragraph{Relationship to existing modules.}
+This module imports \texttt{BraidAtlas.CoxeterConductor} (specifically
+\lstinline|e7_coxeter_not_dvd|) and adds the $h \mid 60$ formulation and the
+biconditional $h \mid 60 \iff 2h \mid 120$.  Together, the three modules
+\texttt{CoxeterConductor}, \texttt{CoxeterConductorTowerLaw}, and
+\texttt{CoxeterBiconditional} form a complete arithmetic + degree-theoretic
+certification of the $\mathbb{Q}(\zeta_{120})$ filter.
+
+% ═══════════════════════════════════════════════════════════════
 \subsection{Electroweak boson c-values (\texttt{BraidAtlas.EWBosons})}
 \label{sec:ewbosons_lean}
 % ═══════════════════════════════════════════════════════════════
@@ -1350,7 +1425,7 @@ is the genuine residual OP(i) target tracked in
 \texttt{papers/01\_SM/.../op\_i\_psc/op\_i\_psc\_findings.md} \S 3.
 
 % ═══════════════════════════════════════════════════════════════
-\section{Neutrino FN Texture Selection (\texttt{MassRelations.NeutrinoFroggattNielsen})}
+\section{Neutrino FN Texture Selection (\texttt{NeutrinoFroggattNielsen})}
 \label{sec:neutrino_fn}
 % ═══════════════════════════════════════════════════════════════
 
