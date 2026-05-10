@@ -132,7 +132,7 @@ It produces, from first principles and without free parameters, a unique
 canonical seed---the triple $(1,73,823)$---whose orbit under the
 Generative Triple Evolution (\gte{}) map is rigidly determined.
 We present \textbf{ugp-lean}, a machine-checked formalization of this
-framework in \lean{}~4 against Mathlib, comprising 119 modules with a
+framework in \lean{}~4 against Mathlib, comprising 120 modules with a
 strict zero-sorry, zero-custom-axiom policy on the core proof path.
 
 \textbf{What makes \ugp{} special, and what this paper proves.}
@@ -215,7 +215,7 @@ formalized here.  Open conjectures remain explicit \lean{}
 \section[Premises, Disagreement Coordinates, Trust Boundary]{Premises, disagreement coordinates, and trust boundary}\label{sec:premises-ugp-lean-paper}
 \begin{keybox}{Where disagreement can (and cannot) live}
 \textbf{Formal spine.}
-Classification and forcing lemmas refer to definitions in \texttt{Ugcp/} (or as cited in the module tree); numerical witnesses are \texttt{\#eval}-friendly where stated.
+Classification and forcing lemmas refer to definitions in \texttt{Ugcp/} (or as cited in the module tree); numerical witnesses are \texttt{\#eval}-friendly where~stated.
 
 \medskip
 \textbf{Premise coordinates (for external readers).}
@@ -231,7 +231,7 @@ Classification and forcing lemmas refer to definitions in \texttt{Ugcp/} (or as 
 \noindent\textbf{Keywords:}
 interactive theorem proving, Lean~4, formalization, number theory,
 ridge sieve, Mersenne numbers, prime-producing formulas,
-cellular automata, mass relations, braid topology
+cellular automata, mass relations, braid topology, cyclotomic fields
 
 % ═══════════════════════════════════════════════════════════════
 \section{Introduction}\label{sec:intro}
@@ -441,7 +441,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 119~\lean{} modules across twelve layers:
+The artifact is organized into 120~\lean{} modules across twelve layers:
 
 \begin{center}
 \begin{tikzpicture}[
@@ -521,7 +521,10 @@ entry points, bridge instances, and the precision-derivation theorems:
 $\mathbb{Q}(\zeta_{120})$), \texttt{GaloisStructure.MinimalCyclotomic}
 ($\mathbb{Q}(\zeta_{120})$ minimality), and
 \texttt{CyclotomicCompleteness.CoxeterBiconditional} (Coxeter-conductor
-biconditional; see \S\ref{sec:coxeter_biconditional}).
+biconditional; see \S\ref{sec:coxeter_biconditional}), and
+\texttt{CyclotomicCompleteness.CyclotomicContainment} (field-theoretic embedding
+$\mathbb{Q}(\zeta_{2h}) \hookrightarrow \mathbb{Q}(\zeta_{120})$ for $h \mid 60$;
+see \S\ref{sec:cyclotomic_containment}).
 
 The \texttt{TE22} module provides a machine-checked framework for
 the TE2.2 PSC universe scan result.
@@ -1190,9 +1193,10 @@ The core lemma (proved by \texttt{omega}) is:
   2h \mid 120 \iff h \mid 60.
 \]
 This is the formal arithmetic equivalent of the field-containment criterion
-$\mathbb{Q}(\cos(\pi/h))^+ \subseteq \mathbb{Q}(\zeta_{120})$ (the full
-field-embedding version is flagged as future work requiring Mathlib's
-\texttt{IsCyclotomicExtension} infrastructure).
+$\mathbb{Q}(\cos(\pi/h))^+ \subseteq \mathbb{Q}(\zeta_{120})$.  The full
+field-embedding is now formalised in the companion module
+\texttt{CyclotomicCompleteness.CyclotomicContainment}
+(see \S\ref{sec:cyclotomic_containment}).
 
 \paragraph{Per-algebra certificates.}
 Five norm\_num certificates confirm the positive cases:
@@ -1238,10 +1242,91 @@ $\lnot(18 \mid 120)$ ($E_7$), and $120 = 2 \times 60$.
 \paragraph{Relationship to existing modules.}
 This module imports \texttt{BraidAtlas.CoxeterConductor} (specifically
 \lstinline|e7_coxeter_not_dvd|) and adds the $h \mid 60$ formulation and the
-biconditional $h \mid 60 \iff 2h \mid 120$.  Together, the three modules
-\texttt{CoxeterConductor}, \texttt{CoxeterConductorTowerLaw}, and
-\texttt{CoxeterBiconditional} form a complete arithmetic + degree-theoretic
-certification of the $\mathbb{Q}(\zeta_{120})$ filter.
+biconditional $h \mid 60 \iff 2h \mid 120$.  Together, the four modules
+\texttt{CoxeterConductor}, \texttt{CoxeterConductorTowerLaw},
+\texttt{CoxeterBiconditional}, and \texttt{CyclotomicContainment} form a
+complete arithmetic + degree-theoretic + field-embedding certification of the
+$\mathbb{Q}(\zeta_{120})$ filter.
+
+% ═══════════════════════════════════════════════════════════════
+\subsection{Cyclotomic field embedding (\texttt{CyclotomicContainment})}
+\label{sec:cyclotomic_containment}
+% ═══════════════════════════════════════════════════════════════
+
+The module \texttt{CyclotomicCompleteness.CyclotomicContainment} (SPEC\_042\_CYX
+Track~C) proves the field-theoretic content of the Coxeter--conductor theorem:
+for every $h \mid 60$, the cyclotomic field $\mathbb{Q}(\zeta_{2h})$ embeds
+as a $\mathbb{Q}$-algebra into $\mathbb{Q}(\zeta_{120})$.  All theorems have
+zero \texttt{sorry} and use only Mathlib's \texttt{IsCyclotomicExtension},
+\texttt{IsPrimitiveRoot}, and \texttt{IsSplittingField} infrastructure.
+
+\paragraph{Theorem~A: primitive root existence.}
+\begin{theorem}[\texttt{cyclotomic120\_contains\_primitive\_root}]
+\label{thm:cyclo_prim_root}
+For every $h \mid 60$, \lstinline|CyclotomicField 120 ℚ| contains a
+primitive $2h$-th root of unity:
+\[
+  \forall h,\; h \mid 60 \;\Longrightarrow\;
+  \exists \zeta \in \mathbb{Q}(\zeta_{120}),\; \mathit{IsPrimitiveRoot}\;\zeta\;(2h).
+\]
+\begin{leanref}
+\lstinline|cyclotomic120_contains_primitive_root|
+\textup{(in \texttt{CyclotomicCompleteness.CyclotomicContainment}, zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
+
+The proof extracts a root $\zeta_0$ of $\Phi_{120}$ from
+\lstinline|Polynomial.SplittingField.splits|, converts it to an
+\lstinline|IsPrimitiveRoot| certificate for $\zeta_{120}$ via
+\lstinline|isRoot_cyclotomic_iff_charZero|, and powers down to a primitive
+$2h$-th root using \lstinline|IsPrimitiveRoot.pow| and the divisibility
+$2h \mid 120$ (supplied by \texttt{CoxeterBiconditional}).
+
+\paragraph{Theorem~B: $\mathbb{Q}$-algebra embedding.}
+\begin{theorem}[\texttt{cyclotomic\_field\_embedding}]
+\label{thm:cyclo_alg_emb}
+For every $h$ with $0 < h$ and $h \mid 60$, there exists an injective
+$\mathbb{Q}$-algebra homomorphism
+\[
+  \mathbb{Q}(\zeta_{2h}) \;\hookrightarrow\; \mathbb{Q}(\zeta_{120}).
+\]
+\begin{leanref}
+\lstinline|cyclotomic_field_embedding|
+\textup{(in \texttt{CyclotomicCompleteness.CyclotomicContainment}, zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
+
+The proof uses the primitive root $\zeta$ from Theorem~A together with
+\lstinline|IsCyclotomicExtension.union_of_isPrimitiveRoot| to promote
+$\mathbb{Q}(\zeta_{120})$ to a $\{120\} \cup \{2h\}$-cyclotomic extension,
+then \lstinline|IsCyclotomicExtension.splits_cyclotomic| to show that
+$\Phi_{2h}$ splits there, and finally the universal property
+\lstinline|Polynomial.IsSplittingField.lift| to produce the embedding.
+A technical subtlety: the \lstinline|IsCyclotomicExtension {120}| instance
+is invoked by name (\lstinline|CyclotomicField.isCyclotomicExtension|)
+with an explicit \lstinline|NeZero (120 : ℚ)| witness to bypass the
+\lstinline|[CharZero K]| definitional loop for concrete numerals.
+
+\paragraph{Per-algebra certificates.}
+Three \lstinline|AlgHom| certificates instantiate Theorem~B for the
+exceptional algebras that pass the Coxeter--conductor filter:
+\begin{align*}
+  G_2 &: h = 6, \quad \mathbb{Q}(\zeta_{12}) \hookrightarrow \mathbb{Q}(\zeta_{120})
+  \quad \text{(\texttt{g2\_cyclotomic\_embedding})},\\
+  F_4, E_6 &: h = 12, \quad \mathbb{Q}(\zeta_{24}) \hookrightarrow \mathbb{Q}(\zeta_{120})
+  \quad \text{(\texttt{f4\_e6\_cyclotomic\_embedding})},\\
+  E_8 &: h = 30, \quad \mathbb{Q}(\zeta_{60}) \hookrightarrow \mathbb{Q}(\zeta_{120})
+  \quad \text{(\texttt{e8\_cyclotomic\_embedding})}.
+\end{align*}
+
+\paragraph{Relationship to other CyclotomicCompleteness modules.}
+\texttt{CyclotomicContainment} imports \texttt{CoxeterBiconditional} for the
+arithmetic backbone ($h \mid 60 \iff 2h \mid 120$).
+The negative direction ($h \nmid 60 \Rightarrow$ no embedding) is handled
+by the Tower-Law argument in \texttt{CoxeterConductorTowerLaw}.
+Together, these four modules provide a machine-checked derivation of the
+complete $\mathbb{Q}(\zeta_{120})$ field-theoretic filter for the
+exceptional root systems.
 
 % ═══════════════════════════════════════════════════════════════
 \subsection{Electroweak boson c-values (\texttt{BraidAtlas.EWBosons})}
