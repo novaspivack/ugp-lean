@@ -43,6 +43,8 @@ UgpLean.lean
 │   ├── HeavyFermionTower, LeptonMassPrediction, UpLeptonCyclotomic,
 │   ├── VVMechanism, VVAllCoefficientsFromNc, Z2OrbifoldDepth
 ├── GaloisStructure (CyclotomicLayers, MinimalCyclotomic)
+├── CyclotomicCompleteness
+│   └── CoxeterBiconditional (h|60 ↔ 2h|120 biconditional; per-algebra h|60 certs; B₄ conductor; e7_double_failure; coxeter_biconditional_summary)
 ├── Phase4 (DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity,
 │           PositiveRootTheorem, GaloisProtection, TwoLoopCoefficient)
 ├── NullDiscipline (SaturationBarrier, TheoremEligibility)
@@ -57,7 +59,7 @@ UgpLean.lean
 └── Instance (NemSBridge)
 ```
 
-**Module count:** 118 `.lean` files across 12 layers (see `paper/ugp_lean_formalization.tex` for the authoritative count and per-layer breakdown).
+**Module count:** 119 `.lean` files across 13 layers (see `paper/ugp_lean_formalization.tex` for the authoritative count and per-layer breakdown).
 
 ## Module Descriptions
 
@@ -135,6 +137,12 @@ UgpLean.lean
 | **CoxeterConductor** | Arithmetic backbone of the Coxeter–conductor theorem; **E7 falsifier** (h=18 ∤ 120); φ(120)=32, 3∤32; lcm(30,12,8,6,3,2,1)=120 |
 | **CoxeterConductorTowerLaw** | Tower-Law step: 8X³−6X−1 irreducible over ℚ via rational-root theorem; finrank ℚ[X]/(p) = 3 (zero sorry, resolves SPEC_033_BTL) |
 | **EWBosons** | Electroweak boson c-values c(W)=11, c(Z)=12, c(H)=13 derived from canonical ridge factorisation + Higgs gap identity at n=10; consecutive triple centred on 2·T(N_c); triangular-number unification |
+
+### CyclotomicCompleteness Layer (Q(ζ₁₂₀) filter arithmetic)
+
+| Module | Purpose |
+|--------|---------|
+| **CoxeterBiconditional** | Arithmetic backbone of the Coxeter–conductor biconditional: h\|60 ↔ 2h\|120 (omega); per-algebra h\|60 certs for G₂(6), F₄(12), E₆(12), E₈(30) via norm\_num; B₄ conductor analysis (conductor=8, actual field Q(√2) ⊆ Q(ζ₈) ⊆ Q(ζ₁₂₀)); `e7_double_failure` (18∤60 AND 18∤120); `coxeter_biconditional_summary` master theorem; all zero sorry. Imports BraidAtlas.CoxeterConductor. |
 
 ### MassRelations Layer (CKM and Koide structural identities)
 

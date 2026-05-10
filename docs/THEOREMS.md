@@ -615,6 +615,32 @@ The Tower Law step uses `finrank_quotient_span_eq_natDegree` on the quotient
 ring `ℚ[X] ⧸ Ideal.span {p_rat_q}`, bypassing the `AdjoinRoot`-instance
 synthesis obstruction (Mathlib `AdjoinRoot` is `def` not `abbrev`).
 
+## Coxeter–Conductor Biconditional — Module CyclotomicCompleteness.CoxeterBiconditional
+
+Module `CyclotomicCompleteness.CoxeterBiconditional` formalises the arithmetic backbone
+of the biconditional criterion: Toda masses in Q(cos(π/h)) = Q(ζ_{2h})⁺ embed in Q(ζ₁₂₀)
+iff 2h | 120 iff h | 60.
+
+| Theorem | Module | Statement / Method |
+|---------|--------|-------------------|
+| **g2_h_dvd_60** | CyclotomicCompleteness.CoxeterBiconditional | 6 \| 60 (G₂, norm_num) |
+| **f4_h_dvd_60** | CyclotomicCompleteness.CoxeterBiconditional | 12 \| 60 (F₄, norm_num) |
+| **e6_h_dvd_60** | CyclotomicCompleteness.CoxeterBiconditional | 12 \| 60 (E₆, norm_num) |
+| **e8_h_dvd_60** | CyclotomicCompleteness.CoxeterBiconditional | 30 \| 60 (E₈, norm_num) |
+| **b4_h_dvd_120** | CyclotomicCompleteness.CoxeterBiconditional | 8 \| 120 (B₄ conductor, norm_num) |
+| **b4_conductor_dvd_120** | CyclotomicCompleteness.CoxeterBiconditional | 8 \| 120 ∧ ¬(8 \| 60); B₄ actual field is Q(√2) ⊆ Q(ζ₈) ⊆ Q(ζ₁₂₀) |
+| **b4_mass_field_conductor** | CyclotomicCompleteness.CoxeterBiconditional | 8 \| 120 ∧ ¬(16 \| 120); conductor is 8 not 16 (norm_num) |
+| **e7_h_not_dvd_60** | CyclotomicCompleteness.CoxeterBiconditional | **KEY EXCLUSION**: ¬(18 \| 60) (norm_num) |
+| **e7_double_failure** | CyclotomicCompleteness.CoxeterBiconditional | ¬(18 \| 60) ∧ ¬(18 \| 120); arithmetic complement to Tower Law (zero sorry) |
+| **two_h_dvd_120_iff_h_dvd_60** | CyclotomicCompleteness.CoxeterBiconditional | ∀ h:ℕ, 2h \| 120 ↔ h \| 60 (omega) |
+| **conductor_biconditional** | CyclotomicCompleteness.CoxeterBiconditional | 120 = 2 × 60 (norm_num) |
+| **lcm_positive_coxeter_h** | CyclotomicCompleteness.CoxeterBiconditional | lcm(6, lcm(12, 30)) = 60 (native_decide) |
+| **conductor_from_h_lcm** | CyclotomicCompleteness.CoxeterBiconditional | 2 × lcm(6, lcm(12, 30)) = 120 (native_decide) |
+| **coxeter_biconditional_summary** | CyclotomicCompleteness.CoxeterBiconditional | Master composite theorem: all positive cases, B₄ conductor, E₇ double failure, biconditional structure (all zero sorry) |
+
+All theorems zero sorry. Imports `BraidAtlas.CoxeterConductor` (for `e7_coxeter_not_dvd`).
+Implements SPEC_042_CYX Track 1 (arithmetic backbone).
+
 ## Electroweak Boson c-Values — Module BraidAtlas.EWBosons
 
 Module `BraidAtlas.EWBosons` derives the EW massive boson c-values
