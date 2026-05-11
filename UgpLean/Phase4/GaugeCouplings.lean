@@ -63,7 +63,10 @@ def SU3_Vandermonde_uniqueness : Prop := True
  PDG value (MS-bar at M_Z): 0.23121
  UGP tree-level prediction: 3456/15101 = 0.22886 (1.0% below PDG)
  The ~1% discrepancy is the two-loop radiative correction, consistent
- with the m_W prediction (−1.28σ after two-loop, −36σ at tree-level). -/
+ The ~1% discrepancy is the two-loop radiative correction, consistent
+ with the m_W prediction (−0.42σ vs PDG 2024 world avg 80.3692 ± 0.0133;
+ −1.28σ vs older PDG 80.379 ± 0.012; gap accounted for by SM/PDG W-mass tension)
+ and −36σ at tree-level before running. -/
 def sin2_theta_W_bare : ℚ := g1Sq_bare / (g1Sq_bare + g2Sq_bare)
 
 theorem sin2_theta_W_bare_eq : sin2_theta_W_bare = 3456/15101 := by
