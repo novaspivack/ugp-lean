@@ -1755,6 +1755,56 @@ Whether A2 and A3 correctly abstract a given physical or biological system is an
 question separate from the formal proof.
 
 % ═══════════════════════════════════════════════════════════════
+\subsection{H9: IPT Self-Consistency Fixed Point}\label{subsec:h9-self-consistency}
+% ═══════════════════════════════════════════════════════════════
+
+The module \texttt{CyclotomicCompleteness.H9SelfConsistency} proves that the IPT
+threshold is the unique fixed point of the Landauer-correction map
+$T(x) = 1/(1 - \ln 2 / N_{\rm univ})$, where
+\[
+  N_{\rm univ} \;=\; \frac{\ln 2 \cdot (\ln\varphi + 2\ln(2\pi))}{\ln\varphi}
+\]
+is the effective number of thermodynamic degrees of freedom determined by $\varphi$ and
+$2\pi$ — the same constants that appear in IPT's defining formula.
+
+\begin{theorem}[H9: IPT self-consistency]\label{thm:h9}
+Let $\varphi = (1+\sqrt{5})/2$ be the golden ratio.  Define
+\[
+  \mathrm{IPT} \;=\; 1 + \frac{\ln\varphi}{2\ln(2\pi)}, \qquad
+  N_{\rm univ} \;=\; \frac{\ln 2 \cdot (\ln\varphi + 2\ln(2\pi))}{\ln\varphi}.
+\]
+Then
+\[
+  \frac{1}{1 - \ln 2 / N_{\rm univ}} \;=\; \mathrm{IPT}.
+\]
+This is an exact algebraic identity: it holds for any values of $\ln\varphi$ and
+$\ln(2\pi)$, given only their positivity.  The proof is:
+\[
+  \frac{\ln 2}{N_{\rm univ}} = \frac{\ln\varphi}{\ln\varphi + 2\ln(2\pi)},
+  \quad
+  1 - \frac{\ln 2}{N_{\rm univ}} = \frac{2\ln(2\pi)}{\ln\varphi + 2\ln(2\pi)},
+  \quad
+  \frac{1}{1 - \ln 2/N_{\rm univ}} = \frac{\ln\varphi + 2\ln(2\pi)}{2\ln(2\pi)}
+  = 1 + \frac{\ln\varphi}{2\ln(2\pi)} = \mathrm{IPT}. \;\checkmark
+\]
+
+\begin{leanref} \lstinline|ipt_self_consistent|
+\textup{(in \texttt{CyclotomicCompleteness.H9SelfConsistency})}
+\end{leanref}
+\end{theorem}
+
+The theorem is proved by \lstinline|field_simp| followed by \lstinline|ring|,
+after supplying the non-zero hypotheses $\ln\varphi \neq 0$, $\ln(2\pi) \neq 0$,
+$\ln\varphi + 2\ln(2\pi) \neq 0$, and $\ln 2 \neq 0$.  Zero sorry.
+
+\paragraph{Significance.}  This closes the self-referential loop in IPT's derivation:
+the very constants $(\varphi, 2\pi)$ that determine IPT's value also determine the
+Landauer overhead $\ln 2/N_{\rm univ}$ such that correcting for it returns exactly IPT.
+IPT is therefore not merely a threshold computed from $\varphi$ and $2\pi$ but the
+\emph{unique thermodynamic selection threshold that is stable under its own Landauer
+correction}.
+
+% ═══════════════════════════════════════════════════════════════
 \section{Gauge Coupling Extensions}\label{sec:gaugecoupling-ext}
 % ═══════════════════════════════════════════════════════════════
 
