@@ -1778,9 +1778,24 @@ question separate from the formal proof.
 \subsection{H9: IPT Self-Consistency Fixed Point}\label{subsec:h9-self-consistency}
 % ═══════════════════════════════════════════════════════════════
 
-\noindent\textit{Migration note: \texttt{CyclotomicCompleteness.H9SelfConsistency} and
-\texttt{CyclotomicCompleteness.GoldenRatioFixedPoint} have been moved to
-\texttt{ugp-physics-lean} as \texttt{UgpPhysicsLean.GXT.*}.}
+\noindent\textit{Migration note: \texttt{CyclotomicCompleteness.H9SelfConsistency},
+\texttt{CyclotomicCompleteness.GoldenRatioFixedPoint},
+\texttt{CyclotomicCompleteness.U1DirectProof}, and
+\texttt{CyclotomicCompleteness.LieExpSurjective} have all been moved to
+\texttt{ugp-physics-lean} as \texttt{UgpPhysicsLean.GXT.*}.
+In particular, \texttt{UgpPhysicsLean.GXT.LieExpSurjective} proves
+\lstinline|circle_exp_surjective_MAIN| (zero sorry, 2026-05-11):
+$\mathrm{Circle.exp} : \mathbb{R} \to \mathrm{Circle}$ is surjective, via the open
+subgroup theorem (\lstinline|open_subgroup_eq_top_of_connected|, zero sorry), and
+\lstinline|circle_iso_addCircle_2pi| establishes $\mathrm{Circle} \cong \mathbb{R}/(2\pi\mathbb{Z})$
+(zero sorry).  Together with \lstinline|lie_algebra_finrank_one_isAbelian|
+(zero sorry, in \texttt{UgpPhysicsLean.GXT.U1DirectProof}), these results prove Task~8
+[T] for the UGP application: A2 (the U(1) adjudication entropy) is fully Lean-certified
+zero-sorry for the case where the symmetry group is $\mathrm{Circle}$ by assumption
+(as in the UGP/IPT derivation).  The one remaining sorry
+(\lstinline|u1_minimality_abstract|) concerns only the abstract claim ``any compact
+connected 1-dimensional Lie group $\cong \mathrm{Circle}$'' and does not block the UGP
+theorem.}
 
 The module \texttt{CyclotomicCompleteness.H9SelfConsistency} proves that the IPT
 threshold is the unique fixed point of the Landauer-correction map
