@@ -48,9 +48,9 @@ UgpLean.lean
 │   └── CyclotomicContainment (cyclotomic120_contains_primitive_root; cyclotomic_field_embedding; per-algebra AlgHom certs for G₂, F₄/E₆, E₈; zero sorry)
 ├── Phase4 (DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity,
 │           PositiveRootTheorem, GaloisProtection, TwoLoopCoefficient)
-├── NullDiscipline (SaturationBarrier, TheoremEligibility)
-├── IPT (InformationProfitThreshold)
-├── PSC (RCCInfiniteFamilies, ThreeRouteForcing)
+├── NullDiscipline [migrated to ugp-physics-lean: SaturationBarrier, TheoremEligibility]
+├── IPT [migrated to ugp-physics-lean: InformationProfitThreshold]
+├── PSC (RCCInfiniteFamilies) [ThreeRouteForcing migrated to ugp-physics-lean]
 ├── TE22 (ScanCertificate)
 ├── SelfRef (LawvereKleene, RiceHalting)
 ├── Universality (Rule110, UWCA, UWCASimulation, UWCAembedsRule110,
@@ -158,4 +158,4 @@ UgpLean.lean
 | Module | Purpose |
 |--------|---------|
 | **RCCInfiniteFamilies** | RCC over all four infinite classical Lie families (B_n, C_n, D_n, A_n): Layer I/II fail by w_0 = −id Weyl-element argument and dimension thresholds |
-| **ThreeRouteForcing** | P01 OP(i) parametric carrier for the [Gödel–Turing ∧ Reflexive Landauer ∧ Norfleet holonomy defect] ⇔ PSC capstone; `ThreeRouteBundle (G L N : Prop)` structure + `bundle_iff_and` + conditional `psc_three_route_capstone` parametric in upstream NEMS iff (no smuggling, zero sorry, zero axioms) |
+| **ThreeRouteForcing** | **Migrated to ugp-physics-lean** (`UgpPhysicsLean.PSC.ThreeRouteForcing`). P01 OP(i) parametric carrier for the [Gödel–Turing ∧ Reflexive Landauer ∧ Norfleet holonomy defect] ⇔ PSC capstone (no smuggling, zero sorry, zero axioms). |

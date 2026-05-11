@@ -132,8 +132,11 @@ It produces, from first principles and without free parameters, a unique
 canonical seed---the triple $(1,73,823)$---whose orbit under the
 Generative Triple Evolution (\gte{}) map is rigidly determined.
 We present \textbf{ugp-lean}, a machine-checked formalization of this
-framework in \lean{}~4 against Mathlib, comprising 120 modules with a
+framework in \lean{}~4 against Mathlib, comprising 114 modules with a
 strict zero-sorry, zero-custom-axiom policy on the core proof path.
+(Six modules — IPT, NullDiscipline, PSC.ThreeRouteForcing,
+CyclotomicCompleteness.H9SelfConsistency, and GoldenRatioFixedPoint
+— have been migrated to the companion \texttt{ugp-physics-lean} library.)
 
 \textbf{What makes \ugp{} special, and what this paper proves.}
 The \ugp{} exhibits three distinct, interlocking properties, each of which
@@ -441,7 +444,8 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 120~\lean{} modules across twelve layers:
+The artifact is organized into 114~\lean{} modules across twelve layers
+(six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
 \begin{tikzpicture}[
@@ -486,11 +490,14 @@ The artifact is organized into 120~\lean{} modules across twelve layers:
 \node[layer, fill=cyan!6,   below=of mass]  (braid)
   {\textbf{BraidAtlas}~(7)\quad ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation,
    CoxeterConductor, CoxeterConductorTowerLaw, EWBosons;
-   \textbf{PSC}~(2)\quad RCCInfiniteFamilies, ThreeRouteForcing};
+   \textbf{PSC}~(1)\quad RCCInfiniteFamilies
+   [\textit{ThreeRouteForcing migrated to ugp-physics-lean}]};
 \node[layer, fill=lime!6,   below=of braid] (null)
-  {\textbf{NullDiscipline}~(2)\quad SaturationBarrier, TheoremEligibility};
+  {\textbf{NullDiscipline}~(2) \textit{migrated to ugp-physics-lean}:
+   SaturationBarrier, TheoremEligibility};
 \node[layer, fill=violet!6, below=of null]  (ipt)
-  {\textbf{IPT}~(1)\quad InformationProfitThreshold};
+  {\textbf{IPT}~(1) \textit{migrated to ugp-physics-lean}:
+   InformationProfitThreshold};
 \node[layer, fill=purple!8, below=of ipt]   (univ)
   {\textbf{Universality}~(7)\quad Rule110, UWCA, UWCASimulation,
    UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge};
@@ -1456,6 +1463,10 @@ over \emph{all} compact simple Lie groups.
 \label{sec:psc_three_route}
 % ═══════════════════════════════════════════════════════════════
 
+\noindent\textit{Migration note: \texttt{PSC.ThreeRouteForcing} has been moved to
+\texttt{ugp-physics-lean} as \texttt{UgpPhysicsLean.PSC.ThreeRouteForcing}.
+The content below describes the module as originally developed in \texttt{ugp-lean}.}
+
 The module \texttt{PSC.ThreeRouteForcing} provides a parametric Lean carrier for
 the architectural shape of P01~\cite{Spivack2026_SM_UGP} OP(i) partial closure:
 the PSC axiom set arises uniquely from three independent forcing routes ---
@@ -1650,6 +1661,11 @@ programme.
 \section{Null Discipline Formalization}\label{sec:nulldiscipline}
 % ═══════════════════════════════════════════════════════════════
 
+\noindent\textit{Migration note: both \texttt{NullDiscipline} modules
+(\texttt{SaturationBarrier}, \texttt{TheoremEligibility}) have been moved to
+\texttt{ugp-physics-lean} as \texttt{UgpPhysicsLean.NullDiscipline.*}.
+The content below describes the modules as originally developed in \texttt{ugp-lean}.}
+
 The \texttt{NullDiscipline} layer provides a formal evidential-grade classification
 of results arising from the \ugp{} programme.  The \emph{objects} being classified
 (the URC algebraic-closure basis, the VV mass-coefficient formula, the charge-winding
@@ -1705,6 +1721,10 @@ The following classifications are machine-certified with zero sorry:
 \section{Information Profit Threshold}\label{sec:ipt}
 % ═══════════════════════════════════════════════════════════════
 
+\noindent\textit{Migration note: \texttt{IPT.InformationProfitThreshold} has been moved to
+\texttt{ugp-physics-lean} as \texttt{UgpPhysicsLean.IPT.InformationProfitThreshold}.
+The content below describes the module as originally developed in \texttt{ugp-lean}.}
+
 The \texttt{IPT.InformationProfitThreshold} module derives the information profit threshold
 from three structural premises.  Two are from the MFRR/PSC framework (A2, A3); one is
 a \ugp{}-derived fact (A1), established as \lstinline|abs_psi_eq_inv_phi| in
@@ -1757,6 +1777,10 @@ question separate from the formal proof.
 % ═══════════════════════════════════════════════════════════════
 \subsection{H9: IPT Self-Consistency Fixed Point}\label{subsec:h9-self-consistency}
 % ═══════════════════════════════════════════════════════════════
+
+\noindent\textit{Migration note: \texttt{CyclotomicCompleteness.H9SelfConsistency} and
+\texttt{CyclotomicCompleteness.GoldenRatioFixedPoint} have been moved to
+\texttt{ugp-physics-lean} as \texttt{UgpPhysicsLean.GXT.*}.}
 
 The module \texttt{CyclotomicCompleteness.H9SelfConsistency} proves that the IPT
 threshold is the unique fixed point of the Landauer-correction map

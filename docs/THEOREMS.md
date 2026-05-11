@@ -798,7 +798,11 @@ hypotheses.
 > masses and continuous geometric arguments and remain open for full
 > OP(vii) closure.
 
-## PSC Three-Route Forcing Capstone — Module PSC.ThreeRouteForcing
+## PSC Three-Route Forcing Capstone — Module PSC.ThreeRouteForcing [MIGRATED to ugp-physics-lean]
+
+> **Note:** `PSC.ThreeRouteForcing` has been migrated to `ugp-physics-lean`
+> as `UgpPhysicsLean.PSC.ThreeRouteForcing`. The entry below is retained for
+> historical reference; the canonical home is now ugp-physics-lean.
 
 Module `PSC.ThreeRouteForcing` records the architectural shape of the
 residual P01 OP(i) target as a parametric Lean carrier:

@@ -31,11 +31,8 @@ import UgpLean.BraidAtlas.CoxeterConductorTowerLaw
 import UgpLean.BraidAtlas.EWBosons
 import UgpLean.GTE.FiberBundle
 import UgpLean.GTE.LinearResponse
-import UgpLean.NullDiscipline.SaturationBarrier
-import UgpLean.NullDiscipline.TheoremEligibility
 import UgpLean.GTE.ScaleConnection
 import UgpLean.MassRelations.ScaleTransport
-import UgpLean.IPT.InformationProfitThreshold
 import UgpLean.GTE.MirrorDualConjecture
 import UgpLean.GTE.MirrorShift
 import UgpLean.GTE.GeneralTheorems
@@ -67,8 +64,6 @@ import UgpLean.GaloisStructure.CyclotomicLayers
 import UgpLean.GaloisStructure.MinimalCyclotomic
 import UgpLean.CyclotomicCompleteness.CoxeterBiconditional
 import UgpLean.CyclotomicCompleteness.CyclotomicContainment
-import UgpLean.CyclotomicCompleteness.H9SelfConsistency
-import UgpLean.CyclotomicCompleteness.GoldenRatioFixedPoint
 import UgpLean.MassRelations.VVMechanism
 import UgpLean.MassRelations.VVAllCoefficientsFromNc
 import UgpLean.MassRelations.NeutrinoFroggattNielsen
@@ -84,7 +79,6 @@ import UgpLean.Universality.TuringUniversal
 import UgpLean.Universality.ArchitectureBridge
 import UgpLean.TE22.ScanCertificate
 import UgpLean.PSC.RCCInfiniteFamilies
-import UgpLean.PSC.ThreeRouteForcing
 
 /-!
 # UgpLean — Universal Generative Principle: Lean 4 Formalization
@@ -103,12 +97,12 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.LModelDerivation`     — L_model derived from D₁, 5³, orbit length 3
 - `UgpLean.Phase4.*`             — DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity (all n), PositiveRootTheorem
 - `UgpLean.GaloisStructure.*`    — CyclotomicLayers (Galois stability of UGP layers in Q(ζ₁₂₀))
-- `UgpLean.CyclotomicCompleteness.*` — CoxeterBiconditional: h|60 ↔ 2h|120 arithmetic biconditional; per-algebra h|60 certs (G₂,F₄,E₆,E₈); B₄ conductor analysis; e7_double_failure; coxeter_biconditional_summary. CyclotomicContainment: full field-theoretic embedding CyclotomicField(2h)ℚ →ₐ[ℚ] CyclotomicField(120)ℚ when h|60; per-algebra certificates for G₂,F₄/E₆,E₈ (all zero sorry). H9SelfConsistency: IPT is the unique self-consistent fixed point of T(x)=1/(1−ln2/N_universal), proved as an exact algebraic identity (zero sorry). GoldenRatioFixedPoint: 1/φ is the unique positive fixed point of x=1/(1+x) (A1 universality algebraic core, zero sorry, PROVED 2026-05-11)
+- `UgpLean.CyclotomicCompleteness.*` — CoxeterBiconditional: h|60 ↔ 2h|120 arithmetic biconditional; per-algebra h|60 certs (G₂,F₄,E₆,E₈); B₄ conductor analysis; e7_double_failure; coxeter_biconditional_summary. CyclotomicContainment: full field-theoretic embedding CyclotomicField(2h)ℚ →ₐ[ℚ] CyclotomicField(120)ℚ when h|60; per-algebra certificates for G₂,F₄/E₆,E₈ (all zero sorry). [H9SelfConsistency and GoldenRatioFixedPoint migrated to ugp-physics-lean]
 - `UgpLean.Universality.*`       — Rule110, UWCA, UWCAHistoryReversible, Turing universality, Architecture bridge
 - `UgpLean.Papers.*`             — Paper25, UGPMain (citable stubs)
 
 - `UgpLean.TE22.*`               — ScanCertificate (TE2.2 PSC scan framework, UGP coupling predictions)
-- `UgpLean.PSC.*`                — RCCInfiniteFamilies (RCC closed over all infinite classical families; B_n/C_n w0=-id, D_n/A_n dimension bounds)
+- `UgpLean.PSC.*`                — RCCInfiniteFamilies (RCC closed over all infinite classical families; B_n/C_n w0=-id, D_n/A_n dimension bounds). [ThreeRouteForcing migrated to ugp-physics-lean]
 - `UgpLean.MassRelations.NeutrinoFroggattNielsen` — MDL-unique FN texture (q1, q2) = (N_c, strand) for b^(29/9)
 - `UgpLean.Phase4.GaloisProtection` — Galois-protection non-renormalization theorem; one-loop cancellation from T/T† pairing
 - `UgpLean.Phase4.TwoLoopCoefficient` — two-loop color coefficient (Nc²-1)/Nc² = 8/9; O3 structural identification
