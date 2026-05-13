@@ -41,10 +41,14 @@ def D2_invariant : ℚ := 2329/432
  D₃ = 41075281/1327104. -/
 def D3_invariant : ℚ := 41075281/1327104
 
+-- TODO: stub — replace with: if f is symmetric and satisfies the JMP Thm A.1 conditions,
+-- then f is the harmonic mean. Reference: JMP Math Foundations Thm A.1
 /-- SU(2) Harmonic Mean Uniqueness: f symmetric, conditions ⇒ harmonic mean.
  Reference: JMP Math Foundations Thm A.1 -/
 def SU2_harmonic_mean_uniqueness : Prop := True
 
+-- TODO: stub — replace with: if g is antisymmetric and satisfies JMP Thm A.2 conditions,
+-- then g is the Vandermonde discriminant. Reference: JMP Math Foundations Thm A.2
 /-- SU(3) Vandermonde Uniqueness: g antisymmetric ⇒ Vandermonde.
  Reference: JMP Math Foundations Thm A.2 -/
 def SU3_Vandermonde_uniqueness : Prop := True

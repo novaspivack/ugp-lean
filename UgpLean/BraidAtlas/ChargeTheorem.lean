@@ -343,7 +343,7 @@ theorem gte_p7_charge_at_Nc3 :
 theorem gte_p7_quantum_numbers_neutral :
     W_g_mirror = 0 ∧                 -- electric-charge numerator zero
     ((3 : ℤ) ∣ W_g_mirror) ∧         -- integer-valued at Nc = 3
-    ((1 : ℤ) ∣ W_g_mirror) := by     -- trivially divisible (placeholder)
+    ((1 : ℤ) ∣ W_g_mirror) := by     -- trivially true: 1 divides every integer
   refine ⟨mirror_winding_number_zero, gte_p7_charge_at_Nc3, ?_⟩
   exact one_dvd _
 

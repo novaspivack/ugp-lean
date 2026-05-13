@@ -46,6 +46,8 @@ theorem rule110_output_iff_minterm (i : Fin 8) :
 /-- Cook (2004) "Universality in Elementary Cellular Automaton Rule 110":
  Rule 110 can simulate any Turing machine. We cite this as an external result.
  Full formalization of the reduction would require a separate project. -/
-def Rule110CookUniversality : Prop := True  -- Cited; not proved here
+-- TODO: stub — external citation (Cook 2004); a full Lean formalization of the
+-- Rule-110-to-Turing reduction would require a separate project
+def Rule110CookUniversality : Prop := True
 
 end UgpLean.Universality

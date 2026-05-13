@@ -53,6 +53,8 @@ def UWCA_single_sweep_correctness : Prop :=
 
 /-- UWCA simulates Rule 110. The survivor topos contains a finite-local subsystem
  isomorphic to Rule 110. Proved in UWCASimulation. -/
-def UWCA_embeds_Rule110 : Prop := True  -- Structural marker; real content in uwca_simulates_rule110_real
+-- TODO: stub — real content proved as `uwca_simulates_rule110_real` in UWCAembedsRule110.lean;
+-- this definition serves as a structural marker for the embedding claim
+def UWCA_embeds_Rule110 : Prop := True
 
 end UgpLean.Universality

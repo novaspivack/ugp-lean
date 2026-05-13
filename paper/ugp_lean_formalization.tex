@@ -132,7 +132,7 @@ It produces, from first principles and without free parameters, a unique
 canonical seed---the triple $(1,73,823)$---whose orbit under the
 Generative Triple Evolution (\gte{}) map is rigidly determined.
 We present \textbf{ugp-lean}, a machine-checked formalization of this
-framework in \lean{}~4 against Mathlib, comprising 115 modules with a
+framework in \lean{}~4 against Mathlib, comprising 117 modules with a
 strict zero-sorry, zero-custom-axiom policy on the core proof path.
 (Six modules — IPT, NullDiscipline, PSC.ThreeRouteForcing,
 CyclotomicCompleteness.H9SelfConsistency, and GoldenRatioFixedPoint
@@ -177,7 +177,7 @@ are decidable, while general reachability is $\Sigma^0_1$-complete.
 \textbf{Further contributions.}
 A new class of \emph{\ugp{} primes} is formally defined with ten
 machine-checked instances across three ridge levels.
-A \textbf{MassRelations} layer (23 modules) formalizes the
+A \textbf{MassRelations} layer (24 modules) formalizes the
 cyclotomic-12 Koide closed form, $S_3$-equivariant Newton flow,
 the $N_c$-structural chain deriving all fermion constants from the QCD colour
 rank, VV mass coefficients from SU(5)/SO(10) group theory, neutrino seesaw
@@ -314,7 +314,7 @@ results:
   structure and $D_5$ renormalization, with zero axioms and zero
   \texttt{sorry} beyond Lean's foundational set.
 \item \textbf{Mass relations and physical spectrum} (\S\ref{sec:massrelations}):
-  The \texttt{MassRelations} layer (23 modules) covers
+  The \texttt{MassRelations} layer (24 modules) covers
   (i) the Koide closed form and $S_3$-balance arithmetic identities
   (\texttt{KoideClosedForm}, \texttt{KoideAngle}, \texttt{KoideNewtonFlow},
   \texttt{KoideS3DiscreteIdentities}, \texttt{ClaimCBridge});
@@ -452,7 +452,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 115~\lean{} modules across twelve layers
+The artifact is organized into 117~\lean{} modules across twelve layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -488,7 +488,7 @@ The artifact is organized into 115~\lean{} modules across twelve layers
    FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure,
    KLFullClosure, PentagonConstraint, RiccatiFixedPoint};
 \node[layer, fill=teal!8,   below=of struc] (mass)
-  {\textbf{MassRelations}~(23)\quad KoideClosedForm, KoideNewtonFlow,
+  {\textbf{MassRelations}~(24)\quad \textit{MassRelations} [umbrella], KoideClosedForm, KoideNewtonFlow,
    BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential,
    FroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational,
    UpLeptonCyclotomic, Z2OrbifoldDepth,
@@ -2296,7 +2296,8 @@ the chirality, Fibonacci--Hessian, and $\mu$-triple structures
 \section[Mass Relations]{Mass Relations and Physical Spectrum}\label{sec:massrelations}
 % ═══════════════════════════════════════════════════════════════
 
-The \texttt{MassRelations} layer (23 modules) formalizes the
+The \texttt{MassRelations} layer (24 modules, including the
+\texttt{MassRelations} umbrella index file) formalizes the
 passage from the \ugp{} ridge arithmetic to physical fermion mass
 ratios, covering the Koide closed form, the SU(3) flavour geometry,
 the Froggatt--Nielsen mechanism, the resulting physical spectrum,
@@ -3579,7 +3580,7 @@ and the full pentagon--$D_5$ kernel structure derived from first principles.
 
 \medskip
 \noindent\textbf{Mass Relations layer}
-(\cref{sec:massrelations}, 23 modules):
+(\cref{sec:massrelations}, 24 modules):
 the Koide cyclotomic-12 closed form with $S_3$-equivariant Newton flow,
 the $N_c$-structural chain deriving all fermion constants from $N_c = 3$,
 VV coefficients from SU(5)/SO(10) group theory, the neutrino seesaw closure

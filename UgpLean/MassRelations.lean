@@ -14,6 +14,7 @@ import UgpLean.MassRelations.KoideClosedForm
 import UgpLean.MassRelations.KoideNewtonFlow
 import UgpLean.MassRelations.KoideS3DiscreteIdentities
 import UgpLean.MassRelations.PhysicalMasses
+import UgpLean.MassRelations.SeesawIndex
 import UgpLean.MassRelations.CKMTheta23
 import UgpLean.MassRelations.CKMMixing
 
