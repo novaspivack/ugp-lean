@@ -1786,23 +1786,19 @@ question separate from the formal proof.
 \subsection{H9: IPT Self-Consistency Fixed Point}\label{subsec:h9-self-consistency}
 % ═══════════════════════════════════════════════════════════════
 
-\begin{sloppypar}\noindent\textit{Migration note: \texttt{CyclotomicCompleteness.H9SelfConsistency},
-\texttt{CyclotomicCompleteness.GoldenRatioFixedPoint},
-\texttt{CyclotomicCompleteness.U1DirectProof}, and
-\texttt{CyclotomicCompleteness.LieExpSurjective} have all been moved to
+{\small\noindent\textit{Migration note: the four modules
+\texttt{H9SelfConsistency}, \texttt{GoldenRatioFixedPoint},
+\texttt{U1DirectProof}, and \texttt{LieExpSurjective}
+(formerly under \texttt{CyclotomicCompleteness}) have been moved to
 \texttt{ugp-physics-lean} as \texttt{UgpPhysicsLean.GXT.*}.
-In particular, \texttt{UgpPhysicsLean.GXT.LieExpSurjective} proves
-\lstinline|circle_exp_surjective_MAIN| (zero sorry):
-$\mathrm{exp} : \mathbb{R} \to \mathrm{Circle}$ is surjective via the open subgroup
-theorem, and \lstinline|circle_iso_addCircle_2pi| establishes
+\texttt{GXT.LieExpSurjective} proves \lstinline|circle_exp_surjective_MAIN|
+(zero sorry): $\mathrm{exp} : \mathbb{R} \to \mathrm{Circle}$ is surjective
+via the open subgroup theorem; \lstinline|circle_iso_addCircle_2pi| establishes
 $\mathrm{Circle} \cong \mathbb{R}/(2\pi\mathbb{Z})$ (zero sorry).
 Together with \lstinline|lie_algebra_finrank_one_isAbelian|
-(in \texttt{UgpPhysicsLean.GXT.U1DirectProof}), these results prove A2 (the U(1)
-adjudication entropy) is fully Lean-certified zero-sorry for the case where the
-symmetry group is $\mathrm{Circle}$ by assumption.
-The one remaining sorry (\lstinline|u1_minimality_abstract|) concerns only the
-abstract claim ``any compact connected 1-dimensional Lie group $\cong \mathrm{Circle}$''
-and does not block the UGP theorem.}\end{sloppypar}
+(in \texttt{GXT.U1DirectProof}), these certify A2 zero-sorry for
+the UGP/IPT derivation. The one remaining sorry
+(\lstinline|u1_minimality_abstract|) does not block the UGP theorem.}}
 
 The module \texttt{CyclotomicCompleteness.H9SelfConsistency} proves that the IPT
 threshold is the unique fixed point of the Landauer-correction map
