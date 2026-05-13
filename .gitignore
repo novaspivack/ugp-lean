@@ -17,5 +17,13 @@ paper/*.fls
 paper/*.synctex.gz
 specs/
 
+# Internal / local-only documentation (do not commit; not for public repo)
+# — Advisor memos, program notes, scratch ledgers. Copy templates locally if needed.
+docs/ADVISOR_STATUS.md
+docs/RESONANT_FACTORY_NOTE.md
+docs/**/INTERNAL*.md
+**/*_INTERNAL.md
+/PRIVATE.md
+
 # OS artifacts
 .DS_Store

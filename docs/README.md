@@ -4,13 +4,14 @@
 
 ## Documentation Index
 
+Tracked here: **build**, **module graph**, **theorem catalog**, and **architecture** only. Advisor memos, program working notes, and other internal write-ups belong in a **local** file (e.g. `docs/ADVISOR_STATUS.md` is gitignored — keep your copy outside the published tree or only on your machine).
+
 | Document | Description |
 |----------|-------------|
 | [BUILD.md](BUILD.md) | Prerequisites, build instructions, toolchain |
 | [MODULES.md](MODULES.md) | Complete module reference and dependency graph |
 | [THEOREMS.md](THEOREMS.md) | Theorem catalog: what ugp-lean proves |
 | [DESIGN.md](DESIGN.md) | Non-circularity, architecture, proof strategy |
-| [ADVISOR_STATUS.md](ADVISOR_STATUS.md) | Executive summary for advisors: scope, soundness, gaps |
 
 ## Quick Start
 

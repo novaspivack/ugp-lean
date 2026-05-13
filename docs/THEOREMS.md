@@ -22,7 +22,7 @@ both openly disclosed with precise citations:
   `decide`) that captures the decidable fragment.  The original name is
   retained as an alias pointing to `isSMGauge_iff`.  The **full** SM
   D-minimizer theorem (over the 34,560-universe scan discretization) remains
-  pending Fintype + native_decide and is tracked in the tech-debt registry.
+  pending Fintype + native_decide (maintainer tracking outside this repo).
 
 ## Core Classification (RSUC)
 
@@ -180,7 +180,7 @@ All zero sorry, zero hypotheses.
 
 ---
 
-## 13_SPEC Claim C — TT Formula = Weyl Bisector × Binary Cascade
+## Claim C — TT Formula = Weyl Bisector × Binary Cascade
 
 Module `MassRelations.ClaimCBridge` establishes Claim C. All theorems zero sorry, zero hypotheses.
 
@@ -639,7 +639,7 @@ iff 2h | 120 iff h | 60.
 | **coxeter_biconditional_summary** | CyclotomicCompleteness.CoxeterBiconditional | Master composite theorem: all positive cases, B₄ conductor, E₇ double failure, biconditional structure (all zero sorry) |
 
 All theorems zero sorry. Imports `BraidAtlas.CoxeterConductor` (for `e7_coxeter_not_dvd`).
-Implements SPEC_042_CYX Track 1 (arithmetic backbone).
+Arithmetic backbone for the cyclotomic / Coxeter certificate stack.
 
 ## Cyclotomic Field Embedding — Module CyclotomicCompleteness.CyclotomicContainment
 
@@ -647,7 +647,7 @@ Module `CyclotomicCompleteness.CyclotomicContainment` proves the field-theoretic
 the Coxeter–conductor theorem: for h | 60, Q(ζ_{2h}) embeds in Q(ζ₁₂₀) as a ℚ-algebra.
 This is the positive direction of the biconditional; the negative direction (h ∤ 60 ⟹ no
 embedding) is handled via Tower Law in `CoxeterConductorTowerLaw`.
-Implements SPEC_042_CYX Track C. All theorems zero sorry.
+Field-embedding track (same module stack). All theorems zero sorry.
 
 **Mathlib infrastructure used:** `IsCyclotomicExtension`, `IsPrimitiveRoot`, `IsSplittingField`,
 `Polynomial.SplittingField.splits`, `isRoot_cyclotomic_iff_charZero`,
@@ -875,7 +875,8 @@ to Δa_eff = α_d = 13/9 by the GUT rank correction δ = rank(SU(5))/N_c² = 4/9
 > **Open physical bridge [C]:** The identification of |V_us|_SM with ε₁^(α_d) via
 > 2×2 FN SVD diagonalization — |(U_uL† U_dL)₁₂| = ε₁^(α_d)·(1+O(ε₁²)) — is a
 > structural hypothesis supported by 1.9% numerical accuracy but not yet
-> formalized in Lean.  See SPEC_049_CDM §CDM-4 for the precise open step.
+> formalized in Lean.  The precise open step is recorded in the maintainer CDM
+> design notes (not published in this repository).
 
 ## External Citations (Not Formalized)
 
