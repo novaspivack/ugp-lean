@@ -26,12 +26,6 @@
 \usepackage{cleveref}
 \usepackage{needspace}
 \usepackage[most]{tcolorbox}
-% Ragged-right section titles avoid huge inter-word gaps when titles include
-% unbreakable \texttt{...} fragments (article class otherwise justifies titles).
-\usepackage{titlesec}
-\titleformat{\section}{\normalfont\Large\bfseries\raggedright}{\thesection}{1em}{}
-\titleformat{\subsection}{\normalfont\large\bfseries\raggedright}{\thesubsection}{1em}{}
-\titleformat{\subsubsection}{\normalfont\normalsize\bfseries\raggedright}{\thesubsubsection}{1em}{}
 
 % Suite §2.8-style overfull tolerance (matches NEMS suite_preamble guidance).
 \hfuzz=30pt
@@ -251,13 +245,13 @@ cellular automata, mass relations, braid topology, cyclotomic fields
 
 The Universal Generative Principle (\ugp{}) is a deterministic
 number-theoretic framework that generates structured integer triples from
-a single arithmetic seed.  The framework centers on \emph{ridges}
-$\Rn = 2^n - 16$, a divisor-based sieve that selects \emph{survivor}
-pairs, and a parity-dependent update map~$T$ called the Generative
-Triple Evolution (\gte{}) that evolves triples through an orbit.  At the
-distinguished level $n = 10$, the sieve produces exactly two survivor
-pairs, and the Minimum Description Length (\mdl{}) principle selects a
-unique seed---the \emph{canonical seed}
+a single arithmetic seed~\cite{SpivackUGP2025}.  The framework centers
+on \emph{ridges} $\Rn = 2^n - 16$, a divisor-based sieve that selects
+\emph{survivor} pairs, and a parity-dependent update map~$T$ called the
+Generative Triple Evolution (\gte{}) that evolves triples through an
+orbit.  At the distinguished level $n = 10$, the sieve produces exactly
+two survivor pairs, and the Minimum Description Length (\mdl{}) principle
+selects a unique seed---the \emph{canonical seed}
 $(1, 73, 823)$---whose orbit under~$T$ is
 $(1,73,823) \to (9,42,1023) \to (5,275,65535)$.
 
@@ -532,66 +526,44 @@ The artifact is organized into 117~\lean{} modules across twelve layers
 \end{center}
 
 \noindent
-Several \emph{fully mechanized} precision and cyclotomic layers appear under
-\texttt{Phase4}, \texttt{GaloisStructure}, and \texttt{CyclotomicCompleteness}.
+The remaining modules (\texttt{Phase4}, \texttt{Papers},
+\texttt{Instance}, \texttt{Conjectures}, \texttt{TE22},
+\texttt{GaloisStructure}, \texttt{CyclotomicCompleteness}) provide stubs, citable
+entry points, bridge instances, and the precision-derivation theorems:
+\texttt{Phase4.GaloisProtection} (one-loop non-renormalization),
+\texttt{Phase4.TwoLoopCoefficient} (two-loop color coefficient $= 8/9$),
+\texttt{GaloisStructure.CyclotomicLayers} (Galois-stability of UGP layers in
+$\mathbb{Q}(\zeta_{120})$), \texttt{GaloisStructure.MinimalCyclotomic}
+($\mathbb{Q}(\zeta_{120})$ minimality), and
+\texttt{CyclotomicCompleteness.CoxeterBiconditional} (Coxeter-conductor
+biconditional; see \S\ref{sec:coxeter_biconditional}), and
+\texttt{CyclotomicCompleteness.CyclotomicContainment} (field-theoretic embedding
+$\mathbb{Q}(\zeta_{2h}) \hookrightarrow \mathbb{Q}(\zeta_{120})$ for $h \mid 60$;
+see \S\ref{sec:cyclotomic_containment}).
 
-\smallskip\noindent
-\textbf{Phase4.}
-\texttt{Phase4.GaloisProtection} formalises one-loop non-renormalization (Galois protection of the
-Quarter-Lock algebraic prefactor).
-\texttt{Phase4.TwoLoopCoefficient} certifies the two-loop colour coefficient ($=8/9$).
-
-\smallskip\noindent
-\textbf{GaloisStructure.}
-\texttt{GaloisStructure.CyclotomicLayers} records Galois-stability of UGP layers in
-$\mathbb{Q}(\zeta_{120})$; \texttt{GaloisStructure.MinimalCyclotomic} certifies minimality of
-$\mathbb{Q}(\zeta_{120})$ in that role.
-
-\smallskip\noindent
-\textbf{CyclotomicCompleteness.}
-\texttt{CyclotomicCompleteness.CoxeterBiconditional} gives the Coxeter--conductor biconditional
-(see \S\ref{sec:coxeter_biconditional}).
-\texttt{CyclotomicCompleteness.CyclotomicContainment} handles the field-theoretic embedding
-$\mathbb{Q}(\zeta_{2h}) \hookrightarrow \mathbb{Q}(\zeta_{120})$ for $h \mid 60$
-(see \S\ref{sec:cyclotomic_containment}).
-
-\smallskip\noindent
-\textbf{Lighter entry points.}
-The modules \texttt{Papers} and \texttt{Instance} supply chiefly \emph{citable stubs} and bridge
-entry points; \texttt{Conjectures} records resolved and open claims; and \texttt{Phase4} also
-contains stubs alongside the result modules named above.
-
-\smallskip\noindent
-\textbf{\texttt{TE22} (PSC universe scan).}
-The \texttt{TE22} module provides a machine-checked framework for the TE2.2 PSC universe scan.
-
-\smallskip\noindent
+The \texttt{TE22} module provides a machine-checked framework for
+the TE2.2 PSC universe scan result.
 Two theorems are proved with zero \texttt{sorry}:
-\texttt{ugp\_coupling\_predictions\_are\_independent} states that the three UGP-derived coupling
-ratio predictions $C_{15}$, $C_{16}$, and $C_4'$ are algebraically derived from
-\emph{ugp-lean} machine-checked rationals---not fitted to SM coupling data.
-\texttt{ugp\_g1g2\_prediction\_close\_to\_SM} records that the UGP $g_1^2/g_2^2$ prediction is
-within $2\%$ of the Standard Model value at $M_Z$.
-
-\smallskip\noindent
-Two further theorems govern gauge-group labelling.
-\texttt{SM\_gauge\_uniquely\_selected} proves (by \texttt{decide}) that exactly one of the $60$
-\mbox{(GaugeGroup, Dimension)} pairs satisfies \texttt{isSMGauge}.
+\texttt{ugp\_coupling\_predictions\_are\_independent} (the three
+UGP-derived coupling ratio predictions $C_{15}$, $C_{16}$, $C_4'$
+are algebraically derived from ugp-lean machine-checked rationals,
+not from SM coupling data) and
+\texttt{ugp\_g1g2\_prediction\_close\_to\_SM} (the UGP $g_1^2/g_2^2$
+prediction is within $2\%$ of the SM value at $M_Z$).
+Two further theorems target the gauge-group labelling: \texttt{SM\_gauge\_uniquely\_selected}
+proves by \texttt{decide} that exactly one of the $60$
+\mbox{(GaugeGroup, Dimension)} pairs satisfies the \texttt{isSMGauge} predicate, and
 \texttt{isSMGauge\_iff} gives the full logical characterisation of that label.
-
-\smallskip\noindent
-A fourth theorem, \texttt{SM\_is\_D\_minimizer\_extended}, is proved with zero \texttt{sorry} as an
-alias \texttt{:=\ isSMGauge\_iff}, packaging the \emph{decidable fragment} of the SM-uniqueness
-claim.
-
-\smallskip\noindent
-\textbf{Open scope.}
-The full machine-checked proof that the SM is the unique $D$-minimizer over the 34{,}560-universe
-scan remains an open programme: the framework and decidable fragment are in place, but
-\texttt{native\_decide} certification awaits a computable \texttt{Fintype} instance on the full
-\texttt{UniverseParams} product type and computable constraint functions.
-A computational certificate lives in
-\texttt{ugp-physics/MFRR/.../extended\_scan\_results.json} (SHA-256: \texttt{407078d7\ldots}).
+A fourth theorem (\texttt{SM\_is\_D\_minimizer\_extended}) is now proved with
+zero \texttt{sorry} as an alias \texttt{:=\ isSMGauge\_iff}, providing the
+decidable fragment of the SM-uniqueness claim.  The full machine-checked
+proof that the SM is the unique $D$-minimizer over the 34,560-universe scan
+remains an open programme (framework and decidable fragment in place;
+\texttt{native\_decide} certification pending a computable \texttt{Fintype}
+instance on the full \texttt{UniverseParams} product type and computable
+constraint functions; computational certificate in
+\texttt{ugp-physics/MFRR/.../extended\_scan\_results.json},
+SHA-256: \texttt{407078d7\ldots}).
 
 \subsection{Zero-sorry, zero-custom-axiom policy}
 
@@ -1602,7 +1574,7 @@ singleton-atomic set.  This converts the texture choice from an aesthetic
 preference into a Lean-certified MDL theorem.
 
 % ═══════════════════════════════════════════════════════════════
-\section[Galois-Protection Non-Renormalization (Phase4.GaloisProtection)]{Galois-Protection Non-Renormalization\\\texttt{Phase4.GaloisProtection}}
+\section{Galois-Protection Non-Renormalization (\texttt{Phase4.GaloisProtection})}
 \label{sec:galois_protection}
 % ═══════════════════════════════════════════════════════════════
 
@@ -1814,25 +1786,19 @@ question separate from the formal proof.
 \subsection{H9: IPT Self-Consistency Fixed Point}\label{subsec:h9-self-consistency}
 % ═══════════════════════════════════════════════════════════════
 
-{\small
-\setlength{\parskip}{0.35em plus 0.1em minus 0.05em}
-\noindent\textit{Migration note.}
-The four modules \texttt{H9SelfConsistency}, \texttt{GoldenRatioFixedPoint},
-\texttt{U1DirectProof}, and \texttt{LieExpSurjective} (formerly under
-\texttt{CyclotomicCompleteness}) have been moved to \texttt{ugp-physics-lean}
-as \texttt{UgpPhysicsLean.GXT.*}.
-
-\smallskip\noindent
+{\small\noindent\textit{Migration note: the four modules
+\texttt{H9SelfConsistency}, \texttt{GoldenRatioFixedPoint},
+\texttt{U1DirectProof}, and \texttt{LieExpSurjective}
+(formerly under \texttt{CyclotomicCompleteness}) have been moved to
+\texttt{ugp-physics-lean} as \texttt{UgpPhysicsLean.GXT.*}.
 \texttt{GXT.LieExpSurjective} proves \lstinline|circle_exp_surjective_MAIN|
-(zero sorry): $\mathrm{exp} : \mathbb{R} \to \mathrm{Circle}$ is surjective via the
-open subgroup theorem; \lstinline|circle_iso_addCircle_2pi| establishes
-$\mathrm{Circle} \cong \mathbb{R}/(2\pi\mathbb{Z})$ (zero sorry).  Together with
-\lstinline|lie_algebra_finrank_one_isAbelian| (in \texttt{GXT.U1DirectProof}),
-these certify A2 zero-sorry for the UGP/IPT derivation.
-
-\smallskip\noindent
-The one remaining sorry (\lstinline|u1_minimality_abstract|) does not block the
-UGP theorem.\par}
+(zero sorry): $\mathrm{exp} : \mathbb{R} \to \mathrm{Circle}$ is surjective
+via the open subgroup theorem; \lstinline|circle_iso_addCircle_2pi| establishes
+$\mathrm{Circle} \cong \mathbb{R}/(2\pi\mathbb{Z})$ (zero sorry).
+Together with \lstinline|lie_algebra_finrank_one_isAbelian|
+(in \texttt{GXT.U1DirectProof}), these certify A2 zero-sorry for
+the UGP/IPT derivation. The one remaining sorry
+(\lstinline|u1_minimality_abstract|) does not block the UGP theorem.}}
 
 The module \texttt{CyclotomicCompleteness.H9SelfConsistency} proves that the IPT
 threshold is the unique fixed point of the Landauer-correction map
@@ -1855,16 +1821,14 @@ Then
 \]
 This is an exact algebraic identity: it holds for any values of $\ln\varphi$ and
 $\ln(2\pi)$, given only their positivity.  The proof is:
-\begin{align*}
-  \frac{\ln 2}{N_{\rm univ}}
-    &= \frac{\ln\varphi}{\ln\varphi + 2\ln(2\pi)}, \\
-  1 - \frac{\ln 2}{N_{\rm univ}}
-    &= \frac{2\ln(2\pi)}{\ln\varphi + 2\ln(2\pi)}, \\
-  \frac{1}{1 - \ln 2/N_{\rm univ}}
-    &= \frac{\ln\varphi + 2\ln(2\pi)}{2\ln(2\pi)}
-    = 1 + \frac{\ln\varphi}{2\ln(2\pi)} = \mathrm{IPT}.
-    \quad \checkmark
-\end{align*}
+\[
+  \frac{\ln 2}{N_{\rm univ}} = \frac{\ln\varphi}{\ln\varphi + 2\ln(2\pi)},
+  \quad
+  1 - \frac{\ln 2}{N_{\rm univ}} = \frac{2\ln(2\pi)}{\ln\varphi + 2\ln(2\pi)},
+  \quad
+  \frac{1}{1 - \ln 2/N_{\rm univ}} = \frac{\ln\varphi + 2\ln(2\pi)}{2\ln(2\pi)}
+  = 1 + \frac{\ln\varphi}{2\ln(2\pi)} = \mathrm{IPT}. \;\checkmark
+\]
 
 \begin{leanref} \lstinline|ipt_self_consistent|
 \textup{(in \texttt{CyclotomicCompleteness.H9SelfConsistency})}
@@ -2589,7 +2553,7 @@ scaling ratio is structurally derived from UGP, not data-matched.
 \textup{(in \texttt{MassRelations.CKMTheta23}, zero \texttt{sorry})}\end{leanref}
 \end{theorem}
 
-\subsection[Koide S3 discrete arithmetic-mean identity]{Koide \texorpdfstring{$S_3$}{S3} Discrete Arithmetic-Mean Identity\\\texttt{MassRelations.KoideS3DiscreteIdentities}}
+\subsection{Koide \texorpdfstring{$S_3$}{S3} Discrete Arithmetic-Mean Identity (\texttt{MassRelations.KoideS3DiscreteIdentities})}
 \label{sec:koide_s3_discrete}
 
 The module \texttt{MassRelations.KoideS3DiscreteIdentities} certifies the discrete
