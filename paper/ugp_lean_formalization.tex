@@ -132,7 +132,7 @@ It produces, from first principles and without free parameters, a unique
 canonical seed---the triple $(1,73,823)$---whose orbit under the
 Generative Triple Evolution (\gte{}) map is rigidly determined.
 We present \textbf{ugp-lean}, a machine-checked formalization of this
-framework in \lean{}~4 against Mathlib, comprising 114 modules with a
+framework in \lean{}~4 against Mathlib, comprising 115 modules with a
 strict zero-sorry, zero-custom-axiom policy on the core proof path.
 (Six modules — IPT, NullDiscipline, PSC.ThreeRouteForcing,
 CyclotomicCompleteness.H9SelfConsistency, and GoldenRatioFixedPoint
@@ -177,7 +177,7 @@ are decidable, while general reachability is $\Sigma^0_1$-complete.
 \textbf{Further contributions.}
 A new class of \emph{\ugp{} primes} is formally defined with ten
 machine-checked instances across three ridge levels.
-A \textbf{MassRelations} layer (22 modules) formalizes the
+A \textbf{MassRelations} layer (23 modules) formalizes the
 cyclotomic-12 Koide closed form, $S_3$-equivariant Newton flow,
 the $N_c$-structural chain deriving all fermion constants from the QCD colour
 rank, VV mass coefficients from SU(5)/SO(10) group theory, neutrino seesaw
@@ -185,8 +185,11 @@ closure with three structural decompositions, the Mersenne mass structure,
 mass ratio $Z$-independence, the seesaw index as a GUT representation defect,
 the CKM $\theta_{23}$ structural ratio $\tau(R_{10})/D_1 = 15/8$ uniquely
 forced at $n = 10$ via the ridge--Mersenne identity $R_n = D_1 \cdot M_{n-4}$,
-and the discrete arithmetic-mean identity $2\,a_\tau = a_e + a_\mu$ on the
-canonical lepton orbit (the $S_3$ equal-norm shadow on the $a$-component).
+the discrete arithmetic-mean identity $2\,a_\tau = a_e + a_\mu$ on the
+canonical lepton orbit (the $S_3$ equal-norm shadow on the $a$-component),
+and the CDM Cabibbo derivation
+$|V_{us}|_{\rm CDM} = \varepsilon_1^{\alpha_d} = e^{-13\pi/27} \approx 0.2203$
+(1.9\% off PDG) from GUT group theory (\texttt{CKMMixing}, 2026-05-11, zero sorry).
 The \textbf{ElegantKernel} layer gains 16 modules including nine
 unconditional closure theorems deriving $k_{\rm gen} = \varphi\cos(\pi/10)$,
 $k_{\rm gen}^{(2)} = -\varphi/2$, and the complete pentagon--$D_5$ kernel
@@ -311,7 +314,7 @@ results:
   structure and $D_5$ renormalization, with zero axioms and zero
   \texttt{sorry} beyond Lean's foundational set.
 \item \textbf{Mass relations and physical spectrum} (\S\ref{sec:massrelations}):
-  The \texttt{MassRelations} layer (22 modules) covers
+  The \texttt{MassRelations} layer (23 modules) covers
   (i) the Koide closed form and $S_3$-balance arithmetic identities
   (\texttt{KoideClosedForm}, \texttt{KoideAngle}, \texttt{KoideNewtonFlow},
   \texttt{KoideS3DiscreteIdentities}, \texttt{ClaimCBridge});
@@ -332,10 +335,15 @@ results:
   (vi) Clebsch--Gordan, Cartan, and SU(3) flavour geometry underpinning
   the flavon VEV structure
   (\texttt{ClebschGordan}, \texttt{CartanFlavonPotential}, \texttt{SU3FlavorCartan});
-  and (vii) the scale-transport, seesaw, and cyclotomic-orbifold
+  (vii) the scale-transport, seesaw, and cyclotomic-orbifold
   machinery linking ridge arithmetic to the physical mass spectrum
   (\texttt{ScaleTransport}, \texttt{SeesawIndex}, \texttt{Z2OrbifoldDepth},
-  \texttt{UpLeptonCyclotomic}).
+  \texttt{UpLeptonCyclotomic});
+  and (viii) the CDM Cabibbo derivation: effective Cabibbo FN charge
+  $\Delta a_{\rm eff} = \alpha_d = 13/9$ from GUT rank correction,
+  yielding $|V_{us}|_{\rm CDM} = \varepsilon_1^{\alpha_d} = e^{-13\pi/27} \approx 0.2203$
+  (1.9\% off PDG $\lambda = 0.2245$); all 20 theorems zero sorry
+  (\texttt{CKMMixing}, 2026-05-11).
 \end{itemize}
 
 \paragraph{Structure.}
@@ -444,7 +452,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 114~\lean{} modules across twelve layers
+The artifact is organized into 115~\lean{} modules across twelve layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -480,13 +488,13 @@ The artifact is organized into 114~\lean{} modules across twelve layers
    FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure,
    KLFullClosure, PentagonConstraint, RiccatiFixedPoint};
 \node[layer, fill=teal!8,   below=of struc] (mass)
-  {\textbf{MassRelations}~(22)\quad KoideClosedForm, KoideNewtonFlow,
+  {\textbf{MassRelations}~(23)\quad KoideClosedForm, KoideNewtonFlow,
    BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential,
    FroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational,
    UpLeptonCyclotomic, Z2OrbifoldDepth,
    KoideAngle, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex,
    NeutrinoFroggattNielsen, VVMechanism, VVAllCoefficientsFromNc,
-   CKMTheta23, KoideS3DiscreteIdentities};
+   CKMTheta23, KoideS3DiscreteIdentities, \textbf{CKMMixing}};
 \node[layer, fill=cyan!6,   below=of mass]  (braid)
   {\textbf{BraidAtlas}~(7)\quad ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation,
    CoxeterConductor, CoxeterConductorTowerLaw, EWBosons;
@@ -2288,7 +2296,7 @@ the chirality, Fibonacci--Hessian, and $\mu$-triple structures
 \section[Mass Relations]{Mass Relations and Physical Spectrum}\label{sec:massrelations}
 % ═══════════════════════════════════════════════════════════════
 
-The \texttt{MassRelations} layer (22 modules) formalizes the
+The \texttt{MassRelations} layer (23 modules) formalizes the
 passage from the \ugp{} ridge arithmetic to physical fermion mass
 ratios, covering the Koide closed form, the SU(3) flavour geometry,
 the Froggatt--Nielsen mechanism, the resulting physical spectrum,
@@ -2577,6 +2585,67 @@ $S_3$ equal-norm condition.
 \textup{(in \texttt{MassRelations.KoideS3DiscreteIdentities},
 zero \texttt{sorry}, zero hypotheses)}\end{leanref}
 \end{theorem}
+
+% ═══════════════════════════════════════════════════════════════
+\subsection{CDM Cabibbo Derivation (\texttt{MassRelations.CKMMixing})}\label{sec:ckmmixing}
+% ═══════════════════════════════════════════════════════════════
+
+The module \texttt{MassRelations.CKMMixing} (2026-05-11, SPEC\_049\_CDM)
+formalizes the \emph{CDM mechanism}: deriving the Wolfenstein Cabibbo parameter
+$\lambda \approx |V_{us}|$ from GUT group theory and the VV down-type
+coefficient $\alpha_d = 13/9$, without free parameters.
+
+\paragraph{Physical mechanism (three steps).}
+(1)~\emph{Bare FN charge:} The leading $|V_{us}|$ suppression in the standard
+Froggatt--Nielsen framework comes from the generation-$1 \leftrightarrow 2$
+left-quark-doublet charge difference $\Delta a_{\rm bare} = 1$.
+(2)~\emph{GUT rank correction:} The VV down-type coefficient satisfies
+$\alpha_d = 1 + \operatorname{rank}(\mathrm{SU}(5))/N_c^2 = 1 + 4/9$
+(Lean-certified by \texttt{VV\_from\_GUT\_group\_theory} in
+\texttt{DownRational}).  The excess $\delta = \alpha_d - 1 = 4/9$ is a
+GUT group-theoretic correction from the $\mathrm{SU}(5)$ rank-$4$ structure.
+(3)~\emph{Effective charge:} $\Delta a_{\rm eff} = \Delta a_{\rm bare} + \delta
+= 1 + 4/9 = 13/9 = \alpha_d$.
+
+\paragraph{Structural prediction.}
+Using $\log \varepsilon_1 = -\pi/3$ (structurally fixed as the
+$\mathbb{Z}_6 \times \mathbb{Z}_{16}$ Cartan flavon potential minimum,
+\texttt{fn\_vevs\_are\_potential\_minima}):
+\[
+|V_{us}|_{\rm CDM} \;=\; \varepsilon_1^{\alpha_d}
+                  \;=\; e^{\alpha_d \log\varepsilon_1}
+                  \;=\; e^{-13\pi/27}
+                  \;\approx\; 0.2203
+\qquad (\text{PDG: } \lambda = 0.2245;\; 1.9\%\text{ off}).
+\]
+This is a pure algebraic identity --- no approximation, no \texttt{sorry}.
+
+\begin{theorem}[CDM Cabibbo derivation, zero sorry]\label{thm:cdm}
+All 20 theorems in \texttt{MassRelations.CKMMixing} are machine-checked with
+zero \texttt{sorry}:
+\begin{itemize}
+  \item \lstinline|cabibbo_effective_charge|: $\Delta a_{\rm eff} = \alpha_d$
+  \item \lstinline|cabibbo_charge_from_GUT|: $\Delta a_{\rm eff} = 1 + \operatorname{rank}(\mathrm{SU}(5))/N_c^2$
+  \item \lstinline|log_cabibbo_eq_neg_13pi_27|: $\log|V_{us}|_{\rm CDM} = -13\pi/27$
+  \item \lstinline|cabibbo_vev_formula|: $|V_{us}|_{\rm CDM} = \varepsilon_1^{\alpha_d}$ (rpow form)
+  \item \lstinline|fn_vv_correction_additive| (KEY BRIDGE): $\texttt{fnMixChargeDown}(\alpha_d) = \texttt{fnMixChargeDown}(1) + (\alpha_d - 1)$
+  \item \lstinline|fn_diagonalization_vv_bridge|: $\texttt{fnMixChargeDown}(\alpha_d) \cdot \log\varepsilon_1 = -13\pi/27$
+  \item \lstinline|fn_cdm_physical_sorry|: $\log(\texttt{cabibbo\_structural\_prediction}) = \texttt{fnMixChargeDown}(\alpha_d) \cdot \log\varepsilon_1$ (zero sorry, algebraic identity)
+\end{itemize}
+\end{theorem}
+
+\begin{leanref}\lstinline|cabibbo_effective_charge|,
+\lstinline|cabibbo_vev_formula|,
+\lstinline|fn_vv_correction_additive|
+\textup{(in \texttt{MassRelations.CKMMixing}, zero \texttt{sorry})}\end{leanref}
+
+\paragraph{Open physical bridge~[C].}
+The broader identification of $|V_{us}|_{\rm SM}$ with $\varepsilon_1^{\alpha_d}$
+requires the 2×2 FN SVD diagonalization theorem
+$|(U_{uL}^\dagger U_{dL})_{12}| = \varepsilon_1^{\alpha_d}(1 + O(\varepsilon_1^2))$,
+which is a structural hypothesis supported by 1.9\% numerical accuracy
+but not yet formalized in Lean.  See SPEC\_049\_CDM \S CDM-4 for the
+precise open step.
 
 % ═══════════════════════════════════════════════════════════════
 \section{Universality and Self-Reference}\label{sec:universality}
@@ -3510,7 +3579,7 @@ and the full pentagon--$D_5$ kernel structure derived from first principles.
 
 \medskip
 \noindent\textbf{Mass Relations layer}
-(\cref{sec:massrelations}, 22 modules):
+(\cref{sec:massrelations}, 23 modules):
 the Koide cyclotomic-12 closed form with $S_3$-equivariant Newton flow,
 the $N_c$-structural chain deriving all fermion constants from $N_c = 3$,
 VV coefficients from SU(5)/SO(10) group theory, the neutrino seesaw closure
@@ -3518,9 +3587,12 @@ with three independent structural decompositions, the Mersenne mass structure
 ($\delta b_1 = 2^{N_c^2}-1$), mass ratio $Z$-independence, the seesaw
 index as SO(10) gauge/matter representation defect, the CKM $\theta_{23}$
 structural ratio $\tau(R_{10})/D_1 = 15/8$ uniquely forced at $n = 10$
-(\cref{sec:ckm_theta23}), and the discrete arithmetic-mean identity
+(\cref{sec:ckm_theta23}), the discrete arithmetic-mean identity
 $2 a_\tau = a_e + a_\mu$ on the canonical lepton orbit
-(\cref{sec:koide_s3_discrete}).
+(\cref{sec:koide_s3_discrete}),
+and the CDM Cabibbo derivation $|V_{us}|_{\rm CDM} = \varepsilon_1^{\alpha_d}
+= e^{-13\pi/27} \approx 0.2203$ from GUT rank theory
+(\texttt{CKMMixing}, 2026-05-11, 20 theorems, zero sorry).
 
 \medskip
 \noindent\textbf{GTE extended structure}

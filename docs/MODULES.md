@@ -36,7 +36,7 @@ UgpLean.lean
 │   ├── PentagonalUniqueness, D5StructuralAxiom, MuTriple, and Unconditional/*
 ├── MassRelations
 │   ├── KoideAngle, KoideClosedForm, KoideNewtonFlow,
-│   ├── KoideS3DiscreteIdentities, CKMTheta23,
+│   ├── KoideS3DiscreteIdentities, CKMTheta23, CKMMixing,
 │   ├── ClebschGordan, BinaryCascade, PhysicalMasses,
 │   ├── ScaleTransport, SeesawIndex, FroggattNielsen, NeutrinoFroggattNielsen,
 │   ├── CartanFlavonPotential, ClaimCBridge, DownRational, SU3FlavorCartan,
@@ -60,7 +60,7 @@ UgpLean.lean
 └── Instance (NemSBridge)
 ```
 
-**Module count:** 120 `.lean` files across 13 layers (see `paper/ugp_lean_formalization.tex` for the authoritative count and per-layer breakdown).
+**Module count:** 117 `.lean` files across 13 layers (see `paper/ugp_lean_formalization.tex` for the authoritative count and per-layer breakdown).
 
 ## Module Descriptions
 
@@ -152,6 +152,7 @@ UgpLean.lean
 |--------|---------|
 | **CKMTheta23** | P01 OP(v): ridge--Mersenne identity `R_n = D_1 · M_(n−4)` for n ≥ 4; CKM θ_23 ratio τ(R_10)/D_1 = 30/16 = 15/8 at n = 10 and unique to n = 10 across [5,20]; bundled `op_v_ckm_theta23_closure` certificate (zero sorry) |
 | **KoideS3DiscreteIdentities** | P01 OP(vii): discrete shadow of the S₃ equal-norm condition on the lepton a-component; canonical orbit a-values (a_e, a_μ, a_τ) = (1, 9, 5) satisfy `2 · a_τ = a_e + a_μ` (i.e., 2·5 = 1+9 = 10); bundled `lepton_a_discrete_S3_identity` certificate (zero sorry, zero hypotheses) |
+| **CKMMixing** | CDM mechanism (SPEC_049_CDM, 2026-05-11): derives Wolfenstein Cabibbo parameter λ ≈ \|V_us\| from GUT group theory and VV down-type coefficient α_d = 13/9; certifies \|V_us\|_CDM = ε₁^(α_d) = exp(−13π/27) ≈ 0.2203 (1.9% off PDG); key theorems: `cabibbo_effective_charge` (Δa_eff = α_d), `cabibbo_charge_from_GUT` (GUT group-theory origin), `cabibbo_vev_formula` (CDM VEV formula), `fn_vv_correction_additive` (additive VV propagation bridge), `fn_diagonalization_vv_bridge`, `fn_cdm_physical_sorry` (algebraic identity; zero sorry); all 20 theorems zero sorry |
 
 ### PSC Layer
 

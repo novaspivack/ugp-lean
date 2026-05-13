@@ -845,6 +845,38 @@ reflexivity-based proof and constitute smuggling). All four are left as
 > module records the architectural shape pending the full upstream
 > NEMS-Lean integration.
 
+## CDM Cabibbo Derivation — Module MassRelations.CKMMixing (2026-05-11)
+
+Module `MassRelations.CKMMixing` formalizes the CDM mechanism: deriving the Wolfenstein
+Cabibbo parameter λ ≈ |V_us| from GUT group theory and the VV down-type coefficient
+α_d = 13/9.  All 20 theorems in this module carry **zero sorry**.
+
+**Physical mechanism:** The FN mixing charge for |V_us| is shifted from Δa_bare = 1 (bare FN)
+to Δa_eff = α_d = 13/9 by the GUT rank correction δ = rank(SU(5))/N_c² = 4/9, giving
+|V_us|_CDM = ε₁^(α_d) = exp(−13π/27) ≈ 0.2203 (PDG: 0.2245; 1.9% off).
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **gut_rank_correction_val** | MassRelations.CKMMixing | gut_rank_correction = 4/9 (rank(SU(5))/N_c²) |
+| **delta_a_eff_val** | MassRelations.CKMMixing | delta_a_eff = 13/9 (effective Cabibbo FN charge) |
+| **cabibbo_effective_charge** | MassRelations.CKMMixing | **CDM THEOREM 1**: Δa_eff = α_d (effective charge = VV coefficient) |
+| **cabibbo_charge_from_GUT** | MassRelations.CKMMixing | **CDM THEOREM 2**: Δa_eff = 1 + rank(SU(5))/N_c² (GUT group-theory origin) |
+| **log_cabibbo_eq_neg_13pi_27** | MassRelations.CKMMixing | **CDM THEOREM 3**: log\|V_us\|_CDM = −13π/27 (pure algebraic identity) |
+| **cabibbo_prediction_formula** | MassRelations.CKMMixing | **CDM THEOREM 4**: \|V_us\|_CDM = exp(−13π/27) |
+| **cabibbo_vev_formula** | MassRelations.CKMMixing | **CDM THEOREM 5**: \|V_us\|_CDM = ε₁^(α_d) in rpow form (CDM formula) |
+| **cabibbo_log_grounded_by_potential** | MassRelations.CKMMixing | Structural grounding via `fn_vevs_are_potential_minima` (ε₁ not a free parameter) |
+| **fnMixChargeDown_eq** | MassRelations.CKMMixing | fnMixChargeDown(α) = α (FN mixing charge simplifies to VV coefficient) |
+| **fn_vv_correction_additive** | MassRelations.CKMMixing | **KEY BRIDGE**: fnMixChargeDown(α_d) = fnMixChargeDown(1) + (α_d−1) (VV propagates additively) |
+| **fn_charge_gap_is_gut_correction** | MassRelations.CKMMixing | rightSectorMixCharge − leftDoubletMixCharge = gut_rank_correction (GUT bridge) |
+| **fn_diagonalization_vv_bridge** | MassRelations.CKMMixing | fnMixChargeDown(α_d) × log(ε₁) = −13π/27 (FN log formula) |
+| **fn_vv_more_suppressed** | MassRelations.CKMMixing | ε₁^(α_d) < ε₁^1 (VV correction increases suppression; α_d > 1) |
+| **fn_cdm_physical_sorry** | MassRelations.CKMMixing | log(cabibbo_structural_prediction) = fnMixChargeDown(α_d) × log(ε₁) (algebraic identity; zero sorry despite historic name) |
+
+> **Open physical bridge [C]:** The identification of |V_us|_SM with ε₁^(α_d) via
+> 2×2 FN SVD diagonalization — |(U_uL† U_dL)₁₂| = ε₁^(α_d)·(1+O(ε₁²)) — is a
+> structural hypothesis supported by 1.9% numerical accuracy but not yet
+> formalized in Lean.  See SPEC_049_CDM §CDM-4 for the precise open step.
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |
