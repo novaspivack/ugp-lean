@@ -26,6 +26,12 @@
 \usepackage{cleveref}
 \usepackage{needspace}
 \usepackage[most]{tcolorbox}
+% Ragged-right section titles avoid huge inter-word gaps when titles include
+% unbreakable \texttt{...} fragments (article class otherwise justifies titles).
+\usepackage{titlesec}
+\titleformat{\section}{\normalfont\Large\bfseries\raggedright}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries\raggedright}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries\raggedright}{\thesubsubsection}{1em}{}
 
 % Suite §2.8-style overfull tolerance (matches NEMS suite_preamble guidance).
 \hfuzz=30pt
@@ -526,10 +532,9 @@ The artifact is organized into 117~\lean{} modules across twelve layers
 \end{center}
 
 \noindent
-The remaining modules (\texttt{Phase4}, \texttt{Papers},
-\texttt{Instance}, \texttt{Conjectures}, \texttt{TE22},
-\texttt{GaloisStructure}, \texttt{CyclotomicCompleteness}) provide stubs, citable
-entry points, bridge instances, and the precision-derivation theorems:
+Several \emph{fully mechanized} precision and cyclotomic layers appear under
+\texttt{Phase4}, \texttt{GaloisStructure}, \texttt{CyclotomicCompleteness},
+and \texttt{TE22}, for example:
 \texttt{Phase4.GaloisProtection} (one-loop non-renormalization),
 \texttt{Phase4.TwoLoopCoefficient} (two-loop color coefficient $= 8/9$),
 \texttt{GaloisStructure.CyclotomicLayers} (Galois-stability of UGP layers in
@@ -540,6 +545,9 @@ biconditional; see \S\ref{sec:coxeter_biconditional}), and
 \texttt{CyclotomicCompleteness.CyclotomicContainment} (field-theoretic embedding
 $\mathbb{Q}(\zeta_{2h}) \hookrightarrow \mathbb{Q}(\zeta_{120})$ for $h \mid 60$;
 see \S\ref{sec:cyclotomic_containment}).
+The modules \texttt{Papers} and \texttt{Instance} supply chiefly \emph{citable stubs}
+and bridge entry points; \texttt{Conjectures} records resolved and open claims; and
+\texttt{Phase4} also contains stubs alongside the result modules named above.
 
 The \texttt{TE22} module provides a machine-checked framework for
 the TE2.2 PSC universe scan result.
@@ -1574,7 +1582,7 @@ singleton-atomic set.  This converts the texture choice from an aesthetic
 preference into a Lean-certified MDL theorem.
 
 % ═══════════════════════════════════════════════════════════════
-\section{Galois-Protection Non-Renormalization (\texttt{Phase4.GaloisProtection})}
+\section[Galois-Protection Non-Renormalization (Phase4.GaloisProtection)]{Galois-Protection Non-Renormalization\\\texttt{Phase4.GaloisProtection}}
 \label{sec:galois_protection}
 % ═══════════════════════════════════════════════════════════════
 
@@ -1786,19 +1794,25 @@ question separate from the formal proof.
 \subsection{H9: IPT Self-Consistency Fixed Point}\label{subsec:h9-self-consistency}
 % ═══════════════════════════════════════════════════════════════
 
-{\small\noindent\textit{Migration note: the four modules
-\texttt{H9SelfConsistency}, \texttt{GoldenRatioFixedPoint},
-\texttt{U1DirectProof}, and \texttt{LieExpSurjective}
-(formerly under \texttt{CyclotomicCompleteness}) have been moved to
-\texttt{ugp-physics-lean} as \texttt{UgpPhysicsLean.GXT.*}.
+{\small
+\setlength{\parskip}{0.35em plus 0.1em minus 0.05em}
+\noindent\textit{Migration note.}
+The four modules \texttt{H9SelfConsistency}, \texttt{GoldenRatioFixedPoint},
+\texttt{U1DirectProof}, and \texttt{LieExpSurjective} (formerly under
+\texttt{CyclotomicCompleteness}) have been moved to \texttt{ugp-physics-lean}
+as \texttt{UgpPhysicsLean.GXT.*}.
+
+\smallskip\noindent
 \texttt{GXT.LieExpSurjective} proves \lstinline|circle_exp_surjective_MAIN|
-(zero sorry): $\mathrm{exp} : \mathbb{R} \to \mathrm{Circle}$ is surjective
-via the open subgroup theorem; \lstinline|circle_iso_addCircle_2pi| establishes
-$\mathrm{Circle} \cong \mathbb{R}/(2\pi\mathbb{Z})$ (zero sorry).
-Together with \lstinline|lie_algebra_finrank_one_isAbelian|
-(in \texttt{GXT.U1DirectProof}), these certify A2 zero-sorry for
-the UGP/IPT derivation. The one remaining sorry
-(\lstinline|u1_minimality_abstract|) does not block the UGP theorem.}}
+(zero sorry): $\mathrm{exp} : \mathbb{R} \to \mathrm{Circle}$ is surjective via the
+open subgroup theorem; \lstinline|circle_iso_addCircle_2pi| establishes
+$\mathrm{Circle} \cong \mathbb{R}/(2\pi\mathbb{Z})$ (zero sorry).  Together with
+\lstinline|lie_algebra_finrank_one_isAbelian| (in \texttt{GXT.U1DirectProof}),
+these certify A2 zero-sorry for the UGP/IPT derivation.
+
+\smallskip\noindent
+The one remaining sorry (\lstinline|u1_minimality_abstract|) does not block the
+UGP theorem.\par}
 
 The module \texttt{CyclotomicCompleteness.H9SelfConsistency} proves that the IPT
 threshold is the unique fixed point of the Landauer-correction map
@@ -1821,14 +1835,16 @@ Then
 \]
 This is an exact algebraic identity: it holds for any values of $\ln\varphi$ and
 $\ln(2\pi)$, given only their positivity.  The proof is:
-\[
-  \frac{\ln 2}{N_{\rm univ}} = \frac{\ln\varphi}{\ln\varphi + 2\ln(2\pi)},
-  \quad
-  1 - \frac{\ln 2}{N_{\rm univ}} = \frac{2\ln(2\pi)}{\ln\varphi + 2\ln(2\pi)},
-  \quad
-  \frac{1}{1 - \ln 2/N_{\rm univ}} = \frac{\ln\varphi + 2\ln(2\pi)}{2\ln(2\pi)}
-  = 1 + \frac{\ln\varphi}{2\ln(2\pi)} = \mathrm{IPT}. \;\checkmark
-\]
+\begin{align*}
+  \frac{\ln 2}{N_{\rm univ}}
+    &= \frac{\ln\varphi}{\ln\varphi + 2\ln(2\pi)}, \\
+  1 - \frac{\ln 2}{N_{\rm univ}}
+    &= \frac{2\ln(2\pi)}{\ln\varphi + 2\ln(2\pi)}, \\
+  \frac{1}{1 - \ln 2/N_{\rm univ}}
+    &= \frac{\ln\varphi + 2\ln(2\pi)}{2\ln(2\pi)}
+    = 1 + \frac{\ln\varphi}{2\ln(2\pi)} = \mathrm{IPT}.
+    \quad \checkmark
+\end{align*}
 
 \begin{leanref} \lstinline|ipt_self_consistent|
 \textup{(in \texttt{CyclotomicCompleteness.H9SelfConsistency})}
@@ -2553,7 +2569,7 @@ scaling ratio is structurally derived from UGP, not data-matched.
 \textup{(in \texttt{MassRelations.CKMTheta23}, zero \texttt{sorry})}\end{leanref}
 \end{theorem}
 
-\subsection{Koide \texorpdfstring{$S_3$}{S3} Discrete Arithmetic-Mean Identity (\texttt{MassRelations.KoideS3DiscreteIdentities})}
+\subsection[Koide S3 discrete arithmetic-mean identity]{Koide \texorpdfstring{$S_3$}{S3} Discrete Arithmetic-Mean Identity\\\texttt{MassRelations.KoideS3DiscreteIdentities}}
 \label{sec:koide_s3_discrete}
 
 The module \texttt{MassRelations.KoideS3DiscreteIdentities} certifies the discrete
