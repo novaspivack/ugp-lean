@@ -60,7 +60,7 @@ UgpLean.lean
 └── Instance (NemSBridge)
 ```
 
-**Module count:** 117 `.lean` files across 13 layers (see `paper/ugp_lean_formalization.tex` for the authoritative count and per-layer breakdown).
+**Module count:** 117 `.lean` files. The **12-layer** diagram and per-layer module names are authoritative in `paper/ugp_lean_formalization.tex` (§Architecture, Figure/module stack).
 
 ## Module Descriptions
 

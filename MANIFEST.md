@@ -4,7 +4,7 @@
 **Mathlib:** v4.29.0-rc6 (via `lakefile.lean`)  
 **Build:** `lake build` from this directory  
 **Root import:** `UgpLean.lean`  
-**Last verified:** 2026-04-20 — matches `lean-toolchain` and Mathlib pin; theorem table below. Pentagon–Hexagon Bridge theorem added (k_gen + k_gen2 = φ·(cos π/10 − cos π/3), commit b4358c6).
+**Last verified:** 2026-05-12 — matches `lean-toolchain` and Mathlib pin; theorem table below. README / `docs/*` wording aligned with `paper/ugp_lean_formalization.tex` §Architecture (12-layer diagram, Phase4 vs stub wording, TE22 34,560 universe scan). Earlier entry: Pentagon–Hexagon Bridge (`k_gen + k_gen2 = φ·(cos π/10 − cos π/3)`, commit b4358c6).
 
 **2026-04-18 integrity fix:** `fingerprint_fixed_point_exists` (Tarski) restated
 on `Set ℕ` (the natural complete lattice for unbounded prime patterns) and proven

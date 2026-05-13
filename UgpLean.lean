@@ -117,7 +117,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Phase4.*`             — DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity (all n), PositiveRootTheorem
 - `UgpLean.GaloisStructure.*`    — CyclotomicLayers (Galois stability of UGP layers in Q(ζ₁₂₀))
 - `UgpLean.CyclotomicCompleteness.*` — CoxeterBiconditional: h|60 ↔ 2h|120 arithmetic biconditional; per-algebra h|60 certs (G₂,F₄,E₆,E₈); B₄ conductor analysis; e7_double_failure; coxeter_biconditional_summary. CyclotomicContainment: full field-theoretic embedding CyclotomicField(2h)ℚ →ₐ[ℚ] CyclotomicField(120)ℚ when h|60; per-algebra certificates for G₂,F₄/E₆,E₈ (all zero sorry). [H9SelfConsistency and GoldenRatioFixedPoint migrated to ugp-physics-lean]
-- `UgpLean.Universality.*`       — Rule110, UWCA, UWCAHistoryReversible, Turing universality, Architecture bridge
+- `UgpLean.Universality.*`       — Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, Turing universality, Architecture bridge
 - `UgpLean.Papers.*`             — Paper25, UGPMain (citable stubs)
 
 - `UgpLean.TE22.*`               — ScanCertificate (TE2.2 PSC scan framework, UGP coupling predictions)

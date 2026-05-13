@@ -21,7 +21,7 @@ both openly disclosed with precise citations:
   claim `SM_gauge_uniquely_selected` + `isSMGauge_iff` (both proved by
   `decide`) that captures the decidable fragment.  The original name is
   retained as an alias pointing to `isSMGauge_iff`.  The **full** SM
-  D-minimizer theorem (over the 20,160+ universe discretization) remains
+  D-minimizer theorem (over the 34,560-universe scan discretization) remains
   pending Fintype + native_decide and is tracked in the tech-debt registry.
 
 ## Core Classification (RSUC)
@@ -252,7 +252,7 @@ Module: `ElegantKernel.Unconditional.KGenFullClosure` (§§1–9).
 | **ugp_g1g2_prediction_close_to_SM** | TE22.ScanCertificate | UGP g1²/g2² prediction within 2% of SM value at M_Z |
 | **SM_gauge_uniquely_selected** | TE22.ScanCertificate | Among all 60 (GaugeGroup, Dimension) pairs, exactly `(SU3xSU2xU1, 4D)` satisfies `isSMGauge` (decided) |
 | **isSMGauge_iff** | TE22.ScanCertificate | `isSMGauge g d = true ↔ g = SU3xSU2xU1 ∧ dim_val d = 4` (decided) |
-| **SM_is_D_minimizer_extended** | TE22.ScanCertificate | Alias of `isSMGauge_iff` (decidable fragment of full D-minimizer claim; full claim over 20,160+ universes still pending Fintype+native_decide) |
+| **SM_is_D_minimizer_extended** | TE22.ScanCertificate | Alias of `isSMGauge_iff` (decidable fragment of full D-minimizer claim; full claim over 34,560 universes still pending Fintype+native_decide) |
 
 ## GTE Number Theory
 

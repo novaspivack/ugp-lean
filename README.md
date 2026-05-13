@@ -4,7 +4,7 @@
 
 This repository is part of the **Reflexive Reality** research program by [Nova Spivack](https://www.novaspivack.com/).
 
-**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality, and self-reference.  **117 modules, zero sorry on the core proof path.**
+**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, and self-reference.  **117 modules, zero sorry on the core proof path** (see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).
 
 | Link | Description |
 |------|-------------|
@@ -27,7 +27,7 @@ A clean build completes with zero `sorry` and the standard Mathlib axiom signatu
 
 ---
 
-## Module structure (117 modules across 13 layers)
+## Module structure (117 modules; **12 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
 
 | Layer | Count | Modules |
 |-------|-------|---------|
@@ -41,7 +41,7 @@ A clean build completes with zero `sorry` and the standard Mathlib axiom signatu
 | **Universality** | 7 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge |
 | **SelfRef** | 2 | LawvereKleene, RiceHalting |
 
-Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity, PositiveRootTheorem, GaloisProtection, TwoLoopCoefficient), **GaloisStructure** (2: CyclotomicLayers, MinimalCyclotomic), **CyclotomicCompleteness** (2: CoxeterBiconditional, CyclotomicContainment), **PSC** (1: RCCInfiniteFamilies), **TE22** (1: ScanCertificate), **Papers** (2: Paper25, UGPMain), **Instance** (1: NemSBridge), **Conjectures** — provide precision-derivation theorems, Galois-stability results, stubs, citable entry points, and bridge instances.
+Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity, PositiveRootTheorem, GaloisProtection, TwoLoopCoefficient), **GaloisStructure** (2), **CyclotomicCompleteness** (2), **PSC** (1: RCCInfiniteFamilies), **TE22** (1: ScanCertificate), **Papers** (2), **Instance** (1), **Conjectures** — per the formalization paper: `Phase4.GaloisProtection`, `TwoLoopCoefficient`, modules under `GaloisStructure.*` and `CyclotomicCompleteness.*`, and `TE22` carry fully mechanized statements where the paper claims zero sorry; `Papers` and `Instance` are chiefly citable stubs and bridges; `Conjectures` records resolved and open claims; `Phase4` also mixes stubs (e.g. UCL, PR1 presentation) with the precision theorems above.
 
 **Non-circularity:** Core/ may not import Compute/. See [docs/DESIGN.md](docs/DESIGN.md).
 
@@ -86,6 +86,8 @@ Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, Asympt
 **Universality and self-reference**
 - `ugp_is_turing_universal` — UGP substrate Turing-universal via native Rule 110 embedding
 - `uwca_sweep_implements_rule110` — UWCA sweep implements Rule 110 exactly
+- `uwca_augmented_left_inverse` — UWCA + history stack: backward ∘ forward = id (exact lift)
+- `gte_entropy_prefix8_gt_prefix9` — finite coarse Shannon-entropy drop along simulated GTE orbit (ML-9 companion; `GTE.EntropyNonMonotone`)
 - `ugp_lawvere_fixed_point` / `ugp_kleene_recursion_thm` / `ugp_rice_theorem` / `ugp_halting_undecidable` — Self-reference layer
 
 ---
