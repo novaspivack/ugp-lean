@@ -15,6 +15,7 @@ import UgpLean.MassRelations.KoideNewtonFlow
 import UgpLean.MassRelations.KoideS3DiscreteIdentities
 import UgpLean.MassRelations.PhysicalMasses
 import UgpLean.MassRelations.CKMTheta23
+import UgpLean.MassRelations.CKMMixing
 
 /-!
 # UgpLean.MassRelations — Charged-Fermion Mass Structural Relations
@@ -57,6 +58,7 @@ See also:
 - `UgpLean.MassRelations.KoideClosedForm` — Priority 7 : Koide algebraic closed form and cyclotomic-12 identification; proves (2+√3) = 4·cos²(π/12), (1+√3)² = 8·cos²(π/12), and the +root `r_τ = 2(r_e+r_μ) + √3·√(r_e²+4r_e r_μ+r_μ²)` satisfies the Koide constraint
 - `UgpLean.MassRelations.KoideNewtonFlow` — Priority 7 /IV: UGP-native S_3-equivariant Newton-step Koide flow `U(v) = v - (q(v)/|∇q|²)·∇q`; proves S_3-equivariance (under all three generators swap12, swap13, rot123), null-cone fixed-point property, and ties to KoideClosedForm's +root
 - `UgpLean.MassRelations.PhysicalMasses` — Priority 8 Phase C: end-to-end physical-mass bridge. Given (m_e, m_μ) as input, defines `predictedLepton`, `predictedUpType`, `predictedDownType` via TT+VV+Koide closed form; proves TT formula, VV formula, and Koide identity hold by construction on the predicted physical masses; proves positivity of all predicted masses; proves predicted lepton vector is fixed point of R34 Newton-step Koide flow. This module upgrades the previously `True → trivial` FormulaHolds placeholders to real theorems on Lean-valued physical-mass predictions, closing the E_base Lean bridge ( §D.4) except for the residual m_μ anchor (see R35 lab notes for empirical MAP at DL ≤ 3)
+- `UgpLean.MassRelations.CKMMixing` — CDM mechanism (SPEC_049_CDM, 2026-05-11): derives the effective Cabibbo FN charge Δa_eff = α_d = 1 + rank(SU(5))/N_c² = 13/9 and proves |V_us|_CDM = ε₁^(α_d) = exp(−13π/27) ≈ 0.2203 (PDG 0.2245; 1.9% off). All theorems zero sorry. Constituent lemmas: `fn_vevs_are_potential_minima` (ε₁ structurally fixed), `VV_from_GUT_group_theory` (α_d from GUT group theory).
 -/
 
 namespace UgpLean.MassRelations

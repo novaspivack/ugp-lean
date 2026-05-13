@@ -4,7 +4,7 @@
 
 This repository is part of the **Reflexive Reality** research program by [Nova Spivack](https://www.novaspivack.com/).
 
-**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality, and self-reference.  **86 modules, zero sorry on the core proof path.**
+**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality, and self-reference.  **87 modules, zero sorry on the core proof path.**
 
 | Link | Description |
 |------|-------------|
@@ -21,13 +21,13 @@ lake update
 lake build
 ```
 
-**Toolchain:** Lean 4.29.0-rc6, Mathlib v4.29.0-rc6.
+**Toolchain:** Lean 4.29.0-rc6, Mathlib v4.29.1.
 
 A clean build completes with zero `sorry` and the standard Mathlib axiom signature `[propext, Classical.choice, Quot.sound]`.  Two pre-existing `sorry` placeholders in `GTE/AnalyticArchitecture` (Tenenbaum-class equidistribution) are outside the core proof path and documented in the formalization paper §3.2.
 
 ---
 
-## Module structure (86 modules across 8 layers)
+## Module structure (87 modules across 8 layers)
 
 | Layer | Count | Modules |
 |-------|-------|---------|
@@ -36,7 +36,7 @@ A clean build completes with zero `sorry` and the standard Mathlib axiom signatu
 | **Classification** | 6 | Bounds, TheoremA, TheoremB, RSUC, FormalRSUC, MonotonicStrengthening |
 | **GTE** | 17 | Evolution, Orbit, UpdateMap, GeneralTheorems, MersenneGcd, PrimeFactorAnalysis, ResonantFactory, MirrorDualConjecture, MirrorShift, UGPPrimes, InertPrimes, AnalyticArchitecture, DSIExport, StructuralTheorems, UniquenessCertificates, GTESimulation, EntropyNonMonotone |
 | **Structural** | 19 | QuarterLock, LModelDerivation; *ElegantKernel/*: ChiralityFeature, D5StructuralAxiom, FibonacciHessian, KGen, KGen2, MuTriple, PentagonalUniqueness; *ElegantKernel/Unconditional/*: CyclotomicChain, D5Renormalization, FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure, KLFullClosure, PentagonConstraint, RiccatiFixedPoint |
-| **MassRelations** | 12 | KoideClosedForm, KoideNewtonFlow, BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential, FroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational, UpLeptonCyclotomic, Z2OrbifoldDepth |
+| **MassRelations** | 13 | KoideClosedForm, KoideNewtonFlow, BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential, FroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational, UpLeptonCyclotomic, Z2OrbifoldDepth, **CKMMixing** |
 | **Universality** | 7 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge |
 | **SelfRef** | 2 | LawvereKleene, RiceHalting |
 
@@ -73,6 +73,14 @@ Additional modules (`Phase4`, `Papers`, `Instance`, `Conjectures`, `TE22`) provi
 - `newton_flow_swap12_equivariant` / `newton_flow_rot123_equivariant` — Full S₃-equivariance of the Newton flow
 - `cascadeState_closed_form` — Binary cascade closed form b_g = 2^{g−1} b₁
 - `koidePredictedMTau_pos` — Predicted m_τ from (m_e, m_μ) is strictly positive
+
+**CDM Mechanism — CKM Mixing (MassRelations.CKMMixing, 2026-05-11; 11 theorems, 0 sorry)**
+- `cabibbo_effective_charge` — Δa_eff = α_d = 13/9 (effective FN charge = VV coefficient)
+- `cabibbo_charge_from_GUT` — Δa_eff = 1 + rank(SU(5))/N_c² (GUT group-theory origin)
+- `cabibbo_vev_formula` — |V_us|_CDM = (ε₁)^(α_d) = exp(−13π/27) ≈ 0.2203 (1.9% off PDG)
+- `fn_vv_correction_additive` — KEY BRIDGE: fnMixChargeDown(α_d) = fnMixChargeDown(1) + (α_d−1); VV GUT coefficient shifts bare FN charge additively
+- `fn_diagonalization_vv_bridge` — fnMixChargeDown(α_d) × log(ε₁) = −13π/27 (connects FN model to CDM structural log)
+- `fn_cdm_physical_sorry` — Algebraic identity: log(cabibbo_structural_prediction) = fnMixChargeDown(α_d) × log(ε₁); proved via `Real.log_exp` (zero sorry)
 
 **Universality and self-reference**
 - `ugp_is_turing_universal` — UGP substrate Turing-universal via native Rule 110 embedding

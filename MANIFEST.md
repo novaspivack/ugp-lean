@@ -1,7 +1,7 @@
 # ugp-lean Theorem Manifest
 
-**Toolchain:** `leanprover/lean4:v4.29.0-rc6`  
-**Mathlib:** v4.29.0-rc6 (via `lakefile.lean`)  
+**Toolchain:** `leanprover/lean4:v4.29.1`  
+**Mathlib:** v4.29.1 (via `lakefile.lean`)  
 **Build:** `lake build` from this directory  
 **Root import:** `UgpLean.lean`  
 **Last verified:** 2026-04-20 — matches `lean-toolchain` and Mathlib pin; theorem table below. Pentagon–Hexagon Bridge theorem added (k_gen + k_gen2 = φ·(cos π/10 − cos π/3), commit b4358c6).

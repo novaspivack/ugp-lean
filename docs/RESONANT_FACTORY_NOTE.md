@@ -87,7 +87,7 @@ multiplicative, λ(F(t)) = λ(Q₋(t)) · λ(Q₊(t)).
 - **Norm-representation Q±(t) = N_{K±}(Lt+β±)/L:** This requires formalizing
   imaginary quadratic fields in Lean, which is beyond current scope.
 
-- **Ω-additivity on F(t):** Mathlib v4.29.0-rc6 does not export `Nat.Ω`
+- **Ω-additivity on F(t):** Mathlib v4.29.1 does not export `Nat.Ω`
   (the big-omega function). The factorization F = Q₋·Q₊ is proved
   definitionally; the Ω-additivity follows from any formalization of
   complete multiplicativity of λ.
