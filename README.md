@@ -21,7 +21,7 @@ lake update
 lake build
 ```
 
-**Toolchain:** Lean 4.29.0-rc6, Mathlib v4.29.0-rc6.
+**Toolchain:** Lean 4.29.0-rc6, Mathlib v4.29.1.
 
 A clean build completes with zero `sorry` and the standard Mathlib axiom signature `[propext, Classical.choice, Quot.sound]`.  Two pre-existing `sorry` placeholders in `GTE/AnalyticArchitecture` (Tenenbaum-class equidistribution) are outside the core proof path and documented in the formalization paper §3.2.
 
