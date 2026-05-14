@@ -26,12 +26,13 @@
 \usepackage{cleveref}
 \usepackage{needspace}
 \usepackage[most]{tcolorbox}
+\usepackage{array}
 
-% Suite §2.8-style overfull tolerance (matches NEMS suite_preamble guidance).
-\hfuzz=30pt
 % Relax line-breaking globally to avoid overfull \hbox from long \lstinline tokens.
 \sloppy
 \setlength{\emergencystretch}{3em}
+% Suite §2.8-style overfull tolerance: set AFTER \sloppy since \sloppy resets \hfuzz to 0.5pt.
+\hfuzz=30pt
 
 % Left-justified environment for Lean module citation lines (avoids stretched
 % inter-word spacing caused by unbreakable \lstinline tokens in a justified paragraph).
@@ -225,7 +226,7 @@ Classification and forcing lemmas refer to definitions in \texttt{Ugcp/} (or as 
 
 \medskip
 \textbf{Premise coordinates (for external readers).}
-\begin{itemize}[leftmargin=2em]
+\begin{itemize}[leftmargin=1.5em]
 \item \textbf{Ridge arithmetic vs.\ ambient set theory.} Claims are about the constructed \ugp{} objects (ridges, sieve, $T$-orbit), not about every conceivable number-theoretic universe.
   \emph{Logical effect:} Generalizing beyond the formalized ridge family requires new definitions, not silent extension.
 \item \textbf{Toolchain / Mathlib pin.} The paper reports builds against a stated Mathlib revision; upgrading may require port work.
@@ -845,7 +846,7 @@ generations (\texttt{gen1\_mersenne\_isolation}).
 \section{GTE Extended Structure}\label{sec:gte-extended}
 % ═══════════════════════════════════════════════════════════════
 
-\subsection{Mersenne ladder and Fibonacci uniqueness (\texttt{MersenneLadder})}\label{subsec:mersenne-ladder}
+\subsection[Mersenne ladder and Fibonacci uniqueness]{Mersenne ladder and Fibonacci uniqueness (\texttt{MersenneLadder})}\label{subsec:mersenne-ladder}
 
 The canonical orbit's third-generation $c$-value $c_3 = 65535 = 2^{16} - 1$ is
 not an arbitrary hardcoded choice.  The \texttt{GTE.MersenneLadder} module
@@ -889,7 +890,7 @@ Mersenne GCD identity.
 \end{leanref}
 \end{theorem}
 
-\subsection{Fiber bundle over GTE triples (\texttt{FiberBundle})}\label{subsec:fiberbundle}
+\subsection[Fiber bundle over GTE triples]{Fiber bundle over GTE triples (\texttt{FiberBundle})}\label{subsec:fiberbundle}
 
 The \texttt{GTE.FiberBundle} module defines the covering space
 $\pi: \widetilde{E}_{\rm GTE} \to T_{\rm GTE}$, where the fiber
@@ -909,7 +910,7 @@ the bundle trivializes.
 \end{leanref}
 \end{theorem}
 
-\subsection{Orbital stability and linear response (\texttt{LinearResponse})}\label{subsec:linear-response}
+\subsection[Orbital stability and linear response]{Orbital stability and linear response (\texttt{LinearResponse})}\label{subsec:linear-response}
 
 The \texttt{GTE.LinearResponse} module connects the canonical orbit's concrete
 arithmetic to the Fibonacci renormalization spectrum.
@@ -936,7 +937,7 @@ renormalization flow.
 \end{leanref}
 \end{theorem}
 
-\subsection{Ridge-level scale connection (\texttt{ScaleConnection})}\label{subsec:scaleconnect}
+\subsection[Ridge-level scale connection]{Ridge-level scale connection (\texttt{ScaleConnection})}\label{subsec:scaleconnect}
 
 \begin{theorem}[Universal 5-factor scale connection]\label{thm:tau-scale}
 For all $n \ge 5$:
@@ -1019,6 +1020,7 @@ The GTE-P7 candidate from the mirror sector of the Braid Atlas v2.0 (P17,
 spin-$\tfrac12$ Dirac fermion.  The \texttt{ChargeTheorem} module provides
 the formal derivation:
 
+\begin{sloppypar}
 \begin{itemize}[leftmargin=1.2em,itemsep=2pt]
   \item \lstinline|mirror_winding_number_zero| --- explicit axiom (faithfully
     disclosed in P17 \texttt{PROVENANCE.md}): the mirror-branch winding
@@ -1038,6 +1040,7 @@ the formal derivation:
     shares the same prime-lock residue $m_1 = 20$ as the canonical lepton
     triple, placing it in the same algebraic orbit.
 \end{itemize}
+\end{sloppypar}
 
 This closes the dark-matter prediction in P17 (\S\,subsec:mirror\_dm) at
 \textbf{Category B} status: the quantum numbers are derived from the braid
@@ -1091,6 +1094,7 @@ level and is consistent with $c < 1023$ (tier-1 assignment, Lean-certified).
 \end{leanref}
 \end{theorem}
 
+\begin{sloppypar}
 \paragraph{Complete composite triple derivation (Category~A).}
 The theorem \lstinline|ugp_composite_braid_c_rule| (zero sorry) bundles the
 winding and chirality structural facts.
@@ -1111,13 +1115,14 @@ Beyond this, the module now proves the \textbf{complete (a,b,c) triple for all 9
     and $29 = 4N_c^2{-}\delta$ (neutrino seesaw numerator), connecting strange baryons
     to the neutrino sector.
 \end{itemize}
+\end{sloppypar}
 
 Status: \textbf{Category~A} — all baryon triple derivations are zero sorry and
 derived from Lean-certified UGP constants.
 The composite triple program is complete with no remaining open items.
 
 % ═══════════════════════════════════════════════════════════════
-\subsection{SM Winding Numbers from $N_c$ (\texttt{BraidAtlas.ChargeDerivation})}
+\subsection[SM Winding Numbers from $N_c$]{SM Winding Numbers from $N_c$ (\texttt{BraidAtlas.ChargeDerivation})}
 \label{subsec:charge_derivation_lean}
 % ═══════════════════════════════════════════════════════════════
 
@@ -1133,11 +1138,13 @@ The Braid Atlas winding number $W_g = 2N_c \cdot Y_g$ then gives
 $\{W_g\} = \{2,-1,0,-3\}$ for $N_c = 3$ --- the complete SM charge spectrum.
 
 \begin{theorem}[SM Winding Numbers from $N_c$]\label{thm:sm_winding_from_Nc}
+\begin{sloppypar}
 The SM winding numbers $\{N_c{-}1,\,-1,\,0,\,-N_c\} = \{2,-1,0,-3\}$ follow
 from $N_c = 3$ via the $\mathrm{SU}(N_c+2)$ decomposition.
 Anomaly cancellation $N_c(N_c-1) + N_c(-1) + 0 + (-N_c) = 0$ is certified.
 The hypercharge $Y_{Q_L} = 1/(2N_c)$ governs both the VV exponent $\beta_d$
 and the SM charge spectrum through a single algebraic path.
+\end{sloppypar}
 \begin{leanref} \lstinline|sm_winding_numbers_from_Nc|,
 \lstinline|anomaly_cancellation_from_windings|,
 \lstinline|y_ql_unifies_vv_and_winding|
@@ -1146,8 +1153,7 @@ and the SM charge spectrum through a single algebraic path.
 \end{theorem}
 
 % ═══════════════════════════════════════════════════════════════
-\subsection{Coxeter--Conductor Theorem (\texttt{BraidAtlas.\allowbreak CoxeterConductor},
-            \texttt{BraidAtlas.\allowbreak CoxeterConductorTowerLaw})}
+\subsection[Coxeter--Conductor Theorem]{Coxeter--Conductor Theorem (\texttt{BraidAtlas.\allowbreak CoxeterConductor}, \texttt{BraidAtlas.\allowbreak CoxeterConductorTowerLaw})}
 \label{sec:coxeter_conductor}
 % ═══════════════════════════════════════════════════════════════
 
@@ -1204,7 +1210,7 @@ companion lab notes.
 \end{sloppypar}
 
 % ═══════════════════════════════════════════════════════════════
-\subsection{Coxeter--Conductor Biconditional (\texttt{CoxeterBiconditional})}
+\subsection[Coxeter--Conductor Biconditional]{Coxeter--Conductor Biconditional (\texttt{CoxeterBiconditional})}
 \label{sec:coxeter_biconditional}
 % ═══════════════════════════════════════════════════════════════
 
@@ -1279,7 +1285,7 @@ complete arithmetic + degree-theoretic + field-embedding certification of the
 $\mathbb{Q}(\zeta_{120})$ filter.
 
 % ═══════════════════════════════════════════════════════════════
-\subsection{Cyclotomic field embedding (\texttt{CyclotomicContainment})}
+\subsection[Cyclotomic field embedding]{Cyclotomic field embedding (\texttt{CyclotomicContainment})}
 \label{sec:cyclotomic_containment}
 % ═══════════════════════════════════════════════════════════════
 
@@ -1361,7 +1367,7 @@ complete $\mathbb{Q}(\zeta_{120})$ field-theoretic filter for the
 exceptional root systems.
 
 % ═══════════════════════════════════════════════════════════════
-\subsection{Electroweak boson c-values (\texttt{BraidAtlas.EWBosons})}
+\subsection[Electroweak boson c-values]{Electroweak boson c-values (\texttt{BraidAtlas.EWBosons})}
 \label{sec:ewbosons_lean}
 % ═══════════════════════════════════════════════════════════════
 
@@ -1407,7 +1413,7 @@ charged-current ($W$), neutral-current ($Z$), and Higgs c-values are
 now derived from \ugp{} axioms rather than postulated.
 
 % ═══════════════════════════════════════════════════════════════
-\subsection{Chirality squaring (\texttt{BraidAtlas.ChiralitySquaring})}
+\subsection[Chirality squaring]{Chirality squaring (\texttt{BraidAtlas.ChiralitySquaring})}
 \label{subsec:chirality_squaring_lean}
 % ═══════════════════════════════════════════════════════════════
 
@@ -1435,7 +1441,7 @@ The non-squareness of $2{,}329$ is proved by bracketing: $48^2 = 2304 < 2329 < 2
 followed by a finite \lstinline|native_decide| check over $k \in [0, 48]$.
 
 % ═══════════════════════════════════════════════════════════════
-\section{RCC Infinite Families (\texttt{PSC.RCCInfiniteFamilies})}
+\section[RCC Infinite Families]{RCC Infinite Families (\texttt{PSC.RCCInfiniteFamilies})}
 \label{sec:rcc_infinite}
 % ═══════════════════════════════════════════════════════════════
 
@@ -1484,13 +1490,15 @@ Together with Theorem~\ref{thm:rcc_infinite}, RCC is established as a theorem
 over \emph{all} compact simple Lie groups.
 
 % ═══════════════════════════════════════════════════════════════
-\section{PSC Three-Route Forcing Capstone (\texttt{PSC.ThreeRouteForcing})}
+\section[PSC Three-Route Forcing Capstone]{PSC Three-Route Forcing Capstone (\texttt{PSC.ThreeRouteForcing})}
 \label{sec:psc_three_route}
 % ═══════════════════════════════════════════════════════════════
 
+\begin{sloppypar}
 \noindent\textit{Migration note: \texttt{PSC.ThreeRouteForcing} has been moved to
 \texttt{ugp-physics-lean} as \texttt{UgpPhysicsLean.PSC.ThreeRouteForcing}.
 The content below describes the module as originally developed in \texttt{ugp-lean}.}
+\end{sloppypar}
 
 The module \texttt{PSC.ThreeRouteForcing} provides a parametric Lean carrier for
 the architectural shape of P01~\cite{Spivack2026_SM_UGP} OP(i) partial closure:
@@ -1522,9 +1530,11 @@ is propositionally equivalent to the conjunction $G \wedge L \wedge N$
   \quad\Longrightarrow\quad
   \text{ThreeRouteBundle}\,G\,L\,N \;\Leftrightarrow\; \text{PSC}
 \]
+\begin{sloppypar}
 holds whenever the upstream NEMS-supplied iff $H$ has been supplied as
 hypothesis (\lstinline|psc_three_route_capstone|; an unbundled-conjunction
 form \lstinline|psc_three_route_capstone_conj| is also provided).
+\end{sloppypar}
 
 \begin{leanref}\lstinline|ThreeRouteBundle|,
 \lstinline|bundle_intro|,
@@ -1546,7 +1556,7 @@ is the genuine residual OP(i) target tracked in
 \texttt{papers/01\_SM/.../op\_i\_psc/op\_i\_psc\_findings.md} \S 3.
 
 % ═══════════════════════════════════════════════════════════════
-\section{Neutrino FN Texture Selection (\texttt{NeutrinoFroggattNielsen})}
+\section[Neutrino FN Texture Selection]{Neutrino FN Texture Selection (\texttt{NeutrinoFroggattNielsen})}
 \label{sec:neutrino_fn}
 % ═══════════════════════════════════════════════════════════════
 
@@ -1591,7 +1601,7 @@ singleton-atomic set.  This converts the texture choice from an aesthetic
 preference into a Lean-certified MDL theorem.
 
 % ═══════════════════════════════════════════════════════════════
-\section{Galois-Protection Non-Renormalization (\texttt{Phase4.\allowbreak GaloisProtection})}
+\section[Galois-Protection Non-Renormalization]{Galois-Protection Non-Renormalization (\texttt{Phase4.GaloisProtection})}
 \label{sec:galois_protection}
 % ═══════════════════════════════════════════════════════════════
 
@@ -1650,7 +1660,7 @@ theorem + T/$T^\dagger$ pairing).
 \end{sloppypar}
 
 % ═══════════════════════════════════════════════════════════════
-\section{Two-Loop Color Coefficient (\texttt{Phase4.TwoLoopCoefficient})}
+\section[Two-Loop Color Coefficient]{Two-Loop Color Coefficient (\texttt{Phase4.TwoLoopCoefficient})}
 \label{sec:two_loop}
 % ═══════════════════════════════════════════════════════════════
 
@@ -1703,7 +1713,7 @@ machinery itself---saturation density, the TEC four-gate predicate---is pure
 methodology: it is not derived from the \ugp{} arithmetic, but applied to \ugp{}
 results to distinguish theorem-grade from computationally-certified outputs.
 
-\subsection{Algebraic saturation barrier (\texttt{SaturationBarrier})}\label{subsec:saturation}
+\subsection[Algebraic saturation barrier]{Algebraic saturation barrier (\texttt{SaturationBarrier})}\label{subsec:saturation}
 
 \begin{theorem}[URC basis is saturated]\label{thm:urc-saturated}
 The URC expression basis of $1{,}596{,}939$ algebraic expressions has
@@ -1718,10 +1728,12 @@ $e^{-319} \le 1/320 < 0.01$.
 \end{leanref}
 \end{theorem}
 
-\subsection{Theorem eligibility criterion (\texttt{TheoremEligibility})}\label{subsec:tec}
+\subsection[Theorem eligibility criterion]{Theorem eligibility criterion (\texttt{TheoremEligibility})}\label{subsec:tec}
 
 \begin{definition}[Theorem Eligibility Criterion (TEC)]
+\begin{sloppypar}
 A result is \emph{theorem-eligible} (\lstinline|IsTheoremEligible|) if it passes all four gates:
+\end{sloppypar}
 \begin{enumerate}[nosep,label=(\arabic*)]
 \item \texttt{PassesNullGate}: null density $< 1\%$;
 \item \texttt{PassesStabilityGate}: stable under perturbation;
@@ -1988,7 +2000,7 @@ alone.
 \end{theorem}
 
 % ═══════════════════════════════════════════════════════════════
-\subsection{Galois Layer Stability (\texttt{GaloisStructure.CyclotomicLayers})}
+\subsection[Galois Layer Stability]{Galois Layer Stability (\texttt{GaloisStructure.CyclotomicLayers})}
 \label{subsec:galois}
 % ═══════════════════════════════════════════════════════════════
 
@@ -2413,6 +2425,7 @@ $m_e > 0$, $m_\mu > 0$.
 \end{leanref}
 \end{theorem}
 
+\begin{sloppypar}
 \paragraph{SU(3) and flavour structure.}
 The remaining original \texttt{MassRelations} modules provide the group-theoretic
 scaffolding:
@@ -2430,8 +2443,9 @@ scaffolding:
   \texttt{HeavyFermionTower}: further algebraic infrastructure
   for the full three-generation mass matrix derivation.
 \end{itemize}
+\end{sloppypar}
 
-\subsection{Colour-rank structural chain (\texttt{KoideAngle})}\label{subsec:koideangle}
+\subsection[Colour-rank structural chain]{Colour-rank structural chain (\texttt{KoideAngle})}\label{subsec:koideangle}
 
 The \texttt{KoideAngle} module derives every charged-fermion structural
 constant from the QCD colour rank $N_c = 3$ via a single algebraic chain:
@@ -2506,7 +2520,7 @@ $\dim(126_{\mathrm{SO}(10)}) = 2N_c^2\delta = 126$ (cross-sector bridge).
 \end{leanref}
 \end{theorem}
 
-\subsection{Seesaw index as GUT representation defect (\texttt{SeesawIndex})}\label{subsec:seesawindex}
+\subsection[Seesaw index as GUT representation defect]{Seesaw index as GUT representation defect (\texttt{SeesawIndex})}\label{subsec:seesawindex}
 
 \begin{theorem}[Seesaw index = gauge/matter defect]\label{thm:seesaw-index}
 The integer $29$, established as the neutrino seesaw numerator by the \ugp{}
@@ -2530,7 +2544,7 @@ of Theorem~\ref{thm:seesaw-closure} under a single GUT-geometric interpretation.
 \end{leanref}
 \end{theorem}
 
-\subsection{Mass ratio Z-independence (\texttt{ScaleTransport})}\label{subsec:scaletransport}
+\subsection[Mass ratio Z-independence]{Mass ratio Z-independence (\texttt{ScaleTransport})}\label{subsec:scaletransport}
 
 \begin{theorem}[Mass ratios are renormalization-scale independent]\label{thm:z-indep}
 For any nonzero renormalization factor $Z(\mu, \mu_0) > 0$, the mass ratio
@@ -2546,7 +2560,7 @@ absolute-scale predictions require an external energy anchor.
 \end{leanref}
 \end{theorem}
 
-\subsection{CKM \texorpdfstring{$\theta_{23}$}{theta23} Structural Ratio (\texttt{MassRelations.CKMTheta23})}
+\subsection[CKM $\theta_{23}$ Structural Ratio]{CKM \texorpdfstring{$\theta_{23}$}{theta23} Structural Ratio (\texttt{MassRelations.CKMTheta23})}
 \label{sec:ckm_theta23}
 
 The module \texttt{MassRelations.CKMTheta23} closes the open problem of why the
@@ -2576,7 +2590,7 @@ scaling ratio is structurally derived from UGP, not data-matched.
 \textup{(in \texttt{MassRelations.CKMTheta23}, zero \texttt{sorry})}\end{leanref}
 \end{theorem}
 
-\subsection{Koide \texorpdfstring{$S_3$}{S3} Discrete Arithmetic-Mean Identity (\texttt{MassRelations.\allowbreak KoideS3DiscreteIdentities})}
+\subsection[Koide $S_3$ Discrete Arithmetic-Mean Identity]{Koide \texorpdfstring{$S_3$}{S3} Discrete Arithmetic-Mean Identity (\texttt{MassRelations.KoideS3DiscreteIdentities})}
 \label{sec:koide_s3_discrete}
 
 \begin{sloppypar}
@@ -2608,7 +2622,7 @@ zero \texttt{sorry}, zero hypotheses)}\end{leanref}
 \end{theorem}
 
 % ═══════════════════════════════════════════════════════════════
-\subsection{CDM Cabibbo Derivation (\texttt{MassRelations.CKMMixing})}\label{sec:ckmmixing}
+\subsection[CDM Cabibbo Derivation]{CDM Cabibbo Derivation (\texttt{MassRelations.CKMMixing})}\label{sec:ckmmixing}
 % ═══════════════════════════════════════════════════════════════
 
 The module \texttt{MassRelations.CKMMixing} (2026-05-11, SPEC\_049\_CDM)
@@ -2644,6 +2658,7 @@ This is a pure algebraic identity --- no approximation, no \texttt{sorry}.
 \begin{theorem}[CDM Cabibbo derivation, zero sorry]\label{thm:cdm}
 All 20 theorems in \texttt{MassRelations.CKMMixing} are machine-checked with
 zero \texttt{sorry}:
+\begin{sloppypar}
 \begin{itemize}
   \item \lstinline|cabibbo_effective_charge|: $\Delta a_{\rm eff} = \alpha_d$
   \item \lstinline|cabibbo_charge_from_GUT|: $\Delta a_{\rm eff} = 1 + \operatorname{rank}(\mathrm{SU}(5))/N_c^2$
@@ -2653,6 +2668,7 @@ zero \texttt{sorry}:
   \item \lstinline|fn_diagonalization_vv_bridge|: $\texttt{fnMixChargeDown}(\alpha_d) \cdot \log\varepsilon_1 = -13\pi/27$
   \item \lstinline|fn_cdm_physical_sorry|: $\log(\texttt{cabibbo\_structural\_prediction}) = \texttt{fnMixChargeDown}(\alpha_d) \cdot \log\varepsilon_1$ (zero sorry, algebraic identity)
 \end{itemize}
+\end{sloppypar}
 \end{theorem}
 
 \begin{leanref}\lstinline|cabibbo_effective_charge|,
@@ -3498,7 +3514,7 @@ $\rho_F$ identity. Full proof requires Hecke $L$-function theory.
 \caption{Open conjectures, formally stated.  First four in \texttt{Conjectures.lean};
 last two in \texttt{GTE.UniquenessCertificates}.}
 \label{tab:conjectures}
-\begin{tabular}{@{}p{4.2cm}p{5.2cm}p{4.2cm}@{}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4.2cm}>{\raggedright\arraybackslash}p{5.2cm}>{\raggedright\arraybackslash}p{4.2cm}@{}}
 \toprule
 \textbf{Conjecture} & \textbf{Lean name} & \textbf{Note} \\
 \midrule
