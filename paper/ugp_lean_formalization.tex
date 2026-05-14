@@ -525,22 +525,24 @@ The artifact is organized into 117~\lean{} modules across twelve layers
 \end{tikzpicture}
 \end{center}
 
-\noindent
+\begin{sloppypar}\noindent
 The remaining modules (\texttt{Phase4}, \texttt{Papers},
 \texttt{Instance}, \texttt{Conjectures}, \texttt{TE22},
 \texttt{GaloisStructure}, \texttt{CyclotomicCompleteness}) provide stubs, citable
 entry points, bridge instances, and the precision-derivation theorems:
-\texttt{Phase4.GaloisProtection} (one-loop non-renormalization),
-\texttt{Phase4.TwoLoopCoefficient} (two-loop color coefficient $= 8/9$),
-\texttt{GaloisStructure.CyclotomicLayers} (Galois-stability of UGP layers in
-$\mathbb{Q}(\zeta_{120})$), \texttt{GaloisStructure.MinimalCyclotomic}
+\texttt{Phase4.\allowbreak GaloisProtection} (one-loop non-renormalization),
+\texttt{Phase4.\allowbreak TwoLoopCoefficient} (two-loop color coefficient $= 8/9$),
+\texttt{GaloisStructure.\allowbreak CyclotomicLayers} (Galois-stability of UGP layers in
+$\mathbb{Q}(\zeta_{120})$), \texttt{GaloisStructure.\allowbreak MinimalCyclotomic}
 ($\mathbb{Q}(\zeta_{120})$ minimality), and
-\texttt{CyclotomicCompleteness.CoxeterBiconditional} (Coxeter-conductor
+\texttt{CyclotomicCompleteness.\allowbreak CoxeterBiconditional} (Coxeter-conductor
 biconditional; see \S\ref{sec:coxeter_biconditional}), and
-\texttt{CyclotomicCompleteness.CyclotomicContainment} (field-theoretic embedding
+\texttt{CyclotomicCompleteness.\allowbreak CyclotomicContainment} (field-theoretic embedding
 $\mathbb{Q}(\zeta_{2h}) \hookrightarrow \mathbb{Q}(\zeta_{120})$ for $h \mid 60$;
 see \S\ref{sec:cyclotomic_containment}).
+\end{sloppypar}
 
+\begin{sloppypar}
 The \texttt{TE22} module provides a machine-checked framework for
 the TE2.2 PSC universe scan result.
 Two theorems are proved with zero \texttt{sorry}:
@@ -564,6 +566,7 @@ instance on the full \texttt{UniverseParams} product type and computable
 constraint functions; computational certificate in
 \texttt{ugp-physics/MFRR/.../extended\_scan\_results.json},
 SHA-256: \texttt{407078d7\ldots}).
+\end{sloppypar}
 
 \subsection{Zero-sorry, zero-custom-axiom policy}
 
@@ -591,8 +594,9 @@ certificate recorded; the \texttt{native\_decide} proof is pending a
 computable \texttt{Fintype} instance on the full \texttt{UniverseParams}
 product type and computable constraint functions.
 
+\begin{sloppypar}
 \medskip\noindent\textbf{Documented axioms.}
-Two theorems in \texttt{GTE.AnalyticArchitecture} are declared as
+Two theorems in \texttt{GTE.\allowbreak AnalyticArchitecture} are declared as
 \texttt{axiom} rather than \texttt{sorry}: \texttt{dickman\_equidistribution\_in\_APs}
 and \texttt{crt\_equidistribution\_within\_regime}, both citing
 Tenenbaum~\cite{Tenenbaum} III.6.  These are analytic number theory
@@ -604,8 +608,10 @@ closure of any physics theorem in the library}: running
 \texttt{\#print axioms} on any charged-lepton or coupling theorem
 returns exactly the standard Lean/Mathlib signature
 $\{\mathtt{propext},\mathtt{Classical.choice},\mathtt{Quot.sound}\}$.
+\end{sloppypar}
 
-\medskip\noindent\textbf{One additional disclosed axiom (\texttt{BraidAtlas.ChargeTheorem}, 2026-05-08):}
+\begin{sloppypar}
+\medskip\noindent\textbf{One additional disclosed axiom (\texttt{BraidAtlas.\allowbreak ChargeTheorem}, 2026-05-08):}
 \texttt{mirror\_winding\_number\_zero}: $W_{g,\text{mirror}} = 0$ for the GTE-P7
 mirror-branch dark matter candidate.  This is a \emph{braid-topology postulate}
 imported from the companion paper P17~\cite{SpivackBraidAtlas}~\S subsec:mirror\_dm:
@@ -617,6 +623,7 @@ in the P17 \texttt{PROVENANCE.md} ledger.  It supports the formal derivation
 \S\ref{sec:braidatlas}) and does \emph{not} appear in the axiom closure of any
 SM-sector theorem (lepton, quark, gauge coupling, mass relation).
 All other theorems in the library are \texttt{sorry}-free.
+\end{sloppypar}
 
 \subsection{Non-circularity contract}\label{sec:noncircular}
 
@@ -1139,16 +1146,18 @@ and the SM charge spectrum through a single algebraic path.
 \end{theorem}
 
 % ═══════════════════════════════════════════════════════════════
-\subsection{Coxeter--Conductor Theorem (\texttt{BraidAtlas.CoxeterConductor},
-            \texttt{BraidAtlas.CoxeterConductorTowerLaw})}
+\subsection{Coxeter--Conductor Theorem (\texttt{BraidAtlas.\allowbreak CoxeterConductor},
+            \texttt{BraidAtlas.\allowbreak CoxeterConductorTowerLaw})}
 \label{sec:coxeter_conductor}
 % ═══════════════════════════════════════════════════════════════
 
-The pair of modules \texttt{BraidAtlas.CoxeterConductor} and
-\texttt{BraidAtlas.CoxeterConductorTowerLaw} certify the arithmetic core
+\begin{sloppypar}
+The pair of modules \texttt{BraidAtlas.\allowbreak CoxeterConductor} and
+\texttt{BraidAtlas.\allowbreak CoxeterConductorTowerLaw} certify the arithmetic core
 of the \emph{Coxeter--conductor theorem}: the affine Toda mass spectrum
 of a simple Lie algebra $G$ lies in $\mathbb{Q}(\zeta_{120})$ iff its
 Coxeter number $h(G)$ divides~$120$.
+\end{sloppypar}
 
 \paragraph{Positive direction.}
 For $G \in \{E_8, E_6, F_4, G_2, B_4\}$ with $h \in \{30, 12, 6, 8\}$,
@@ -1182,15 +1191,17 @@ zero \texttt{sorry})}
 \end{leanref}
 \end{theorem}
 
+\begin{sloppypar}
 The proof uses Mathlib's rational-root theorem (\texttt{num\_dvd\_of\_is\_root},
 \texttt{den\_dvd\_of\_is\_root}) to verify all eight rational candidates
 $\pm 1, \pm \tfrac{1}{2}, \pm \tfrac{1}{4}, \pm \tfrac{1}{8}$, then concludes
-irreducibility from \texttt{Polynomial.irreducible\_of\_degree\_le\_three\_of\_not\_isRoot}.
+irreducibility from \texttt{Polynomial.\allowbreak irreducible\_of\_degree\_le\_three\_of\_not\_isRoot}.
 The dimension claim uses
 \texttt{finrank\_quotient\_span\_eq\_natDegree} on the
 quotient form $\mathbb{Q}[X]/\langle p\rangle$, which avoids the
 \texttt{AdjoinRoot} typeclass-synthesis obstruction noted in the
 companion lab notes.
+\end{sloppypar}
 
 % ═══════════════════════════════════════════════════════════════
 \subsection{Coxeter--Conductor Biconditional (\texttt{CoxeterBiconditional})}
@@ -1207,11 +1218,13 @@ The core lemma (proved by \texttt{omega}) is:
 \[
   2h \mid 120 \iff h \mid 60.
 \]
+\begin{sloppypar}
 This is the formal arithmetic equivalent of the field-containment criterion
 $\mathbb{Q}(\cos(\pi/h))^+ \subseteq \mathbb{Q}(\zeta_{120})$.  The full
 field-embedding is now formalised in the companion module
-\texttt{CyclotomicCompleteness.CyclotomicContainment}
+\texttt{CyclotomicCompleteness.\allowbreak CyclotomicContainment}
 (see \S\ref{sec:cyclotomic_containment}).
+\end{sloppypar}
 
 \paragraph{Per-algebra certificates.}
 Five norm\_num certificates confirm the positive cases:
@@ -1232,9 +1245,11 @@ The theorem \lstinline|e7_double_failure| (zero \texttt{sorry}) proves:
 \[
   \lnot(18 \mid 60) \;\land\; \lnot(18 \mid 120).
 \]
+\begin{sloppypar}
 This is the arithmetic complement to \lstinline|e7_tower_law_complete| in
-\texttt{BraidAtlas.CoxeterConductorTowerLaw}: divisibility fails at both the
+\texttt{BraidAtlas.\allowbreak CoxeterConductorTowerLaw}: divisibility fails at both the
 $h|60$ and $2h|120$ levels before the Tower Law argument is even needed.
+\end{sloppypar}
 
 \paragraph{Master theorem.}
 The composite theorem \lstinline|coxeter_biconditional_summary| packages all
@@ -1268,12 +1283,14 @@ $\mathbb{Q}(\zeta_{120})$ filter.
 \label{sec:cyclotomic_containment}
 % ═══════════════════════════════════════════════════════════════
 
-The module \texttt{CyclotomicCompleteness.CyclotomicContainment} (SPEC\_042\_CYX
+\begin{sloppypar}
+The module \texttt{CyclotomicCompleteness.\allowbreak CyclotomicContainment} (SPEC\_042\_CYX
 Track~C) proves the field-theoretic content of the Coxeter--conductor theorem:
 for every $h \mid 60$, the cyclotomic field $\mathbb{Q}(\zeta_{2h})$ embeds
 as a $\mathbb{Q}$-algebra into $\mathbb{Q}(\zeta_{120})$.  All theorems have
 zero \texttt{sorry} and use only Mathlib's \texttt{IsCyclotomicExtension},
 \texttt{IsPrimitiveRoot}, and \texttt{IsSplittingField} infrastructure.
+\end{sloppypar}
 
 \paragraph{Theorem~A: primitive root existence.}
 \begin{theorem}[\texttt{cyclotomic120\_contains\_primitive\_root}]
@@ -1574,13 +1591,15 @@ singleton-atomic set.  This converts the texture choice from an aesthetic
 preference into a Lean-certified MDL theorem.
 
 % ═══════════════════════════════════════════════════════════════
-\section{Galois-Protection Non-Renormalization (\texttt{Phase4.GaloisProtection})}
+\section{Galois-Protection Non-Renormalization (\texttt{Phase4.\allowbreak GaloisProtection})}
 \label{sec:galois_protection}
 % ═══════════════════════════════════════════════════════════════
 
-The module \texttt{Phase4.GaloisProtection} formalises the
+\begin{sloppypar}
+The module \texttt{Phase4.\allowbreak GaloisProtection} formalises the
 \textbf{Galois-protection non-renormalization theorem}: the one-loop QED correction
 to the Quarter-Lock algebraic prefactor $C_\mathrm{alg}$ vanishes identically.
+\end{sloppypar}
 
 \paragraph{Physical context.}
 $C_\mathrm{alg} = -1/(k_{\mathrm{gen2}} + k_{L^2}/4) + (7/4)(k_{L^2}/k_{\mathrm{gen2}})$
@@ -1622,11 +1641,13 @@ Supporting lemmas:
     $\alpha/\pi$ (certifying it is at most two-loop magnitude).
 \end{itemize}
 
+\begin{sloppypar}
 The residual 2.39~ppm is $0.886 \times \alpha^2/(2\pi^2)$ (verified numerically
 by \texttt{comp\_p25\_o4b\_analytic\_proof.py}), consistent with a two-loop
 correction.  The analytic proof of the one-loop cancellation is formalised in
 \texttt{comp\_p25\_o4b\_analytic\_proof.json} (6-step argument via Baker's
 theorem + T/$T^\dagger$ pairing).
+\end{sloppypar}
 
 % ═══════════════════════════════════════════════════════════════
 \section{Two-Loop Color Coefficient (\texttt{Phase4.TwoLoopCoefficient})}
@@ -1821,14 +1842,16 @@ Then
 \]
 This is an exact algebraic identity: it holds for any values of $\ln\varphi$ and
 $\ln(2\pi)$, given only their positivity.  The proof is:
-\[
-  \frac{\ln 2}{N_{\rm univ}} = \frac{\ln\varphi}{\ln\varphi + 2\ln(2\pi)},
-  \quad
-  1 - \frac{\ln 2}{N_{\rm univ}} = \frac{2\ln(2\pi)}{\ln\varphi + 2\ln(2\pi)},
-  \quad
-  \frac{1}{1 - \ln 2/N_{\rm univ}} = \frac{\ln\varphi + 2\ln(2\pi)}{2\ln(2\pi)}
-  = 1 + \frac{\ln\varphi}{2\ln(2\pi)} = \mathrm{IPT}. \;\checkmark
-\]
+\begin{align*}
+  \frac{\ln 2}{N_{\rm univ}}
+    &= \frac{\ln\varphi}{\ln\varphi + 2\ln(2\pi)}, \\
+  1 - \frac{\ln 2}{N_{\rm univ}}
+    &= \frac{2\ln(2\pi)}{\ln\varphi + 2\ln(2\pi)}, \\
+  \frac{1}{1 - \ln 2/N_{\rm univ}}
+    &= \frac{\ln\varphi + 2\ln(2\pi)}{2\ln(2\pi)}
+     = 1 + \frac{\ln\varphi}{2\ln(2\pi)}
+     = \mathrm{IPT}.\;\checkmark
+\end{align*}
 
 \begin{leanref} \lstinline|ipt_self_consistent|
 \textup{(in \texttt{CyclotomicCompleteness.H9SelfConsistency})}
@@ -2553,16 +2576,18 @@ scaling ratio is structurally derived from UGP, not data-matched.
 \textup{(in \texttt{MassRelations.CKMTheta23}, zero \texttt{sorry})}\end{leanref}
 \end{theorem}
 
-\subsection{Koide \texorpdfstring{$S_3$}{S3} Discrete Arithmetic-Mean Identity (\texttt{MassRelations.KoideS3DiscreteIdentities})}
+\subsection{Koide \texorpdfstring{$S_3$}{S3} Discrete Arithmetic-Mean Identity (\texttt{MassRelations.\allowbreak KoideS3DiscreteIdentities})}
 \label{sec:koide_s3_discrete}
 
-The module \texttt{MassRelations.KoideS3DiscreteIdentities} certifies the discrete
+\begin{sloppypar}
+The module \texttt{MassRelations.\allowbreak KoideS3DiscreteIdentities} certifies the discrete
 shadow of the $S_3$ equal-norm Koide condition for the GTE lepton orbit's
 $a$-component, contributing to the partial closure of OP(vii) in
 P01~\cite{Spivack2026_SM_UGP}.  Where the continuous $S_3$ equal-norm identity
 $|v_{\mathbf{1}}|^2 = |v_{\mathbf{2}}|^2 = 3$ holds for every value of the Koide
 phase (Theorem~\ref{thm:koide-equal-norm}), the discrete identity holds exactly
 on the canonical Lean-certified orbit $a$-component sequence $(1, 9, 5)$.
+\end{sloppypar}
 
 \begin{theorem}[Lepton $a$-arithmetic mean]\label{thm:lepton_a_mean}
 The tau $a$-value is the arithmetic mean of the electron and muon $a$-values
