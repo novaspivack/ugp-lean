@@ -8,33 +8,28 @@
 -- KEY ARGUMENT:
 --   The Callan-Symanzik DT integral
 --     I(η₁, η₂) = ∫_{η₁}^{η₂} dη / β_η
---   diverges logarithmically at both endpoints η₁ and η₂ because:
---     near η₁: β_η ≈ κ(η − η₁)(η₁ − η₂) ~ C(η − η₁)   [linear zero]
---     so 1/β_η ~ 1/(C(η − η₁))  and  ∫ dη/(η−η₁) = log|η−η₁| → −∞
+--   is not well-defined (the integrand is not interval-integrable) because:
+--     near η₁: β_η ≈ κ(η₁ − η₂)(η − η₁)  [simple zero]
+--     so 1/β_η ~ 1/(C(η − η₁)) which is NOT integrable at η₁.
+--   Mathlib key: not_intervalIntegrable_of_sub_inv_isBigO_punctured.
 --
 -- PHYSICAL CONSEQUENCE:
 --   The SRRG η-flow cannot generate the EW scale v ≈ 246 GeV through
 --   dimensional transmutation. v remains a Category A/D anchor in UGP/PSC.
 --
--- CONTEXT (EPIC_051 Round 2, Direction G):
---   This formalizes the analytic no-go from Round 1, Direction C
---   (01_LAB_NOTES_ROUND01_vev_genius_team.md, §3).
---
 -- PROOF STATUS:
---   The theorem structure and key lemmas are fully stated.
---   Technical Mathlib interval-integral divergence steps are marked sorry.
---   The proof strategy is rigorous and sorries could be closed with
---   Mathlib.MeasureTheory.Integral.IntervalIntegral divergence lemmas
---   (integrability, HasDerivAt, integrableOn).
+--   All sorries closed. Main theorem and all supporting lemmas fully proved.
 
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.MeasureTheory.Integral.IntervalIntegral
+import Mathlib.Analysis.SpecialFunctions.NonIntegrable
+import Mathlib.Analysis.SpecialFunctions.Integrability.Basic
 import Mathlib.Analysis.Calculus.Deriv.Basic
 import Mathlib.Topology.Algebra.Order.LiminfLimsup
 import Mathlib.Order.Filter.Basic
 
-open Real Filter Set MeasureTheory intervalIntegral
+open scoped Topology
+open Real Filter Set MeasureTheory intervalIntegral Asymptotics
 
 noncomputable section
 
@@ -45,7 +40,6 @@ def betaEta (κ η₁ η₂ η : ℝ) : ℝ := κ * (η - η₁) * (η - η₂)
 
 -- ─── Basic algebraic properties ────────────────────────────────────────────
 
-/-- β_η vanishes exactly at the two endpoints η₁ and η₂. -/
 theorem betaEta_zero_at_eta1 (κ η₁ η₂ : ℝ) : betaEta κ η₁ η₂ η₁ = 0 := by
   simp [betaEta]
 
@@ -56,132 +50,136 @@ theorem betaEta_zero_at_eta2 (κ η₁ η₂ : ℝ) : betaEta κ η₁ η₂ η�
 theorem betaEta_nonzero_interior (κ η₁ η₂ η : ℝ)
     (hκ : κ ≠ 0) (hη : η₁ < η) (hη2 : η < η₂) :
     betaEta κ η₁ η₂ η ≠ 0 := by
-  simp [betaEta]
-  intro h
-  rcases mul_eq_zero.mp h with h1 | h1
-  · rcases mul_eq_zero.mp h1 with h2 | h2
-    · exact hκ h2
-    · linarith
-  · linarith
+  simp only [betaEta, ne_eq]
+  exact mul_ne_zero (mul_ne_zero hκ (sub_ne_zero.mpr hη.ne')) (sub_ne_zero.mpr hη2.ne)
 
 -- ─── Linear behavior near the lower zero ────────────────────────────────────
 
-/-- Near η₁, the β-function has a simple (linear) zero:
-    β_η / (η − η₁) → κ(η₁ − η₂) as η → η₁. -/
-theorem betaEta_linear_zero_at_eta1 (κ η₁ η₂ : ℝ) (hη : η₁ < η₂) (η : ℝ) (hne : η ≠ η₁) :
+/-- β_η / (η − η₁) = κ(η − η₂) for all η ≠ η₁ (the simple-zero factorization). -/
+theorem betaEta_linear_zero_at_eta1 (κ η₁ η₂ : ℝ) (_hη : η₁ < η₂) (η : ℝ) (hne : η ≠ η₁) :
     betaEta κ η₁ η₂ η / (η - η₁) = κ * (η - η₂) := by
-  simp [betaEta]
+  simp only [betaEta]
   field_simp [sub_ne_zero.mpr hne]
-  ring
 
-/-- The limit of β_η / (η − η₁) at η₁ is κ(η₁ − η₂), which is nonzero. -/
-theorem betaEta_simple_zero_limit (κ η₁ η₂ : ℝ) (hκ : κ ≠ 0) (hη : η₁ < η₂) :
+/-- The limit of β_η / (η − η₁) at η₁ is κ(η₁ − η₂) (nonzero when κ ≠ 0, η₁ ≠ η₂). -/
+theorem betaEta_simple_zero_limit (κ η₁ η₂ : ℝ) (_hκ : κ ≠ 0) (hη : η₁ < η₂) :
     Filter.Tendsto (fun η => betaEta κ η₁ η₂ η / (η - η₁))
-                   (nhdsWithin η₁ {η₁}ᶜ) (nhds (κ * (η₁ - η₂))) := by
-  have key : ∀ η ≠ η₁, betaEta κ η₁ η₂ η / (η - η₁) = κ * (η - η₂) := by
-    intro η hne; exact betaEta_linear_zero_at_eta1 κ η₁ η₂ hη η hne
-  rw [Filter.tendsto_nhdsWithin_iff]
-  constructor
-  · rw [show (fun η => betaEta κ η₁ η₂ η / (η - η₁)) =
-             (fun η => κ * (η - η₂)) from by ext η; by_cases h : η = η₁
-      · simp [h, betaEta]
-      · exact (key η h).symm ▸ rfl]
-    · exact (continuous_const.mul (continuous_id.sub continuous_const)).continuousAt
-        |>.tendsto
-  · exact eventually_nhdsWithin_of_forall (fun _ hη => hη)
+                   (𝓝[≠] η₁) (𝓝 (κ * (η₁ - η₂))) := by
+  have key : (fun η => betaEta κ η₁ η₂ η / (η - η₁)) =ᶠ[𝓝[≠] η₁] (fun η => κ * (η - η₂)) :=
+    eventually_nhdsWithin_of_forall fun η hne =>
+      betaEta_linear_zero_at_eta1 κ η₁ η₂ hη η hne
+  have hg : Filter.Tendsto (fun η => κ * (η - η₂)) (𝓝[≠] η₁) (𝓝 (κ * (η₁ - η₂))) := by
+    have : ContinuousAt (fun η : ℝ => κ * (η - η₂)) η₁ := by fun_prop
+    exact this.tendsto.mono_left nhdsWithin_le_nhds
+  exact hg.congr' key.symm
 
--- ─── The integrand 1/β_η diverges at the endpoints ───────────────────────
+-- ─── Key BigO: (η − η₁)⁻¹ = O(1/β_η) near η₁ ────────────────────────────
 
-/-- Near η₁, the integrand 1/β_η behaves like 1/(C(η−η₁)) for C ≠ 0,
-    and therefore is not integrable on [η₁, η₁+ε] for any ε > 0. -/
+/-- Near η₁, (η − η₁)⁻¹ = O(1/β_η) in the 𝓝[≠] sense.
+
+    Proof: factorization (η−η₁)⁻¹ = κ(η−η₂) · (1/β_η) for η ≠ η₁, η ≠ η₂;
+    κ(η−η₂) → κ(η₁−η₂) is continuous and bounded near η₁, giving the bound. -/
+private lemma sub_inv_isBigO_betaEta_inv (κ η₁ η₂ : ℝ) (hκ : κ ≠ 0) (hη : η₁ < η₂) :
+    (fun η => (η - η₁)⁻¹) =O[𝓝[≠] η₁] (fun η => 1 / betaEta κ η₁ η₂ η) := by
+  -- η₂ ∉ 𝓝[≠] η₁ for small enough neighborhoods (since η₂ ≠ η₁)
+  have hne₂ : ∀ᶠ η in 𝓝[≠] η₁, η ≠ η₂ := by
+    apply eventually_nhdsWithin_of_eventually_nhds
+    have h : η₁ ∈ ({η₂} : Set ℝ)ᶜ := by simp [hη.ne]
+    exact isOpen_compl_singleton.mem_nhds h
+  -- Factorization: (η−η₁)⁻¹ = κ(η−η₂) · (1/β_η) when η ≠ η₁, η ≠ η₂
+  have heq : ∀ᶠ η in 𝓝[≠] η₁, (η - η₁)⁻¹ = κ * (η - η₂) * (1 / betaEta κ η₁ η₂ η) := by
+    filter_upwards [self_mem_nhdsWithin, hne₂] with η hne₁ hne₂
+    simp only [betaEta, one_div]
+    field_simp [hκ, sub_ne_zero.mpr hne₁, sub_ne_zero.mpr hne₂]
+  -- κ(η−η₂) is bounded: |κ(η−η₂)| ≤ ‖κ(η₁−η₂)‖ + 1 near η₁
+  set M := ‖κ * (η₁ - η₂)‖ + 1
+  have hbnd : ∀ᶠ η in 𝓝[≠] η₁, ‖κ * (η - η₂)‖ ≤ M := by
+    have hcts : ContinuousAt (fun η : ℝ => κ * (η - η₂)) η₁ := by fun_prop
+    have htend : Filter.Tendsto (fun η => κ * (η - η₂)) (𝓝[≠] η₁) (𝓝 (κ * (η₁ - η₂))) :=
+      hcts.tendsto.mono_left nhdsWithin_le_nhds
+    exact htend.norm.eventually (Iic_mem_nhds (lt_add_one _))
+  -- Combine: ‖(η−η₁)⁻¹‖ = ‖κ(η−η₂)‖ · ‖1/β_η‖ ≤ M · ‖1/β_η‖
+  apply IsBigO.of_bound M
+  filter_upwards [heq, hbnd] with η h1 h2
+  rw [h1, norm_mul]
+  exact mul_le_mul_of_nonneg_right h2 (norm_nonneg _)
+
+-- ─── The integrand 1/β_η is not interval-integrable ─────────────────────
+
+/-- On [η₁, η₁+ε] (with 0 < ε < η₂−η₁), the integrand 1/β_η is NOT
+    interval-integrable. The singularity at η₁ is of type (η−η₁)⁻¹ which is
+    not L¹ near 0. -/
 theorem integrand_not_integrable_at_lower_zero (κ η₁ η₂ : ℝ)
-    (hκ : κ ≠ 0) (hη : η₁ < η₂) (ε : ℝ) (hε : 0 < ε) (hεη : ε < η₂ - η₁) :
-    ¬ MeasureTheory.Integrable (fun η => 1 / betaEta κ η₁ η₂ η)
-      (MeasureTheory.Measure.restrict volume (Set.Ioc η₁ (η₁ + ε))) := by
-  sorry
-  -- Proof sketch:
-  -- 1. On Ioc η₁ (η₁+ε), betaEta κ η₁ η₂ η = κ(η−η₁)(η−η₂)
-  -- 2. |η−η₂| is bounded below by (η₂−η₁−ε) > 0 on this interval
-  -- 3. So |1/betaEta| ≥ 1/(|κ|·(η₂−η₁)·(η−η₁)) on Ioc η₁ (η₁+ε)
-  -- 4. ∫ dη/(η−η₁) = log(ε) - log(0⁺) = +∞ (standard Mathlib: not integrable)
-  -- 5. By comparison, 1/betaEta is also not integrable near η₁.
+    (hκ : κ ≠ 0) (hη : η₁ < η₂) (ε : ℝ) (hε : 0 < ε) (_hεη : ε < η₂ - η₁) :
+    ¬ IntervalIntegrable (fun η => 1 / betaEta κ η₁ η₂ η) volume η₁ (η₁ + ε) :=
+  not_intervalIntegrable_of_sub_inv_isBigO_punctured
+    (sub_inv_isBigO_betaEta_inv κ η₁ η₂ hκ hη)
+    (by linarith)
+    left_mem_uIcc
 
--- ─── The key DT integral diverges ─────────────────────────────────────────
+-- ─── The full DT integral is not well-defined ─────────────────────────────
 
-/-- The Callan-Symanzik DT integral
-      I = ∫_{η₁}^{η₂} dη / β_η
-    diverges: the integral does not converge to any finite real number. -/
+/-- The integrand 1/β_η is NOT interval-integrable on [η₁, η₂]:
+    the DT integral I = ∫_{η₁}^{η₂} dη/β_η does not exist as an L¹ integral. -/
 theorem dt_integral_diverges (κ η₁ η₂ : ℝ) (hκ : κ ≠ 0) (hη : η₁ < η₂) :
-    ¬ ∃ (I : ℝ), ∫ η in η₁..η₂, (1 / betaEta κ η₁ η₂ η) = I := by
-  sorry
-  -- Proof sketch:
-  -- The integral ∫_{η₁}^{η₂} 1/β_η dη is improper (β_η = 0 at η₁ and η₂).
-  -- By integrand_not_integrable_at_lower_zero, the integrand is not L¹ near η₁.
-  -- Therefore the Lebesgue integral over [η₁, η₂] does not exist as a finite real.
-  -- IntervalIntegral.integral_comp_* and integrableOn analysis confirm this.
+    ¬ IntervalIntegrable (fun η => 1 / betaEta κ η₁ η₂ η) volume η₁ η₂ :=
+  not_intervalIntegrable_of_sub_inv_isBigO_punctured
+    (sub_inv_isBigO_betaEta_inv κ η₁ η₂ hκ hη)
+    hη.ne
+    left_mem_uIcc
 
 -- ─── Main no-go theorem ─────────────────────────────────────────────────────
 
-/-- SRRG No-Go Theorem:
+/-- SRRG No-Go Theorem (machine-checked):
     With β_η = κ(η − η₁)(η − η₂) having simple zeros at both endpoints,
-    there is no finite energy scale Λ_DT > 0 arising from the DT formula
-      Λ_DT = μ_UV · exp(−I)
-    where I = ∫_{η₁}^{η₂} dη/β_η, because I diverges.
+    the integrand 1/β_η is NOT in L¹[η₁, η₂].
 
-    Physical reading: The SRRG η-flow cannot produce the EW scale v ≈ 246 GeV
-    through dimensional transmutation. -/
+    Physical reading: The SRRG η-flow cannot generate the EW scale v ≈ 246 GeV
+    through dimensional transmutation. v remains a Category A/D anchor in UGP/PSC. -/
 theorem srrg_no_dimensional_transmutation (κ η₁ η₂ : ℝ)
     (hκ : κ ≠ 0) (hη : η₁ < η₂) :
-    ∀ (μ_UV : ℝ), μ_UV > 0 →
-    ¬ ∃ (Λ_DT : ℝ), Λ_DT > 0 ∧
-      ∃ (I : ℝ), (∫ η in η₁..η₂, (1 / betaEta κ η₁ η₂ η) = I) ∧
-                 Λ_DT = μ_UV * Real.exp (-I) := by
-  intro μ_UV _ ⟨_, _, I, hI, _⟩
-  exact dt_integral_diverges κ η₁ η₂ hκ hη ⟨I, hI⟩
+    ¬ IntervalIntegrable (fun η => 1 / betaEta κ η₁ η₂ η) volume η₁ η₂ :=
+  dt_integral_diverges κ η₁ η₂ hκ hη
 
 -- ─── Higgs quartic corollary ─────────────────────────────────────────────
 
-/-- The same obstruction applies to the Higgs quartic β-function
-    β_λ ∝ λ² near λ = 0 (leading one-loop term 24λ²/(16π²)):
-    The DT integral ∫dλ/β_λ ~ ∫dλ/(b₀λ²) = −1/(b₀λ) diverges as λ → 0.
-    This is STRONGER than the SRRG case (1/λ vs log(1/λ)) but the conclusion
-    is the same: no finite DT scale from β_λ alone. -/
+/-- The Higgs quartic DT integrand 1/(b₀λ²) is NOT interval-integrable on [0,1].
+    Stronger singularity (λ⁻² vs λ⁻¹), same conclusion: no finite DT scale.
+
+    Proof: λ⁻¹ = b₀λ · (1/(b₀λ²)) and b₀λ → 0 near 0, so λ⁻¹ = O(1/(b₀λ²)).
+    Apply not_intervalIntegrable_of_sub_inv_isBigO_punctured with c = 0. -/
 theorem higgs_quartic_no_dt (b₀ : ℝ) (hb₀ : b₀ > 0) :
-    ¬ ∃ (I : ℝ),
-      ∫ λ in (0 : ℝ)..1, (1 / (b₀ * λ^2)) = I := by
-  sorry
-  -- Proof sketch:
-  -- ∫₀^1 1/(b₀λ²) dλ = (1/b₀) · ∫₀^1 λ^{-2} dλ
-  -- The integral ∫₀^1 λ^{-2} dλ diverges (not L¹ on [0,1]).
-  -- Mathlib: MeasureTheory.not_integrable_of_tendsto_atTop or
-  --          intervalIntegral.integral_comp_rpow divergence.
+    ¬ IntervalIntegrable (fun lam => 1 / (b₀ * lam ^ 2)) volume 0 1 := by
+  apply not_intervalIntegrable_of_sub_inv_isBigO_punctured
+      _ (by norm_num : (0 : ℝ) ≠ 1) left_mem_uIcc
+  simp only [sub_zero]
+  -- Factorization: lam⁻¹ = b₀·lam · (1/(b₀·lam²)) for lam ≠ 0
+  have heq : ∀ᶠ lam in 𝓝[≠] (0 : ℝ), lam⁻¹ = b₀ * lam * (1 / (b₀ * lam ^ 2)) := by
+    filter_upwards [self_mem_nhdsWithin] with lam hlam
+    field_simp [hb₀.ne', pow_ne_zero 2 hlam, hlam]
+  -- b₀·lam is bounded near 0 (tends to 0, so eventually ‖b₀·lam‖ < 1)
+  have hbnd : ∀ᶠ lam in 𝓝[≠] (0 : ℝ), ‖b₀ * lam‖ ≤ 1 := by
+    have hcts : ContinuousAt (fun lam : ℝ => b₀ * lam) 0 := by fun_prop
+    have htend : Filter.Tendsto (fun lam => b₀ * lam) (𝓝[≠] (0 : ℝ)) (𝓝 0) := by
+      have h := hcts.tendsto
+      simp only [mul_zero] at h
+      exact tendsto_nhdsWithin_of_tendsto_nhds h
+    have hlt : ∀ᶠ lam in 𝓝[≠] (0 : ℝ), ‖b₀ * lam‖ < 1 :=
+      htend.norm.eventually (Iio_mem_nhds (by norm_num : ‖(0 : ℝ)‖ < 1))
+    exact hlt.mono (fun _ h => le_of_lt h)
+  -- ‖lam⁻¹‖ = ‖b₀·lam‖ · ‖1/(b₀·lam²)‖ ≤ 1 · ‖1/(b₀·lam²)‖
+  apply IsBigO.of_bound 1
+  filter_upwards [heq, hbnd] with lam h1 h2
+  rw [h1, norm_mul]
+  exact mul_le_mul_of_nonneg_right h2 (norm_nonneg _)
 
--- ─── Contrast: QCD-type β-function enables DT ────────────────────────────
+-- ─── Contrast remark ─────────────────────────────────────────────────────
 
-/-- For contrast: a QCD-type β-function β(g) = −b₀ g³ with b₀ > 0
-    makes the DT integral CONVERGENT:
-      ∫_ε^{g_UV} dg / (−b₀g³) = 1/(2b₀) · (1/ε² − 1/g_UV²) → ∞ as ε → 0
-    Wait — this also diverges! The correct DT formula for QCD is:
-      Λ_QCD = μ · exp(−∫_{αs(μ)}^{∞} dαs / β(αs))
-    The integral is over αs from μ down to 0 via the flow.
-    In terms of g: I = ∫₀^{g(μ)} dg′ / β(g′) = ∫₀^{g(μ)} dg′/(b₀g′³)
-    which also diverges as g′→0.
-
-    The QCD DT formula actually uses the *closed form*:
-      Λ_QCD = μ · exp(−1/(b₀ αs(μ)))   (one-loop)
-    This is finite because αs(μ) > 0 at any finite μ.
-    The DT scale is set by where αs diverges, not by an integral to 0.
-
-    For Higgs: αs → α_H = λ/(4π). The Landau pole of λ is at finite scale (below M_P).
-    But this gives a UV Landau pole, not an IR condensation scale. DT ≠ Landau pole.
-
-    The key insight: QCD DT works because it is IR free at the confinement scale
-    (g gets large in IR → confinement at Λ_QCD). The Higgs has no such mechanism. -/
+/-- For contrast: QCD DT is possible via Λ_QCD = μ · exp(−1/(b₀αs(μ))),
+    a closed-form that bypasses the integral obstruction. The Higgs has no
+    such mechanism. -/
 theorem qcd_contrast_remark : True := trivial
 
 end
 
--- ─── Module declaration for import ────────────────────────────────────────
-
--- To import this from VEVNoGo.lean:
---   import UgpLean.VEVNoGo.SRRGNoGo
+-- To import: import UgpLean.VEVNoGo.SRRGNoGo
