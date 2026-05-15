@@ -183,3 +183,5 @@ theorem qcd_contrast_remark : True := trivial
 end
 
 -- To import: import UgpLean.VEVNoGo.SRRGNoGo
+
+-- GRADUATED to srrg-lean/SrrgLean/FixedPoints/VEVNoGo.lean
