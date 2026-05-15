@@ -80,6 +80,7 @@ import UgpLean.Universality.TuringUniversal
 import UgpLean.Universality.ArchitectureBridge
 import UgpLean.TE22.ScanCertificate
 import UgpLean.PSC.RCCInfiniteFamilies
+import UgpLean.VEVProof.GoldstoneEntropyCorrection
 
 /-!
 # UgpLean — Universal Generative Principle: Lean 4 Formalization
