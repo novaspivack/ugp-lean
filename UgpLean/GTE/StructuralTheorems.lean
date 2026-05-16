@@ -288,7 +288,7 @@ theorem fingerprint_fixed_point_bounded
   -- this gives equality of sets, hence a fixed point.
   have : ∃ n, (chain n).card = (chain (n+1)).card := by
     by_contra h
-    push_neg at h
+    push Not at h
     have strict : ∀ n, (chain n).card < (chain (n+1)).card := fun n =>
       lt_of_le_of_ne (card_mono n) (h n)
     -- The cardinality sequence is strictly increasing, so chain(B.card + 1).card

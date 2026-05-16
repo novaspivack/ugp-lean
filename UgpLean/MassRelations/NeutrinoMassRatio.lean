@@ -7,9 +7,7 @@ import UgpLean.MassRelations.SeesawIndex
 Lean formalization of the neutrino mass-squared ratio prediction from the UGP
 seesaw exponent α = 29/9 applied to Braid Atlas b-values {5, 11, 19}.
 
-## Phase 1 Theorems (EPIC_052_NLS, 2026-05-16)
-
-Three theorems targeting zero sorry:
+## Phase 1 Theorems (zero sorry)
 
 1. **`fn_texture_gives_seesaw_exponent`** — Arithmetic closure.
    The FN charge pair (q₁,q₂) = (N_c, strand) = (3,2), selected by the UGP MDL
@@ -26,6 +24,16 @@ Three theorems targeting zero sorry:
    Proved via monotone integer bounds: each b^{58/9} is sandwiched by checking
    that (lower)⁹ < b⁵⁸ < (upper)⁹ using `norm_num`.
 
+## Phase 2 Theorems (zero sorry, proved 2026-05-16)
+
+4. **`neutrino_mass_ratio_tight_bound`** — Tight certified bound.
+   |R − 0.02936| < 0.0001, proved via unit-width integer bounds:
+   31950 < 5^(58/9) < 31951, 5142772 < 11^(58/9) < 5142773,
+   174123159 < 19^(58/9) < 174123160 (all verified by norm_num).
+
+5. **`neutrino_mass_ratio_within_1pct_of_nufit`** — NuFIT 6.0 comparison.
+   |R − 0.02951| < 0.01 · 0.02951; R is within 1% of the NuFIT 6.0 central value.
+
 ## The formula (from P21 §3)
 
   R = Δm²₂₁/Δm²₃₁ = (11^{58/9} − 5^{58/9}) / (19^{58/9} − 5^{58/9}) ≈ 0.02936
@@ -39,7 +47,10 @@ Three theorems targeting zero sorry:
 
 ## Status
 
-Zero `sorry` for Theorems 1–3.
+All five theorems zero sorry. Phase 2 (tight bound |R − 0.02936| < 0.0001): proved
+2026-05-16 using unit-width integer bounds: 31950 < 5^(58/9) < 31951,
+5142772 < 11^(58/9) < 5142773, 174123159 < 19^(58/9) < 174123160
+(all verified by norm_num).
 -/
 
 namespace UgpLean.MassRelations.NeutrinoMassRatio
@@ -215,7 +226,125 @@ theorem neutrino_mass_ratio_coarse_bound :
     -- 1000 · 5168750 = 5168750000 < 30 · 172968000 = 5189040000 ✓
     nlinarith
 
--- Phase 2 (tight bound |R − 0.02936| < 0.0001): deferred pending Mathlib Real.rpow
--- norm_num extension. Mathematical argument documented in EPIC_052_NLS_SPEC.md.
+-- ════════════════════════════════════════════════════════════════
+-- §4  Phase 2 — Tight Bound and NuFIT Comparison
+-- ════════════════════════════════════════════════════════════════
+
+/-!
+### Phase 2: Tighter bound |R − 0.02936| < 0.0001
+
+The true value is R ≈ 0.029360... (Python: exact b^{58/9} values).
+Proved 2026-05-16 using unit-width integer bounds (each reducing to a
+norm_num evaluation of exact integers via the helper lemmas above):
+
+  31950 < 5^(58/9)  < 31951       (31950^9 < 5^58  < 31951^9)
+  5142772 < 11^(58/9) < 5142773   (5142772^9 < 11^58 < 5142773^9)
+  174123159 < 19^(58/9) < 174123160 (174123159^9 < 19^58 < 174123160^9)
+
+From these: 5110821 < num < 5110823, 174091208 < denom < 174091210.
+R > 0.02926: 2926·denom < 2926·174091210 = 509390880260 < 511082100000 = 100000·num ✓
+R < 0.02946: 100000·num < 100000·5110823 = 511082300000 < 512872698768 = 2946·174091208 < 2946·denom ✓
+
+Phase 2 (tight bound |R − 0.02936| < 0.0001): proved 2026-05-16 using unit-width
+integer bounds: 31950 < 5^(58/9) < 31951, 5142772 < 11^(58/9) < 5142773,
+174123159 < 19^(58/9) < 174123160 (all verified by norm_num).
+-/
+
+/-- Phase 2 tight bound: R lies within 0.0001 of 0.02936 (zero sorry).
+
+    Integer bounds used (each certified by c^9 < b^58 < (c+1)^9 via norm_num):
+      31950 < 5^(58/9)  < 31951       (31950^9 < 5^58  < 31951^9)
+    5142772 < 11^(58/9) < 5142773   (5142772^9 < 11^58 < 5142773^9)
+  174123159 < 19^(58/9) < 174123160 (174123159^9 < 19^58 < 174123160^9)
+
+    Derived: 5110821 < num < 5110823, 174091208 < denom < 174091210.
+    R > 0.02926: 2926·denom < 2926·174091210 = 509390880260 < 511082100000 = 100000·num ✓
+    R < 0.02946: 100000·num < 100000·5110823 = 511082300000 < 512872698768 = 2946·174091208 < 2946·denom ✓  -/
+theorem neutrino_mass_ratio_tight_bound :
+    let R := ((11 : ℝ) ^ ((58 : ℝ) / 9) - (5 : ℝ) ^ ((58 : ℝ) / 9)) /
+             ((19 : ℝ) ^ ((58 : ℝ) / 9) - (5 : ℝ) ^ ((58 : ℝ) / 9))
+    |R - (0.02936 : ℝ)| < 0.0001 := by
+  simp only
+  -- ── Unit-width integer bounds on each b^(58/9) ───────────────────────
+  -- 31950 < 5^(58/9) < 31951  (31950^9 < 5^58 < 31951^9)
+  have h5_lo : (31950 : ℝ) < (5 : ℝ) ^ ((58 : ℝ) / 9) :=
+    rpow_gt_of_pow_gt (by norm_num) (by norm_num) 58 9 (by norm_num) (by norm_num)
+  have h5_hi : (5 : ℝ) ^ ((58 : ℝ) / 9) < (31951 : ℝ) :=
+    rpow_lt_of_pow_lt (by norm_num) (by norm_num) 58 9 (by norm_num) (by norm_num)
+  -- 5142772 < 11^(58/9) < 5142773  (5142772^9 < 11^58 < 5142773^9)
+  have h11_lo : (5142772 : ℝ) < (11 : ℝ) ^ ((58 : ℝ) / 9) :=
+    rpow_gt_of_pow_gt (by norm_num) (by norm_num) 58 9 (by norm_num) (by norm_num)
+  have h11_hi : (11 : ℝ) ^ ((58 : ℝ) / 9) < (5142773 : ℝ) :=
+    rpow_lt_of_pow_lt (by norm_num) (by norm_num) 58 9 (by norm_num) (by norm_num)
+  -- 174123159 < 19^(58/9) < 174123160  (174123159^9 < 19^58 < 174123160^9)
+  have h19_lo : (174123159 : ℝ) < (19 : ℝ) ^ ((58 : ℝ) / 9) :=
+    rpow_gt_of_pow_gt (by norm_num) (by norm_num) 58 9 (by norm_num) (by norm_num)
+  have h19_hi : (19 : ℝ) ^ ((58 : ℝ) / 9) < (174123160 : ℝ) :=
+    rpow_lt_of_pow_lt (by norm_num) (by norm_num) 58 9 (by norm_num) (by norm_num)
+  -- ── Denominator positivity ────────────────────────────────────────────
+  have h_denom_pos : (0 : ℝ) < (19 : ℝ) ^ ((58 : ℝ) / 9) - (5 : ℝ) ^ ((58 : ℝ) / 9) := by
+    linarith
+  -- ── Ratio bounds: 2926/100000 < R < 2946/100000 ──────────────────────
+  have hR_lo : (2926 : ℝ) / 100000 <
+      ((11 : ℝ) ^ ((58 : ℝ) / 9) - (5 : ℝ) ^ ((58 : ℝ) / 9)) /
+      ((19 : ℝ) ^ ((58 : ℝ) / 9) - (5 : ℝ) ^ ((58 : ℝ) / 9)) := by
+    rw [lt_div_iff₀ h_denom_pos]
+    -- 2926/100000 · denom < num; denom < 174091210, num > 5110821
+    -- 2926 · 174091210 = 509390880260 < 511082100000 = 100000 · 5110821 ✓
+    nlinarith
+  have hR_hi :
+      ((11 : ℝ) ^ ((58 : ℝ) / 9) - (5 : ℝ) ^ ((58 : ℝ) / 9)) /
+      ((19 : ℝ) ^ ((58 : ℝ) / 9) - (5 : ℝ) ^ ((58 : ℝ) / 9)) < (2946 : ℝ) / 100000 := by
+    rw [div_lt_iff₀ h_denom_pos]
+    -- num < 2946/100000 · denom; num < 5110823, denom > 174091208
+    -- 100000 · 5110823 = 511082300000 < 512872698768 = 2946 · 174091208 ✓
+    nlinarith
+  -- ── Conclude |R - 0.02936| < 0.0001 from R ∈ (2926/100000, 2946/100000) ──
+  rw [abs_lt]
+  constructor
+  · -- -(0.0001) < R - 0.02936, i.e., R > 0.02936 - 0.0001 = 0.02926 = 2926/100000
+    linarith [show (0.02936 : ℝ) - 0.0001 = 2926 / 100000 from by norm_num]
+  · -- R - 0.02936 < 0.0001, i.e., R < 0.02936 + 0.0001 = 0.02946 = 2946/100000
+    linarith [show (0.02936 : ℝ) + 0.0001 = 2946 / 100000 from by norm_num]
+
+/-- Phase 2 NuFIT comparison: R is within 1% of the NuFIT 6.0 central value 0.02951 (zero sorry).
+    R ∈ (0.02926, 0.02946); since 0.02946 < 0.02951, R < nufit_central, so
+    |R − 0.02951| = 0.02951 − R < 0.02951 − 0.02926 = 0.00025 < 0.0002951 = 0.01 · 0.02951. -/
+theorem neutrino_mass_ratio_within_1pct_of_nufit :
+    let R := ((11 : ℝ) ^ ((58 : ℝ) / 9) - (5 : ℝ) ^ ((58 : ℝ) / 9)) /
+             ((19 : ℝ) ^ ((58 : ℝ) / 9) - (5 : ℝ) ^ ((58 : ℝ) / 9))
+    let nufit_central := (0.02951 : ℝ)
+    |R - nufit_central| < (0.01 : ℝ) * nufit_central := by
+  simp only
+  -- Same integer bounds as tight_bound give R ∈ (2926/100000, 2946/100000)
+  have h5_lo : (31950 : ℝ) < (5 : ℝ) ^ ((58 : ℝ) / 9) :=
+    rpow_gt_of_pow_gt (by norm_num) (by norm_num) 58 9 (by norm_num) (by norm_num)
+  have h5_hi : (5 : ℝ) ^ ((58 : ℝ) / 9) < (31951 : ℝ) :=
+    rpow_lt_of_pow_lt (by norm_num) (by norm_num) 58 9 (by norm_num) (by norm_num)
+  have h11_lo : (5142772 : ℝ) < (11 : ℝ) ^ ((58 : ℝ) / 9) :=
+    rpow_gt_of_pow_gt (by norm_num) (by norm_num) 58 9 (by norm_num) (by norm_num)
+  have h11_hi : (11 : ℝ) ^ ((58 : ℝ) / 9) < (5142773 : ℝ) :=
+    rpow_lt_of_pow_lt (by norm_num) (by norm_num) 58 9 (by norm_num) (by norm_num)
+  have h19_lo : (174123159 : ℝ) < (19 : ℝ) ^ ((58 : ℝ) / 9) :=
+    rpow_gt_of_pow_gt (by norm_num) (by norm_num) 58 9 (by norm_num) (by norm_num)
+  have h19_hi : (19 : ℝ) ^ ((58 : ℝ) / 9) < (174123160 : ℝ) :=
+    rpow_lt_of_pow_lt (by norm_num) (by norm_num) 58 9 (by norm_num) (by norm_num)
+  have h_denom_pos : (0 : ℝ) < (19 : ℝ) ^ ((58 : ℝ) / 9) - (5 : ℝ) ^ ((58 : ℝ) / 9) := by
+    linarith
+  have hR_lo : (2926 : ℝ) / 100000 <
+      ((11 : ℝ) ^ ((58 : ℝ) / 9) - (5 : ℝ) ^ ((58 : ℝ) / 9)) /
+      ((19 : ℝ) ^ ((58 : ℝ) / 9) - (5 : ℝ) ^ ((58 : ℝ) / 9)) := by
+    rw [lt_div_iff₀ h_denom_pos]; nlinarith
+  have hR_hi :
+      ((11 : ℝ) ^ ((58 : ℝ) / 9) - (5 : ℝ) ^ ((58 : ℝ) / 9)) /
+      ((19 : ℝ) ^ ((58 : ℝ) / 9) - (5 : ℝ) ^ ((58 : ℝ) / 9)) < (2946 : ℝ) / 100000 := by
+    rw [div_lt_iff₀ h_denom_pos]; nlinarith
+  -- |R − 0.02951| < 0.01 · 0.02951 = 0.0002951
+  -- First goal: R > 0.02951 − 0.0002951 = 0.0292149 (from R > 0.02926 > 0.0292149)
+  -- Second goal: R < 0.02951 + 0.0002951 = 0.0297951 (from R < 0.02946 < 0.0297951)
+  rw [abs_lt]
+  constructor
+  · linarith [show (2926 : ℝ) / 100000 > 0.02951 - 0.01 * 0.02951 from by norm_num]
+  · linarith [show (2946 : ℝ) / 100000 < 0.02951 + 0.01 * 0.02951 from by norm_num]
 
 end UgpLean.MassRelations.NeutrinoMassRatio
