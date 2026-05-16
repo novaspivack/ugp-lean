@@ -17,6 +17,7 @@ import UgpLean.MassRelations.PhysicalMasses
 import UgpLean.MassRelations.SeesawIndex
 import UgpLean.MassRelations.CKMTheta23
 import UgpLean.MassRelations.CKMMixing
+import UgpLean.MassRelations.NeutrinoMassRatio
 
 /-!
 # UgpLean.MassRelations — Charged-Fermion Mass Structural Relations

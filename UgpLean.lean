@@ -86,6 +86,7 @@ import UgpLean.MassRelations.VVAllCoefficientsFromNc
 import UgpLean.MassRelations.NeutrinoFroggattNielsen
 import UgpLean.MassRelations.CKMTheta23
 import UgpLean.MassRelations.CKMMixing
+import UgpLean.MassRelations.NeutrinoMassRatio
 import UgpLean.MassRelations
 import UgpLean.Phase4.GaloisProtection
 import UgpLean.Phase4.TwoLoopCoefficient
@@ -126,6 +127,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Phase4.GaloisProtection` — Galois-protection non-renormalization theorem; one-loop cancellation from T/T† pairing
 - `UgpLean.Phase4.TwoLoopCoefficient` — two-loop color coefficient (Nc²-1)/Nc² = 8/9; O3 structural identification
 - `UgpLean.MassRelations.CKMMixing` — CDM mechanism (2026-05-11): effective Cabibbo FN charge Δa_eff = α_d = 13/9 from GUT group theory; |V_us|_CDM = ε₁^(α_d) = exp(−13π/27) ≈ 0.2203 (zero sorry)
+- `UgpLean.MassRelations.NeutrinoMassRatio` — Seesaw mass-squared ratio R ≈ 0.02936 from FN texture (q₁,q₂)=(3,2) and b-values {5,11,19}; coarse bound 0.029 < R < 0.030 certified zero sorry (2026-05-16)
 
 **Non-circularity:** Core/ does not import Compute/. See README.md.
 -/

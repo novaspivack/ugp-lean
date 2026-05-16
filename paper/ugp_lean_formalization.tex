@@ -133,7 +133,7 @@ It produces, from first principles and without free parameters, a unique
 canonical seed---the triple $(1,73,823)$---whose orbit under the
 Generative Triple Evolution (\gte{}) map is rigidly determined.
 We present \textbf{ugp-lean}, a machine-checked formalization of this
-framework in \lean{}~4 against Mathlib, comprising 117 modules with a
+framework in \lean{}~4 against Mathlib, comprising 118 modules with a
 strict zero-sorry, zero-custom-axiom policy on the core proof path.
 (Six modules — IPT, NullDiscipline, PSC.ThreeRouteForcing,
 CyclotomicCompleteness.H9SelfConsistency, and GoldenRatioFixedPoint
@@ -178,7 +178,7 @@ are decidable, while general reachability is $\Sigma^0_1$-complete.
 \textbf{Further contributions.}
 A new class of \emph{\ugp{} primes} is formally defined with ten
 machine-checked instances across three ridge levels.
-A \textbf{MassRelations} layer (24 modules) formalizes the
+A \textbf{MassRelations} layer (25 modules) formalizes the
 cyclotomic-12 Koide closed form, $S_3$-equivariant Newton flow,
 the $N_c$-structural chain deriving all fermion constants from the QCD colour
 rank, VV mass coefficients from SU(5)/SO(10) group theory, neutrino seesaw
@@ -188,9 +188,13 @@ the CKM $\theta_{23}$ structural ratio $\tau(R_{10})/D_1 = 15/8$ uniquely
 forced at $n = 10$ via the ridge--Mersenne identity $R_n = D_1 \cdot M_{n-4}$,
 the discrete arithmetic-mean identity $2\,a_\tau = a_e + a_\mu$ on the
 canonical lepton orbit (the $S_3$ equal-norm shadow on the $a$-component),
-and the CDM Cabibbo derivation
+the CDM Cabibbo derivation
 $|V_{us}|_{\rm CDM} = \varepsilon_1^{\alpha_d} = e^{-13\pi/27} \approx 0.2203$
-(1.9\% off PDG) from GUT group theory (\texttt{CKMMixing}, 2026-05-11, zero sorry).
+(1.9\% off PDG) from GUT group theory (\texttt{CKMMixing}, 2026-05-11, zero sorry),
+and the seesaw mass-squared ratio arithmetic chain: FN texture $(q_1,q_2)=(3,2)$
+determines exponent $29/9$, $M_R$ cancels algebraically, and the coarse bound
+$0.029 < R < 0.030$ is certified via integer 9th-power comparisons
+(\texttt{NeutrinoMassRatio}, 2026-05-16, zero sorry).
 The \textbf{ElegantKernel} layer gains 16 modules including nine
 unconditional closure theorems deriving $k_{\rm gen} = \varphi\cos(\pi/10)$,
 $k_{\rm gen}^{(2)} = -\varphi/2$, and the complete pentagon--$D_5$ kernel
@@ -315,7 +319,7 @@ results:
   structure and $D_5$ renormalization, with zero axioms and zero
   \texttt{sorry} beyond Lean's foundational set.
 \item \textbf{Mass relations and physical spectrum} (\S\ref{sec:massrelations}):
-  The \texttt{MassRelations} layer (24 modules) covers
+  The \texttt{MassRelations} layer (25 modules) covers
   (i) the Koide closed form and $S_3$-balance arithmetic identities
   (\texttt{KoideClosedForm}, \texttt{KoideAngle}, \texttt{KoideNewtonFlow},
   \texttt{KoideS3DiscreteIdentities}, \texttt{ClaimCBridge});
@@ -340,11 +344,15 @@ results:
   machinery linking ridge arithmetic to the physical mass spectrum
   (\texttt{ScaleTransport}, \texttt{SeesawIndex}, \texttt{Z2OrbifoldDepth},
   \texttt{UpLeptonCyclotomic});
-  and (viii) the CDM Cabibbo derivation: effective Cabibbo FN charge
+  (viii) the CDM Cabibbo derivation: effective Cabibbo FN charge
   $\Delta a_{\rm eff} = \alpha_d = 13/9$ from GUT rank correction,
   yielding $|V_{us}|_{\rm CDM} = \varepsilon_1^{\alpha_d} = e^{-13\pi/27} \approx 0.2203$
   (1.9\% off PDG $\lambda = 0.2245$); all 20 theorems zero sorry
-  (\texttt{CKMMixing}, 2026-05-11).
+  (\texttt{CKMMixing}, 2026-05-11);
+  and (ix) the seesaw mass-squared ratio arithmetic chain: FN texture
+  $(q_1,q_2)=(3,2)$ determines exponent $29/9$, $M_R$ cancels algebraically,
+  coarse bound $0.029 < R < 0.030$ certified zero sorry
+  (\texttt{NeutrinoMassRatio}, 2026-05-16).
 \end{itemize}
 
 \paragraph{Structure.}
@@ -453,7 +461,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 117~\lean{} modules across twelve layers
+The artifact is organized into 118~\lean{} modules across twelve layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -489,13 +497,13 @@ The artifact is organized into 117~\lean{} modules across twelve layers
    FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure,
    KLFullClosure, PentagonConstraint, RiccatiFixedPoint};
 \node[layer, fill=teal!8,   below=of struc] (mass)
-  {\textbf{MassRelations}~(24)\quad \textit{MassRelations} [umbrella], KoideClosedForm, KoideNewtonFlow,
+  {\textbf{MassRelations}~(25)\quad \textit{MassRelations} [umbrella], KoideClosedForm, KoideNewtonFlow,
    BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential,
    FroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational,
    UpLeptonCyclotomic, Z2OrbifoldDepth,
    KoideAngle, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex,
    NeutrinoFroggattNielsen, VVMechanism, VVAllCoefficientsFromNc,
-   CKMTheta23, KoideS3DiscreteIdentities, \textbf{CKMMixing}};
+   CKMTheta23, KoideS3DiscreteIdentities, CKMMixing, \textbf{NeutrinoMassRatio}};
 \node[layer, fill=cyan!6,   below=of mass]  (braid)
   {\textbf{BraidAtlas}~(7)\quad ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation,
    CoxeterConductor, CoxeterConductorTowerLaw, EWBosons;
@@ -2327,7 +2335,7 @@ the chirality, Fibonacci--Hessian, and $\mu$-triple structures
 \section[Mass Relations]{Mass Relations and Physical Spectrum}\label{sec:massrelations}
 % ═══════════════════════════════════════════════════════════════
 
-The \texttt{MassRelations} layer (24 modules, including the
+The \texttt{MassRelations} layer (25 modules, including the
 \texttt{MassRelations} umbrella index file) formalizes the
 passage from the \ugp{} ridge arithmetic to physical fermion mass
 ratios, covering the Koide closed form, the SU(3) flavour geometry,
@@ -2684,6 +2692,56 @@ $|(U_{uL}^\dagger U_{dL})_{12}| = \varepsilon_1^{\alpha_d}(1 + O(\varepsilon_1^2
 which is a structural hypothesis supported by 1.9\% numerical accuracy
 but not yet formalized in Lean.  See SPEC\_049\_CDM \S CDM-4 for the
 precise open step.
+
+% ═══════════════════════════════════════════════════════════════
+\subsection[Neutrino Mass Ratio Arithmetic]{Neutrino Mass-Squared Ratio (\texttt{NeutrinoMassRatio})}\label{sec:neutrino_mass_ratio}
+% ═══════════════════════════════════════════════════════════════
+
+The module \texttt{MassRelations.NeutrinoMassRatio} (2026-05-16, zero sorry)
+formalizes the arithmetic/algebraic chain from the FN texture to the
+neutrino mass-squared ratio prediction.
+
+\paragraph{The ratio.}
+The UGP seesaw exponent $\alpha = 29/9$ and Braid Atlas RH-neutrino
+b-values $\{5, 11, 19\}$ predict the mass-squared ratio
+\[
+  R \;=\; \frac{\Delta m^2_{21}}{\Delta m^2_{31}}
+    \;=\; \frac{11^{58/9} - 5^{58/9}}{19^{58/9} - 5^{58/9}}
+    \;\approx\; 0.02936.
+\]
+NuFIT~6.0 reports $0.02951 \pm 0.00098$ ($0.16\sigma$, $0.52\%$ agreement).
+
+\begin{theorem}[Neutrino mass ratio (Phase~1), zero sorry]\label{thm:neutrino_mass_ratio}
+Three theorems in \texttt{MassRelations.NeutrinoMassRatio} are machine-checked
+with zero \texttt{sorry}:
+\begin{itemize}
+  \item \lstinline|fn_texture_gives_seesaw_exponent|:
+    The FN charge pair $(q_1,q_2) = (3,2)$ satisfies
+    $q_1 + q_2/N_c^2 = 3 + 2/9 = 29/9 = \mathtt{nuSeesawExponent}$.
+  \item \lstinline|seesaw_ratio_independent_of_MR|:
+    If $m_i = C \cdot x_i$ (common prefactor), then
+    $(m_2^2 - m_1^2)/(m_3^2 - m_1^2) = (x_2^2 - x_1^2)/(x_3^2 - x_1^2)$
+    (independent of $C$, hence independent of $M_R$).
+  \item \lstinline|neutrino_mass_ratio_coarse_bound|:
+    $0.029 < R < 0.030$, certified via monotone 9th-power integer comparisons
+    and \lstinline|norm_num|.
+\end{itemize}
+\end{theorem}
+
+\begin{leanref}
+\lstinline|fn_texture_gives_seesaw_exponent|,
+\lstinline|seesaw_ratio_independent_of_MR|,
+\lstinline|neutrino_mass_ratio_coarse_bound|
+\textup{(in \texttt{MassRelations.NeutrinoMassRatio}, zero \texttt{sorry})}
+\end{leanref}
+
+\paragraph{Phase~2 (deferred).}
+A tighter bound $|R - 0.02936| < 0.0001$ is mathematically argued
+via 9th-power checks at $\pm 0.1\%$ precision, but is deferred
+pending a \texttt{Real.rpow} \lstinline|norm_num| extension in Mathlib.
+The full Lagrangian bridge --- formal derivation that Yukawa couplings
+scale as $b^{q_1}$ and $b^{q_2}$ from the FN texture --- also remains open
+and requires a companion \texttt{NeutrinoLagrangian.lean} module.
 
 % ═══════════════════════════════════════════════════════════════
 \section{Universality and Self-Reference}\label{sec:universality}
@@ -3628,9 +3686,13 @@ structural ratio $\tau(R_{10})/D_1 = 15/8$ uniquely forced at $n = 10$
 (\cref{sec:ckm_theta23}), the discrete arithmetic-mean identity
 $2 a_\tau = a_e + a_\mu$ on the canonical lepton orbit
 (\cref{sec:koide_s3_discrete}),
-and the CDM Cabibbo derivation $|V_{us}|_{\rm CDM} = \varepsilon_1^{\alpha_d}
+the CDM Cabibbo derivation $|V_{us}|_{\rm CDM} = \varepsilon_1^{\alpha_d}
 = e^{-13\pi/27} \approx 0.2203$ from GUT rank theory
-(\texttt{CKMMixing}, 2026-05-11, 20 theorems, zero sorry).
+(\texttt{CKMMixing}, 2026-05-11, 20 theorems, zero sorry),
+and the seesaw mass-squared ratio arithmetic chain: FN texture $(q_1,q_2)=(3,2)$
+gives exponent $29/9$, $M_R$ cancels algebraically, coarse bound
+$0.029 < R < 0.030$ certified
+(\texttt{NeutrinoMassRatio}, 2026-05-16, 3 theorems, zero sorry).
 
 \medskip
 \noindent\textbf{GTE extended structure}
