@@ -41,6 +41,7 @@ import UgpLean.GTE.LinearResponse
 import UgpLean.GTE.ScaleConnection
 import UgpLean.MassRelations.ScaleTransport
 import UgpLean.GTE.MirrorDualConjecture
+import UgpLean.GTE.NuclearPairing
 import UgpLean.GTE.MirrorShift
 import UgpLean.GTE.GeneralTheorems
 import UgpLean.GTE.GTESimulation
