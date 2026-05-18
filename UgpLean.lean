@@ -53,6 +53,7 @@ import UgpLean.GTE.StructuralTheorems
 import UgpLean.GTE.UniquenessCertificates
 import UgpLean.GTE.GTBGenerationPrimes
 import UgpLean.GTE.DSIExport
+import UgpLean.GTE.NcColorArithmetic
 import UgpLean.SelfRef.LawvereKleene
 import UgpLean.SelfRef.RiceHalting
 import UgpLean.Conjectures
