@@ -315,7 +315,7 @@ def infRule110Steps : ℕ → InfTape → InfTape
 2. **`GTEComputability.rule110_simulates_computable`** (named axiom):
    Any total computable ℕ → ℕ function embeds in Rule 110. This is Cook (2004)'s
    Turing universality theorem at the tape level. The formalization gap is
-   SPEC_069_C1R Milestones 3–5 in `rule110-lean`.
+   Milestones 3–5 in `rule110-lean`.
 
 The old `gte_in_rule110_sim_ax` is **removed**. `#print axioms gte_embeds_in_rule110`
 now lists only `GTEComputability.rule110_simulates_computable` (plus Lean universe axioms).

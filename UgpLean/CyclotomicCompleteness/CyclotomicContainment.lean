@@ -7,7 +7,7 @@ import UgpLean.CyclotomicCompleteness.CoxeterBiconditional
 /-!
 # CyclotomicContainment
 
-## SPEC_042_CYX — Cyclotomic Completeness: Field-Theoretic Embedding
+## Cyclotomic Completeness: Field-Theoretic Embedding
 
 We prove the field-theoretic content of the Coxeter-Conductor theorem:
 if h | 60, then Q(ζ_{2h}) embeds in Q(ζ₁₂₀), formalized as:

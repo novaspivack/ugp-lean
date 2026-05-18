@@ -7,7 +7,7 @@ import UgpLean.Universality.GTECompilation
 import UgpLean.Universality.GTEInfTapeEncoding
 
 /-!
-# GTE update map is computable (SPEC_069_C1R Milestone 4 — Strategy C)
+# GTE update map is computable (Milestone 4 — Strategy C)
 
 Proves `Computable gte_update_map_nat`, the ℕ → ℕ encoding of `gte_update_map`.
 Together with the named axiom `gte_rule110_sim_ax` this replaces the opaque bridge
@@ -137,7 +137,7 @@ theorem gte_update_map_nat_computable : Computable gte_update_map_nat :=
     This is Cook (2004)'s Turing universality theorem applied to the infinite tape:
     Rule 110 can simulate any Turing machine, and hence any computable function.
     The gap between this axiom and a zero-axiom proof is the formalization of Cook's
-    TM→CTS→glider construction (SPEC_069_C1R Milestones 3–5 in `rule110-lean`). -/
+    TM→CTS→glider construction (Milestones 3–5 in `rule110-lean`). -/
 axiom rule110_simulates_computable (f : ℕ → ℕ) (hf : Computable f) :
     ∃ (encode : ℕ → Rule110.InfTape)
       (decode : Rule110.InfTape → ℕ)

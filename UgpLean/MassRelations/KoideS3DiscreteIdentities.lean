@@ -37,7 +37,7 @@ holds for the actual Lean-certified canonical orbit a-values.
 
 ## Status
 
-Refined target #1 from SPEC_038F: the discrete arithmetic-mean identity
+The discrete arithmetic-mean identity
 on the canonical lepton orbit. The remaining refined targets (PDG-θ
 alignment to 7.4×10⁻⁶ rad, Koide-cone near-attractor of UCL within
 6×10⁻⁴) involve PDG real-valued masses and continuous geometric

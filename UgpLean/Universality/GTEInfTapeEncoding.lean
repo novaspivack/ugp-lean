@@ -4,7 +4,7 @@ import Batteries.Data.Nat.Lemmas
 import UgpLean.Universality.GTECompilation
 
 /-!
-# GTE State ↔ InfTape encoding (SPEC_069_C1R Milestone 4)
+# GTE State ↔ InfTape encoding (Milestone 4)
 
 Provides a concrete injection `gte_encode : GTEState → (ℕ → Bool)` and a left inverse
 `gte_decode : (ℕ → Bool) → GTEState` satisfying `gte_decode (gte_encode s) = s` for
@@ -25,7 +25,7 @@ combined with `Nat.unpair_pair` from Mathlib.
 ## Architecture note
 
 This file provides the **round-trip half** of `gte_in_rule110_sim_ax` (zero sorry).
-The simulation half remains axiomatic until SPEC_069_C1R Milestones 3–5 are proved
+The simulation half remains axiomatic until Milestones 3–5 are proved
 in `rule110-lean`.
 -/
 

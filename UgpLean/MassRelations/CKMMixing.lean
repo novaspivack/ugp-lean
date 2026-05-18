@@ -11,7 +11,7 @@ import UgpLean.MassRelations.CartanFlavonPotential
 /-!
 # UgpLean.MassRelations.CKMMixing — CDM Cabibbo Derivation from α_d
 
-**SPEC_049_CDM (2026-05-11):** Lean certification of the CDM mechanism that
+Lean certification of the CDM mechanism that
 derives the Wolfenstein Cabibbo parameter λ from the VV down-type coefficient α_d.
 
 ## Physical mechanism (CDM = Cabibbo Derivation from α_d)
@@ -71,7 +71,7 @@ formalization would require:
   (b) This misalignment propagates to |V_us| as an effective FN charge shift via
       a 2×2 SVD perturbation theorem: |(U_uL† U_dL)₁₂| = ε₁^(α_d) · (1 + O(ε₁²)).
 
-This open step is an honest physical-theory claim (classification [C] in SPEC_049_CDM).
+This open step is an honest physical-theory claim (classification [C]).
 The theorem `fn_cdm_physical_sorry` (§7) is now proved zero-sorry as an algebraic
 identity (both sides equal log_cabibbo_structural = −13π/27), but the broader
 physical identification of |V_us|_SM with ε₁^(α_d) remains a [C] structural hypothesis.
@@ -274,7 +274,7 @@ theorem cabibbo_uses_vv_gut_structure :
     correction additively as Δa_eff = 1 + (α_d − 1) is a structural
     hypothesis supported by 1.9% numerical agreement with PDG (λ = 0.2245).
     Formalizing it requires a FN-diagonalization-basis-shift argument
-    (see SPEC_049_CDM §CDM-4 for the precise open step). -/
+    (see the CDM open item for the precise open step). -/
 theorem cdm_mechanism_summary :
     delta_a_eff = DownRational.alpha_d ∧
     delta_a_eff = 1 + (DownRational.rank_SU5_val : ℚ) / 3 ^ 2 ∧
@@ -358,7 +358,7 @@ The broader physical identification of |V_us|_SM with ε₁^(α_d) remains an op
 [C] structural hypothesis, supported by 1.9% numerical accuracy vs PDG λ = 0.2245.
 A full formalization would require:
   |(U_uL† · U_dL)_{12}| = ε₁^(α_d) · (1 + O(ε₁²))
-using 2×2 SVD perturbation theory. See SPEC_049_CDM §CDM-4 for the precise open step. -/
+using 2×2 SVD perturbation theory. The precise open step is the SVD perturbation formalization. -/
 
 /-- FN log-Yukawa charge for one matrix entry in the DOWN-type sector with
     VV coefficient α:  `fnDownCharge(a_Q_i, a_u_j, α) = a_Q_i + α × a_u_j`. -/
@@ -531,7 +531,7 @@ theorem fn_vv_more_suppressed :
     (PDG λ = 0.2245 vs. ε₁^(α_d) ≈ 0.2203). A complete formalization requires
     the 2×2 FN SVD diagonalization theorem:
         |(U_uL† · U_dL)_{12}| = ε₁^(α_d) · (1 + O(ε₁²))
-    See SPEC_049_CDM §CDM-4 for the precise open step. -/
+    The precise open step is the SVD perturbation formalization. -/
 theorem fn_cdm_physical_sorry :
     Real.log cabibbo_structural_prediction =
     (fnMixChargeDown DownRational.alpha_d : ℝ) * FroggattNielsen.log_eps_1 := by

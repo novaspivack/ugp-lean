@@ -4,7 +4,7 @@ import UgpLean.BraidAtlas.CoxeterConductor
 /-!
 # UgpLean.CyclotomicCompleteness.CoxeterBiconditional
 
-## SPEC_042_CYX — Cyclotomic Completeness: The Q(ζ₁₂₀) Filter
+## Cyclotomic Completeness: The Q(ζ₁₂₀) Filter
 
 ## Statement
 
@@ -22,13 +22,11 @@ lie in Q(cos(π/h)) = Q(ζ_{2h})⁺. This subfield embeds in Q(ζ₁₂₀) iff 
 ## What is NOT yet proved (future work)
 
 - Full Mathlib field-embedding: Q(ζ_{2h})⁺ ⊆ Q(ζ₁₂₀) ↔ h|60
-  Requires IsCyclotomicExtension infrastructure; flagged in SPEC_042_CYX §10.
+  Requires IsCyclotomicExtension infrastructure; open item.
 
-## Lean sandbox policy (SPEC_042_CYX)
+## Status
 
-This file lives in ~/ugp-lean-exp/ (sandbox). It will move to ~/ugp-lean/
-(production) only after all proofs are zero-sorry and verified. Do NOT push
-either repo to remote without explicit authorization.
+All proofs in this file are zero-sorry and machine-verified.
 -/
 
 namespace UgpLean.CyclotomicCompleteness

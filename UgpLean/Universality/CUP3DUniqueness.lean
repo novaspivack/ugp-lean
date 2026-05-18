@@ -247,7 +247,7 @@ theorem fmdl_z7_three_generation_orbit :
    fmdl_z7_gen3_to_vacuum⟩
 
 -- Note on fmdl_physically_incomplete:
--- INFRASTRUCTURE AVAILABLE (ugp-lean-exp):
+-- INFRASTRUCTURE AVAILABLE:
 --   fmdl_rule110_binary (this file): fmdl = Rule110 on binary sublayer [PROVED]
 --   UWCAembedsRule110: UWCA simulates Rule 110 exactly [PROVED]
 --   SelfRef/RiceHalting: halting undecidability for TM-universal systems [PROVED]

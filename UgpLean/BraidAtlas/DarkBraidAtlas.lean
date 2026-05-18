@@ -10,7 +10,7 @@ import UgpLean.Phase4.GaugeCouplings
 # UgpLean.BraidAtlas.DarkBraidAtlas — Lean-Certified Facts for the Dark Sector
 
 Collects the Lean-certified structural facts about the mirror branch (dark sector)
-derived from EPIC_065 (Mirror Braid Atlas, rounds MBA-1 through MBA-5).
+derived from the mirror branch of the GTE cascade.
 
 ## Summary of certified facts (zero sorry)
 
@@ -271,7 +271,7 @@ mass-squared ratio, not absolute masses.
 -- ════════════════════════════════════════════════════════════════
 -- §8  Dark Sector: No EW Symmetry (DSEW-1, 2026-05-17)
 -- ════════════════════════════════════════════════════════════════
--- EPIC_066 Round 01 result: dark sector has no dark SU(2)_L symmetry.
+-- Result: dark sector has no dark SU(2)_L symmetry.
 -- Y_mirror=0 (P17, universal mirror-branch statement) + Q=0 → T₃=0
 -- → all mirror particles are SU(2)_L singlets.
 -- Dark sector gauge group: SU(3)_dark (conjectured [C]) only.
@@ -305,7 +305,7 @@ theorem dark_sector_no_ew_symmetry : mirrorT3Int = 0 ∧ mirrorYInt = 0 := ⟨rf
 /-- **q₁'(mirror) = b₂'(RHN) = 29 is a structural arithmetic identity, NOT a gauge
     boson c-value.**
 
-    The label "c(W')=29" (used in EPIC_065 MBA-4 and DarkBraidAtlas comments) was
+    The label "c(W')=29" (noted in earlier DarkBraidAtlas comments) was
     incorrect. DSEW-1 (2026-05-17) established there is no dark W' boson.
     The correct label is q₁'(mirror) = 29 = b₂'(RHN).
 
@@ -314,7 +314,7 @@ theorem dark_sector_no_ew_symmetry : mirrorT3Int = 0 ∧ mirrorYInt = 0 := ⟨rf
 theorem q1_mirror_structural_identity : q1FromQ2 q₂_mirror = 29 := dark_rhn_b2
 
 -- ════════════════════════════════════════════════════════════════
--- §9  Z₇ Dark Charge Arithmetic (CUP-11a / EPIC_053)
+-- §9  Z₇ Dark Charge Arithmetic
 -- ════════════════════════════════════════════════════════════════
 -- From CUP-11a: the Z₇ dark charge distinguishes SM from dark sector.
 -- Key values: b₂_canonical=42 (SM branch), b₂_mirror=24 (mirror branch).
@@ -366,7 +366,7 @@ theorem z7_sector_separation : b₂_canonical % 7 ≠ b₂_mirror % 7 := by
   norm_num [b₂_canonical, b₂_mirror]
 
 /-- **Z₇ dark charge certificate (§9 summary, grade A).**
-    Bundles all Z₇ dark charge arithmetic facts (CUP-11a, EPIC_053).
+    Bundles all Z₇ dark charge arithmetic facts.
     - SM branch Z₇ charge = 0
     - Mirror branch Z₇ charge = N_c = 3
     - Dark baryon Z₇ charge = 2 (mod 7)

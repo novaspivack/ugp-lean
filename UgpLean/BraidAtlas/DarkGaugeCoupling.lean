@@ -46,7 +46,7 @@ Overall grade: Cat A/C (formula certified [A]; D branch-independence argued [C])
 ## References
 
 - P01 §4 (Gauge Coupling Master Formula, eq. gauge_master)
-- EPIC_061 Round 11 (α_s_dark = α_s_SM derivation, 2026-05-17)
+- α_s_dark = α_s_SM derivation (2026-05-17)
 - `UgpLean.Phase4.GaugeCouplings` (g₃²_bare, D3_invariant)
 - `UgpLean.ElegantKernel.MuTriple` (Vandermonde², k_triple_determines_D3)
 -/
@@ -148,7 +148,7 @@ theorem dark_su3_gamma_branch_independent :
     require a uniqueness theorem for the MDL fixed point across branches. This is the
     main remaining gap for upgrading α_s_dark = α_s_SM from Cat A/C to Cat A.
 
-    Current status: argued via EPIC_061 Round 11 (2026-05-17). -/
+    Current status: physically argued (2026-05-17). -/
 theorem dark_su3_vandermonde_branch_independent_claim :
     vandermonde_sq k_a k_b k_c = D3_invariant :=
   k_triple_determines_D3
@@ -174,12 +174,12 @@ theorem dark_su3_vandermonde_branch_independent_claim :
     **Grade: Cat A/C.**
       - A: Master formula and its parameters are Lean-certified in P01 Lean.
       - C: Elegant Kernel triple (k_a,k_b,k_c) is the same for both branches
-           (argued via MDL uniqueness in EPIC_061 Round 11; not yet Lean-proved).
+           (argued via MDL uniqueness; not yet Lean-proved).
 
     **Physical consequence:** Since bare couplings agree, the only source of
     Λ_dark ≠ Λ_QCD is the RGE running, which differs due to the dark sector's
     distinct particle content (number of effective light dark quarks N_f_dark_eff
-    is unknown; see OPEN_RESEARCH_TODOS §EPIC_065 open items). -/
+    is unknown; see open items in DarkBraidAtlas open questions). -/
 theorem dark_su3_coupling_from_master_formula :
     -- The master formula parameters are:
     weylOrder_SU3 = 6 ∧
