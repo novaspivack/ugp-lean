@@ -5,12 +5,10 @@ import UgpLean.GTE.UniquenessCertificates
 /-!
 # UgpLean.GTE.GTBGenerationPrimes — Lean Certificates for GTE Topological Baryogenesis
 
-## Context: EPIC_068 Round 04
+## Context: GTE Topological Baryogenesis
 
-Round 02 of EPIC_068 (GTB: GTE Topological Baryogenesis) identified the three
-generation-analog ridges n=10, 13, 16 as admitting mirror-dual prime-lock pairs.
-Round 03 corrected Round 02's c₁ values (which contained errors for n=13 and n=16)
-and provided the Lean-consistent values.
+Three generation-analog ridges n=10, 13, 16 admit mirror-dual prime-lock pairs.
+This module certifies the prime-lock structure underlying the GTB η_{B+L,pre} formula.
 
 The η_{B+L,pre} formula:
   η_{B+L,pre} = N_f × ∏_i P_gen_i  where N_f = 3 (anomaly cancellation)
@@ -23,10 +21,7 @@ Using the MDL-minimal mirror pair at each generation ridge:
 
   η_{B+L,pre} ≈ 3 × 1.317 × 10⁻⁶ = 3.95 × 10⁻⁶  (target: 3 × 10⁻⁶, +31.7% off)
 
-Note: Round 02 reported 3.09 × 10⁻⁶ (3% off), but used incorrect c₁ values for
-n=13 (used 91253 instead of 27817) and n=16 (used 104233, 6400391 instead of
-46681, 2489143). Round 03 corrects this. The formula is Cat C (structurally
-grounded, correct order of magnitude, 32% deviation from target).
+The formula is structurally grounded, at correct order of magnitude (32% deviation from target 3×10⁻⁶).
 
 ## What is certified here
 
@@ -48,8 +43,8 @@ UniquenessCertificates and MirrorDualConjecture).
 
 ## Scientific status
 
-The primality certificates here are Cat A (machine-verified).
-The η_{B+L,pre} formula is Cat C (structurally motivated, 32% off target).
+The primality certificates here are machine-verified (native_decide).
+The η_{B+L,pre} formula is structurally motivated, 32% off target.
 The connection η = N_f × ∏ P_gen_i requires additional derivation (singular series
 correction S_GTE not yet computed).
 -/
@@ -71,16 +66,13 @@ theorem gen1_prime_pair : Nat.Prime 823 ∧ Nat.Prime 2137 := by
   exact ⟨h1, h2⟩
 
 /-- Generation 2 (n=13) mirror-dual c₁ values {9007, 27817} are both prime.
-    CORRECTION from Round 02: Round 02 used 91253 instead of 27817.
     The correct mirror c₁ at n=13 is 27817 (Lean-certified). -/
 theorem gen2_prime_pair : Nat.Prime 9007 ∧ Nat.Prime 27817 := by
   obtain ⟨_, _, _, h1, h2⟩ := mdl_c1_n13_is_9007
   exact ⟨h1, h2⟩
 
 /-- Generation 3 (n=16) MDL-minimal mirror-dual c₁ values {46681, 2489143} are both prime.
-    CORRECTION from Round 02: Round 02 used (104233, 6400391) which do NOT form a valid
-    MirrorDualPair at n=16 under the exact Lean formula. The correct MDL-minimal pair
-    gives c₁ values {46681, 2489143}. -/
+    The MDL-minimal pair gives c₁ values {46681, 2489143}. -/
 theorem gen3_prime_pair : Nat.Prime 46681 ∧ Nat.Prime 2489143 := by
   obtain ⟨_, _, _, h1, h2⟩ := mdl_c1_n16_is_46681
   exact ⟨h1, h2⟩
@@ -164,15 +156,15 @@ theorem generation_b1_values :
 -- §5  Summary theorem
 -- ════════════════════════════════════════════════════════════════
 
-/-- **GTB Generation Prime Certificate** (EPIC_068 Round 04):
+/-- **GTB Generation Prime Certificate:**
     The three generation-analog ridges n=10, 13, 16 each admit a
     Lean-certified mirror-dual prime-lock pair, and all six c₁ values
     involved are prime. This certifies the prime-lock structure
     underlying the GTB η_{B+L,pre} formula.
 
-    CAVEAT: The η formula η = N_f × ∏ P_gen_i = 3.95×10⁻⁶ is Cat C
-    (32% off target 3×10⁻⁶). The primality facts here are Cat A.
-    The singular series correction S_GTE is not yet computed. -/
+    CAVEAT: The η formula η = N_f × ∏ P_gen_i = 3.95×10⁻⁶ is
+    structurally motivated (32% off target 3×10⁻⁶). The primality facts
+    here are machine-verified. The singular series correction S_GTE is not yet computed. -/
 theorem gtb_generation_prime_certificate :
     -- All six prime-lock c₁ values are prime
     Nat.Prime 823 ∧ Nat.Prime 2137 ∧
@@ -195,5 +187,59 @@ theorem gtb_generation_prime_certificate :
          gen3_prime_pair.1, gen3_prime_pair.2,
          gen1_mirror_dual, gen2_mirror_dual, gen3_mirror_dual_mdl,
          ?_, ?_, ?_, ?_, ?_, ?_⟩ <;> native_decide
+
+-- ════════════════════════════════════════════════════════════════
+-- §6  Ridge structure and distinctness (additional certificates)
+-- ════════════════════════════════════════════════════════════════
+
+/-- Per-ridge prime pair certificate at n=10 (aliases gen1_prime_pair for clarity). -/
+theorem gen_c1_primes_n10 : Nat.Prime 823 ∧ Nat.Prime 2137 := gen1_prime_pair
+
+/-- Per-ridge prime pair certificate at n=13 (aliases gen2_prime_pair for clarity). -/
+theorem gen_c1_primes_n13 : Nat.Prime 9007 ∧ Nat.Prime 27817 := gen2_prime_pair
+
+/-- Per-ridge prime pair certificate at n=16, MDL pair (aliases gen3_prime_pair). -/
+theorem gen_c1_primes_n16_mdl : Nat.Prime 46681 ∧ Nat.Prime 2489143 := gen3_prime_pair
+
+/-- **Ridge spacing equals N_c = 3.**
+    The three generation ridges n=10, 13, 16 are spaced by exactly 3,
+    the number of QCD color charges. -/
+theorem gtb_ridge_spacing_equals_Nc :
+    let n₁ : ℕ := 10
+    let n₂ : ℕ := 13
+    let n₃ : ℕ := 16
+    let N_c : ℕ := 3
+    n₂ - n₁ = N_c ∧ n₃ - n₂ = N_c := by
+  norm_num
+
+/-- The three generation ridge levels are distinct naturals. -/
+theorem gtb_generation_ridges_distinct :
+    (10 : ℕ) ≠ 13 ∧ (13 : ℕ) ≠ 16 ∧ (10 : ℕ) ≠ 16 := by
+  norm_num
+
+/-- **The six generation c₁ primes are pairwise distinct.**
+    Confirms that each ridge level and each branch produces a unique prime. -/
+theorem gtb_six_primes_pairwise_distinct :
+    (823 : ℕ) ≠ 2137   ∧ (823 : ℕ) ≠ 9007   ∧ (823 : ℕ) ≠ 27817  ∧
+    (823 : ℕ) ≠ 46681  ∧ (823 : ℕ) ≠ 2489143 ∧
+    (2137 : ℕ) ≠ 9007  ∧ (2137 : ℕ) ≠ 27817  ∧ (2137 : ℕ) ≠ 46681 ∧
+    (2137 : ℕ) ≠ 2489143 ∧
+    (9007 : ℕ) ≠ 27817 ∧ (9007 : ℕ) ≠ 46681  ∧ (9007 : ℕ) ≠ 2489143 ∧
+    (27817 : ℕ) ≠ 46681 ∧ (27817 : ℕ) ≠ 2489143 ∧
+    (46681 : ℕ) ≠ 2489143 := by
+  norm_num
+
+/-- **Three certified generation ridges exist with N_c-spaced structure.**
+    At each of the three ridges n=10, 13, 16, two distinct prime c₁ values
+    are machine-certified. The ridges are evenly spaced by N_c = 3. -/
+theorem gtb_three_generations :
+    Nat.Prime 823 ∧ Nat.Prime 2137 ∧ (823 : ℕ) ≠ 2137 ∧
+    Nat.Prime 9007 ∧ Nat.Prime 27817 ∧ (9007 : ℕ) ≠ 27817 ∧
+    Nat.Prime 46681 ∧ Nat.Prime 2489143 ∧ (46681 : ℕ) ≠ 2489143 ∧
+    (13 : ℕ) - 10 = 3 ∧ (16 : ℕ) - 13 = 3 :=
+  ⟨gen_c1_primes_n10.1, gen_c1_primes_n10.2, by norm_num,
+   gen_c1_primes_n13.1, gen_c1_primes_n13.2, by norm_num,
+   gen_c1_primes_n16_mdl.1, gen_c1_primes_n16_mdl.2, by norm_num,
+   by norm_num, by norm_num⟩
 
 end UgpLean.GTE.GTBGenerationPrimes

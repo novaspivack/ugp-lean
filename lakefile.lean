@@ -19,6 +19,10 @@ require APS from git
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4.git" @ "v4.29.1"
 
+/-- Cook Rule 110 pipeline (cyclic tag prelude, ether background). -/
+require «Rule110» from git
+  "https://github.com/novaspivack/rule110-lean.git" @ "9ac43e3"
+
 @[default_target]
 lean_lib «UgpLean» where
   -- Ridge, Sieve, Triple, QuarterLock, Classification, RSUC
