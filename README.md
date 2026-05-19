@@ -346,7 +346,7 @@ Physical motivation: The five SM particle families [e⁻, u, d, νR, νL] in the
 - `cyclic_rotate` — definition: cyclic rotation of a 5-cell Z₇ ring by k positions (generalizes rotate5 from CUP4TotalParity to Fin 7 cells)
 - `fmdl_z5_equivariant` — **Main theorem**: ∀ (v : Fin 5 → Fin 7) (k : Fin 5), fmdl_step5(cyclic_rotate v k) = cyclic_rotate(fmdl_step5 v) k; zero failures over 7⁵ × 5 = 84,035 cases (native_decide, CatAL)
 
-**SU(5) GUT Weinberg Angle, f_MDL Structural Bridge, CKM Count Theorem, CKM Quark N_eff Formulas, b_sum = 390 Weinberg Factorization, Z₂ Longitudinal Mode MDL Universality, Coupling Ratio Duality, smGen1 SU(5) Projector, Mersenne Prime Structure, Joint Selection Theorem, GTE Master Formula, Weinberg Physical Bridge, Weinberg Three-Tier Prediction, Bidirectional Unification Summary, MDL Robustness / Z₇ Free Minterm Count, Z₂ Longitudinal Universality Structural Chain, Chern-Simons Level k=30, and Mersenne Cascade Discriminator 12→2 (GUTStructure.lean, 2026-05-19; 103 theorems + 18 definitions, 0 sorry)**
+**SU(5) GUT Weinberg Angle, f_MDL Structural Bridge, CKM Count Theorem, CKM Quark N_eff Formulas, b_sum = 390 Weinberg Factorization, Z₂ Longitudinal Mode MDL Universality, Coupling Ratio Duality, smGen1 SU(5) Projector, Mersenne Prime Structure, Joint Selection Theorem, GTE Master Formula, Weinberg Physical Bridge, Weinberg Three-Tier Prediction, Bidirectional Unification Summary, MDL Robustness / Z₇ Free Minterm Count, Z₂ Longitudinal Universality Structural Chain, Chern-Simons Level k=30, Mersenne Cascade Discriminator 12→2, and f_MDL Perfect Code §36 (GUTStructure.lean, 2026-05-19; 105 theorems + 18 definitions, 0 sorry)**
 
 Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit depth, CatAL) and N_fam = 5 (Z₅ family ring size, CatAL) satisfy the arithmetic identity N_gen + N_fam = 2^N_gen (3 + 5 = 8 = 2³). This implies that the GUT-scale Weinberg angle sin²θ_W(M_GUT) = N_gen/(N_gen + N_fam) = N_gen/2^N_gen = 3/8 — agreeing exactly with the standard SU(5) GUT prediction. The denominator then increases to c_H = 13 at M_Z by exactly N_fam = 5. A new structural identity (§9) connects the CA dynamics layer: the MDL-minimal CA function f_MDL produces nonzero output on exactly c_H + 1 = 14 of the 343 possible neighborhoods.
 
@@ -564,6 +564,15 @@ The 2→1 step in the quark G1 seed derivation (Rank 99): the charge assignment 
 - `su2l_charge_assignment_z7_discriminator` ★★★★ — joint: (N_gen² mod 7 = w_u) ∧ (N_fam mod 7 ≠ w_u) ∧ (w_u ∈ {1,2,4}) ∧ (w_d ∉ {1,2,4}); canonical selected, charge-swap excluded (CatAL)
 
 Rank 99 result: Step 3 (2→1) upgraded from unexplained postulate to GTE-motivated CatAD derivation with full CatAL arithmetic certificate. Enables Rank 100 native_decide capstone.
+
+---
+
+**f_MDL Perfect Code — Lower Bound 14 (GUTStructure.lean §36, 2026-05-19; 2 theorems, 0 sorry)**
+
+Machine-checked certification that f_MDL is a perfect code: it achieves the minimum number of non-zero output neighborhoods (14) consistent with orbit admissibility + Rule 110 binary sublayer + vacuum transparency. The lower bound 14 = 9 (orbit-forced) + 5 (binary-forced) follows from the structural disjointness of orbit and binary neighborhoods. MDL-minimality forces all 320 free neighborhoods to zero, so no non-zero output is redundant.
+
+- `fmdl_perfect_code` ★★★★★ — packages (i) exactly 14 non-zero outputs (native_decide) and (ii) unique MDL-minimal orbit-admissible function (delegates to Z7ChargeConjugation.fmdl_mdl_uniqueness); CatAL, zero sorry
+- `fmdl_nonzero_lower_bound` ★★ — 3 + 10 + 1 = fmdl_nonzero_count = 14 (palindrome decomposition arithmetic certificate; norm_num, CatAL)
 
 ---
 
