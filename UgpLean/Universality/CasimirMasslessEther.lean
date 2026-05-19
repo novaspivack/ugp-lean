@@ -169,7 +169,48 @@ theorem ether_not_em_vacuum :
     ether_period ≠ List.replicate 14 (0 : Fin 7) := by native_decide
 
 -- ════════════════════════════════════════════════════════════════
--- §4  Combined structural summary
+-- §4  Helicity Parity Violation (CatAL)
+--     h=+1 (Z₇=1) stable; h=−1 (Z₇=6) decays to vacuum
+-- ════════════════════════════════════════════════════════════════
+
+/-- **helicity_plus_stable** (CatAL): The positive-helicity transverse photon mode
+    (Z₇ = 1, h = +1) is CA-propagation-stable: fmdl(0, 1, 0) = 1.
+
+    This is a direct special case of `fmdl_massless_criterion`: since 1 ∈ {0, 1},
+    the masslessness criterion holds and the mode is a CA fixed point in a vacuum
+    neighborhood.
+
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
+theorem helicity_plus_stable : fmdl 0 1 0 = 1 := by native_decide
+
+/-- **helicity_minus_decays** (CatAL): The negative-helicity transverse photon mode
+    (Z₇ = 6, h = −1) decays to the CA vacuum in one step: fmdl(0, 6, 0) = 0.
+
+    Since 6 ∉ {0, 1}, the masslessness criterion fails for k = 6, and the massive
+    decay theorem gives fmdl(0, 6, 0) = 0.
+
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
+theorem helicity_minus_decays : fmdl 0 6 0 = 0 := by native_decide
+
+/-- **helicity_parity_violation** (CatAL): The combined helicity parity violation
+    statement: positive helicity is stable, negative helicity decays to vacuum,
+    and the two behaviors are opposite.
+
+    - fmdl(0, 1, 0) = 1  (h = +1 mode: CA fixed point, stable)
+    - fmdl(0, 6, 0) = 0  (h = −1 mode: decays to vacuum in one step)
+    - fmdl(0, 1, 0) ≠ fmdl(0, 6, 0)  (the two helicity modes have opposite dynamics)
+
+    The CA dynamics enforce a left-right asymmetry at the arithmetic level:
+    only the positive-helicity (left-handed) photon propagation mode is
+    CA-stable, while the negative-helicity mode is annihilated by the CA rule.
+
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
+theorem helicity_parity_violation :
+    fmdl 0 1 0 = 1 ∧ fmdl 0 6 0 = 0 ∧ fmdl 0 1 0 ≠ fmdl 0 6 0 := by
+  native_decide
+
+-- ════════════════════════════════════════════════════════════════
+-- §5  Combined structural summary
 -- ════════════════════════════════════════════════════════════════
 
 /-- **casimir_sector_structure** (summary theorem): The f_MDL framework has a
