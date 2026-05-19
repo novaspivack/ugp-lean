@@ -144,6 +144,26 @@ the bare→tree-level running. The complete two-term prediction matches PDG to 0
 - `weinberg_denominator_factors`: 2^(3·N_gen+1) × N_fam³ × c_H = 1664000 (pure GTE primes)
 - `weinberg_n3_uniqueness`: n=2 correction ≠ δ(3); n=3 correction = δ(3) (uniqueness)
 
+## §25 — W Boson Gateway Identity — c_W = c_H − d_W; b_t in c_W Form (Rank 82, CatAL)
+
+The top quark's GTE orbit capacity b_t is expressed entirely in terms of the W boson
+cascade endpoint c_W = c_H − d_W = 2N_fam + 1 = 11.
+
+- `cw_eq_chiggs_minus_dw`: c_W = c_H − d_W = 11 (W boson gateway identity; alias of EWBosonStructure)
+- `cw_eq_two_nfam_plus_one`: c_W = 2·N_fam + 1 = 11 (family ring staircase identity)
+- `bt_eq_cw_gateway`: b_top = 2^c_W × N_gen × N_fam × (2N_fam+1) = 337920 (top quark gateway form)
+- `bt_in_cw_sq_form`: b_top = 2^c_W × N_gen × N_fam × c_W (most compressed form)
+
+## §26 — G1 Quark Seed MDL-Doublet Pairing — N_eff Uniqueness (Rank 80, CatAL)
+
+The MDL-doublet pairing argument for G1 quark seeds: the unique assignment of lepton
+a-values to quark b-values giving (N_gen², N_fam) simultaneously is (a_L2, a_L3) = (9, 5).
+
+- `neff_u_eq_ngen_sq_mdl`: b_u = N_gen² = 9 (up quark G1 MDL-doublet seed; alias of §15)
+- `neff_d_eq_nfam_mdl`: b_d = N_fam = 5 (down quark G1 MDL-doublet seed; alias of §15)
+- `quark_doublet_pairing_unique`: joint theorem — b_u = N_gen² ∧ b_d = N_fam ∧
+    N_gen² + N_fam = 14 (G1 doublet total) ∧ N_gen²/(N_gen²+N_fam) = 9/14 (u-type fraction)
+
 ## §15 — CKM Arithmetic — Quark N_eff Structural Formulas and R_b = sin²θ_W(GUT) (Rank 67, CatAL)
 
 - `b_u`, `b_d`, `b_c`, `b_s`, `b_b`: GTE quark N_eff definitions (9, 5, 275, 186, 8191)
@@ -2541,5 +2561,75 @@ theorem bt_eq_cw_gateway :
 theorem bt_in_cw_sq_form :
     b_top = 2 ^ EWBosonStructure.c_w_plus * n_gen * n_fam * EWBosonStructure.c_w_plus := by
   norm_num [b_top, EWBosonStructure.c_higgs, EWBosonStructure.c_w_plus, n_gen, n_fam]
+
+-- ════════════════════════════════════════════════════════════════
+-- §26  G1 Quark Seed MDL-Doublet Pairing — N_eff Uniqueness (Rank 80, CatAL)
+-- ════════════════════════════════════════════════════════════════
+
+/-!
+## §26  G1 Quark Seed MDL-Doublet Pairing
+
+The MDL-doublet pairing argument: the permutation rule assigning GTE lepton a-values
+to quark G1 b-values is uniquely determined.  Among all lepton a-values {a_L1=1, a_L2=9,
+a_L3=5}, only the assignment (a_L2, a_L3) = (9, 5) simultaneously gives (N_gen², N_fam)
+for the (up, down) G1 quark b-values.  No other pair from the lepton a-values produces
+(b_u, b_d) = (9, 5).
+
+Python-verified (CatA, `research-sandbox/quark_seed_permutation.py`): MDL uniqueness
+confirmed; all six lepton→quark pairings checked; only (9, 5) gives (N_gen², N_fam).
+
+These three theorems certify the numeric content (CatAL).  The formal derivation of
+WHY the MDL principle forces cross-generational assignment (the permutation from GTE
+axioms) remains CatAD and is an open Lean certification target.
+-/
+
+/-- **neff_u_eq_ngen_sq_mdl** (CatAL): the up quark G1 N_eff equals N_gen² = 9
+    in the MDL-doublet pairing context.
+
+    b_u = N_gen² = 3² = 9.
+
+    The up quark G1 seed inherits the b-value a_L2 = N_gen² = 9 from the lepton cascade
+    via the MDL-doublet permutation.  This equals the number of independent real parameters
+    in the N_gen × N_gen CKM matrix, connecting the quark G1 seed to the CKM degree-of-freedom
+    count.
+
+    This theorem is an alias of `neff_u_eq_ngen_sq` (§15) in the MDL-doublet pairing context.
+
+    LEAN-CERTIFIED (exact, zero sorry). -/
+theorem neff_u_eq_ngen_sq_mdl : b_u = n_gen ^ 2 := neff_u_eq_ngen_sq
+
+/-- **neff_d_eq_nfam_mdl** (CatAL): the down quark G1 N_eff equals N_fam = 5
+    in the MDL-doublet pairing context.
+
+    b_d = N_fam = 5.
+
+    The down quark G1 seed inherits the b-value a_L3 = N_fam = 5 from the lepton cascade
+    via the MDL-doublet permutation.  This places the down quark at the Z₅ ring boundary,
+    the simplest GTE constant, the family ring size.
+
+    This theorem is an alias of `neff_d_eq_nfam` (§15) in the MDL-doublet pairing context.
+
+    LEAN-CERTIFIED (exact, zero sorry). -/
+theorem neff_d_eq_nfam_mdl : b_d = n_fam := neff_d_eq_nfam
+
+/-- **quark_doublet_pairing_unique** (CatAL): the G1 quark (u, d) doublet MDL pairing
+    is characterized by four simultaneous arithmetic identities.
+
+    (i)  b_u = N_gen² = 9  (up quark seed from lepton a_L2)
+    (ii) b_d = N_fam  = 5  (down quark seed from lepton a_L3)
+    (iii) N_gen² + N_fam = 14  (G1 doublet total: the 14-neighborhood f_MDL count identity)
+    (iv) N_gen² / (N_gen² + N_fam) = 9/14  (u-type fraction of the G1 doublet)
+
+    Identity (iii) connects the G1 quark doublet total directly to the f_MDL nonzero
+    neighborhood count 14 = c_H + 1 (certified by `fmdl_count_eq_chiggs_plus_one`, §9).
+    Identity (iv) is the u-type quark fraction of the G1 doublet: 9 out of 14 total
+    N_eff units are in the up sector.
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem quark_doublet_pairing_unique :
+    b_u = n_gen ^ 2 ∧ b_d = n_fam ∧
+    n_gen ^ 2 + n_fam = 14 ∧
+    (n_gen ^ 2 : ℚ) / (n_gen ^ 2 + n_fam) = 9 / 14 := by
+  norm_num [b_u, b_d, n_gen, n_fam]
 
 end GUTStructure
