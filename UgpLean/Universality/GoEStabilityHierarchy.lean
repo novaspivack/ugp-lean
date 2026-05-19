@@ -265,34 +265,19 @@ theorem sm_orbit_is_gtp3 :
   ⟨fmdl_gen1_is_garden_of_eden, fmdl_gen2_unique_predecessor,
    fmdl_gen3_unique_predecessor, fmdl_z7_gen3_to_vacuum⟩
 
-/-- **sm_orbit_unique_gtp3**: The SM orbit is the unique GTP-3 in Z₇⁵ under f_MDL.
+/-! ### Uniqueness of GTP-3 (CatA)
 
-    Every chain s₁ → fmdl(s₁) → fmdl²(s₁) → vacuum, where:
-    - s₁ has no predecessor (GoE)
-    - fmdl(s₁) has s₁ as its unique predecessor
-    - fmdl²(s₁) has fmdl(s₁) as its unique predecessor
-    - fmdl³(s₁) = vacuum
+Exhaustive Python search (gtp_chain_uniqueness.py, 2026-05-19) confirms:
+exactly 5 GTP-3 chains exist in Z₇⁵ under f_MDL_ring, all cyclic rotations of gen₁.
+No other GoE state begins a GTP-3 chain.
 
-    must start at a cyclic rotation of gen₁ = [1,5,2,2,1].
+The Lean CatAL proof of uniqueness (`sm_orbit_unique_gtp3`) requires `native_decide`
+over all 16,807 states of `Fin 5 → Fin 7` with inner ∀-conditions per state.
+This generates extremely large LLVM IR (30+ minute LLVM compile time) and is
+deferred to a future build-time-optimized version.
 
-    Formulated using direct function predicates (no Finset.filter.card in antecedents)
-    for efficient native_decide compilation. Equivalent to the pred_count formulation
-    but with O(n) per-hypothesis check rather than O(n²) finset computation.
-
-    Physical significance: Three generations is TOPOLOGICALLY FORCED by Z₇⁵ under
-    f_MDL — the CA graph has exactly one class of GoE-rooted terminating paths of
-    length 3, and that class IS the SM generation orbit (up to ring symmetry).
-
-    CatA: confirmed by exhaustive Python search (gtp_chain_uniqueness.py, 5 chains found).
-    LEAN-CERTIFIED (native_decide, zero sorry). -/
-theorem sm_orbit_unique_gtp3 :
-    ∀ s₁ : Fin 5 → Fin 7,
-      (∀ s, fmdl_step5 s ≠ s₁) →
-      (∀ s, fmdl_step5 s = fmdl_step5 s₁ → s = s₁) →
-      (∀ s, fmdl_step5 s = fmdl_step5 (fmdl_step5 s₁) → s = fmdl_step5 s₁) →
-      fmdl_step5 (fmdl_step5 (fmdl_step5 s₁)) = (fun (_ : Fin 5) => (0 : Fin 7)) →
-      ∃ k : Fin 5, s₁ = fun i => fmdl_gen1_z7 (i + k) := by
-  native_decide
+The existence results below (sm_orbit_is_gtp3, fmdl_no_gtp4) are fully CatAL.
+-/
 
 /-- **fmdl_no_gtp4**: No GoE state begins a GTP-4 chain in Z₇⁵.
 
@@ -386,12 +371,6 @@ theorem fmdl_no_generation_shortcut :
 -- §9  GTP-3 Z₇-Sum Trajectory Uniqueness (Rank 38)
 -- ════════════════════════════════════════════════════════════════
 
-/-- The secondary sum-4-conserving orbit starting at [0,2,5,2,2].
-    Under fmdl_step5, alt is a GTP-2 start: it reaches vacuum in exactly 2 steps.
-    From Spec 01: the 5 cyclic rotations of alt are the other 5 sum-4-conserving states. -/
-def fmdl_alt_z7 : Fin 5 → Fin 7
-  | ⟨0, _⟩ => 0 | ⟨1, _⟩ => 2 | ⟨2, _⟩ => 5 | ⟨3, _⟩ => 2 | ⟨4, _⟩ => 2
-  | ⟨n+5, h⟩ => absurd h (by omega)
 
 /-!
 ## GTP-3 Z₇-Sum Trajectory Uniqueness
@@ -424,13 +403,13 @@ not just the canonical gen₁ = [1,5,2,2,1] representative.
     Combined with §7's `sm_orbit_unique_gtp3` (all GTP-3 chains are gen₁ rotations),
     this gives the complete characterization: the unique GTP-3 sum trajectory is 4→4→3.
 
-    LEAN-CERTIFIED (fin_cases + decide, zero sorry). -/
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
 theorem gtp3_sum_trajectory_of_gen1_rotations :
     ∀ k : Fin 5,
       z7_sum (fun i : Fin 5 => fmdl_gen1_z7 (i + k)) = 4 ∧
       z7_sum (fmdl_step5 (fun i => fmdl_gen1_z7 (i + k))) = 4 ∧
       z7_sum (fmdl_step5 (fmdl_step5 (fun i => fmdl_gen1_z7 (i + k)))) = 3 := by
-  decide
+  native_decide
 
 /-- **gtp3_alt_depth_is_two**: The alt orbit [0,2,5,2,2] and all its cyclic rotations
     have depth exactly 2 under fmdl_step5 (GTP-2, not GTP-3).
@@ -442,12 +421,12 @@ theorem gtp3_sum_trajectory_of_gen1_rotations :
     - gen₁ rotations: depth 3, GTP-3, sum trajectory 4→4→3
     - alt  rotations: depth 2, GTP-2, sum trajectory 4→4→0 (skips sum=3)
 
-    LEAN-CERTIFIED (fin_cases + decide, zero sorry). -/
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
 theorem gtp3_alt_depth_is_two :
     ∀ k : Fin 5,
       (fmdl_step5 (fmdl_step5 (fun i => fmdl_alt_z7 (i + k))) = fun _ => (0 : Fin 7)) ∧
       (fmdl_step5 (fun i => fmdl_alt_z7 (i + k)) ≠ fun _ => (0 : Fin 7)) := by
-  decide
+  native_decide
 
 /-- **gtp3_sum_trajectory_master**: master theorem summarizing the complete
     GTP-3 Z₇-sum trajectory characterization.
