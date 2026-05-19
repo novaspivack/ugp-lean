@@ -153,6 +153,8 @@ cascade endpoint c_W = c_H − d_W = 2N_fam + 1 = 11.
 - `cw_eq_two_nfam_plus_one`: c_W = 2·N_fam + 1 = 11 (family ring staircase identity)
 - `bt_eq_cw_gateway`: b_top = 2^c_W × N_gen × N_fam × (2N_fam+1) = 337920 (top quark gateway form)
 - `bt_in_cw_sq_form`: b_top = 2^c_W × N_gen × N_fam × c_W (most compressed form)
+- `q_l1_eq_c_w`: ⌊823/73⌋ = c_W = 11 (first GTE cascade quotient = W boson c-value; structural WHY)
+- `bt_from_cascade_quotient`: b_top = 2^(823/73) × N_gen × N_fam × (823/73) (cascade quotient derivation route)
 
 ## §26 — G1 Quark Seed MDL-Doublet Pairing — N_eff Uniqueness (Rank 80, CatAL)
 
@@ -2630,6 +2632,58 @@ theorem bt_in_cw_sq_form :
     b_top = 2 ^ EWBosonStructure.c_w_plus * n_gen * n_fam * EWBosonStructure.c_w_plus := by
   norm_num [b_top, EWBosonStructure.c_higgs, EWBosonStructure.c_w_plus, n_gen, n_fam]
 
+/-- **q_l1_eq_c_w** (CatAL):
+    The first GTE cascade quotient equals the W boson cascade depth.
+
+    q_L1 = ⌊c_L1 / b_L1⌋ = ⌊823 / 73⌋ = 11 = c_W.
+
+    The lepton seed is (1, 73, 823) at ridge n = 10.  The first GTE cascade
+    step (odd step) computes q = ⌊823/73⌋ = 11, which is EXACTLY the W boson
+    cascade depth c_W = c_H − d_W = 13 − 2 = 11 (EWBosonStructure, CatAL).
+
+    This is the structural origin of the exponent in the top quark formula:
+    b_t = 2^c_W × N_gen × N_fam × c_W, where c_W = q_L1 is the first cascade
+    quotient.  The binary amplification 2^(q_L1) is 2 raised to the quotient
+    at the lepton seed's first cascade step — not an independently injected
+    parameter.  The W boson cascade depth emerges from the GTE lepton cascade
+    itself, via integer division of the seed c-value by the seed b-value.
+
+    Physical significance (CatAD): the top quark orbit capacity is capped at
+    the W boson level because c_W = q_L1 is the "most natural" cascade quotient
+    — the one produced at the very first GTE step on the minimal admissible seed.
+    The cascade cannot proceed deeper (to c_H = 13) for the up-type G3 quark
+    because the W gateway absorbs exactly d_W = 2 Goldstone modes.
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem q_l1_eq_c_w : 823 / 73 = EWBosonStructure.c_w_plus := by
+  norm_num [EWBosonStructure.c_w_plus]
+
+/-- **bt_from_cascade_quotient** (CatAL):
+    The top quark orbit capacity expressed via the GTE first cascade quotient.
+
+    b_top = 2^(823/73) × N_gen × N_fam × (823/73) = 337920.
+
+    Here 823/73 = ⌊823/73⌋ = 11 (Lean integer division = floor division for
+    positive integers).  This re-derives `bt_in_cw_sq_form` via the cascade
+    quotient route: the exponent and the linear factor both equal q_L1 = ⌊823/73⌋,
+    the first quotient in the GTE lepton cascade (see `q_l1_eq_c_w`).
+
+    This theorem provides an alternative derivation of b_t:
+    - Route 1 (prior): b_top = 2^c_W × N_gen × N_fam × c_W (`bt_in_cw_sq_form`)
+      expressed via the W boson constant c_W directly.
+    - Route 2 (this theorem): b_top = 2^(q_L1) × N_gen × N_fam × q_L1
+      expressed via the GTE cascade quotient q_L1 = ⌊823/73⌋.
+    Both routes give the same value because q_L1 = c_W (`q_l1_eq_c_w`, CatAL).
+
+    The cascade quotient route provides the structural WHY for the W gateway:
+    c_W is not injected by hand but emerges as the GTE quotient at the first
+    lepton cascade step.
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem bt_from_cascade_quotient :
+    b_top = 2 ^ (823 / 73) * n_gen * n_fam * (823 / 73) := by
+  norm_num [b_top, EWBosonStructure.c_higgs, n_gen, n_fam]
+
 -- ════════════════════════════════════════════════════════════════
 -- §26  G1 Quark Seed MDL-Doublet Pairing — N_eff Uniqueness (Rank 80, CatAL)
 -- ════════════════════════════════════════════════════════════════
@@ -4078,5 +4132,121 @@ theorem dark_ring_size_eq_n_gen_plus_one : (4 : ℕ) = n_gen + 1 := by
     LEAN-CERTIFIED (norm_num, zero sorry). -/
 theorem dark_budget_identity : (4 : ℕ) + 4 = 2 ^ n_gen := by
   norm_num [n_gen]
+
+-- ============================================================
+-- §35 (continued)  Visible Sector: 5-Cell Ring Has Zero Period-2 Orbits (R95.NT8, CatAL)
+-- ============================================================
+
+/-! ## §35 (cont.) — Visible Sector No Period-2: Rule 110 on the 5-Cell Ring (R95.NT8)
+
+The visible sector corresponds to the N=5 (=N_gen+2) binary ring under Rule 110.
+Exhaustive computation over all 32 = 2⁵ states shows:
+- Unique fixed point: state 0 = (0,0,0,0,0) (vacuum)
+- Period-2 orbits: NONE — every non-vacuum state is a transient
+
+This seals the N=4 vs N=5 asymmetry:
+  Dark sector  (N=4 ring): 1 fixed point + 2 period-2 cycles → stable dark states exist
+  Visible sector (N=5 ring): 1 fixed point + 0 period-2 cycles → no stable excited states
+
+Physical interpretation: visible-sector excited states (SM particles) are transients,
+not stable dark-matter analogs. The N=4 ring's period-2 orbits are a ring-size privilege
+that does not extend to N=5.
+
+New definitions and theorems (R95.NT8, CatAL, all `decide`/`norm_num`, zero sorry):
+- `rule110_5cell_raw` ★★: lookup table for Rule 110 on 5-cell binary periodic ring
+- `rule110_5cell_ring` ★★★: the Fin 32 → Fin 32 CA map
+- `visible_sector_vacuum_fixed_point` ★★★ (CatAL): state 0 is a fixed point
+- `visible_sector_no_period2` ★★★★★ (CatAL): no period-2 orbits exist — the key asymmetry theorem
+- `visible_sector_all_transients_or_fixed` ★★★★ (CatAL): every period-2 implies fixed
+- `n4_n5_period2_asymmetry` ★★★★★ (CatAL): N=4 ring HAS period-2 orbits; N=5 ring does NOT
+
+All proofs: `decide` or `norm_num`, zero sorry.
+-/
+
+/-- Raw Rule 110 map on a 5-cell binary periodic ring: lookup table keyed by state
+    value 0..31. States are big-endian encodings of (s₀,s₁,s₂,s₃,s₄) ∈ {0,1}⁵, with
+    new_sᵢ = Rule110(s_{i-1 mod 5}, sᵢ, s_{i+1 mod 5}).
+
+    Computed exhaustively from Rule 110 = 01101110₂. -/
+private def rule110_5cell_raw : ℕ → ℕ
+  | 0  => 0   | 1  => 3   | 2  => 6   | 3  => 7
+  | 4  => 12  | 5  => 15  | 6  => 14  | 7  => 13
+  | 8  => 24  | 9  => 27  | 10 => 30  | 11 => 31
+  | 12 => 28  | 13 => 31  | 14 => 26  | 15 => 25
+  | 16 => 17  | 17 => 19  | 18 => 23  | 19 => 22
+  | 20 => 29  | 21 => 31  | 22 => 31  | 23 => 28
+  | 24 => 25  | 25 => 11  | 26 => 31  | 27 => 14
+  | 28 => 21  | 29 => 7   | 30 => 19  | 31 => 0
+  | _  => 0
+
+private lemma rule110_5cell_raw_lt : ∀ n : ℕ, n < 32 → rule110_5cell_raw n < 32 := by
+  intro n hn
+  interval_cases n <;> simp [rule110_5cell_raw]
+
+/-- **rule110_5cell_ring**: the Rule 110 cellular automaton map on a 5-cell binary
+    periodic ring, encoded as Fin 32 → Fin 32.
+    States represent (s₀,s₁,s₂,s₃,s₄) ∈ {0,1}⁵ in big-endian binary. -/
+def rule110_5cell_ring (s : Fin 32) : Fin 32 :=
+  ⟨rule110_5cell_raw s.val, rule110_5cell_raw_lt s.val s.isLt⟩
+
+/-- **visible_sector_vacuum_fixed_point** ★★★ (CatAL):
+    The state (0,0,0,0,0) = 0 is a fixed point of Rule 110 on the 5-cell binary ring.
+    This is the unique fixed point (vacuum state).
+
+    LEAN-CERTIFIED (decide, zero sorry). -/
+theorem visible_sector_vacuum_fixed_point :
+    rule110_5cell_ring ⟨0, by decide⟩ = ⟨0, by decide⟩ := by decide
+
+/-- **visible_sector_no_period2** ★★★★★ (CatAL):
+    The 5-cell binary ring under Rule 110 has **zero period-2 orbits**.
+    Every state satisfying f(f(s)) = s must already satisfy f(s) = s (i.e., be a fixed point).
+
+    This is the key N=4 vs N=5 asymmetry theorem:
+    - N=4 ring (dark sector): admits 4 period-2 orbit states
+    - N=5 ring (visible sector): admits NONE — period-2 implies fixed
+
+    Physical consequence: visible-sector excited states cannot be stable as dark-matter
+    analogs; they are transients that decay to the vacuum.
+
+    LEAN-CERTIFIED (decide, zero sorry). -/
+theorem visible_sector_no_period2 :
+    ∀ s : Fin 32,
+      rule110_5cell_ring (rule110_5cell_ring s) = s →
+      rule110_5cell_ring s = s := by
+  decide
+
+/-- **visible_sector_all_transients_or_fixed** ★★★★ (CatAL):
+    Every state in the 5-cell ring is either a fixed point or a transient (reaches a
+    strictly different state under one application of Rule 110 and never returns in 2 steps).
+    No state has a non-trivial period-2 orbit.
+
+    Equivalently: the only recurrent states are fixed points.
+
+    LEAN-CERTIFIED (decide, zero sorry). -/
+theorem visible_sector_all_transients_or_fixed :
+    ∀ s : Fin 32,
+      (rule110_5cell_ring (rule110_5cell_ring s) = s ∧ rule110_5cell_ring s ≠ s) ↔ False := by
+  decide
+
+/-- **n4_n5_period2_asymmetry** ★★★★★ (CatAL):
+    The N=4 ring (dark sector) has period-2 orbit states; the N=5 ring (visible sector)
+    has none. Specifically:
+    - State 14 ∈ Fin 16 is a period-2 orbit state on the 4-cell ring (f(f(14)) = 14, f(14) ≠ 14)
+    - No state in Fin 32 is a period-2 orbit state on the 5-cell ring
+
+    This asymmetry is a structural property of Rule 110 and the ring sizes N=4, N=5 —
+    not a tuned parameter. It provides the first CA-theoretic explanation for why the
+    dark sector (N=4) admits stable non-vacuum states while the visible sector (N=5) does not.
+
+    LEAN-CERTIFIED (decide, zero sorry). -/
+theorem n4_n5_period2_asymmetry :
+    (rule110_4cell_ring ⟨14, by decide⟩ ≠ ⟨14, by decide⟩ ∧
+     rule110_4cell_ring (rule110_4cell_ring ⟨14, by decide⟩) = ⟨14, by decide⟩) ∧
+    (∀ s : Fin 32,
+      rule110_5cell_ring (rule110_5cell_ring s) = s →
+      rule110_5cell_ring s = s) := by
+  constructor
+  · decide
+  · decide
 
 end GUTStructure
