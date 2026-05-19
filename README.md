@@ -154,6 +154,22 @@ Physical motivation: P28 Table 1 shows computationally that no single-bit pertur
 - `rule110_orbit_complete_isolation` — **Deepest result**: ∀ g₂ g₃, (Rule 110: smGen1→g₂→g₃) ↔ (g₂=smGen2 ∧ g₃=smGen3); covers all 1024 possible orbit pairs (native_decide)
 - `rule110_orbit_is_globally_isolated` — Any (g₂,g₃)≠(smGen2,smGen3): Rule 110 does not produce orbit smGen1→g₂→g₃
 
+**GoE Orbital Chain Isolation — Z₇ CA stability hierarchy (GoEStabilityHierarchy.lean, 2026-05-18; 9 theorems, 0 sorry)**
+
+Physical motivation: The SM generation orbit gen₁→gen₂→gen₃→vacuum under fmdl_step5 forms a completely isolated linear chain in Z₇⁵ (16,807-state space). Each generation has a unique predecessor (its immediate orbital ancestor), except gen₁ which has none. This certifies the generation stability hierarchy from CA arithmetic alone.
+
+- `fmdl_predecessor_count` (def) — counts predecessor states of any Z₇⁵ configuration under fmdl_step5
+- `fmdl_gen1_predecessor_count = 0` — Garden of Eden restated as explicit count (native_decide)
+- `fmdl_gen2_predecessor_count = 1` — gen₂ has exactly 1 predecessor (native_decide)
+- `fmdl_gen3_predecessor_count = 1` — gen₃ has exactly 1 predecessor (native_decide)
+- `fmdl_gen2_unique_predecessor` — **Orbital isolation**: ∀s : Z₇⁵, fmdl_step5(s)=gen₂ ↔ s=gen₁ (native_decide)
+- `fmdl_gen3_unique_predecessor` — **Orbital isolation**: ∀s : Z₇⁵, fmdl_step5(s)=gen₃ ↔ s=gen₂ (native_decide)
+- `fmdl_orbit_linear_chain` — **Main theorem**: GoE ∧ gen₂←gen₁ only ∧ gen₃←gen₂ only (combines above)
+- `fmdl_generation_stability_ordering` — exact predecessor counts 0/1/1 for gen₁/gen₂/gen₃
+- `fmdl_gen1_stability_dominance` — gen₁ has strictly fewer predecessors than gen₂ or gen₃
+
+Note: pred(gen₂)=pred(gen₃)=1 (not a strict ordering), but `fmdl_orbit_linear_chain` provides the complete isolation structure which is the deeper result.
+
 **Universality and self-reference**
 - `ugp_is_turing_universal` — UGP substrate Turing-universal via native Rule 110 embedding
 - `uwca_sweep_implements_rule110` — UWCA sweep implements Rule 110 exactly
