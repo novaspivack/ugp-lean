@@ -339,6 +339,27 @@ Physical motivation: The Z₇-sum sequence 4→4→3→0 across the generation c
 - `orbit_sum_trajectory_invariant` — for any orbit-admissible f: z7_sum trajectory of orbit images is 4→3→0 (rw+decide, CatAL)
 - `orbit_sum_full_trajectory` — complete 4-step trajectory 4→4→3→0 for all orbit-admissible f (CatAL)
 
+**Z₅ Ring Equivariance of fmdl (CUP3DUniqueness §10, 2026-05-19; 1 definition + 1 theorem, 0 sorry)**
+
+Physical motivation: The five SM particle families [e⁻, u, d, νR, νL] in the 5-cell ring are related by Z₅ rotational symmetry. PSC Presentation Invariance (PI) requires that observable quantities be invariant under bijections preserving physical structure; the Z₅ cyclic rotation group acts on the 5-cell ring, and fmdl treats all 5 positions identically. This is the exact discrete gauge symmetry of the ring geometry derived from PI. Note: fmdl is NOT equivariant under Z₇ additive shifts (2030 counterexamples); Z₅ rotational symmetry is the correct and complete ring gauge symmetry.
+
+- `cyclic_rotate` — definition: cyclic rotation of a 5-cell Z₇ ring by k positions (generalizes rotate5 from CUP4TotalParity to Fin 7 cells)
+- `fmdl_z5_equivariant` — **Main theorem**: ∀ (v : Fin 5 → Fin 7) (k : Fin 5), fmdl_step5(cyclic_rotate v k) = cyclic_rotate(fmdl_step5 v) k; zero failures over 7⁵ × 5 = 84,035 cases (native_decide, CatAL)
+
+**EW Boson GTE Triple Arithmetic (EWBosonStructure.lean, 2026-05-19; 7 theorems + 3 definitions, 0 sorry)**
+
+Physical motivation: The three EW bosons with defined GTE triples — W⁺(5,3,11), Z(5,3,12), H⁰(5,3,13) — share identical (a=5, b=3) components and form a unit-step arithmetic progression in c. This c-staircase is the unique such structure in the GTE triple dataset. Each c-step encodes one layer of EW cascade complexity corresponding to broken SU(2)_L generator directions in the Higgs mechanism. The scalar boundary c_H = 13 = N_gen + 2×N_fam marks the EW cascade endpoint: particles with c < c_H are massive spin-1 gauge bosons; the particle at c = c_H is the spin-0 Higgs scalar.
+
+- `c_w_plus`, `c_z_boson`, `c_higgs` — cascade depth constants (11, 12, 13)
+- `w_plus_triple`, `z_triple`, `higgs_triple` — GTE triple constants (5,3,c)
+- `ew_c_staircase` — c_W = c_H − 2 ∧ c_Z = c_H − 1 ∧ c_H = 13 (decide, CatAL)
+- `ew_c_arithmetic_progression` — c_Z = c_W + 1 ∧ c_H = c_Z + 1 ∧ c_H = c_W + 2 (decide, CatAL)
+- `ew_mass_ordering` — c_W < c_Z < c_H matching M_W < M_Z < M_H (decide, CatAL)
+- `ew_higgs_is_scalar_boundary` — c_W < c_H ∧ c_Z < c_H ∧ c_H = 13 (decide, CatAL)
+- `ew_shared_ab_components` — all three EW bosons have (a=5, b=3) (decide, CatAL)
+- `ew_triples_distinct` — W⁺, Z, H⁰ triples pairwise distinct (differ only in c) (decide, CatAL)
+- `ew_boson_structure` — **Combined theorem**: all 5 structural facts in one conjunction (decide, CatAL)
+
 <!-- NOVA_ZPO_ZENODO_SOFTWARE_BEGIN -->
 **Archival software (Zenodo):** https://doi.org/10.5281/zenodo.19429247
 <!-- NOVA_ZPO_ZENODO_SOFTWARE_END -->

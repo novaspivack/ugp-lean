@@ -128,6 +128,7 @@ import UgpLean.Universality.DimensionalSliceUniqueness
 import UgpLean.Universality.Z5TransitivityUniqueness
 import UgpLean.Universality.GTPNeutralDiscrimination
 import UgpLean.Universality.SMOrbitCausalIsolation
+import UgpLean.Universality.EWBosonStructure
 import UgpLean.TE22.ScanCertificate
 import UgpLean.PSC.RCCInfiniteFamilies
 import UgpLean.PSC.RCCComplete
