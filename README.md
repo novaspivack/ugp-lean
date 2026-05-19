@@ -567,6 +567,18 @@ Rank 99 result: Step 3 (2→1) upgraded from unexplained postulate to GTE-motiva
 
 ---
 
+**Full 6-Quark N_eff GTE Arithmetic Closure (GUTStructure.lean §34, 2026-05-19; 3 theorems, 0 sorry)**
+
+The capstone certification packaging the complete GTE quark N_eff spectrum. Assembles individually certified structural formulas (§15, §20, §25) with the three-step G1 seed derivation chain (§26 MDL-doublet pairing, §30 Mersenne discriminator, §33 Z₇ alignment) into three joint theorems — closing the full six-quark derivation at CatAL for the arithmetic result.
+
+- `six_quark_neff_complete` ★★★★★ — 6-conjunct joint theorem: b_u=N_gen²=9, b_d=N_fam=5, b_c=N_fam²(2N_fam+1)=275, b_s=2N_gen(2c_H+N_fam)=186, b_b=2^c_H−1=8191 (Mersenne prime M₁₃), b_top=2^c_W·N_gen·N_fam·(2N_fam+1)=337920 (exact assembly, zero sorry)
+- `quark_g1_canonical_assignment` ★★★ — Z₇ arithmetic fingerprint: b_u % 7 = 2 (aligned with w(u)=2), b_d % 7 = 5, b_u ≠ b_d; charge-swap candidate excluded (norm_num, CatAL)
+- `quark_neff_all_distinct` ★★★ — all six quark b-values mutually distinct: b_u≠b_d, b_u≠b_b, b_u≠b_top, b_d≠b_b, b_d≠b_top, b_b≠b_top (norm_num, CatAL)
+
+Rank 100 result: all six quark N_eff values GTE-derived and machine-certified at CatAL level for the arithmetic content.
+
+---
+
 **CA Masslessness Criterion, EW Vertex, Ether Z₇ Winding, Helicity Parity Violation (CasimirMasslessEther.lean, 2026-05-19; 12 theorems + 1 definition, 0 sorry)**
 
 Three results from the photon-vacuum-Casimir session, Lean-certified via native_decide:
