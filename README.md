@@ -527,6 +527,23 @@ Physical motivation: The three EW bosons with defined GTE triples — W⁺(5,3,1
 
 ---
 
+**Primordial T(2,3) Topology — Cascade Period p=2 Selection (GUTStructure.lean §31, 2026-05-19; 5 theorems, 0 sorry)**
+
+Three-constraint Lean certification that p=2 is the unique valid cascade period for T(p,N_gen):
+(1) GoE structural necessity (p≥2: `CUP3D.fmdl_gen1_is_garden_of_eden`, CatAL);
+(2) PSC topological connectedness (gcd(p,N_gen)=1 for T(p,q) to be a knot, not a link);
+(3) MDL minimality (p=2 is the smallest p≥2 coprime to N_gen=3).
+
+- `cascade_period_coprimality` — Nat.gcd 2 n_gen = 1 (T(2,3) is a single-component knot; norm_num, CatAL)
+- `cascade_period_3_fails_coprimality` — Nat.gcd 3 n_gen ≠ 1 (T(3,3) is a 3-link; p=3 PSC-excluded; norm_num, CatAL)
+- `mdl_cascade_period_minimum` — ∀ p≥2, gcd(p,N_gen)=1 → MDL(2) ≤ MDL(p)  (monotone MDL; omega, CatAL)
+- `fmdl_cascade_period_two_unique` — gcd(2,N_gen)=1 ∧ ∀ p≥2 coprime to N_gen, 2≤p  (joint statement; CatAL)
+- `cascade_period_minimum_is_two` ★ — (gcd(2,N_gen)=1) ∧ (MDL(2)=10) ∧ (MDL minimality) — **three-constraint selection theorem** (norm_num + omega, CatAL)
+
+Both T(2,3) parameters are now GTE-derived at CatAL level: q=N_gen=3 (`fmdl_ngen_equals_three`, CatAL) and p=2 (§31, CatAL). Rank 93 upgraded: CatD+ → CatAD → **CatAL**.
+
+---
+
 **CA Masslessness Criterion, EW Vertex, Ether Z₇ Winding, Helicity Parity Violation (CasimirMasslessEther.lean, 2026-05-19; 12 theorems + 1 definition, 0 sorry)**
 
 Three results from the photon-vacuum-Casimir session, Lean-certified via native_decide:
