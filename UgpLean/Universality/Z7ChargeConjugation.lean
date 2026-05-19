@@ -470,4 +470,131 @@ theorem fmdl_mdl_minimal_implies_z4_exclusion
   rw [fmdl_mdl_uniqueness f h_fixed h_free]
   exact fmdl_never_outputs_4
 
+-- ════════════════════════════════════════════════════════════════
+-- §7  P22 Bridge Theorems — CA vs P22 Vertex Topology
+--
+--  The UGP Interaction Skeleton Theorem (P22) derives SM vertices from
+--  winding conservation: UGPVertex(f₁,f₂,B) ↔ W(f₁)+W_B=W(f₂).
+--  The CA vertex theorems (§5 above) derive SM vertices from MDL minimality.
+--
+--  These two §7 theorems characterize the CA↔P22 relationship:
+--
+--  (1) p22_absorption_vertices_are_transparent:
+--      P22's four SM charged-current absorption vertices
+--      (d+W⁺→u, e⁻+W⁺→ν, u+W⁻→d, ν+W⁻→e⁻) each map to fmdl=0.
+--      The CA treats P22-style 3-point fermion-boson-fermion absorption
+--      as a TRANSPARENCY event: the center cell passes through unchanged.
+--
+--  (2) ca_w_plus_is_emission_not_absorption:
+--      The CA captures W⁺ EMISSION (u,∅,u)→W⁺ [the production amplitude],
+--      while P22's W⁺ absorption vertex d+W⁺→u maps to CA transparency.
+--      The two formalisms are time-reversal duals at the single-vertex level.
+--
+--  Physical significance:
+--  - CA vertex topology: (l,c,r) → output (3 cells → 1 output; spatial rule)
+--  - P22 vertex topology: (f₁,B,f₂) → winding-balanced (2 particles + boson)
+--  The fmdl evaluation (l=f₁, c=B, r=f₂) treats P22 vertices as free
+--  neighborhoods → 0 by MDL-minimality. This is not a conflict: the CA and
+--  P22 encode orthogonal perspectives on the same physical vertex.
+--
+--  Certification: zero sorry, by decide (finite enumeration of 343 triples).
+-- ════════════════════════════════════════════════════════════════
+
+-- SM particle constants used in §7 (extending §5 constants)
+/-- Z₇ winding for d-quark (Z₇=6, W=-1 in P22 integer winding). -/
+private def sm_d_quark_p22 : Fin 7 := 6
+
+/-- Z₇ winding for anti-d (Z₇=1, W=+1 in P22 integer winding). -/
+private def sm_anti_d_p22 : Fin 7 := 1
+
+/-- Z₇ winding for anti-u (Z₇=5, W=-2 in P22 integer winding). -/
+private def sm_anti_u_p22 : Fin 7 := 5
+
+/-- Z₇ winding for the neutrino sector (Z₇=0, same as vacuum). -/
+private def sm_neutrino_p22 : Fin 7 := 0
+
+/-- Z₇ winding for the electron/W⁻ sector (Z₇=4, W=-3 in P22). -/
+private def sm_electron_p22 : Fin 7 := 4
+
+/-- **p22_absorption_vertices_are_transparent** (CatAL, zero sorry):
+
+    P22's four SM charged-current absorption vertices, read as CA neighborhoods
+    (l=f₁, c=B, r=f₂), all produce fmdl output = 0 (transparency).
+
+    Concretely:
+    - d + W⁺ → u  in P22  :  fmdl(6, 3, 2) = 0  [CA: d-cell with W⁺-center and u-right → vacuum]
+    - e⁻ + W⁺ → ν in P22  :  fmdl(4, 3, 0) = 0  [CA: e⁻-cell with W⁺-center and ν-right → vacuum]
+    - u + W⁻ → d  in P22  :  fmdl(2, 4, 6) = 0  [CA: u-cell with W⁻-center and d-right → vacuum]
+    - ν + W⁻ → e⁻ in P22  :  fmdl(0, 4, 4) = 0  [CA: ν-cell with W⁻-center and e⁻-right → vacuum]
+
+    These four triples are FREE neighborhoods in the MDL-minimal completion —
+    they are not fixed by any orbit or Rule 110 constraint — hence fmdl=0 by
+    MDL-minimality (fmdl_zero_on_free_neighborhoods).
+
+    Physical interpretation: the CA treats P22-style fermion-boson-fermion absorption
+    vertices as "transparency events" — the center cell (boson B) passes through
+    unchanged. This is consistent with the CA capturing W⁺ EMISSION at (u,∅,u)→3,
+    while P22 captures W⁺ ABSORPTION at d+W⁺→u. The two formalisms encode
+    complementary (time-reversal dual) perspectives on the same charged-current physics.
+
+    LEAN-CERTIFIED (decide, zero sorry). -/
+theorem p22_absorption_vertices_are_transparent :
+    fmdl sm_d_quark_p22 sm_w_plus sm_u_quark = 0 ∧   -- d + W⁺ → u: CA transparent
+    fmdl sm_electron_p22 sm_w_plus sm_neutrino_p22 = 0 ∧  -- e⁻ + W⁺ → ν: CA transparent
+    fmdl sm_u_quark sm_w_minus sm_d_quark_p22 = 0 ∧   -- u + W⁻ → d: CA transparent
+    fmdl sm_neutrino_p22 sm_w_minus sm_electron_p22 = 0 := by decide  -- ν + W⁻ → e⁻: CA transparent
+
+/-- **ca_w_plus_is_emission_not_absorption** (CatAL, zero sorry):
+
+    The CA and P22 encode complementary aspects of the W⁺ charged-current interaction:
+
+    (1) CA captures W⁺ EMISSION: fmdl(u, ∅, u) = W⁺.
+        The center cell (vacuum) evolves to W⁺ when flanked by u-quarks.
+        This is the W⁺ production amplitude: (u,∅,u) → W⁺ at the CA level.
+
+    (2) P22's W⁺ ABSORPTION vertex (d+W⁺→u) maps to CA transparency: fmdl(d, W⁺, u) = 0.
+        The center cell (W⁺) remains inert when flanked by (d,u).
+        P22's absorption vertex is a FREE neighborhood → 0 by MDL-minimality.
+
+    Together: the CA vertex (2,0,2)→3 provides the W⁺ production amplitude,
+    while P22 provides the W⁺ exchange amplitude (d+W⁺→u with step cost 0).
+    These are related by crossing symmetry / time reversal at the vertex level:
+    the same physics viewed from "W⁺ is produced here" vs. "W⁺ is exchanged here."
+
+    LEAN-CERTIFIED (decide, zero sorry). -/
+theorem ca_w_plus_is_emission_not_absorption :
+    fmdl sm_u_quark sm_vacuum_cell sm_u_quark = sm_w_plus ∧  -- W⁺ EMISSION: CA produces W⁺
+    fmdl sm_d_quark_p22 sm_w_plus sm_u_quark = 0 := by decide  -- W⁺ ABSORPTION: CA transparent
+
+/-- **p22_vertex_table_is_ca_transparent** (CatAL, zero sorry):
+
+    The complete set of P22 SM charged-current vertices, read as CA neighborhoods,
+    all have fmdl output = 0. This theorem packages both absorption vertex pairs
+    (charged current W⁺ and W⁻) together with the W⁺ emission result.
+
+    Summary:
+    - CA produces W⁺ (emission): fmdl(2,0,2) = 3
+    - CA does NOT produce W⁻: ∀ l c r, fmdl l c r ≠ 4 (sm_w_minus_absence)
+    - P22's W⁺-absorption vertex d+W⁺→u: fmdl(6,3,2) = 0
+    - P22's W⁻-absorption vertex u+W⁻→d: fmdl(2,4,6) = 0
+
+    The CA vertex table and P22's vertex catalog are COMPLEMENTARY:
+    - CA = W⁺ emission kernel (production amplitude)
+    - P22 = W⁺ exchange kernel (absorption amplitude, coupling constants)
+    Neither subsumes the other.
+
+    LEAN-CERTIFIED (decide, zero sorry). -/
+theorem p22_vertex_table_is_ca_transparent :
+    -- W⁺ emission (CA unique vertex)
+    fmdl sm_u_quark sm_vacuum_cell sm_u_quark = sm_w_plus ∧
+    -- W⁻ complete absence (CA hard exclusion)
+    (∀ l c r : Fin 7, fmdl l c r ≠ sm_w_minus) ∧
+    -- P22 W⁺-absorption vertices → CA transparent
+    fmdl sm_d_quark_p22 sm_w_plus sm_u_quark = 0 ∧
+    fmdl sm_electron_p22 sm_w_plus sm_neutrino_p22 = 0 ∧
+    -- P22 W⁻-absorption vertices → CA transparent
+    fmdl sm_u_quark sm_w_minus sm_d_quark_p22 = 0 ∧
+    fmdl sm_neutrino_p22 sm_w_minus sm_electron_p22 = 0 :=
+  ⟨by decide, fmdl_never_outputs_4, by decide, by decide, by decide, by decide⟩
+
 end Z7ChargeConjugation
