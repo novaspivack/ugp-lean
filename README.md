@@ -116,6 +116,24 @@ Graduated to ugp-lean canonical (commit `cc6865f`).
 - `cup11b_alt_rotations_conserve` — secondary orbit [0,2,5,2,2]: all 5 rotations also conserve
 - `cup11b_z7_sum4_conserving_characterization` — **complete iff characterization** of sum-4-conserving states: exactly the rotations of gen₁ and [0,2,5,2,2]
 
+**Minterm Set Uniqueness — CUP-4 extensions (CUP4TotalParity §10–§11, 2026-05-18; 13 theorems, 0 sorry)**
+
+Physical motivation: Among all C(8,5)=56 elementary CA rules of Hamming weight 5, Rule 110 is the unique orbit-satisfier; its minterm set {1,2,3,5,6} is combinatorially forced by the SM generation structure.
+
+- `hammingWeight` (def) — 8-bit popcount (computable)
+- `rule110_hamming_weight_5` — Rule 110 has Hamming weight 5 (minterm set has cardinality 5)
+- `rule111_hamming_weight_6` — Rule 111 has Hamming weight 6
+- `rule110_unique_weight5_orbit_satisfier` — Among all weight-5 rules, Rule 110 is the unique SM orbit-satisfier (no vacuum condition needed: Rule 111 has weight 6)
+- `minterm_set_z5_uniqueness` — For any weight-5 orbit-satisfier, the active bit pattern is exactly {1,2,3,5,6}
+- `orbit_satisfier_weight_range` — SM orbit forces Hamming weight ∈ {5,6}; no other weight satisfies the orbit
+- `orbit_weight_dichotomy` — **Orbit-Weight Dichotomy**: for orbit-satisfying rules, vacuum-transparency (000→0) ↔ Hamming weight 5 exactly
+- `weight5_rule_count` — Exactly 56 = C(8,5) rules have Hamming weight 5
+- `weight5_orbit_satisfier_count` — Exactly 1 of those 56 satisfies the SM orbit
+- `weight5_orbit_satisfiers_eq_singleton` — {weight-5 orbit-satisfiers} = {110} as Finset
+- `orbit_satisfiers_finset` — All orbit satisfiers = {110, 111} as Finset (Finset form of cup4_valid_rules)
+- `minterm_set_as_finset` — Active neighbourhoods of any weight-5 orbit-satisfier = {1,2,3,5,6} : Finset (Fin 8)
+- `rule110_non_minterm_set` — Non-minterms = {0,4,7} = {vacuum, left-only, all-ones} : Finset (Fin 8)
+
 **Universality and self-reference**
 - `ugp_is_turing_universal` — UGP substrate Turing-universal via native Rule 110 embedding
 - `uwca_sweep_implements_rule110` — UWCA sweep implements Rule 110 exactly
