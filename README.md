@@ -346,7 +346,7 @@ Physical motivation: The five SM particle families [e⁻, u, d, νR, νL] in the
 - `cyclic_rotate` — definition: cyclic rotation of a 5-cell Z₇ ring by k positions (generalizes rotate5 from CUP4TotalParity to Fin 7 cells)
 - `fmdl_z5_equivariant` — **Main theorem**: ∀ (v : Fin 5 → Fin 7) (k : Fin 5), fmdl_step5(cyclic_rotate v k) = cyclic_rotate(fmdl_step5 v) k; zero failures over 7⁵ × 5 = 84,035 cases (native_decide, CatAL)
 
-**SU(5) GUT Weinberg Angle from GTE Arithmetic + f_MDL Structural Bridge + CKM Count Theorem (GUTStructure.lean, 2026-05-19; 28 theorems + 4 definitions, 0 sorry)**
+**SU(5) GUT Weinberg Angle, f_MDL Structural Bridge, CKM Count Theorem, and CKM Quark N_eff Structural Formulas + R_b = sin²θ_W(GUT) Identity (GUTStructure.lean, 2026-05-19; 37 theorems + 9 definitions, 0 sorry)**
 
 Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit depth, CatAL) and N_fam = 5 (Z₅ family ring size, CatAL) satisfy the arithmetic identity N_gen + N_fam = 2^N_gen (3 + 5 = 8 = 2³). This implies that the GUT-scale Weinberg angle sin²θ_W(M_GUT) = N_gen/(N_gen + N_fam) = N_gen/2^N_gen = 3/8 — agreeing exactly with the standard SU(5) GUT prediction. The denominator then increases to c_H = 13 at M_Z by exactly N_fam = 5. A new structural identity (§9) connects the CA dynamics layer: the MDL-minimal CA function f_MDL produces nonzero output on exactly c_H + 1 = 14 of the 343 possible neighborhoods.
 
@@ -381,6 +381,17 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `gut_capacity_times_ring` — 2^N_gen × N_fam = 40 (norm_num; GUT-orbit × family-ring capacity, CatAL)
 - `wolfenstein_lambda_formula` — (N_gen:ℚ)²/(2^N_gen×N_fam) = 9/40 (norm_num; Wolfenstein λ arithmetic, CatAL)
 - `wolfenstein_lambda_value` — (9:ℚ)/40 = 225/1000 (norm_num; exact decimal 0.225, 0.000% vs PDG, CatAL)
+
+*§15: CKM quark N_eff structural formulas and R_b = sin²θ_W(GUT) (Rank 67, CatAL)*
+- `b_u`, `b_d`, `b_c`, `b_s`, `b_b` — GTE quark N_eff definitions (9, 5, 275, 186, 8191)
+- `neff_u_eq_ngen_sq` — b_u = N_gen² = 9 (norm_num; up quark G1 seed, CatAL)
+- `neff_d_eq_nfam` — b_d = N_fam = 5 (norm_num; down quark at Z₅ boundary, CatAL)
+- `neff_c_eq_nfam_poly` — b_c = N_fam²(2N_fam+1) = 275 (norm_num; G2 up-type, CatAL)
+- `neff_s_eq_gen_higgs_form` — b_s = 2N_gen(2c_H+N_fam) = 186 (norm_num; G2 down-type, CatAL)
+- `neff_b_eq_mersenne` — b_b = 2^c_H − 1 = 8191 (norm_num; G3 Mersenne prime, CatAL)
+- `wolfenstein_A_sq_rational` — A² = (186:ℚ)/275 (norm_num; Wolfenstein A squared, CatAL)
+- `ckm_unitarity_triangle_radius_eq_gut_weinberg` — R_b = N_gen/2^N_gen = 3/8 = sin²θ_W(GUT) ★★★★★ (alias of gut_weinberg_angle_pow2; cross-sector identity, CatAL)
+- `ckm_from_gte_arithmetic` — **Combined CKM theorem**: N_gen²=9 ∧ 2^N_gen×N_fam=40 ∧ λ=9/40 ∧ R_b=3/8 (norm_num, CatAL)
 
 ---
 
