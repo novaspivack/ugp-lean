@@ -105,6 +105,17 @@ Physical motivation: GTE-theoretic basis for the F10 proton-parity stability fea
 
 Graduated to ugp-lean canonical (commit `cc6865f`).
 
+**Z₇ Sum Conservation — CUP-11b Lean Certification (CUP3DUniqueness §6, 2026-05-18; 9 theorems, 0 sorry)**
+- `z7_sum_generation_values` — exact Z₇ sums: gen₁=4, gen₂=4, gen₃=3, vacuum=0 (mod 7)
+- `cup11b_z7_orbit_sum_sequence` — orbit sum trajectory under fmdl_step5: 4 → 4 → 3 → 0
+- `cup11b_gen1_gen2_sum_equal` — gen₁ and gen₂ have identical Z₇ sums (= 4 mod 7)
+- `cup11b_z7_sum_conservation` — **CUP-11b CatAL**: gen₁ conserves Z₇ sum; gen₂ and gen₃ break it
+- `cup11b_z7_sum_conservation_unique` — gen₁ is the unique SM generation state conserving Z₇ sum
+- `cup11b_gen1_rotations_conserve` — all 5 cyclic rotations of gen₁ conserve Z₇ sum
+- `cup11b_z7_sum4_conserving_count` — exactly 10 of 7⁵ states with sum=4 conserve (native_decide)
+- `cup11b_alt_rotations_conserve` — secondary orbit [0,2,5,2,2]: all 5 rotations also conserve
+- `cup11b_z7_sum4_conserving_characterization` — **complete iff characterization** of sum-4-conserving states: exactly the rotations of gen₁ and [0,2,5,2,2]
+
 **Universality and self-reference**
 - `ugp_is_turing_universal` — UGP substrate Turing-universal via native Rule 110 embedding
 - `uwca_sweep_implements_rule110` — UWCA sweep implements Rule 110 exactly

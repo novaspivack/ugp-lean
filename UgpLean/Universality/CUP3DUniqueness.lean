@@ -300,4 +300,117 @@ theorem cup3d_coupling_unique_under_mdl_principle
     principle" (Nature uses the simplest CA), not a physics-specific conjecture. -/
 theorem cup12_mathematical_content_summary : True := trivial
 
+-- ════════════════════════════════════════════════════════════════
+-- §6  Z₇ sum conservation — CUP-11b Lean Certification (CatAL)
+-- ════════════════════════════════════════════════════════════════
+
+/-- The Z₇ sum of a 5-cell ring configuration: sum of all cell values in Fin 7
+    (i.e., modulo 7). -/
+def z7_sum (v : Fin 5 → Fin 7) : Fin 7 :=
+  v 0 + v 1 + v 2 + v 3 + v 4
+
+/-- Exact Z₇ sum values for the three SM generation vectors and vacuum.
+    gen₁ = [1,5,2,2,1]: sum = 11 ≡ 4 (mod 7)
+    gen₂ = [2,5,2,0,2]: sum = 11 ≡ 4 (mod 7)
+    gen₃ = [5,6,5,3,5]: sum = 24 ≡ 3 (mod 7)
+    vacuum = [0,0,0,0,0]: sum = 0 -/
+theorem z7_sum_generation_values :
+    z7_sum fmdl_gen1_z7 = 4 ∧
+    z7_sum fmdl_gen2_z7 = 4 ∧
+    z7_sum fmdl_gen3_z7 = 3 ∧
+    z7_sum (fun _ => (0 : Fin 7)) = 0 := by decide
+
+/-- The Z₇ orbit sum sequence under iterated fmdl_step5 application from gen₁:
+    4 → 4 → 3 → 0.
+    The Z₇ sum is preserved at the first step (gen₁ → gen₂), then decreases. -/
+theorem cup11b_z7_orbit_sum_sequence :
+    z7_sum (fmdl_step5 fmdl_gen1_z7) = 4 ∧
+    z7_sum (fmdl_step5 (fmdl_step5 fmdl_gen1_z7)) = 3 ∧
+    z7_sum (fmdl_step5 (fmdl_step5 (fmdl_step5 fmdl_gen1_z7))) = 0 := by decide
+
+/-- gen₁ and gen₂ have identical Z₇ sums (both equal 4 mod 7).
+    This is a structural consequence of the fmdl orbit constraints:
+    the gen₁ → gen₂ transition preserves the total Z₇ charge. -/
+theorem cup11b_gen1_gen2_sum_equal :
+    z7_sum fmdl_gen1_z7 = z7_sum fmdl_gen2_z7 := by decide
+
+/-- **CUP-11b Z₇ sum conservation theorem** (CatAL, zero sorry).
+
+    Under fmdl_step5 (the MDL-minimal Z₇ CA on the periodic 5-cell ring):
+    - gen₁ [1,5,2,2,1] conserves Z₇ sum: sum(fmdl_step5(gen₁)) = sum(gen₁) = 4 mod 7.
+    - gen₂ [2,5,2,0,2] breaks Z₇ sum: sum(fmdl_step5(gen₂)) = 3 ≠ 4 = sum(gen₂).
+    - gen₃ [5,6,5,3,5] breaks Z₇ sum: sum(fmdl_step5(gen₃)) = 0 ≠ 3 = sum(gen₃).
+
+    Physical significance: the lightest (stable, ground-state) generation conserves
+    Z₇ sum under fmdl; the heavier (unstable) generations break this symmetry.
+    Gen₁ is also the Garden of Eden (zero predecessors); Z₇ sum conservation is a
+    companion structural property of the ground-state generation.
+
+    Note: the totalistic rule g = [6,5,6,3,3,6,3] (CUP-11b in P28) has a different
+    conservation pattern; this theorem is for the MDL-minimal fmdl specifically. -/
+theorem cup11b_z7_sum_conservation :
+    z7_sum (fmdl_step5 fmdl_gen1_z7) = z7_sum fmdl_gen1_z7 ∧
+    z7_sum (fmdl_step5 fmdl_gen2_z7) ≠ z7_sum fmdl_gen2_z7 ∧
+    z7_sum (fmdl_step5 fmdl_gen3_z7) ≠ z7_sum fmdl_gen3_z7 := by decide
+
+/-- **Uniqueness of Z₇ sum conservation among SM generation states**.
+    Among the three SM generation vectors, gen₁ is the unique one that conserves
+    Z₇ sum under fmdl_step5. -/
+theorem cup11b_z7_sum_conservation_unique :
+    (z7_sum (fmdl_step5 fmdl_gen1_z7) = z7_sum fmdl_gen1_z7) ∧
+    ¬(z7_sum (fmdl_step5 fmdl_gen2_z7) = z7_sum fmdl_gen2_z7) ∧
+    ¬(z7_sum (fmdl_step5 fmdl_gen3_z7) = z7_sum fmdl_gen3_z7) :=
+  cup11b_z7_sum_conservation
+
+/-- **All 5 cyclic rotations of gen₁ conserve Z₇ sum under fmdl_step5**.
+    A cyclic rotation of gen₁ by k positions is the state i ↦ gen₁((i + k) mod 5).
+    All 5 such rotations have the same Z₇ sum (= 4 mod 7) and map under fmdl_step5
+    to states with the same Z₇ sum. This rotational symmetry of Z₇ sum conservation
+    is a structural property of the gen₁ orbit class. -/
+theorem cup11b_gen1_rotations_conserve :
+    ∀ k : Fin 5,
+      let rot := fun i : Fin 5 => fmdl_gen1_z7 (i + k)
+      z7_sum (fmdl_step5 rot) = z7_sum rot := by decide
+
+/-- **Exact count of Z₇-sum-4-conserving states (CatAL)**.
+    Among all 7⁵ = 16807 possible 5-cell ring configurations, exactly 10 states
+    have Z₇ sum equal to 4 AND have their Z₇ sum conserved under fmdl_step5.
+    These 10 states are precisely the 5 cyclic rotations of gen₁ = [1,5,2,2,1]
+    together with the 5 cyclic rotations of the secondary vector [0,2,5,2,2].
+    Gen₁ is one of exactly 10 sum-4-conserving configurations in the full state
+    space — a very sparse conservation class (10/2401 ≈ 0.4% of sum-4 states). -/
+theorem cup11b_z7_sum4_conserving_count :
+    ((Finset.univ : Finset (Fin 5 → Fin 7)).filter
+      (fun v => z7_sum v = 4 ∧ z7_sum (fmdl_step5 v) = 4)).card = 10 := by native_decide
+
+/-- **Secondary Z₇-sum-4-conserving orbit** (companion to gen₁ orbit).
+    The vector alt = [0,2,5,2,2] has the same Z₇ sum as gen₁ (= 4 mod 7) and
+    all 5 of its cyclic rotations also conserve Z₇ sum under fmdl_step5.
+    This secondary orbit is distinct from the SM generation orbit (gen₁ → gen₂ → gen₃)
+    but shares the Z₇ sum-4 conservation property. -/
+def fmdl_alt_z7 : Fin 5 → Fin 7
+  | 0 => 0
+  | 1 => 2
+  | 2 => 5
+  | 3 => 2
+  | 4 => 2
+
+theorem cup11b_alt_rotations_conserve :
+    ∀ k : Fin 5,
+      let rot := fun i : Fin 5 => fmdl_alt_z7 (i + k)
+      z7_sum (fmdl_step5 rot) = z7_sum rot := by decide
+
+/-- **Complete characterization of sum-4-conserving states (CatAL)**.
+    A state v with z7_sum v = 4 conserves Z₇ sum under fmdl_step5 if and only if
+    it is a cyclic rotation of gen₁ = [1,5,2,2,1] or a cyclic rotation of
+    alt = [0,2,5,2,2].
+    Equivalently: the sum-4-conserving set consists of exactly the two orbits
+    {gen₁, gen₁_rot1, ..., gen₁_rot4} ∪ {alt, alt_rot1, ..., alt_rot4}. -/
+theorem cup11b_z7_sum4_conserving_characterization :
+    ∀ v : Fin 5 → Fin 7,
+      z7_sum v = 4 →
+      (z7_sum (fmdl_step5 v) = 4 ↔
+        (∃ k : Fin 5, v = fun i => fmdl_gen1_z7 (i + k)) ∨
+        (∃ k : Fin 5, v = fun i => fmdl_alt_z7 (i + k))) := by native_decide
+
 end CUP3D
