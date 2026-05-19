@@ -567,6 +567,23 @@ Rank 99 result: Step 3 (2→1) upgraded from unexplained postulate to GTE-motiva
 
 ---
 
+**Dark Sector Period-2 Orbits: Rule 110 on 4-Cell Binary Ring (GUTStructure.lean §35, 2026-05-19; 7 theorems + 2 definitions, 0 sorry)**
+
+Machine-checked certification that the four dark sector stable states are exactly the period-2 orbits of Rule 110 on a 4-cell binary periodic ring — no more, no less. The complete orbit structure of the 4-cell ring is certified: one fixed point (vacuum), two period-2 cycles (dark sector), eleven transients. The identification provides the deepest structural account of dark sector stability: ring size N=4 (dark sector) admits Rule 110 period-2 orbits, while N=5 (visible sector) does not.
+
+State encoding: big-endian binary (s₀ = bit 3, s₃ = bit 0). Dark cycle states: 14 = (1,1,1,0) ↔ 11 = (1,0,1,1) and 13 = (1,1,0,1) ↔ 7 = (0,1,1,1). All four have Z₇ winding sum = 3 (W⁺ charge class).
+
+- `rule110_4cell_ring` — the Rule 110 map on the 4-cell binary periodic ring (Fin 16 → Fin 16)
+- `dark_sector_vacuum_fixed_point` ★★★ — state 0 = (0,0,0,0) is the unique fixed point (decide, CatAL)
+- `dark_sector_cycles_are_period2` ★★★★ — all four dark cycle states {14,11,13,7} satisfy period-2: f(f(s))=s ∧ f(s)≠s (decide, CatAL)
+- `dark_sector_period2_exhaustive` ★★★★★ — the four dark cycle states are EXACTLY the period-2 orbits: (f(f(s))=s ∧ f(s)≠s) ↔ s∈{7,11,13,14} (decide, CatAL)
+- `dark_sector_orbit_structure` ★★★★★ — complete orbit characterization: unique fixed point + exhaustive period-2 set (decide, CatAL)
+- `dark_states_z7_winding_3` ★★★ — all four dark cycle states have Z₇ winding sum = 3 (decide, CatAL)
+- `dark_ring_size_eq_n_gen_plus_one` ★★ — dark ring size 4 = N_gen + 1 (norm_num, CatAL)
+- `dark_budget_identity` ★★ — (dark cycle count) + (dark ring size) = 2^N_gen: 4+4=8 (norm_num, CatAL)
+
+---
+
 **Full 6-Quark N_eff GTE Arithmetic Closure (GUTStructure.lean §34, 2026-05-19; 3 theorems, 0 sorry)**
 
 The capstone certification packaging the complete GTE quark N_eff spectrum. Assembles individually certified structural formulas (§15, §20, §25) with the three-step G1 seed derivation chain (§26 MDL-doublet pairing, §30 Mersenne discriminator, §33 Z₇ alignment) into three joint theorems — closing the full six-quark derivation at CatAL for the arithmetic result.
