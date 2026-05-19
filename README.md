@@ -346,7 +346,7 @@ Physical motivation: The five SM particle families [e⁻, u, d, νR, νL] in the
 - `cyclic_rotate` — definition: cyclic rotation of a 5-cell Z₇ ring by k positions (generalizes rotate5 from CUP4TotalParity to Fin 7 cells)
 - `fmdl_z5_equivariant` — **Main theorem**: ∀ (v : Fin 5 → Fin 7) (k : Fin 5), fmdl_step5(cyclic_rotate v k) = cyclic_rotate(fmdl_step5 v) k; zero failures over 7⁵ × 5 = 84,035 cases (native_decide, CatAL)
 
-**SU(5) GUT Weinberg Angle, f_MDL Structural Bridge, CKM Count Theorem, CKM Quark N_eff Formulas, b_sum = 390 Weinberg Factorization, Z₂ Longitudinal Mode MDL Universality, Coupling Ratio Duality, smGen1 SU(5) Projector, Mersenne Prime Structure, Joint Selection Theorem, GTE Master Formula, Weinberg Physical Bridge, Weinberg Three-Tier Prediction, Bidirectional Unification Summary, and MDL Robustness / Z₇ Free Minterm Count (GUTStructure.lean, 2026-05-19; 95 theorems + 17 definitions, 0 sorry)**
+**SU(5) GUT Weinberg Angle, f_MDL Structural Bridge, CKM Count Theorem, CKM Quark N_eff Formulas, b_sum = 390 Weinberg Factorization, Z₂ Longitudinal Mode MDL Universality, Coupling Ratio Duality, smGen1 SU(5) Projector, Mersenne Prime Structure, Joint Selection Theorem, GTE Master Formula, Weinberg Physical Bridge, Weinberg Three-Tier Prediction, Bidirectional Unification Summary, MDL Robustness / Z₇ Free Minterm Count, and Z₂ Longitudinal Universality Structural Chain (GUTStructure.lean, 2026-05-19; 98 theorems + 18 definitions, 0 sorry)**
 
 Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit depth, CatAL) and N_fam = 5 (Z₅ family ring size, CatAL) satisfy the arithmetic identity N_gen + N_fam = 2^N_gen (3 + 5 = 8 = 2³). This implies that the GUT-scale Weinberg angle sin²θ_W(M_GUT) = N_gen/(N_gen + N_fam) = N_gen/2^N_gen = 3/8 — agreeing exactly with the standard SU(5) GUT prediction. The denominator then increases to c_H = 13 at M_Z by exactly N_fam = 5. A new structural identity (§9) connects the CA dynamics layer: the MDL-minimal CA function f_MDL produces nonzero output on exactly c_H + 1 = 14 of the 343 possible neighborhoods.
 
@@ -483,6 +483,12 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `z7_fixed_neighborhood_count` — Exactly 18 of the 343 Z₇³ neighborhoods satisfy isFixedNeighborhood (10 orbit from gen1→gen2 + gen2→gen3 steps, 8 binary Rule 110; native_decide, CatAL)
 - `z7_free_neighborhood_count` — Exactly 325 = 343 − 18 neighborhoods are free; MDL zeros all 325, uniquely selecting f_MDL (native_decide, CatAL)
 - `mdl_robustness_z7` ★★★★ — **MDL ROBUSTNESS**: Any orbit-admissible MDL-minimal Z₇ CA function must equal fmdl, regardless of orbit depth (naming alias of Z7ChargeConjugation.fmdl_mdl_uniqueness; zero sorry, CatAL). Combined with CatA computation: 15 orbit-constrained Z₇ neighborhoods (5 cells × 3 generations, no repeats), disjoint from 8 binary neighborhoods; total 23 constrained, 320 free.
+
+*§29: Z₂ Longitudinal Universality Structural Chain (Rank 89, CatAL)*
+- `n_rule110_minterms` — Hamming weight (minterm count) of Rule 110 = 5 (def; equals MDL description length of Rule 110 as a Z₂ CA rule)
+- `rule110_minterms_eq_five` — n_rule110_minterms = 5 (rfl, CatAL)
+- `z_boson_cvalue_equals_mdl_plus_z7` ★★★ — **c-VALUE MDL IDENTITY**: n_rule110_minterms + 7 = c_Z = 12; the Z boson GTE c-value equals the Z₇ modulus (7 free Z₂ CA bits) plus the Rule 110 minterm count (5); arithmetic certification of the structural chain c_Z = 7 + MDL(Rule 110) = 12 (norm_num, CatAL)
+- `z_boson_mdl_class4_chain` — **THREE-CONJUNCT CHAIN**: (1) n_rule110_minterms=5 ∧ (2) 5+7=c_Z ∧ (3) c_Z=c_H−1; the arithmetic backbone of the Z₂ longitudinal universality CatAD result — c_Z=12 forces MDL(rule_Z)=5, landing at the isolated Class 4 resonance in the qualifying Z₂ CA rule space (norm_num, zero sorry, CatAL)
 
 ---
 
