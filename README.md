@@ -38,7 +38,7 @@ A clean build completes with zero `sorry` and the standard Mathlib axiom signatu
 | **Structural** | 19 | QuarterLock, LModelDerivation; *ElegantKernel/*: ChiralityFeature, D5StructuralAxiom, FibonacciHessian, KGen, KGen2, MuTriple, PentagonalUniqueness; *ElegantKernel/Unconditional/*: CyclotomicChain, D5Renormalization, FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure, KLFullClosure, PentagonConstraint, RiccatiFixedPoint |
 | **MassRelations** | 25 | *MassRelations* [umbrella], KoideClosedForm, KoideNewtonFlow, KoideAngle, KoideS3DiscreteIdentities, BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential, FroggattNielsen, NeutrinoFroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational, UpLeptonCyclotomic, Z2OrbifoldDepth, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex, VVMechanism, VVAllCoefficientsFromNc, CKMTheta23, CKMMixing, **NeutrinoMassRatio** |
 | **BraidAtlas** | 7 | ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation, CoxeterConductor, CoxeterConductorTowerLaw, EWBosons |
-| **Universality** | 11 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, Z5TransitivityUniqueness, **GTECompilation**, **GTEUniqueness**, **DimensionalSliceUniqueness** |
+| **Universality** | 12 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, Z5TransitivityUniqueness, **GTECompilation**, **GTEUniqueness**, **DimensionalSliceUniqueness**, **GTPNeutralDiscrimination** |
 | **SelfRef** | 2 | LawvereKleene, RiceHalting |
 
 Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity, PositiveRootTheorem, GaloisProtection, TwoLoopCoefficient), **GaloisStructure** (2), **CyclotomicCompleteness** (2), **PSC** (1: RCCInfiniteFamilies), **TE22** (1: ScanCertificate), **Papers** (2), **Instance** (1), **Conjectures** — per the formalization paper: `Phase4.GaloisProtection`, `TwoLoopCoefficient`, modules under `GaloisStructure.*` and `CyclotomicCompleteness.*`, and `TE22` carry fully mechanized statements where the paper claims zero sorry; `Papers` and `Instance` are chiefly citable stubs and bridges; `Conjectures` records resolved and open claims; `Phase4` also mixes stubs (e.g. UCL, PR1 presentation) with the precision theorems above.
@@ -252,6 +252,18 @@ Physical motivation: The GTE update map T (particle mass cascade G₁→G₂→G
 - [MANIFEST.md](MANIFEST.md) — Paper→Lean theorem mapping
 - [Assumptions.md](Assumptions.md) — Premise ledger
 - **Formalization paper** — `paper/ugp_lean_formalization.tex` (definitive formal spec; complete theorem inventory in Table 1)
+**GTE Triple Discrimination of Z₇=0 Neutral Particles — partial closure of the neutral-sector open problem (GTPNeutralDiscrimination.lean, 2026-05-18; 10 theorems, 0 sorry)**
+
+All five Z₇=0 Standard Model particles with GTE triples — three neutrino generations (νₑ, νμ, ντ) and the electroweak bosons (Z, H⁰) — are pairwise distinguishable by their (a, b, c) GTE triples. The Z₇ projection collapses all five to winding class 0, but the full triple preserves discriminating power. A two-level discriminant: b-component (b=1→neutrino sector, b=3→EW sector) as the first level; a-component (neutrino generations) or c-component (EW bosons) as the second. Partially resolves P28 §11.4: photon (γ) has no GTE triple (massless, fixed_zero) and remains open.
+
+- `nu_e_triple`, `nu_mu_triple`, `nu_tau_triple`, `z_boson_triple`, `higgs_triple` — canonical triple constants
+- `z7_zero_gte_triples_distinct` — 10 pairwise distinct pairs (CatAL, native_decide)
+- `z_boson_b_index_distinct_from_neutrinos` — b=3 separates Z from all neutrinos
+- `neutrino_a_indices_distinct` — a-component separates 3 generations
+- `neutral_particle_discriminant` — computable discriminant function (labels 0–4)
+- `neutral_discriminant_correct` — discriminant assigns unique labels to all 5 particles
+- `gte_triple_neutral_discrimination` — **Master theorem**: all three aspects combined (CatAL, zero sorry)
+
 <!-- NOVA_ZPO_ZENODO_SOFTWARE_BEGIN -->
 **Archival software (Zenodo):** https://doi.org/10.5281/zenodo.19429247
 <!-- NOVA_ZPO_ZENODO_SOFTWARE_END -->
