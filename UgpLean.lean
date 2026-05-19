@@ -129,6 +129,8 @@ import UgpLean.Universality.Z5TransitivityUniqueness
 import UgpLean.Universality.GTPNeutralDiscrimination
 import UgpLean.Universality.SMOrbitCausalIsolation
 import UgpLean.Universality.EWBosonStructure
+import UgpLean.Universality.EWChiralBridge
+import UgpLean.Universality.GUTStructure
 import UgpLean.Universality.CasimirMasslessEther
 import UgpLean.TE22.ScanCertificate
 import UgpLean.PSC.RCCInfiniteFamilies
