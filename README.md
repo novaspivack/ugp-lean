@@ -387,6 +387,39 @@ Physical motivation: The three EW bosons with defined GTE triples — W⁺(5,3,1
 - `ew_triples_distinct` — W⁺, Z, H⁰ triples pairwise distinct (differ only in c) (decide, CatAL)
 - `ew_boson_structure` — **Combined theorem**: all 5 structural facts in one conjunction (decide, CatAL)
 
+---
+
+**CA Masslessness Criterion, EW Vertex, Ether Z₇ Winding (CasimirMasslessEther.lean, 2026-05-19; 9 theorems + 1 definition, 0 sorry)**
+
+Three results from the photon-vacuum-Casimir session, Lean-certified via native_decide:
+
+*§1 — Rank 46: CA Masslessness Criterion*
+
+Physical motivation: The criterion fmdl(0,k,0)=k — whether a Z₇ value k survives stably in a vacuum neighborhood — selects exactly k∈{0,1} from Z₇. This gives a CA-level masslessness/massiveness partition matching the SM: Z₇=0 (photon/EM vacuum) and Z₇=1 (neutrino-weight sector) are CA-massless; Z₇∈{2,3,4,5,6} (all SM massive particles) decay to vacuum. The Z₇=1 CA-masslessness is at the winding-sector level; GTE gives neutrinos tiny mass at a deeper level.
+
+- `fmdl_massless_criterion` — ∀ k : Fin 7, fmdl 0 k 0 = k ↔ (k = 0 ∨ k = 1) (native_decide, CatAL)
+- `fmdl_massless_unique` — exactly one non-zero CA-massless value: k=1 (native_decide, CatAL)
+- `fmdl_massive_decay` — ∀ k ≠ 0,1: fmdl 0 k 0 = 0 (native_decide, CatAL)
+
+*§2 — Rank 48: (u,γ,u)→W⁺ CA-Level Electroweak Vertex*
+
+Physical motivation: The orbit neighborhood fmdl(2,0,2)=3 defines a CA-level EW vertex: two u-quarks flanking a photon produce a W⁺. Sourced from the gen₂ orbit [2,5,2,0,2] where position 3 (photon-slot) evolves to W⁺ in gen₃. Photon transparency: 34/36 = 94.44% of matter-matter configurations.
+
+- `u_photon_u_to_W_vertex` — fmdl 2 0 2 = 3 (native_decide, CatAL)
+- `nu_photon_nu_absorption` — fmdl 1 0 1 = 1 (native_decide, CatAL)
+- `photon_absorption_events` — exactly 2 absorption events among 36 matter pairs (native_decide, CatAL)
+
+*§3 — Rank 50: Rule 110 Ether Z₇ Winding = 1 (Neutrino Sector Background)*
+
+Physical motivation: The Rule 110 ether (period-14 background [0,1,0,1,1,1,0,0,0,1,1,1,0,1]) has Z₇ sum mod 7 = 1 (neutrino-sector winding), not 0 (EM vacuum winding). The ether is the neutrino-sector propagation medium; matter (gliders) propagates through the neutrino background. The EM vacuum is the separate Z₇=0 fixed point.
+
+- `ether_period` (def) — [0,1,0,1,1,1,0,0,0,1,1,1,0,1] : List (Fin 7)
+- `ether_period_length` — ether_period.length = 14 (native_decide)
+- `ether_z7_sum_mod7` — (ether_period.map (·.val)).sum % 7 = 1 (native_decide, CatAL)
+- `ether_z7_composition` — 6 zeros, 8 ones per period (native_decide)
+- `ether_not_em_vacuum` — ether_period ≠ replicate 14 0 (native_decide)
+- `casimir_sector_structure` — **Combined theorem**: masslessness criterion + EW vertex + ether winding (native_decide, CatAL)
+
 <!-- NOVA_ZPO_ZENODO_SOFTWARE_BEGIN -->
 **Archival software (Zenodo):** https://doi.org/10.5281/zenodo.19429247
 <!-- NOVA_ZPO_ZENODO_SOFTWARE_END -->
