@@ -116,6 +116,25 @@ Graduated to ugp-lean canonical (commit `cc6865f`).
 - `cup11b_alt_rotations_conserve` — secondary orbit [0,2,5,2,2]: all 5 rotations also conserve
 - `cup11b_z7_sum4_conserving_characterization` — **complete iff characterization** of sum-4-conserving states: exactly the rotations of gen₁ and [0,2,5,2,2]
 
+**Decay Depth Profile and 7-Step Convergence (CUP3DUniqueness §7a, 2026-05-19; 4 theorems, 0 sorry)**
+
+Physical motivation: The global decay depth of fmdl_step5 on Z₇⁵. The SM orbit achieves depth 3 = N_gen = maximum for non-binary states. The binary sublayer (Rule 110 dynamics) drives deeper chains (up to 7 steps). Python sweep of all 16,807 states confirmed maximum depth = 7; depth distribution: 14,146/1,655/75/10/170/715/35 at depths 1–7.
+
+- `fmdl_orbit_depth_profile` — gen₁/2/3 reach vacuum in exactly 3/2/1 steps; depth ordering (decide)
+- `fmdl_universal_7step_convergence` — **all 7⁵ states reach vacuum in ≤7 steps** (native_decide)
+- `fmdl_depth7_witness_exact` — [0,0,1,5,2] is a depth-7 witness confirming max=7 (decide)
+- `fmdl_max_depth_is_7` — max depth = 7; SM orbit depth 3 = N_gen = max for Z₇ non-binary sector
+
+**Z₇/Z₂ Algebraic Structure — binary incompatibility (CUP3DUniqueness §7b, 2026-05-19; 4 theorems, 0 sorry)**
+
+Physical motivation: Z₇ CA dynamics (CUP-11) are qualitatively richer than binary CAs (CUP-4). The specific winding value Z₇=4 (electron/W⁻) is the counterexample to mod-2 ring homomorphism, explaining why the Z₇ layer cannot be captured by any binary ring map.
+
+- `z7_to_z2_reduction` (def) — the mod-2 reduction φ: Z₇ → Z₂
+- `z7_binary_injection_not_surjective` — the injection Z₂→Z₇ (0↦0, 1↦1) is not surjective (decide)
+- `z7_binary_not_ring_homomorphism` — φ: Z₇→Z₂ (mod 2) is NOT a ring hom; counterexample (4,4) (decide)
+- `z7_binary_not_ring_hom_universal` — no (x,y) pair makes φ a ring hom (decide)
+- `z7_z2_incompatible_additive` — combined: injection injective/not-surjective, reduction not additive (CatAL)
+
 **Minterm Set Uniqueness — CUP-4 extensions (CUP4TotalParity §10–§11, 2026-05-18; 13 theorems, 0 sorry)**
 
 Physical motivation: Among all C(8,5)=56 elementary CA rules of Hamming weight 5, Rule 110 is the unique orbit-satisfier; its minterm set {1,2,3,5,6} is combinatorially forced by the SM generation structure.
@@ -169,6 +188,13 @@ Physical motivation: The SM generation orbit gen₁→gen₂→gen₃→vacuum u
 - `fmdl_gen1_stability_dominance` — gen₁ has strictly fewer predecessors than gen₂ or gen₃
 
 Note: pred(gen₂)=pred(gen₃)=1 (not a strict ordering), but `fmdl_orbit_linear_chain` provides the complete isolation structure which is the deeper result.
+
+**All-Rotations Garden-of-Eden Theorem (GoEStabilityHierarchy §6, 2026-05-19; 2 theorems, 0 sorry)**
+
+Physical motivation: All five first-generation particle families (e⁻, u, d, νR, νL) — obtained as cyclic rotations of gen₁ on the Z₅ ring — are Garden-of-Eden states. The 5-fold rotational symmetry of the SM first generation is exactly reflected in the GoE structure: the family structure IS the ring rotation structure. Connects N_fam=5 to the GoE stability property in a single theorem.
+
+- `fmdl_gen1_all_rotations_are_goe` — **all 5 cyclic rotations of gen₁ have 0 predecessors** (native_decide)
+- `fmdl_gen1_all_rotations_no_predecessor` — equivalent non-existence form: no state maps to any rotation of gen₁
 
 **Z₅ Transitivity Uniqueness — CA-internal reason for five families (Z5TransitivityUniqueness.lean, 2026-05-18; 9 theorems, 0 sorry)**
 
