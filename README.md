@@ -346,7 +346,7 @@ Physical motivation: The five SM particle families [e⁻, u, d, νR, νL] in the
 - `cyclic_rotate` — definition: cyclic rotation of a 5-cell Z₇ ring by k positions (generalizes rotate5 from CUP4TotalParity to Fin 7 cells)
 - `fmdl_z5_equivariant` — **Main theorem**: ∀ (v : Fin 5 → Fin 7) (k : Fin 5), fmdl_step5(cyclic_rotate v k) = cyclic_rotate(fmdl_step5 v) k; zero failures over 7⁵ × 5 = 84,035 cases (native_decide, CatAL)
 
-**SU(5) GUT Weinberg Angle, f_MDL Structural Bridge, CKM Count Theorem, CKM Quark N_eff Formulas, b_sum = 390 Weinberg Factorization, Z₂ Longitudinal Mode MDL Universality, Coupling Ratio Duality, smGen1 SU(5) Projector, Mersenne Prime Structure, Joint Selection Theorem, GTE Master Formula, Weinberg Physical Bridge, and Weinberg Three-Tier Prediction (GUTStructure.lean, 2026-05-19; 86 theorems + 17 definitions, 0 sorry)**
+**SU(5) GUT Weinberg Angle, f_MDL Structural Bridge, CKM Count Theorem, CKM Quark N_eff Formulas, b_sum = 390 Weinberg Factorization, Z₂ Longitudinal Mode MDL Universality, Coupling Ratio Duality, smGen1 SU(5) Projector, Mersenne Prime Structure, Joint Selection Theorem, GTE Master Formula, Weinberg Physical Bridge, Weinberg Three-Tier Prediction, and Bidirectional Unification Summary (GUTStructure.lean, 2026-05-19; 92 theorems + 17 definitions, 0 sorry)**
 
 Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit depth, CatAL) and N_fam = 5 (Z₅ family ring size, CatAL) satisfy the arithmetic identity N_gen + N_fam = 2^N_gen (3 + 5 = 8 = 2³). This implies that the GUT-scale Weinberg angle sin²θ_W(M_GUT) = N_gen/(N_gen + N_fam) = N_gen/2^N_gen = 3/8 — agreeing exactly with the standard SU(5) GUT prediction. The denominator then increases to c_H = 13 at M_Z by exactly N_fam = 5. A new structural identity (§9) connects the CA dynamics layer: the MDL-minimal CA function f_MDL produces nonzero output on exactly c_H + 1 = 14 of the 343 possible neighborhoods.
 
@@ -470,6 +470,14 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 *§12 (extended — 2026-05-19): Weinberg Physical Bridge — P22 EWChiralBridge import explicit*
 - `parity_restriction_explicit` — ∀ l c r : Fin 7, ca_parity l c r = (r,c,l); the Parity Restriction Theorem as an explicit standalone Lean theorem (rfl from definition, zero axioms, CatAL)
 - `weinberg_physical_bridge` — 4-conjunct theorem: (A) Parity Restriction, (B) U(1)_Y count = N_gen = 3, (C) SU(2)_L count = 2·N_fam = 10, (D) sin²θ_W = 3/13; explicitly cites `EWChiralBridge.doublet_partner_is_left_chiral` and `EWChiralBridge.u1y_couples_both_chiralities` as imported P22 bridge axioms (zero sorry; full CatAL pending P22 EWStructure formalization ~1 session, CatAL conditional)
+
+*§27: Bidirectional UGP–Rule 110–SM Unification Summary (Rank 85, CatAL capstone ★★★★★)*
+- `ugp_arith_forces_rule110` — Arrow A1/A3-R: ∀ r : Fin 256, SM orbit conditions ↔ r=110; CUP-4 alias in unification context (alias of cup1_orbit_uniquely_selects_rule110, CatAL)
+- `sm_selects_gte_triple` — Arrow A2-R: n_gen=3 ∧ n_fam=5 ∧ c_H=13; SM structural constants = GTE generating triple (rfl, CatAL)
+- `gte_predicts_ew_mixing` — Arrow A2: sin²θ_W(EW)=3/13 ∧ sin²θ_W(GUT)=3/8; both Weinberg angles from N_gen alone (aliases of §12/§3, CatAL)
+- `gte_predicts_ckm_lambda` — Arrow A2: λ=9/40; Wolfenstein parameter from N_gen alone (alias of wolfenstein_lambda_formula §14, CatAL)
+- `rule110_encodes_sm_particles` — Arrow A3: (photon=unique CA fixed point) ∧ (gen₁=Garden of Eden) ∧ (fmdl never outputs Z₇=4); three Rule 110 CA certifications of SM particle structure (CUP3DUniqueness theorems, CatAL)
+- `ugp_r110_sm_joint_unification` ★★★★★ — **UNIFICATION CAPSTONE**: 7-conjunct theorem: (1) N_gen+N_fam=2^N_gen; (2) sin²θ_W(EW)=3/13; (3) sin²θ_W(GUT)=3/8; (4) λ=9/40; (5) double Mersenne endpoint (2^N_fam−1 and 2^c_H−1 both prime); (6) photon CA fixed point; (7) gen₁ Garden of Eden. P35 Theorem 1 candidate. (zero sorry, zero new axioms; CatAL)
 
 ---
 
