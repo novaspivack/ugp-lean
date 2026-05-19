@@ -142,4 +142,85 @@ theorem gte_binary_rules_bisimilar :
 theorem rule110_is_lawful : IsLawfulBinaryCARule 110 :=
   (cup1_orbit_uniquely_selects_rule110 110).mpr rfl
 
+-- ════════════════════════════════════════════════════════════════
+-- §3 sigma_gte is a lawful and minimal program (zero sorry)
+-- ════════════════════════════════════════════════════════════════
+
+/-- **sigma_gte is a lawful UWCA program** (existence witness):
+    sigma_gte exactly implements the GTE update map on every input.
+    This is the existence side of the uniqueness theorem — sigma_gte itself
+    satisfies the lawfulness predicate.
+
+    Proof: immediate from gte_compilation_theorem.
+    LEAN-CERTIFIED: zero sorry. -/
+theorem sigma_gte_is_lawful : IsLawfulUWCAProgram sigma_gte :=
+  gte_compilation_theorem
+
+/-- The empty tile set is NOT a lawful UWCA program.
+    Proof: uwca_eval [] LeptonSeed = LeptonSeed = ⟨1,73,823⟩,
+    but gte_update_map LeptonSeed = ⟨9,42,1023⟩ ≠ ⟨1,73,823⟩.
+    LEAN-CERTIFIED: zero sorry. -/
+theorem empty_tileset_not_lawful : ¬ IsLawfulUWCAProgram [] := by
+  intro h
+  have heval : uwca_eval [] LeptonSeed = LeptonSeed := rfl
+  have hlawful := h LeptonSeed
+  rw [heval, gte_update_at_seed] at hlawful
+  exact absurd hlawful (by native_decide)
+
+/-- A GTE UWCA program is minimal if it is lawful and no proper sub-program
+    (shorter tile set) is also lawful. This captures the notion that sigma_gte
+    is not over-specified — removing any tile makes it non-lawful. -/
+def IsMinimalProgram (prog : UWCATileSet) : Prop :=
+  IsLawfulUWCAProgram prog ∧
+  ∀ prog' : UWCATileSet, prog'.length < prog.length → ¬ IsLawfulUWCAProgram prog'
+
+/-- sigma_gte is a minimal lawful program: it has exactly 1 tile, and the only
+    program shorter (0 tiles, i.e., []) is not lawful.
+    LEAN-CERTIFIED: zero sorry. -/
+theorem sigma_gte_is_minimal : IsMinimalProgram sigma_gte :=
+  ⟨sigma_gte_is_lawful, fun prog' hlen => by
+    simp only [sigma_gte_card] at hlen
+    have hzero : prog'.length = 0 := by omega
+    cases prog' with
+    | nil => exact empty_tileset_not_lawful
+    | cons _ _ => simp at hzero⟩
+
+-- ════════════════════════════════════════════════════════════════
+-- §4 Characterization theorem (zero sorry)
+-- ════════════════════════════════════════════════════════════════
+
+/-- **Characterization of lawful UWCA programs:**
+    A GTE tile program is lawful if and only if it bisimulates sigma_gte.
+    This strengthens the one-way uniqueness theorem to a full equivalence.
+
+    (→): any lawful program bisimulates sigma_gte (`gte_uniqueness_up_to_bisimulation`)
+    (←): any program bisimilar to sigma_gte is lawful (since sigma_gte is lawful,
+         bisimilarity with it forces the same outputs = gte_update_map on all inputs)
+
+    LEAN-CERTIFIED: zero sorry. -/
+theorem lawful_iff_bisim_sigma_gte (prog : UWCATileSet) :
+    IsLawfulUWCAProgram prog ↔ UWCABisim prog sigma_gte :=
+  ⟨gte_uniqueness_up_to_bisimulation prog,
+   fun h s => (h s).trans (gte_compilation_theorem s)⟩
+
+/-- **GTE Uniqueness — complete statement** (zero sorry):
+    sigma_gte is the unique minimal lawful UWCA program, up to bisimulation.
+    Three components:
+    (1) sigma_gte is itself lawful (existence)
+    (2) sigma_gte is minimal (1-tile is the minimum for any lawful program)
+    (3) Every lawful program bisimulates sigma_gte (uniqueness, unconditional)
+
+    **Note:** component (3) is STRONGER than the monograph's thm:gte_uniqueness, which
+    only states uniqueness for minimal programs. The present formalization shows
+    minimality is not needed as an additional hypothesis — all lawful programs are
+    necessarily bisimilar to sigma_gte, because the GTE orbit constraints uniquely
+    determine the update function on all inputs.
+
+    LEAN-CERTIFIED: zero sorry. -/
+theorem gte_uniqueness_complete :
+    IsLawfulUWCAProgram sigma_gte ∧
+    IsMinimalProgram sigma_gte ∧
+    (∀ prog : UWCATileSet, IsLawfulUWCAProgram prog → UWCABisim prog sigma_gte) :=
+  ⟨sigma_gte_is_lawful, sigma_gte_is_minimal, gte_uniqueness_up_to_bisimulation⟩
+
 end UgpLean.Universality.GTEUniqueness
