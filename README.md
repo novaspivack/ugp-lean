@@ -134,6 +134,26 @@ Physical motivation: Among all C(8,5)=56 elementary CA rules of Hamming weight 5
 - `minterm_set_as_finset` — Active neighbourhoods of any weight-5 orbit-satisfier = {1,2,3,5,6} : Finset (Fin 8)
 - `rule110_non_minterm_set` — Non-minterms = {0,4,7} = {vacuum, left-only, all-ones} : Finset (Fin 8)
 
+**Orbit Perturbation Catalog — CatAL certification (OrbitPerturbationCatalog.lean, 2026-05-18; 15 theorems, 0 sorry)**
+
+Physical motivation: P28 Table 1 shows computationally that no single-bit perturbation of the SM orbit yields Rule 110 or any other universal CA rule. This module Lean-certifies that result and extends it to a complete global isolation theorem.
+
+- `pertG2_pos0_catalog` — gen₂[0] 0→1: vac-transp satisfying rules iff r∈{234,238} (complete iff, native_decide)
+- `pertG2_pos1_catalog` — gen₂[1] 1→0: no satisfying rule exists
+- `pertG2_pos2_catalog` — gen₂[2] 0→1: no satisfying rule exists
+- `pertG2_pos3_catalog` — gen₂[3] 1→0: no satisfying rule exists
+- `pertG2_pos4_catalog` — gen₂[4] 1→0: no satisfying rule exists
+- `pertG3_pos0_catalog` — gen₃[0] 1→0: no satisfying rule exists
+- `pertG3_pos1_catalog` — gen₃[1] 1→0: satisfying rule iff r=106 (complete iff, native_decide)
+- `pertG3_pos2_catalog` — gen₃[2] 1→0: no satisfying rule exists
+- `pertG3_pos3_catalog` — gen₃[3] 1→0: no satisfying rule exists
+- `pertG3_pos4_catalog` — gen₃[4] 1→0: no satisfying rule exists
+- `orbit_perturbation_destroys_universality` — **Main catalog**: all 10 perturbed orbits yield r ≠ 110 (derived from catalog lemmas; zero sorry)
+- `rule110_orbit_isolation_gen2` — ∀ g₂ : Fin 5 → Fin 2, Rule 110 maps smGen1 → g₂ iff g₂ = smGen2 (native_decide; 32 cases)
+- `rule110_orbit_isolation_gen3` — ∀ g₃ : Fin 5 → Fin 2, Rule 110 maps smGen2 → g₃ iff g₃ = smGen3 (native_decide; 32 cases)
+- `rule110_orbit_complete_isolation` — **Deepest result**: ∀ g₂ g₃, (Rule 110: smGen1→g₂→g₃) ↔ (g₂=smGen2 ∧ g₃=smGen3); covers all 1024 possible orbit pairs (native_decide)
+- `rule110_orbit_is_globally_isolated` — Any (g₂,g₃)≠(smGen2,smGen3): Rule 110 does not produce orbit smGen1→g₂→g₃
+
 **Universality and self-reference**
 - `ugp_is_turing_universal` — UGP substrate Turing-universal via native Rule 110 embedding
 - `uwca_sweep_implements_rule110` — UWCA sweep implements Rule 110 exactly
