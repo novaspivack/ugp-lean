@@ -346,7 +346,7 @@ Physical motivation: The five SM particle families [e⁻, u, d, νR, νL] in the
 - `cyclic_rotate` — definition: cyclic rotation of a 5-cell Z₇ ring by k positions (generalizes rotate5 from CUP4TotalParity to Fin 7 cells)
 - `fmdl_z5_equivariant` — **Main theorem**: ∀ (v : Fin 5 → Fin 7) (k : Fin 5), fmdl_step5(cyclic_rotate v k) = cyclic_rotate(fmdl_step5 v) k; zero failures over 7⁵ × 5 = 84,035 cases (native_decide, CatAL)
 
-**SU(5) GUT Weinberg Angle, f_MDL Structural Bridge, CKM Count Theorem, CKM Quark N_eff Formulas, b_sum = 390 Weinberg Factorization, Z₂ Longitudinal Mode MDL Universality, Coupling Ratio Duality, and smGen1 SU(5) Projector (GUTStructure.lean, 2026-05-19; 58 theorems + 16 definitions, 0 sorry)**
+**SU(5) GUT Weinberg Angle, f_MDL Structural Bridge, CKM Count Theorem, CKM Quark N_eff Formulas, b_sum = 390 Weinberg Factorization, Z₂ Longitudinal Mode MDL Universality, Coupling Ratio Duality, smGen1 SU(5) Projector, Mersenne Prime Structure, and Joint Selection Theorem (GUTStructure.lean, 2026-05-19; 70 theorems + 17 definitions, 0 sorry)**
 
 Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit depth, CatAL) and N_fam = 5 (Z₅ family ring size, CatAL) satisfy the arithmetic identity N_gen + N_fam = 2^N_gen (3 + 5 = 8 = 2³). This implies that the GUT-scale Weinberg angle sin²θ_W(M_GUT) = N_gen/(N_gen + N_fam) = N_gen/2^N_gen = 3/8 — agreeing exactly with the standard SU(5) GUT prediction. The denominator then increases to c_H = 13 at M_Z by exactly N_fam = 5. A new structural identity (§9) connects the CA dynamics layer: the MDL-minimal CA function f_MDL produces nonzero output on exactly c_H + 1 = 14 of the 343 possible neighborhoods.
 
@@ -424,6 +424,30 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `sm_gen1_active_count` — active positions (value=1) count = N_gen = 3 (decide, CatAL; matches SU(5) colored sector)
 - `sm_gen1_inactive_count` — inactive positions (value=0) count = N_fam−N_gen = 2 (decide, CatAL; matches SU(5) leptonic sector)
 - `sm_gen1_partition_matches_su5` — **Combined partition theorem**: active=3, inactive=2, 3+2=5 (decide; smGen1 as SU(5) projector, CatAL)
+
+*§20: Mersenne prime structure, top quark formula, CP irrationality (Rank 67C, CatAL)*
+- `b_top` — b_t = 2^(c_H−2) × N_gen × N_fam × (2N_fam+1) = 337920 (def; top quark N_eff)
+- `neff_b_value` — b_b = 8191 (rfl, CatAL)
+- `neff_b_is_prime` — Nat.Prime b_b (norm_num; 8191 is Mersenne prime, CatAL)
+- `chiggs_is_5th_mersenne_exp` — c_H=13 ∧ N_fam=5 ∧ (∀ p ∈ {2,3,5,7,13}, Nat.Prime (2^p−1)) (norm_num+native_decide, CatAL)
+- `neff_t_formula` — b_top = 337920 (norm_num, CatAL)
+- `neff_t_factors` — b_top = 2^11 × N_gen × N_fam × (2N_fam+1) (norm_num, CatAL)
+- `top_bottom_ratio_q` — (b_top:ℚ)/b_b = 337920/8191 (norm_num; tracks M_top/M_bottom −0.49%, CatAL)
+- `bb_bs_product_not_square` — ¬∃ n:ℕ, n²=b_b×b_s (norm_num+linarith; implies tan(γ) irrational, CatAL)
+- `bb_bs_sqrt_floor` — Nat.sqrt(b_b×b_s) = 1234 (native_decide; confirms non-square, CatAL)
+
+*§21: Joint Selection Theorem — N_fam = 5 uniquely selected by Mersenne c_H AND Z₅ transitivity (Rank 67C-bis, CatAL)*
+- `mersenne_ch_prime_p2` — 2^7−1=127 is prime at N_fam=2 (norm_num, CatAL)
+- `mersenne_ch_not_prime_p3` — 2^9−1=511 not prime at N_fam=3 (norm_num, CatAL; 511=7×73)
+- `mersenne_ch_prime_p5` — 2^13−1=8191 is prime at N_fam=5 (alias of neff_b_is_prime, CatAL)
+- `mersenne_ch_prime_p7` — 2^17−1=131071 is prime at N_fam=7 (norm_num, CatAL; sibling universe)
+- `mersenne_ch_not_prime_p11` — 2^25−1 not prime at N_fam=11 (norm_num; 31×1082401, CatAL)
+- `mersenne_ch_not_prime_p13` — 2^29−1 not prime at N_fam=13 (norm_num, CatAL)
+- `mersenne_ch_not_prime_p17` — 2^37−1 not prime at N_fam=17 (norm_num; 223×616318177, CatAL)
+- `mersenne_ch_not_prime_p19` — 2^41−1 not prime at N_fam=19 (norm_num, CatAL)
+- `mersenne_ch_not_prime_p23` — 2^49−1 not prime at N_fam=23 (norm_num; 127×4432676798593, CatAL)
+- `joint_selection_theorem` — **Main theorem**: among primes ≤ 23, N_fam=5 is the UNIQUE prime satisfying BOTH (i) Mersenne prime c_H AND (ii) Z₅ full weight-3 transitivity under Rule 110. Combines the full Mersenne landscape (9 cases) + transitivity exclusion of p=2 and p=7. CatAL upgrade of the CatAD Joint Selection result from Rank 67C-bis. (norm_num + Z5TransitivityUniqueness, zero sorry)
+- `double_mersenne_exponent_identity` — N_fam=5 and c_H=13 are BOTH Mersenne prime exponents; pivot: c_H−2·N_fam=N_gen (3 arithmetic facts, norm_num, CatAL)
 
 ---
 
