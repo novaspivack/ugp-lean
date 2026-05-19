@@ -38,7 +38,7 @@ A clean build completes with zero `sorry` and the standard Mathlib axiom signatu
 | **Structural** | 19 | QuarterLock, LModelDerivation; *ElegantKernel/*: ChiralityFeature, D5StructuralAxiom, FibonacciHessian, KGen, KGen2, MuTriple, PentagonalUniqueness; *ElegantKernel/Unconditional/*: CyclotomicChain, D5Renormalization, FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure, KLFullClosure, PentagonConstraint, RiccatiFixedPoint |
 | **MassRelations** | 25 | *MassRelations* [umbrella], KoideClosedForm, KoideNewtonFlow, KoideAngle, KoideS3DiscreteIdentities, BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential, FroggattNielsen, NeutrinoFroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational, UpLeptonCyclotomic, Z2OrbifoldDepth, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex, VVMechanism, VVAllCoefficientsFromNc, CKMTheta23, CKMMixing, **NeutrinoMassRatio** |
 | **BraidAtlas** | 7 | ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation, CoxeterConductor, CoxeterConductorTowerLaw, EWBosons |
-| **Universality** | 10 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, Z5TransitivityUniqueness, **GTECompilation**, **GTEUniqueness** |
+| **Universality** | 11 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, Z5TransitivityUniqueness, **GTECompilation**, **GTEUniqueness**, **DimensionalSliceUniqueness** |
 | **SelfRef** | 2 | LawvereKleene, RiceHalting |
 
 Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity, PositiveRootTheorem, GaloisProtection, TwoLoopCoefficient), **GaloisStructure** (2), **CyclotomicCompleteness** (2), **PSC** (1: RCCInfiniteFamilies), **TE22** (1: ScanCertificate), **Papers** (2), **Instance** (1), **Conjectures** — per the formalization paper: `Phase4.GaloisProtection`, `TwoLoopCoefficient`, modules under `GaloisStructure.*` and `CyclotomicCompleteness.*`, and `TE22` carry fully mechanized statements where the paper claims zero sorry; `Papers` and `Instance` are chiefly citable stubs and bridges; `Conjectures` records resolved and open claims; `Phase4` also mixes stubs (e.g. UCL, PR1 presentation) with the precision theorems above.
@@ -189,6 +189,27 @@ Key theorems:
 - `z5_class2_one_step_allones` — The other weight-3 class ([0,1,0,1,1] rotations) reaches all-ones in exactly 1 step
 
 Note: build time ≈ 426s (native_decide for p=23 enumerates 2^23 vectors; confirmed by Python pre-check in 237ms).
+
+**Dimensional Slice Uniqueness — Rule 110 forced on all d-dimensional slices (DimensionalSliceUniqueness.lean, 2026-05-18; 17 theorems, 0 sorry)**
+
+Physical motivation: CUP-4 proves Rule 110 is uniquely forced by the SM orbit on a 1D 5-cell ring. This raises the objection: "Why 1D? Can a 2D or 3D CA evade Rule 110?" Answer: no. Any d-dimensional binary CA (d ≥ 1) satisfying the SM orbit on axis-aligned 5-cell periodic ring slices must apply Rule 110 on those slices. In the 3D case (f_MDL,3D), all three spatial axes are Rule 110 and P22 forces the cross-dimensional coupling to be Z₇ addition — the full 3D structure is derived, not assumed.
+
+- `DimSliceCA d` / `DimSliceCAMulti d` — abstract d-dimensional CA types carrying axis-aligned slice rules
+- `satisfies_sm_orbit` / `is_vacuum_transparent` — the orbit and vacuum conditions
+- `dimensional_slice_uniqueness` — **Core theorem**: d-dim CA (d≥1) with orbit + vacuum on slices → slice_rule = 110 (CatAL, zero sorry)
+- `dim_slice_rule110_forced` — structure-free form (hypotheses only, no DimSliceCA wrapper)
+- `dim_slice_step_is_rule110Periodic` — slice step function equals rule110StepPeriodic
+- `dimensional_slice_all_axes_rule110` — all d axes simultaneously forced to Rule 110
+- `dim_slice_valid_rule_count` — exactly 1 of 256 rules satisfies orbit + vacuum (native_decide)
+- `dim_slice_vacuum_essential` — without vacuum: 2 rules qualify (tightness; native_decide)
+- `dim_slice_valid_rules_eq_singleton` — Finset identity: valid rules = {110} (native_decide)
+- `two_dim_all_slices_rule110` — d=2 case: both axes forced to Rule 110
+- `three_dim_all_slices_rule110` — d=3 case: all three axes forced to Rule 110
+- `slice_rule_independent_of_dimension` — forced rule is Rule 110 for any d ≥ 1
+- `three_dim_fmdl_structure_forced` — **Deepest result**: 3D f_MDL fully forced: Rule 110 slices (this module) ∧ Z₇ addition coupling (CUP3D.p22_z7_coupling_unique); the 3D structure is derived
+- `dimensional_slice_universality` — master summary (count + tightness + singleton identity)
+
+Build time: ~2s (all native_decide proofs are over Fin 256, very fast).
 
 **GTE Compilation and Uniqueness (GTECompilation + GTEUniqueness, 2026-05-18; 12 theorems, 0 sorry)**
 
