@@ -377,9 +377,9 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `gte_family_capacity_identity` — N_gen + N_fam = 2^N_gen (alias of §2; GUT orbit-filling naming, CatAL)
 
 *§14: CKM matrix count theorem (Rank 68, CatAL)*
-- `ckm_dof_count` — N_gen² = 9 (norm_num; CKM matrix has 9 real d.o.f., CatAL)
-- `gut_capacity_times_ring` — 2^N_gen × N_fam = 40 (norm_num; GUT-orbit × family-ring capacity, CatAL)
-- `wolfenstein_lambda_formula` — (N_gen:ℚ)²/(2^N_gen×N_fam) = 9/40 (norm_num; Wolfenstein λ arithmetic, CatAL)
+- `ckm_dof_count` / `ckm_real_dimension` — N_gen² = 9 (norm_num; CKM matrix real d.o.f. = dim U(N_gen), CatAL)
+- `gut_capacity_times_ring` / `gte_generation_capacity` — 2^N_gen × N_fam = 40 (norm_num; GUT-orbit × family-ring capacity, CatAL)
+- `wolfenstein_lambda_formula` / `wolfenstein_density_formula` — (N_gen:ℚ)²/(2^N_gen×N_fam) = 9/40 (norm_num; Wolfenstein λ arithmetic, CatAL)
 - `wolfenstein_lambda_value` — (9:ℚ)/40 = 225/1000 (norm_num; exact decimal 0.225, 0.000% vs PDG, CatAL)
 
 *§15: CKM quark N_eff structural formulas and R_b = sin²θ_W(GUT) (Rank 67, CatAL)*
