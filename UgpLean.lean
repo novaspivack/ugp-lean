@@ -122,6 +122,12 @@ import UgpLean.Universality.CUP3DUniqueness
 import UgpLean.Universality.CUP3DPSCUnification
 import UgpLean.Universality.CUP3DPhysicalIncompleteness
 import UgpLean.Universality.CookRule110Ref
+import UgpLean.Universality.OrbitPerturbationCatalog
+import UgpLean.Universality.Z7ChargeConjugation
+import UgpLean.Universality.DimensionalSliceUniqueness
+import UgpLean.Universality.Z5TransitivityUniqueness
+import UgpLean.Universality.GTPNeutralDiscrimination
+import UgpLean.Universality.SMOrbitCausalIsolation
 import UgpLean.TE22.ScanCertificate
 import UgpLean.PSC.RCCInfiniteFamilies
 import UgpLean.PSC.RCCComplete
