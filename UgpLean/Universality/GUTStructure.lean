@@ -34,6 +34,19 @@ N_gen = 3 and N_fam = 5 to the SU(5) grand unified theory and the GUT-scale Wein
 - `weinberg_angle_closure`: sin²θ_W = N_gen/c_H = 3/13 (CatAL, norm_num)
 - `weinberg_angle_derivation`: joint theorem packaging all three components (CatAL)
 
+## §13 — Z₅ Ring Contribution — Running Shift Physical Naming (Ranks 57 & 58)
+
+- `running_shift_is_z5_ring`: c_H − 2^N_gen = N_fam (Z₅ ring contributes shift; alias of §5)
+- `z5_ring_contributes_nfam_to_denominator`: c_H = 2^N_gen + N_fam (explicit sum form)
+- `gte_family_capacity_identity`: N_gen + N_fam = 2^N_gen (alias of §2, physical naming)
+
+## §14 — CKM Matrix Count Theorem — N_gen² from GTE (Rank 68, CatAL)
+
+- `ckm_dof_count`: N_gen² = 9 (CKM matrix has 9 independent real parameters)
+- `gut_capacity_times_ring`: 2^N_gen × N_fam = 40 (GUT-orbit × family-ring capacity)
+- `wolfenstein_lambda_formula`: N_gen²/(2^N_gen × N_fam) = 9/40 (Wolfenstein λ arithmetic)
+- `wolfenstein_lambda_value`: 9/40 = 225/1000 (exact decimal 0.225, 0.000% error vs PDG)
+
 ## Physical context
 
 The GTE structural constants are:
@@ -735,5 +748,145 @@ theorem weinberg_angle_derivation :
           fmdl_nonpalindrome_nonzero_count_eq_two_nfam,
           ?_⟩
   norm_num [n_gen, n_fam]
+
+-- ════════════════════════════════════════════════════════════════
+-- §13  Z₅ Ring Contribution — Running Shift Physical Naming (Ranks 57/58)
+-- ════════════════════════════════════════════════════════════════
+
+/-!
+### §13  Z₅ Ring Contribution — Running Shift and Family Capacity (Ranks 57 & 58)
+
+Two arithmetic identities reframed with their physical interpretation:
+
+**Rank 57 — Running shift IS the Z₅ ring contribution:**
+The denominator increases from 2^N_gen = 8 (GUT scale) to c_H = 13 (EW scale) by exactly
+N_fam = 5.  This shift equals the Z₅ family-ring count — the same count that appears in
+the Z₅ transitivity uniqueness theorem (CUP-9, CatAL).
+
+  c_H − 2^N_gen = 5 = N_fam   (same identity as §5 `running_shift_equals_nfam`)
+
+The new physical naming makes explicit that this shift IS the Z₅ ring contribution:
+the RGE running encodes the family-ring size.
+
+**Rank 58 — Family capacity identity (N_gen + N_fam = 2^N_gen):**
+The N_gen active generation slots plus the N_fam Z₅ ring slots together fill exactly
+the GUT capacity 2^N_gen.  The "unfilled" Z₅ slots are N_fam − N_gen = 2 (the two
+lepton singlets in the SU(5) 5-plet partition).
+
+  N_gen + N_fam = 8 = 2^N_gen   (same identity as §2 `ngen_plus_nfam_eq_pow2`)
+
+Both identities are pure norm_num arithmetic on the Lean-certified GTE constants.
+Zero sorry.
+-/
+
+/-- **running_shift_is_z5_ring** (CatAL):
+    The running shift c_H − 2^N_gen equals exactly N_fam — the Z₅ family-ring count.
+
+    Physical interpretation: the denominator's gain from M_GUT to M_Z equals the Z₅
+    ring size N_fam = 5.  The RGE running and the family-ring count are the same
+    structural fact: c_H − 2^N_gen = N_fam.
+
+    Physically named alias of §5 `running_shift_equals_nfam`.
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem running_shift_is_z5_ring :
+    EWBosonStructure.c_higgs - 2 ^ n_gen = n_fam :=
+  running_shift_equals_nfam
+
+/-- **z5_ring_contributes_nfam_to_denominator** (CatAL):
+    The EW denominator c_H = 2^N_gen + N_fam.
+
+    The Z₅ ring contributes exactly N_fam = 5 to the Weinberg denominator:
+    the EW-scale capacity equals the GUT capacity 2^N_gen augmented by the full
+    family-ring count N_fam.
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem z5_ring_contributes_nfam_to_denominator :
+    EWBosonStructure.c_higgs = 2 ^ n_gen + n_fam := by
+  simp only [EWBosonStructure.c_higgs, n_gen, n_fam]; norm_num
+
+/-- **gte_family_capacity_identity** (CatAL):
+    N_gen + N_fam = 2^N_gen.  The filled generation slots plus the full Z₅ ring
+    together equal the GUT capacity.
+
+    Physical interpretation: the N_gen = 3 active generations fill N_gen slots of the
+    Z₅ ring; the N_fam − N_gen = 2 remaining slots are the empty (leptonic) sector.
+    All N_fam = 5 ring slots together exhaust the binary-power capacity 2^N_gen = 8.
+
+    Physically named alias of §2 `ngen_plus_nfam_eq_pow2`.
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem gte_family_capacity_identity :
+    n_gen + n_fam = 2 ^ n_gen :=
+  ngen_plus_nfam_eq_pow2
+
+-- ════════════════════════════════════════════════════════════════
+-- §14  CKM Matrix Degree-of-Freedom Count — Rank 68 (CatAL)
+-- ════════════════════════════════════════════════════════════════
+
+/-!
+### §14  CKM Matrix Count Theorem — N_gen² from GTE Matrix Structure (Rank 68)
+
+An N_gen × N_gen unitary matrix has exactly N_gen² = 9 independent real parameters.
+The GTE generation-orbit × family-ring supports a combined capacity of
+2^N_gen × N_fam = 8 × 5 = 40 independent slots.  The ratio
+
+  λ = N_gen² / (2^N_gen × N_fam) = 9/40 = 0.225
+
+equals the Wolfenstein CKM parameter (PDG central value 0.22500 ± 0.00067,
+0.000% error — best GTE quantitative prediction to date).
+
+The theorems here certify the arithmetic component (CatAL) of this identification.
+The physical interpretation — that N_gen² counts CKM degrees of freedom and
+2^N_gen × N_fam counts GTE generation-orbit slots — is CatAD (Rank 68 physical claim).
+
+All proofs by `norm_num`, zero sorry.
+-/
+
+/-- **ckm_dof_count** (CatAL):
+    The CKM matrix has N_gen² = 9 independent real parameters.
+
+    An N_gen × N_gen unitary matrix U(N_gen) has N_gen² real degrees of freedom
+    (before imposing additional symmetries such as rephasing).  For N_gen = 3:
+    N_gen² = 3² = 9.
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem ckm_dof_count : n_gen ^ 2 = 9 := by
+  norm_num [n_gen]
+
+/-- **gut_capacity_times_ring** (CatAL):
+    The GUT-orbit capacity times the Z₅ ring size equals 40:
+    2^N_gen × N_fam = 8 × 5 = 40.
+
+    Physical interpretation (CatAD): the 40 = 2^N_gen × N_fam GTE slots represent
+    the combined generation-orbit (depth 2^N_gen = 8) × family-ring (N_fam = 5)
+    capacity that supports the CKM mixing structure.
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem gut_capacity_times_ring : 2 ^ n_gen * n_fam = 40 := by
+  norm_num [n_gen, n_fam]
+
+/-- **wolfenstein_lambda_formula** (CatAL):
+    The Wolfenstein parameter λ = N_gen² / (2^N_gen × N_fam) = 9/40.
+
+    The arithmetic identity N_gen² / (2^N_gen × N_fam) = 9/40 is a pure rational
+    computation on the Lean-certified GTE constants N_gen = 3 and N_fam = 5.
+
+    Physical status: the identification of 9/40 with the Wolfenstein parameter λ
+    is CatAD.  The PDG central value is λ = 0.22500 ± 0.00067; 9/40 = 0.225000
+    gives 0.000% error (see `wolfenstein_lambda_value`).
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem wolfenstein_lambda_formula :
+    ((n_gen : ℚ) ^ 2) / ((2 : ℚ) ^ n_gen * n_fam) = 9 / 40 := by
+  simp only [n_gen, n_fam]; norm_num
+
+/-- **wolfenstein_lambda_value** (CatAL):
+    9/40 = 225/1000 as a rational identity, confirming the exact decimal value 0.225.
+
+    The PDG Wolfenstein parameter λ = 0.22500 ± 0.00067 matches 9/40 = 0.22500
+    with 0.000% error — the best quantitative GTE prediction to date.
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem wolfenstein_lambda_value : (9 : ℚ) / 40 = 225 / 1000 := by
+  norm_num
 
 end GUTStructure
