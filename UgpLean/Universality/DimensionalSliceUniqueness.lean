@@ -410,4 +410,59 @@ theorem dimensional_slice_universality :
    dim_slice_vacuum_essential,
    dim_slice_valid_rules_eq_singleton⟩
 
+-- ════════════════════════════════════════════════════════════════
+-- §4b  Rule 111 as the Unique Near-Miss — Vacuum Uniquely Selects Rule 110
+-- ════════════════════════════════════════════════════════════════
+
+/-- **vacuum_selects_rule110_over_rule111**: The orbit-satisfying rule set without
+    vacuum transparency is exactly {110, 111} (explicit Finset identity, not just count=2).
+    Rule 110 satisfies vacuum transparency (r.val % 2 = 0); Rule 111 does NOT
+    (111 % 2 = 1, i.e., the bit encoding for neighborhood 000 maps to 1).
+    Vacuum transparency is the UNIQUE discriminant that selects Rule 110 over Rule 111.
+
+    This strengthens `dim_slice_vacuum_essential` (which gives count = 2) and
+    `dim_slice_rule111_excluded` (which gives the disjunction for Rule 111) into a
+    complete Finset identity: the orbit-satisfying rules are {110, 111}, and adding
+    the vacuum condition reduces the set to {110}.
+
+    Physical meaning: Rule 111 maps neighborhood (0,0,0) → 1, creating excitations
+    from empty space — "vacuum instability." The physical requirement that empty space
+    remains empty is the single criterion that excludes the totally-active Rule 111
+    and leaves computationally universal Rule 110 as the unique solution.
+
+    LEAN-CERTIFIED (native_decide + decide, zero sorry). -/
+theorem vacuum_selects_rule110_over_rule111 :
+    -- (a) The orbit-satisfying set WITHOUT vacuum transparency is exactly {110, 111}
+    (Finset.univ (α := Fin 256)).filter (fun r =>
+      elementaryCAStep r smGen1 = smGen2 ∧
+      elementaryCAStep r smGen2 = smGen3) = ({110, 111} : Finset (Fin 256)) ∧
+    -- (b) Rule 110 satisfies vacuum transparency
+    is_vacuum_transparent 110 ∧
+    -- (c) Rule 111 does NOT satisfy vacuum transparency (000 → 1)
+    ¬ is_vacuum_transparent 111 ∧
+    -- (d) The orbit-satisfying set WITH vacuum transparency is exactly {110}
+    (Finset.univ (α := Fin 256)).filter (fun r =>
+      elementaryCAStep r smGen1 = smGen2 ∧
+      elementaryCAStep r smGen2 = smGen3 ∧
+      r.val % 2 = 0) = {110} := by
+  unfold is_vacuum_transparent
+  refine ⟨by native_decide, by decide, by decide, by native_decide⟩
+
+/-- **rule111_orbit_valid_no_vacuum**: Rule 111 is the unique orbit-satisfying rule
+    other than Rule 110. Among all 256 binary elementary CA rules, only Rules 110
+    and 111 produce the correct two-step SM generation orbit smGen1 → smGen2 → smGen3
+    on the 5-cell Z₅ ring. Rule 111 is the unique NEAR-MISS: it passes the generation
+    orbit constraint but fails the vacuum stability test (maps 000 → 1).
+
+    This is the "nearest competitor" theorem: Rule 110 wins not arbitrarily among 256
+    rules but by a single-condition margin over exactly one other rule (Rule 111).
+    The vacuum condition is the final and exact discriminant.
+
+    LEAN-CERTIFIED (native_decide + decide, zero sorry). -/
+theorem rule111_orbit_valid_no_vacuum :
+    satisfies_sm_orbit 111 ∧ ¬ is_vacuum_transparent 111 ∧
+    (∀ r : Fin 256, satisfies_sm_orbit r → r = 110 ∨ r = 111) := by
+  unfold satisfies_sm_orbit is_vacuum_transparent
+  refine ⟨⟨by native_decide, by native_decide⟩, by decide, by native_decide⟩
+
 end UgpLean.Universality

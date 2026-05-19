@@ -698,4 +698,205 @@ theorem fmdl_uniform_fp_uniqueness_count :
     Finset.card (Finset.filter (fun k : Fin 7 => fmdl k k k = k) Finset.univ) = 1 := by
   decide
 
+-- ════════════════════════════════════════════════════════════════
+-- §8  Z₇ Sum Conservation Landscape (Rank 27)
+-- ════════════════════════════════════════════════════════════════
+
+/-!
+## Z₇ Sum Conservation Landscape — all seven sum values
+
+Spec 01 fully characterized sum-4-conserving states: exactly 10 states conserve
+their Z₇ sum value 4 under fmdl_step5. This section extends the analysis to ALL
+seven sum values, completing the conservation landscape.
+
+Key new result: **sum=4 is the uniquely sparsest non-zero conservation class**
+(10 conserving states out of 2401, fewer than any other non-zero sum value).
+The SM generation orbit sits in the arithmetically rarest conservation niche.
+
+Exact conservation counts (verified exhaustively over all 7⁵ = 16,807 states):
+- v=0: 2026 (vacuum is stable; most zero-sum states map to zero-sum states)
+- v=1: 100
+- v=2:  80
+- v=3:  45  (gen₃'s sum; gen₃ itself is NOT conserving — it maps to vacuum, sum 0)
+- v=4:  10  (gen₁/gen₂'s sum — RAREST among all non-zero sums; CatAL)
+- v=5:  80
+- v=6:  30
+-/
+
+/-- The count of states in Z₇⁵ with Z₇ sum value v that also conserve their sum
+    under one fmdl_step5 application. -/
+def z7_conserving_count (v : Fin 7) : ℕ :=
+  (Finset.univ.filter (fun s : Fin 5 → Fin 7 =>
+    z7_sum s = v ∧ z7_sum (fmdl_step5 s) = v)).card
+
+/-- **z7_conservation_count_table**: complete Z₇ sum conservation counts for all
+    seven sum values (CatAL).
+
+    Exact counts over all 7⁵ = 16,807 states:
+      v=0: 2026   v=1: 100   v=2: 80   v=3: 45
+      v=4:   10   v=5:  80   v=6: 30
+
+    Note: sum=0 has 2026 conserving states because the vacuum maps to vacuum and
+    most "zero-sum" configurations collapse back to the zero-sum attractor.
+    Sum=4 has only 10 conserving states — the rarest non-zero class.
+
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
+theorem z7_conservation_count_table :
+    z7_conserving_count 0 = 2026 ∧
+    z7_conserving_count 1 = 100 ∧
+    z7_conserving_count 2 = 80 ∧
+    z7_conserving_count 3 = 45 ∧
+    z7_conserving_count 4 = 10 ∧
+    z7_conserving_count 5 = 80 ∧
+    z7_conserving_count 6 = 30 := by native_decide
+
+/-- **z7_sum4_uniquely_sparse**: sum=4 has strictly fewer conserving states than any
+    other non-zero, non-4 sum value (CatAL).
+
+    Among all non-zero sum values {1,2,3,5,6}, the conservation count for v=4 (10)
+    is strictly less than the count for every other value. This establishes that the
+    SM generation orbit (which lies in the sum=4 class) occupies the arithmetically
+    rarest Z₇ conservation niche.
+
+    Physical significance: the first generation's Z₇ sum value (4) is not just any
+    conserved quantity — it is the most restrictively conserved sum value in the
+    entire Z₇ arithmetic. The SM orbit is dynamically isolated in the rarest class.
+
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
+theorem z7_sum4_uniquely_sparse :
+    ∀ v : Fin 7, v ≠ 0 → v ≠ 4 →
+      z7_conserving_count 4 < z7_conserving_count v := by native_decide
+
+/-- **z7_gen3_not_sum_conserving**: gen₃ does NOT conserve Z₇ sum under fmdl_step5.
+
+    z7_sum(gen₃) = 3; z7_sum(fmdl_step5(gen₃)) = z7_sum(vacuum) = 0.
+    The breaking 3 → 0 is part of the generation cascade.
+    Gen₃ belongs to the sum=3 class but is not one of the 45 sum-3-conserving states.
+
+    LEAN-CERTIFIED (decide, zero sorry). -/
+theorem z7_gen3_not_sum_conserving :
+    z7_sum (fmdl_step5 fmdl_gen3_z7) ≠ z7_sum fmdl_gen3_z7 := by decide
+
+/-- **z7_vacuum_sum_conserved**: the vacuum (all-zeros) conserves Z₇ sum (CatAL).
+
+    z7_sum(vacuum) = 0 and fmdl_step5(vacuum) = vacuum, so z7_sum(fmdl(vacuum)) = 0.
+    The vacuum is among the 2026 sum-0-conserving states.
+
+    LEAN-CERTIFIED (decide, zero sorry). -/
+theorem z7_vacuum_sum_conserved :
+    z7_sum (fmdl_step5 (fun _ => (0 : Fin 7))) = z7_sum (fun _ => (0 : Fin 7)) := by decide
+
+/-- **z7_conservation_landscape_summary**: consolidated summary theorem (CatAL).
+
+    The full Z₇ sum conservation landscape under f_MDL, in one statement:
+    (1) Complete count table for all 7 sum values
+    (2) Sum=4 (SM orbit) is uniquely sparsest among non-zero sums
+    (3) Gen₃ breaks its sum; the vacuum preserves its sum.
+
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
+theorem z7_conservation_landscape_summary :
+    -- (1) Complete count table
+    (z7_conserving_count 0 = 2026 ∧ z7_conserving_count 1 = 100 ∧
+     z7_conserving_count 2 = 80 ∧ z7_conserving_count 3 = 45 ∧
+     z7_conserving_count 4 = 10 ∧ z7_conserving_count 5 = 80 ∧
+     z7_conserving_count 6 = 30) ∧
+    -- (2) Sum=4 uniquely sparse
+    (∀ v : Fin 7, v ≠ 0 → v ≠ 4 → z7_conserving_count 4 < z7_conserving_count v) ∧
+    -- (3) Generation dynamics: gen₃ breaks, vacuum preserves
+    (z7_sum (fmdl_step5 fmdl_gen3_z7) ≠ z7_sum fmdl_gen3_z7) ∧
+    (z7_sum (fmdl_step5 (fun _ => (0 : Fin 7))) = z7_sum (fun _ => (0 : Fin 7))) :=
+  ⟨z7_conservation_count_table, z7_sum4_uniquely_sparse,
+   z7_gen3_not_sum_conserving, z7_vacuum_sum_conserved⟩
+
+-- ════════════════════════════════════════════════════════════════
+-- §9  Orbit-Admissible Function Sum Trajectory Invariance (Rank 40)
+-- ════════════════════════════════════════════════════════════════
+
+/-- **apply_f_ring**: apply a Z₇ CA function f on the 5-cell ring with periodic
+    boundary conditions. Each output cell i is f(prev, center, next), where
+    prev = v[i−1 mod 5], center = v[i], next = v[i+1 mod 5].
+
+    This generalizes fmdl_step5: `apply_f_ring fmdl = fmdl_step5` by definition
+    (since `i + 4` in Fin 5 is `i − 1 mod 5`). -/
+def apply_f_ring (f : Fin 7 → Fin 7 → Fin 7 → Fin 7) (v : Fin 5 → Fin 7) : Fin 5 → Fin 7 :=
+  fun i => f (v (i + 4)) (v i) (v (i + 1))
+
+/-- **is_orbit_admissible**: a Z₇ CA function f is orbit-admissible if it maps the
+    SM orbit correctly on the 5-cell ring:
+    - apply_f_ring f gen₁ = gen₂  (first generation cascade step)
+    - apply_f_ring f gen₂ = gen₃  (second generation cascade step)
+    - apply_f_ring f gen₃ = vacuum (third step — decay to ground state)
+
+    The orbit constraints fix exactly 15 specific (l, c, r) → output entries of f
+    (5 per orbit step; all 15 are distinct neighborhoods). The remaining 7³ − 15 = 328
+    neighborhoods are unconstrained. The full class of orbit-admissible functions has
+    cardinality 7^328 ≈ 10^277.
+
+    Physical meaning: an orbit-admissible f is any Z₇ CA consistent with the three
+    observed generation cascades. The class includes fmdl (MDL-minimal orbit-admissible)
+    and 7^328 − 1 other functions that also reproduce the SM particle spectrum. -/
+def is_orbit_admissible (f : Fin 7 → Fin 7 → Fin 7 → Fin 7) : Prop :=
+  apply_f_ring f fmdl_gen1_z7 = fmdl_gen2_z7 ∧
+  apply_f_ring f fmdl_gen2_z7 = fmdl_gen3_z7 ∧
+  apply_f_ring f fmdl_gen3_z7 = fun _ => (0 : Fin 7)
+
+/-- **fmdl_is_orbit_admissible**: the MDL-minimal function fmdl is orbit-admissible.
+    Follows from `apply_f_ring fmdl = fmdl_step5` and the three orbit-step theorems.
+
+    LEAN-CERTIFIED (decide, zero sorry). -/
+theorem fmdl_is_orbit_admissible : is_orbit_admissible fmdl :=
+  ⟨by decide, by decide, by decide⟩
+
+/-- **orbit_sum_trajectory_invariant**: the Z₇-sum trajectory of the orbit step-images
+    under ANY orbit-admissible f is universally 4 → 3 → 0.
+
+    For any f satisfying the orbit constraints:
+    - z7_sum(f(gen₁)) = 4    (= z7_sum(gen₂): sum conserved from gen₁ to its image)
+    - z7_sum(f(gen₂)) = 3    (= z7_sum(gen₃): sum breaks from gen₂ to its image)
+    - z7_sum(f(gen₃)) = 0    (= z7_sum(vacuum): sum collapses at final decay step)
+
+    This is a UNIVERSAL property of the orbit constraints. The Z₇-sum sequence of
+    the orbit cascade images is determined entirely by the 15 fixed orbit-constraint
+    output values: the sums are ∑ (orbit-fixed outputs for gen₁ step) = 11 ≡ 4 mod 7,
+    ∑ (orbit-fixed outputs for gen₂ step) = 24 ≡ 3 mod 7, and 0. The 7^328 free
+    neighborhoods do NOT affect any of these sums since free neighborhoods are never
+    evaluated when applying f to the orbit states.
+
+    Physical significance: the generation Z₇-sum progression is as fundamental as the
+    orbit itself — it is a CA-structural consequence of the SM particle spectrum, not
+    a special property of MDL minimality or any particular f.
+
+    LEAN-CERTIFIED (rw + decide, zero sorry). -/
+theorem orbit_sum_trajectory_invariant :
+    ∀ (f : Fin 7 → Fin 7 → Fin 7 → Fin 7),
+      is_orbit_admissible f →
+      z7_sum (apply_f_ring f fmdl_gen1_z7) = 4 ∧
+      z7_sum (apply_f_ring f fmdl_gen2_z7) = 3 ∧
+      z7_sum (apply_f_ring f fmdl_gen3_z7) = 0 := by
+  intro f ⟨h1, h2, h3⟩
+  refine ⟨?_, ?_, ?_⟩
+  · rw [h1]; decide
+  · rw [h2]; decide
+  · rw [h3]; decide
+
+/-- **orbit_sum_full_trajectory**: the complete 4-step Z₇-sum sequence
+    gen₁(sum=4) → gen₂(sum=4) → gen₃(sum=3) → vacuum(sum=0) holds universally
+    for all orbit-admissible functions.
+
+    The starting gen₁ sum (= 4) is a fixed arithmetic property of gen₁ itself
+    (not dependent on any f). The subsequent step-image sums follow from
+    orbit-admissibility (Theorem `orbit_sum_trajectory_invariant`).
+
+    LEAN-CERTIFIED (decide + orbit_sum_trajectory_invariant, zero sorry). -/
+theorem orbit_sum_full_trajectory :
+    ∀ (f : Fin 7 → Fin 7 → Fin 7 → Fin 7),
+      is_orbit_admissible f →
+      z7_sum fmdl_gen1_z7 = 4 ∧
+      z7_sum (apply_f_ring f fmdl_gen1_z7) = 4 ∧
+      z7_sum (apply_f_ring f fmdl_gen2_z7) = 3 ∧
+      z7_sum (apply_f_ring f fmdl_gen3_z7) = 0 := by
+  intro f hf
+  have h := orbit_sum_trajectory_invariant f hf
+  exact ⟨by decide, h.1, h.2.1, h.2.2⟩
+
 end CUP3D
