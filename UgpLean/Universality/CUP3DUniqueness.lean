@@ -562,4 +562,140 @@ theorem z7_z2_incompatible_additive :
     have heq : b.val = 2 := by simpa using congr_arg Fin.val hb
     exact absurd heq (by omega)
 
+-- ────────────────────────────────────────────────────────────────
+-- §7c  Vacuum fixed-point uniqueness — No False Vacua (Rank 22)
+-- ────────────────────────────────────────────────────────────────
+
+/-- **fmdl_unique_fixed_point** (No False Vacua theorem):
+    The vacuum (all-zeros) is the UNIQUE fixed point of fmdl_step5 on the 5-cell ring.
+
+    Proof: If fmdl_step5 v = v, then for all n, fmdl_step5^n v = v.
+    In particular, fmdl_step5^7 v = v. But `fmdl_universal_7step_convergence` gives
+    fmdl_step5^7 v = fun _ => 0 for all v. Therefore v = fun _ => 0 (vacuum).
+
+    Physical significance: no "false vacuum" states exist in the arithmetic universe.
+    The CA dynamics has exactly ONE stable configuration — the all-zeros state.
+    Every non-vacuum state is transient. This sharply distinguishes the UGP framework
+    from string-landscape scenarios where false vacua proliferate.
+
+    LEAN-CERTIFIED (native_decide, 7⁵ = 16807 cases, zero sorry). -/
+theorem fmdl_unique_fixed_point :
+    ∀ v : Fin 5 → Fin 7, fmdl_step5 v = v → v = fun _ => (0 : Fin 7) := by
+  native_decide
+
+/-- **fmdl_no_nontrivial_cycles**: every state in Z₇⁵ eventually reaches vacuum;
+    no periodic orbit of period ≥ 2 exists under fmdl_step5.
+
+    Proof: by `fmdl_universal_7step_convergence`, fmdl_step5^7 v = vacuum for all v.
+    Hence every orbit is finite-length (terminates at vacuum within 7 steps).
+
+    Physical meaning: all matter configurations are unstable over infinite time in the
+    absence of pair-production / external input. The vacuum is the unique long-run state.
+
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
+theorem fmdl_no_nontrivial_cycles :
+    ∀ v : Fin 5 → Fin 7, ∃ n : ℕ, n ≤ 7 ∧ fmdl_step5^[n] v = fun _ => (0 : Fin 7) := by
+  intro v
+  exact ⟨7, le_refl 7, by
+    simp only [Function.iterate_succ, Function.iterate_zero, Function.comp, id]
+    exact fmdl_universal_7step_convergence v⟩
+
+/-- **fmdl_vacuum_is_unique_attractor** (No False Vacua — complete statement, CatAL):
+    The vacuum is the sole fixed point AND the universal attractor of fmdl_step5.
+
+    Three components proved simultaneously:
+    (1) Vacuum is a fixed point under fmdl_step5
+    (2) Every state converges to vacuum in at most 7 steps
+    (3) Vacuum is the UNIQUE fixed point (no false vacua)
+
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
+theorem fmdl_vacuum_is_unique_attractor :
+    fmdl_step5 (fun _ => (0 : Fin 7)) = (fun _ => (0 : Fin 7)) ∧
+    (∀ v : Fin 5 → Fin 7,
+      fmdl_step5 (fmdl_step5 (fmdl_step5 (fmdl_step5
+        (fmdl_step5 (fmdl_step5 (fmdl_step5 v)))))) = fun _ => (0 : Fin 7)) ∧
+    (∀ v : Fin 5 → Fin 7, fmdl_step5 v = v → v = fun _ => (0 : Fin 7)) :=
+  ⟨by native_decide, fmdl_universal_7step_convergence, fmdl_unique_fixed_point⟩
+
+-- ────────────────────────────────────────────────────────────────
+-- §7d  Photon as CA Ether — unique uniform fixed point (Rank 41)
+-- ────────────────────────────────────────────────────────────────
+
+/-- **fmdl_nonzero_diagonal_all_zero**: for every non-vacuum winding k ≠ 0, the uniform
+    neighborhood (k,k,k) maps to 0 under fmdl.
+
+    Verification by cases:
+    • k=1: fmdl 1 1 1 = 0 (Rule 110 binary constraint: all-ones → 0)
+    • k=2..6: (k,k,k) is a free neighborhood (not among the 18 fixed constraints),
+      so MDL-minimality forces output = 0.
+
+    Physical significance: no non-vacuum winding class is self-replicating under
+    uniform f_MDL dynamics. Only the vacuum (k=0) can reproduce itself from a uniform
+    background of its own kind.
+
+    LEAN-CERTIFIED (decide, all 6 non-zero values exhaustively checked, zero sorry). -/
+theorem fmdl_nonzero_diagonal_all_zero :
+    ∀ k : Fin 7, k ≠ 0 → fmdl k k k = 0 := by decide
+
+/-- **fmdl_unique_uniform_fixed_point** (Photon = CA Ether — main theorem):
+    The value k=0 (photon/vacuum winding) is the UNIQUE uniform fixed point of fmdl:
+    fmdl(k,k,k) = k if and only if k = 0.
+
+    Physical significance: The photon (Z₇=0) IS the CA's quiescent ether — the
+    background medium itself. No other Z₇ winding value is self-replicating under
+    uniform f_MDL dynamics. Every other neutral SM particle (ν, Z, H⁰) requires a
+    non-trivial GTE triple to specify and therefore has K_MDL > 0.
+
+    The photon requires zero description length (K_MDL = 0) because it is not an
+    excitation above the f_MDL background — it IS the background. The GTE sieve
+    generates particle identity by iterating the GTE triple evolution; the one particle
+    that IS the vacuum medium has zero mass and zero description length. This provides
+    the structural reason behind the photon's GTE-triple absence established in
+    GTPNeutralDiscrimination.lean (Rank 11): γ is `fixed_zero` not by accident but
+    because it is the unique element that the CA background reproduces unchanged.
+
+    Note on MDL-minimality: the result has two cases.
+    (1) k=1: fmdl(1,1,1) = 0 ≠ 1 because Rule 110 mandates f(1,1,1)=0 (all-ones→0).
+    (2) k≥2: fmdl(k,k,k) = 0 ≠ k because (k,k,k) is a free neighborhood and
+        MDL-minimality (fmdl_zero_on_free_neighborhoods) assigns 0 to all free slots.
+    (3) k=0: fmdl(0,0,0) = 0 = 0 because Rule 110 sets f(0,0,0)=0 (vacuum→vacuum).
+    The photon is the unique diagonal where the MDL-zero and the fixed-point condition
+    coincide. This is not a coincidence — it is the definition of vacuum in the CA.
+
+    LEAN-CERTIFIED (decide, all 7 values of Fin 7 checked exhaustively, zero sorry). -/
+theorem fmdl_unique_uniform_fixed_point :
+    ∀ k : Fin 7, fmdl k k k = k ↔ k = 0 := by decide
+
+/-- **photon_is_ca_ether**: explicit conjunction form of the unique uniform fixed point
+    result.
+
+    (a) Forward: the photon (k=0) IS a uniform fixed point: fmdl 0 0 0 = 0.
+    (b) Converse: no other winding class k ≠ 0 is a uniform fixed point.
+
+    Together these give the complete CA ether characterization: among all Z₇ winding
+    classes, the photon is the sole quiescent background — the ether — while every
+    other neutral particle class is an excitation above that background.
+
+    LEAN-CERTIFIED (decide, zero sorry). -/
+theorem photon_is_ca_ether :
+    fmdl 0 0 0 = 0 ∧
+    (∀ k : Fin 7, k ≠ 0 → fmdl k k k ≠ k) := by
+  constructor <;> decide
+
+/-- **fmdl_uniform_fp_uniqueness_count**: exactly ONE value in Z₇ is a uniform
+    fixed point of fmdl.
+
+    The Finset of uniform fixed points has cardinality 1 (containing only 0).
+
+    Physical meaning: the photon is the sole member of the "CA ether" class —
+    the class of Z₇ winding values that are quiescent backgrounds rather than
+    excitations. This counting theorem is the strongest form: not merely
+    existential (some fixed point exists) or conditional (if k=0 then fixed),
+    but a precise cardinality statement over all 7 winding classes.
+
+    LEAN-CERTIFIED (decide, zero sorry). -/
+theorem fmdl_uniform_fp_uniqueness_count :
+    Finset.card (Finset.filter (fun k : Fin 7 => fmdl k k k = k) Finset.univ) = 1 := by
+  decide
+
 end CUP3D
