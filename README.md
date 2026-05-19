@@ -230,8 +230,11 @@ Key theorems:
 - `no_hamming3_transitivity_p{3,7,11,13,17,19,23}` — 7 negative theorems: total 2-step isolation for all other small primes (no partial transitivity either)
 - `z5_transitivity_uniqueness` — **Main theorem**: combined uniqueness statement over all primes ≤ 23 (positive + all negatives in one conjunction)
 - `z5_class2_one_step_allones` — The other weight-3 class ([0,1,0,1,1] rotations) reaches all-ones in exactly 1 step
+- `z5_w3_t1_full_transitivity` — **New (§8)**: all 5 rotations of [0,1,0,1,1] reach all-ones in t=1 step (full Z₅ transitivity at Hamming weight 3, step 1); 2026-05-19
+- `z5_w3_exclusive_among_primes` — weight-3 full-transitivity under Rule 110 is exclusive to p=5 among primes ≤ 11, at t=1 or t=2 (§8)
+- `p7_w4_t1_full_transitivity` — p=7's unique full-transitive class: weight-4 vector [0,1,0,1,0,1,1] reaches all-ones in 1 step (§8)
 
-Note: build time ≈ 426s (native_decide for p=23 enumerates 2^23 vectors; confirmed by Python pre-check in 237ms).
+Full (p,w,t) transitivity spectrum: Python sweep confirms p=5 uniquely weight-3-transitive; p=7 hits only at weight 4. Note: build time ≈ 442s (native_decide for §8 primes; §5 positives fast, §8 p=11 native_decide largest).
 
 **Dimensional Slice Uniqueness — Rule 110 forced on all d-dimensional slices (DimensionalSliceUniqueness.lean, 2026-05-18; 17 theorems, 0 sorry)**
 
@@ -270,6 +273,10 @@ Physical motivation: The GTE update map T (particle mass cascade G₁→G₂→G
 - `gte_uniqueness_complete` — 3-part complete statement (existence ∧ minimality ∧ unconditional uniqueness)
 - `gte_binary_uniqueness` — At the binary level, Rule 110 is the unique lawful CA rule (from CUP-4)
 - `rule110_is_lawful` — Rule 110 satisfies all three UGP orbit constraints (existence closure)
+- `minimal_lawful_has_card_one` — any minimal lawful UWCA program has exactly 1 tile (= sigma_gte; §5)
+- `UWCAIsomorphic` — definition: same tile count + bisimulation (§5)
+- `gte_uniqueness_isomorphism` — **Isomorphism theorem**: any minimal lawful UWCA is isomorphic to sigma_gte (Myhill-Nerode; §5, 2026-05-19)
+- `gte_isomorphism_symmetric` — any two minimal lawful programs are mutually isomorphic (§5)
 
 **Universality and self-reference**
 - `ugp_is_turing_universal` — UGP substrate Turing-universal via native Rule 110 embedding
