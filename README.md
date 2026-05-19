@@ -346,7 +346,7 @@ Physical motivation: The five SM particle families [e⁻, u, d, νR, νL] in the
 - `cyclic_rotate` — definition: cyclic rotation of a 5-cell Z₇ ring by k positions (generalizes rotate5 from CUP4TotalParity to Fin 7 cells)
 - `fmdl_z5_equivariant` — **Main theorem**: ∀ (v : Fin 5 → Fin 7) (k : Fin 5), fmdl_step5(cyclic_rotate v k) = cyclic_rotate(fmdl_step5 v) k; zero failures over 7⁵ × 5 = 84,035 cases (native_decide, CatAL)
 
-**SU(5) GUT Weinberg Angle, f_MDL Structural Bridge, CKM Count Theorem, CKM Quark N_eff Formulas, b_sum = 390 Weinberg Factorization, and Z₂ Longitudinal Mode MDL Universality (GUTStructure.lean, 2026-05-19; 50 theorems + 15 definitions, 0 sorry)**
+**SU(5) GUT Weinberg Angle, f_MDL Structural Bridge, CKM Count Theorem, CKM Quark N_eff Formulas, b_sum = 390 Weinberg Factorization, Z₂ Longitudinal Mode MDL Universality, Coupling Ratio Duality, and smGen1 SU(5) Projector (GUTStructure.lean, 2026-05-19; 58 theorems + 16 definitions, 0 sorry)**
 
 Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit depth, CatAL) and N_fam = 5 (Z₅ family ring size, CatAL) satisfy the arithmetic identity N_gen + N_fam = 2^N_gen (3 + 5 = 8 = 2³). This implies that the GUT-scale Weinberg angle sin²θ_W(M_GUT) = N_gen/(N_gen + N_fam) = N_gen/2^N_gen = 3/8 — agreeing exactly with the standard SU(5) GUT prediction. The denominator then increases to c_H = 13 at M_Z by exactly N_fam = 5. A new structural identity (§9) connects the CA dynamics layer: the MDL-minimal CA function f_MDL produces nonzero output on exactly c_H + 1 = 14 of the 343 possible neighborhoods.
 
@@ -412,11 +412,24 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `rule110_and_124_joint_mdl_count` — Rule 110 and Rule 124 share MDL count = 5 (native_decide, CatAL; arithmetic component of conditional universality theorem)
 - `rule110_preferred_by_sublayer_consistency` — Rule 110 minterms ≠ Rule 124 minterms (native_decide; arithmetic basis for sublayer-consistency selection of Rule 110, CatAL)
 
+*§18: Coupling ratio duality — sin²θ_W = 3/13 ⟺ r = α₁⁻¹/α₂⁻¹ = 2 (Rank 54, CatAL algebra)*
+- `weinberg_at_r2` — N_gen/(N_gen + N_fam × 2) = 3/13 (norm_num; EW scale formula at coupling ratio r=2, CatAL)
+- `weinberg_at_r1_gut` — N_gen/(N_gen + N_fam × 1) = 3/8 (norm_num; GUT scale formula at r=1, alias of §3, CatAL)
+- `beta_function_diff_two_nfam` — 2 × N_fam = 10 (norm_num; β-function differential arithmetic b₁−b₂=2N_fam, CatAL)
+- `universal_coupling_ratio_cancellation` — (N_gen/N_fam)×(2N_fam/N_gen) = 2 (norm_num; universal residue after N_gen/N_fam cancellation, CatAL)
+- `coupling_ratio_duality` — **Combined duality theorem**: all four identities (r=2→3/13, r=1→3/8, β-diff=10, universal residue=2; norm_num, CatAL)
+
+*§19: smGen1 as SU(5) projector — Z₅ ring partition (Rank 55, CatAL counting)*
+- `sm_gen1` — Fin 5 → Fin 2 := ![1,1,0,0,1] (GTE first-generation binary pattern)
+- `sm_gen1_active_count` — active positions (value=1) count = N_gen = 3 (decide, CatAL; matches SU(5) colored sector)
+- `sm_gen1_inactive_count` — inactive positions (value=0) count = N_fam−N_gen = 2 (decide, CatAL; matches SU(5) leptonic sector)
+- `sm_gen1_partition_matches_su5` — **Combined partition theorem**: active=3, inactive=2, 3+2=5 (decide; smGen1 as SU(5) projector, CatAL)
+
 ---
 
-**EW Boson GTE Triple Arithmetic (EWBosonStructure.lean, 2026-05-19; 7 theorems + 3 definitions, 0 sorry)**
+**EW Boson GTE Triple Arithmetic and Goldstone Cascade Formula (EWBosonStructure.lean, 2026-05-19; 11 theorems + 6 definitions, 0 sorry)**
 
-Physical motivation: The three EW bosons with defined GTE triples — W⁺(5,3,11), Z(5,3,12), H⁰(5,3,13) — share identical (a=5, b=3) components and form a unit-step arithmetic progression in c. This c-staircase is the unique such structure in the GTE triple dataset. Each c-step encodes one layer of EW cascade complexity corresponding to broken SU(2)_L generator directions in the Higgs mechanism. The scalar boundary c_H = 13 = N_gen + 2×N_fam marks the EW cascade endpoint: particles with c < c_H are massive spin-1 gauge bosons; the particle at c = c_H is the spin-0 Higgs scalar.
+Physical motivation: The three EW bosons with defined GTE triples — W⁺(5,3,11), Z(5,3,12), H⁰(5,3,13) — share identical (a=5, b=3) components and form a unit-step arithmetic progression in c. This c-staircase is the unique such structure in the GTE triple dataset. Each c-step encodes one layer of EW cascade complexity corresponding to broken SU(2)_L generator directions in the Higgs mechanism. The scalar boundary c_H = 13 = N_gen + 2×N_fam marks the EW cascade endpoint: particles with c < c_H are massive spin-1 gauge bosons; the particle at c = c_H is the spin-0 Higgs scalar. The Goldstone cascade formula c_P = c_H − d_P certifies that each unit c-step counts one absorbed Goldstone boson degree of freedom.
 
 - `c_w_plus`, `c_z_boson`, `c_higgs` — cascade depth constants (11, 12, 13)
 - `w_plus_triple`, `z_triple`, `higgs_triple` — GTE triple constants (5,3,c)
@@ -424,9 +437,15 @@ Physical motivation: The three EW bosons with defined GTE triples — W⁺(5,3,1
 - `ew_c_arithmetic_progression` — c_Z = c_W + 1 ∧ c_H = c_Z + 1 ∧ c_H = c_W + 2 (decide, CatAL)
 - `ew_mass_ordering` — c_W < c_Z < c_H matching M_W < M_Z < M_H (decide, CatAL)
 - `ew_higgs_is_scalar_boundary` — c_W < c_H ∧ c_Z < c_H ∧ c_H = 13 (decide, CatAL)
-- `ew_shared_ab_components` — all three EW bosons have (a=5, b=3) (decide, CatAL)
 - `ew_triples_distinct` — W⁺, Z, H⁰ triples pairwise distinct (differ only in c) (decide, CatAL)
 - `ew_boson_structure` — **Combined theorem**: all 5 structural facts in one conjunction (decide, CatAL)
+
+*§5: Goldstone cascade formula — c_P = c_H − d_P (Rank 53, CatAL)*
+- `d_higgs`, `d_z`, `d_w` — broken SU(2)_L generator ranks (0, 1, 2)
+- `goldstone_cascade_higgs` — c_H = c_H − 0 (simp; Higgs is scalar remnant, d_H=0, CatAL)
+- `goldstone_cascade_z` — c_Z = c_H − 1 = 12 (simp; Z absorbs 1 neutral Goldstone mode, CatAL)
+- `goldstone_cascade_w` — c_W = c_H − 2 = 11 (simp; W⁺ absorbs 2 charged Goldstone modes, CatAL)
+- `goldstone_cascade_formula` — **Combined formula**: c_P = c_H − d_P for all three EW bosons (simp, CatAL)
 
 ---
 
