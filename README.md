@@ -346,7 +346,7 @@ Physical motivation: The five SM particle families [e⁻, u, d, νR, νL] in the
 - `cyclic_rotate` — definition: cyclic rotation of a 5-cell Z₇ ring by k positions (generalizes rotate5 from CUP4TotalParity to Fin 7 cells)
 - `fmdl_z5_equivariant` — **Main theorem**: ∀ (v : Fin 5 → Fin 7) (k : Fin 5), fmdl_step5(cyclic_rotate v k) = cyclic_rotate(fmdl_step5 v) k; zero failures over 7⁵ × 5 = 84,035 cases (native_decide, CatAL)
 
-**SU(5) GUT Weinberg Angle from GTE Arithmetic + f_MDL Structural Bridge (GUTStructure.lean, 2026-05-19; 18 theorems + 4 definitions, 0 sorry)**
+**SU(5) GUT Weinberg Angle from GTE Arithmetic + f_MDL Structural Bridge + CKM Count Theorem (GUTStructure.lean, 2026-05-19; 28 theorems + 4 definitions, 0 sorry)**
 
 Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit depth, CatAL) and N_fam = 5 (Z₅ family ring size, CatAL) satisfy the arithmetic identity N_gen + N_fam = 2^N_gen (3 + 5 = 8 = 2³). This implies that the GUT-scale Weinberg angle sin²θ_W(M_GUT) = N_gen/(N_gen + N_fam) = N_gen/2^N_gen = 3/8 — agreeing exactly with the standard SU(5) GUT prediction. The denominator then increases to c_H = 13 at M_Z by exactly N_fam = 5. A new structural identity (§9) connects the CA dynamics layer: the MDL-minimal CA function f_MDL produces nonzero output on exactly c_H + 1 = 14 of the 343 possible neighborhoods.
 
@@ -370,6 +370,17 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `fmdl_count_eq_chiggs_plus_one` — fmdl_nonzero_count = c_higgs + 1 = 14 (norm_num, CatAL)
 - `fmdl_count_decomposition` — fmdl_nonzero_count = b_higgs + (c_higgs − b_higgs) + 1 = 3+10+1 (norm_num, CatAL)
 - `fmdl_count_ngen_nfam` — fmdl_nonzero_count = n_gen + 2·n_fam + 1 = 3+10+1 (norm_num, CatAL)
+
+*§13: Z₅ ring contribution — running shift physical naming (Ranks 57 & 58, CatAL)*
+- `running_shift_is_z5_ring` — c_H − 2^N_gen = N_fam (alias of §5; explicit Z₅ ring naming, CatAL)
+- `z5_ring_contributes_nfam_to_denominator` — c_H = 2^N_gen + N_fam (norm_num, CatAL)
+- `gte_family_capacity_identity` — N_gen + N_fam = 2^N_gen (alias of §2; GUT orbit-filling naming, CatAL)
+
+*§14: CKM matrix count theorem (Rank 68, CatAL)*
+- `ckm_dof_count` — N_gen² = 9 (norm_num; CKM matrix has 9 real d.o.f., CatAL)
+- `gut_capacity_times_ring` — 2^N_gen × N_fam = 40 (norm_num; GUT-orbit × family-ring capacity, CatAL)
+- `wolfenstein_lambda_formula` — (N_gen:ℚ)²/(2^N_gen×N_fam) = 9/40 (norm_num; Wolfenstein λ arithmetic, CatAL)
+- `wolfenstein_lambda_value` — (9:ℚ)/40 = 225/1000 (norm_num; exact decimal 0.225, 0.000% vs PDG, CatAL)
 
 ---
 
