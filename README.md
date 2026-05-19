@@ -135,6 +135,23 @@ Physical motivation: Z₇ CA dynamics (CUP-11) are qualitatively richer than bin
 - `z7_binary_not_ring_hom_universal` — no (x,y) pair makes φ a ring hom (decide)
 - `z7_z2_incompatible_additive` — combined: injection injective/not-surjective, reduction not additive (CatAL)
 
+**Vacuum Fixed-Point Uniqueness — No False Vacua (CUP3DUniqueness §7c, 2026-05-19; 3 theorems, 0 sorry)**
+
+Physical motivation: The vacuum (all-zeros in Z₇⁵) is the unique fixed point of fmdl_step5. No "false vacuum" states exist: all 16,807 states converge to vacuum within 7 steps (from `fmdl_universal_7step_convergence`). Sharply distinguishes the UGP framework from string-landscape scenarios where metastable vacua proliferate.
+
+- `fmdl_unique_fixed_point` — **No False Vacua**: ∀ v, fmdl_step5 v = v → v = vacuum (native_decide, 16807 cases)
+- `fmdl_no_nontrivial_cycles` — every state terminates at vacuum in ≤7 steps; no periodic orbit of period ≥2
+- `fmdl_vacuum_is_unique_attractor` — complete 3-part statement: vacuum is fixed + universal attractor + unique fixed point (native_decide)
+
+**Photon as CA Ether — Unique Uniform Fixed Point (CUP3DUniqueness §7d, 2026-05-19; 4 theorems, 0 sorry)**
+
+Physical motivation: The photon (Z₇=0) is the unique winding value that is self-replicating under uniform f_MDL dynamics: fmdl(k,k,k) = k if and only if k = 0. For k=1, Rule 110 forces f(1,1,1)=0≠1; for k≥2, MDL-minimality forces f(k,k,k)=0≠k (free neighborhoods output 0); for k=0, the Rule 110 vacuum constraint gives f(0,0,0)=0=0. The photon IS the CA ether — the background medium itself, not an excitation above it. This closes the structural "why" behind the photon's GTE-triple absence: γ requires zero description length (K_MDL=0) because it is the vacuum.
+
+- `fmdl_nonzero_diagonal_all_zero` — ∀ k≠0 in Z₇, fmdl k k k = 0 (decide)
+- `fmdl_unique_uniform_fixed_point` — **Main theorem**: ∀ k : Fin 7, fmdl k k k = k ↔ k = 0 (decide)
+- `photon_is_ca_ether` — explicit conjunction: fmdl 0 0 0 = 0 ∧ ∀ k≠0, fmdl k k k ≠ k (decide)
+- `fmdl_uniform_fp_uniqueness_count` — Finset.card of uniform fixed points = 1 (decide)
+
 **Minterm Set Uniqueness — CUP-4 extensions (CUP4TotalParity §10–§11, 2026-05-18; 13 theorems, 0 sorry)**
 
 Physical motivation: Among all C(8,5)=56 elementary CA rules of Hamming weight 5, Rule 110 is the unique orbit-satisfier; its minterm set {1,2,3,5,6} is combinatorially forced by the SM generation structure.
