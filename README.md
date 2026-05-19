@@ -38,7 +38,7 @@ A clean build completes with zero `sorry` and the standard Mathlib axiom signatu
 | **Structural** | 19 | QuarterLock, LModelDerivation; *ElegantKernel/*: ChiralityFeature, D5StructuralAxiom, FibonacciHessian, KGen, KGen2, MuTriple, PentagonalUniqueness; *ElegantKernel/Unconditional/*: CyclotomicChain, D5Renormalization, FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure, KLFullClosure, PentagonConstraint, RiccatiFixedPoint |
 | **MassRelations** | 25 | *MassRelations* [umbrella], KoideClosedForm, KoideNewtonFlow, KoideAngle, KoideS3DiscreteIdentities, BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential, FroggattNielsen, NeutrinoFroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational, UpLeptonCyclotomic, Z2OrbifoldDepth, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex, VVMechanism, VVAllCoefficientsFromNc, CKMTheta23, CKMMixing, **NeutrinoMassRatio** |
 | **BraidAtlas** | 7 | ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation, CoxeterConductor, CoxeterConductorTowerLaw, EWBosons |
-| **Universality** | 12 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, Z5TransitivityUniqueness, **GTECompilation**, **GTEUniqueness**, **DimensionalSliceUniqueness**, **GTPNeutralDiscrimination** |
+| **Universality** | 13 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, Z5TransitivityUniqueness, **GTECompilation**, **GTEUniqueness**, **DimensionalSliceUniqueness**, **GTPNeutralDiscrimination**, **GUTStructure** |
 | **SelfRef** | 2 | LawvereKleene, RiceHalting |
 
 Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity, PositiveRootTheorem, GaloisProtection, TwoLoopCoefficient), **GaloisStructure** (2), **CyclotomicCompleteness** (2), **PSC** (1: RCCInfiniteFamilies), **TE22** (1: ScanCertificate), **Papers** (2), **Instance** (1), **Conjectures** — per the formalization paper: `Phase4.GaloisProtection`, `TwoLoopCoefficient`, modules under `GaloisStructure.*` and `CyclotomicCompleteness.*`, and `TE22` carry fully mechanized statements where the paper claims zero sorry; `Papers` and `Instance` are chiefly citable stubs and bridges; `Conjectures` records resolved and open claims; `Phase4` also mixes stubs (e.g. UCL, PR1 presentation) with the precision theorems above.
@@ -345,6 +345,24 @@ Physical motivation: The five SM particle families [e⁻, u, d, νR, νL] in the
 
 - `cyclic_rotate` — definition: cyclic rotation of a 5-cell Z₇ ring by k positions (generalizes rotate5 from CUP4TotalParity to Fin 7 cells)
 - `fmdl_z5_equivariant` — **Main theorem**: ∀ (v : Fin 5 → Fin 7) (k : Fin 5), fmdl_step5(cyclic_rotate v k) = cyclic_rotate(fmdl_step5 v) k; zero failures over 7⁵ × 5 = 84,035 cases (native_decide, CatAL)
+
+**SU(5) GUT Weinberg Angle from GTE Arithmetic (GUTStructure.lean, 2026-05-19; 13 theorems + 2 definitions, 0 sorry)**
+
+Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit depth, CatAL) and N_fam = 5 (Z₅ family ring size, CatAL) satisfy the arithmetic identity N_gen + N_fam = 2^N_gen (3 + 5 = 8 = 2³). This implies that the GUT-scale Weinberg angle sin²θ_W(M_GUT) = N_gen/(N_gen + N_fam) = N_gen/2^N_gen = 3/8 — agreeing exactly with the standard SU(5) GUT prediction. The denominator then increases to c_H = 13 at M_Z by exactly N_fam = 5 (the Z₅ ring count). These are the first machine-certified results connecting GTE arithmetic to a GUT-scale observable.
+
+- `n_gen`, `n_fam` — GTE structural constants (3, 5)
+- `ngen_plus_nfam_eq_pow2` — N_gen + N_fam = 2^N_gen (norm_num, CatAL)
+- `gut_weinberg_angle_ngen_nfam` — (N_gen:ℚ)/(N_gen+N_fam) = 3/8 (norm_num, CatAL)
+- `gut_weinberg_angle_pow2` — (N_gen:ℚ)/2^N_gen = 3/8 (norm_num, CatAL)
+- `su5_dim_matches_nfam` — N_fam = 5 = dim(SU(5) fundamental) (rfl, CatAL)
+- `su5_5plet_partition` — N_fam−N_gen=2 ∧ N_gen+2=N_fam (3+2 partition) (norm_num, CatAL)
+- `running_shift_equals_nfam` — c_H − 2^N_gen = N_fam = 5 (norm_num, CatAL)
+- `running_shift_denominator` — N_gen+2·N_fam = c_H ∧ shift=N_fam (norm_num, CatAL)
+- `gut_to_ew_denominator_chain` — 3/8 (GUT) ∧ 3/13 (EW) (norm_num, CatAL)
+- `gut_weinberg_ngen2/3/4/5` — universal formula N_gen/2^N_gen for N_gen ∈ {2,3,4,5} (norm_num, CatAL)
+- `gut_weinberg_structure` — **Combined theorem**: all 7 structural identities (norm_num, CatAL)
+
+---
 
 **EW Boson GTE Triple Arithmetic (EWBosonStructure.lean, 2026-05-19; 7 theorems + 3 definitions, 0 sorry)**
 
