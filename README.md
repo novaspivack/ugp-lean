@@ -314,6 +314,31 @@ All five Z₇=0 Standard Model particles with GTE triples — three neutrino gen
 - `neutral_discriminant_correct` — discriminant assigns unique labels to all 5 particles
 - `gte_triple_neutral_discrimination` — **Master theorem**: all three aspects combined (CatAL, zero sorry)
 
+**Rule 111 Near-Miss — Vacuum Uniquely Selects Rule 110 (DimensionalSliceUniqueness §4b, 2026-05-19; 2 theorems, 0 sorry)**
+
+Physical motivation: Spec 07 proved exactly 2 of 256 binary CA rules satisfy the SM orbit without vacuum transparency. This section names Rule 111 as the unique near-miss and gives the full Finset identity. Vacuum transparency (f(0,0,0)=0) is the single physical criterion that selects Rule 110 from the pair {110, 111}.
+
+- `vacuum_selects_rule110_over_rule111` — 4-part Finset identity: orbit rules without vacuum = {110,111} exactly; Rule 110 passes vacuum transparency; Rule 111 fails; orbit rules with vacuum = {110} (native_decide, CatAL)
+- `rule111_orbit_valid_no_vacuum` — Rule 111 is the unique near-miss; all orbit-satisfying rules are exactly {110,111} and only Rule 110 also satisfies vacuum transparency (native_decide, CatAL)
+
+**GTP-3 Z₇-Sum Trajectory Uniqueness (GoEStabilityHierarchy §9, 2026-05-19; 3 theorems, 0 sorry)**
+
+Physical motivation: Every GoE-rooted 3-step terminating path (GTP-3) in Z₇⁵ under f_MDL has the universal Z₇-sum fingerprint 4→4→3. Python exhaustive search confirms exactly 5 GTP-3 chains — all cyclic rotations of gen₁ — and distinguishes them from the alt orbit [0,2,5,2,2] class (depth-2, GTP-2).
+
+- `gtp3_sum_trajectory_of_gen1_rotations` — all 5 gen₁ rotations have Z₇-sum trajectory 4→4→3 (decide, CatAL)
+- `gtp3_alt_depth_is_two` — alt orbit [0,2,5,2,2] rotations reach vacuum in exactly 2 steps (GTP-2, not GTP-3) (decide, CatAL)
+- `gtp3_sum_trajectory_master` — joint master theorem: GTP-3 fingerprint 4→4→3 vs GTP-2 alt class (CatAL)
+
+**Orbit Sum Trajectory Invariance (CUP3DUniqueness §9, 2026-05-19; 3 theorems + 2 definitions, 0 sorry)**
+
+Physical motivation: The Z₇-sum sequence 4→4→3→0 across the generation cascade is determined by the 15 orbit-constraint output values and holds for ALL 7^328 orbit-admissible functions — not just fmdl. Any CA consistent with the SM particle spectrum exhibits the same sum trajectory.
+
+- `apply_f_ring` — definition: generalized Z₇ ring step for arbitrary f: Fin 7 → Fin 7 → Fin 7 → Fin 7
+- `is_orbit_admissible` — definition: f maps gen₁→gen₂, gen₂→gen₃, gen₃→vacuum (orbit-producing predicate)
+- `fmdl_is_orbit_admissible` — fmdl satisfies orbit-admissibility (decide, CatAL)
+- `orbit_sum_trajectory_invariant` — for any orbit-admissible f: z7_sum trajectory of orbit images is 4→3→0 (rw+decide, CatAL)
+- `orbit_sum_full_trajectory` — complete 4-step trajectory 4→4→3→0 for all orbit-admissible f (CatAL)
+
 <!-- NOVA_ZPO_ZENODO_SOFTWARE_BEGIN -->
 **Archival software (Zenodo):** https://doi.org/10.5281/zenodo.19429247
 <!-- NOVA_ZPO_ZENODO_SOFTWARE_END -->
