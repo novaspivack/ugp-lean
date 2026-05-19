@@ -521,7 +521,7 @@ Physical motivation: The three EW bosons with defined GTE triples — W⁺(5,3,1
 
 ---
 
-**CA Masslessness Criterion, EW Vertex, Ether Z₇ Winding (CasimirMasslessEther.lean, 2026-05-19; 9 theorems + 1 definition, 0 sorry)**
+**CA Masslessness Criterion, EW Vertex, Ether Z₇ Winding, Helicity Parity Violation (CasimirMasslessEther.lean, 2026-05-19; 12 theorems + 1 definition, 0 sorry)**
 
 Three results from the photon-vacuum-Casimir session, Lean-certified via native_decide:
 
@@ -551,6 +551,14 @@ Physical motivation: The Rule 110 ether (period-14 background [0,1,0,1,1,1,0,0,0
 - `ether_z7_composition` — 6 zeros, 8 ones per period (native_decide)
 - `ether_not_em_vacuum` — ether_period ≠ replicate 14 0 (native_decide)
 - `casimir_sector_structure` — **Combined theorem**: masslessness criterion + EW vertex + ether winding (native_decide, CatAL)
+
+*§4 — Helicity Parity Violation (CatAL)*
+
+Physical motivation: The CA masslessness criterion implies a left-right asymmetry between the two transverse photon helicity modes. The positive-helicity mode (Z₇=1, h=+1) is CA-stable (fmdl(0,1,0)=1); the negative-helicity mode (Z₇=6, h=−1) decays to vacuum in one step (fmdl(0,6,0)=0). This provides CA-arithmetic grounding for helicity parity violation. Machine-certified in P33, Proposition 5.4 (CatAL).
+
+- `helicity_plus_stable` — fmdl 0 1 0 = 1 (native_decide, CatAL)
+- `helicity_minus_decays` — fmdl 0 6 0 = 0 (native_decide, CatAL)
+- `helicity_parity_violation` — fmdl 0 1 0 = 1 ∧ fmdl 0 6 0 = 0 ∧ fmdl 0 1 0 ≠ fmdl 0 6 0 (native_decide, CatAL)
 
 <!-- NOVA_ZPO_ZENODO_SOFTWARE_BEGIN -->
 **Archival software (Zenodo):** https://doi.org/10.5281/zenodo.19429247
