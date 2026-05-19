@@ -38,7 +38,7 @@ A clean build completes with zero `sorry` and the standard Mathlib axiom signatu
 | **Structural** | 19 | QuarterLock, LModelDerivation; *ElegantKernel/*: ChiralityFeature, D5StructuralAxiom, FibonacciHessian, KGen, KGen2, MuTriple, PentagonalUniqueness; *ElegantKernel/Unconditional/*: CyclotomicChain, D5Renormalization, FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure, KLFullClosure, PentagonConstraint, RiccatiFixedPoint |
 | **MassRelations** | 25 | *MassRelations* [umbrella], KoideClosedForm, KoideNewtonFlow, KoideAngle, KoideS3DiscreteIdentities, BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential, FroggattNielsen, NeutrinoFroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational, UpLeptonCyclotomic, Z2OrbifoldDepth, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex, VVMechanism, VVAllCoefficientsFromNc, CKMTheta23, CKMMixing, **NeutrinoMassRatio** |
 | **BraidAtlas** | 7 | ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation, CoxeterConductor, CoxeterConductorTowerLaw, EWBosons |
-| **Universality** | 7 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge |
+| **Universality** | 8 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, **Z5TransitivityUniqueness** |
 | **SelfRef** | 2 | LawvereKleene, RiceHalting |
 
 Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity, PositiveRootTheorem, GaloisProtection, TwoLoopCoefficient), **GaloisStructure** (2), **CyclotomicCompleteness** (2), **PSC** (1: RCCInfiniteFamilies), **TE22** (1: ScanCertificate), **Papers** (2), **Instance** (1), **Conjectures** — per the formalization paper: `Phase4.GaloisProtection`, `TwoLoopCoefficient`, modules under `GaloisStructure.*` and `CyclotomicCompleteness.*`, and `TE22` carry fully mechanized statements where the paper claims zero sorry; `Papers` and `Instance` are chiefly citable stubs and bridges; `Conjectures` records resolved and open claims; `Phase4` also mixes stubs (e.g. UCL, PR1 presentation) with the precision theorems above.
@@ -169,6 +169,26 @@ Physical motivation: The SM generation orbit gen₁→gen₂→gen₃→vacuum u
 - `fmdl_gen1_stability_dominance` — gen₁ has strictly fewer predecessors than gen₂ or gen₃
 
 Note: pred(gen₂)=pred(gen₃)=1 (not a strict ordering), but `fmdl_orbit_linear_chain` provides the complete isolation structure which is the deeper result.
+
+**Z₅ Transitivity Uniqueness — CA-internal reason for five families (Z5TransitivityUniqueness.lean, 2026-05-18; 9 theorems, 0 sorry)**
+
+Physical motivation: p = 5 is the unique prime ring size (among primes ≤ 23) for which Rule 110 acts with full transitivity on all cyclic rotations of a Hamming-weight-3 binary vector, producing a 2-step orbit to all-ones. This gives a CA-internal structural reason for the five-family count, converging with P01's algebraic N_fam = 5 derivation.
+
+New reusable infrastructure:
+- `rule110Ring p hp` — Rule 110 one-step on a general p-cell periodic ring (generalises `rule110StepPeriodic`)
+- `cyclicShiftRing p hp k` — Cyclic shift for arbitrary ring size p
+- `hammingWeightRing p v` — Hamming weight via Finset.filter.card
+
+Key theorems:
+- `z5_gen2_rotations_to_allones` — All 5 rotations of smGen2 reach smGen3 in 1 Rule 110 step (deepens CUP-9)
+- `z5_full_transitivity_smGen1` — All 5 rotations of smGen1 reach smGen3 in 2 steps (proved by CUP-9 composition)
+- `smGen1_hamming_weight_3` — smGen1 = [1,1,0,0,1] has Hamming weight 3
+- `z5_weight3_full_transitivity_count` — Exactly 5 weight-3 vectors (the smGen1 rotations) are full-transitive on the 5-ring
+- `no_hamming3_transitivity_p{3,7,11,13,17,19,23}` — 7 negative theorems: total 2-step isolation for all other small primes (no partial transitivity either)
+- `z5_transitivity_uniqueness` — **Main theorem**: combined uniqueness statement over all primes ≤ 23 (positive + all negatives in one conjunction)
+- `z5_class2_one_step_allones` — The other weight-3 class ([0,1,0,1,1] rotations) reaches all-ones in exactly 1 step
+
+Note: build time ≈ 426s (native_decide for p=23 enumerates 2^23 vectors; confirmed by Python pre-check in 237ms).
 
 **Universality and self-reference**
 - `ugp_is_turing_universal` — UGP substrate Turing-universal via native Rule 110 embedding
