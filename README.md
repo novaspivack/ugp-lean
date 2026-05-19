@@ -346,7 +346,7 @@ Physical motivation: The five SM particle families [e⁻, u, d, νR, νL] in the
 - `cyclic_rotate` — definition: cyclic rotation of a 5-cell Z₇ ring by k positions (generalizes rotate5 from CUP4TotalParity to Fin 7 cells)
 - `fmdl_z5_equivariant` — **Main theorem**: ∀ (v : Fin 5 → Fin 7) (k : Fin 5), fmdl_step5(cyclic_rotate v k) = cyclic_rotate(fmdl_step5 v) k; zero failures over 7⁵ × 5 = 84,035 cases (native_decide, CatAL)
 
-**SU(5) GUT Weinberg Angle, f_MDL Structural Bridge, CKM Count Theorem, CKM Quark N_eff Formulas, b_sum = 390 Weinberg Factorization, Z₂ Longitudinal Mode MDL Universality, Coupling Ratio Duality, smGen1 SU(5) Projector, Mersenne Prime Structure, Joint Selection Theorem, GTE Master Formula, and Weinberg Physical Bridge (GUTStructure.lean, 2026-05-19; 81 theorems + 17 definitions, 0 sorry)**
+**SU(5) GUT Weinberg Angle, f_MDL Structural Bridge, CKM Count Theorem, CKM Quark N_eff Formulas, b_sum = 390 Weinberg Factorization, Z₂ Longitudinal Mode MDL Universality, Coupling Ratio Duality, smGen1 SU(5) Projector, Mersenne Prime Structure, Joint Selection Theorem, GTE Master Formula, Weinberg Physical Bridge, and Weinberg Three-Tier Prediction (GUTStructure.lean, 2026-05-19; 86 theorems + 17 definitions, 0 sorry)**
 
 Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit depth, CatAL) and N_fam = 5 (Z₅ family ring size, CatAL) satisfy the arithmetic identity N_gen + N_fam = 2^N_gen (3 + 5 = 8 = 2³). This implies that the GUT-scale Weinberg angle sin²θ_W(M_GUT) = N_gen/(N_gen + N_fam) = N_gen/2^N_gen = 3/8 — agreeing exactly with the standard SU(5) GUT prediction. The denominator then increases to c_H = 13 at M_Z by exactly N_fam = 5. A new structural identity (§9) connects the CA dynamics layer: the MDL-minimal CA function f_MDL produces nonzero output on exactly c_H + 1 = 14 of the 343 possible neighborhoods.
 
@@ -459,6 +459,13 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `gte_arithmetic_root` — N_gen + N_fam = 2^N_gen (alias of ngen_plus_nfam_eq_pow2; algebraic pivot of the master formula, CatAL)
 - `ngen_3_mersenne_uniqueness` — Nat.Prime (2^N_fam−1) ∧ Nat.Prime (2^c_H−1) (norm_num; double Mersenne window; N_fam=5 and c_H=13 are Mersenne prime exponents, CatAL)
 - `gte_master_formula_complete` ★★★★★ — **CAPSTONE THEOREM**: N_fam=2^N_gen−N_gen ∧ c_H=2^(N_gen+1)−N_gen ∧ sin²θ_W(GUT)=3/8 ∧ sin²θ_W(EW)=3/13 ∧ λ=9/40 ∧ N_gen+N_fam=2^N_gen; all four SM EW parameters from N_gen=3 alone; four independent real predictions, zero free parameters (norm_num, zero sorry, zero new axioms; CatAL)
+
+*§24: Weinberg Angle Three-Tier Prediction — k=N_gen orbit-average term (Rank 76, CatAL; upgraded from CatA)*
+- `weinberg_residual_correction` — (λ_formula)^N_gen / (2·c_H) = 729/1664000; k=N_gen term of the binomial orbit-average expansion; C(3,3)=1 (norm_num, CatAL)
+- `weinberg_residual_as_orbit_average` — (9/40)³ / (2·13) = 729/1664000; pure-numeric form (norm_num, CatAL)
+- `weinberg_two_term_prediction` — N_gen/c_H + (9/40)^N_gen/(2·c_H) = 384729/1664000; complete two-term Weinberg prediction, 0.09 PDG σ (norm_num, CatAL)
+- `weinberg_denominator_factors` — 2^(3·N_gen+1) × N_fam³ × c_H = 1664000; denominator = pure GTE primes (norm_num, CatAL)
+- `weinberg_n3_uniqueness` — n=2 correction (1/72) ≠ δ(3) ∧ n=3 correction = 729/1664000; N_gen=3 uniqueness (norm_num, CatAL)
 
 *§12 (extended — 2026-05-19): Weinberg Physical Bridge — P22 EWChiralBridge import explicit*
 - `parity_restriction_explicit` — ∀ l c r : Fin 7, ca_parity l c r = (r,c,l); the Parity Restriction Theorem as an explicit standalone Lean theorem (rfl from definition, zero axioms, CatAL)
