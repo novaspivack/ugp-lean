@@ -38,7 +38,7 @@ A clean build completes with zero `sorry` and the standard Mathlib axiom signatu
 | **Structural** | 19 | QuarterLock, LModelDerivation; *ElegantKernel/*: ChiralityFeature, D5StructuralAxiom, FibonacciHessian, KGen, KGen2, MuTriple, PentagonalUniqueness; *ElegantKernel/Unconditional/*: CyclotomicChain, D5Renormalization, FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure, KLFullClosure, PentagonConstraint, RiccatiFixedPoint |
 | **MassRelations** | 25 | *MassRelations* [umbrella], KoideClosedForm, KoideNewtonFlow, KoideAngle, KoideS3DiscreteIdentities, BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential, FroggattNielsen, NeutrinoFroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational, UpLeptonCyclotomic, Z2OrbifoldDepth, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex, VVMechanism, VVAllCoefficientsFromNc, CKMTheta23, CKMMixing, **NeutrinoMassRatio** |
 | **BraidAtlas** | 7 | ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation, CoxeterConductor, CoxeterConductorTowerLaw, EWBosons |
-| **Universality** | 8 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, **Z5TransitivityUniqueness** |
+| **Universality** | 10 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, Z5TransitivityUniqueness, **GTECompilation**, **GTEUniqueness** |
 | **SelfRef** | 2 | LawvereKleene, RiceHalting |
 
 Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity, PositiveRootTheorem, GaloisProtection, TwoLoopCoefficient), **GaloisStructure** (2), **CyclotomicCompleteness** (2), **PSC** (1: RCCInfiniteFamilies), **TE22** (1: ScanCertificate), **Papers** (2), **Instance** (1), **Conjectures** — per the formalization paper: `Phase4.GaloisProtection`, `TwoLoopCoefficient`, modules under `GaloisStructure.*` and `CyclotomicCompleteness.*`, and `TE22` carry fully mechanized statements where the paper claims zero sorry; `Papers` and `Instance` are chiefly citable stubs and bridges; `Conjectures` records resolved and open claims; `Phase4` also mixes stubs (e.g. UCL, PR1 presentation) with the precision theorems above.
@@ -189,6 +189,23 @@ Key theorems:
 - `z5_class2_one_step_allones` — The other weight-3 class ([0,1,0,1,1] rotations) reaches all-ones in exactly 1 step
 
 Note: build time ≈ 426s (native_decide for p=23 enumerates 2^23 vectors; confirmed by Python pre-check in 237ms).
+
+**GTE Compilation and Uniqueness (GTECompilation + GTEUniqueness, 2026-05-18; 12 theorems, 0 sorry)**
+
+Physical motivation: The GTE update map T (particle mass cascade G₁→G₂→G₃) runs as a finite tile program on the Rule 110-universal UWCA substrate (P08, thm:gte-as-uwca). The canonical 1-tile program sigma_gte is the unique lawful UWCA program up to bisimulation (P08, thm:gte_uniqueness) — the universe is forced to run GTE, not just permitted to.
+
+- `sigma_gte` — 1-tile UWCA program encoding the GTE odd-step arithmetic transition
+- `gte_compilation_theorem` — `∀ s, uwca_eval sigma_gte s = gte_update_map s` (zero sorry; both sides reduce to the same arithmetic triple by `rfl`)
+- `hypothesis_a_complete` — Full Hypothesis A: 4 components simultaneously (fMDL orbit → Rule 110; UWCA substrate → Rule 110; two-layer confluence; GTE compilation)
+- `sigma_gte_is_lawful` — sigma_gte is a lawful UWCA program (existence witness)
+- `empty_tileset_not_lawful` — the empty tile set cannot implement gte_update_map (lawful programs must have ≥1 tile)
+- `IsMinimalProgram` — lawful + no proper shorter sub-program is lawful
+- `sigma_gte_is_minimal` — sigma_gte's 1-tile set is minimal
+- `gte_uniqueness_up_to_bisimulation` — **Main theorem**: `∀ prog, IsLawfulUWCAProgram prog → UWCABisim prog sigma_gte` (zero sorry; stronger than monograph — no minimality hypothesis needed)
+- `lawful_iff_bisim_sigma_gte` — Characterization: `IsLawfulUWCAProgram prog ↔ UWCABisim prog sigma_gte`
+- `gte_uniqueness_complete` — 3-part complete statement (existence ∧ minimality ∧ unconditional uniqueness)
+- `gte_binary_uniqueness` — At the binary level, Rule 110 is the unique lawful CA rule (from CUP-4)
+- `rule110_is_lawful` — Rule 110 satisfies all three UGP orbit constraints (existence closure)
 
 **Universality and self-reference**
 - `ugp_is_turing_universal` — UGP substrate Turing-universal via native Rule 110 embedding
