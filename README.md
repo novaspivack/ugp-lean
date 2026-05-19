@@ -346,10 +346,11 @@ Physical motivation: The five SM particle families [e⁻, u, d, νR, νL] in the
 - `cyclic_rotate` — definition: cyclic rotation of a 5-cell Z₇ ring by k positions (generalizes rotate5 from CUP4TotalParity to Fin 7 cells)
 - `fmdl_z5_equivariant` — **Main theorem**: ∀ (v : Fin 5 → Fin 7) (k : Fin 5), fmdl_step5(cyclic_rotate v k) = cyclic_rotate(fmdl_step5 v) k; zero failures over 7⁵ × 5 = 84,035 cases (native_decide, CatAL)
 
-**SU(5) GUT Weinberg Angle from GTE Arithmetic (GUTStructure.lean, 2026-05-19; 13 theorems + 2 definitions, 0 sorry)**
+**SU(5) GUT Weinberg Angle from GTE Arithmetic + f_MDL Structural Bridge (GUTStructure.lean, 2026-05-19; 18 theorems + 4 definitions, 0 sorry)**
 
-Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit depth, CatAL) and N_fam = 5 (Z₅ family ring size, CatAL) satisfy the arithmetic identity N_gen + N_fam = 2^N_gen (3 + 5 = 8 = 2³). This implies that the GUT-scale Weinberg angle sin²θ_W(M_GUT) = N_gen/(N_gen + N_fam) = N_gen/2^N_gen = 3/8 — agreeing exactly with the standard SU(5) GUT prediction. The denominator then increases to c_H = 13 at M_Z by exactly N_fam = 5 (the Z₅ ring count). These are the first machine-certified results connecting GTE arithmetic to a GUT-scale observable.
+Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit depth, CatAL) and N_fam = 5 (Z₅ family ring size, CatAL) satisfy the arithmetic identity N_gen + N_fam = 2^N_gen (3 + 5 = 8 = 2³). This implies that the GUT-scale Weinberg angle sin²θ_W(M_GUT) = N_gen/(N_gen + N_fam) = N_gen/2^N_gen = 3/8 — agreeing exactly with the standard SU(5) GUT prediction. The denominator then increases to c_H = 13 at M_Z by exactly N_fam = 5. A new structural identity (§9) connects the CA dynamics layer: the MDL-minimal CA function f_MDL produces nonzero output on exactly c_H + 1 = 14 of the 343 possible neighborhoods.
 
+*§1–§8: GUT Weinberg structure*
 - `n_gen`, `n_fam` — GTE structural constants (3, 5)
 - `ngen_plus_nfam_eq_pow2` — N_gen + N_fam = 2^N_gen (norm_num, CatAL)
 - `gut_weinberg_angle_ngen_nfam` — (N_gen:ℚ)/(N_gen+N_fam) = 3/8 (norm_num, CatAL)
@@ -361,6 +362,14 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `gut_to_ew_denominator_chain` — 3/8 (GUT) ∧ 3/13 (EW) (norm_num, CatAL)
 - `gut_weinberg_ngen2/3/4/5` — universal formula N_gen/2^N_gen for N_gen ∈ {2,3,4,5} (norm_num, CatAL)
 - `gut_weinberg_structure` — **Combined theorem**: all 7 structural identities (norm_num, CatAL)
+
+*§9: f_MDL nonzero count = c_H + 1 (structural bridge, CatAL)*
+- `b_higgs` — GTE b-component of H⁰: b_H = 3 = N_gen (def)
+- `fmdl_nonzero_count` — count of (l,c,r) with f_MDL(l,c,r) ≠ 0: value = 14 (def; certified by Z7ChargeConjugation.fmdl_nonzero_count_14)
+- `b_higgs_eq_ngen` — b_higgs = n_gen (rfl, CatAL)
+- `fmdl_count_eq_chiggs_plus_one` — fmdl_nonzero_count = c_higgs + 1 = 14 (norm_num, CatAL)
+- `fmdl_count_decomposition` — fmdl_nonzero_count = b_higgs + (c_higgs − b_higgs) + 1 = 3+10+1 (norm_num, CatAL)
+- `fmdl_count_ngen_nfam` — fmdl_nonzero_count = n_gen + 2·n_fam + 1 = 3+10+1 (norm_num, CatAL)
 
 ---
 
