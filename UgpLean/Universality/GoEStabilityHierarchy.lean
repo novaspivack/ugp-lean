@@ -179,4 +179,42 @@ theorem fmdl_gen1_stability_dominance :
   · simp [fmdl_gen1_predecessor_count, fmdl_gen2_predecessor_count]
   · simp [fmdl_gen1_predecessor_count, fmdl_gen3_predecessor_count]
 
+-- ════════════════════════════════════════════════════════════════
+-- §6  All-rotations Garden-of-Eden theorem (CatAL)
+-- ════════════════════════════════════════════════════════════════
+
+/-- **fmdl_gen1_all_rotations_are_goe**: all 5 cyclic rotations of gen₁ = [1,5,2,2,1]
+    are Garden-of-Eden states under fmdl_step5 on the 5-cell periodic ring.
+
+    A cyclic rotation of gen₁ by k positions is the state i ↦ gen₁((i + k) mod 5).
+    The 5 rotations are:
+      k=0: [1,5,2,2,1]   (canonical gen₁)
+      k=1: [5,2,2,1,1]
+      k=2: [2,2,1,1,5]
+      k=3: [2,1,1,5,2]
+      k=4: [1,1,5,2,2]
+
+    Each has fmdl_predecessor_count = 0 (verified by exhaustive search over 7⁵ = 16,807 states).
+
+    Physical meaning: ALL five first-generation particle families (e⁻, u, d, νR, νL)
+    are arithmetically equivalent GoEs under the CA dynamics. The 5-fold rotational
+    symmetry of the SM first generation is exactly reflected in the GoE structure:
+    the family structure IS the ring rotation structure.
+
+    The canonical gen₁ GoE was already proved in CUP3DUniqueness.lean.
+    This theorem extends it to all 5 cyclic rotations, completing the full family GoE theorem.
+
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
+theorem fmdl_gen1_all_rotations_are_goe :
+    ∀ k : Fin 5,
+      fmdl_predecessor_count (fun i => fmdl_gen1_z7 (i + k)) = 0 := by
+  native_decide
+
+/-- **fmdl_gen1_all_rotations_no_predecessor**: equivalent formulation of the above
+    as the non-existence statement: no state maps to any rotation of gen₁. -/
+theorem fmdl_gen1_all_rotations_no_predecessor :
+    ∀ k : Fin 5,
+      ∀ s : Fin 5 → Fin 7, fmdl_step5 s ≠ fun i => fmdl_gen1_z7 (i + k) := by
+  native_decide
+
 end CUP3D
