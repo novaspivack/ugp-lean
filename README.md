@@ -346,7 +346,7 @@ Physical motivation: The five SM particle families [e⁻, u, d, νR, νL] in the
 - `cyclic_rotate` — definition: cyclic rotation of a 5-cell Z₇ ring by k positions (generalizes rotate5 from CUP4TotalParity to Fin 7 cells)
 - `fmdl_z5_equivariant` — **Main theorem**: ∀ (v : Fin 5 → Fin 7) (k : Fin 5), fmdl_step5(cyclic_rotate v k) = cyclic_rotate(fmdl_step5 v) k; zero failures over 7⁵ × 5 = 84,035 cases (native_decide, CatAL)
 
-**SU(5) GUT Weinberg Angle, f_MDL Structural Bridge, CKM Count Theorem, CKM Quark N_eff Formulas, b_sum = 390 Weinberg Factorization, Z₂ Longitudinal Mode MDL Universality, Coupling Ratio Duality, smGen1 SU(5) Projector, Mersenne Prime Structure, Joint Selection Theorem, GTE Master Formula, Weinberg Physical Bridge, Weinberg Three-Tier Prediction, Bidirectional Unification Summary, MDL Robustness / Z₇ Free Minterm Count, and Z₂ Longitudinal Universality Structural Chain (GUTStructure.lean, 2026-05-19; 98 theorems + 18 definitions, 0 sorry)**
+**SU(5) GUT Weinberg Angle, f_MDL Structural Bridge, CKM Count Theorem, CKM Quark N_eff Formulas, b_sum = 390 Weinberg Factorization, Z₂ Longitudinal Mode MDL Universality, Coupling Ratio Duality, smGen1 SU(5) Projector, Mersenne Prime Structure, Joint Selection Theorem, GTE Master Formula, Weinberg Physical Bridge, Weinberg Three-Tier Prediction, Bidirectional Unification Summary, MDL Robustness / Z₇ Free Minterm Count, Z₂ Longitudinal Universality Structural Chain, Chern-Simons Level k=30, and Mersenne Cascade Discriminator 12→2 (GUTStructure.lean, 2026-05-19; 103 theorems + 18 definitions, 0 sorry)**
 
 Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit depth, CatAL) and N_fam = 5 (Z₅ family ring size, CatAL) satisfy the arithmetic identity N_gen + N_fam = 2^N_gen (3 + 5 = 8 = 2³). This implies that the GUT-scale Weinberg angle sin²θ_W(M_GUT) = N_gen/(N_gen + N_fam) = N_gen/2^N_gen = 3/8 — agreeing exactly with the standard SU(5) GUT prediction. The denominator then increases to c_H = 13 at M_Z by exactly N_fam = 5. A new structural identity (§9) connects the CA dynamics layer: the MDL-minimal CA function f_MDL produces nonzero output on exactly c_H + 1 = 14 of the 343 possible neighborhoods.
 
@@ -489,6 +489,13 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `rule110_minterms_eq_five` — n_rule110_minterms = 5 (rfl, CatAL)
 - `z_boson_cvalue_equals_mdl_plus_z7` ★★★ — **c-VALUE MDL IDENTITY**: n_rule110_minterms + 7 = c_Z = 12; the Z boson GTE c-value equals the Z₇ modulus (7 free Z₂ CA bits) plus the Rule 110 minterm count (5); arithmetic certification of the structural chain c_Z = 7 + MDL(Rule 110) = 12 (norm_num, CatAL)
 - `z_boson_mdl_class4_chain` — **THREE-CONJUNCT CHAIN**: (1) n_rule110_minterms=5 ∧ (2) 5+7=c_Z ∧ (3) c_Z=c_H−1; the arithmetic backbone of the Z₂ longitudinal universality CatAD result — c_Z=12 forces MDL(rule_Z)=5, landing at the isolated Class 4 resonance in the qualifying Z₂ CA rule space (norm_num, zero sorry, CatAL)
+
+*§30: Mersenne Cascade Discriminator — 12→2 Doublet-Paired Candidates (Rank 80 Round 02, CatAL)*
+- `bt_is_composite` — ¬ Nat.Prime b_top (b_t = 337920 is composite; top quark N_eff not Mersenne prime; norm_num, CatAL)
+- `bb_not_eq_bt` — b_b ≠ b_top (Mersenne G3 endpoint 8191 ≠ top G3 endpoint 337920; norm_num, CatAL)
+- `bb_mersenne_bt_not` ★★★★ — **ARITHMETIC ASYMMETRY**: b_b = Mersenne prime M₁₃ ∧ b_t = composite; the down cascade (c_d=42=b_L2) terminates with G3 = 8191 (Mersenne prime) while the up cascade (c_u=275=b_L3) terminates with G3 = 337920 (composite); this asymmetry is the arithmetic basis of the cascade discriminator (exact, CatAL)
+- `cascade_c_pair_mersenne_unique` ★★★★★ — **DISCRIMINATOR**: (c_u=b_L3=275, c_d=b_L2=42) is the unique c-pair from B_lep selected by the Mersenne G3 constraint; c=b_L1=73 (electron N_eff) is structurally inadmissible; the three B_lep values are mutually distinct; certifies the 12→2 cascade reduction combined with §26 (norm_num, CatAL)
+- `quark_cascade_mersenne_discriminator` — **JOINT THEOREM**: b_b = Mersenne prime M₁₃ ∧ b_t not prime ∧ b_u = N_gen² ∧ b_d = N_fam; packages the cascade discriminator (§30) with the N_eff assignments (§26) in one certified statement (exact, CatAL)
 
 ---
 
