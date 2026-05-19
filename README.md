@@ -346,7 +346,7 @@ Physical motivation: The five SM particle families [e⁻, u, d, νR, νL] in the
 - `cyclic_rotate` — definition: cyclic rotation of a 5-cell Z₇ ring by k positions (generalizes rotate5 from CUP4TotalParity to Fin 7 cells)
 - `fmdl_z5_equivariant` — **Main theorem**: ∀ (v : Fin 5 → Fin 7) (k : Fin 5), fmdl_step5(cyclic_rotate v k) = cyclic_rotate(fmdl_step5 v) k; zero failures over 7⁵ × 5 = 84,035 cases (native_decide, CatAL)
 
-**SU(5) GUT Weinberg Angle, f_MDL Structural Bridge, CKM Count Theorem, and CKM Quark N_eff Structural Formulas + R_b = sin²θ_W(GUT) Identity (GUTStructure.lean, 2026-05-19; 37 theorems + 9 definitions, 0 sorry)**
+**SU(5) GUT Weinberg Angle, f_MDL Structural Bridge, CKM Count Theorem, CKM Quark N_eff Formulas, b_sum = 390 Weinberg Factorization, and Z₂ Longitudinal Mode MDL Universality (GUTStructure.lean, 2026-05-19; 50 theorems + 15 definitions, 0 sorry)**
 
 Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit depth, CatAL) and N_fam = 5 (Z₅ family ring size, CatAL) satisfy the arithmetic identity N_gen + N_fam = 2^N_gen (3 + 5 = 8 = 2³). This implies that the GUT-scale Weinberg angle sin²θ_W(M_GUT) = N_gen/(N_gen + N_fam) = N_gen/2^N_gen = 3/8 — agreeing exactly with the standard SU(5) GUT prediction. The denominator then increases to c_H = 13 at M_Z by exactly N_fam = 5. A new structural identity (§9) connects the CA dynamics layer: the MDL-minimal CA function f_MDL produces nonzero output on exactly c_H + 1 = 14 of the 343 possible neighborhoods.
 
@@ -392,6 +392,25 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `wolfenstein_A_sq_rational` — A² = (186:ℚ)/275 (norm_num; Wolfenstein A squared, CatAL)
 - `ckm_unitarity_triangle_radius_eq_gut_weinberg` — R_b = N_gen/2^N_gen = 3/8 = sin²θ_W(GUT) ★★★★★ (alias of gut_weinberg_angle_pow2; cross-sector identity, CatAL)
 - `ckm_from_gte_arithmetic` — **Combined CKM theorem**: N_gen²=9 ∧ 2^N_gen×N_fam=40 ∧ λ=9/40 ∧ R_b=3/8 (norm_num, CatAL)
+
+*§16: SM generation N-value sum b_sum = 390 — all SM structural numbers in one object (Rank 49, CatAL)*
+- `b_gen1`, `b_gen2`, `b_gen3`, `b_sum` — GTE generation b-values (73, 42, 275) and their sum
+- `b_sum_value` — b_sum = 390 (norm_num, CatAL)
+- `b_sum_is_product` — b_sum = 2 · N_gen · N_fam · c_H (norm_num; all four SM structural numbers as factors, CatAL)
+- `b_sum_factorization` — b_sum = 2 × 3 × 5 × 13 (norm_num; explicit prime factorization, CatAL)
+- `weinberg_numerator_in_bsum` — N_gen ∣ b_sum (norm_num; 3 divides 390, CatAL)
+- `weinberg_denominator_in_bsum` — c_H ∣ b_sum (norm_num; 13 divides 390, CatAL)
+- `weinberg_ratio_from_bsum` — (N_gen:ℚ) / c_H = 3/13 (norm_num; Weinberg ratio as ratio of prime factors of b_sum, CatAL)
+- `nw_plus_chiggs_eq_pow2` — N_gen + c_H = 2⁴ (norm_num; 3+13=16=2⁴, the ridge subtraction constant, CatAL)
+- `b_sum_structure` — **Combined b_sum theorem**: all 6 arithmetic identities (norm_num, CatAL)
+
+*§17: Z₂ longitudinal mode universality — MDL-minimal universal Z₂ rule (Rank 43, CatAL arithmetic)*
+- `rule124Output`, `rule124Minterms` — Rule 124 rule table and minterm set {2,3,4,5,6}
+- `rule124_minterms_card` — Rule 124 has exactly 5 ones (native_decide, CatAL)
+- `rule124_output_iff_minterm` — Rule 124 output ↔ in {2,3,4,5,6} (native_decide, CatAL)
+- `rule124_quiescent` — Rule 124 maps (0,0,0)→0 (native_decide; satisfies neutral-sector quiescent condition, CatAL)
+- `rule110_and_124_joint_mdl_count` — Rule 110 and Rule 124 share MDL count = 5 (native_decide, CatAL; arithmetic component of conditional universality theorem)
+- `rule110_preferred_by_sublayer_consistency` — Rule 110 minterms ≠ Rule 124 minterms (native_decide; arithmetic basis for sublayer-consistency selection of Rule 110, CatAL)
 
 ---
 
