@@ -117,6 +117,7 @@ import UgpLean.Universality.HypothesisB
 import UgpLean.Universality.HypothesisBCChain
 import UgpLean.Universality.GoEHierarchy
 import UgpLean.Universality.GoEStabilityHierarchy
+import UgpLean.Universality.LawvereZone
 import UgpLean.Universality.PSCUniversality
 import UgpLean.Universality.CUP3DUniqueness
 import UgpLean.Universality.CUP3DPSCUnification
