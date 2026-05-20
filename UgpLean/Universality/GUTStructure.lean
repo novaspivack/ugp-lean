@@ -7,6 +7,8 @@ import UgpLean.Core.RidgeDefs
 import UgpLean.Core.MirrorDefs
 import Rule110.CookGliderCatalog
 import Mathlib.Tactic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 
 /-!
 # UgpLean.Universality.GUTStructure — SU(5) GUT Weinberg Angle from GTE Arithmetic
@@ -8514,5 +8516,280 @@ theorem massless_beables_count :
   native_decide
 
 end BeableHilbert
+
+-- ────────────────────────────────────────────────────────────────────────────
+-- §70  CA-to-QFT Amplitude Lift Morphism (Rank 209-LCA, CatAL)
+-- ────────────────────────────────────────────────────────────────────────────
+
+/-! ### §70  CA-to-QFT Amplitude Lift Morphism (Rank 209-LCA, CatAL)
+
+The GTE baryogenesis amplitude has structure A_B = sin θ_W × α_em² and therefore
+η_B = |A_B|² = sin²θ_W × α_em^4 at the W⁺ CA vertex (2,0,2)→3
+(`CUP3D.fmdl` / `wplus_creation_then_decay`, §39, CatAL).
+
+The amplitude lift morphism assigns exponent pair (n_EW, n_EM) from Z₇ sector
+classification (EM sector {2,6}, EW sector {3,4}).  Rate exponents (2·n_EW, 2·n_EM)
+link to `baryogenesis_loop_count` (§57) and `baryogenesis_exclusivity` (§59).
+
+Full QFT-from-CA lift (CatAD open): `physical_bridge_statement` (§65), Rank 130.
+O(1) normalization κ: `eta_B_normalization_axiom` (placeholder; Rank 219-FTB).
+
+Zero sorry for all definitions and theorems; one explicit axiom for κ (§4.4).
+-/
+
+namespace AmplitudeLift
+
+/-- SM sector classification: winding classes in the EM+color subsector {2,6}
+    correspond to quark states carrying electromagnetic coupling.
+    Winding classes in the EW subsector {3,4} correspond to SU(2) gauge states.
+    The transition {2,6}→{3,4} is the EW mixing insertion. -/
+def is_em_sector (w : ZMod 7) : Bool :=
+  w == 2 || w == 6
+
+def is_ew_sector (w : ZMod 7) : Bool :=
+  w == 3 || w == 4
+
+/-- Count EM-sector inputs to a three-body CA vertex. -/
+def vertex_em_count (w1 w2 w3 : ZMod 7) : ℕ :=
+  (if is_em_sector w1 then 1 else 0) +
+  (if is_em_sector w2 then 1 else 0) +
+  (if is_em_sector w3 then 1 else 0)
+
+/-- Count EW-sector outputs (sector crossings) from a three-body CA vertex.
+    An EW insertion occurs when the output is in the EW sector {3,4}
+    but at least one input is in the EM sector {2,6}. -/
+def vertex_ew_crossings (w1 w2 w3 w_out : ZMod 7) : ℕ :=
+  if is_ew_sector w_out && (is_em_sector w1 || is_em_sector w2 || is_em_sector w3)
+  then 1
+  else 0
+
+/-- **AmplitudeLiftMorphism** (CatAL arithmetic proxy):
+    Exponent pair (n_EW, n_EM) for sin^(n_EW) θ_W × α_em^(n_EM) at a CA vertex. -/
+def vertex_amplitude_exponents (w1 w2 w3 w_out : ZMod 7) : ℕ × ℕ :=
+  (vertex_ew_crossings w1 w2 w3 w_out, vertex_em_count w1 w2 w3)
+
+/-- Rate exponents from |A|²: (2·n_EW, 2·n_EM) for η_B = sin^(2·n_EW) θ_W × α_em^(2·n_EM). -/
+def baryogenesis_rate_exponents (n_EW n_EM : ℕ) : ℕ × ℕ :=
+  (2 * n_EW, 2 * n_EM)
+
+/-- **wplus_vertex_em_count** (CatAL):
+    The W⁺ CA vertex (2,0,2)→3 has exactly two EM-sector inputs
+    (both u-quarks at w=2) and zero EM-sector inputs for the vacuum (w=0). -/
+theorem wplus_vertex_em_count :
+    vertex_em_count 2 0 2 = 2 := by decide
+
+/-- **wplus_vertex_ew_crossings** (CatAL):
+    The W⁺ CA vertex (2,0,2)→3 has exactly one EW-sector crossing:
+    the output w=3 is in the EW sector {3,4} and the inputs include EM sector w=2. -/
+theorem wplus_vertex_ew_crossings :
+    vertex_ew_crossings 2 0 2 3 = 1 := by decide
+
+/-- **wplus_vertex_amplitude_structure** (CatAL):
+    The W⁺ vertex has amplitude structure: 1 EW insertion + 2 EM couplings.
+    Arithmetic proxy for A_vertex(2,0,2→3) = sin θ_W × α_em. -/
+theorem wplus_vertex_amplitude_structure :
+    vertex_ew_crossings 2 0 2 3 = 1 ∧
+    vertex_em_count 2 0 2 = 2 := by decide
+
+/-- W⁺ vertex is the certified f_MDL emission neighborhood (§39). -/
+theorem wplus_vertex_fmdl_emission :
+    CUP3D.fmdl 2 0 2 = 3 := by decide
+
+/-- **baryogenesis_amplitude_A_B_structure** (CatAL):
+    Full-diagram amplitude A_B = sin θ_W × α_em²: one EW insertion (n_EW = 1)
+    and two EM couplings (n_EM = 2) at the W⁺ production vertex. -/
+theorem baryogenesis_amplitude_A_B_structure :
+    let n_EW := vertex_ew_crossings 2 0 2 3
+    let n_EM := vertex_em_count 2 0 2
+    n_EW = 1 ∧ n_EM = 2 ∧
+    vertex_amplitude_exponents 2 0 2 3 = (1, 2) := by
+  decide
+
+/-- **baryogenesis_amplitude_counting** (CatAL):
+    Baryogenesis rate η_B = |A_B|² has exponents (2, 4) from one GoE EW insertion
+    (`baryogenesis_exclusivity`, §59) and EM coupling count at the W⁺ vertex.
+    The α_em rate exponent 2·n_EM = 4 equals N_fam − 1 (`baryogenesis_loop_count`, §57).
+
+    LEAN-CERTIFIED: decide + norm_num, zero sorry. -/
+theorem baryogenesis_amplitude_counting :
+    vertex_ew_crossings 2 0 2 3 = 1 ∧
+    vertex_em_count 2 0 2 = 2 ∧
+    2 * (vertex_ew_crossings 2 0 2 3) = 2 ∧
+    2 * (vertex_em_count 2 0 2) = 4 ∧
+    n_fam - 1 = 4 ∧
+    2 * (vertex_em_count 2 0 2) = n_fam - 1 := by
+  decide
+
+/-- Links W⁺ vertex α_em rate exponent 2·n_EM = 4 to GoE loop count N_fam − 1 (§57). -/
+theorem baryogenesis_amplitude_goe_loop_count :
+    2 * (vertex_em_count 2 0 2) = (let N_fam := 5; N_fam - 1) := by
+  decide
+
+/-- GoE ring-cut step count from §59 `baryogenesis_exclusivity`. -/
+theorem baryogenesis_amplitude_goe_exclusivity :
+    n_fam - 1 = 4 :=
+  baryogenesis_exclusivity.1
+
+/-- **eta_B_amplitude_structure** (CatAL):
+    η_B = sin^(2·n_EW) θ_W × α_em^(2·n_EM) with n_EW = 1, n_EM = 2 at the W⁺ vertex.
+    sin²θ_W = N_gen/c_H = 3/13 via `weinberg_angle_closure` (§12).
+
+    LEAN-CERTIFIED (arithmetic exponents + Weinberg closure): decide + norm_num, zero sorry. -/
+theorem eta_B_amplitude_structure :
+    let n_EW := vertex_ew_crossings 2 0 2 3
+    let n_EM := vertex_em_count 2 0 2
+    let (sin_exp, alpha_exp) := baryogenesis_rate_exponents n_EW n_EM
+    2 * n_EW = 2 ∧
+    2 * n_EM = 4 ∧
+    n_EW = 1 ∧
+    n_EM = 2 ∧
+    sin_exp = 2 ∧
+    alpha_exp = 4 ∧
+    (n_gen : ℚ) / EWBosonStructure.c_higgs = 3 / 13 := by
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, weinberg_angle_closure⟩
+  all_goals decide
+
+/-- **baryogenesis_rate_eta_B_structure** (CatAL):
+    η_B = |A_B|²: rate exponents (2, 4) packaged from amplitude exponents (1, 2). -/
+theorem baryogenesis_rate_eta_B_structure :
+    let n_EW := vertex_ew_crossings 2 0 2 3
+    let n_EM := vertex_em_count 2 0 2
+    baryogenesis_rate_exponents n_EW n_EM = (2, 4) ∧
+    baryogenesis_rate_exponents n_EW n_EM = baryogenesis_rate_exponents 1 2 := by
+  decide
+
+/-- O(1) normalization κ from thermal bath partition (Rank 219-FTB open).
+    Placeholder: κ = 1 pending explicit loop-integral derivation. -/
+axiom eta_B_normalization_axiom : ∃ κ : ℝ, 0 < κ ∧ κ = 1
+
+end AmplitudeLift
+
+-- ════════════════════════════════════════════════════════════════
+-- §72  CKM Real Parameters — A, θ_C, γ, ρ̄, η̄  (CatAL)
+-- ════════════════════════════════════════════════════════════════
+
+/-!
+### §72  CKM Real Parameters: Algebraic Certifications
+
+This section proves machine-certified real-arithmetic theorems for four
+Wolfenstein/CKM parameters not captured by rational arithmetic alone.
+
+**Zero-sorry theorems (CatAL):**
+- `wolfenstein_A_satisfies_eq`: A = √(186/275) satisfies A² = 186/275
+- `wolfenstein_A_bounds`: 0.82 < √(186/275) < 0.83  (PDG: A = 0.8224)
+- `cabibbo_angle_exists`: ∃ θ, sin θ = 9/40 ∧ 0 < θ < π/2  (Cabibbo angle)
+- `gamma_cp_tan_value`: tan(arctan(√(8191/186)/3)) = √(8191/186)/3  (γ defining eq)
+
+**Round 2 targets (sorry stubs — interval arithmetic needed):**
+- `gamma_cp_bounds_deg`: 65° < γ < 66°  (PDG: δ_CP = 65.6° ± 1.5°)
+- `rho_bar_eta_bar_bounds`: ρ̄ ∈ (0.15, 0.16) ∧ η̄ ∈ (0.34, 0.35)
+
+Zero-sorry proofs use `Real.sq_sqrt`, `Real.sqrt_lt_sqrt`, `Real.sqrt_sq`,
+`Real.sin_arcsin`, `Real.arcsin_pos`, `Real.arcsin_lt_pi_div_two`, `Real.tan_arctan`.
+-/
+
+section CKMParametersReal
+
+/-- **wolfenstein_A_satisfies_eq** (CatAL):
+    A = √(186/275) satisfies the defining equation A² = 186/275.
+
+    Lifts the rational identity `wolfenstein_A_sq_rational` (§15) to ℝ:
+    if A = √(b_s/b_c) = √(186/275), then A² = 186/275.
+
+    LEAN-CERTIFIED (Real.sq_sqrt, zero sorry). -/
+theorem wolfenstein_A_satisfies_eq (A : ℝ) (hA : A = Real.sqrt (186 / 275 : ℝ)) :
+    A ^ 2 = 186 / 275 := by
+  subst hA
+  exact Real.sq_sqrt (by norm_num)
+
+/-- **wolfenstein_A_bounds** (CatAL):
+    0.82 < √(186/275) < 0.83.
+
+    PDG central value: A = 0.8224 ± 0.0016.  The GTE prediction √(186/275) ≈ 0.8225
+    lies squarely within the PDG band.
+
+    Proof uses monotonicity of √: 0.82² = 0.6724 < 186/275 ≈ 0.6764 < 0.83² = 0.6889.
+
+    LEAN-CERTIFIED (Real.sqrt_lt_sqrt + Real.sqrt_sq, zero sorry). -/
+theorem wolfenstein_A_bounds :
+    (0.82 : ℝ) < Real.sqrt (186 / 275 : ℝ) ∧
+    Real.sqrt (186 / 275 : ℝ) < (0.83 : ℝ) := by
+  constructor
+  · calc (0.82 : ℝ) = Real.sqrt ((0.82 : ℝ) ^ 2) :=
+          (Real.sqrt_sq (by norm_num : (0 : ℝ) ≤ 0.82)).symm
+      _ < Real.sqrt (186 / 275 : ℝ) :=
+          Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
+  · calc Real.sqrt (186 / 275 : ℝ)
+        < Real.sqrt ((0.83 : ℝ) ^ 2) :=
+          Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
+      _ = (0.83 : ℝ) := Real.sqrt_sq (by norm_num)
+
+/-- **cabibbo_angle_exists** (CatAL):
+    ∃ θ ∈ (0, π/2) with sin θ = λ = 9/40.
+
+    The Wolfenstein parameter λ = 9/40 (`wolfenstein_lambda_formula`, §14) equals
+    sin(θ_C) for the Cabibbo mixing angle θ_C.  Existence and first-quadrant
+    placement follow from standard properties of Real.arcsin.
+
+    LEAN-CERTIFIED (Real.sin_arcsin + Real.arcsin_pos + Real.arcsin_lt_pi_div_two, zero sorry). -/
+theorem cabibbo_angle_exists :
+    ∃ θ : ℝ, Real.sin θ = 9 / 40 ∧ 0 < θ ∧ θ < Real.pi / 2 := by
+  refine ⟨Real.arcsin (9 / 40), ?_, ?_, ?_⟩
+  · exact Real.sin_arcsin (by norm_num) (by norm_num)
+  · exact Real.arcsin_pos.mpr (by norm_num)
+  · exact Real.arcsin_lt_pi_div_two.mpr (by norm_num)
+
+/-- **gamma_cp_tan_value** (CatAL):
+    tan(arctan(√(8191/186)/3)) = √(8191/186)/3.
+
+    The CKM CP phase γ is defined by tan γ = √(b_b/b_s)/N_gen = √(8191/186)/3.
+    This theorem certifies the defining equation via tan(arctan x) = x.
+
+    The irrationality of tan γ is machine-certified in `cp_violation_irrationality_chain`
+    (§20), establishing that γ encodes structurally non-tunable CP violation.
+
+    LEAN-CERTIFIED (Real.tan_arctan, zero sorry). -/
+theorem gamma_cp_tan_value :
+    Real.tan (Real.arctan (Real.sqrt (8191 / 186 : ℝ) / 3)) =
+    Real.sqrt (8191 / 186 : ℝ) / 3 :=
+  Real.tan_arctan _
+
+/-- **gamma_cp_bounds_deg** (Round 2 target):
+    65° < γ < 66° where γ = arctan(√(8191/186)/3).
+
+    PDG: γ = δ_CP = (65.6 ± 1.5)°.  The GTE prediction arctan(√(8191/186)/3) ≈ 65.6°
+    lies within this band.  Proof requires:
+    tan(65π/180) < √(8191/186)/3 < tan(66π/180),
+    i.e. tan(65°) ≈ 2.1445 < √(8191/186)/3 ≈ 2.212 < tan(66°) ≈ 2.2460.
+
+    TODO Round 2: discharge via Mathlib interval arithmetic or norm_num extension for
+    real tan values at rational multiples of π. -/
+theorem gamma_cp_bounds_deg :
+    65 * Real.pi / 180 < Real.arctan (Real.sqrt (8191 / 186 : ℝ) / 3) ∧
+    Real.arctan (Real.sqrt (8191 / 186 : ℝ) / 3) < 66 * Real.pi / 180 := by
+  constructor
+  · sorry -- TODO Round 2: tan(65π/180) < √(8191/186)/3 via interval arithmetic
+  · sorry -- TODO Round 2: √(8191/186)/3 < tan(66π/180) via interval arithmetic
+
+/-- **rho_bar_eta_bar_bounds** (Round 2 target):
+    ρ̄ ∈ (0.15, 0.16) and η̄ ∈ (0.34, 0.35).
+
+    Definitions: ρ̄ = R_b cos γ, η̄ = R_b sin γ, where R_b = 3/8
+    (`ckm_unitarity_triangle_radius_eq_gut_weinberg`, §15) and
+    γ = arctan(√(8191/186)/3).
+
+    PDG: ρ̄ = 0.157 ± 0.008, η̄ = 0.350 ± 0.007.
+
+    TODO Round 2: follows from `gamma_cp_bounds_deg` + monotonicity of sin/cos on (0, π/2). -/
+theorem rho_bar_eta_bar_bounds :
+    ∃ ρ η : ℝ,
+    ρ = (3 / 8 : ℝ) * Real.cos (Real.arctan (Real.sqrt (8191 / 186 : ℝ) / 3)) ∧
+    η = (3 / 8 : ℝ) * Real.sin (Real.arctan (Real.sqrt (8191 / 186 : ℝ) / 3)) ∧
+    (0.15 : ℝ) < ρ ∧ ρ < (0.16 : ℝ) ∧
+    (0.34 : ℝ) < η ∧ η < (0.35 : ℝ) := by
+  refine ⟨_, _, rfl, rfl, ?_, ?_, ?_, ?_⟩
+  all_goals sorry -- TODO Round 2: follow from gamma_cp_bounds_deg + trig monotonicity
+
+end CKMParametersReal
 
 end GUTStructure
