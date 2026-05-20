@@ -5307,6 +5307,104 @@ theorem mass_gap_theorem :
     (∀ (l r : Fin 7), CUP3D.fmdl l 6 r = 0) :=
   ⟨by decide, wplus_center_maps_to_vacuum, winding_4_maps_to_vacuum, winding_6_maps_to_vacuum⟩
 
+/-- **fmdl_never_outputs_4** (CatAL — Rank 155-QFT):
+    Winding 4 (electron/W⁻) is never produced by f_MDL for ANY input triple (l, c, r).
+    4 ∉ range(f_MDL) — a hard structural exclusion holding for all 343 input neighborhoods.
+
+    This is stronger than `winding_4_not_self_propagating` (which only covers center=4 inputs):
+    no neighborhood whatsoever produces winding 4 as output, regardless of what the center is.
+    This is the CA-level statement that e⁻ is a boundary-condition-only particle.
+
+    LEAN-CERTIFIED (decide, zero sorry). -/
+theorem fmdl_never_outputs_4 :
+    ∀ l c r : Fin 7, CUP3D.fmdl l c r ≠ 4 := CUP3D.fmdl_never_outputs_4
+
+-- ────────────────────────────────────────────────────────────────────────────
+-- Rank 159-OWN: Orbit-Closure Biconditional (CatAL)
+-- The self-propagating set {0,1,2,5} equals the orbit-closure of the SM generation orbit.
+-- ────────────────────────────────────────────────────────────────────────────
+
+/-- **orbit_winding_set** (CatAL — Rank 159-OWN):
+    The set of Z₇ winding values appearing in the 5-cell SM generation orbit
+    (winding sequence 1 → 5 → 2 → 2 → 1) together with the vacuum background (winding 0).
+    These are the only windings that can serve as self-propagating CA centers under f_MDL. -/
+def orbit_winding_set : Finset (Fin 7) := {0, 1, 2, 5}
+
+/-- **self_propagating_iff_orbit_winding** (CatAL — Rank 159-OWN):
+    Orbit-closure biconditional: a Z₇ winding w admits a self-propagating center
+    (∃ l r, f_MDL(l, w, r) = w) if and only if w belongs to the generation orbit + vacuum,
+    i.e., w ∈ {0, 1, 2, 5}.
+
+    Forward witnesses (self-propagating centers):
+      w = 0: f_MDL(0,0,0) = 0  (vacuum);
+      w = 1: f_MDL(0,1,0) = 1  (gen₁ orbit);
+      w = 2: f_MDL(5,2,2) = 2  (u-quark orbit);
+      w = 5: f_MDL(1,5,2) = 5  (anti-gen₃ orbit).
+    Backward witnesses (no self-propagating center): exhaustive check for w ∈ {3,4,6}.
+
+    Physical meaning: self-propagation at the CA substrate level is equivalent to orbit
+    membership. The mass gap partition {0,1,2,5} vs {3,4,6} is the orbit-closure partition
+    of Z₇ under f_MDL. This upgrades the brute-force §44 survey to a structural theorem.
+
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
+theorem self_propagating_iff_orbit_winding :
+    ∀ w : Fin 7, (∃ l r : Fin 7, CUP3D.fmdl l w r = w) ↔ w ∈ orbit_winding_set := by
+  native_decide
+
+/-- **orbit_closure_theorem** (CatAL — Rank 159-OWN):
+    The Finset of self-propagating windings under f_MDL equals the orbit winding set {0,1,2,5}.
+    This is the Finset form of the orbit-closure characterization: the filter of all w ∈ Z₇
+    admitting a self-propagating center is exactly the orbit + vacuum set.
+
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
+theorem orbit_closure_theorem :
+    Finset.univ.filter (fun w : Fin 7 => ∃ l r : Fin 7, CUP3D.fmdl l w r = w) =
+    orbit_winding_set := by
+  native_decide
+
+-- ────────────────────────────────────────────────────────────────────────────
+-- Rank 161-QFC: d-Quark Production Uniqueness (CatAL)
+-- Winding 6 (d-quark) has exactly one f_MDL preimage: the vertex (2, 5, 2).
+-- ────────────────────────────────────────────────────────────────────────────
+
+/-- **dquark_unique_production_vertex** (CatAL — Rank 161-QFC):
+    The unique f_MDL neighborhood producing a d-quark (winding 6):
+      f_MDL(2, 5, 2) = 6.
+    Neighborhood: winding-2 (u-quark) left neighbor, winding-5 (anti-gen₃) center,
+    winding-2 (u-quark) right neighbor → winding-6 (d-quark) output.
+    This is the CA-level quark flavor-change vertex, the GTE analog of the Cabibbo interaction.
+
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
+theorem dquark_unique_production_vertex :
+    CUP3D.fmdl 2 5 2 = 6 := by native_decide
+
+/-- **dquark_preimage_count** (CatAL — Rank 161-QFC):
+    Exactly ONE triple (l, c, r) ∈ Z₇³ satisfies f_MDL(l, c, r) = 6 (d-quark production).
+    Out of 343 possible input neighborhoods, d-quark production occurs at precisely one.
+    This extreme rarity is the CA-level analog of CKM suppression of flavor-changing processes.
+
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
+theorem dquark_preimage_count :
+    (Finset.univ.filter (fun t : Fin 7 × Fin 7 × Fin 7 =>
+      CUP3D.fmdl t.1 t.2.1 t.2.2 = 6)).card = 1 := by
+  native_decide
+
+/-- **dquark_unique_preimage** (CatAL — Rank 161-QFC):
+    The unique preimage of winding 6 (d-quark) under f_MDL is exactly the triple (2, 5, 2).
+    For every (l, c, r) ∈ Z₇³: f_MDL(l, c, r) = 6 ↔ (l = 2 ∧ c = 5 ∧ r = 2).
+
+    This is the strongest possible statement of d-quark production uniqueness:
+    there is no other input combination that can produce a d-quark at the CA substrate level.
+    It directly implies `dquark_preimage_count` and `dquark_unique_production_vertex`.
+
+    Physical meaning: quark flavor change (u → d type) at the single-step CA level
+    is uniquely determined by the specific orbital configuration (u | anti-gen₃ | u).
+
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
+theorem dquark_unique_preimage :
+    ∀ l c r : Fin 7, CUP3D.fmdl l c r = 6 ↔ (l = 2 ∧ c = 5 ∧ r = 2) := by
+  native_decide
+
 end MassGapTheorem
 
 -- §45  W-to-Z Mass Ratio — Rank 156-PRP: cos²θ_W = 10/13 (CatAL)
