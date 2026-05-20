@@ -8410,4 +8410,109 @@ theorem physical_bridge_charge_sum :
 
 end PhysicalBridge
 
+-- ────────────────────────────────────────────────────────────────────────────
+-- §69  BeableHilbert — 't Hooft Beable Construction for GTE (Rank 132, CatAL)
+-- Round 1: type definitions and mass gap partition in beable language
+-- ────────────────────────────────────────────────────────────────────────────
+
+/-! ### §69  BeableHilbert: 't Hooft beable construction for GTE
+
+The two-layer {Rule 110, Rule 124} chiral CA admits a natural beable basis
+following 't Hooft's cogwheel construction: the CA configuration space is the
+"beable space" from which quantum Hilbert space states are built by superposition.
+
+**Beable space (Round 1):**  `Fin 5 → Fin 7` — one Z₇ winding class per cell of
+the 5-cell ring.  Each assignment is a CA-level cogwheel eigenstate.
+
+**Mass gap in beable basis (from §44 orbit-closure theorem):**
+- Massless beables: winding w ∈ {0, 1, 2, 5} (self-propagating under f_MDL)
+- Massive beables:  winding w ∈ {3, 4, 6}    (contact vertex; no self-propagating center)
+
+Rank 132, Round 1 — type definitions and beable mass gap in beable language, citing §44.
+Rounds 2–4 will add the two-layer GTE Hamiltonian and the Lorentz dispersion relation
+E² = v²k² + m²_eff. -/
+
+namespace BeableHilbert
+
+/-- **BeableState**: A CA beable state for the 5-cell glider ring.
+    Each of the 5 ring cells carries a Z₇ winding class.
+    This is the 't Hooft "cogwheel state" for the GTE substrate. -/
+def BeableState : Type := Fin 5 → Fin 7
+
+/-- **isMasslessBeable**: Winding w is a massless beable iff it belongs to the
+    certified orbit winding set {0,1,2,5} from §44 (orbit_winding_set).
+    Massless beables are self-propagating gliders under f_MDL. -/
+def isMasslessBeable (w : Fin 7) : Prop :=
+  w ∈ orbit_winding_set
+
+/-- **isMassiveBeable**: Winding w is a massive beable iff it does NOT belong to
+    the orbit winding set — it has no self-propagating center under f_MDL and
+    appears only as a contact-vertex transient. -/
+def isMassiveBeable (w : Fin 7) : Prop :=
+  w ∉ orbit_winding_set
+
+/-- **beable_massless_iff_self_propagating** (CatAL — Rank 132, citing §44):
+    A beable winding is massless iff its Z₇ winding class is self-propagating
+    under f_MDL.  This lifts the §44 orbit-closure theorem to beable language:
+    the partition {massless} = {self-propagating} is the orbit-closure partition.
+
+    LEAN-CERTIFIED (from §44 self_propagating_iff_orbit_winding, zero sorry). -/
+theorem beable_massless_iff_self_propagating (w : Fin 7) :
+    isMasslessBeable w ↔ (∃ l r : Fin 7, CUP3D.fmdl l w r = w) :=
+  (self_propagating_iff_orbit_winding w).symm
+
+/-- **beable_mass_gap_partition** (CatAL — Rank 132):
+    Every Z₇ winding class is either massless or massive in the beable sense;
+    the partition {0,1,2,5} ∪ {3,4,6} = Z₇ is exhaustive.
+
+    LEAN-CERTIFIED (Classical.em on orbit membership, zero sorry). -/
+theorem beable_mass_gap_partition (w : Fin 7) :
+    isMasslessBeable w ∨ isMassiveBeable w := by
+  show w ∈ orbit_winding_set ∨ w ∉ orbit_winding_set
+  exact Classical.em _
+
+/-- **wplus_is_massive_beable** (CatAL — Rank 132):
+    The W⁺ boson (winding 3) is a massive beable: 3 ∉ {0,1,2,5}.
+    Consistent with §44 mass_gap_theorem (wplus_center_maps_to_vacuum).
+
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
+theorem wplus_is_massive_beable : isMassiveBeable ⟨3, by norm_num⟩ := by
+  show (⟨3, by norm_num⟩ : Fin 7) ∉ orbit_winding_set
+  native_decide
+
+/-- **photon_is_massless_beable** (CatAL — Rank 132):
+    The photon (vacuum ether, winding 0) is a massless beable: 0 ∈ {0,1,2,5}.
+    Witness: f_MDL(0,0,0) = 0 (§44 mass_gap_theorem).
+
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
+theorem photon_is_massless_beable : isMasslessBeable ⟨0, by norm_num⟩ := by
+  show (⟨0, by norm_num⟩ : Fin 7) ∈ orbit_winding_set
+  native_decide
+
+/-- **fermion_windings_massless** (CatAL — Rank 132):
+    The three fermion orbit winding classes {1, 2, 5} are all massless beables.
+    These are the SM generation-orbit windings (§44 orbit_winding_set).
+
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
+theorem fermion_windings_massless :
+    isMasslessBeable ⟨1, by norm_num⟩ ∧
+    isMasslessBeable ⟨2, by norm_num⟩ ∧
+    isMasslessBeable ⟨5, by norm_num⟩ := by
+  refine ⟨?_, ?_, ?_⟩
+  · show (⟨1, by norm_num⟩ : Fin 7) ∈ orbit_winding_set; native_decide
+  · show (⟨2, by norm_num⟩ : Fin 7) ∈ orbit_winding_set; native_decide
+  · show (⟨5, by norm_num⟩ : Fin 7) ∈ orbit_winding_set; native_decide
+
+/-- **massless_beables_count** (CatAL — Rank 132):
+    There are exactly 4 massless beable winding classes ({0,1,2,5});
+    the remaining 3 windings {3,4,6} are massive contact-vertex beables.
+    This is the Finset cardinality form of the §44 orbit_closure_theorem.
+
+    LEAN-CERTIFIED (native_decide via orbit_closure_theorem, zero sorry). -/
+theorem massless_beables_count :
+    (Finset.univ.filter (fun w : Fin 7 => w ∈ orbit_winding_set)).card = 4 := by
+  native_decide
+
+end BeableHilbert
+
 end GUTStructure
