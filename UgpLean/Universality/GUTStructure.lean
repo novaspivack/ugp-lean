@@ -8343,4 +8343,71 @@ theorem c3_master_proxy :
 
 end C3TPCCompleteness
 
+-- §68  Physical Bridge — CA Observables to SM Quantum Numbers (Rank 181-CAD)
+--
+--  STATUS: CatAD formal statement.  The arithmetic content (centeredZ7 values) is CatAL.
+--  The physical identification — that the Z₇ winding number w of a CA beable equals the
+--  SM quantum number Q = w*/3 as measured by electromagnetic scattering experiments —
+--  is CatAD: physically motivated and analytically clear, but not yet Lean-certified.
+--
+--  What is needed for CatAL (full physical bridge):
+--  (1) CA Dirac Hamiltonian formalized in Lean: H = v_CA k σ_z + m_eff σ_x (Rank 130)
+--  (2) Winding observable: Ŵ = winding number operator on Layer 110/124 spinors
+--  (3) Eigenvalue equation: Ŵ |f⟩ = w_f* |f⟩ for each SM particle
+--  (4) Charge identification: Q_f = w_f*/3 from CA coupling to the EM field
+--  (5) T₃ identification: T₃_f = (w_f* − w_partner*)/6 from SU(2)_L CA doublet structure
+--
+--  The arithmetic half (Q = w*/3 gives exact rational SM charges) is CatAL via §49.
+--  The physical half (this arithmetic formula equals the measured EM charge) is CatAD.
+
+section PhysicalBridge
+
+/-- **physical_bridge_statement** (CatAD formal / CatAL arithmetic ★★★★):
+    Formal statement of the CA Observable-to-SM Quantum Number identification.
+
+    The CA physical bridge (CatAD): for any CA beable b with Z₇ winding w(b),
+    the electromagnetic scattering cross-section of a physical particle in state |b⟩
+    equals that of an SM particle with charge Q = w*(b)/3, where w*(b) is the
+    centered Z₇ representative in {−3,...,+3}.
+
+    This is the physical content of the charge formula results (§49, §50, §55).
+
+    Arithmetic proxy (CatAL): the three canonical SM charges are reproduced exactly
+    by centeredZ7 on the winding classes w ∈ {2, 6, 4} (u-quark, d-quark, electron):
+      Q_u = centeredZ7(2)/3 = 2/3  (3Q = +2)
+      Q_d = centeredZ7(6)/3 = −1/3 (3Q = −1)
+      Q_e = centeredZ7(4)/3 = −1   (3Q = −3)
+
+    Full CatAL proof requires: CA Dirac Hamiltonian formalization (Rank 130),
+    S-matrix elements from winding quantum numbers, Ward identity (§47).
+
+    LEAN-CERTIFIED (arithmetic proxy only): native_decide, zero sorry. -/
+theorem physical_bridge_statement :
+    centeredZ7 ⟨2, by norm_num⟩ = 2  ∧    -- u-quark: 3Q = +2
+    centeredZ7 ⟨6, by norm_num⟩ = -1 ∧    -- d-quark: 3Q = −1
+    centeredZ7 ⟨4, by norm_num⟩ = -3 := by -- electron: 3Q = −3
+  native_decide
+
+/-- **physical_bridge_charge_sum** (CatAD formal / CatAL arithmetic ★★★★):
+    The sum of centered Z₇ winding values across all five SM particle classes
+    equals the sum of their 3Q quantum numbers.
+
+    Arithmetic identity (CatAL): centeredZ7 applied to the five canonical SM
+    winding classes {2, 6, 4, 3, 0} reproduces the integer-charge sum 2−1−3+3+0 = 1.
+
+    Physical content (CatAD): this is the arithmetic identity underlying the
+    Q = w*/3 formula for the complete first-generation SM spectrum.
+
+    LEAN-CERTIFIED: native_decide, zero sorry. -/
+theorem physical_bridge_charge_sum :
+    (centeredZ7 ⟨2, by norm_num⟩ : ℤ) +   -- u-quark:   3Q = +2
+     centeredZ7 ⟨6, by norm_num⟩ +          -- d-quark:   3Q = −1
+     centeredZ7 ⟨4, by norm_num⟩ +          -- electron:  3Q = −3
+     centeredZ7 ⟨3, by norm_num⟩ +          -- W⁺ boson:  3Q = +3
+     centeredZ7 ⟨0, by norm_num⟩ =          -- vacuum/γ:  3Q = 0
+    2 + (-1) + (-3) + 3 + 0 := by
+  native_decide
+
+end PhysicalBridge
+
 end GUTStructure
