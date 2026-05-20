@@ -4,7 +4,7 @@
 
 This repository is part of the **Reflexive Reality** research program by [Nova Spivack](https://www.novaspivack.com/).
 
-**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, and self-reference.  **118 modules, zero sorry on the core proof path** (see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).
+**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, and self-reference.  **143 modules, zero sorry on the core proof path** (see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).
 
 | Link | Description |
 |------|-------------|
@@ -27,7 +27,7 @@ A clean build completes with zero `sorry` and the standard Mathlib axiom signatu
 
 ---
 
-## Module structure (118 modules; **12 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
+## Module structure (143 modules; **13 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
 
 | Layer | Count | Modules |
 |-------|-------|---------|
@@ -38,7 +38,8 @@ A clean build completes with zero `sorry` and the standard Mathlib axiom signatu
 | **Structural** | 19 | QuarterLock, LModelDerivation; *ElegantKernel/*: ChiralityFeature, D5StructuralAxiom, FibonacciHessian, KGen, KGen2, MuTriple, PentagonalUniqueness; *ElegantKernel/Unconditional/*: CyclotomicChain, D5Renormalization, FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure, KLFullClosure, PentagonConstraint, RiccatiFixedPoint |
 | **MassRelations** | 25 | *MassRelations* [umbrella], KoideClosedForm, KoideNewtonFlow, KoideAngle, KoideS3DiscreteIdentities, BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential, FroggattNielsen, NeutrinoFroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational, UpLeptonCyclotomic, Z2OrbifoldDepth, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex, VVMechanism, VVAllCoefficientsFromNc, CKMTheta23, CKMMixing, **NeutrinoMassRatio** |
 | **BraidAtlas** | 7 | ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation, CoxeterConductor, CoxeterConductorTowerLaw, EWBosons |
-| **Universality** | 13 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, Z5TransitivityUniqueness, **GTECompilation**, **GTEUniqueness**, **DimensionalSliceUniqueness**, **GTPNeutralDiscrimination**, **GUTStructure** |
+| **Universality** | 34 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, CUP4TotalParity, CUP11ModSeven, CUP3DUniqueness, CUP3DPSCUnification, CUP3DPhysicalIncompleteness, TwoLayerConfluence, GTECompilation, GTEUniqueness, GoEHierarchy, GoEStabilityHierarchy, GTEInfTapeEncoding, GTEComputability, HypothesisB, HypothesisBCChain, PSCUniversality, CookRule110Ref, OrbitPerturbationCatalog, Z7ChargeConjugation, DimensionalSliceUniqueness, Z5TransitivityUniqueness, GTPNeutralDiscrimination, SMOrbitCausalIsolation, EWBosonStructure, EWChiralBridge, **GUTStructure**, LawvereZone, CasimirMasslessEther |
+| **Framework** | 1 | **GTEFrameworkInstance** (NemS + transputation classification on GTE substrate) |
 | **SelfRef** | 2 | LawvereKleene, RiceHalting |
 
 Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity, PositiveRootTheorem, GaloisProtection, TwoLoopCoefficient), **GaloisStructure** (2), **CyclotomicCompleteness** (2), **PSC** (1: RCCInfiniteFamilies), **TE22** (1: ScanCertificate), **Papers** (2), **Instance** (1), **Conjectures** — per the formalization paper: `Phase4.GaloisProtection`, `TwoLoopCoefficient`, modules under `GaloisStructure.*` and `CyclotomicCompleteness.*`, and `TE22` carry fully mechanized statements where the paper claims zero sorry; `Papers` and `Instance` are chiefly citable stubs and bridges; `Conjectures` records resolved and open claims; `Phase4` also mixes stubs (e.g. UCL, PR1 presentation) with the precision theorems above.
@@ -284,6 +285,13 @@ Physical motivation: The GTE update map T (particle mass cascade G₁→G₂→G
 - `uwca_augmented_left_inverse` — UWCA + history stack: backward ∘ forward = id (exact lift)
 - `gte_entropy_prefix8_gt_prefix9` — finite coarse Shannon-entropy drop along simulated GTE orbit (ML-9 companion; `GTE.EntropyNonMonotone`)
 - `ugp_lawvere_fixed_point` / `ugp_kleene_recursion_thm` / `ugp_rice_theorem` / `ugp_halting_undecidable` — Self-reference layer
+
+**GTE-NEMS Framework Instance (Framework.GTEFrameworkInstance, 2026-05-20; zero sorry, one bridge axiom)**
+- `GTEFramework` — GTE-Möbius substrate as `NemS.Framework` over `BeableState`
+- `gte_not_categorical` — vacuum and gen₁ disagree on record query 0
+- `gte_nems` / `GTEPSCBundle` — NEMS + determinacy PSC bundle
+- `GTEDiagonalCapable` — ASR via vacuum reachability + Cook encoding (bridge axiom `gte_partrec_eval_iff_fmdl_phi`)
+- `gte_tpc_from_nems_classification` / `gte_tpc_real` — transputation classification on the GTE substrate
 
 ---
 

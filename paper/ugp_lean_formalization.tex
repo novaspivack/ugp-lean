@@ -135,7 +135,7 @@ It produces, from first principles and without free parameters, a unique
 canonical seed---the triple $(1,73,823)$---whose orbit under the
 Generative Triple Evolution (\gte{}) map is rigidly determined.
 We present \textbf{ugp-lean}, a machine-checked formalization of this
-framework in \lean{}~4 against Mathlib, comprising 131 modules with a
+framework in \lean{}~4 against Mathlib, comprising 143 modules with a
 strict zero-sorry, zero-custom-axiom policy on the core proof path.
 (Six modules — IPT, NullDiscipline, PSC.ThreeRouteForcing,
 CyclotomicCompleteness.H9SelfConsistency, and GoldenRatioFixedPoint
@@ -175,8 +175,14 @@ over all eight neighborhoods.  This implies a sharp \emph{decidability
 phase transition}: finite-window properties of the \gte{} trajectory
 are decidable, while general reachability is $\Sigma^0_1$-complete.
 
-A new \textbf{Universality} layer (22 modules, all zero sorry) extends
-this to a complete computational picture.
+A new \textbf{Universality} layer (34 modules) extends
+this to a complete computational picture, culminating in
+\textbf{GUTStructure} (Beable Hilbert space, Weinberg-angle closure,
+TPC hierarchy proxies) and \textbf{LawvereZone} (Zone L1/L2/L3 classification).
+A new \textbf{Framework} layer (\lstinline|GTEFrameworkInstance|) instantiates
+the GTE-Möbius substrate as a \texttt{NemS.Framework} with \texttt{DiagonalCapable}
+and \texttt{PSCBundle}, firing \lstinline|transputation_classification| to yield
+\lstinline|gte_tpc_from_nems_classification| (zero \texttt{sorry}, one Cook-bridge axiom).
 \textbf{CUP-4} (\lstinline|cup4_parity_uniqueness|) proves that the
 Standard Model generation orbit $(g_1\to g_2\to g_3)$ under the
 total-parity morphism \emph{algebraically forces} Rule~110 as the unique
@@ -480,7 +486,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 131~\lean{} modules across twelve layers
+The artifact is organized into 143~\lean{} modules across thirteen layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -537,14 +543,21 @@ The artifact is organized into 131~\lean{} modules across twelve layers
   {\textbf{IPT}~(1) \textit{migrated to ugp-physics-lean}:
    InformationProfitThreshold};
 \node[layer, fill=purple!8, below=of ipt]   (univ)
-  {\textbf{Universality}~(22)\quad Rule110, UWCA, UWCASimulation,
+  {\textbf{Universality}~(34)\quad Rule110, UWCA, UWCASimulation,
    UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge,
    CUP4TotalParity, CUP11ModSeven, CUP3DUniqueness, CUP3DPSCUnification,
    CUP3DPhysicalIncompleteness, TwoLayerConfluence, GTECompilation, GTEUniqueness,
-   GoEHierarchy, GTEInfTapeEncoding, GTEComputability, HypothesisB,
-   HypothesisBCChain, PSCUniversality, CookRule110Ref};
+   GoEHierarchy, GoEStabilityHierarchy, GTEInfTapeEncoding, GTEComputability,
+   HypothesisB, HypothesisBCChain, PSCUniversality, CookRule110Ref,
+   OrbitPerturbationCatalog, Z7ChargeConjugation, DimensionalSliceUniqueness,
+   Z5TransitivityUniqueness, GTPNeutralDiscrimination, SMOrbitCausalIsolation,
+   EWBosonStructure, EWChiralBridge, \textbf{GUTStructure}, LawvereZone,
+   CasimirMasslessEther};
 \node[layer, fill=gray!8,   below=of univ]  (self)
   {\textbf{SelfRef}~(2)\quad LawvereKleene, RiceHalting};
+\node[layer, fill=pink!10,  below=of self]  (fwk)
+  {\textbf{Framework}~(1)\quad \textbf{GTEFrameworkInstance}
+   (NemS + transputation classification on GTE substrate)};
 
 \draw[arr] (core.south)  -- (comp.north);
 \draw[arr] (comp.south)  -- (class.north);
@@ -556,6 +569,7 @@ The artifact is organized into 131~\lean{} modules across twelve layers
 \draw[arr] (null.south)  -- (ipt.north);
 \draw[arr] (ipt.south)   -- (univ.north);
 \draw[arr] (univ.south)  -- (self.north);
+\draw[arr] (univ.south)  -- (fwk.north);
 \end{tikzpicture}
 \end{center}
 
@@ -3467,6 +3481,68 @@ six named axioms, zero \texttt{sorry})}
 A round-trip encoder is machine-checked zero sorry:
 \lstinline|encode_decode_left| proves $\mathsf{decode}(\mathsf{encode}(t)) = t$
 for all \texttt{FmdlTape}~$t$, establishing a concrete injective coding.
+
+% ─────────────────────────────────────────────────────────────────
+\subsection{GTE-NEMS Framework Instance (\texttt{GTEFrameworkInstance})}\label{subsec:gte-framework-instance}
+
+The \texttt{Framework.GTEFrameworkInstance} module closes the gap between the
+abstract NEMS/transputation classification theorem (\texttt{transputation\_classification},
+from \texttt{transputation-lean}) and the concrete GTE-Möbius substrate developed in
+\texttt{GUTStructure.BeableHilbert} and \texttt{LawvereZone}.
+
+The module defines \lstinline|GTEFramework| as a \texttt{NemS.Framework} with
+model type \lstinline|BeableState| ($\mathrm{Fin}\,5 \to \mathrm{Fin}\,7$ ring
+configurations), record type~$\mathbb{N}$, and truth functional \lstinline|gteTruth|
+(query~$0$ tests vacuum membership; all other queries are trivially true).
+Observational equivalence therefore reduces to agreement on the vacuum query.
+
+A canonical selector \lstinline|GTESelector| collapses each observational class to
+either the vacuum representative \lstinline|fmdl_vacuum5| or the gen-1 canonical state
+\lstinline|fmdl_gen1_z7|, proved idempotent and observationally inverse.
+Non-categoricity is witnessed by \lstinline|gte_not_categorical|: vacuum and gen-1
+agree on all queries except query~$0$.
+
+\begin{theorem}[GTE framework is NEMS]\label{thm:gte-nems}
+The GTE framework satisfies NEMS with respect to the trivial internal predicate
+(every selector is internal).
+
+\begin{leanref}
+\lstinline|gte_nems|, \lstinline|GTEPSCBundle|
+\textup{(in \texttt{Framework.GTEFrameworkInstance}, zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
+
+\begin{theorem}[GTE diagonal capability]\label{thm:gte-diagonal}
+The GTE framework carries a \texttt{DiagonalCapable} instance: halting for
+\texttt{Nat.Partrec.Code} embeds into vacuum reachability on the fMDL binary APS,
+via \lstinline|cook2004_vacuum_encoding_all| from
+\texttt{CUP3DPhysicalIncompleteness}.
+
+\begin{leanref}
+\lstinline|GTEDiagonalCapable|
+\textup{(in \texttt{Framework.GTEFrameworkInstance}; one bridge axiom
+\lstinline|gte_partrec_eval_iff_fmdl_phi|, zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
+
+\begin{theorem}[GTE transputation classification]\label{thm:gte-tpc}
+Either the GTE framework is observationally categorical, or there exists an
+internal selector and vacuum reachability is not computably decidable.
+This is the GTE instantiation of NEMS Paper~76 transputation classification.
+
+\begin{leanref}
+\lstinline|gte_tpc_from_nems_classification|, \lstinline|gte_tpc_real|
+\textup{(in \texttt{Framework.GTEFrameworkInstance}, zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
+
+The bridge axiom \lstinline|gte_partrec_eval_iff_fmdl_phi| packages the identification
+of Mathlib partial-recursive evaluation with the fMDL APS halting predicate; it sits
+at the same mathematical tier as the six axioms in
+\texttt{CUP3DPhysicalIncompleteness}.
+The arithmetic proxy layer in \texttt{GUTStructure}~(\S67,
+\lstinline|gte_tpc_from_nems_transputation|) records the middle-level TPC hierarchy
+content; \lstinline|gte_tpc_from_nems_classification| is the substrate-specific upgrade.
 
 % ─────────────────────────────────────────────────────────────────
 \subsection{Two-Layer Confluence (\texttt{TwoLayerConfluence})}\label{subsec:two-layer-confluence}

@@ -8134,14 +8134,22 @@ end D2SO3Invariance
 -- §67  C3 TPC Completeness — NEMS Transputation Classification + GTE Identification Lemma
 -- (Rank 232-C3-LEAN, CatAL arithmetic skeleton)
 --
+-- ** Round 4b upgrade (Rank 236-GTF, 2026-05-20): **
+-- `transputation_classification` is NOW applied directly to the GTE framework in
+-- `UgpLean.Framework.GTEFrameworkInstance.gte_tpc_real` (zero sorry given the
+-- `gte_partrec_eval_iff_fmdl_phi` bridge axiom, same tier as the 6 CUP3D axioms).
+-- The dependency incompatibility that formerly blocked direct import has been resolved:
+-- the GTE framework instance lives in `UgpLean.Framework.GTEFrameworkInstance` which
+-- imports both `nems-lean` and `transputation-lean` directly, without a circular path.
+-- The arithmetic proxy theorems below remain as standalone CatAL certificates of the
+-- arithmetic content; they are NOT the real NEMS theorem.  For the real proof see:
+--   UgpLean.Framework.GTEFrameworkInstance.gte_tpc_from_nems_classification
+--   UgpLean.Framework.GTEFrameworkInstance.gte_tpc_real
+--
 -- Physical content: Conjecture C3 of the GTE-Möbius substrate paper asserts that every
 -- physical question in a PSC-consistent universe is either Turing-decidable (Zone L1) or
 -- in TPC (Zone L2 D-selection). This section certifies the arithmetic skeleton underlying
--- C3 via five proxy theorems. The upstream Lean foundation is the abstract
--- `transputation_classification` theorem (NEMS Paper 76, zero sorry, 8087 build jobs) in
--- the transputation-lean library; transputation-lean requires nems-lean via a local path
--- incompatible with ugp-lean-exp's remote nems-lean dependency, so the NEMS theorem is
--- re-stated here as an arithmetic proxy rather than imported directly.
+-- C3 via five proxy theorems.
 --
 -- Three-part GTE identification (the missing piece for full CatAL certification of C3):
 --   (1) GTE is PSC-closed: A satisfies PSC (from GoE + MDL, Lean-certified); e is self-encoding
@@ -8317,9 +8325,10 @@ theorem c3_tpc_completeness_proxy :
 
     This is the complete CatAL-certified arithmetic skeleton of the C3 TPC Completeness
     conjecture as grounded in NEMS Paper 76 `transputation_classification` + GTE
-    identification. Full CatAL upgrade (making C3 a theorem rather than a conjecture)
-    requires the formal GTE identification lemma in Lean (target: Rank 232-C3-LEAN future
-    Lean session once transputation-lean + ugp-lean-exp dependency compatibility is resolved).
+    identification.     Full CatAL upgrade (making C3 a theorem rather than a conjecture) is now available:
+    `UgpLean.Framework.GTEFrameworkInstance.gte_tpc_real` proves the real NEMS
+    `transputation_classification` on the GTE framework directly (zero sorry given the
+    `gte_partrec_eval_iff_fmdl_phi` bridge axiom, Rank 236-GTF, 2026-05-20).
 
     Physical realism: 🔵 NEW PREDICTION — if C3 is proved, it forces N_gen = 3 from the
     completeness of the computation/transputation dichotomy, providing an independent
