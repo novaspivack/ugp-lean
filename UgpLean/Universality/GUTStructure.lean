@@ -5455,4 +5455,121 @@ theorem mw_mz_squared_from_weinberg :
 
 end MWMZRatio
 
+-- §46  Lepton Number Conservation — Rank 160-LNC (CatAL)
+-- Winding 4 (e⁻/W⁻) cannot be produced by f_MDL; multi-step CA evolution preserves L=0.
+-- ════════════════════════════════════════════════════════════════
+
+/-! ### §46  Lepton Number Conservation: Winding 4 Cannot Be Created by f_MDL (Rank 160-LNC, CatAL)
+
+**Source theorem:** `CUP3D.fmdl_never_outputs_4` (CUP3DUniqueness §2, CatAL) establishes that
+winding 4 is absent from the range of f_MDL — for all (l, c, r) ∈ Z₇³, f_MDL(l,c,r) ≠ 4.
+This section derives the multi-step CA-level lepton number conservation law from that single fact.
+
+**Physical statement:** The electron/W⁻ winding (Z₇ = 4 ≡ −3 mod 7) is structurally excluded
+from the output of f_MDL.  Lepton number (encoded as the count of Z₇=4 cells on the tape)
+can never increase under f_MDL dynamics:
+
+- *Production impossible*: no f_MDL neighborhood produces winding 4 (unconditional structural fact).
+- *One-step conservation*: for any tape, one f_MDL step introduces no winding-4 cells.
+- *Multi-step conservation*: after k+1 steps (any k ≥ 0), no cell in the evolved tape has value 4.
+- *Decay*: any winding-4 cell present as an input center decays to vacuum in one step
+  (`winding_4_maps_to_vacuum`, §44).
+
+The proofs are uniformly trivial: each step of the multi-step evolution is a direct f_MDL output,
+which is never 4.  No non-trivial induction is required.  The conservation is a pure structural
+property of the CA rule, not a dynamical equilibrium.
+
+**Connection to SM lepton number:** In the Standard Model, L-conservation is an accidental global
+U(1)_L symmetry — not gauge-enforced.  In GTE, L-conservation is a structural consequence of
+the MDL-minimal CA rule: the CA substrate simply cannot produce winding 4.  This is a derivation
+from CA structure (CatAL), not an additional assumption.
+
+All theorems zero sorry; proofs follow directly from `CUP3D.fmdl_never_outputs_4`. -/
+
+section LeptonNumberConservation
+
+/-- One-step f_MDL evolution of a bi-infinite Z₇ tape.  Cell i maps to f_MDL of its
+    left neighbor, itself, and its right neighbor under the integer indexing. -/
+private def evolveStep (tape : ℤ → Fin 7) (i : ℤ) : Fin 7 :=
+  CUP3D.fmdl (tape (i - 1)) (tape i) (tape (i + 1))
+
+/-- n-fold f_MDL evolution of a Z₇ tape.  `evolveN tape 0 = tape` (identity);
+    `evolveN tape (k+1) i = f_MDL(evolveN tape k (i−1), evolveN tape k i, evolveN tape k (i+1))`. -/
+private def evolveN (tape : ℤ → Fin 7) : ℕ → ℤ → Fin 7
+  | 0, i => tape i
+  | n + 1, i => CUP3D.fmdl (evolveN tape n (i - 1)) (evolveN tape n i) (evolveN tape n (i + 1))
+
+/-- **lepton_production_impossible** (CatAL):
+    Winding 4 (e⁻/W⁻) is absent from the range of f_MDL: no input triple produces output 4.
+    This is the foundational CA-level statement that lepton number cannot be created by
+    f_MDL dynamics — winding 4 is a boundary condition, not a dynamical output.
+
+    Z₇ = 4 ≡ −3 (mod 7) is the electron/W⁻ winding class; 4 ∉ range(f_MDL) is confirmed
+    by exhaustive evaluation of all 7³ = 343 neighborhoods (18 orbit + 325 free→0).
+
+    LEAN-CERTIFIED (decide, zero sorry — physical restatement of `fmdl_never_outputs_4`). -/
+theorem lepton_production_impossible :
+    ∀ (l c r : Fin 7), CUP3D.fmdl l c r ≠ 4 :=
+  CUP3D.fmdl_never_outputs_4
+
+/-- **lepton_conservation_one_step** (CatAL):
+    One step of f_MDL evolution cannot introduce winding-4 cells into any tape.
+    The conclusion holds for ALL input tapes, not just those free of winding 4:
+    f_MDL structurally never outputs 4, so the evolved tape never contains 4.
+
+    LEAN-CERTIFIED (zero sorry). -/
+theorem lepton_conservation_one_step (tape : ℤ → Fin 7) :
+    ∀ i : ℤ, evolveStep tape i ≠ 4 :=
+  fun _ => CUP3D.fmdl_never_outputs_4 _ _ _
+
+/-- **lepton_number_conservation** (CatAL):
+    After k+1 steps of f_MDL evolution (any k ≥ 0), no cell has winding value 4.
+    This is the multi-step CA-level lepton number conservation law.
+
+    The proof follows directly at each level from `fmdl_never_outputs_4`:
+    `evolveN tape (k+1) i` is definitionally `f_MDL(evolveN tape k (i−1), ...)`,
+    which is never 4.  The inductive hypothesis is never needed — every evolved cell
+    is a fresh f_MDL output.  This confirms that the conservation is unconditional
+    (holds from step 1 regardless of the initial tape content).
+
+    LEAN-CERTIFIED (zero sorry). -/
+theorem lepton_number_conservation (tape : ℤ → Fin 7) (k : ℕ) :
+    ∀ i : ℤ, evolveN tape (k + 1) i ≠ 4 :=
+  fun _ => CUP3D.fmdl_never_outputs_4 _ _ _
+
+/-- **lepton_number_preserved_from_L0_initial** (CatAL):
+    If the initial tape has no winding-4 cells (L = 0 initial condition), then after any
+    number k of f_MDL evolution steps the tape still has no winding-4 cells.
+
+    This is the standard conservation-law formulation for L=0 initial data.
+    The base case uses the hypothesis; the inductive step discards it (the conclusion
+    holds for any tape at step k+1, by `lepton_number_conservation`).
+
+    LEAN-CERTIFIED (zero sorry). -/
+theorem lepton_number_preserved_from_L0_initial
+    (tape : ℤ → Fin 7)
+    (h0 : ∀ i : ℤ, tape i ≠ 4) :
+    ∀ (k : ℕ) (i : ℤ), evolveN tape k i ≠ 4 := by
+  intro k
+  induction k with
+  | zero     => exact h0
+  | succ n _ => exact fun i => CUP3D.fmdl_never_outputs_4 _ _ _
+
+/-- **lepton_number_conservation_summary** (CatAL):
+    Complete CA-level lepton number conservation: two-part joint statement.
+    (1) Production forbidden: f_MDL never outputs winding 4 (for any input triple).
+    (2) Decay: any winding-4 center decays to vacuum — f_MDL(l, 4, r) = 0 for all l, r.
+
+    Together these establish: winding 4 is both *uncreatable* (no output = 4) and
+    *unstable as a center* (any input with center = 4 maps immediately to vacuum).
+    This is the GTE structural derivation of lepton non-creation at the CA substrate level.
+
+    LEAN-CERTIFIED (zero sorry). -/
+theorem lepton_number_conservation_summary :
+    (∀ (l c r : Fin 7), CUP3D.fmdl l c r ≠ 4) ∧
+    (∀ (l r : Fin 7), CUP3D.fmdl l 4 r = 0) :=
+  ⟨CUP3D.fmdl_never_outputs_4, winding_4_maps_to_vacuum⟩
+
+end LeptonNumberConservation
+
 end GUTStructure
