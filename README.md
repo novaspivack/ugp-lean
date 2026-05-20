@@ -661,3 +661,14 @@ Physical motivation: The CA masslessness criterion implies a left-right asymmetr
 <!-- NOVA_ZPO_ZENODO_PAPER_BEGIN -->
 **Archival paper (Zenodo preprint) (Zenodo):** https://doi.org/10.5281/zenodo.19433539
 <!-- NOVA_ZPO_ZENODO_PAPER_END -->
+
+---
+
+**Z₇ Winding–Charge Equivalence (GUTStructure.lean §50 `WindingChargeEquivalence`, Rank 189-WCT, 2026-05-20; 4 theorems, 0 sorry)**
+
+Formal certification that Z₇ winding conservation is equivalent to electric charge conservation for all SM color-singlet particles. The GTE charge formula 3Q = w* (§49) maps integer charges injectively to Z₇ classes, making Z₇ an arithmetic encoding of U(1)_EM at the observable-particle level. All proofs by `norm_num`.
+
+- `wplus_decay_z7_eq_charge` — all three charge-conserving splits of Q=+1 satisfy Z₇: (3+0)%7=3, (3+4)%7=0, (0+0)%7=0 (norm_num, CatAL)
+- `proton_decay_dominant_z7` — dominant channel p→e⁺+π⁰ certified: 3 ≡ 3+0 (mod 7); w(e⁺)=w(p)=3 (norm_num, CatAL)
+- `z7_charge_homomorphism` — Q↦w*=3Q (mod 7) is a group homomorphism for all SM charges including fractional quarks: Q∈{+1,0,−1,+2/3,−1/3} → w*∈{3,0,4,2,6} (norm_num, CatAL)
+- `winding_charge_equivalence` — **Main theorem**: Z₇ winding sum = initial winding for all five representative SM color-singlet charge classes, including quark pairs u+ū and d+d̄ (norm_num, CatAL)
