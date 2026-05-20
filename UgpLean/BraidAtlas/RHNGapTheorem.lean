@@ -211,4 +211,101 @@ theorem rhn_b3_both_prime : Nat.Prime 19 ∧ Nat.Prime 37 := ⟨by decide, by de
   (preserved under mirror swap; gap = adjoint dimension) but not derived.
 -/
 
+-- ════════════════════════════════════════════════════════════════════
+-- §6  Arithmetic reduction: gap = q₂ − b₁_RHN (Rank 245-SGT)
+-- ════════════════════════════════════════════════════════════════════
+
+/-! ### §6  Structural gap as q₂ − b₁_RHN (Rank 245-SGT)
+
+The gap b₃ = b₂ + (N_c²−1) is algebraically equivalent to b₃ = q₂ − b₁_RHN,
+given the certified structural facts:
+
+  (A) q₂ = q₁ + 13 = q₁ + c_H    (branch-shift invariant, `branch_spacing_invariant` §51)
+  (B) b₂_RHN = q₁                 (EW Boson–RHN connection, `ew_rhn_connection_standard`)
+  (C) b₁_RHN = 5                  (branch-invariant, `dark_rhn_b1` = (N_c²+1)/2 = 5)
+
+Chain: q₂ − b₁_RHN = (q₁ + 13) − 5 = q₁ + 8 = b₂_RHN + 8 = b₃_RHN.
+
+  Standard: q₂_SM   − b₁_RHN = 24 − 5 = 19 = b₃_std    ✓
+  Mirror:   q₂_mir  − b₁_RHN = 42 − 5 = 37 = b₃_mirror  ✓
+
+This section provides arithmetic certifications of the q₂ − b₁ form and the
+algebraic reduction from (A)+(B)+(C).  Scientific status: CatAL for the
+arithmetic; the structural assignment b₃ := q₂ − b₁_RHN from GTE cascade
+derivation rules remains CatD (open derivation, see §5).
+
+All theorems: zero sorry.
+-/
+
+/-- **SM gap via q₂ − b₁_RHN — ARITHMETIC (CatD).**
+
+    The standard RHN b₃ = 19 equals q₂_SM − b₁_RHN = 24 − 5 = 19.
+    This is a norm_num arithmetic certificate; the structural assignment
+    b₃ := q₂ − b₁ from GTE cascade rules is an open derivation (§5).
+
+    Grade: [D] numerical identity (norm_num, zero sorry). -/
+theorem rhn_b3_gap_q2_b1_standard : (24 : ℕ) - 5 = 19 := by norm_num
+
+/-- **Mirror gap via q₂ − b₁_RHN — ARITHMETIC (CatD).**
+
+    The mirror RHN b₃_mirror = 37 equals q₂_mirror − b₁_RHN = 42 − 5 = 37.
+    This is a norm_num arithmetic certificate; the structural assignment
+    b₃ := q₂ − b₁ from GTE cascade rules is an open derivation (§5).
+
+    Grade: [D] numerical identity (norm_num, zero sorry). -/
+theorem rhn_b3_gap_q2_b1_mirror : (42 : ℕ) - 5 = 37 := by norm_num
+
+/-- **Gap formula equivalence: b₃ = b₂ + 8 ↔ b₃ = q₂ − 5 — ARITHMETIC.**
+
+    Both standard and mirror branches: the two gap formulas are arithmetically
+    equivalent, given the certified branch-shift invariant q₂ − q₁ = 13 = c_H
+    (`branch_spacing_invariant`, GUTStructure §51) and b₂_RHN = q₁ (EW-RHN
+    connection, `ew_rhn_connection_standard`).
+
+    Standard: 24 − 5 = 19 = 11 + 8  (q₂=24, b₁=5, b₂=11, b₃=19)
+    Mirror:   42 − 5 = 37 = 29 + 8  (q₂=42, b₁=5, b₂=29, b₃=37)
+
+    The equivalence reduces the structural gap theorem to a single open claim:
+    the assignment rule b₃_RHN := q₂ − b₁_RHN from GTE cascade first principles.
+
+    Grade: [D] arithmetic equivalence (norm_num, zero sorry). -/
+theorem rhn_b3_gap_formulas_equivalent :
+    -- Standard branch: both gap formulas give b₃ = 19
+    (24 : ℕ) - 5 = 19 ∧ (11 : ℕ) + 8 = 19 ∧
+    -- Mirror branch: both gap formulas give b₃ = 37
+    (42 : ℕ) - 5 = 37 ∧ (29 : ℕ) + 8 = 37 ∧
+    -- Equivalence via q₂ − q₁ = 13 (branch-shift invariant) and b₁_RHN = 5
+    -- Standard: (q₁ + 13) − 5 = q₁ + 8  →  24 − 5 = 11 + 8
+    (24 : ℕ) - 5 = 11 + 8 ∧
+    -- Mirror:   (q₁' + 13) − 5 = q₁' + 8  →  42 − 5 = 29 + 8
+    (42 : ℕ) - 5 = 29 + 8 := by
+  norm_num
+
+/-- **Algebraic reduction chain (CatAL skeleton).**
+
+    Given three certified structural facts, the gap theorem b₃ = q₂ − b₁ follows:
+
+    (A) q₂ − q₁ = 13 = c_H                          CatAL: branch_spacing_invariant (§51)
+    (B) b₂_RHN = q₁                                 CatAL: ew_rhn_connection_standard
+    (C) b₁_RHN = (N_c²+1)/2 = 5                     CatAL: dark_rhn_b1
+
+    From (A)+(B)+(C): q₂ − b₁ = (q₁ + 13) − 5 = q₁ + 8 = b₂ + 8 = b₃.
+    This arithmetic chain holds for both branches (standard q₁=11; mirror q₁=29).
+
+    What this theorem certifies: the reduction chain is arithmetically consistent.
+    What it does NOT certify: that b₃_RHN is ASSIGNED by the GTE cascade as q₂ − b₁
+    from first principles.  The structural assignment remains CatD (§5 open problem).
+
+    Grade: [AL] arithmetic skeleton (norm_num, zero sorry). -/
+theorem rhn_gap_algebraic_reduction :
+    -- (A) Branch-shift invariant: q₂_SM − q₁_SM = 13, q₂_mir − q₁_mir = 13
+    (24 : ℕ) - 11 = 13 ∧ (42 : ℕ) - 29 = 13 ∧
+    -- (C) b₁_RHN = 5 = (3² + 1) / 2 (both branches)
+    (3 : ℕ)^2 + 1 = 10 ∧ 10 / 2 = 5 ∧
+    -- Reduction: standard  q₂ − b₁ = 24 − 5 = 19 = b₂ + 8 = 11 + 8
+    (24 : ℕ) - 5 = 11 + 8 ∧
+    -- Reduction: mirror    q₂ − b₁ = 42 − 5 = 37 = b₂ + 8 = 29 + 8
+    (42 : ℕ) - 5 = 29 + 8 := by
+  norm_num
+
 end UgpLean.BraidAtlas

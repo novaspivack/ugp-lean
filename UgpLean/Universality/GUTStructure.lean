@@ -9403,4 +9403,97 @@ theorem tail_neff_nearness :
 
 end MassOrderingTailLengths
 
+-- §78  PSCCoupling — MDL → sin²θ_W = 3/13 Arithmetic Certificate (Rank 255-PSC, CatAL)
+-- ════════════════════════════════════════════════════════════════
+--
+-- This section records the arithmetic certificate of the PSC → MDL → Weinberg chain:
+--   PSC efficiency maximization → MDL minimality of all physical descriptions
+--   MDL minimality → gauge couplings arise from minimum description fractions
+--   MDL-minimal coupling at the scalar endpoint → sin²θ_W = b_H/c_H = 3/13
+--
+-- What is machine-certified here (CatAL):
+--   b_H = N_gen = 3  (palindromic CA neighborhoods = U(1)_Y channels)
+--   c_H = 13         (total Higgs cascade depth, EWBosonStructure.c_higgs)
+--   sin²θ_W = b_H/c_H = 3/13 (arithmetic identity; see also weinberg_angle_closure §12)
+--
+-- What remains CatAD (not proved here):
+--   Physical identification: MDL description fraction = gauge coupling
+--   PSC efficiency → MDL minimality bridge (AX-MDL-COUPLING)
+--   These require the PSC morphism category (Rank 234-SRRG-MDL-BRIDGE, P34 C1)
+--
+-- Section status: CatAL arithmetic certificate; physical bridge CatAD.
+-- Zero sorry for all theorems in this section.
+-- ════════════════════════════════════════════════════════════════
+
+/-! ### §78  PSCCoupling — MDL → sin²θ_W = 3/13 (Rank 255-PSC)
+
+The MDL-minimal coupling assignment uniquely gives sin²θ_W = 3/13 from:
+- b_H = N_gen = 3 palindromic CA neighborhoods (U(1)_Y channels) — CatAL
+- c_H = 13 total CA neighborhoods (Higgs cascade depth) — CatAL
+- sin²θ_W = b_H/c_H = 3/13 — CatAL arithmetic
+
+This section provides the arithmetic certificate.  The PSC → MDL bridge
+(AX-MDL-COUPLING) that physically motivates this assignment remains CatAD. -/
+
+section PSCCoupling
+
+/-- **mdl_b_H_value** (CatAL): b_H = N_gen = 3.
+    The palindromic CA neighborhood count (U(1)_Y channels) equals the generation count.
+    Source: `n_gen = 3` (GUTStructure §1) ∧ b_H = N_gen (fmdl_count_decomposition §3).
+    LEAN-CERTIFIED (rfl, zero sorry). -/
+theorem mdl_b_H_value : n_gen = 3 := rfl
+
+/-- **mdl_c_H_value** (CatAL): c_H = 13.
+    The total Higgs cascade depth (GTE palindromes + non-palindromes).
+    Source: `EWBosonStructure.c_higgs = 13` (EWBosonStructure, zero sorry).
+    LEAN-CERTIFIED (rfl, zero sorry). -/
+theorem mdl_c_H_value : EWBosonStructure.c_higgs = 13 := rfl
+
+/-- **mdl_b_H_lt_c_H** (CatAL): b_H < c_H, i.e., N_gen < c_higgs (3 < 13).
+    The U(1)_Y channel count is strictly less than the full EW capacity.
+    This ensures sin²θ_W = b_H/c_H ∈ (0,1) as required for a physical mixing angle.
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem mdl_b_H_lt_c_H : n_gen < EWBosonStructure.c_higgs := by
+  norm_num [n_gen, EWBosonStructure.c_higgs]
+
+/-- **mdl_coupling_arithmetic_certificate** ★★★ (CatAL): sin²θ_W = b_H/c_H = 3/13.
+    The arithmetic certificate of the MDL-minimal coupling assignment.
+    If gauge couplings arise from MDL description fractions, then
+    sin²θ_W = (U(1)_Y channels) / (total EW channels) = b_H/c_H = 3/13.
+
+    CatAL chain:
+      b_H = N_gen = 3    (palindrome count, fmdl_count_decomposition §3)
+      c_H = 13           (Higgs cascade depth, EWBosonStructure.c_higgs)
+      sin²θ_W = 3/13     (arithmetic; see also weinberg_angle_closure §12)
+
+    CatAD (not proved here): the PSC → MDL bridge (AX-MDL-COUPLING) asserting that
+    PSC efficiency maximization forces the description-fraction assignment
+    g² ∝ (G-type description fraction).  This requires the PSC morphism category
+    (Rank 234-SRRG-MDL-BRIDGE, P34 C1 conjecture).
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem mdl_coupling_arithmetic_certificate :
+    (n_gen : ℚ) / EWBosonStructure.c_higgs = 3 / 13 := by
+  norm_num [n_gen, EWBosonStructure.c_higgs]
+
+/-- **psc_mdl_coupling_chain** ★★★ (CatAL): Full arithmetic chain in one statement.
+    Records all three arithmetic links of the PSC → MDL → Weinberg certificate:
+    (1) b_H = 3       — U(1)_Y channels = N_gen (palindrome count)
+    (2) c_H = 13      — total EW capacity = Higgs cascade depth
+    (3) b_H/c_H = 3/13 — MDL-minimal coupling ratio = sin²θ_W
+    (4) b_H < c_H     — ensures ratio is in (0,1)
+
+    This is the CatAL arithmetic certificate of AX-MDL-COUPLING.
+    The physical bridge (PSC efficiency → MDL fraction = gauge coupling) is CatAD.
+    LEAN-CERTIFIED (norm_num + rfl, zero sorry). -/
+theorem psc_mdl_coupling_chain :
+    n_gen = 3 ∧                                              -- (1) b_H = N_gen
+    EWBosonStructure.c_higgs = 13 ∧                         -- (2) c_H = Higgs depth
+    (n_gen : ℚ) / EWBosonStructure.c_higgs = 3 / 13 ∧      -- (3) sin²θ_W = b_H/c_H
+    n_gen < EWBosonStructure.c_higgs :=                     -- (4) 0 < sin²θ_W < 1
+  ⟨rfl, rfl, by norm_num [n_gen, EWBosonStructure.c_higgs],
+              by norm_num [n_gen, EWBosonStructure.c_higgs]⟩
+
+end PSCCoupling
+
 end GUTStructure
