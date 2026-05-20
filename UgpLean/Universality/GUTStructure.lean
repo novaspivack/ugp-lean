@@ -5621,4 +5621,123 @@ theorem lepton_number_conservation_summary :
 
 end LeptonNumberConservation
 
+-- §47  Ward Identity — Z₇ Winding Current Conservation (Rank 170-WCI, CatAL)
+-- ════════════════════════════════════════════════════════════════
+
+/-! ### §47  Ward Identity for the Z₇ Winding Current (Rank 170-WCI, CatAL)
+
+The CA Dirac equation (1+1D, `H = v_CA · k · σ_z + m_eff · σ_x`) implies the continuity
+equation for the Z₇ winding current:
+
+  `∂_t(ψ†ψ) + ∂_x(v_CA · ψ†σ_z ψ) = 0`
+
+where `ρ = ψ†ψ = |ψ_R|² + |ψ_L|²` is the winding density and
+`j_Z₇ = v_CA · ψ†σ_z ψ = v_CA · (|ψ_R|² − |ψ_L|²)` is the Z₇ winding current.
+
+The full analytic derivation (CatAD) proceeds via the position-space Dirac equations:
+
+  `∂_t ψ_R = −v_CA ∂_x ψ_R − i m ψ_L`
+  `∂_t ψ_L = +v_CA ∂_x ψ_L − i m ψ_R`
+
+Computing `∂_t ρ` introduces two mass cross-terms:
+  `−m Im(ψ_R* ψ_L) − m Im(ψ_L* ψ_R)`
+
+These cancel identically because `Im(z) + Im(z̄) = 0` for any `z ∈ ℂ`.
+The kinetic terms then give `∂_t ρ = −∂_x(v_CA · ψ†σ_z ψ)`, completing the identity.
+
+This section certifies the algebraic core of that cancellation in Lean: the
+mass cross-term vanishes for all `ψ_R, ψ_L ∈ ℂ`, and the chirality density
+`ψ†σ_z ψ = normSq(ψ_R) − normSq(ψ_L)` holds as a real-valued identity.
+
+All theorems zero sorry; proofs use `simp [Complex.mul_im, Complex.star_def]` + `ring`. -/
+
+section WardIdentity
+
+/-- **ward_mass_cancellation** (CatAL):
+    The mass cross-term in `∂_t(ψ†ψ)` vanishes for all `ψ_R ψ_L : ℂ`.
+
+    In the CA Dirac equation the off-diagonal mass term contributes:
+      `−m Im(ψ_R* ψ_L)  −m Im(ψ_L* ψ_R)`
+    to `∂_t ρ`.  This theorem proves these two terms cancel identically:
+
+      `Im(ψ_R* ψ_L) + Im(ψ_L* ψ_R) = Im(z) + Im(z̄) = 0`   (z = ψ_R* ψ_L)
+
+    Proof: expand via `Complex.mul_im` and `Complex.star_def`; the resulting
+    polynomial `a·d − b·c + c·b − d·a = 0` closes by `ring`.
+
+    LEAN-CERTIFIED (simp + ring, zero sorry). -/
+theorem ward_mass_cancellation :
+    ∀ (ψ_R ψ_L : ℂ),
+      (star ψ_R * ψ_L).im + (star ψ_L * ψ_R).im = 0 := by
+  intro ψ_R ψ_L
+  simp [Complex.mul_im]
+  ring
+
+/-- **ward_mass_cancellation_scaled** (CatAL):
+    The mass cross-term multiplied by any real coefficient `m` vanishes.
+    This is the exact form appearing in `∂_t ρ` from the Dirac equations:
+    the coefficient `−m` cancels for all `m : ℝ`.
+
+    LEAN-CERTIFIED (from `ward_mass_cancellation`, zero sorry). -/
+theorem ward_mass_cancellation_scaled :
+    ∀ (m : ℝ) (ψ_R ψ_L : ℂ),
+      m * ((star ψ_R * ψ_L).im + (star ψ_L * ψ_R).im) = 0 := by
+  intro m ψ_R ψ_L
+  linear_combination m * ward_mass_cancellation ψ_R ψ_L
+
+/-- **ward_density_as_normSq** (CatAL):
+    The winding density `ρ = ψ†ψ = |ψ_R|² + |ψ_L|²` equals `normSq ψ_R + normSq ψ_L`.
+    In the complex spinor language this is `(star ψ_R * ψ_R).re + (star ψ_L * ψ_L).re`,
+    confirming that the density is a sum of real non-negative terms.
+
+    LEAN-CERTIFIED (simp + ring, zero sorry). -/
+theorem ward_density_as_normSq :
+    ∀ (ψ_R ψ_L : ℂ),
+      Complex.normSq ψ_R + Complex.normSq ψ_L =
+      (star ψ_R * ψ_R).re + (star ψ_L * ψ_L).re := by
+  intro ψ_R ψ_L
+  simp [Complex.normSq_apply, Complex.mul_re]
+
+/-- **ward_chirality_density** (CatAL):
+    The Z₇ chirality density `ψ†σ_z ψ = |ψ_R|² − |ψ_L|²` as an identity of real numbers:
+
+      `(star ψ_R * ψ_R).re − (star ψ_L * ψ_L).re = normSq ψ_R − normSq ψ_L`
+
+    This is the algebraic fact that makes `σ_z = diag(+1, −1)` the winding current operator:
+    `⟨ψ|σ_z|ψ⟩ = |ψ_R|² − |ψ_L|²` in the chiral spinor basis {Layer 110, Layer 124}.
+    Combined with `v_CA = 2/3` (CatA, Rank 111) this gives `j_Z₇ = v_CA (normSq ψ_R − normSq ψ_L)`.
+
+    LEAN-CERTIFIED (simp + ring, zero sorry). -/
+theorem ward_chirality_density :
+    ∀ (ψ_R ψ_L : ℂ),
+      (star ψ_R * ψ_R).re - (star ψ_L * ψ_L).re =
+      Complex.normSq ψ_R - Complex.normSq ψ_L := by
+  intro ψ_R ψ_L
+  simp [Complex.normSq_apply, Complex.mul_re]
+
+/-- **ward_identity_algebraic_summary** (CatAL):
+    Joint statement packaging the three algebraic facts underlying the Ward identity
+    `∂_t(ψ†ψ) + ∂_x(v_CA ψ†σ_z ψ) = 0`:
+
+    (1) Mass cross-term cancels: `Im(ψ_R* ψ_L) + Im(ψ_L* ψ_R) = 0`
+    (2) Density in normSq form: `normSq ψ_R + normSq ψ_L = (ψ_R* ψ_R).re + (ψ_L* ψ_L).re`
+    (3) Chirality density: `(ψ_R* ψ_R).re − (ψ_L* ψ_L).re = normSq ψ_R − normSq ψ_L`
+
+    The continuum Ward identity follows from (1) + (3) + the product rule for derivatives.
+    The product rule is not formalised here (requires function derivatives); the three
+    algebraic cores are the CatAL contribution.
+
+    LEAN-CERTIFIED (from the three component theorems above, zero sorry). -/
+theorem ward_identity_algebraic_summary (ψ_R ψ_L : ℂ) :
+    (star ψ_R * ψ_L).im + (star ψ_L * ψ_R).im = 0 ∧
+    Complex.normSq ψ_R + Complex.normSq ψ_L =
+      (star ψ_R * ψ_R).re + (star ψ_L * ψ_L).re ∧
+    (star ψ_R * ψ_R).re - (star ψ_L * ψ_L).re =
+      Complex.normSq ψ_R - Complex.normSq ψ_L :=
+  ⟨ward_mass_cancellation ψ_R ψ_L,
+   ward_density_as_normSq ψ_R ψ_L,
+   ward_chirality_density ψ_R ψ_L⟩
+
+end WardIdentity
+
 end GUTStructure
