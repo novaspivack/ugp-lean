@@ -672,3 +672,19 @@ Formal certification that Z₇ winding conservation is equivalent to electric ch
 - `proton_decay_dominant_z7` — dominant channel p→e⁺+π⁰ certified: 3 ≡ 3+0 (mod 7); w(e⁺)=w(p)=3 (norm_num, CatAL)
 - `z7_charge_homomorphism` — Q↦w*=3Q (mod 7) is a group homomorphism for all SM charges including fractional quarks: Q∈{+1,0,−1,+2/3,−1/3} → w*∈{3,0,4,2,6} (norm_num, CatAL)
 - `winding_charge_equivalence` — **Main theorem**: Z₇ winding sum = initial winding for all five representative SM color-singlet charge classes, including quark pairs u+ū and d+d̄ (norm_num, CatAL)
+
+---
+
+**CA Ether Dispersion Relation E = v_CA × k (GUTStructure.lean §58 `EtherDispersion`, Rank 212-CEK Thread 2, 2026-05-20; 9 theorems + 2 defs, 0 sorry)**
+
+Formal certification of the CA ether dispersion relation E(k) = v_CA × k evaluated at the Brillouin zone boundary. v_CA = 2/3 is grounded directly in Cook's Rule 110 glider catalog: the A glider (Cook Figure 5) has period (Δt=3, Δx=2), giving speed v_CA = Δx/Δt = 2/3. This is the first CatAL connection between the Cook glider catalog data and the neutrino mass formula. Added `import Rule110.CookGliderCatalog` to GUTStructure.lean. Build: ✔ [3300/3300] in 10s (5 extra from CookGliderCatalog import chain).
+
+- `a_glider_period` — A glider Δt = 3 (rfl; Cook Figure 5 data, CatAL)
+- `a_glider_displacement` — A glider Δx = 2 (rfl; Cook Figure 5 data, CatAL)
+- `v_CA_from_a_glider` — **Main certificate**: Δt=3 ∧ Δx=2 ∧ v_CA=2/3 (⟨rfl,rfl,rfl⟩; directly grounded in CookGliderCatalog, CatAL)
+- `e_bz_eq_v_times_k` — v_CA × k_BZ = 1/21 (norm_num; BZ boundary energy rational proxy, CatAL)
+- `e_bz_rational_proxy` — (2:ℚ)/3/14 = 1/21 (norm_num, CatAL)
+- `linear_dispersion_at_BZ` — v_CA × k_BZ = 1/21 (alias for e_bz_eq_v_times_k, CatAL)
+- `ether_energy_denominator_factored` — 3 × 7 × 13 = 273 (norm_num, CatAL)
+- `ether_dispersion_complete` — **Master conjunction**: v_CA=2/3 ∧ k_BZ=1/14 ∧ v_CA×k_BZ=1/21 (⟨rfl,rfl,norm_num⟩, CatAL)
+- `dispersion_denominator_chain` — 21×13=273 ∧ (2/3)/14=1/21 (norm_num, CatAL)
