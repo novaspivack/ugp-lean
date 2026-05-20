@@ -9,6 +9,9 @@ import Rule110.CookGliderCatalog
 import Mathlib.Tactic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
+import Mathlib.Analysis.Real.Pi.Bounds
+import Mathlib.Analysis.SpecialFunctions.Complex.Arctan
+import Mathlib.Analysis.SpecificLimits.Normed
 
 /-!
 # UgpLean.Universality.GUTStructure — SU(5) GUT Weinberg Angle from GTE Arithmetic
@@ -8754,41 +8757,182 @@ theorem gamma_cp_tan_value :
     Real.sqrt (8191 / 186 : ℝ) / 3 :=
   Real.tan_arctan _
 
-/-- **gamma_cp_bounds_deg** (Round 2 target):
+-- ────────────────────────────────────────────────────────────────
+-- §72 Private helpers: alternating-series bounds for arctan
+-- Used in gamma_cp_bounds_deg and rho_bar_eta_bar_bounds below.
+-- ────────────────────────────────────────────────────────────────
+
+/-- f(n) = x^{2n+1}/(2n+1) is antitone on ℕ for 0 < x < 1. -/
+private lemma ckm_arctan_f_antitone {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    Antitone (fun n : ℕ => x ^ (2 * n + 1) / (↑(2 * n + 1) : ℝ)) := by
+  intro m n hmn
+  have hpow : x ^ (2 * n + 1) ≤ x ^ (2 * m + 1) :=
+    pow_le_pow_of_le_one hx0.le hx1.le (by omega)
+  have hm_pos : (0 : ℝ) < ↑(2 * m + 1) := by exact_mod_cast Nat.succ_pos _
+  have hn_pos : (0 : ℝ) < ↑(2 * n + 1) := by exact_mod_cast Nat.succ_pos _
+  have hmn_le : (↑(2 * m + 1) : ℝ) ≤ ↑(2 * n + 1) :=
+    Nat.cast_le.mpr (by omega)
+  calc x ^ (2 * n + 1) / ↑(2 * n + 1)
+      ≤ x ^ (2 * m + 1) / ↑(2 * n + 1) :=
+        div_le_div_of_nonneg_right hpow hn_pos.le
+    _ ≤ x ^ (2 * m + 1) / ↑(2 * m + 1) :=
+        div_le_div_of_nonneg_left (pow_nonneg hx0.le _) hm_pos hmn_le
+
+/-- Convert Real.hasSum_arctan to the range-Tendsto form used by alternating series bounds. -/
+private lemma ckm_arctan_tendsto {x : ℝ} (hnorm : ‖x‖ < 1) :
+    Filter.Tendsto
+      (fun n => ∑ i ∈ Finset.range n, (-1 : ℝ) ^ i * (x ^ (2 * i + 1) / ↑(2 * i + 1)))
+      Filter.atTop (nhds (Real.arctan x)) := by
+  have h := (Real.hasSum_arctan hnorm).tendsto_sum_nat
+  simp_rw [mul_div_assoc] at h; exact h
+
+/-- For 0 < x < 1: arctan x ≤ x − x³/3 + x⁵/5 (3-term Taylor upper bound). -/
+private lemma arctan_3term_upper {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    Real.arctan x ≤ x - x ^ 3 / 3 + x ^ 5 / 5 := by
+  have hnorm : ‖x‖ < 1 := by rwa [Real.norm_of_nonneg hx0.le]
+  have hfl := ckm_arctan_tendsto hnorm
+  have h3 := Antitone.tendsto_le_alternating_series hfl (ckm_arctan_f_antitone hx0 hx1) 1
+  have heval : ∑ i ∈ Finset.range (2 * 1 + 1),
+      (-1 : ℝ) ^ i * (x ^ (2 * i + 1) / ↑(2 * i + 1)) =
+      x - x ^ 3 / 3 + x ^ 5 / 5 := by
+    simp [Finset.sum_range_succ]; ring
+  rw [heval] at h3; exact h3
+
+/-- For 0 < x < 1: x − x³/3 + x⁵/5 − x⁷/7 ≤ arctan x (4-term Taylor lower bound). -/
+private lemma arctan_4term_lower {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    x - x ^ 3 / 3 + x ^ 5 / 5 - x ^ 7 / 7 ≤ Real.arctan x := by
+  have hnorm : ‖x‖ < 1 := by rwa [Real.norm_of_nonneg hx0.le]
+  have hfl := ckm_arctan_tendsto hnorm
+  have h4 := Antitone.alternating_series_le_tendsto hfl (ckm_arctan_f_antitone hx0 hx1) 2
+  have heval : ∑ i ∈ Finset.range (2 * 2),
+      (-1 : ℝ) ^ i * (x ^ (2 * i + 1) / ↑(2 * i + 1)) =
+      x - x ^ 3 / 3 + x ^ 5 / 5 - x ^ 7 / 7 := by
+    simp [Finset.sum_range_succ]; ring
+  rw [heval] at h4; exact h4
+
+/-- **gamma_cp_bounds_deg** (CatAL):
     65° < γ < 66° where γ = arctan(√(8191/186)/3).
 
     PDG: γ = δ_CP = (65.6 ± 1.5)°.  The GTE prediction arctan(√(8191/186)/3) ≈ 65.6°
-    lies within this band.  Proof requires:
-    tan(65π/180) < √(8191/186)/3 < tan(66π/180),
-    i.e. tan(65°) ≈ 2.1445 < √(8191/186)/3 ≈ 2.212 < tan(66°) ≈ 2.2460.
+    lies within this band.
 
-    TODO Round 2: discharge via Mathlib interval arithmetic or norm_num extension for
-    real tan values at rational multiples of π. -/
+    Strategy:
+    · Lower: x = √(8191/186)/3 > 2.2; arctan(2.2) = π/2 − arctan(5/11);
+      arctan(5/11) ≤ 206365/483153 (3-term Taylor); 206365/483153 < 5π/36 (π > 3.14);
+      hence 65π/180 = 13π/36 < arctan(2.2) ≤ arctan(x).
+    · Upper: x < 2.24; arctan(2.24) = π/2 − arctan(25/56);
+      L₄(25/56) ≤ arctan(25/56) (4-term Taylor); L₄ > 2π/15 (π < 3.1416);
+      hence arctan(x) ≤ arctan(2.24) < 66π/180.
+
+    LEAN-CERTIFIED (alternating series bounds + pi_gt_d2 + pi_lt_d4, zero sorry). -/
 theorem gamma_cp_bounds_deg :
     65 * Real.pi / 180 < Real.arctan (Real.sqrt (8191 / 186 : ℝ) / 3) ∧
     Real.arctan (Real.sqrt (8191 / 186 : ℝ) / 3) < 66 * Real.pi / 180 := by
+  -- Rational bounds: 2.2 < √(8191/186)/3 < 2.24
+  have hx_lo : (2.2 : ℝ) < Real.sqrt (8191 / 186 : ℝ) / 3 := by
+    have h66 : (6.6 : ℝ) < Real.sqrt (8191 / 186 : ℝ) :=
+      calc (6.6 : ℝ) = Real.sqrt (6.6 ^ 2) := (Real.sqrt_sq (by norm_num)).symm
+        _ < Real.sqrt (8191 / 186 : ℝ) := Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
+    -- 2.2 = 6.6/3 < sqrt/3 follows by linarith from (sqrt/3)*3 = sqrt > 6.6 = 2.2*3
+    linarith [show Real.sqrt (8191 / 186 : ℝ) / 3 * 3 = Real.sqrt (8191 / 186 : ℝ) from by ring]
+  have hx_hi : Real.sqrt (8191 / 186 : ℝ) / 3 < (2.24 : ℝ) := by
+    have h672 : Real.sqrt (8191 / 186 : ℝ) < (6.72 : ℝ) :=
+      calc Real.sqrt (8191 / 186 : ℝ)
+          < Real.sqrt (6.72 ^ 2) := Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
+        _ = 6.72 := Real.sqrt_sq (by norm_num)
+    -- sqrt/3 < 2.24 = 6.72/3 follows by linarith from (sqrt/3)*3 = sqrt < 6.72 = 2.24*3
+    linarith [show Real.sqrt (8191 / 186 : ℝ) / 3 * 3 = Real.sqrt (8191 / 186 : ℝ) from by ring]
+  -- Complement: arctan(2.2) = π/2 − arctan(5/11)
+  have hcomp22 : Real.arctan (2.2 : ℝ) = Real.pi / 2 - Real.arctan (5 / 11 : ℝ) := by
+    have : (2.2 : ℝ) = (5 / 11 : ℝ)⁻¹ := by norm_num
+    rw [this]; exact Real.arctan_inv_of_pos (by norm_num)
+  -- 3-term Taylor: arctan(5/11) ≤ 206365/483153
+  have hU : Real.arctan (5 / 11 : ℝ) ≤ 206365 / 483153 := by
+    have heq : (5/11 : ℝ) - (5/11)^3/3 + (5/11)^5/5 = 206365/483153 := by norm_num
+    rw [← heq]; exact arctan_3term_upper (by norm_num) (by norm_num)
+  -- 206365/483153 < 5π/36 (from π > 3.14)
+  have hU_lt : (206365 : ℝ) / 483153 < 5 * Real.pi / 36 := by
+    have := Real.pi_gt_d2; linarith
+  -- Complement: arctan(2.24) = π/2 − arctan(25/56)
+  have hcomp224 : Real.arctan (2.24 : ℝ) = Real.pi / 2 - Real.arctan (25 / 56 : ℝ) := by
+    have : (2.24 : ℝ) = (25 / 56 : ℝ)⁻¹ := by norm_num
+    rw [this]; exact Real.arctan_inv_of_pos (by norm_num)
+  -- 4-term Taylor: L₄(25/56) ≤ arctan(25/56)
+  have hL : (25/56 : ℝ) - (25/56)^3/3 + (25/56)^5/5 - (25/56)^7/7 ≤
+            Real.arctan (25/56 : ℝ) :=
+    arctan_4term_lower (by norm_num) (by norm_num)
+  -- L₄ > 2π/15 (from π < 3.1416)
+  have hL_gt : 2 * Real.pi / 15 <
+      (25/56 : ℝ) - (25/56)^3/3 + (25/56)^5/5 - (25/56)^7/7 := by
+    have hpi := Real.pi_lt_d4
+    have : (3.1416 : ℝ) * 2 / 15 <
+        (25/56 : ℝ) - (25/56)^3/3 + (25/56)^5/5 - (25/56)^7/7 := by norm_num
+    linarith
   constructor
-  · sorry -- TODO Round 2: tan(65π/180) < √(8191/186)/3 via interval arithmetic
-  · sorry -- TODO Round 2: √(8191/186)/3 < tan(66π/180) via interval arithmetic
+  · -- 65π/180 < arctan(x): chain 65π/180 < arctan(2.2) ≤ arctan(x)
+    have h22_lb : 65 * Real.pi / 180 < Real.arctan (2.2 : ℝ) := by
+      rw [hcomp22]; linarith
+    exact lt_of_lt_of_le h22_lb (Real.arctan_le_arctan_iff.mpr hx_lo.le)
+  · -- arctan(x) < 66π/180: chain arctan(x) ≤ arctan(2.24) < 66π/180
+    have h224_ub : Real.arctan (2.24 : ℝ) < 66 * Real.pi / 180 := by
+      rw [hcomp224]; linarith
+    exact lt_of_le_of_lt (Real.arctan_le_arctan_iff.mpr hx_hi.le) h224_ub
 
-/-- **rho_bar_eta_bar_bounds** (Round 2 target):
+/-- **rho_bar_eta_bar_bounds** (CatAL):
     ρ̄ ∈ (0.15, 0.16) and η̄ ∈ (0.34, 0.35).
 
-    Definitions: ρ̄ = R_b cos γ, η̄ = R_b sin γ, where R_b = 3/8
-    (`ckm_unitarity_triangle_radius_eq_gut_weinberg`, §15) and
+    Definitions: ρ̄ = R_b cos γ, η̄ = R_b sin γ, where R_b = 3/8 and
     γ = arctan(√(8191/186)/3).
 
     PDG: ρ̄ = 0.157 ± 0.008, η̄ = 0.350 ± 0.007.
 
-    TODO Round 2: follows from `gamma_cp_bounds_deg` + monotonicity of sin/cos on (0, π/2). -/
+    Strategy: use cos_sq_arctan / sin_sq_arctan to compute ρ̄² and η̄² algebraically,
+    then bound via nlinarith + positivity.
+    · ρ̄² = (9/64) × (1674/9865) = 7533/315680;   0.15² < ρ̄² < 0.16²
+    · η̄² = (9/64) × (8191/9865) = 73719/631360;  0.34² < η̄² < 0.35²
+
+    LEAN-CERTIFIED (cos_sq_arctan + sin_sq_arctan + nlinarith, zero sorry). -/
 theorem rho_bar_eta_bar_bounds :
     ∃ ρ η : ℝ,
     ρ = (3 / 8 : ℝ) * Real.cos (Real.arctan (Real.sqrt (8191 / 186 : ℝ) / 3)) ∧
     η = (3 / 8 : ℝ) * Real.sin (Real.arctan (Real.sqrt (8191 / 186 : ℝ) / 3)) ∧
     (0.15 : ℝ) < ρ ∧ ρ < (0.16 : ℝ) ∧
     (0.34 : ℝ) < η ∧ η < (0.35 : ℝ) := by
+  -- Establish algebraic facts about t = √(8191/186)/3 before splitting
+  set t := Real.sqrt (8191 / 186 : ℝ) / 3 with ht_def
+  have ht_sq : t ^ 2 = 8191 / 1674 := by
+    simp only [ht_def, div_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 8191 / 186)]; norm_num
+  have h1t2 : 1 + t ^ 2 = 9865 / 1674 := by rw [ht_sq]; norm_num
+  -- ρ̄² = 7533/315680 and ρ̄ > 0
+  have hrho_sq : ((3 / 8 : ℝ) * Real.cos (Real.arctan t)) ^ 2 = 7533 / 315680 := by
+    rw [mul_pow, Real.cos_sq_arctan, h1t2]; norm_num
+  have hrho_pos : 0 < (3 / 8 : ℝ) * Real.cos (Real.arctan t) :=
+    mul_pos (by norm_num) (Real.cos_arctan_pos t)
+  -- η̄² = 73719/631360 and η̄ > 0
+  have heta_sq : ((3 / 8 : ℝ) * Real.sin (Real.arctan t)) ^ 2 = 73719 / 631360 := by
+    rw [mul_pow, Real.sin_sq_arctan, h1t2, ht_sq]; norm_num
+  have ht_pos : 0 < t :=
+    div_pos (Real.sqrt_pos.mpr (by norm_num)) (by norm_num)
+  have heta_pos : 0 < (3 / 8 : ℝ) * Real.sin (Real.arctan t) :=
+    mul_pos (by norm_num) (Real.sin_arctan_pos.mpr ht_pos)
+  -- Split into four bounds; all follow from sq + positivity
   refine ⟨_, _, rfl, rfl, ?_, ?_, ?_, ?_⟩
-  all_goals sorry -- TODO Round 2: follow from gamma_cp_bounds_deg + trig monotonicity
+  · -- 0.15 < ρ̄: from ρ̄² > 0.15² and ρ̄ > 0
+    nlinarith [hrho_sq, hrho_pos,
+      sq_nonneg ((3 / 8 : ℝ) * Real.cos (Real.arctan t) - 3 / 20),
+      show (9 : ℝ) / 400 < 7533 / 315680 from by norm_num]
+  · -- ρ̄ < 0.16: from ρ̄² < 0.16² and ρ̄ > 0
+    nlinarith [hrho_sq, hrho_pos,
+      sq_nonneg ((3 / 8 : ℝ) * Real.cos (Real.arctan t) - 4 / 25),
+      show (7533 : ℝ) / 315680 < 16 / 625 from by norm_num]
+  · -- 0.34 < η̄: from η̄² > 0.34² and η̄ > 0
+    nlinarith [heta_sq, heta_pos,
+      sq_nonneg ((3 / 8 : ℝ) * Real.sin (Real.arctan t) - 17 / 50),
+      show (1156 : ℝ) / 10000 < 73719 / 631360 from by norm_num]
+  · -- η̄ < 0.35: from η̄² < 0.35² and η̄ > 0
+    nlinarith [heta_sq, heta_pos,
+      sq_nonneg ((3 / 8 : ℝ) * Real.sin (Real.arctan t) - 7 / 20),
+      show (73719 : ℝ) / 631360 < 49 / 400 from by norm_num]
 
 end CKMParametersReal
 
