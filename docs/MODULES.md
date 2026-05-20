@@ -60,7 +60,13 @@ UgpLean.lean
 └── Instance (NemSBridge)
 ```
 
-**Module count:** 118 `.lean` files. The **12-layer** diagram and per-layer module names are authoritative in `paper/ugp_lean_formalization.tex` (§Architecture, Figure/module stack).
+**Module count:** 143 `.lean` files. The **13-layer** diagram and per-layer module names are authoritative in `paper/ugp_lean_formalization.tex` (§Architecture, Figure/module stack).
+
+### Framework Layer
+
+| Module | Purpose |
+|--------|---------|
+| **GTEFrameworkInstance** | GTE substrate as `NemS.Framework` with `DiagonalCapable` + `PSCBundle`; fires `transputation_classification`; zone-based truth (`gteTruth M 0 := zoneOf M ≠ .L2_transput`); ASR via Cook 2004 bridge axiom |
 
 ## Module Descriptions
 

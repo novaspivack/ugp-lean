@@ -3493,14 +3493,20 @@ from \texttt{transputation-lean}) and the concrete GTE-Möbius substrate develop
 The module defines \lstinline|GTEFramework| as a \texttt{NemS.Framework} with
 model type \lstinline|BeableState| ($\mathrm{Fin}\,5 \to \mathrm{Fin}\,7$ ring
 configurations), record type~$\mathbb{N}$, and truth functional \lstinline|gteTruth|
-(query~$0$ tests vacuum membership; all other queries are trivially true).
-Observational equivalence therefore reduces to agreement on the vacuum query.
+(query~$0$ tests zone membership: \lstinline|gteTruth M 0 := zoneOf M ≠ .L2_transput|;
+all other queries are trivially true).
+Observational equivalence therefore reduces to agreement on the zone-membership
+query: two states are \emph{observationally equivalent} if and only if they are
+in the same Lawvere zone class (decidable orbit vs.\ transputational sector).
 
 A canonical selector \lstinline|GTESelector| collapses each observational class to
-either the vacuum representative \lstinline|fmdl_vacuum5| or the gen-1 canonical state
-\lstinline|fmdl_gen1_z7|, proved idempotent and observationally inverse.
-Non-categoricity is witnessed by \lstinline|gte_not_categorical|: vacuum and gen-1
-agree on all queries except query~$0$.
+either the vacuum representative \lstinline|fmdl_vacuum5| (for Zone~L0/L1 states)
+or the canonical Zone~L2 representative \lstinline|gteZoneL2Witness| (the uniform
+all-2 state, certified by \lstinline|native_decide|), proved idempotent and
+observationally inverse.
+Non-categoricity is witnessed by \lstinline|gte_not_categorical|: the vacuum state
+(Zone~L0, passes query~$0$) and \lstinline|gteZoneL2Witness| (Zone~L2, fails
+query~$0$) are observationally distinct.
 
 \begin{theorem}[GTE framework is NEMS]\label{thm:gte-nems}
 The GTE framework satisfies NEMS with respect to the trivial internal predicate

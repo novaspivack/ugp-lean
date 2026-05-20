@@ -878,6 +878,23 @@ to Δa_eff = α_d = 13/9 by the GUT rank correction δ = rank(SU(5))/N_c² = 4/9
 > formalized in Lean.  The precise open step is recorded in the maintainer CDM
 > design notes (not published in this repository).
 
+## GTE-NEMS Framework Instance (`Framework.GTEFrameworkInstance`)
+
+All theorems zero sorry. One bridge axiom `gte_partrec_eval_iff_fmdl_phi` (same tier as six CUP3D axioms).
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **GTEFramework** | Framework.GTEFrameworkInstance | NemS.Framework on BeableState / ℕ; `gteTruth M 0 := zoneOf M ≠ .L2_transput` |
+| **GTESelector** | Framework.GTEFrameworkInstance | [D] selector: Zone L2 → gteZoneL2Witness, Zone L0/L1 → vacuum; proved inv/idem/cong |
+| **gte_not_categorical** | Framework.GTEFrameworkInstance | vacuum (Zone L0) and gteZoneL2Witness (Zone L2) disagree on query 0 |
+| **gte_nems** | Framework.GTEFrameworkInstance | GTE satisfies NEMS (∃ internal selector, trivial internality) |
+| **GTEPSCBundle** | Framework.GTEFrameworkInstance | PSCBundle: gte_nems + determinacyPSC_of_framework (free) |
+| **GTEDiagonalCapable** | Framework.GTEFrameworkInstance | DiagonalCapable instance; ASR RT = vacuumReachable ∘ decode_ic; halts_iff_RT via bridge axiom + cook2004 |
+| **gte_tpc_from_nems_classification** | Framework.GTEFrameworkInstance | C3: GTE is categorical ∨ (internal selector ∧ RT not computable); real NEMS proof |
+| **gte_tpc_real** | Framework.GTEFrameworkInstance | alias of gte_tpc_from_nems_classification; drop-in replacement for §67 proxies |
+
+**Bridge axiom:** `gte_partrec_eval_iff_fmdl_phi` — Mathlib `Partrec.Code.eval` ↔ `fmdl_binary_aps.φ` on halting; same mathematical tier as `fmdl_binary_aps` (APS axiom 1).
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |
