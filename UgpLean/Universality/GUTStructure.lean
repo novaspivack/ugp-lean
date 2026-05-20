@@ -6611,4 +6611,141 @@ theorem gauge_arithmetic_identification :
 
 end GaugeSectors
 
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- §56  CA Ether Brillouin Scale — E_ether_B = π × v_H / (N_gen × Z₇ × c_H)
+--      (Rank 212-CEK, CatAL rational core)
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+/-! ## §56  CA Ether Brillouin Scale (Rank 212-CEK, CatAL)
+
+The physical ether excitation energy for the Z₅ neutrino mass orbit is
+
+    E_ether_B = v_CA × (π / T_ether) × (v_Higgs / c_H)
+
+where:
+  • v_CA     = 2/3    — Rule 110 C2-glider speed (CatAL, Gliders.lean)
+  • T_ether  = 14     — CA ether background period (CatAL, §EtherPeriodStructural)
+  • v_Higgs  = 246 GeV — Higgs VEV (single SM anchor)
+  • c_H      = 13     — Higgs channel count (CatAL, P31)
+
+The dimensionless Doppler factor is
+
+    v_CA × (1 / T_ether) = (2/3) / 14 = 1/21
+
+so E_ether_B = (π/21) × (v_Higgs / c_H).
+
+Equivalently, noting N_gen = 3 (CatAL) and Z₇_period = 7 (CatAL):
+
+    21 = N_gen × Z₇_period   and   21 × c_H = 273 = N_gen × Z₇_period × c_H
+
+giving the cleanest form:
+
+    E_ether_B = π × v_Higgs / (N_gen × Z₇_period × c_H) = π × 246 / 273 GeV ≈ 2.831 GeV
+
+With this scale, m_ν = α_em^5 × E_ether_B = 0.0586 eV, within 0.7% of the atmospheric
+oscillation lower bound m_ν_obs = 0.059 eV (PDG 2024).
+
+The theorems below certify the rational arithmetic backbone at CatAL.
+The full physical interpretation (Brillouin zone boundary energy of the 1D ether lattice
+with period T_ether = 14, traversed at glider speed v_CA = 2/3) is CatAD; the Lean
+theorems certify only the number-theoretic identities. -/
+
+section EtherBrillouinScale
+
+/-- **ether_brillouin_doppler** (CatAL):
+    The CA Doppler factor v_CA / T_ether = (2/3) / 14 = 1/21 in ℚ.
+
+    Physical reading: a glider travelling at speed v_CA = 2/3 traverses one ether period
+    T_ether = 14 steps in 14 / (2/3) = 21 time units — the reciprocal 1/21 is the
+    frequency of one ether-period traversal.  Multiplied by π this gives the angular
+    frequency of the Brillouin-zone boundary mode: ω_BZ = π/21 (in CA time units).
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem ether_brillouin_doppler :
+    (2 : ℚ) / 3 / 14 = 1 / 21 := by norm_num
+
+/-- **ether_brillouin_rational** (CatAL):
+    Equivalent statement: v_CA / T_ether = 2 / (3 × 14) = 1/21 in ℚ.
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem ether_brillouin_rational :
+    (2 : ℚ) / (3 * 14) = 1 / 21 := by norm_num
+
+/-- **ether_ngen_z7_product** (CatAL):
+    N_gen × Z₇_period = 3 × 7 = 21 in ℕ.
+
+    Identifies the Doppler denominator 21 as the product of two independent CatAL constants:
+    the number of SM generations N_gen = 3 (PSC Layer II uniqueness, P05) and the Z₇ period
+    Z₇_period = 7 (the prime order of the winding group).
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem ether_ngen_z7_product :
+    (3 : ℕ) * 7 = 21 := by norm_num
+
+/-- **ether_energy_denominator** (CatAL):
+    N_gen × Z₇_period × c_H = 3 × 7 × 13 = 273 in ℕ.
+
+    This is the full denominator of E_ether_B in the form π × v_Higgs / 273:
+    E_ether_B = π × 246 GeV / 273 ≈ 2.831 GeV.
+    All three factors (N_gen = 3, Z₇_period = 7, c_H = 13) are CatAL-certified.
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem ether_energy_denominator :
+    (3 : ℕ) * 7 * 13 = 273 := by norm_num
+
+/-- **ether_brillouin_denominator_via_ch** (CatAL):
+    The Doppler denominator times c_H equals the full energy denominator:
+    21 × c_H = 21 × 13 = 273 in ℕ.
+
+    This certifies the step (π/21) × (v_Higgs / 13) = π × v_Higgs / 273.
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem ether_brillouin_denominator_via_ch :
+    (21 : ℕ) * 13 = 273 := by norm_num
+
+/-- **ether_scale_rational_proxy** (CatAL):
+    The rational proxy for E_ether_B / (π × GeV): v_Higgs_nat / denom = 246 / 273 = 82 / 91.
+
+    In reduced form: gcd(246, 273) = 3, so 246/273 = 82/91 (= 82 / (7 × 13)).
+    Thus E_ether_B = π × (82/91) GeV ≈ π × 0.9011 GeV ≈ 2.831 GeV.
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem ether_scale_rational_proxy :
+    (246 : ℚ) / 273 = 82 / 91 := by norm_num
+
+/-- **ether_scale_denominator_prime_factors** (CatAL):
+    The denominator 91 = 7 × 13 = Z₇_period × c_H, certifying that after cancellation
+    the two surviving denominator factors are exactly the winding-group period and the
+    Higgs channel count.
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem ether_scale_denominator_prime_factors :
+    (7 : ℕ) * 13 = 91 := by norm_num
+
+/-- **ether_scale_numerator_prime_factors** (CatAL):
+    The numerator 82 = 2 × 41 in ℕ, certifying that the reduced numerator introduces the
+    factor 41 = (v_Higgs_nat / (2 × N_gen)) = 246 / 6.
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem ether_scale_numerator_prime_factors :
+    (2 : ℕ) * 41 = 82 := by norm_num
+
+/-- **ether_brillouin_capstone** (CatAL):
+    Master rational certificate for the Brillouin scale denominator structure:
+    simultaneously certifies (1) 3 × 7 = 21, (2) 21 × 13 = 273,
+    (3) 246/273 = 82/91 in ℚ, and (4) 2/3/14 = 1/21 in ℚ.
+
+    These four identities together fix all rational factors of E_ether_B = (π/21) × (246/13) GeV
+    = π × (82/91) GeV at CatAL.  The factor π is transcendental and enters only through the
+    physical interpretation (Brillouin zone boundary angular frequency); the rational backbone
+    certified here is necessary and sufficient for Lean verification.
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem ether_brillouin_capstone :
+    (3 : ℕ) * 7 = 21 ∧
+    (21 : ℕ) * 13 = 273 ∧
+    (246 : ℚ) / 273 = 82 / 91 ∧
+    (2 : ℚ) / 3 / 14 = 1 / 21 := by
+  refine ⟨by norm_num, by norm_num, by norm_num, by norm_num⟩
+
+end EtherBrillouinScale
+
 end GUTStructure
