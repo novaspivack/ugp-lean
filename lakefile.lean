@@ -5,11 +5,15 @@ package «ugp-lean» where
   -- UGP (Universal Generative Principle) and GTE (Generative Triple Evolution)
   -- Formalization for UGP papers, Paper 25, and MFRR
 
--- SelfReference (Lawvere/Kleene fixed-point theorems, Paper 26)
--- Pin `c60a844` so downstream packages (e.g. DSI) can `require «ugp-lean»` alongside the same
--- nems checkout without duplicate `SelfReference.*` modules (`d1379b2` is an ancestor).
-require SelfReference from git
+-- nems-lean (Lawvere/Kleene fixed-point theorems, Paper 26; package name «nems-lean»)
+-- SelfReference is a lean_lib within nems-lean; imports like `import SelfReference.Core.*`
+-- remain valid regardless of the package alias used in require.
+require «nems-lean» from git
   "https://github.com/novaspivack/nems-lean.git" @ "main"
+
+-- transputation-lean (NEMS Transputation / TPC framework, Paper 34 GTE substrate)
+require «transputation» from git
+  "https://github.com/novaspivack/transputation-lean.git" @ "main"
 
 -- APS Rice/Recursion theorems (Rice's theorem, halting undecidability, recursion theorem)
 require APS from git
