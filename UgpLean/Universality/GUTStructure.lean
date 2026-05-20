@@ -1979,6 +1979,67 @@ theorem bb_bs_product_not_square : ¬∃ n : ℕ, n ^ 2 = b_b * b_s := by
 theorem bb_bs_sqrt_floor : Nat.sqrt (b_b * b_s) = 1234 := by
   native_decide
 
+/-- **neff_s_not_prime** (CatAL): b_s = 186 = 2 × 3 × 31 is composite.
+
+    The factorization 186 = 2 × 3 × 31 means b_s is not prime.  Combined with
+    `neff_b_is_prime`, this ensures b_b and b_s share no common prime factor —
+    in particular, the Mersenne prime 8191 divides b_b but not b_s.
+
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
+theorem neff_s_not_prime : ¬ Nat.Prime b_s := by
+  native_decide
+
+/-- **neff_b_s_coprime** (CatAL): gcd(b_b, b_s) = gcd(8191, 186) = 1.
+
+    b_b = 8191 is prime (`neff_b_is_prime`) and 8191 ∤ 186, so they are coprime.
+    Coprimality means 8191 appears to odd power (exactly 1) in b_b × b_s,
+    which is a sufficient condition for b_b × b_s to be a non-square.
+
+    LEAN-CERTIFIED (native_decide, zero sorry). -/
+theorem neff_b_s_coprime : Nat.gcd b_b b_s = 1 := by
+  native_decide
+
+/-- **tan_gamma_numerator_not_square** (CatAL):
+    The quantity b_b × b_s × N_gen² = 8191 × 186 × 9 = 13,711,734 is not a perfect square.
+
+    Physical meaning:
+      tan(γ) = √(b_b / b_s) / N_gen
+    so tan²(γ) = b_b / (b_s × N_gen²), which is rational.
+    tan(γ) is irrational iff b_b × b_s × N_gen² is not a perfect square in ℕ.
+    Since b_b = 8191 is prime and 8191 ∤ (b_s × N_gen²) = 186 × 9 = 1674,
+    the prime 8191 appears to exactly the first power in b_b × b_s × N_gen².
+    A perfect square requires all primes to appear to even power — contradiction.
+    Therefore tan(γ) is irrational: CP violation cannot be tuned to zero.
+
+    Proof: 3702² = 13,704,804 < 13,711,734 < 13,712,209 = 3703², so no integer square
+    root exists.
+
+    LEAN-CERTIFIED (norm_num + linarith, zero sorry). -/
+theorem tan_gamma_numerator_not_square : ¬ ∃ (k : ℕ), k ^ 2 = b_b * b_s * n_gen ^ 2 := by
+  intro ⟨k, hk⟩
+  norm_num [b_b, b_s, n_gen] at hk
+  have hcases : k ≤ 3702 ∨ 3703 ≤ k := by omega
+  rcases hcases with h | h
+  · linarith [Nat.pow_le_pow_left h 2, show (3702 : ℕ) ^ 2 = 13704804 from by norm_num]
+  · linarith [Nat.pow_le_pow_left h 2, show (3703 : ℕ) ^ 2 = 13712209 from by norm_num]
+
+/-- **cp_violation_irrationality_chain** (CatAL):
+    Combined CP irrationality chain: b_b prime ∧ gcd(b_b,b_s)=1 ∧ b_b×b_s not square
+    ∧ tan(γ) numerator not square.
+
+    This packages the four-step arithmetic certificate:
+    (1) b_b = 8191 is a Mersenne prime → (2) coprime to b_s = 186 → (3) b_b×b_s not a
+    perfect square → (4) b_b×b_s×N_gen² not a perfect square → tan(γ) irrational →
+    the CKM CP phase γ cannot equal 0 or π/2 → structural (non-tunable) CP violation.
+
+    LEAN-CERTIFIED (norm_num + native_decide, zero sorry). -/
+theorem cp_violation_irrationality_chain :
+    Nat.Prime b_b ∧ Nat.gcd b_b b_s = 1 ∧
+    (¬ ∃ n : ℕ, n ^ 2 = b_b * b_s) ∧
+    (¬ ∃ k : ℕ, k ^ 2 = b_b * b_s * n_gen ^ 2) := by
+  exact ⟨neff_b_is_prime, neff_b_s_coprime, bb_bs_product_not_square,
+         tan_gamma_numerator_not_square⟩
+
 -- ════════════════════════════════════════════════════════════════
 -- §21  Joint Selection Theorem — N_fam = 5 is Uniquely Selected by
 --      Mersenne Prime c_H AND Z₅ Transitivity (Rank 67C-bis, CatAL)
@@ -4499,5 +4560,67 @@ theorem ether_period_eq_cH_plus_one : 14 = 13 + 1 := by norm_num
 theorem alpha_denominator_eq_twice_137 : 274 = 2 * 137 := by norm_num
 
 end AlphaChain
+
+-- ════════════════════════════════════════════════════════════════
+-- §39  W⁺ Decay Lemma — Center Winding 3 Always Maps to Vacuum (Rank 145-WDT, CatAL)
+-- ════════════════════════════════════════════════════════════════
+
+/-!
+### §39  W⁺ Decay Lemma: f_MDL Maps Every Center-3 Neighborhood to Vacuum (CatAL)
+
+**Physical background:**
+The W⁺ boson carries Z₇ winding number 3 (center cell value = 3).  The unique W⁺
+creation neighborhood is f_MDL(2, 0, 2) = 3 (certified by `CUP3D.fmdl_w_emission`):
+a u-quark pair flanking a vacuum gap produces a W⁺ in one CA step.
+
+This section certifies the complementary fact: once a cell holds value 3 (W⁺), ANY
+one-step update of a neighborhood with center = 3 maps to vacuum (value 0).
+No f_MDL table entry has center value 3 with a non-zero output — all 18 explicit
+entries have center ∈ {0, 1, 2, 5}, so every center-3 neighborhood falls to the
+MDL-minimal default output 0.
+
+**Structural consequence:**
+The pair of theorems
+  - `CUP3D.fmdl_w_emission`     :  f_MDL(2, 0, 2) = 3   (W⁺ creation)
+  - `wplus_center_maps_to_vacuum`:  f_MDL(l, 3, r) = 0   (W⁺ decay → vacuum)
+together encode the Fermi contact interaction at the CA scale (E ≪ M_W):
+W⁺ is created in a single step and decays in the very next step.  It is a virtual
+mediator, not a propagating excitation — consistent with the observed Fermi 4-fermion
+effective theory at low energies.
+
+Zero sorry for all theorems in this section.
+-/
+
+section WPlusDecay
+
+/-- **wplus_center_maps_to_vacuum** (CatAL):
+    For every left and right neighbor (l, r : Fin 7), the f_MDL evaluation on a
+    neighborhood with center value 3 (W⁺ winding) returns 0 (vacuum).
+
+    Proof: none of the 18 explicit f_MDL entries has center = 3; all 7 × 7 = 49
+    center-3 neighborhoods fall to the MDL-minimal default output 0.
+
+    This is the CA-level signature of W⁺ being a virtual mediator: the W⁺ decays
+    to vacuum in one CA step.
+
+    LEAN-CERTIFIED (decide, zero sorry). -/
+theorem wplus_center_maps_to_vacuum :
+    ∀ (l r : Fin 7), CUP3D.fmdl l 3 r = 0 := by
+  decide
+
+/-- **wplus_creation_then_decay** (CatAL):
+    The W⁺ creation neighborhood and the W⁺ decay property hold simultaneously:
+    f_MDL(2, 0, 2) = 3  (creation) and  f_MDL(l, 3, r) = 0 for all l r (decay).
+
+    Together these two facts certify that the W⁺ is a transient one-step excitation:
+    created from a u-vacuum-u triple and immediately resolved to vacuum in the next step.
+    This is the Fermi contact interaction at the CA scale.
+
+    LEAN-CERTIFIED (decide, zero sorry). -/
+theorem wplus_creation_then_decay :
+    CUP3D.fmdl 2 0 2 = 3 ∧ ∀ (l r : Fin 7), CUP3D.fmdl l 3 r = 0 :=
+  ⟨by decide, wplus_center_maps_to_vacuum⟩
+
+end WPlusDecay
 
 end GUTStructure

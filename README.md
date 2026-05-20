@@ -346,7 +346,7 @@ Physical motivation: The five SM particle families [e⁻, u, d, νR, νL] in the
 - `cyclic_rotate` — definition: cyclic rotation of a 5-cell Z₇ ring by k positions (generalizes rotate5 from CUP4TotalParity to Fin 7 cells)
 - `fmdl_z5_equivariant` — **Main theorem**: ∀ (v : Fin 5 → Fin 7) (k : Fin 5), fmdl_step5(cyclic_rotate v k) = cyclic_rotate(fmdl_step5 v) k; zero failures over 7⁵ × 5 = 84,035 cases (native_decide, CatAL)
 
-**SU(5) GUT Weinberg Angle, f_MDL Structural Bridge, CKM Count Theorem, CKM Quark N_eff Formulas, b_sum = 390 Weinberg Factorization, Z₂ Longitudinal Mode MDL Universality, Coupling Ratio Duality, smGen1 SU(5) Projector, Mersenne Prime Structure, Joint Selection Theorem, GTE Master Formula, Weinberg Physical Bridge, Weinberg Three-Tier Prediction, Bidirectional Unification Summary, MDL Robustness / Z₇ Free Minterm Count, Z₂ Longitudinal Universality Structural Chain, Chern-Simons Level k=30, Mersenne Cascade Discriminator 12→2, and f_MDL Perfect Code §36 (GUTStructure.lean, 2026-05-19; 105 theorems + 18 definitions, 0 sorry)**
+**SU(5) GUT Weinberg Angle, f_MDL Structural Bridge, CKM Count Theorem, CKM Quark N_eff Formulas, b_sum = 390 Weinberg Factorization, Z₂ Longitudinal Mode MDL Universality, Coupling Ratio Duality, smGen1 SU(5) Projector, Mersenne Prime Structure, CP Irrationality Chain, Joint Selection Theorem, GTE Master Formula, Weinberg Physical Bridge, Weinberg Three-Tier Prediction, Bidirectional Unification Summary, MDL Robustness / Z₇ Free Minterm Count, Z₂ Longitudinal Universality Structural Chain, Chern-Simons Level k=30, Mersenne Cascade Discriminator 12→2, f_MDL Perfect Code §36, Alpha Chain §38, and W⁺ Decay Lemma §39 (GUTStructure.lean, 2026-05-19; 192 theorems + 23 definitions, 0 sorry)**
 
 Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit depth, CatAL) and N_fam = 5 (Z₅ family ring size, CatAL) satisfy the arithmetic identity N_gen + N_fam = 2^N_gen (3 + 5 = 8 = 2³). This implies that the GUT-scale Weinberg angle sin²θ_W(M_GUT) = N_gen/(N_gen + N_fam) = N_gen/2^N_gen = 3/8 — agreeing exactly with the standard SU(5) GUT prediction. The denominator then increases to c_H = 13 at M_Z by exactly N_fam = 5. A new structural identity (§9) connects the CA dynamics layer: the MDL-minimal CA function f_MDL produces nonzero output on exactly c_H + 1 = 14 of the 343 possible neighborhoods.
 
@@ -425,7 +425,7 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `sm_gen1_inactive_count` — inactive positions (value=0) count = N_fam−N_gen = 2 (decide, CatAL; matches SU(5) leptonic sector)
 - `sm_gen1_partition_matches_su5` — **Combined partition theorem**: active=3, inactive=2, 3+2=5 (decide; smGen1 as SU(5) projector, CatAL)
 
-*§20: Mersenne prime structure, top quark formula, CP irrationality (Rank 67C, CatAL)*
+*§20: Mersenne prime structure, top quark formula, CP irrationality (Rank 67C + B-53, CatAL)*
 - `b_top` — b_t = 2^(c_H−2) × N_gen × N_fam × (2N_fam+1) = 337920 (def; top quark N_eff)
 - `neff_b_value` — b_b = 8191 (rfl, CatAL)
 - `neff_b_is_prime` — Nat.Prime b_b (norm_num; 8191 is Mersenne prime, CatAL)
@@ -435,6 +435,10 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `top_bottom_ratio_q` — (b_top:ℚ)/b_b = 337920/8191 (norm_num; tracks M_top/M_bottom −0.49%, CatAL)
 - `bb_bs_product_not_square` — ¬∃ n:ℕ, n²=b_b×b_s (norm_num+linarith; implies tan(γ) irrational, CatAL)
 - `bb_bs_sqrt_floor` — Nat.sqrt(b_b×b_s) = 1234 (native_decide; confirms non-square, CatAL)
+- `neff_s_not_prime` — ¬ Nat.Prime b_s (native_decide; 186=2×3×31 composite, CatAL)
+- `neff_b_s_coprime` — Nat.gcd b_b b_s = 1 (native_decide; 8191 prime ∧ 8191∤186, CatAL)
+- `tan_gamma_numerator_not_square` — ¬∃ k:ℕ, k²=b_b×b_s×n_gen² (norm_num+linarith; 3702²<13711734<3703², CatAL; implies tan(γ) irrational)
+- `cp_violation_irrationality_chain` — **Combined CP irrationality certificate**: b_b prime ∧ gcd=1 ∧ b_b×b_s non-square ∧ b_b×b_s×N_gen² non-square (exact ⟨...⟩; CatAL — CP violation is arithmetically irreducible)
 
 *§21: Joint Selection Theorem — N_fam = 5 uniquely selected by Mersenne c_H AND Z₅ transitivity (Rank 67C-bis, CatAL)*
 - `mersenne_ch_prime_p2` — 2^7−1=127 is prime at N_fam=2 (norm_num, CatAL)
@@ -635,6 +639,13 @@ Physical motivation: The Rule 110 ether (period-14 background [0,1,0,1,1,1,0,0,0
 - `ether_z7_composition` — 6 zeros, 8 ones per period (native_decide)
 - `ether_not_em_vacuum` — ether_period ≠ replicate 14 0 (native_decide)
 - `casimir_sector_structure` — **Combined theorem**: masslessness criterion + EW vertex + ether winding (native_decide, CatAL)
+
+*§39 — WPlusDecay: W⁺ Decay Lemma (Rank 145-WDT, CatAL)*
+
+Physical motivation: The W⁺ boson (Z₇=3) is a virtual mediator in the GTE CA. Combined with the W⁺ creation theorem (`CUP3D.fmdl_w_emission`), this section certifies the complete CA lifecycle: W⁺ is created from a (u,vac,u) triple in one step and immediately decays to vacuum in the next. This is the Fermi contact interaction at the CA scale (E ≪ M_W).
+
+- `wplus_center_maps_to_vacuum` — **Main theorem**: ∀ l r : Fin 7, CUP3D.fmdl l 3 r = 0 (decide; all 49 center-3 neighborhoods map to vacuum, CatAL)
+- `wplus_creation_then_decay` — **Combined theorem**: fmdl 2 0 2 = 3 ∧ ∀ l r, fmdl l 3 r = 0 (decide; complete W⁺ CA lifecycle, CatAL)
 
 *§4 — Helicity Parity Violation (CatAL)*
 
