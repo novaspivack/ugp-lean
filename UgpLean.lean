@@ -136,6 +136,8 @@ import UgpLean.Framework.GTEFrameworkInstance
 import UgpLean.Framework.GTEOptimalityInstance
 import UgpLean.Framework.GTEFinalCoalgebra
 import UgpLean.Universality.CasimirMasslessEther
+import UgpLean.Universality.ChiralPairVA
+import UgpLean.Universality.CouplingNoGo
 import UgpLean.TE22.ScanCertificate
 import UgpLean.PSC.RCCInfiniteFamilies
 import UgpLean.PSC.RCCComplete

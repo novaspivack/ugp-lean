@@ -130,7 +130,7 @@
 \begin{abstract}
 We present \textbf{ugp-lean}, a \lean{}~4 formalization of the
 Universal Generative Principle (\ugp{}) against Mathlib, comprising
-144 modules with a strict zero-sorry, zero-custom-axiom policy on the
+148 modules with a strict zero-sorry, zero-custom-axiom policy on the
 core proof path.
 The \ugp{} is a deterministic arithmetic framework on integer ridges
 $R_n = 2^n - 16$ that produces, from first principles and without free
@@ -399,7 +399,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 144~\lean{} modules across thirteen layers
+The artifact is organized into 148~\lean{} modules across thirteen layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -456,7 +456,7 @@ The artifact is organized into 144~\lean{} modules across thirteen layers
   {\textbf{IPT}~(1) \textit{migrated to ugp-physics-lean}:
    InformationProfitThreshold};
 \node[layer, fill=purple!8, below=of ipt]   (univ)
-  {\textbf{Universality}~(34)\quad Rule110, UWCA, UWCASimulation,
+  {\textbf{Universality}~(36)\quad Rule110, UWCA, UWCASimulation,
    UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge,
    CUP4TotalParity, CUP11ModSeven, CUP3DUniqueness, CUP3DPSCUnification,
    CUP3DPhysicalIncompleteness, TwoLayerConfluence, GTECompilation, GTEUniqueness,
@@ -465,7 +465,7 @@ The artifact is organized into 144~\lean{} modules across thirteen layers
    OrbitPerturbationCatalog, Z7ChargeConjugation, DimensionalSliceUniqueness,
    Z5TransitivityUniqueness, GTPNeutralDiscrimination, SMOrbitCausalIsolation,
    EWBosonStructure, EWChiralBridge, \textbf{GUTStructure}, LawvereZone,
-   CasimirMasslessEther};
+   CasimirMasslessEther, \textbf{ChiralPairVA}, \textbf{CouplingNoGo}};
 \node[layer, fill=gray!8,   below=of univ]  (self)
   {\textbf{SelfRef}~(2)\quad LawvereKleene, RiceHalting};
 \node[layer, fill=pink!10,  below=of self]  (fwk)

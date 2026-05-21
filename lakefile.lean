@@ -5,13 +5,14 @@ package «ugp-lean» where
   -- UGP (Universal Generative Principle) and GTE (Generative Triple Evolution)
   -- Formalization for UGP papers, Paper 25, and MFRR
 
--- nems-lean (Lawvere/Kleene fixed-point theorems, Paper 26; package name «nems-lean»)
--- SelfReference is a lean_lib within nems-lean; imports like `import SelfReference.Core.*`
--- remain valid regardless of the package alias used in require.
+-- nems-lean (Lawvere/Kleene fixed-point theorems, Paper 26; SelfReference is a lean_lib within it)
+-- Using «nems-lean» as package name to avoid duplicate-module conflicts when transputation
+-- also resolves nems-lean as a transitive dependency.
 require «nems-lean» from git
   "https://github.com/novaspivack/nems-lean.git" @ "main"
 
--- transputation-lean (NEMS Transputation / TPC framework, Paper 34 GTE substrate)
+-- transputation-lean (NEMS Transputation / TPC framework; NemS.Category.PSCSys / FPSC)
+-- Required by UgpLean.Framework.GTEFrameworkInstance, GTEOptimalityInstance, GTEFinalCoalgebra.
 require «transputation» from git
   "https://github.com/novaspivack/transputation-lean.git" @ "main"
 
