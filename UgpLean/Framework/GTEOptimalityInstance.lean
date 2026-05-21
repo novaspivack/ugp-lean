@@ -242,22 +242,10 @@ def GTECompatibleSpace : PSCCompatibleSpace where
 def GTEPSCSubstrate : PSCSubstrate GTECompatibleSpace :=
   ⟨fmdl, gte_psc_optimal⟩
 
-/-- **c1_final_coalgebra** (CatAD axiom, Stage 2 of Rank 282-C1F):
-    GTE is the terminal object of PSCSys: for every PSC-consistent substrate `A`,
-    there exists a unique PSC-morphism `A ⟶ GTEPSCSubstrate`.
-
-    In the thin-category formulation, this reduces to:
-    `∀ A : PSCSubstrate GTECompatibleSpace, GTECompatibleSpace.RecordEquivalent A.T fmdl`
-
-    This follows from `optimal_unique_up_to_iso` (FinalityTheorem.lean, zero sorry)
-    applied to `A.optimal` and `gte_psc_optimal`.
-
-    **CatAL upgrade path** (Stages 5–7, Rank 282-C1F):
-    The full proof requires connecting `foundational_finality` / `optimal_unique_up_to_iso`
-    (NemS.Reflexive.FinalityTheorem) to `PSCSubstrate.IsTerminal GTEPSCSubstrate`.
-    This needs a `ReflexiveTheorySpace` instance for `GTECompatibleSpace` providing
-    `Isomorphic`, `MetaExplanation`, and `ExecInternal` predicates (~3–5 sessions). -/
-axiom c1_final_coalgebra :
-    PSCSubstrate.IsTerminal GTEPSCSubstrate
+-- c1_final_coalgebra is proved in GTEFinalCoalgebra.lean (Stages 5–7, Rank 282-C1F).
+-- Import UgpLean.Framework.GTEFinalCoalgebra to access:
+--   c1_final_coalgebra_derived : PSCSubstrate.IsTerminal GTEPSCSubstrate  (CatAD, one sorry)
+--   c1_final_coalgebra         : alias for c1_final_coalgebra_derived
+--   c1_lambek_isomorphism      : (FPSC GTECompatibleSpace).obj GTEPSCSubstrate = GTEPSCSubstrate  (zero sorry)
 
 end UgpLean.Framework.GTE
