@@ -266,4 +266,143 @@ theorem no_physical_single_quark :
   intro b h_weight h_single
   exact no_psc_admissible_single_quark b (d2_axiom b h_weight) h_single
 
+/-!
+## Composite Beable Color Neutrality (Route A Reformulation)
+
+The original Route A argument (`psc_rc_requires_color_neutrality`) was stated
+per-beable: every PSC-admissible beable has zero total Z₃.  This is *not* the
+right level for confinement physics: a single-slot beable (one nonzero winding,
+rest zero) represents a single quark, and Route B already rules those out.
+
+The correct Route A argument operates at the **COMPOSITE** level:
+- A physical *system* is a list of single-slot beables (one beable per parton)
+- Color neutrality of the system = total Z₃ of all beables in the list = 0
+- The PSC anomaly-cancellation (RC) argument applies to the *full* multi-parton
+  state, not to individual partons
+
+This reformulation correctly handles the hadron cases:
+- Meson: quark (w=2, color 1) + antiquark (w=5, color 2) → 1+2=3≡0 mod 3 ✓
+- Baryon: quarks {1,2,4} → color 0+1+2=3≡0 mod 3 ✓
+- Free quark: {2} alone → color 1 ≠ 0 → ruled out (consistent with Route B) ✓
+-/
+
+/-- A SYSTEM of beables: a list of single-particle winding values in Z₇.
+    A physical state is a composition of individually PSC-admissible single-particle
+    beables; this list records the active winding for each parton in the composite.
+
+    Declared as `abbrev` (transparent) so that `List (Fin 7)` instances (Membership,
+    foldl, etc.) are available without extra boilerplate. -/
+abbrev BeableSystem := List (Fin 7)
+
+/-- Total Z₃ color of a system of particles. -/
+def systemColor (system : BeableSystem) : ZMod 3 :=
+  system.foldl (fun acc w => acc + colorChargeOfWinding w.val) 0
+
+/-- A color-neutral system has total Z₃ color equal to zero. -/
+def SystemColorNeutral (system : BeableSystem) : Prop :=
+  systemColor system = 0
+
+/-- **Meson color neutrality** (CatAL).
+
+    For any color-charged winding `w`, the quark-antiquark pair `[w, -w]` is color-neutral.
+    The antiquark winding is the additive inverse `-w` in `Fin 7` (i.e. `7-w mod 7`),
+    which satisfies `colorChargeOfWinding (-w) = -colorChargeOfWinding w` in `ZMod 3`.
+
+    Status: CatAL — zero sorry, proved by exhaustion over the seven Fin 7 cases. -/
+theorem meson_is_color_neutral (w : Fin 7)
+    (h_color : colorChargeOfWinding w.val ≠ 0) :
+    systemColor [w, (-w : Fin 7)] = 0 := by
+  fin_cases w <;> simp_all [systemColor, colorChargeOfWinding, List.foldl] <;> decide
+
+/-- **Baryon color neutrality** (CatAL).
+
+    The three-quark state `[1, 2, 4]` (one quark of each color 0, 1, 2) is color-neutral:
+    `colorChargeOfWinding 1 + colorChargeOfWinding 2 + colorChargeOfWinding 4`
+    `= 0 + 1 + 2 = 3 ≡ 0 (mod 3)`.
+
+    Status: CatAL — zero sorry, proved by computation (`decide`). -/
+theorem baryon_is_color_neutral :
+    systemColor [(1 : Fin 7), 2, 4] = 0 := by
+  decide
+
+/-- **PSC–RC bridge axiom for composite systems** (named axiom).
+
+    Every PSC-admissible SYSTEM (all component partons individually PSC-admissible)
+    has total Z₃ color zero.
+
+    Physical content: the PSC anomaly-cancellation (RC unitarity) requirement applies
+    to the full multi-parton Fock state.  A system with nonzero total Z₃ has anomalous
+    Ward identities and a non-unitary S-matrix, violating PSC-RC.
+
+    This is the correct composite-level analogue of `psc_rc_requires_color_neutrality`.
+    Closing this axiom requires a formal derivation that Z₃ anomaly cancellation in the
+    PSC functional, extended to multi-beable composite states, implies systemColor = 0.
+
+    Status: Axiom — same design pattern as `psc_rc_requires_color_neutrality`. -/
+axiom psc_rc_requires_system_color_neutral :
+    ∀ (system : BeableSystem),
+    (∀ w ∈ system, PSCAdmissible (fun _ => w)) →
+    SystemColorNeutral system
+
+/-- **Route A (reformulated): No color-charged SYSTEM can exist physically** (CatAD).
+
+    Any system whose partons are individually PSC-admissible must be color-neutral.
+    A system with nonzero total Z₃ color contradicts the PSC–RC composite anomaly
+    requirement.
+
+    Combined with Route B (`no_physical_single_quark`): quarks are permanently
+    confined within color-neutral composites.
+
+    Status: CatAD — zero sorry, proved from `psc_rc_requires_system_color_neutral`.
+    Becomes CatAL when the bridge axiom is formally derived from the PSC functional. -/
+theorem composite_color_confinement
+    (system : BeableSystem)
+    (h_all_psc : ∀ w ∈ system, PSCAdmissible (fun _ => w))
+    (h_charged : ¬SystemColorNeutral system) :
+    False :=
+  h_charged (psc_rc_requires_system_color_neutral system h_all_psc)
+
+/-!
+## Mass Gap (Clay Millennium Problem §1) — Direction and Status
+
+The Yang–Mills mass gap problem has two parts:
+1. **Color confinement** (no free quarks) — Route B: ✅ CatAL (`no_psc_admissible_single_quark`)
+2. **Mass gap** (the lightest physical particle has m > 0) — not yet formalized here
+
+### Mass gap in the GTE framework
+
+The GTE mass cascade (P01/P32/P33) derives particle masses from orbit depth:
+- Generation 1 (orbit depth 3): lightest charged fermion is the electron, m ≈ 0.511 MeV (CatA)
+- The lightest color-neutral composite is the neutral pion π⁰ (u+ū), m ≈ 135 MeV
+
+Both have strictly positive mass — the mass gap exists empirically and is consistent
+with the GTE spectrum.
+
+### What a formal GTE mass gap proof would require
+
+1. **Orbit depth → mass (positive)**: show that every orbit state with nonzero winding
+   has positive orbit depth, and that orbit depth maps to positive mass via the GTE
+   cascade.  The gen₁ orbit state (depth 3) has the minimum nonzero depth, giving
+   m(gen₁) > 0.  This is CatA from P01/P32 but not yet formally certified in Lean.
+
+2. **Lightest composite positive mass**: show that the lightest color-neutral composite
+   (meson [w, -w] for the lightest color-charged w) inherits positive mass from its
+   partons.  This requires the 3D f_MDL Hamiltonian (Rank 6-MPD, blocked on 2-ZGM).
+
+3. **OR**: a direct orbit-structure argument that any nonzero-winding composite has
+   positive mass, bypassing the Hamiltonian route.
+
+4. **AFCA clock rate mechanism**: the AFCA clock rate gives mass via m ∝ 1/(clock period),
+   providing a physical mechanism.  Formalization of this connection is open (Rank 31-ACS).
+
+### Status
+
+**Mass gap**: CatD — long-term research target.
+Rank 42-MGP tracks this in the ranked ideas (RANKED_IDEAS.md).
+
+The Route B confinement proof establishes that no massless free-quark state exists
+in the PSC-certified orbit.  Combined with the empirical CatA mass cascade, the mass
+gap is strongly supported but not yet formally closed in Lean.
+-/
+
 end GTE.Spacetime.Confinement
