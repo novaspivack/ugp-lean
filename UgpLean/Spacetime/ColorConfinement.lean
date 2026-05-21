@@ -256,8 +256,9 @@ theorem baryon_is_color_neutral :
 /-- Phase 0 helper: the only PSC-admissible constant beable is the vacuum (w = 0).
     For all w ≠ 0, `fun _ => w` is not any of the four orbit states, so
     `zoneOf (fun _ => w) = .L2_transput` and `PSCAdmissible (fun _ => w) = false`.
-    Certified by exhaustive check over all 7 windings (2026-05-21). -/
-private lemma const_beable_psc_iff_vacuum :
+    Certified by exhaustive check over all 7 windings (2026-05-21).
+    Exported (non-private) for use in sibling modules (AnomalyRenormalizability, etc.). -/
+lemma const_beable_psc_iff_vacuum :
     ∀ (w : Fin 7), PSCAdmissible (fun _ => w) ↔ w = 0 := by
   decide
 

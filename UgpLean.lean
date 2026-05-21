@@ -166,10 +166,12 @@ import UgpLean.Spacetime.CausalGraph
 import UgpLean.Spacetime.SpectralDimension
 import UgpLean.Spacetime.ChiralPairDecoupling
 import UgpLean.Spacetime.ColorConfinement
+import UgpLean.Spacetime.AnomalyRenormalizability
 import UgpLean.Spacetime.LiftingTheorem
 import UgpLean.Spacetime.GeodesicTheorem
 import UgpLean.Spacetime.MassGap
 import UgpLean.Spacetime.UniversalSimulation
+import UgpLean.Spacetime.QuantumGravity
 
 /-!
 # UgpLean — Universal Generative Principle: Lean 4 Formalization
@@ -203,8 +205,10 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Spacetime.SpectralDimension` — Rank 13-LSD: spectral dimension dₛ = 4; `FinAdjPeriodic`, `CausalGraphPeriodic`, `causal_graph_periodic_rule_independent` zero sorry; degree=20, torus isomorphism, dₛ=4 stated with sorry (2026-05-21)
 - `UgpLean.Spacetime.ChiralPairDecoupling` — Rank 14-LCD: chiral pair causal decoupling; `ChiralLayer`, `ChiralNode`, `ChiralPairAdj`; `chiral_pair_no_cross_layer_edges` zero sorry, `chiral_pair_walk_layer_invariant` zero sorry (2026-05-21)
 - `UgpLean.Spacetime.ColorConfinement` — Rank 25-CCF: color confinement from PSC RC + Absence Theorem; `color_confinement` and `physical_particles_are_color_neutral` zero sorry, one named bridge axiom `psc_rc_requires_color_neutrality` (CatAD, 2026-05-21)
+- `UgpLean.Spacetime.AnomalyRenormalizability` — Ranks 26-ANO + 27-RNM: anomaly cancellation and renormalizability PSC-forced; `anomaly_cancellation_psc_forced`, `physical_anomaly_cancellation`, `renormalizability_psc_forced`, `physical_renormalizability`, `anomaly_and_renorm_psc_forced`; all zero sorry, zero axioms (CatAL, 2026-05-21)
 - `UgpLean.Spacetime.GeodesicTheorem` — Rank 17-GEO: geodesic theorem; `IsGeodesicPath`, `PSCPreserving`, `DWeightNode`, `geodesic_theorem`, `gte_equivalence_principle`, `massive_timelike_geodesic`, `photon_null_geodesic`, `geodesic_uniqueness`, `geodesic_consistent_with_emergent_gravity`; all zero sorry, D2 argument stated (2026-05-21)
 - `UgpLean.Spacetime.MassGap` — Rank 42-MGP: Yang–Mills mass gap at beable level; `beable_positive_mass`, `physical_mass_gap`, `lightest_meson_positive_mass`, `gte_mass_gap`; all zero sorry, 1 named axiom `gte_mass_formula_positive` (CatAD → CatAL pending ridge sieve formalization, 2026-05-21)
+- `UgpLean.Spacetime.QuantumGravity` — Rank 28-QGR: beable-level quantum gravity; `gte_is_beable_level_quantum_gravity`, `matter_geometry_from_same_rule`, `gte_already_quantum`, `particles_source_and_follow_curvature`, `gte_clay_millennium_status`, `unification_is_not_bolt_on`; `GeometryEvidence`, `ParticleEvidence`, `DynamicsEvidence`, `GTEQuantumGravityEvidence`; all zero sorry, zero axioms (CatAD — geometry CatA, particles CatAL, dynamics CatAD, 2026-05-21)
 
 **Non-circularity:** Core/ does not import Compute/. See README.md.
 -/
