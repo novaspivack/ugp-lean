@@ -5,10 +5,10 @@ import UgpLean.Universality.CUP3DUniqueness
 /-!
 # UgpLean.Framework.GTEOptimalityInstance
 
-**Stage 3 of Rank 282-C1F (C1 Final Coalgebra).**
+**Stages 3–4 of Rank 282-C1F (C1 Final Coalgebra).**
 
 Wires GTE's already-certified MDL minimality (CUP-12, zero sorry) into a
-`NemS.Optimality.TheorySpace.PSCOptimal` instance.
+`NemS.Optimality.TheorySpace.PSCOptimal` instance and proves Semantic Terminality.
 
 ## Construction
 
@@ -33,7 +33,8 @@ the active-neighborhood set of fmdl is contained in that of any record-equivalen
 | `GTETheorySpace` | zero sorry |
 | `gte_psc_optimal` | zero sorry |
 | `GTEOptimalityInstance` | zero sorry |
-| `gte_semantic_terminality_preview` | zero sorry (given ExtensionDichotomy + ExtensionComplexity) |
+| `gte_extension_dichotomy` | zero sorry |
+| `gte_semantic_terminality` | zero sorry |
 -/
 
 namespace UgpLean.Framework.GTE
@@ -175,31 +176,40 @@ def GTEOptimalityInstance : TheorySpace.PSCOptimal GTETheorySpace fmdl :=
   gte_psc_optimal
 
 -- ────────────────────────────────────────────────────────────────────────────
--- §2.6  Stage 4 preview: Semantic Terminality for GTE extensions
+-- §2.6  Stage 4: Semantic Terminality for GTE extensions (zero sorry)
 -- ────────────────────────────────────────────────────────────────────────────
 
-/-- **gte_semantic_terminality** (CatAL, zero sorry given dichotomy + complexity):
-    Any extension T' of f_MDL either fails PSC or is physically redundant.
+/-- **gte_extension_dichotomy** (trivial):
+    In GTETheorySpace, `Extends = RecordEquivalent` by definition (both are
+    `z7CARecordEq`), so every extension is already record-equivalent.
+    ExtensionDichotomy holds via `Or.inl`. -/
+private lemma gte_extension_dichotomy : GTETheorySpace.ExtensionDichotomy :=
+  fun _ _ h => Or.inl h
 
-    This is the direct application of `semantic_terminality`
-    (NemS.Optimality.Terminality, zero sorry) to the GTE Theory Space with the
-    `GTEOptimalityInstance` certificate.
+/-- **gte_semantic_terminality** (CatAL ★★★★, zero sorry):
+    Any extension T' of f_MDL is physically redundant (and possibly also fails PSC).
 
-    **Remaining work for Stage 4:**
-    - Prove `GTETheorySpace.ExtensionDichotomy`: any orbit-agreeing Z₇ CA extension
-      either produces the same records or activates a free neighborhood (violating PSC).
-    - Prove `GTETheorySpace.ExtensionComplexity`: record-equivalent extensions are
-      strictly more complex (any free-neighborhood activation adds to K).
-    Both are combinatorial and straightforward from `fmdl_zero_on_free_neighborhoods`.
+    **Proof:**
+    Every extension of f_MDL in GTETheorySpace is record-equivalent to f_MDL by
+    definition (Extends = RecordEquivalent = z7CARecordEq).  PSC-Optimality
+    (`gte_psc_optimal`, §2.4) then gives K(fmdl) ≤ K(T') directly.
+    Hence T' is Redundant (RecordEquivalent ∧ K(fmdl) ≤ K(T')).
 
-    LEAN-CERTIFIED (zero sorry given h_dichotomy and h_complexity). -/
+    Note: `GTETheorySpace.ExtensionComplexity` does not hold universally across
+    all theories in the GTE space (only for the PSC-optimal fmdl).  Rather than
+    invoke `semantic_terminality` with that premise, we give a one-step direct
+    proof using `gte_psc_optimal`, which is precisely the needed instance.
+
+    **Certificate chain (all zero sorry):**
+    - `gte_psc_optimal` (§2.4): K(fmdl) ≤ K(T') for all RecordEquivalent T'
+    - `GTETheorySpace.Extends = GTETheorySpace.RecordEquivalent` (definitional)
+    - `Redundant` (NemS.Optimality.Terminality): RecordEquivalent ∧ K T ≤ K T'
+
+    LEAN-CERTIFIED (zero sorry). -/
 theorem gte_semantic_terminality
-    (h_dichotomy  : GTETheorySpace.ExtensionDichotomy)
-    (h_complexity : GTETheorySpace.ExtensionComplexity)
     (T' : GTETheorySpace.Theory)
     (h_ext : GTETheorySpace.Extends T' fmdl) :
     GTETheorySpace.FailsPSC T' ∨ TheorySpace.Redundant GTETheorySpace T' fmdl :=
-  TheorySpace.semantic_terminality GTETheorySpace h_dichotomy h_complexity fmdl
-    GTEOptimalityInstance T' h_ext
+  Or.inr ⟨h_ext, gte_psc_optimal T' h_ext⟩
 
 end UgpLean.Framework.GTE
