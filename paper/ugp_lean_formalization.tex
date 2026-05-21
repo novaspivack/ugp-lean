@@ -135,7 +135,7 @@ It produces, from first principles and without free parameters, a unique
 canonical seed---the triple $(1,73,823)$---whose orbit under the
 Generative Triple Evolution (\gte{}) map is rigidly determined.
 We present \textbf{ugp-lean}, a machine-checked formalization of this
-framework in \lean{}~4 against Mathlib, comprising 143 modules with a
+framework in \lean{}~4 against Mathlib, comprising 144 modules with a
 strict zero-sorry, zero-custom-axiom policy on the core proof path.
 (Six modules — IPT, NullDiscipline, PSC.ThreeRouteForcing,
 CyclotomicCompleteness.H9SelfConsistency, and GoldenRatioFixedPoint
@@ -179,10 +179,12 @@ A new \textbf{Universality} layer (34 modules) extends
 this to a complete computational picture, culminating in
 \textbf{GUTStructure} (Beable Hilbert space, Weinberg-angle closure,
 TPC hierarchy proxies) and \textbf{LawvereZone} (Zone L1/L2/L3 classification).
-A new \textbf{Framework} layer (\lstinline|GTEFrameworkInstance|) instantiates
-the GTE-Möbius substrate as a \texttt{NemS.Framework} with \texttt{DiagonalCapable}
-and \texttt{PSCBundle}, firing \lstinline|transputation_classification| to yield
-\lstinline|gte_tpc_from_nems_classification| (zero \texttt{sorry}, one Cook-bridge axiom).
+A new \textbf{Framework} layer (3 modules) completes the GTE-substrate program:
+\lstinline|GTEFrameworkInstance| instantiates GTE as a \texttt{NemS.Framework} with
+\lstinline|gte_tpc_from_nems_classification| (one Cook-bridge axiom);
+\lstinline|GTEOptimalityInstance| derives GTE optimality and D-uniqueness;
+\lstinline|GTEFinalCoalgebra| proves GTE is the \emph{final} $F_{\rm PSC}$
+coalgebra in \texttt{PSCSys} — zero sorry, zero custom axioms.
 \textbf{CUP-4} (\lstinline|cup4_parity_uniqueness|) proves that the
 Standard Model generation orbit $(g_1\to g_2\to g_3)$ under the
 total-parity morphism \emph{algebraically forces} Rule~110 as the unique
@@ -486,7 +488,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 143~\lean{} modules across thirteen layers
+The artifact is organized into 144~\lean{} modules across thirteen layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -556,8 +558,9 @@ The artifact is organized into 143~\lean{} modules across thirteen layers
 \node[layer, fill=gray!8,   below=of univ]  (self)
   {\textbf{SelfRef}~(2)\quad LawvereKleene, RiceHalting};
 \node[layer, fill=pink!10,  below=of self]  (fwk)
-  {\textbf{Framework}~(1)\quad \textbf{GTEFrameworkInstance}
-   (NemS + transputation classification on GTE substrate)};
+  {\textbf{Framework}~(3)\quad \textbf{GTEFrameworkInstance},
+   \textbf{GTEOptimalityInstance}, \textbf{GTEFinalCoalgebra}
+   (NemS + TPC + C1 final coalgebra)};
 
 \draw[arr] (core.south)  -- (comp.north);
 \draw[arr] (comp.south)  -- (class.north);
@@ -3549,6 +3552,56 @@ at the same mathematical tier as the six axioms in
 The arithmetic proxy layer in \texttt{GUTStructure}~(\S67,
 \lstinline|gte_tpc_from_nems_transputation|) records the middle-level TPC hierarchy
 content; \lstinline|gte_tpc_from_nems_classification| is the substrate-specific upgrade.
+
+% ─────────────────────────────────────────────────────────────────
+\subsection{GTE Optimality (\texttt{GTEOptimalityInstance})}\label{subsec:gte-optimality-instance}
+
+The \texttt{Framework.GTEOptimalityInstance} module derives GTE's optimality properties
+from the substrate definition, complementing \texttt{GTEFrameworkInstance}.
+
+\textbf{Key theorem:} \lstinline|gte_d_unique| (zero \texttt{sorry}) proves that
+the GTE substrate is the unique $D$-dimensional theory satisfying the PSC optimality
+constraints at the GTE orbit, formalizing the dimensional-uniqueness claim of P34.
+
+\begin{leanref}
+\lstinline|GTEOptimalityInstance|, \lstinline|gte_d_unique|
+\textup{(in \texttt{Framework.GTEOptimalityInstance}, zero \texttt{sorry})}
+\end{leanref}
+
+% ─────────────────────────────────────────────────────────────────
+\subsection{GTE as Final $F_{\rm PSC}$ Coalgebra (\texttt{GTEFinalCoalgebra})}\label{subsec:gte-final-coalgebra}
+
+The \texttt{Framework.GTEFinalCoalgebra} module proves that the GTE-Möbius substrate
+is the \emph{terminal object} in the category \texttt{PSCSys} of PSC-compatible spaces,
+i.e., GTE is the final $F_{\rm PSC}$ coalgebra.  This is the C1 Final Coalgebra result
+(7 stages, all zero sorry, zero custom axioms).
+
+\textbf{Stage 5 — Optimality forces free-neighborhood zeros.}
+\lstinline|psc_optimal_zero_on_free| proves that any PSCOptimal CA function must output~0
+on all 325 free neighborhoods: zeroing one nonzero free entry yields a record-equivalent
+function with strictly lower Kolmogorov complexity, contradicting optimality.
+
+\textbf{Stage 6 — Terminality.}  \lstinline|c1_final_coalgebra_derived| (CatAL, zero sorry)
+derives that \lstinline|GTEPSCSubstrate| is terminal in \texttt{PSCSys} via the bridge lemma
+\lstinline|psc_optimal_implies_orbit_admissible|: any valid \texttt{PSCSubstrate} for
+\texttt{GTECompatibleSpace} must satisfy orbit-admissibility by construction, forcing it
+to agree with $f_{\rm MDL}$ on all fixed neighborhoods.
+
+\textbf{Stage 7 — Lambek isomorphism.}  \lstinline|c1_lambek_isomorphism| proves
+$F_{\rm PSC}(\mathsf{GTEPSCSubstrate}) = \mathsf{GTEPSCSubstrate}$ by \lstinline|rfl|
+(the functor $F_{\rm PSC} = \mathbf{1}_{\mathsf{PSCSys}}$ is the identity).
+
+\begin{leanref}
+\lstinline|psc_optimal_zero_on_free|, \lstinline|c1_final_coalgebra_derived|,
+\lstinline|c1_lambek_isomorphism|, \lstinline|psc_optimal_implies_orbit_admissible|
+\textup{(in \texttt{Framework.GTEFinalCoalgebra}, zero \texttt{sorry}, zero custom axioms)}
+\end{leanref}
+
+The C1 Final Coalgebra result completes the categorical characterization of the GTE
+substrate: GTE is simultaneously a terminal object (by this module), the unique
+orbit-admissible MDL-minimal function (by \texttt{GUTStructure}), and a
+\texttt{NemS.Framework} instance with transputation classification (by
+\texttt{GTEFrameworkInstance}).
 
 % ─────────────────────────────────────────────────────────────────
 \subsection{Two-Layer Confluence (\texttt{TwoLayerConfluence})}\label{subsec:two-layer-confluence}
