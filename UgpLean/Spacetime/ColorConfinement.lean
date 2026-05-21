@@ -216,39 +216,40 @@ def SingleQuarkBeable (b : Fin 5 → Fin 7) : Prop :=
 instance (b : Fin 5 → Fin 7) : Decidable (SingleQuarkBeable b) := by
   unfold SingleQuarkBeable; infer_instance
 
-/-- **Orbit exhaustion**: no state in the certified MDL orbit is a single-quark beable.
-
-    For each orbit state: no index `i` exists such that `b i ∈ {1,2,4}` and all
-    other positions are zero.
-    - gen₁ = [1,5,2,2,1]: every position `i` has at least one other nonzero neighbour
-    - gen₂ = [2,5,2,0,2]: same
-    - gen₃ = [5,6,5,3,5]: same
-    - vacuum = [0,0,0,0,0]: no color-charged position exists
-
-    Status: CatAL — zero sorry, zero axioms, certified by `decide` (5 cases each). -/
-theorem orbit_has_no_single_quarks :
-    ¬SingleQuarkBeable fmdl_gen1_z7 ∧
-    ¬SingleQuarkBeable fmdl_gen2_z7 ∧
-    ¬SingleQuarkBeable fmdl_gen3_z7 ∧
-    ¬SingleQuarkBeable (fun _ => (0 : Fin 7)) :=
-  ⟨by decide, by decide, by decide, by decide⟩
-
 /-- **Route B — Color Confinement** (Rank 25-CCF, CatAL).
 
     No PSC-admissible beable is a single-quark beable.
 
     Proof: `PSCAdmissible b` means `b ∈ {vacuum, gen₁, gen₂, gen₃}` (Zone L0 ∪ L1).
-    By `orbit_has_no_single_quarks`, none of these four states is a single-quark
-    beable.  Therefore no PSC-admissible state admits a single free color charge.
+    None of these four states is a single-quark beable (verified by exhaustive check
+    over all 7⁵ = 16 807 states).  Therefore no PSC-admissible state admits a
+    single free color charge.
 
     This route requires **no bridge axiom** — it replaces the analytic
-    anomaly-cancellation argument with a direct exhaustive check over the orbit.
+    anomaly-cancellation argument with a direct exhaustive finite check.
 
     Status: CatAL — zero sorry, zero axioms, certified by `native_decide`
     over all 7⁵ = 16 807 states. -/
 theorem no_psc_admissible_single_quark :
     ∀ b : Fin 5 → Fin 7, PSCAdmissible b → ¬SingleQuarkBeable b := by
   native_decide
+
+/-- **Orbit exhaustion**: no state in the certified MDL orbit is a single-quark beable.
+
+    Corollary of `no_psc_admissible_single_quark`: each orbit state (gen₁, gen₂,
+    gen₃, vacuum) is PSC-admissible, and PSC-admissible states are not single-quark
+    beables.
+
+    Status: CatAL — zero sorry, zero axioms. -/
+theorem orbit_has_no_single_quarks :
+    ¬SingleQuarkBeable fmdl_gen1_z7 ∧
+    ¬SingleQuarkBeable fmdl_gen2_z7 ∧
+    ¬SingleQuarkBeable fmdl_gen3_z7 ∧
+    ¬SingleQuarkBeable (fun _ => (0 : Fin 7)) :=
+  ⟨no_psc_admissible_single_quark _ gen1_psc_admissible,
+   no_psc_admissible_single_quark _ gen2_psc_admissible,
+   no_psc_admissible_single_quark _ gen3_psc_admissible,
+   no_psc_admissible_single_quark _ vacuum_psc_admissible⟩
 
 /-- **Route B Corollary**: No [D]-weighted beable is a single-quark beable.
 
