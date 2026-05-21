@@ -165,6 +165,10 @@ import UgpLean.Framework.GTEFinalCoalgebra
 import UgpLean.Spacetime.CausalGraph
 import UgpLean.Spacetime.SpectralDimension
 import UgpLean.Spacetime.ChiralPairDecoupling
+import UgpLean.Spacetime.ColorConfinement
+import UgpLean.Spacetime.LiftingTheorem
+import UgpLean.Spacetime.GeodesicTheorem
+import UgpLean.Spacetime.UniversalSimulation
 
 /-!
 # UgpLean — Universal Generative Principle: Lean 4 Formalization
@@ -197,8 +201,8 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Spacetime.CausalGraph` — Rank 12-LCG: causal graph of 3D f_MDL spacetime; `CausalNode`, `CausalAdj`, `CausalGraph`; rule-independence theorem zero sorry (2026-05-21)
 - `UgpLean.Spacetime.SpectralDimension` — Rank 13-LSD: spectral dimension dₛ = 4; `FinAdjPeriodic`, `CausalGraphPeriodic`, `causal_graph_periodic_rule_independent` zero sorry; degree=20, torus isomorphism, dₛ=4 stated with sorry (2026-05-21)
 - `UgpLean.Spacetime.ChiralPairDecoupling` — Rank 14-LCD: chiral pair causal decoupling; `ChiralLayer`, `ChiralNode`, `ChiralPairAdj`; `chiral_pair_no_cross_layer_edges` zero sorry, `chiral_pair_walk_layer_invariant` zero sorry (2026-05-21)
+- `UgpLean.Spacetime.ColorConfinement` — Rank 25-CCF: color confinement from PSC RC + Absence Theorem; `color_confinement` and `physical_particles_are_color_neutral` zero sorry, one named bridge axiom `psc_rc_requires_color_neutrality` (CatAD, 2026-05-21)
+- `UgpLean.Spacetime.GeodesicTheorem` — Rank 17-GEO: geodesic theorem; `IsGeodesicPath`, `PSCPreserving`, `DWeightNode`, `geodesic_theorem`, `gte_equivalence_principle`, `massive_timelike_geodesic`, `photon_null_geodesic`, `geodesic_uniqueness`, `geodesic_consistent_with_emergent_gravity`; all zero sorry, D2 argument stated (2026-05-21)
 
 **Non-circularity:** Core/ does not import Compute/. See README.md.
 -/
-import UgpLean.Spacetime.LiftingTheorem
-import UgpLean.Spacetime.UniversalSimulation
