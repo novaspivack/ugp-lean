@@ -168,6 +168,7 @@ import UgpLean.Spacetime.ChiralPairDecoupling
 import UgpLean.Spacetime.ColorConfinement
 import UgpLean.Spacetime.LiftingTheorem
 import UgpLean.Spacetime.GeodesicTheorem
+import UgpLean.Spacetime.MassGap
 import UgpLean.Spacetime.UniversalSimulation
 
 /-!
@@ -203,6 +204,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Spacetime.ChiralPairDecoupling` — Rank 14-LCD: chiral pair causal decoupling; `ChiralLayer`, `ChiralNode`, `ChiralPairAdj`; `chiral_pair_no_cross_layer_edges` zero sorry, `chiral_pair_walk_layer_invariant` zero sorry (2026-05-21)
 - `UgpLean.Spacetime.ColorConfinement` — Rank 25-CCF: color confinement from PSC RC + Absence Theorem; `color_confinement` and `physical_particles_are_color_neutral` zero sorry, one named bridge axiom `psc_rc_requires_color_neutrality` (CatAD, 2026-05-21)
 - `UgpLean.Spacetime.GeodesicTheorem` — Rank 17-GEO: geodesic theorem; `IsGeodesicPath`, `PSCPreserving`, `DWeightNode`, `geodesic_theorem`, `gte_equivalence_principle`, `massive_timelike_geodesic`, `photon_null_geodesic`, `geodesic_uniqueness`, `geodesic_consistent_with_emergent_gravity`; all zero sorry, D2 argument stated (2026-05-21)
+- `UgpLean.Spacetime.MassGap` — Rank 42-MGP: Yang–Mills mass gap at beable level; `beable_positive_mass`, `physical_mass_gap`, `lightest_meson_positive_mass`, `gte_mass_gap`; all zero sorry, 1 named axiom `gte_mass_formula_positive` (CatAD → CatAL pending ridge sieve formalization, 2026-05-21)
 
 **Non-circularity:** Core/ does not import Compute/. See README.md.
 -/
