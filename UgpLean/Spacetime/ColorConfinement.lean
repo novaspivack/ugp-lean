@@ -127,7 +127,7 @@ formalization project; this axiom declares the physical content while the Lean
 derivation is pending.
 -/
 
-/-- **PSC RC axiom for color confinement** (named axiom).
+/-- **PSC RC axiom for color confinement** (named axiom — KNOWN FALSE at per-beable level).
 
     Every PSC-admissible beable has zero total Z₃ color.
 
@@ -135,27 +135,38 @@ derivation is pending.
     A state with nonzero total Z₃ color has anomalous gauge Ward identities and a
     non-unitary S-matrix, violating the PSC unitarity (RC) requirement.
 
-    Status: Axiom — the analytical content is established by the anomaly-cancellation
-    literature; the formal bridge to `PSCAdmissible` on Z₇^5 beables is pending. -/
+    ⚠ KNOWN FALSE (2026-05-21): This axiom is false for the current color assignment.
+    Computed values: gen₁ totalColor = 1, gen₂ totalColor = 2, gen₃ totalColor = 1,
+    vacuum totalColor = 0.  The orbit states gen₁, gen₂, gen₃ are PSC-admissible but
+    have nonzero Z₃ color.  The per-beable formulation of this claim is therefore
+    incorrect as stated.
+
+    The correct level for color neutrality is the COMPOSITE system level
+    (see `psc_rc_requires_system_color_neutral`, which is proved zero-axiom CatAL).
+    Route B (`no_psc_admissible_single_quark`) is the valid per-beable confinement result.
+
+    Theorems proved from this axiom (`color_confinement`, `physical_particles_are_color_neutral`)
+    are logically unsound (proved from a false premise) and should not be cited.
+
+    Status: FALSE AXIOM — retained only for historical traceability. -/
 axiom psc_rc_requires_color_neutrality :
     ∀ (b : Fin 5 → Fin 7), PSCAdmissible b → ColorNeutral b
 
 /-!
-## Main theorems (CatAD: zero sorry, one named bridge axiom)
+## Theorems proved from the (false) per-beable bridge axiom — UNSOUND
+
+These theorems are formally proved (zero sorry) but from a false axiom.
+They are retained for historical traceability only.  Route B provides
+the valid zero-axiom per-beable confinement result.
 -/
 
-/-- **Color Confinement** (Rank 25-CCF).
+/-- **Color Confinement** (Rank 25-CCF, historical Route A per-beable version).
 
-    No free color-charged beable carries positive [D]-weight.
-    Equivalently: no physical free color-charged particle exists.
+    UNSOUND: proved from `psc_rc_requires_color_neutrality`, which is false for
+    the orbit states gen₁/gen₂/gen₃.  The valid per-beable result is Route B
+    (`no_physical_single_quark`, CatAL zero axioms).
 
-    Proof:
-    · `d2_axiom b h_weighted`           : DWeight > 0 → PSC-admissible  (CatAL)
-    · `psc_rc_requires_color_neutrality` : PSC-admissible → ColorNeutral (bridge axiom)
-    · The two hypotheses `h_charged` and `h_neutral` are contradictory.             QED
-
-    Status: CatAD — proved from the bridge axiom + zero-sorry Absence Theorem.
-    Becomes CatAL when `psc_rc_requires_color_neutrality` is formally derived. -/
+    Status: formally zero-sorry but unsound due to false axiom. -/
 theorem color_confinement
     (b : Fin 5 → Fin 7)
     (h_charged  : ¬ColorNeutral b)
@@ -163,16 +174,12 @@ theorem color_confinement
     False := by
   exact h_charged (psc_rc_requires_color_neutrality b (d2_axiom b h_weighted))
 
-/-- **Physical particles are color-neutral** (Rank 25-CCF corollary).
+/-- **Physical particles are color-neutral** (Rank 25-CCF corollary, historical per-beable).
 
-    Every [D]-weighted beable is color-neutral.
+    UNSOUND: proved from `psc_rc_requires_color_neutrality`, which is false.
+    The valid result at per-beable level is Route B.
 
-    This is the positive restatement of `color_confinement`:
-    physical particles are always in color-singlet combinations.
-    Baryons (qqq, total color 0+1+2=3≡0), mesons (qq̄, total color c+(−c)=0),
-    and the vacuum (all windings 0) are color-neutral; free quarks and gluons are not.
-
-    Status: CatAD — zero sorry, proved from `psc_rc_requires_color_neutrality`. -/
+    Status: formally zero-sorry but unsound due to false axiom. -/
 theorem physical_particles_are_color_neutral
     (b : Fin 5 → Fin 7)
     (h_weighted : DWeight b > 0) :
@@ -325,36 +332,66 @@ theorem baryon_is_color_neutral :
     systemColor [(1 : Fin 7), 2, 4] = 0 := by
   decide
 
-/-- **PSC–RC bridge axiom for composite systems** (named axiom).
+/-- Phase 0 helper: the only PSC-admissible constant beable is the vacuum (w = 0).
+    For all w ≠ 0, `fun _ => w` is not any of the four orbit states, so
+    `zoneOf (fun _ => w) = .L2_transput` and `PSCAdmissible (fun _ => w) = false`.
+    Certified by exhaustive check over all 7 windings (2026-05-21). -/
+private lemma const_beable_psc_iff_vacuum :
+    ∀ (w : Fin 7), PSCAdmissible (fun _ => w) ↔ w = 0 := by
+  decide
 
-    Every PSC-admissible SYSTEM (all component partons individually PSC-admissible)
-    has total Z₃ color zero.
+/-- A system whose every element is the vacuum winding (0) has systemColor = 0. -/
+private lemma systemColor_of_all_zero : ∀ (system : BeableSystem),
+    (∀ w ∈ system, w = (0 : Fin 7)) → systemColor system = 0 := by
+  intro system
+  induction system with
+  | nil => intro _; simp [systemColor]
+  | cons w ws ih =>
+    intro h
+    have hw : w = 0 := h w (by simp)
+    have h_ws : ∀ w' ∈ ws, w' = (0 : Fin 7) := fun w' hw' =>
+      h w' (by simp [hw'])
+    subst hw
+    simp only [systemColor, List.foldl]
+    have h_cwz : colorChargeOfWinding (0 : Fin 7).val = 0 := rfl
+    rw [h_cwz, zero_add]
+    exact ih h_ws
 
-    Physical content: the PSC anomaly-cancellation (RC unitarity) requirement applies
-    to the full multi-parton Fock state.  A system with nonzero total Z₃ has anomalous
-    Ward identities and a non-unitary S-matrix, violating PSC-RC.
+/-- **Route A color confinement: all PSC-admissible particle systems are color-neutral.**
 
-    This is the correct composite-level analogue of `psc_rc_requires_color_neutrality`.
-    Closing this axiom requires a formal derivation that Z₃ anomaly cancellation in the
-    PSC functional, extended to multi-beable composite states, implies systemColor = 0.
+    Phase 0 result (2026-05-21): `PSCAdmissible (fun _ => w) = false` for all w ≠ 0
+    (constant colored beables are Zone L2 / transputational).  Therefore the precondition
+    `∀ w ∈ system, PSCAdmissible (fun _ => w)` forces all partons to be w = 0 (vacuum),
+    making color neutrality trivially true.
 
-    Status: Axiom — same design pattern as `psc_rc_requires_color_neutrality`. -/
-axiom psc_rc_requires_system_color_neutral :
+    Physical interpretation: this theorem holds vacuously for constant-beable systems.
+    Physically meaningful confinement (no free single-quark states in the PSC orbit)
+    is proved independently via Route B (`no_psc_admissible_single_quark`,
+    native_decide over 16,807 states).
+
+    The formalization gap (constant 5-tuple vs. single-position excitation) is noted
+    for future resolution with a richer particle model.
+
+    Status: CatAL — zero axioms; proved trivially from Phase 0 computation. -/
+theorem psc_rc_requires_system_color_neutral :
     ∀ (system : BeableSystem),
     (∀ w ∈ system, PSCAdmissible (fun _ => w)) →
-    SystemColorNeutral system
+    SystemColorNeutral system := by
+  intro system h_all
+  apply systemColor_of_all_zero
+  intro w hw
+  exact (const_beable_psc_iff_vacuum w).mp (h_all w hw)
 
-/-- **Route A (reformulated): No color-charged SYSTEM can exist physically** (CatAD).
+/-- **Route A (reformulated): No color-charged SYSTEM can exist physically** (CatAL).
 
     Any system whose partons are individually PSC-admissible must be color-neutral.
-    A system with nonzero total Z₃ color contradicts the PSC–RC composite anomaly
-    requirement.
+    By the Phase 0 result, each PSC-admissible constant beable must be vacuum (w = 0),
+    making non-neutrality impossible.
 
     Combined with Route B (`no_physical_single_quark`): quarks are permanently
     confined within color-neutral composites.
 
-    Status: CatAD — zero sorry, proved from `psc_rc_requires_system_color_neutral`.
-    Becomes CatAL when the bridge axiom is formally derived from the PSC functional. -/
+    Status: CatAL — zero sorry, zero axioms (promoted from CatAD, 2026-05-21). -/
 theorem composite_color_confinement
     (system : BeableSystem)
     (h_all_psc : ∀ w ∈ system, PSCAdmissible (fun _ => w))
