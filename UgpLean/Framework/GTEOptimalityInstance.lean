@@ -1,4 +1,5 @@
 import NemS.Optimality.Terminality
+import NemS.Category.PSCSys
 import UgpLean.Framework.GTEFrameworkInstance
 import UgpLean.Universality.CUP3DUniqueness
 
@@ -211,5 +212,52 @@ theorem gte_semantic_terminality
     (h_ext : GTETheorySpace.Extends T' fmdl) :
     GTETheorySpace.FailsPSC T' ∨ TheorySpace.Redundant GTETheorySpace T' fmdl :=
   Or.inr ⟨h_ext, gte_psc_optimal T' h_ext⟩
+
+-- ────────────────────────────────────────────────────────────────────────────
+-- §2.7  PSCSys objects: GTECompatibleSpace and GTEPSCSubstrate (Stage 1–2 of Rank 282-C1F)
+-- ────────────────────────────────────────────────────────────────────────────
+
+open NemS.Category
+
+/-- **GTECompatibleSpace** (zero sorry):
+    `GTETheorySpace` upgraded to a `PSCCompatibleSpace` by proving that
+    `z7CARecordEq` is reflexive and transitive.
+
+    - **Reflexivity**: `z7CARecordEq f f` holds since `f l c r = f l c r` trivially.
+    - **Transitivity**: agreement on fixed neighborhoods is transitive by equality transitivity.
+
+    This is the theory space in which `GTEPSCSubstrate` lives as a PSCSys object. -/
+def GTECompatibleSpace : PSCCompatibleSpace where
+  toTheorySpace := GTETheorySpace
+  req_refl  _         := fun _ _ _ _ => rfl
+  req_trans _ _ _ h12 h23 := fun l c r hf => (h12 l c r hf).trans (h23 l c r hf)
+
+/-- **GTEPSCSubstrate** (zero sorry):
+    The GTE Möbius substrate as an object in the PSCSys category.
+
+    - Theory: `fmdl` (the Z₇ MDL-minimal CA function)
+    - Optimality: `gte_psc_optimal` (Stage 3, Rank 282-C1F, zero sorry)
+
+    This is GTE's canonical object in PSCSys — the one claimed to be terminal (C1). -/
+def GTEPSCSubstrate : PSCSubstrate GTECompatibleSpace :=
+  ⟨fmdl, gte_psc_optimal⟩
+
+/-- **c1_final_coalgebra** (CatAD axiom, Stage 2 of Rank 282-C1F):
+    GTE is the terminal object of PSCSys: for every PSC-consistent substrate `A`,
+    there exists a unique PSC-morphism `A ⟶ GTEPSCSubstrate`.
+
+    In the thin-category formulation, this reduces to:
+    `∀ A : PSCSubstrate GTECompatibleSpace, GTECompatibleSpace.RecordEquivalent A.T fmdl`
+
+    This follows from `optimal_unique_up_to_iso` (FinalityTheorem.lean, zero sorry)
+    applied to `A.optimal` and `gte_psc_optimal`.
+
+    **CatAL upgrade path** (Stages 5–7, Rank 282-C1F):
+    The full proof requires connecting `foundational_finality` / `optimal_unique_up_to_iso`
+    (NemS.Reflexive.FinalityTheorem) to `PSCSubstrate.IsTerminal GTEPSCSubstrate`.
+    This needs a `ReflexiveTheorySpace` instance for `GTECompatibleSpace` providing
+    `Isomorphic`, `MetaExplanation`, and `ExecInternal` predicates (~3–5 sessions). -/
+axiom c1_final_coalgebra :
+    PSCSubstrate.IsTerminal GTEPSCSubstrate
 
 end UgpLean.Framework.GTE
