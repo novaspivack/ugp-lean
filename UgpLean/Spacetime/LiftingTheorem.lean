@@ -282,30 +282,52 @@ theorem no_fourth_generation_physical
 -- §7  Charge Quantization and Three Generations at Physical Scale
 -- ─────────────────────────────────────────────────────────────────────────────
 
-/-- Charge is quantized in units of 1/3 at physical scale.
+/-- **Charge quantization at physical scale** (Rank 20-CQP).
 
-    The charge formula Q = w*/3 (CatAL, P28 §charge_formula) holds for all
-    PSC-admissible beables.  By `algebraic_lifting_theorem`, charge is quantized
-    for every [D]-weighted physical observable.
+    The charge formula Q = w*/3 holds for all PSC-admissible beables.
+    `GUTStructure.gte_charge_formula` (CatAL, zero sorry) certifies the complete
+    SM charge table as arithmetic facts: `centeredZ7 ⟨w, _⟩ = w*` for each SM
+    particle, giving 3Q = w* ∈ ℤ for every particle.
 
-    Placeholder until `z7_charge_formula` is lifted explicitly. -/
+    By `algebraic_lifting_theorem`, any property of PSC-admissible beables holds
+    for [D]-weighted physical observables, so charge quantization in units of 1/3
+    holds at Compton scale.
+
+    Connecting `gte_charge_formula` to this theorem requires lifting the pointwise
+    arithmetic certification (which fixes specific winding values) to the predicate
+    "3Q ∈ ℤ for every beable component."  That lift is the remaining step; the
+    CatAL ingredient is `GUTStructure.gte_charge_formula` (P28, zero sorry).
+
+    Status: Rank 20-CQP placeholder — proof body trivial, CatAL source identified. -/
 theorem charge_quantization_physical
     (beable : Fin 5 → Fin 7)
     (_h_weighted : DWeight beable > 0) :
     -- Physical charge Q is an integer multiple of 1/3.
+    -- CatAL source: GUTStructure.gte_charge_formula (centeredZ7 arithmetic table)
     True := trivial
 
-/-- Exactly 3 physical generations exist.
+/-- **Three physical generations** (Rank 21-3GP).
 
-    The f_MDL orbit on Z₇^5 has period exactly 3 (CatAL, encoded in
-    `sm_period3_orbit_chain`).  By `algebraic_lifting_theorem`, all three
-    generation seeds — and only those seeds — are physical.
-    Equivalently, by `algebraic_absence_theorem`, no 4th-generation physical
-    particle exists.
+    The f_MDL orbit on Z₇^5 has period exactly 3.
+    `CUP3DPSCUnification.fmdl_ngen_equals_three` (CatAL, zero sorry) certifies:
+    ∃ g1 g2 g3 : Fin 5 → Fin 7, pairwise distinct, non-vacuum, with orbit
+    g1 → g2 → g3 → vacuum under `fmdl_step5`.
 
-    Placeholder until `three_dim_fmdl_structure_forced` is connected. -/
+    By `algebraic_lifting_theorem`, only g1, g2, g3 carry non-zero [D]-weight,
+    so exactly three physical generations exist.  The no-4th-generation result
+    follows by `algebraic_absence_theorem`: any 4th-generation candidate would
+    require a non-vacuum orbit state beyond the period-3 orbit, contradicting
+    the PSC-admissibility criterion.
+
+    Connecting this requires importing `UgpLean.Universality.CUP3DPSCUnification`
+    and composing `fmdl_ngen_equals_three` with `algebraic_lifting_theorem`.
+    That composition is the remaining step.
+
+    Status: Rank 21-3GP placeholder — proof body trivial, CatAL source identified:
+    `CUP3DPSCUnification.fmdl_ngen_equals_three`. -/
 theorem three_generations_physical :
     -- Only gen₁, gen₂, gen₃ are PSC-admissible; orbit depth is 3.
+    -- CatAL source: CUP3DPSCUnification.fmdl_ngen_equals_three (zero sorry)
     True := trivial
 
 -- ─────────────────────────────────────────────────────────────────────────────
@@ -347,21 +369,32 @@ theorem composition_theorem
 -- §9  Garden-of-Eden Physical Stability
 -- ─────────────────────────────────────────────────────────────────────────────
 
-/-- **Garden-of-Eden physical stability.**
+/-- **Garden-of-Eden physical stability** (Rank 23-GSP).
 
     A beable with no f_MDL predecessor (Garden of Eden state) corresponds to
-    an absolutely stable physical particle: there is no PSC-admissible
-    predecessor state into which it could decay.
+    an absolutely stable physical particle: no PSC-admissible predecessor
+    state can decay into it via any allowed vertex.
 
-    `fmdl_gen1_is_garden_of_eden` certifies gen₁ is a GoE state (CatAL).
-    The [D]-weight condition confirms it is a physical observable.
+    `fmdl_gen1_is_garden_of_eden` (CatAL, zero sorry; `CUP3DUniqueness`, accessible
+    via `LawvereZone`) certifies `∀ s : Fin 5 → Fin 7, fmdl_step5 s ≠ fmdl_gen1_z7`,
+    i.e., gen₁ is a GoE state.  The hypothesis `_h_goe` of this theorem is exactly
+    that statement for an arbitrary beable; specializing to `fmdl_gen1_z7` recovers
+    the certified instance.
 
-    Placeholder: the decay-impossibility predicate is not yet formalized. -/
+    Connecting this to a formal absolute-stability statement requires formalizing
+    the decay-impossibility predicate: "no PSC-admissible vertex transition produces
+    `beable` as an output."  That predicate is the remaining step; it will follow
+    from `_h_goe` plus the vertex catalog (P22/P28), which restricts allowed
+    transitions to those mapping between PSC-admissible states under `fmdl_step5`.
+
+    Status: Rank 23-GSP placeholder — proof body trivial, CatAL source identified:
+    `fmdl_gen1_is_garden_of_eden` (`CUP3DUniqueness`, zero sorry). -/
 theorem goe_physical_stability
     (beable : Fin 5 → Fin 7)
     (_h_goe : ∀ s : Fin 5 → Fin 7, fmdl_step5 s ≠ beable)
     (_h_weighted : DWeight beable > 0) :
     -- The physical particle is absolutely stable; no decay predecessor exists.
+    -- CatAL source: fmdl_gen1_is_garden_of_eden (CUP3DUniqueness, zero sorry)
     True := trivial
 
 -- ─────────────────────────────────────────────────────────────────────────────
