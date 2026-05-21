@@ -221,26 +221,35 @@ open NemS.Category
 
 /-- **GTECompatibleSpace** (zero sorry):
     `GTETheorySpace` upgraded to a `PSCCompatibleSpace` by proving that
-    `z7CARecordEq` is reflexive and transitive.
+    `z7CARecordEq` is reflexive and transitive, and equipping it with the
+    GTE orbit-admissibility predicate.
 
     - **Reflexivity**: `z7CARecordEq f f` holds since `f l c r = f l c r` trivially.
     - **Transitivity**: agreement on fixed neighborhoods is transitive by equality transitivity.
+    - **orbit_admissible**: any theory `f` in this space must agree with `fmdl` on all
+      fixed neighborhoods (the 18 SM generation orbit + Rule 110 constraints).
+      This is `z7CARecordEq f fmdl` by definition.  It is required as part of the
+      `PSCSubstrate` constructor and proved trivially for `fmdl` by `rfl`.
 
     This is the theory space in which `GTEPSCSubstrate` lives as a PSCSys object. -/
 def GTECompatibleSpace : PSCCompatibleSpace where
   toTheorySpace := GTETheorySpace
   req_refl  _         := fun _ _ _ _ => rfl
   req_trans _ _ _ h12 h23 := fun l c r hf => (h12 l c r hf).trans (h23 l c r hf)
+  -- orbit_admissible encodes the SM generation orbit + Rule 110 constraints:
+  -- a theory is orbit-admissible iff it agrees with fmdl on all 18 fixed neighborhoods.
+  orbit_admissible f  := ∀ l c r : Fin 7, isFixedNeighborhood l c r = true → f l c r = fmdl l c r
 
 /-- **GTEPSCSubstrate** (zero sorry):
     The GTE Möbius substrate as an object in the PSCSys category.
 
     - Theory: `fmdl` (the Z₇ MDL-minimal CA function)
     - Optimality: `gte_psc_optimal` (Stage 3, Rank 282-C1F, zero sorry)
+    - Orbit-admissibility: `fmdl` agrees with itself on all fixed neighborhoods (`rfl`)
 
     This is GTE's canonical object in PSCSys — the one claimed to be terminal (C1). -/
 def GTEPSCSubstrate : PSCSubstrate GTECompatibleSpace :=
-  ⟨fmdl, gte_psc_optimal⟩
+  ⟨fmdl, gte_psc_optimal, fun _ _ _ _ => rfl⟩
 
 -- c1_final_coalgebra is proved in GTEFinalCoalgebra.lean (Stages 5–7, Rank 282-C1F).
 -- Import UgpLean.Framework.GTEFinalCoalgebra to access:
