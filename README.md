@@ -113,6 +113,49 @@ Graduated to ugp-lean canonical (commit `cc6865f`).
 - `gte_entropy_prefix8_gt_prefix9` — finite coarse Shannon-entropy drop along simulated GTE orbit (ML-9 companion; `GTE.EntropyNonMonotone`)
 - `ugp_lawvere_fixed_point` / `ugp_kleene_recursion_thm` / `ugp_rice_theorem` / `ugp_halting_undecidable` — Self-reference layer
 
+**CUP theorems — SM orbit forces Rule 110 (Universality layer)**
+- `cup4_parity_uniqueness` — CUP-4: SM generation orbit algebraically forces Rule 110 as the unique vacuum-transparent binary CA rule; `cup1_orbit_uniquely_selects_rule110` (256 rules checked, native_decide)
+- `cup11c_universal_mod7_CA_exists` — CUP-11c: a universal mod-7 CA exists; `CUP11ModSeven`
+- `fmdl_gen1_is_garden_of_eden` — gen₁ = [1,5,2,2,1] has zero predecessors under f_MDL (native_decide over 7⁵ = 16,807 states)
+- `fmdl_unique_uniform_fixed_point` — unique CA fixed point is k=0 (photon); `fmdl_massless_criterion`: massless iff k∈{0,1}
+- `cup11b_z7_sum_conservation` — CUP-11b: gen₁ conserves Z₇ sum under fmdl_step5; gen₂/gen₃ do not (characterization of gen₁ as unique conserving generation)
+- `orbit_perturbation_destroys_universality` — all 10 single-bit orbit perturbations yield no Rule 110 (orbit isolation with zero tolerance)
+- `sm_orbit_complete_causal_isolation` — 6-part master theorem: GoE, unique predecessor chain, chain isolation, sum trajectory 4→4→3→0, GTP-3 structure, max GTP length 3 (all native_decide)
+- `hypothesis_b_tape_level` — single Rule 110 Bool tape simultaneously computes both UGP dynamical sectors (1 named axiom)
+- `hypothesis_c_psc_forces_universality` — PSC → SM structure → orbit → Rule 110 → Turing-universal (1 named axiom)
+
+**GUT structure — SM observables from N_gen=3, N_fam=5 (`GUTStructure`)**
+- `gut_weinberg_structure` — sin²θ_W(GUT) = N_gen/(N_gen+N_fam) = 3/8; holds for all N_gen∈{2,3,4,5}
+- `weinberg_angle_closure` — sin²θ_W = 3/13 from palindrome decomposition alone, zero new axioms
+- `wolfenstein_lambda_formula` — λ = N_gen²/(2^N_gen × N_fam) = 9/40; PDG: 0.22500 ± 0.00067 (0.000% error)
+- `six_quark_neff_complete` — all six quark N_eff values (b_u=9, b_d=5, b_c=275, b_s=186, b_b=8191, b_t) from GTE arithmetic
+- `ugp_r110_sm_joint_unification` — joint capstone: GTE arithmetic simultaneously forces Rule 110 and certifies sin²θ_W=3/13, λ=9/40, D=4, GoE chain, photon fixed point
+- `gte_spacetime_dimension` — D = N_gen + 1 = 4; `three_dim_fmdl_structure_forced`: D=3 spatial forced by orthogonal Rule 110 slice constraint
+- `charge_from_z7_winding` — Q = w*/3 for all SM fermions; `z7_color_subgroup_closed`: Z₃={1,2,4}⊂Z₇* closed
+- `hypercharge_u_quark` + `weinberg_angle_from_hypercharge_sum` — U(1)_Y consistency; sin²θ_W=3/13 from hypercharge sum rule
+- `gorard_matter_step_kappa_positive` — κ_SD > 0 at all SM generation neighborhoods (matter curves discrete geometry; P36 CatAL)
+- `tail_length_strict_ordering` — gen₁ tail > gen₂ tail > gen₃ tail: generation mass hierarchy in CA orbit topology; `neff_not_monotone_in_tail`: naive eigenvalue-mass identification ruled out
+- `qcd_beta0_from_gte` — β₀ = (11N_c − 2N_gen N_fam)/3 = 23/3; `orbit_sum_winding_classes`: orbit sum 4→4→3→0 encodes winding-class hierarchy
+- `vacuum_ollivier_ricci_flatness` — κ_EE = 0 exactly (vacuum is CA-flat); `fmdl_perfect_code`: f_MDL achieves minimum 14 nonzero neighborhoods
+- `eta_B_amplitude_structure` — baryogenesis amplitude exponent structure CatAL (n_EW=1, n_EM=2)
+- `ward_mass_cancellation` — Z₇ winding current conserved at every f_MDL vertex (Ward identity)
+
+**N_c=3 from substrate arithmetic (`GTE.NcColorArithmetic`)**
+- `nc_eq_3_from_mersenne_gcd` — Route 1: GCD(2^10−1, 2^16−1) = 2^GCD(10,16)−1 = 3; zero custom axioms
+- `nc_uniqueness_from_ridge_divisors` — Route 2: N_c is the unique n with n! = GCD(b₂,q₂) = 6; zero custom axioms
+
+**GoE stability, orbit structure, dimensional uniqueness**
+- `gen1_is_goe` / `gen2_unique_predecessor` / `sm_chain_fully_isolated` — orbital chain isolation: gen₁ GoE, gen₂/gen₃ unique predecessors, no other state maps to any SM generation (`GoEStabilityHierarchy`)
+- `z5_prime_unique_transitivity` — p=5 is the unique prime ≤23 giving SM family transitivity; CA-internal reason for N_fam=5 (`Z5TransitivityUniqueness`)
+- `ew_c_staircase` / `ew_c_arithmetic_progression` — W⁺/Z/H⁰ c-values {11,12,13} forced; `ew_higgs_is_scalar_boundary` (`EWBosonStructure`)
+- `fmdl_matter_cp_violation` / `fmdl_conj_pair_asymmetry_unique` — f_MDL uniquely selected by MDL minimality + CP asymmetry; `ca_w_plus_is_emission_not_absorption` (`Z7ChargeConjugation`)
+
+**GTE-NEMS Framework Instance and C1 Final Coalgebra**
+- `gte_tpc_from_nems_classification` / `gte_tpc_real` — GTE instantiates NemS.Framework; transputation classification fires (1 Cook-bridge axiom; `GTEFrameworkInstance`)
+- `gte_d_unique` — GTE D-uniqueness and optimality (`GTEOptimalityInstance`)
+- `c1_final_coalgebra_derived` — GTE is the terminal F_PSC coalgebra in PSCSys; zero sorry, zero custom axioms
+- `psc_optimal_zero_on_free` — PSCOptimal function must output 0 on all 325 free neighborhoods (`GTEFinalCoalgebra`)
+
 ---
 
 ## Documentation
