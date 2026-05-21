@@ -86,6 +86,19 @@
 \draw[arr] (umap)   -- (genthm);
 \draw[arr] (mgcd)   -- (mdc);
 
+% Framework layer (NEMS / transputation on GTE substrate)
+\node[mod, fill=pink!15] (gtefwk) at (6,-1.2) {GTEFrameworkInstance};
+\node[mod, fill=violet!10] (gut)   at (3.5,-1.2) {GUTStructure};
+\node[mod, fill=violet!10] (cup3d) at (8.5,-1.2) {CUP3DPhysInc};
+
+\begin{scope}[on background layer]
+  \node[layer, fill=pink!3, fit=(gtefwk)(gut)(cup3d),
+        label={[font=\sffamily\small\bfseries]above left:Framework}] {};
+\end{scope}
+
+\draw[arr] (gut)   -- (gtefwk);
+\draw[arr] (cup3d) -- (gtefwk);
+
 \end{tikzpicture}
 \caption{Module dependency graph (simplified).  Arrows indicate import
   dependencies.  The critical invariant is that \textbf{Core} does not

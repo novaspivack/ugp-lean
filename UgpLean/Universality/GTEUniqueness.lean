@@ -142,4 +142,165 @@ theorem gte_binary_rules_bisimilar :
 theorem rule110_is_lawful : IsLawfulBinaryCARule 110 :=
   (cup1_orbit_uniquely_selects_rule110 110).mpr rfl
 
+-- ════════════════════════════════════════════════════════════════
+-- §3 sigma_gte is a lawful and minimal program (zero sorry)
+-- ════════════════════════════════════════════════════════════════
+
+/-- **sigma_gte is a lawful UWCA program** (existence witness):
+    sigma_gte exactly implements the GTE update map on every input.
+    This is the existence side of the uniqueness theorem — sigma_gte itself
+    satisfies the lawfulness predicate.
+
+    Proof: immediate from gte_compilation_theorem.
+    LEAN-CERTIFIED: zero sorry. -/
+theorem sigma_gte_is_lawful : IsLawfulUWCAProgram sigma_gte :=
+  gte_compilation_theorem
+
+/-- The empty tile set is NOT a lawful UWCA program.
+    Proof: uwca_eval [] LeptonSeed = LeptonSeed = ⟨1,73,823⟩,
+    but gte_update_map LeptonSeed = ⟨9,42,1023⟩ ≠ ⟨1,73,823⟩.
+    LEAN-CERTIFIED: zero sorry. -/
+theorem empty_tileset_not_lawful : ¬ IsLawfulUWCAProgram [] := by
+  intro h
+  have heval : uwca_eval [] LeptonSeed = LeptonSeed := rfl
+  have hlawful := h LeptonSeed
+  rw [heval, gte_update_at_seed] at hlawful
+  exact absurd hlawful (by native_decide)
+
+/-- A GTE UWCA program is minimal if it is lawful and no proper sub-program
+    (shorter tile set) is also lawful. This captures the notion that sigma_gte
+    is not over-specified — removing any tile makes it non-lawful. -/
+def IsMinimalProgram (prog : UWCATileSet) : Prop :=
+  IsLawfulUWCAProgram prog ∧
+  ∀ prog' : UWCATileSet, prog'.length < prog.length → ¬ IsLawfulUWCAProgram prog'
+
+/-- sigma_gte is a minimal lawful program: it has exactly 1 tile, and the only
+    program shorter (0 tiles, i.e., []) is not lawful.
+    LEAN-CERTIFIED: zero sorry. -/
+theorem sigma_gte_is_minimal : IsMinimalProgram sigma_gte :=
+  ⟨sigma_gte_is_lawful, fun prog' hlen => by
+    simp only [sigma_gte_card] at hlen
+    have hzero : prog'.length = 0 := by omega
+    cases prog' with
+    | nil => exact empty_tileset_not_lawful
+    | cons _ _ => simp at hzero⟩
+
+-- ════════════════════════════════════════════════════════════════
+-- §4 Characterization theorem (zero sorry)
+-- ════════════════════════════════════════════════════════════════
+
+/-- **Characterization of lawful UWCA programs:**
+    A GTE tile program is lawful if and only if it bisimulates sigma_gte.
+    This strengthens the one-way uniqueness theorem to a full equivalence.
+
+    (→): any lawful program bisimulates sigma_gte (`gte_uniqueness_up_to_bisimulation`)
+    (←): any program bisimilar to sigma_gte is lawful (since sigma_gte is lawful,
+         bisimilarity with it forces the same outputs = gte_update_map on all inputs)
+
+    LEAN-CERTIFIED: zero sorry. -/
+theorem lawful_iff_bisim_sigma_gte (prog : UWCATileSet) :
+    IsLawfulUWCAProgram prog ↔ UWCABisim prog sigma_gte :=
+  ⟨gte_uniqueness_up_to_bisimulation prog,
+   fun h s => (h s).trans (gte_compilation_theorem s)⟩
+
+/-- **GTE Uniqueness — complete statement** (zero sorry):
+    sigma_gte is the unique minimal lawful UWCA program, up to bisimulation.
+    Three components:
+    (1) sigma_gte is itself lawful (existence)
+    (2) sigma_gte is minimal (1-tile is the minimum for any lawful program)
+    (3) Every lawful program bisimulates sigma_gte (uniqueness, unconditional)
+
+    **Note:** component (3) is STRONGER than the monograph's thm:gte_uniqueness, which
+    only states uniqueness for minimal programs. The present formalization shows
+    minimality is not needed as an additional hypothesis — all lawful programs are
+    necessarily bisimilar to sigma_gte, because the GTE orbit constraints uniquely
+    determine the update function on all inputs.
+
+    LEAN-CERTIFIED: zero sorry. -/
+theorem gte_uniqueness_complete :
+    IsLawfulUWCAProgram sigma_gte ∧
+    IsMinimalProgram sigma_gte ∧
+    (∀ prog : UWCATileSet, IsLawfulUWCAProgram prog → UWCABisim prog sigma_gte) :=
+  ⟨sigma_gte_is_lawful, sigma_gte_is_minimal, gte_uniqueness_up_to_bisimulation⟩
+
+-- ════════════════════════════════════════════════════════════════
+-- §5 GTE Uniqueness → Isomorphism (Rank 20)
+-- ════════════════════════════════════════════════════════════════
+
+/-- Any minimal lawful UWCA program has the same tile count as sigma_gte (= 1).
+
+    Proof:
+    - Length 0 is impossible: the empty program is not lawful (`empty_tileset_not_lawful`).
+    - Length ≥ 2 is impossible: sigma_gte has length 1 < prog.length and is lawful,
+      contradicting minimality (no shorter lawful program exists).
+    - Therefore prog.length = 1 = sigma_gte.length.
+
+    LEAN-CERTIFIED: zero sorry. -/
+theorem minimal_lawful_has_card_one (prog : UWCATileSet) (hmin : IsMinimalProgram prog) :
+    prog.length = 1 := by
+  obtain ⟨h_lawful, h_shorter⟩ := hmin
+  have hpos : 0 < prog.length := by
+    rcases prog with _ | ⟨_, _⟩
+    · exact absurd h_lawful empty_tileset_not_lawful
+    · simp
+  have hle : prog.length ≤ 1 := by
+    by_contra hgt
+    push Not at hgt
+    have hlt : sigma_gte.length < prog.length := by
+      simp only [sigma_gte_card]; omega
+    exact h_shorter sigma_gte hlt sigma_gte_is_lawful
+  omega
+
+/-- Two UWCA programs are isomorphic if they have the same tile count and produce
+    identical outputs on all GTE states.
+
+    For minimal programs, this implements the Myhill-Nerode isomorphism principle:
+    same minimal tile count + behavioral equivalence (bisimulation) → isomorphic.
+    The bijection between tile-index sets (both of size 1) trivially preserves
+    the evaluation function, since both programs evaluate identically on every input. -/
+def UWCAIsomorphic (prog₁ prog₂ : UWCATileSet) : Prop :=
+  prog₁.length = prog₂.length ∧ UWCABisim prog₁ prog₂
+
+/-- **GTE Uniqueness → Isomorphism** (CatAL, zero sorry):
+    Every minimal lawful UWCA program is isomorphic to sigma_gte.
+
+    This strengthens `gte_uniqueness_up_to_bisimulation` (which only gives bisimulation)
+    to a full isomorphism for minimal programs. The proof applies Myhill-Nerode:
+    two bisimilar minimal automata are isomorphic, since they must have the same state
+    count and their bisimulation relation constitutes a state bijection.
+
+    In the UWCA setting:
+    - Any minimal lawful prog has exactly 1 tile = sigma_gte's tile count
+      (`minimal_lawful_has_card_one`)
+    - Any lawful prog bisimulates sigma_gte (`gte_uniqueness_up_to_bisimulation`)
+    - Same tile count + bisimulation = isomorphism (`UWCAIsomorphic`)
+
+    Physical significance: sigma_gte is not merely behaviorally unique (any lawful CA
+    behaves like it) — it is STRUCTURALLY unique. Any minimal lawful program IS sigma_gte,
+    up to renaming of the single tile. The GTE substrate is structurally irreplaceable.
+
+    LEAN-CERTIFIED: zero sorry. -/
+theorem gte_uniqueness_isomorphism :
+    ∀ prog : UWCATileSet, IsMinimalProgram prog → UWCAIsomorphic prog sigma_gte := by
+  intro prog hmin
+  exact ⟨by rw [minimal_lawful_has_card_one prog hmin, sigma_gte_card],
+         gte_uniqueness_up_to_bisimulation prog hmin.1⟩
+
+/-- **Isomorphism is symmetric for minimal lawful programs**:
+    sigma_gte is also isomorphic to itself, and any two minimal lawful programs are
+    mutually isomorphic.
+
+    LEAN-CERTIFIED: zero sorry. -/
+theorem gte_isomorphism_symmetric :
+    ∀ prog₁ prog₂ : UWCATileSet,
+      IsMinimalProgram prog₁ → IsMinimalProgram prog₂ →
+      UWCAIsomorphic prog₁ prog₂ := by
+  intro prog₁ prog₂ hmin₁ hmin₂
+  obtain ⟨hcard₁, hbisim₁⟩ := gte_uniqueness_isomorphism prog₁ hmin₁
+  obtain ⟨hcard₂, hbisim₂⟩ := gte_uniqueness_isomorphism prog₂ hmin₂
+  constructor
+  · omega
+  · intro s
+    exact (hbisim₁ s).trans (hbisim₂ s).symm
+
 end UgpLean.Universality.GTEUniqueness

@@ -268,4 +268,159 @@ theorem cup1_orbit_uniquely_selects_rule110 :
      r.val % 2 = 0) ↔ r = 110 :=
   cup4_parity_uniqueness
 
+-- ════════════════════════════════════════════════════════════════
+-- §10  Minterm Set Uniqueness (CatAL)
+-- ════════════════════════════════════════════════════════════════
+
+/-- Hamming weight of an 8-bit rule table: the number of 1-bits among bits 0–7.
+    For r : Fin 256, `hammingWeight r.val` counts how many of the 8 neighbourhood
+    outputs are 1, equivalently the cardinality of the minterm set. -/
+def hammingWeight (n : Nat) : Nat :=
+  (n &&& 1) + ((n >>> 1) &&& 1) + ((n >>> 2) &&& 1) + ((n >>> 3) &&& 1) +
+  ((n >>> 4) &&& 1) + ((n >>> 5) &&& 1) + ((n >>> 6) &&& 1) + ((n >>> 7) &&& 1)
+
+/-- Rule 110 has Hamming weight 5.
+    110 = 0b01101110, so bits {1,2,3,5,6} are set — exactly 5 bits. -/
+theorem rule110_hamming_weight_5 : hammingWeight 110 = 5 := by decide
+
+/-- Rule 111 has Hamming weight 6.
+    111 = 0b01101111, so bits {0,1,2,3,5,6} are set — exactly 6 bits. -/
+theorem rule111_hamming_weight_6 : hammingWeight 111 = 6 := by decide
+
+/-- **Weight-5 orbit uniqueness (strong form)**: Among all 256 elementary CA rules with
+    Hamming weight 5, Rule 110 is the UNIQUE rule satisfying the SM orbit
+    gen₁ → gen₂ → gen₃, even without requiring vacuum-transparency.
+
+    This is strictly stronger than adding the vacuum condition: Rule 111 (the only
+    other orbit-satisfier) has Hamming weight 6, so weight-5 alone eliminates it.
+    Among all C(8,5) = 56 rules with exactly 5 active bits, Rule 110 is the sole
+    orbit-satisfier. -/
+theorem rule110_unique_weight5_orbit_satisfier :
+    ∀ r : Fin 256,
+      hammingWeight r.val = 5 →
+      elementaryCAStep r smGen1 = smGen2 →
+      elementaryCAStep r smGen2 = smGen3 →
+      r = 110 := by
+  native_decide
+
+/-- **Minterm Set Uniqueness**: For any elementary CA rule of Hamming weight 5 satisfying
+    the SM orbit gen₁ → gen₂ → gen₃, its minterm set (the neighbourhood indices where
+    output = 1) is exactly {1, 2, 3, 5, 6}.
+
+    Among all C(8,5) = 56 possible weight-5 subsets of {0,…,7}, the specific set
+    {1,2,3,5,6} is the unique one whose corresponding rule satisfies the SM orbit.
+    The SM orbit thereby selects a unique 5-element minterm set, not merely a unique rule. -/
+theorem minterm_set_z5_uniqueness :
+    ∀ r : Fin 256,
+      hammingWeight r.val = 5 →
+      elementaryCAStep r smGen1 = smGen2 →
+      elementaryCAStep r smGen2 = smGen3 →
+      ∀ i : Fin 8,
+        (r.val >>> i.val) % 2 = 1 ↔
+        (i.val = 1 ∨ i.val = 2 ∨ i.val = 3 ∨ i.val = 5 ∨ i.val = 6) := by
+  native_decide
+
+/-- **Orbit satisfiers have weight in {5, 6}**: Every elementary CA rule satisfying
+    the SM orbit gen₁ → gen₂ → gen₃ has Hamming weight exactly 5 or 6.
+    No weight-≤4 or weight-≥7 rule satisfies the orbit.
+
+    This sharpens cup4_valid_rules: since only Rules 110 (weight 5) and 111 (weight 6)
+    satisfy the orbit, the Hamming weight is forced into the minimal two-element range {5,6}. -/
+theorem orbit_satisfier_weight_range :
+    ∀ r : Fin 256,
+      elementaryCAStep r smGen1 = smGen2 →
+      elementaryCAStep r smGen2 = smGen3 →
+      hammingWeight r.val = 5 ∨ hammingWeight r.val = 6 := by
+  native_decide
+
+/-- **Orbit-Weight Dichotomy**: For any elementary CA rule satisfying the SM orbit
+    gen₁ → gen₂ → gen₃, vacuum-transparency (neighbourhood 000 → 0) is equivalent
+    to Hamming weight 5.
+    - Rule 110: vacuum-transparent (000 → 0) AND weight 5.
+    - Rule 111: non-transparent (000 → 1) AND weight 6.
+    - No other rule satisfies the orbit.
+
+    Physical significance: among orbit-satisfying rules, the physical requirement that
+    the vacuum (all-zero neighbourhood) produces no output from nothing is exactly
+    equivalent to having the minimal possible active minterm count (5 of 8 possible
+    neighbourhood patterns). Vacuum-transparency and Hamming minimality are the same
+    condition, restricted to orbit-satisfiers. -/
+theorem orbit_weight_dichotomy :
+    ∀ r : Fin 256,
+      elementaryCAStep r smGen1 = smGen2 →
+      elementaryCAStep r smGen2 = smGen3 →
+      (r.val % 2 = 0 ↔ hammingWeight r.val = 5) := by
+  native_decide
+
+-- ════════════════════════════════════════════════════════════════
+-- §11  Combinatorial sharpening: explicit counts and Finset identities
+-- ════════════════════════════════════════════════════════════════
+
+/-- There are exactly C(8,5) = 56 elementary CA rules with Hamming weight 5.
+    This is the combinatorial background: the orbit must select among 56 candidates. -/
+theorem weight5_rule_count :
+    ((Finset.univ (α := Fin 256)).filter (fun r => hammingWeight r.val = 5)).card = 56 := by
+  native_decide
+
+/-- Among all 56 weight-5 elementary CA rules, exactly 1 satisfies the SM orbit
+    gen₁ → gen₂ → gen₃.  The orbit discriminates 55 of 56 candidates. -/
+theorem weight5_orbit_satisfier_count :
+    ((Finset.univ (α := Fin 256)).filter (fun r =>
+      hammingWeight r.val = 5 ∧
+      elementaryCAStep r smGen1 = smGen2 ∧
+      elementaryCAStep r smGen2 = smGen3)).card = 1 := by
+  native_decide
+
+/-- The unique weight-5 orbit-satisfier is Rule 110.
+    As a Finset identity: the intersection of weight-5 rules with orbit-satisfying rules
+    is the singleton {110}. -/
+theorem weight5_orbit_satisfiers_eq_singleton :
+    (Finset.univ (α := Fin 256)).filter (fun r =>
+      hammingWeight r.val = 5 ∧
+      elementaryCAStep r smGen1 = smGen2 ∧
+      elementaryCAStep r smGen2 = smGen3) = {110} := by
+  native_decide
+
+/-- All orbit-satisfying rules form the set {110, 111}.
+    Finset form of cup4_valid_rules, making the two-element set explicit. -/
+theorem orbit_satisfiers_finset :
+    (Finset.univ (α := Fin 256)).filter (fun r =>
+      elementaryCAStep r smGen1 = smGen2 ∧
+      elementaryCAStep r smGen2 = smGen3) = {110, 111} := by
+  native_decide
+
+/-- **Minterm Set Uniqueness — sharpest form**: rule 110 is the element of the
+    singleton Finset of weight-5 orbit-satisfiers.  Extracted from the Finset identity. -/
+theorem minterm_uniqueness_from_singleton (r : Fin 256)
+    (hw : hammingWeight r.val = 5)
+    (h1 : elementaryCAStep r smGen1 = smGen2)
+    (h2 : elementaryCAStep r smGen2 = smGen3) : r = 110 := by
+  have hmem : r ∈ ({110} : Finset (Fin 256)) := by
+    rw [← weight5_orbit_satisfiers_eq_singleton]
+    simp [Finset.mem_filter, hw, h1, h2]
+  exact Finset.mem_singleton.mp hmem
+
+/-- **Minterm Finset Identity**: For any weight-5 orbit-satisfying rule, its active
+    neighbourhood set (as a Finset of Fin 8) is exactly {1, 2, 3, 5, 6}.
+    This is the Finset equality form of minterm_set_z5_uniqueness, giving the most
+    explicit description of the unique weight-5 orbit-satisfying minterm set. -/
+theorem minterm_set_as_finset (r : Fin 256)
+    (hw : hammingWeight r.val = 5)
+    (h1 : elementaryCAStep r smGen1 = smGen2)
+    (h2 : elementaryCAStep r smGen2 = smGen3) :
+    (Finset.univ (α := Fin 8)).filter (fun i => (r.val >>> i.val) % 2 = 1) =
+    ({1, 2, 3, 5, 6} : Finset (Fin 8)) := by
+  have h110 : r = 110 := rule110_unique_weight5_orbit_satisfier r hw h1 h2
+  subst h110
+  native_decide
+
+/-- **Complement of minterm set**: the three non-minterm neighbourhoods of Rule 110 are
+    {0, 4, 7} — the all-zero neighbourhood (vacuum, 000), the left-only neighbourhood (100),
+    and the all-one neighbourhood (111).
+    These are the three patterns to which Rule 110 responds with output 0. -/
+theorem rule110_non_minterm_set :
+    (Finset.univ (α := Fin 8)).filter (fun i => (110 >>> i.val) % 2 = 0) =
+    ({0, 4, 7} : Finset (Fin 8)) := by
+  native_decide
+
 end UgpLean.Universality

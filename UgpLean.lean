@@ -128,6 +128,23 @@ import UgpLean.VEVNoGo.SRRGNoGo
 import UgpLean.VEVProof.GoldstoneEntropyCorrection
 import UgpLean.VEVProof.PSCEntropyDuality
 import UgpLean.VEVProof.EWGoldstoneManifold
+import UgpLean.Universality.GoEStabilityHierarchy
+import UgpLean.Universality.OrbitPerturbationCatalog
+import UgpLean.Universality.Z7ChargeConjugation
+import UgpLean.Universality.Z5TransitivityUniqueness
+import UgpLean.Universality.DimensionalSliceUniqueness
+import UgpLean.Universality.GTPNeutralDiscrimination
+import UgpLean.Universality.SMOrbitCausalIsolation
+import UgpLean.Universality.EWBosonStructure
+import UgpLean.Universality.EWChiralBridge
+import UgpLean.Universality.GUTStructure
+import UgpLean.Universality.CasimirMasslessEther
+import UgpLean.Universality.LawvereZone
+import UgpLean.Universality.ChiralPairVA
+import UgpLean.Universality.CouplingNoGo
+import UgpLean.Framework.GTEFrameworkInstance
+import UgpLean.Framework.GTEOptimalityInstance
+import UgpLean.Framework.GTEFinalCoalgebra
 
 /-!
 # UgpLean — Universal Generative Principle: Lean 4 Formalization

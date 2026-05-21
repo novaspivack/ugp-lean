@@ -181,196 +181,131 @@ theorem rhn_b3_mirror_is_prime : Nat.Prime 37 := by decide
 theorem rhn_b3_both_prime : Nat.Prime 19 ∧ Nat.Prime 37 := ⟨by decide, by decide⟩
 
 -- ════════════════════════════════════════════════════════════════════
--- §5  Status after Round 2 derivation (2026-05-20)
+-- §5  What would be needed for a structural upgrade
 -- ════════════════════════════════════════════════════════════════════
 
-/-! ### §5 Status: CatAD derivation established; CatAL remains open
+/-! ### Open: upgrading from Cat D to Cat A
 
-  Round 2 (Rank 245-SGT, 2026-05-20) identified the full structural
-  derivation chain making b₃ = q₂ − b₁ a CatAD result:
+  To prove the gap theorem at Cat A (structural, Lean-certified), one needs:
 
-  **The derivation (§6–§7 below):**
-  1. `ugp1_g_minus_b1_rhn_eq_su3_adj` [CatAL]: the two independently
-     certified GTE quantities ugp1_g and b₁_RHN = (N_c²+1)/2 differ
-     by exactly N_c²−1 = 8 = dim(SU(3) adjoint).
-  2. The EW-RHN connection (CatAL, EWBosonRHNConnection.lean) gives
-     b₂(RHN) = q₂ − ugp1_g in each branch.
-  3. The MDL doublet-pairing rule (CatAD): the RHN triple satisfies
-     b₁ + b₃ = q₂ (doublet sum rule), giving b₃ = q₂ − b₁.
-  4. Combining: b₃ = b₂ + (ugp1_g − b₁) = b₂ + (N_c²−1).
+  1. **A derivation rule** for b₃ from GTE cascade structure — e.g., a theorem
+     of the form `rhn_b3_from_cascade : b₃_RHN = q₂ - b₁_RHN` where this
+     follows from an explicit cascade orbit computation, not pattern matching.
 
-  **Grade**: [AD].  The doublet sum rule b₁+b₃=q₂ is a named GTE principle
-  (MDL doublet-pairing, Rank 245-SGT Round 2), not yet reduced to GTE axioms.
-  Upgrading to [AL] requires proving b₁+b₃=q₂ from GTE orbit axioms
-  (Rank 245-SGT Round 3).
+  2. **Certified b₃ values**:
+     - Standard: `rhn_b3_standard_eq_19 : q₂_canonical - b₁_RHN = 19`
+       (q₂_canonical = 24, b₁_RHN = 5, 24-5 = 19: arithmetic trivial but
+        the ASSIGNMENT b₃ = q₂ - b₁ is the unproved structural claim)
+     - Mirror: `rhn_b3_mirror_eq_37 : q₂_mirror - b₁_RHN = 37`
+       (q₂_mirror = 42, b₁_RHN = 5, 42-5 = 37: same status)
 
-  **R_dark = 0.2080**: now has a CatAD structural derivation chain.
-  Script: `research-sandbox/rank245_sgt_round2.py`.
+  3. **A derivation linking b₃ = q₂ − b₁ to the GTE orbit structure** —
+     ideally showing that the third-generation RHN b-value is selected by
+     the GTE quotient at the large-c tier (c=65535) using the b₁_RHN offset.
+
+  Once item 1 is proved, items 2 and 3 follow by substitution, and
+  `rhn_b3_gap_numerical_both_branches` becomes a structural corollary.
+  At that point R_dark = 0.2080 upgrades from Cat D to Cat A.
+
+  Current status (2026-05-17): unproved.  The gap observation is well-motivated
+  (preserved under mirror swap; gap = adjoint dimension) but not derived.
 -/
 
 -- ════════════════════════════════════════════════════════════════════
--- §6  Key structural identity: ugp1_g − b₁(RHN) = N_c²−1
+-- §6  Arithmetic reduction: gap = q₂ − b₁_RHN (Rank 245-SGT)
 -- ════════════════════════════════════════════════════════════════════
 
-/-- **ugp1_g − b₁_RHN = N_c²−1 = 8 — structural arithmetic identity (CatAL).**
+/-! ### §6  Structural gap as q₂ − b₁_RHN (Rank 245-SGT)
 
-    Both ugp1_g and b₁_RHN are independently derived GTE structural quantities:
-      ugp1_g  = N_c·(N_c+1) + 1 = 13   [EWBosons.lean: Higgs gap identity]
-      b₁_RHN  = (N_c²+1)/2    = 5    [color-counting: branch-invariant seed]
+The gap b₃ = b₂ + (N_c²−1) is algebraically equivalent to b₃ = q₂ − b₁_RHN,
+given the certified structural facts:
 
-    Their difference equals the SU(3) adjoint dimension:
-      ugp1_g − b₁_RHN = 13 − 5 = 8 = N_c²−1 = dim(SU(3) adjoint).
+  (A) q₂ = q₁ + 13 = q₁ + c_H    (branch-shift invariant, `branch_spacing_invariant` §51)
+  (B) b₂_RHN = q₁                 (EW Boson–RHN connection, `ew_rhn_connection_standard`)
+  (C) b₁_RHN = 5                  (branch-invariant, `dark_rhn_b1` = (N_c²+1)/2 = 5)
 
-    This is non-trivial: it connects the Higgs gap (an orbit-structure quantity)
-    to the color-counting RHN seed via the adjoint representation dimension.
-    The identity holds specifically at N_c = 3; it is an N_c=3 arithmetic fact.
+Chain: q₂ − b₁_RHN = (q₁ + 13) − 5 = q₁ + 8 = b₂_RHN + 8 = b₃_RHN.
 
-    Grade: [A] (norm_num at N_c=3; proved from certified structural formulas). -/
-theorem ugp1_g_minus_b1_rhn_eq_su3_adj :
-    ugp1_g - (N_c ^ 2 + 1) / 2 = N_c ^ 2 - 1 := by
-  unfold ugp1_g N_c; norm_num
+  Standard: q₂_SM   − b₁_RHN = 24 − 5 = 19 = b₃_std    ✓
+  Mirror:   q₂_mir  − b₁_RHN = 42 − 5 = 37 = b₃_mirror  ✓
 
-/-- b₁_RHN = 5: the color-counting formula (N_c²+1)/2 = 5 at N_c=3.
+This section provides arithmetic certifications of the q₂ − b₁ form and the
+algebraic reduction from (A)+(B)+(C).  Scientific status: CatAL for the
+arithmetic; the structural assignment b₃ := q₂ − b₁_RHN from GTE cascade
+derivation rules remains CatD (open derivation, see §5).
 
-    This is the value certified in DarkBraidAtlas.lean (`dark_rhn_b1`)
-    and repeated here for use in §7. -/
-theorem b1_rhn_eq_5 : (N_c ^ 2 + 1) / 2 = 5 := by
-  unfold N_c; norm_num
+All theorems: zero sorry.
+-/
 
-/-- The key identity in explicit form: 13 − 5 = 8 = 3²−1.
-    Connects ugp1_g=13, b₁_RHN=5, and N_c²−1=8 as a single arithmetic fact. -/
-theorem ugp1_g_minus_b1_rhn_explicit : (13 : ℕ) - 5 = 8 ∧ 8 = (3 : ℕ)^2 - 1 := by
+/-- **SM gap via q₂ − b₁_RHN — ARITHMETIC (CatD).**
+
+    The standard RHN b₃ = 19 equals q₂_SM − b₁_RHN = 24 − 5 = 19.
+    This is a norm_num arithmetic certificate; the structural assignment
+    b₃ := q₂ − b₁ from GTE cascade rules is an open derivation (§5).
+
+    Grade: [D] numerical identity (norm_num, zero sorry). -/
+theorem rhn_b3_gap_q2_b1_standard : (24 : ℕ) - 5 = 19 := by norm_num
+
+/-- **Mirror gap via q₂ − b₁_RHN — ARITHMETIC (CatD).**
+
+    The mirror RHN b₃_mirror = 37 equals q₂_mirror − b₁_RHN = 42 − 5 = 37.
+    This is a norm_num arithmetic certificate; the structural assignment
+    b₃ := q₂ − b₁ from GTE cascade rules is an open derivation (§5).
+
+    Grade: [D] numerical identity (norm_num, zero sorry). -/
+theorem rhn_b3_gap_q2_b1_mirror : (42 : ℕ) - 5 = 37 := by norm_num
+
+/-- **Gap formula equivalence: b₃ = b₂ + 8 ↔ b₃ = q₂ − 5 — ARITHMETIC.**
+
+    Both standard and mirror branches: the two gap formulas are arithmetically
+    equivalent, given the certified branch-shift invariant q₂ − q₁ = 13 = c_H
+    (`branch_spacing_invariant`, GUTStructure §51) and b₂_RHN = q₁ (EW-RHN
+    connection, `ew_rhn_connection_standard`).
+
+    Standard: 24 − 5 = 19 = 11 + 8  (q₂=24, b₁=5, b₂=11, b₃=19)
+    Mirror:   42 − 5 = 37 = 29 + 8  (q₂=42, b₁=5, b₂=29, b₃=37)
+
+    The equivalence reduces the structural gap theorem to a single open claim:
+    the assignment rule b₃_RHN := q₂ − b₁_RHN from GTE cascade first principles.
+
+    Grade: [D] arithmetic equivalence (norm_num, zero sorry). -/
+theorem rhn_b3_gap_formulas_equivalent :
+    -- Standard branch: both gap formulas give b₃ = 19
+    (24 : ℕ) - 5 = 19 ∧ (11 : ℕ) + 8 = 19 ∧
+    -- Mirror branch: both gap formulas give b₃ = 37
+    (42 : ℕ) - 5 = 37 ∧ (29 : ℕ) + 8 = 37 ∧
+    -- Equivalence via q₂ − q₁ = 13 (branch-shift invariant) and b₁_RHN = 5
+    -- Standard: (q₁ + 13) − 5 = q₁ + 8  →  24 − 5 = 11 + 8
+    (24 : ℕ) - 5 = 11 + 8 ∧
+    -- Mirror:   (q₁' + 13) − 5 = q₁' + 8  →  42 − 5 = 29 + 8
+    (42 : ℕ) - 5 = 29 + 8 := by
   norm_num
 
--- ════════════════════════════════════════════════════════════════════
--- §7  MDL doublet-pairing: structural gap derivation (CatAD)
--- ════════════════════════════════════════════════════════════════════
+/-- **Algebraic reduction chain (CatAL skeleton).**
 
-/-! ### The MDL doublet-pairing rule for the RHN sector
+    Given three certified structural facts, the gap theorem b₃ = q₂ − b₁ follows:
 
-  The MDL doublet-pairing rule (Rank 245-SGT Round 2) states:
+    (A) q₂ − q₁ = 13 = c_H                          CatAL: branch_spacing_invariant (§51)
+    (B) b₂_RHN = q₁                                 CatAL: ew_rhn_connection_standard
+    (C) b₁_RHN = (N_c²+1)/2 = 5                     CatAL: dark_rhn_b1
 
-    **b₁_RHN + b₃_RHN = q₂** (MDL doublet sum rule)
+    From (A)+(B)+(C): q₂ − b₁ = (q₁ + 13) − 5 = q₁ + 8 = b₂ + 8 = b₃.
+    This arithmetic chain holds for both branches (standard q₁=11; mirror q₁=29).
 
-  In words: the RHN triple (b₁, b₂, b₃) is the MDL-minimal triple where the
-  pair (b₁, b₃) are MDL doublet partners under q₂ — each being the unique
-  complement of the other in the cascade orbit.  Given this rule:
+    What this theorem certifies: the reduction chain is arithmetically consistent.
+    What it does NOT certify: that b₃_RHN is ASSIGNED by the GTE cascade as q₂ − b₁
+    from first principles.  The structural assignment remains CatD (§5 open problem).
 
-      b₃ = q₂ − b₁
-
-  The structural derivation chain then gives:
-
-      b₃ = q₂ − b₁
-         = (b₂ + ugp1_g) − b₁        [since b₂ = q₂ − ugp1_g, EW-RHN connection]
-         = b₂ + (ugp1_g − b₁)
-         = b₂ + (N_c²−1)             [key identity: §6 above]
-
-  This chain upgrades the numerical observation b₃ = b₂ + 8 (§2, Cat D) to a
-  structural derivation from three independently certified GTE identities.
-
-  Grade of the following theorems: [AD].  The doublet sum premise b₁+b₃=q₂
-  is a named GTE structural principle; it is not yet proved from GTE axioms.
-  The arithmetic consequences (b₃ = 37 for mirror, 19 for standard) are
-  certified by norm_num and inherit the structural status.
--/
-
-/-- **MDL doublet sum: SM branch — b₁_RHN + b₃_RHN = q₂_canonical.**
-
-    The pair (b₁_RHN=5, b₃_RHN=19) sums to q₂_canonical=24 in the SM branch.
-    This is the arithmetic embodiment of the MDL doublet-pairing rule.
-
-    Grade: [AD] (arithmetic cert norm_num; MDL doublet-pairing premise). -/
-theorem rhn_b3_sm_doublet_sum :
-    (N_c ^ 2 + 1) / 2 + 19 = q₂_canonical := by
-  unfold N_c q₂_canonical; norm_num
-
-/-- **MDL doublet sum: mirror branch — b₁_RHN + b₃'_RHN = q₂_mirror.**
-
-    The pair (b₁_RHN=5, b₃'_RHN=37) sums to q₂_mirror=42 in the mirror branch.
-    This is the key doublet sum identity for the dark neutrino sector.
-
-    Grade: [AD] (arithmetic cert norm_num; MDL doublet-pairing premise). -/
-theorem rhn_b3_mirror_doublet_sum :
-    (N_c ^ 2 + 1) / 2 + 37 = q₂_mirror := by
-  unfold N_c q₂_mirror; norm_num
-
-/-- **MDL doublet-pairing gap: SM branch — b₃_RHN = q₂_canonical − b₁_RHN = 19 (CatAD).**
-
-    The MDL doublet-pairing rule b₁+b₃=q₂ gives b₃ = q₂_canonical − b₁_RHN.
-    This is the SM branch structural assignment of b₃(RHN):
-
-      b₃_SM = q₂_canonical − b₁_RHN = 24 − 5 = 19.
-
-    Structural chain: b₃ = (b₂+ugp1_g) − b₁ = b₂ + (N_c²−1) = 11 + 8 = 19.
-
-    Grade: [AD] — structural derivation from MDL doublet-pairing rule;
-    upgrades `rhn_b3_gap_numerical_standard` (Cat D) to CatAD. -/
-theorem rhn_b3_sm_mdl_structural :
-    q₂_canonical - (N_c ^ 2 + 1) / 2 = 19 := by
-  unfold q₂_canonical N_c; norm_num
-
-/-- **MDL doublet-pairing gap: mirror branch — b₃'_RHN = q₂_mirror − b₁_RHN = 37 (CatAD).**
-
-    The MDL doublet-pairing rule b₁+b₃=q₂ gives b₃' = q₂_mirror − b₁_RHN.
-    This is the mirror branch structural assignment of b₃'(RHN):
-
-      b₃'_mirror = q₂_mirror − b₁_RHN = 42 − 5 = 37.
-
-    Structural chain:
-      b₃' = q₂_mirror − b₁_RHN
-          = (b₂'_RHN + ugp1_g) − b₁_RHN    [b₂' = q₂_mirror − ugp1_g = 29]
-          = b₂'_RHN + (ugp1_g − b₁_RHN)
-          = 29 + 8 = 37.                     [ugp1_g − b₁ = N_c²−1 = 8; §6]
-
-    Grade: [AD] — structural derivation from MDL doublet-pairing rule;
-    upgrades `rhn_b3_gap_numerical_mirror` (Cat D) to CatAD.
-    R_dark = 0.2080 now has a CatAD structural derivation. -/
-theorem rhn_b3_mirror_mdl_structural :
-    q₂_mirror - (N_c ^ 2 + 1) / 2 = 37 := by
-  unfold q₂_mirror N_c; norm_num
-
-/-- **Both branches: MDL doublet-pairing gap theorem (CatAD).**
-
-    In both the SM and mirror branches, the third RHN b-value is determined
-    by the MDL doublet-pairing rule b₃ = q₂ − b₁_RHN:
-
-      SM branch:     q₂_canonical − b₁_RHN = 24 − 5 = 19
-      Mirror branch: q₂_mirror    − b₁_RHN = 42 − 5 = 37
-
-    Structural chain for each branch:
-      b₃ = (b₂ + ugp1_g) − b₁ = b₂ + (N_c²−1)
-    where:
-      b₂ = q₂ − ugp1_g     [EW-RHN connection, CatAL, EWBosonRHNConnection.lean]
-      ugp1_g − b₁ = N_c²−1 [key identity, CatAL, §6 above]
-
-    Grade: [AD] — both branches derived from MDL doublet-pairing rule.
-    Lab notes: `research-sandbox/rank245_sgt_round2.py` (Rank 245-SGT Round 2). -/
-theorem rhn_b3_both_mdl_structural :
-    q₂_canonical - (N_c ^ 2 + 1) / 2 = 19 ∧
-    q₂_mirror    - (N_c ^ 2 + 1) / 2 = 37 := by
-  refine ⟨?_, ?_⟩
-  · unfold q₂_canonical N_c; norm_num
-  · unfold q₂_mirror N_c; norm_num
-
-/-- **Algebraic chain: b₃ = b₂ + (N_c²−1) derived structurally (CatAD).**
-
-    The numerical observation b₃ = b₂ + 8 (§2, Cat D) follows from the
-    structural chain:
-
-      b₃ = q₂ − b₁_RHN              [MDL doublet-pairing rule]
-         = (q₂ − ugp1_g) + (ugp1_g − b₁_RHN)   [algebra]
-         = b₂_RHN + (N_c²−1).       [EW-RHN connection + §6 identity]
-
-    For the mirror branch explicitly: 42 − 5 = 29 + 8 = 37.
-
-    Grade: [AD] — the Cat D observation §2 is now a structural corollary. -/
-theorem rhn_b3_via_ewrhn_and_key_identity :
-    -- Standard: q₂ − b₁ = b₂_SM + (N_c²−1)
-    q₂_canonical - (N_c ^ 2 + 1) / 2 = 11 + (N_c ^ 2 - 1) ∧
-    -- Mirror: q₂' − b₁ = b₂_mirror + (N_c²−1)
-    q₂_mirror    - (N_c ^ 2 + 1) / 2 = 29 + (N_c ^ 2 - 1) := by
-  refine ⟨?_, ?_⟩
-  · unfold q₂_canonical N_c; norm_num
-  · unfold q₂_mirror N_c; norm_num
+    Grade: [AL] arithmetic skeleton (norm_num, zero sorry). -/
+theorem rhn_gap_algebraic_reduction :
+    -- (A) Branch-shift invariant: q₂_SM − q₁_SM = 13, q₂_mir − q₁_mir = 13
+    (24 : ℕ) - 11 = 13 ∧ (42 : ℕ) - 29 = 13 ∧
+    -- (C) b₁_RHN = 5 = (3² + 1) / 2 (both branches)
+    (3 : ℕ)^2 + 1 = 10 ∧ 10 / 2 = 5 ∧
+    -- Reduction: standard  q₂ − b₁ = 24 − 5 = 19 = b₂ + 8 = 11 + 8
+    (24 : ℕ) - 5 = 11 + 8 ∧
+    -- Reduction: mirror    q₂ − b₁ = 42 − 5 = 37 = b₂ + 8 = 29 + 8
+    (42 : ℕ) - 5 = 29 + 8 := by
+  norm_num
 
 end UgpLean.BraidAtlas

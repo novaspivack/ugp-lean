@@ -123,20 +123,132 @@
 \addlinespace[4pt]
 \midrule
 \addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{$N_c{=}3$ and VEV proof modules (\S\ref{subsec:nc-color-arith}--\ref{sec:vev-proof})}} \\
+\addlinespace[2pt]
+\lstinline|nc_eq_3_from_mersenne_gcd|   & GTE.NcColorArithmetic   & P24      & \textbf{Yes} \\
+\lstinline|nc_uniqueness_from_ridge_divisors| & GTE.NcColorArithmetic & P24   & \textbf{Yes} \\
+\lstinline|nc_eq_3_from_substrate|      & GTE.NcColorArithmetic   & P24      & \textbf{Yes} \\
+\lstinline|cabibbo_effective_charge|, \lstinline|cabibbo_vev_formula| & MR.CKMMixing & P01 & \textbf{Yes} \\
+\lstinline|fn_vv_correction_additive|   & MR.CKMMixing            & P01      & \textbf{Yes} \\
+\lstinline|neutrino_mass_ratio_tight_bound| & MR.NeutrinoMassRatio & P21     & \textbf{Yes} \\
+\lstinline|seesaw_ratio_independent_of_MR| & MR.NeutrinoMassRatio  & P21     & \textbf{Yes} \\
+\lstinline|dt_integral_diverges|        & VEVNoGo.SRRGNoGo        & SRRG     & \textbf{Yes} \\
+\lstinline|psc_entropy_contraction_duality_proved| & VEVProof.PSCEntropyDuality & P27 & \textbf{Yes} \\
+\lstinline|per_gen_volume_correction|   & VEVProof.GoldstoneEntropy & P27    & \textbf{Yes} \\
+\lstinline|ew_goldstone_count|, \lstinline|vol_S3_eq| & VEVProof.EWGoldstoneManifold & P27 & \textbf{Yes} \\
+\lstinline|ew_vacuum_manifold_uniqueness| & VEVProof.EWGoldstoneManifold & P27 & \textbf{Yes} \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
 \multicolumn{4}{@{}l}{\textit{Universality \& Self-Reference (\S\ref{sec:universality})}} \\
 \addlinespace[2pt]
 \lstinline|uwca_P3_eq_rule110|         & Universality.UWCASimul  & Thm~\ref{thm:uwca-sweep} & \textbf{Yes} \\
 \lstinline|uwca_sweep_implements_rule110| & Universality.UWCASimul & Thm~\ref{thm:uwca-sweep} & \textbf{Yes} \\
-\lstinline|uwca_sector_invariant|     & Universality.UWCASimul  & Thm~\ref{thm:uwca-sweep} & \textbf{Yes} \\
-\lstinline|uwca_tile_verification|    & Universality.UWCASimul  & Thm~\ref{thm:uwca-sweep} & \textbf{Yes} \\
 \lstinline|uwca_simulates_rule110_real| & Universality.UWCAEmbeds & Thm~\ref{thm:uwca-sweep} & \textbf{Yes} \\
 \lstinline|ugp_is_turing_universal|   & Universality.TuringUniv & Thm~\ref{thm:turing}     & --- \\
 \lstinline|uwca_augmented_left_inverse| & Univ.UWCAHistoryReversible & T2 & \textbf{Yes} \\
-\lstinline|uwca_history_lane_step_reversible| & Univ.UWCAHistoryReversible & T2 & \textbf{Yes} \\
 \lstinline|ugp_lawvere_fixed_point|   & SelfRef.LawvereKleene   & Lawvere  & Import \\
-\lstinline|ugp_kleene_recursion_thm|  & SelfRef.LawvereKleene   & Kleene   & Import \\
 \lstinline|ugp_rice_theorem|          & SelfRef.RiceHalting     & Rice     & Import \\
 \lstinline|ugp_halting_undecidable|   & SelfRef.RiceHalting     & Halting  & Import \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{CUP Theorems (\S\ref{subsec:cup4-total-parity}--\ref{subsec:cup3d-psc-unification})}} \\
+\addlinespace[2pt]
+\lstinline|cup4_parity_uniqueness|       & Univ.CUP4TotalParity    & CUP-4   & \textbf{Yes} \\
+\lstinline|cup1_orbit_uniquely_selects_rule110| & Univ.CUP4TotalParity & CUP-4 & \textbf{Yes} \\
+\lstinline|cup11c_universal_mod7_CA_exists| & Univ.CUP11ModSeven   & CUP-11c & \textbf{Yes} \\
+\lstinline|fmdl_never_outputs_4|        & Univ.CUP3DUniqueness    & \S\ref{sec:gutstructure} & \textbf{Yes} \\
+\lstinline|fmdl_gen1_is_garden_of_eden| & Univ.CUP3DUniqueness    & GoE     & \textbf{Yes} \\
+\lstinline|fmdl_unique_uniform_fixed_point| & Univ.CUP3DUniqueness & Photon  & \textbf{Yes} \\
+\lstinline|cup3d_psc_goe_chain|         & Univ.CUP3DPSCUnification & PSC     & \textbf{Yes} \\
+\lstinline|physical_incompleteness_thm| & Univ.CUP3DPhysicalInc.  & CUP-PI  & 3 axioms \\
+\lstinline|hypothesis_b_tape_level|     & Univ.HypothesisB        & Hyp B   & 1 axiom \\
+\lstinline|hypothesis_c_psc_forces_universality| & Univ.PSCUniversality & Hyp C & 1 axiom \\
+\lstinline|gte_compilation_theorem|     & Univ.GTECompilation     & \S\ref{subsec:gte-compilation} & \textbf{Yes} \\
+\lstinline|gte_unique_bisimulation|     & Univ.GTEUniqueness      & \S\ref{subsec:gte-uniqueness} & \textbf{Yes} \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{GoE Stability \& Orbit Perturbation (\S\ref{subsec:goe-stability}--\ref{subsec:orbit-perturbation})}} \\
+\addlinespace[2pt]
+\lstinline|gen1_is_goe|                 & Univ.GoEStabilityHierarchy & GoE  & \textbf{Yes} \\
+\lstinline|gen2_unique_predecessor|     & Univ.GoEStabilityHierarchy & ---  & \textbf{Yes} \\
+\lstinline|sm_chain_fully_isolated|     & Univ.GoEStabilityHierarchy & ---  & \textbf{Yes} \\
+\lstinline|orbit_perturbation_destroys_universality| & Univ.OrbitPerturbCat. & P28 & \textbf{Yes} \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{Z$_7$ Charge Conjugation (\S\ref{subsec:z7-charge-conjugation})}} \\
+\addlinespace[2pt]
+\lstinline|z7_conj_involution|, \lstinline|z7_conj_sum_zero|  & Univ.Z7ChargeConj. & §CC & \textbf{Yes} \\
+\lstinline|z7_conj_pairs|               & Univ.Z7ChargeConj.      & §CC  & \textbf{Yes} \\
+\lstinline|fmdl_matter_cp_violation|    & Univ.Z7ChargeConj.      & P33  & \textbf{Yes} \\
+\lstinline|fmdl_conj_pair_asymmetry_unique| & Univ.Z7ChargeConj.  & P33  & \textbf{Yes} \\
+\lstinline|ca_w_plus_is_emission_not_absorption| & Univ.Z7ChargeConj. & P33 & \textbf{Yes} \\
+\lstinline|cup11b_z7_sum_conservation|  & Univ.CUP3DUniqueness    & CUP-11b & \textbf{Yes} \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{Dimensional \& Transitivity Uniqueness (\S\ref{subsec:z5-transitivity}--\ref{subsec:sm-orbit-causal})}} \\
+\addlinespace[2pt]
+\lstinline|z5_prime_unique_transitivity| & Univ.Z5TransitivityUniq. & P28 & \textbf{Yes} \\
+\lstinline|three_dim_fmdl_structure_forced| & Univ.DimSliceUniq.   & P36  & \textbf{Yes} \\
+\lstinline|gtp_neutral_particles_distinct| & Univ.GTPNeutralDisc.  & P28  & \textbf{Yes} \\
+\lstinline|sm_orbit_complete_causal_isolation| & Univ.SMOrbitCausalIsol. & P33 & \textbf{Yes} \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{EW Boson Structure \& Casimir Ether (\S\ref{subsec:ew-boson-structure}--\ref{subsec:casimir-massless})}} \\
+\addlinespace[2pt]
+\lstinline|ew_c_staircase|, \lstinline|ew_c_arithmetic_progression| & Univ.EWBosonStructure & P33 & \textbf{Yes} \\
+\lstinline|ew_higgs_is_scalar_boundary| & Univ.EWBosonStructure   & P31  & \textbf{Yes} \\
+\lstinline|doublet_partner_is_left_chiral| & Univ.EWChiralBridge   & P31  & axiom stub \\
+\lstinline|fmdl_unique_uniform_fixed_point| & Univ.CasimirMassless. & P33 & \textbf{Yes} \\
+\lstinline|fmdl_massless_criterion|     & Univ.CasimirMassless.   & P33  & \textbf{Yes} \\
+\lstinline|ether_z7_sum_mod7|           & Univ.CasimirMassless.   & P33  & \textbf{Yes} \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{Lawvere Zone (\S\ref{subsec:lawvere-zone})}} \\
+\addlinespace[2pt]
+\lstinline|zone_L0_is_vacuum|           & Univ.LawvereZone        & P34  & \textbf{Yes} \\
+\lstinline|zone_L1_is_goe_orbit|        & Univ.LawvereZone        & P34  & \textbf{Yes} \\
+\lstinline|zone_L2_lawvere_diagonal|    & Univ.LawvereZone        & P34  & \textbf{Yes} \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{GUT Structure — EW observables (\S\ref{sec:gutstructure})}} \\
+\addlinespace[2pt]
+\lstinline|gut_weinberg_structure|      & Univ.GUTStructure §8    & P31  & \textbf{Yes} \\
+\lstinline|ngen_plus_nfam_eq_pow2|      & Univ.GUTStructure §2    & P31  & \textbf{Yes} \\
+\lstinline|weinberg_angle_closure|      & Univ.GUTStructure §12   & P31  & \textbf{Yes} \\
+\lstinline|wolfenstein_lambda_formula|  & Univ.GUTStructure §14   & P32  & \textbf{Yes} \\
+\lstinline|six_quark_neff_complete|     & Univ.GUTStructure §34   & P32  & \textbf{Yes} \\
+\lstinline|ugp_r110_sm_joint_unification| & Univ.GUTStructure §27 & P35  & \textbf{Yes} \\
+\lstinline|gte_spacetime_dimension|     & Univ.GUTStructure §54   & P36  & \textbf{Yes} \\
+\lstinline|charge_from_z7_winding|      & Univ.GUTStructure §49   & P37  & \textbf{Yes} \\
+\lstinline|hypercharge_u_quark|, \lstinline|weinberg_angle_from_hypercharge_sum| & Univ.GUTStructure §73 & P37 & \textbf{Yes} \\
+\lstinline|gorard_matter_step_kappa_positive| & Univ.GUTStructure §74 & P36 & \textbf{Yes} \\
+\lstinline|tail_length_strict_ordering| & Univ.GUTStructure §76   & P37  & \textbf{Yes} \\
+\lstinline|vacuum_ollivier_ricci_flatness| & Univ.GUTStructure §32 & P36 & \textbf{Yes} \\
+\lstinline|qcd_beta0_from_gte|          & Univ.GUTStructure §81   & P33  & \textbf{Yes} \\
+\lstinline|orbit_sum_winding_classes|   & Univ.GUTStructure §79   & P33  & \textbf{Yes} \\
+\lstinline|eta_B_amplitude_structure|   & Univ.GUTStructure §70   & P33  & \textbf{Yes} \\
+\lstinline|fmdl_perfect_code|           & Univ.GUTStructure §36   & P33  & \textbf{Yes} \\
+\lstinline|mw_mz_ratio_squared|         & Univ.GUTStructure §45   & P33  & \textbf{Yes} \\
+\addlinespace[4pt]
+\midrule
+\addlinespace[2pt]
+\multicolumn{4}{@{}l}{\textit{GTE Framework \& C1 Final Coalgebra (\S\ref{subsec:gte-framework-instance}--\ref{subsec:gte-final-coalgebra})}} \\
+\addlinespace[2pt]
+\lstinline|GTEFramework|               & Framework.GTEFrameworkInstance & NEMS   & \textbf{Yes} \\
+\lstinline|gte_tpc_from_nems_classification| & Framework.GTEFrameworkInstance & C3 & \textbf{Yes} \\
+\lstinline|gte_tpc_real|               & Framework.GTEFrameworkInstance & C3     & \textbf{Yes} \\
+\lstinline|gte_d_unique|               & Framework.GTEOptimalityInstance & P34   & \textbf{Yes} \\
+\lstinline|psc_optimal_zero_on_free|   & Framework.GTEFinalCoalgebra  & C1     & \textbf{Yes} \\
+\lstinline|c1_final_coalgebra_derived| & Framework.GTEFinalCoalgebra  & C1     & \textbf{Yes} \\
+\lstinline|c1_lambek_isomorphism|      & Framework.GTEFinalCoalgebra  & C1     & \textbf{Yes} \\
 \addlinespace[4pt]
 \midrule
 \addlinespace[2pt]
