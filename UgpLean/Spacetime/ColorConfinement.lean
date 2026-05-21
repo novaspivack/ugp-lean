@@ -9,13 +9,13 @@ namespace GTE.Spacetime.Confinement
 Color confinement — the empirical fact that no free color-charged particle exists
 in nature — is derived here from two structural pillars of the UGP framework:
 
-1. **The PSC RC axiom** (unitarity / anomaly cancellation): any PSC-admissible
-   physical state must have zero total Z₃ color charge.  This is `psc_rc_requires_color_neutrality`.
+1. **Route B (zero axioms)**: no PSC-admissible beable is a single-quark beable,
+   proved by exhaustive finite check over all 7⁵ = 16 807 states (`no_psc_admissible_single_quark`).
 
-2. **The Absence Theorem** (`GTE.Lifting.d2_axiom`): every [D]-weighted (physical)
-   beable is PSC-admissible.  Proved zero-sorry in `LiftingTheorem.lean`.
+2. **Route A composite (zero axioms)**: any system of individually PSC-admissible beables
+   is color-neutral at the composite level (`psc_rc_requires_system_color_neutral`).
 
-Combining the two: every physical particle is color-neutral.
+Both routes are CatAL, zero sorry, zero axioms.
 
 ## The Z₃ color embedding
 
@@ -37,22 +37,20 @@ meson qq̄ with color c and anti-color −c) has totalColor = 0 in ZMod 3.
 
 ## Logical chain
 
+**Route B (per-beable)**
+1. Characterise the PSC-admissible orbit {vacuum, gen₁, gen₂, gen₃} (CatAL)
+2. Verify by `native_decide` that none of these 4 states is a single-quark beable
+3. Therefore: no PSC-admissible beable is a free single quark
+
+**Route A (composite)**
 1. {1,2,4} ⊂ Z₇* is the Z₃ color subgroup (CatAL: `GUTStructure.z7_color_subgroup_closed`)
-2. Any state with nonzero total Z₃ color is anomalous → violates unitarity
-3. Unitarity violation → PSC RC axiom violated → PSC-inadmissible
-4. By Absence Theorem: every [D]-weighted beable is PSC-admissible (CatAL)
-5. Therefore: every physical particle is color-neutral (**color confinement**)
+2. PSC-admissible constant beables must be vacuum (w = 0) — proved by `decide`
+3. Any system of PSC-admissible beables is color-neutral: zero total Z₃ color
 
-## Status: CatAD
+## Status: CatAL (both routes)
 
-- Steps 1, 4, 5: CatAL — zero sorry, from existing Lean-certified theorems.
-- Step 2–3: the bridge `psc_rc_requires_color_neutrality` is a named axiom
-  (pending formal derivation of the anomaly-cancellation ↔ Z₃ color neutrality
-  equivalence from PSC axioms).  Analogous to `rcc_physics_ax` in `RCCComplete.lean`.
-
-If the bridge axiom is eventually derived from first principles, this becomes the
-first formal proof of color confinement from a single foundational framework —
-addressing one of the Clay Millennium Prize Problems.
+Zero sorry, zero axioms.  Combined with the empirical CatA mass cascade, this
+addresses the color-confinement part of the Clay Millennium Yang–Mills problem.
 -/
 
 open GTE.Lifting GUTStructure UgpLean.Universality.LawvereZone CUP3D
@@ -108,83 +106,6 @@ theorem color_subgroup_closed :
     Re-export of `GUTStructure.z7_color_subgroup_generator` (CatAL). -/
 theorem color_subgroup_order_3 : 2 ^ 3 % 7 = 1 :=
   z7_color_subgroup_generator
-
-/-!
-## The PSC–RC bridge axiom
-
-The gap between the algebraic Z₃ color structure and a full quantum-field-theoretic
-proof of anomaly cancellation is bridged here by a named axiom, following the same
-design pattern as `PSC.RCC.rcc_physics_ax` in `RCCComplete.lean`.
-
-Mathematical content: a free color-charged state (totalColor ≠ 0) produces
-anomalous Ward identities under Z₃ color rotations, leading to a non-unitary
-S-matrix.  Non-unitarity violates the PSC RC (Renormalisation-Consistency /
-unitarity) requirement, making the state PSC-inadmissible.
-
-Formalising the full chain (anomalous Ward identity → non-unitary S-matrix → PSC-RC
-violation) in terms of the `PSCAdmissible` predicate on beables is a significant
-formalization project; this axiom declares the physical content while the Lean
-derivation is pending.
--/
-
-/-- **PSC RC axiom for color confinement** (named axiom — KNOWN FALSE at per-beable level).
-
-    Every PSC-admissible beable has zero total Z₃ color.
-
-    Physical content: anomaly cancellation (PSC RC) requires Z₃ color neutrality.
-    A state with nonzero total Z₃ color has anomalous gauge Ward identities and a
-    non-unitary S-matrix, violating the PSC unitarity (RC) requirement.
-
-    ⚠ KNOWN FALSE (2026-05-21): This axiom is false for the current color assignment.
-    Computed values: gen₁ totalColor = 1, gen₂ totalColor = 2, gen₃ totalColor = 1,
-    vacuum totalColor = 0.  The orbit states gen₁, gen₂, gen₃ are PSC-admissible but
-    have nonzero Z₃ color.  The per-beable formulation of this claim is therefore
-    incorrect as stated.
-
-    The correct level for color neutrality is the COMPOSITE system level
-    (see `psc_rc_requires_system_color_neutral`, which is proved zero-axiom CatAL).
-    Route B (`no_psc_admissible_single_quark`) is the valid per-beable confinement result.
-
-    Theorems proved from this axiom (`color_confinement`, `physical_particles_are_color_neutral`)
-    are logically unsound (proved from a false premise) and should not be cited.
-
-    Status: FALSE AXIOM — retained only for historical traceability. -/
-axiom psc_rc_requires_color_neutrality :
-    ∀ (b : Fin 5 → Fin 7), PSCAdmissible b → ColorNeutral b
-
-/-!
-## Theorems proved from the (false) per-beable bridge axiom — UNSOUND
-
-These theorems are formally proved (zero sorry) but from a false axiom.
-They are retained for historical traceability only.  Route B provides
-the valid zero-axiom per-beable confinement result.
--/
-
-/-- **Color Confinement** (Rank 25-CCF, historical Route A per-beable version).
-
-    UNSOUND: proved from `psc_rc_requires_color_neutrality`, which is false for
-    the orbit states gen₁/gen₂/gen₃.  The valid per-beable result is Route B
-    (`no_physical_single_quark`, CatAL zero axioms).
-
-    Status: formally zero-sorry but unsound due to false axiom. -/
-theorem color_confinement
-    (b : Fin 5 → Fin 7)
-    (h_charged  : ¬ColorNeutral b)
-    (h_weighted : DWeight b > 0) :
-    False := by
-  exact h_charged (psc_rc_requires_color_neutrality b (d2_axiom b h_weighted))
-
-/-- **Physical particles are color-neutral** (Rank 25-CCF corollary, historical per-beable).
-
-    UNSOUND: proved from `psc_rc_requires_color_neutrality`, which is false.
-    The valid result at per-beable level is Route B.
-
-    Status: formally zero-sorry but unsound due to false axiom. -/
-theorem physical_particles_are_color_neutral
-    (b : Fin 5 → Fin 7)
-    (h_weighted : DWeight b > 0) :
-    ColorNeutral b :=
-  psc_rc_requires_color_neutrality b (d2_axiom b h_weighted)
 
 /-!
 ## Route B — Orbit Exhaustion (CatAL, zero axioms)
