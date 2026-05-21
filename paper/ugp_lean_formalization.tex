@@ -128,128 +128,39 @@
 
 % ── Abstract ──────────────────────────────────────────────────
 \begin{abstract}
-\raggedright
-The Universal Generative Principle (\ugp{}) is a deterministic
-arithmetic framework defined over integer ridges $R_n = 2^n - 16$.
-It produces, from first principles and without free parameters, a unique
-canonical seed---the triple $(1,73,823)$---whose orbit under the
-Generative Triple Evolution (\gte{}) map is rigidly determined.
-We present \textbf{ugp-lean}, a machine-checked formalization of this
-framework in \lean{}~4 against Mathlib, comprising 144 modules with a
-strict zero-sorry, zero-custom-axiom policy on the core proof path.
-(Six modules — IPT, NullDiscipline, PSC.ThreeRouteForcing,
-CyclotomicCompleteness.H9SelfConsistency, and GoldenRatioFixedPoint
-— have been migrated to the companion \texttt{ugp-physics-lean} library.)
+We present \textbf{ugp-lean}, a \lean{}~4 formalization of the
+Universal Generative Principle (\ugp{}) against Mathlib, comprising
+144 modules with a strict zero-sorry, zero-custom-axiom policy on the
+core proof path.
+The \ugp{} is a deterministic arithmetic framework on integer ridges
+$R_n = 2^n - 16$ that produces, from first principles and without free
+parameters, a unique canonical seed $(1,73,823)$ and a rigid
+Generative Triple Evolution (\gte{}) orbit.
 
-\textbf{What makes \ugp{} special, and what this paper proves.}
-The \ugp{} exhibits three distinct, interlocking properties, each of which
-we formalize and machine-check:
+The library establishes three interlocking results.
+\emph{Algebraic uniqueness}: the ridge sieve, prime-lock criterion, and
+the Residual Seed Uniqueness theorem prove that $(1,73,823)$ is the
+unique lexicographic minimum of its residual seed class, and that the
+\gte{} map $T$ derives the canonical orbit
+$(1,73,823)\to(9,42,1023)\to(5,275,65535)$ unconditionally.
+\emph{Computational universality}: the UWCA built natively from the
+\ugp{} survivor space simulates Rule~110, and the CUP-4 theorem proves
+that the Standard Model generation orbit \emph{algebraically forces}
+Rule~110 as the unique vacuum-transparent CA rule consistent with SM
+winding structure.
+\emph{Physical formalization}: 515 certified theorems in the
+\texttt{GUTStructure} module derive Standard Model observables from
+$N_{\rm gen}=3$ and $N_{\rm fam}=5$ alone, including
+$\sin^2\theta_W = 3/13$, $\lambda_{\rm CKM} = 9/40$, $D=4$,
+$Q = w^*/3$ for all SM fermions, and $\beta_0 = 23/3$ for QCD.
+GTE is certified as the terminal $F_{\rm PSC}$ coalgebra in the PSCSys
+category (zero sorry, zero custom axioms).
 
-\smallskip
-\emph{(1) Algebraic uniqueness.}
-The ridge sieve, prime-lock criterion, and the \rsuc{} theorem together
-prove that $(1,73,823)$ is the unique lexicographic minimum of the residual
-seed class at $n=10$---forced by the arithmetic, not chosen.  The
-\gte{} update map $T$ is proved to \emph{derive} the canonical three-step
-orbit $(1,73,823)\to(9,42,1023)\to(5,275,65535)$ rather than merely
-stating it.  The Quarter-Lock identity $k_M = k_{G_2} + \tfrac{1}{4}k_L^2$
-is an unconditional algebraic invariant.
-
-\smallskip
-\emph{(2) Structural richness.}
-The \ugp{} carries a suite of non-trivial mathematical structures:
-the mirror shift algebra ($c_1(b_2,q_2) - c_1(q_2,b_2) = b_1(q_2-b_2)$,
-universal across all ridge levels), a Fibonacci renormalization spectrum
-(Fibonacci companion eigenvalues $\varphi$ and $-\varphi^{-1}$,
-contraction rate $\varphi^{-2}$), loop topology from mirror pairs,
-an exact divisor-count formula $\tau(2^n-16)=5\,\tau(2^{n-4}-1)$,
-and a minimality-duality theorem at $n=10$.  All are machine-checked.
-
-\smallskip
-\emph{(3) Computational universality.}
-The same arithmetic substrate that selects the canonical seed also
-harbors universal computation: we prove that the \uwca{} built natively
-from the \ugp{} survivor space exactly simulates Rule~110~\cite{Wolfram1984,Wolfram2002,Cook2004} via a
-four-pass round, verified by exhaustive case analysis
-over all eight neighborhoods.  This implies a sharp \emph{decidability
-phase transition}: finite-window properties of the \gte{} trajectory
-are decidable, while general reachability is $\Sigma^0_1$-complete.
-
-A new \textbf{Universality} layer (34 modules) extends
-this to a complete computational picture, culminating in
-\textbf{GUTStructure} (Beable Hilbert space, Weinberg-angle closure,
-TPC hierarchy proxies) and \textbf{LawvereZone} (Zone L1/L2/L3 classification).
-A new \textbf{Framework} layer (3 modules) completes the GTE-substrate program:
-\lstinline|GTEFrameworkInstance| instantiates GTE as a \texttt{NemS.Framework} with
-\lstinline|gte_tpc_from_nems_classification| (one Cook-bridge axiom);
-\lstinline|GTEOptimalityInstance| derives GTE optimality and D-uniqueness;
-\lstinline|GTEFinalCoalgebra| proves GTE is the \emph{final} $F_{\rm PSC}$
-coalgebra in \texttt{PSCSys} — zero sorry, zero custom axioms.
-\textbf{CUP-4} (\lstinline|cup4_parity_uniqueness|) proves that the
-Standard Model generation orbit $(g_1\to g_2\to g_3)$ under the
-total-parity morphism \emph{algebraically forces} Rule~110 as the unique
-vacuum-transparent binary CA rule consistent with SM winding structure.
-The same Rule~110 is independently realized by the \uwca{} substrate,
-giving a \emph{two-way convergence}: Rule~110 is forced both from the SM
-orbit and from the arithmetic substrate.
-\textbf{Garden of Eden} (\lstinline|fmdl_gen1_is_garden_of_eden|,
-\lstinline|native_decide| over $7^5 = 16{,}807$ states): the first-generation
-state $\text{gen}_1=[1,5,2,2,1]$ has zero predecessors under $f_{\rm MDL}$,
-giving a structural explanation of first-generation particle stability.
-\textbf{Tape-level unification} (\lstinline|hypothesis_b_tape_level|):
-a single Rule~110 Bool tape simultaneously computes both UGP dynamical sectors
---- the SM charge sector (fMDL winding, zero axioms) and the GTE mass cascade
-(one named Cook universality axiom).
-\textbf{PSC chain} (\lstinline|hypothesis_c_psc_forces_universality|):
-PSC forces SM gauge structure, which forces the orbit, which forces Rule~110,
-which is Turing-universal --- each step Lean-certified.
-Three named physics bridge axioms span the module
-(\lstinline|rcc_physics_ax|, \lstinline|rule110_simulates_computable|,
-\lstinline|simultaneous_dual_tape_ax|), each backed by substantial
-partial certification.
-
-\smallskip
-\textbf{Further contributions.}
-A new class of \emph{\ugp{} primes} is formally defined with ten
-machine-checked instances across three ridge levels.
-A \textbf{MassRelations} layer (22 modules) formalizes the
-cyclotomic-12 Koide closed form, $S_3$-equivariant Newton flow,
-the $N_c$-structural chain deriving all fermion constants from the QCD colour
-rank, VV mass coefficients from SU(5)/SO(10) group theory, neutrino seesaw
-closure with three structural decompositions, the Mersenne mass structure,
-mass ratio $Z$-independence, the seesaw index as a GUT representation defect,
-the CKM $\theta_{23}$ structural ratio $\tau(R_{10})/D_1 = 15/8$ uniquely
-forced at $n = 10$ via the ridge--Mersenne identity $R_n = D_1 \cdot M_{n-4}$,
-and the discrete arithmetic-mean identity $2\,a_\tau = a_e + a_\mu$ on the
-canonical lepton orbit (the $S_3$ equal-norm shadow on the $a$-component).
-The \textbf{ElegantKernel} layer gains 16 modules including nine
-unconditional closure theorems deriving $k_{\rm gen} = \varphi\cos(\pi/10)$,
-$k_{\rm gen}^{(2)} = -\varphi/2$, and the complete pentagon--$D_5$ kernel
-from first principles.
-New layers cover \textbf{GTE extended structure} (Mersenne ladder with Fibonacci
-uniqueness, fiber bundle, orbital stability, scale connection, GTB generation
-prime certificate, \textbf{NuclearPairing}: nucleon b-seed parity
-L001--L006 and the identity $5\sqrt{5}=\sqrt{125}$ underpinning
-$\Delta_{\rm pair}=5^{3/2}=11.18$~MeV~[B]),
-\textbf{BraidAtlas} charge derivation ($Q = W_g/N_c$ with anomaly cancellation forcing
-$N_c = 3$, Coxeter--Conductor theorem, chirality squaring, EW boson c-values),
-\textbf{Dark Braid Atlas} (mirror-branch dark sector: Q=0 for all dark particles,
-dark gauge group SU(3)$_{\rm dark}$ only, RHN gap theorem, dark quark charge, and a
-16-theorem machine-checked dark sector structural certificate),
-\textbf{NullDiscipline} evidential classification (four-gate TEC,
-saturation barrier), and the \textbf{Information Profit Threshold} ($\rho_{\rm crit} =
-1 + \ln\varphi/(2\ln 2\pi)$, theorem-grade within the formal model).
-Six open conjectures (mirror-dual infinitude, \ugp{} prime infinitude,
-$\mu$-flip squarefree, $\mu$-flip bounded gap, asymptotic sparsity,
-orbital zeta factorization) are formally stated as \lean{} propositions.
-All definitions are self-contained; no results beyond the ridged
-arithmetic framework are asserted.
-
-\smallskip
-\textbf{Trust boundary:}
-Proved statements are scoped to the ridged arithmetic framework
-formalized here.  Open conjectures remain explicit \lean{}
-\texttt{Prop}s and are not asserted as classical theorems.
+The library additionally formalizes the Elegant Kernel closure
+($k_{\rm gen} = \varphi\cos(\pi/10)$), the Koide cyclotomic-12 closed
+form with $S_3$-equivariant Newton flow, the full BraidAtlas charge
+structure, neutrino mass-ratio arithmetic, and six formally stated open conjectures.
+All proved statements are scoped to the ridged arithmetic framework.
 
 \NovaZenodoInAbstract
 \end{abstract}
