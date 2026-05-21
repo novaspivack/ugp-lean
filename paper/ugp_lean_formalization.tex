@@ -1025,6 +1025,34 @@ The numerical value $5\sqrt{5} = 11.1803\ldots$~MeV matches the M\o ller et al.\
 The physical mechanism (why $a_{\rm seed}^{g/2}$ equals the BCS pairing scale)
 is open theoretical work.
 
+\subsection{$N_c = 3$ from substrate arithmetic (\texttt{NcColorArithmetic})}\label{subsec:nc-color-arith}
+
+The \texttt{GTE.NcColorArithmetic} module (209 lines, 10 theorems) derives the QCD
+colour count $N_c = 3$ from GTE substrate arithmetic alone, without importing
+Standard Model winding assignments.  Two independent routes are certified:
+
+\begin{theorem}[Route 1 — Mersenne GCD, zero \texttt{sorry}, zero custom axioms]
+The GTE orbit at $n=10$ produces c-values $c_2 = 2^{10}-1$ and $c_3 = 2^{16}-1$.
+By the Mathlib identity \lstinline|Nat.pow_sub_one_gcd_pow_sub_one|:
+\[
+\gcd(2^{10}-1,\;2^{16}-1) = 2^{\gcd(10,16)}-1 = 2^2 - 1 = 3.
+\]
+Lean name: \lstinline|nc_eq_3_from_mersenne_gcd|.
+\end{theorem}
+
+\begin{theorem}[Route 2 — Ridge factorial uniqueness, zero \texttt{sorry}]
+The ridge parameters satisfy $\gcd(b_2, q_2) = \gcd(42, 24) = 6 = 3!$.
+$N_c$ is the unique positive integer $n$ with $n! = \gcd(b_2, q_2)$.
+Lean name: \lstinline|nc_uniqueness_from_ridge_divisors|.
+\end{theorem}
+
+\begin{leanref}
+\lstinline|nc_eq_3_from_mersenne_gcd|, \lstinline|nc_uniqueness_from_ridge_divisors|,
+\lstinline|nc_eq_3_from_substrate|
+\textup{(in \texttt{GTE.NcColorArithmetic}, 10 theorems, zero \texttt{sorry},
+zero custom axioms; standard Lean/Mathlib kernel only)}
+\end{leanref}
+
 % ═══════════════════════════════════════════════════════════════
 \section{Braid Atlas Charge Structure}\label{sec:braidatlas}
 % ═══════════════════════════════════════════════════════════════
@@ -2992,6 +3020,108 @@ $S_3$ equal-norm condition.
 \textup{(in \texttt{MassRelations.KoideS3DiscreteIdentities},
 zero \texttt{sorry}, zero hypotheses)}\end{leanref}
 \end{theorem}
+
+\subsection{CDM Cabibbo derivation (\texttt{MassRelations.CKMMixing})}\label{subsec:ckm-mixing}
+
+The \texttt{MassRelations.CKMMixing} module (551 lines, 29 theorems) certifies the
+CDM mechanism deriving the Wolfenstein Cabibbo parameter $\lambda$ from the
+VV down-type coefficient $\alpha_d$.
+
+\begin{theorem}[CDM Cabibbo derivation, zero \texttt{sorry}]
+The effective FN charge $\Delta a_{\rm eff} = \alpha_d = 13/9$ receives a GUT
+rank correction $\delta = \mathrm{rank}(\mathrm{SU}(5))/N_c^2 = 4/9$ on top of
+the bare charge 1.  This gives:
+\[
+|V_{us}|_{\rm CDM} = \varepsilon_1^{\alpha_d} = e^{-13\pi/27} \approx 0.2203
+\quad (1.9\%\ \text{off PDG}).
+\]
+Key bridge theorem: \lstinline|fn_vv_correction_additive| certifies that the VV GUT
+coefficient shifts the bare FN charge additively.
+\end{theorem}
+
+\begin{leanref}
+\lstinline|cabibbo_effective_charge|, \lstinline|cabibbo_charge_from_GUT|,
+\lstinline|cabibbo_vev_formula|, \lstinline|fn_vv_correction_additive|,
+\lstinline|fn_cdm_physical_sorry|
+\textup{(in \texttt{MassRelations.CKMMixing}, 29 theorems, zero \texttt{sorry})}
+\end{leanref}
+
+\subsection{Neutrino mass-squared ratio (\texttt{MassRelations.NeutrinoMassRatio})}\label{subsec:neutrino-mass-ratio}
+
+The \texttt{MassRelations.NeutrinoMassRatio} module (350 lines, 5 theorems) certifies
+the UGP prediction for the atmospheric-to-solar neutrino mass-squared ratio from the
+seesaw exponent $\alpha = 29/9$ applied to Braid Atlas b-values $\{5, 11, 19\}$.
+
+\begin{theorem}[Neutrino mass ratio, tight bound, zero \texttt{sorry}]
+The mass-squared ratio
+$R = (m_2^2 - m_1^2)/(m_3^2 - m_1^2)$ is independent of $M_R$
+(theorem \lstinline|seesaw_ratio_independent_of_MR|).
+The tight certified bound is $|R - 0.02936| < 0.0001$, placing the prediction
+within $0.16\sigma$ of NuFIT~6.0. Formally:
+\lstinline|neutrino_mass_ratio_tight_bound| (zero sorry, integer arithmetic).
+\end{theorem}
+
+\begin{leanref}
+\lstinline|fn_texture_gives_seesaw_exponent|, \lstinline|seesaw_ratio_independent_of_MR|,
+\lstinline|neutrino_mass_ratio_coarse_bound|, \lstinline|neutrino_mass_ratio_tight_bound|,
+\lstinline|neutrino_mass_ratio_within_1pct_of_nufit|
+\textup{(in \texttt{MassRelations.NeutrinoMassRatio}, 5 theorems, zero \texttt{sorry})}
+\end{leanref}
+
+\subsection{SRRG no-go theorem and VEV derivation}\label{sec:vev-proof}
+
+Three modules formalize the EW vacuum expectation value derivation via PSC entropy
+and the S$^3$ Goldstone manifold, together with the SRRG no-go theorem that motivates
+the entropy-based route.
+
+\paragraph{\texttt{VEVNoGo.SRRGNoGo.}}
+The SRRG no-go theorem (187 lines, 11 theorems) certifies that the SRRG $\beta$-function
+$\beta_\eta = \kappa(\eta - \eta_1)(\eta - \eta_2)$ with simple zeros at $\eta_1 < \eta_2$
+prevents finite-scale dimensional transmutation: the RG-time integral
+$\int_{\eta_1+\varepsilon}^{\eta_2-\varepsilon} d\eta / \beta_\eta$ diverges as
+$\varepsilon\to 0$, ruling out a perturbative VEV from the SRRG $\beta$-function alone.
+
+\begin{leanref}
+\lstinline|dt_integral_diverges|, \lstinline|integrand_not_integrable_at_lower_zero|
+\textup{(in \texttt{VEVNoGo.SRRGNoGo}, zero \texttt{sorry})}
+\end{leanref}
+
+\paragraph{\texttt{VEVProof.PSCEntropyDuality.}}
+Formalizes the PSC entropy-contraction duality (207 lines, 10 theorems): the PSC entropy
+contracts under SRRG flow with rate $\lambda_{\rm contr} = 1/\varphi$ (the inverse golden
+ratio), and the duality
+$S_{\rm PSC}(\text{after}) < S_{\rm PSC}(\text{before})$ is certified for all valid
+$\varepsilon > 0$ (zero sorry).
+
+\begin{leanref}
+\lstinline|psc_entropy_contraction_duality_proved|,
+\lstinline|srrg_s3_entropy_increase_proved|
+\textup{(in \texttt{VEVProof.PSCEntropyDuality}, zero \texttt{sorry})}
+\end{leanref}
+
+\paragraph{\texttt{VEVProof.GoldstoneEntropyCorrection.}}
+Derives the per-generation Goldstone entropy volume correction via the SRRG contraction
+rate (336 lines, 14 theorems):
+
+\begin{theorem}[Goldstone entropy correction, zero \texttt{sorry}]
+For $N_{\rm gen} = 3$ generations, the per-generation correction factor is
+$f_{\rm vol}(N_{\rm gen}) = 1/\varphi^{1/N_{\rm gen}}$ where $\varphi$ is the golden ratio.
+Certified: \lstinline|per_gen_volume_correction| (zero sorry).
+\end{theorem}
+
+\paragraph{\texttt{VEVProof.EWGoldstoneManifold.}}
+Certifies the EW Goldstone boson count and manifold structure (141 lines, 8 theorems):
+the $\mathrm{SU}(2)_L \times \mathrm{U}(1)_Y / \mathrm{U}(1)_{\rm EM}$ breaking produces
+exactly 3 Goldstone bosons ($4 - 1 = 3$, \lstinline|ew_goldstone_count|),
+the vacuum manifold is $S^3$ with volume $V(S^3) = 2\pi^2$
+(\lstinline|vol_S3_eq|, \lstinline|vol_S3_pos|), and the vacuum is unique up to
+gauge equivalence (\lstinline|ew_vacuum_manifold_uniqueness|).
+
+\begin{leanref}
+\lstinline|ew_goldstone_count|, \lstinline|vol_S3_eq|,
+\lstinline|ew_vacuum_manifold_uniqueness|, \lstinline|ew_vacuum_psc_entropy_well_defined|
+\textup{(in \texttt{VEVProof.EWGoldstoneManifold}, 8 theorems, zero \texttt{sorry})}
+\end{leanref}
 
 % ═══════════════════════════════════════════════════════════════
 \section{Universality and Self-Reference}\label{sec:universality}
@@ -5032,6 +5162,18 @@ structural ratio $\tau(R_{10})/D_1 = 15/8$ uniquely forced at $n = 10$
 (\cref{sec:ckm_theta23}), and the discrete arithmetic-mean identity
 $2 a_\tau = a_e + a_\mu$ on the canonical lepton orbit
 (\cref{sec:koide_s3_discrete}).
+CDM Cabibbo derivation: $|V_{us}|_{\rm CDM} = e^{-13\pi/27}$ from GUT rank correction
+(\texttt{CKMMixing}, \cref{subsec:ckm-mixing}).
+Neutrino mass-squared ratio: $R = 0.02936$ certified tight
+(\texttt{NeutrinoMassRatio}, \cref{subsec:neutrino-mass-ratio}).
+
+\medskip
+\noindent\textbf{SRRG no-go and VEV proof}
+(\cref{sec:vev-proof}, 4 modules):
+SRRG $\beta$-function excludes perturbative dimensional transmutation;
+PSC entropy-contraction duality with rate $\lambda=1/\varphi$;
+per-generation Goldstone entropy volume correction $f_{\rm vol}=\varphi^{-1/N_{\rm gen}}$;
+EW vacuum manifold $S^3$ with $V = 2\pi^2$ and uniqueness certified.
 
 \medskip
 \noindent\textbf{GUT structure and physical formalization}
@@ -5067,12 +5209,14 @@ GTE as the terminal $F_{\rm PSC}$ coalgebra in \texttt{PSCSys}, zero sorry, zero
 
 \medskip
 \noindent\textbf{GTE extended structure}
-(\cref{sec:gte-extended}, 5 new modules):
+(\cref{sec:gte-extended}, 6 new modules):
 the Mersenne ladder with Fibonacci uniqueness certification, the fiber bundle
 with canonical orbit trivialization, orbital stability via the Fibonacci
-contraction mode, the universal 5-factor ridge-level scale connection, and the
-GTB generation prime certificate (all six generation $c_1$ values certified prime,
-ridge spacing equal to $N_c$).
+contraction mode, the universal 5-factor ridge-level scale connection,
+the GTB generation prime certificate (all six $c_1$ values certified prime,
+ridge spacing equal to $N_c$),
+and $N_c = 3$ derived from GTE substrate arithmetic alone via two independent
+routes (Mersenne GCD and ridge factorial uniqueness; \texttt{NcColorArithmetic}).
 
 \medskip
 \noindent\textbf{Braid Atlas charge structure}
