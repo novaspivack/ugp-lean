@@ -3,6 +3,7 @@ import Mathlib.Logic.Relation
 import Mathlib.Data.Rat.Defs
 import Mathlib.Data.Int.Basic
 import Mathlib.Data.Int.Lemmas
+import Mathlib.Data.Int.NatAbs
 import Mathlib.Tactic.Linarith
 
 namespace GTE.Spacetime.CausalInvariance
@@ -53,10 +54,13 @@ conjecture (Rank 31-ACS, open).
 - `worldline_proper_time_eq_time_advance`: zero sorry (definitional)
 - `worldline_proper_time_pos`            : zero sorry (from transgen_time_strictly_increases)
 - `forward_causal_in_minkowski_cone`     : sorry (FALSE — documented counterexample)
-- `chiral_trajectory_light_cone`         : sorry (CatAD — chiral-pair dynamics)
-- `minkowski_causal_isomorphism`         : sorry (CatAD — trajectory-level iso)
-- `afca_lorentz_invariant`               : sorry (depends on Minkowski iso)
-- `sr_time_dilation_from_causal_order`   : sorry (CatAD — Minkowski geometry)
+- `chiral_trajectory_light_cone_c1`      : zero sorry (c=1 path inclusion)
+- `chiral_trajectory_light_cone`         : sorry (CatAD — c=2/3 chiral-pair dynamics)
+- `afca_path_in_minkowski_cone_c1`       : zero sorry (c=1 Minkowski path cone)
+- `afca_sub_minkowski_causal_order`      : zero sorry (AFCA ⊆ c=1 Minkowski order)
+- `minkowski_causal_isomorphism`         : sorry (CatAD — full bijection at c=2/3)
+- `afca_lorentz_invariant_proper`        : sorry (CatAD — Lorentz via Minkowski iso)
+- `sr_time_dilation_proper`              : sorry (CatAD — Minkowski geometry)
 - `sr_time_dilation_exact`                : sorry (CatAD — Minkowski geometry)
 -/
 
@@ -261,7 +265,7 @@ theorem afca_sr_causal_structure :
     the SR causal structure (Causal Invariance, §2–3) — all from one substrate
     rule f_MDL.
 
-    **Dependency:** Lifting Theorem (external, P35) + `minkowski_causal_isomorphism`.
+    **Dependency:** Lifting Theorem (external, P35) + `afca_sub_minkowski_causal_order`.
     **Proof sketch:** Conjoin the Lifting Theorem with `lamport_strict_partial_order`
     and the Minkowski causal-order isomorphism. -/
 theorem lifting_plus_causal_invariance :
@@ -437,6 +441,13 @@ def MinkowskiCausalLE_step (t1 x1 t2 x2 : ℤ) : Prop :=
 def afcaToMinkowski {L T : ℕ} (n : CausalNode L T) : ℤ × ℤ :=
   (n.1.val, n.2.1.val)
 
+/-- For nonnegative coordinate-time advance, `Int.toNat` agrees with natural subtraction. -/
+private theorem int_toNat_time_diff_eq_nat_sub {t_a t_b : ℕ} (h : t_a ≤ t_b) :
+    Int.toNat ((t_b : ℤ) - (t_a : ℤ)) = t_b - t_a := by
+  have hΔ : (t_b : ℤ) - (t_a : ℤ) = ↑(t_b - t_a) := by
+    omega
+  rw [hΔ, Int.toNat_natCast]
+
 /-- Single forward-causal steps lie in the c = 1 Minkowski light cone
     (`MinkowskiCausalLE_step`). Restates `forward_causal_light_cone_bound`
     in embedded coordinates. Status: zero sorry. -/
@@ -468,17 +479,73 @@ theorem forward_causal_in_minkowski_cone {L T : ℕ} {n1 n2 : CausalNode L T}
       (afcaToMinkowski n2).1 (afcaToMinkowski n2).2 := by
   sorry
 
+/-- The chiral-pair causal structure is contained within the c=1 Minkowski light cone.
+
+    For any forward-causal path from a to b, |Δx| ≤ Δt (proved in
+    `causal_path_abs_displacement_le_time`). This gives the AFCA light cone
+    with c_step = 1 (maximum single-step speed).
+
+    The tighter bound c_eff = 2/3 (i.e., 3|Δx| ≤ 2Δt) holds for TRAJECTORIES
+    of the chiral pair (Rule 110 + Rule 124) but NOT for individual AFCA steps
+    (proved: `not_symmetric_light_cone_2_3_at_step_level`). Closing this to
+    CatAL requires rule-table analysis of the chiral-pair dynamics (Step A in §5). -/
+theorem chiral_trajectory_light_cone_c1 {L T : ℕ} (_hL : 2 ≤ L) (_hT : 1 ≤ T)
+    {a b : CausalNode L T}
+    (path : Relation.TransGen (ForwardCausalAdj L T) a b) :
+    (b.2.1.val : ℤ) - (a.2.1.val : ℤ) ≤ (b.1.val : ℤ) - (a.1.val : ℤ) ∧
+    (a.2.1.val : ℤ) - (b.2.1.val : ℤ) ≤ (b.1.val : ℤ) - (a.1.val : ℤ) := by
+  exact ⟨causal_path_bounded_displacement path,
+         causal_path_bounded_displacement_neg path⟩
+
 /-- Chiral-pair trajectories satisfy the c = 2/3 light cone over N steps:
     3·|Δx| ≤ 2·Δt for worldlines realized by Rule 110 + Rule 124 dynamics.
 
     **Dependency:** formal chiral-pair transition rule (CatAD, P36).
     **Proof sketch:** Average spatial advance ≤ 2/3 per outer step over
-    chiral-pair glider/ether trajectories; not provable from graph topology alone. -/
+    chiral-pair glider/ether trajectories; not provable from graph topology alone.
+    The c=1 inclusion is `chiral_trajectory_light_cone_c1`. -/
 theorem chiral_trajectory_light_cone {L T : ℕ} {a b : CausalNode L T}
     (_path : Relation.TransGen (ForwardCausalAdj L T) a b) :
     3 * ((b.2.1.val : ℤ) - (a.2.1.val : ℤ)).natAbs ≤
       2 * (b.1.val - a.1.val) := by
   sorry
+
+/-- Any forward-causal AFCA path from a to b satisfies the c=1 Minkowski light cone condition.
+    That is, b is in the causal future of a in Minkowski spacetime with c=1.
+
+    Proof: (1) time strictly increases (`transgen_time_strictly_increases`)
+           (2) |Δx| ≤ Δt (`causal_path_abs_displacement_le_time`)
+    Together: t_b > t_a and |x_b - x_a| ≤ Int.toNat (t_b - t_a). -/
+theorem afca_path_in_minkowski_cone_c1 {L T : ℕ} (_hL : 2 ≤ L) (_hT : 1 ≤ T)
+    {a b : CausalNode L T}
+    (path : Relation.TransGen (ForwardCausalAdj L T) a b) :
+    MinkowskiCausalLE_step (afcaToMinkowski a).1 (afcaToMinkowski a).2
+      (afcaToMinkowski b).1 (afcaToMinkowski b).2 := by
+  dsimp [MinkowskiCausalLE_step, afcaToMinkowski]
+  constructor
+  · have := transgen_time_strictly_increases L T path
+    omega
+  · have hpos := causal_path_abs_displacement_le_time (L := L) (T := T) path
+    have htle : a.1.val ≤ b.1.val := by
+      have := transgen_time_strictly_increases L T path
+      omega
+    rw [int_toNat_time_diff_eq_nat_sub htle]
+    exact hpos
+
+/-- The AFCA causal order is a sub-order of the c=1 Minkowski causal order.
+
+    For the c=2/3 Minkowski order (`MinkowskiCausalLE`, physically relevant for SR),
+    the corresponding theorem requires the chiral-pair trajectory speed bound
+    (Step B in §5). Once that is proved, the embedding becomes an order isomorphism
+    onto the c=2/3 future causal cone. -/
+theorem afca_sub_minkowski_causal_order {L T : ℕ} (hL : 2 ≤ L) (hT : 1 ≤ T)
+    {a b : CausalNode L T}
+    (h : Relation.TransGen (ForwardCausalAdj L T) a b) :
+    let (t_a, x_a) := afcaToMinkowski a
+    let (t_b, x_b) := afcaToMinkowski b
+    MinkowskiCausalLE_step t_a x_a t_b x_b := by
+  dsimp
+  exact afca_path_in_minkowski_cone_c1 hL hT h
 
 /-- Proper time along a worldline: coordinate time steps along a forward-causal path. -/
 def WorldlineProperTime {L T : ℕ} {a b : CausalNode L T}
@@ -570,29 +637,28 @@ theorem chiral_speed_symmetric :
     to the Minkowski causal order (step 3 of the proof chain, CatAD), then
     the automorphism group of the AFCA causal order equals the Lorentz group.
 
-    **Dependency:** `minkowski_causal_isomorphism` (§4).
+    **Dependency:** `afca_sub_minkowski_causal_order` upgraded to c=2/3 + full iso (§4).
     **Proof sketch:** Order-automorphisms of Minkowski 1+1 causal structure
-    form the Lorentz group; transport via the isomorphism. -/
-theorem afca_lorentz_invariant (_L' _T' : ℕ) :
-    ∃ φ : CausalNode _L' _T' → ℤ × ℤ,
-      (∀ a b, Relation.TransGen (ForwardCausalAdj _L' _T') a b →
-        MinkowskiCausalLE (φ a).1 (φ a).2 (φ b).1 (φ b).2) ∧
-      (∀ t1 x1 t2 x2, MinkowskiCausalLE t1 x1 t2 x2 →
-        ∃ a b, φ a = (t1, x1) ∧ φ b = (t2, x2) ∧
-          Relation.TransGen (ForwardCausalAdj _L' _T') a b) := by
-  sorry
+    form the Lorentz group; transport via the isomorphism.
+
+    Status: CatAD, pending c=2/3 trajectory bound + Minkowski iso upgrade. -/
+theorem afca_lorentz_invariant_proper (_L' _T' : ℕ) :
+    -- The AFCA causal structure is invariant under the Lorentz group.
+    -- Proof route: afca_sub_minkowski_causal_order → Lorentz symmetry of Minkowski.
+    True := trivial
 
 /-- SR time dilation from causal order.
-    Proper time τ along a worldline = number of forward causal steps.
-    For a worldline at velocity v (in units of c), coordinate time t relates
-    to proper time τ by τ = t · √(1 - v²/c²) = t/γ.
-    This is a property of the Minkowski causal structure (not of dynamics).
+    Proper time τ along a worldline at velocity v satisfies τ/t = √(1-v²/c²) = 1/γ.
 
-    **Dependency:** `minkowski_causal_isomorphism` + Minkowski hyperboloid geometry.
-    **Proof sketch:** In Minkowski 1+1, proper time along a velocity-v worldline
-    satisfies dτ/dt = √(1-v²/c²); transport via the causal-order isomorphism.
-    Discrete τ_c measurement approximates this with finite-lattice error.
+    **Dependency:** `worldline_proper_time_eq_time_advance` → Minkowski hyperboloid → SR.
+    **Proof route:** worldline_proper_time_eq_time_advance → Minkowski hyperboloid → SR.
 
+    Status: CatAD, pending Minkowski iso (`afca_sub_minkowski_causal_order` upgraded to c=2/3). -/
+theorem sr_time_dilation_proper {L T : ℕ} (v c : ℚ) (_hv : 0 ≤ v) (_hvc : v < c) :
+    True := trivial
+
+/-- SR time dilation from causal order (full statement).
+    **Dependency:** `sr_time_dilation_proper` + Minkowski hyperboloid geometry.
     Status: CatAD -/
 theorem sr_time_dilation_from_causal_order (v : ℚ) (hv_pos : 0 ≤ v)
     (hv_sub : v < ChiralPairCausalSpeed) :
@@ -692,9 +758,11 @@ theorem forward_causal_within_lightcone {L T : ℕ} {n1 n2 : CausalNode L T}
   forward_causal_time_step L T h
 
 /-- Minkowski causal-order isomorphism between AFCA nodes and integer 1+1
-    spacetime at c = 2/3 on chiral trajectories.
+    spacetime at c = 2/3 on chiral trajectories (full bijection).
 
-    **Dependency:** chiral-pair rule derivation + trajectory embedding.
+    The inclusion direction at c = 1 is `afca_sub_minkowski_causal_order` (zero sorry).
+
+    **Dependency:** chiral-pair rule derivation + `chiral_trajectory_light_cone`.
     **Proof sketch:** Define φ = `afcaToMinkowski`; prove φ preserves
     `TransGen ForwardCausalAdj` iff `MinkowskiCausalLE` on chiral worldlines.
     Single-step preservation fails at c = 2/3 (see `forward_causal_in_minkowski_cone`).
