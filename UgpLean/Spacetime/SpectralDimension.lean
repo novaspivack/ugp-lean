@@ -3,6 +3,7 @@ import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.Combinatorics.SimpleGraph.Maps
 import Mathlib.Data.Fin.Basic
 import Mathlib.Data.Nat.Basic
+import Mathlib.Data.Nat.ModEq
 import UgpLean.Spacetime.CausalGraph
 
 namespace GTE.Spacetime
@@ -108,6 +109,107 @@ def CausalAdjPeriodic (n1 n2 : CausalNode L T) : Prop :=
   TimelikeAdjPeriodic L T n1 n2 ∨
   LightConeAdjPeriodic L T n1 n2
 
+/-! ## Translation Invariance Lemmas -/
+
+/-- Modular addition on `Fin L`. -/
+def finShift (L : ℕ) (a δ : Fin L) : Fin L :=
+  ⟨(a.val + δ.val) % L, Nat.mod_lt _ (Nat.zero_lt_of_lt a.isLt)⟩
+
+/-- Modular addition on `Fin (T + 1)`. -/
+def finTimeShift (T : ℕ) (a δ : Fin (T + 1)) : Fin (T + 1) :=
+  ⟨(a.val + δ.val) % (T + 1), Nat.mod_lt _ (Nat.zero_lt_of_lt a.isLt)⟩
+
+/-- Modular increment `(a+1) % n` is preserved under a common shift.
+    Case split mirrors `finAdjPeriodic_irrefl`. -/
+theorem finMod_shift_preserves_succ {n : ℕ} {a b δ : ℕ}
+    (ha : a < n) (hb : b < n) (hd : δ < n)
+    (h : (a + 1) % n = b) :
+    ((a + δ) % n + 1) % n = (b + δ) % n := by
+  rcases n with _ | n
+  · exact absurd ha (Nat.not_lt_zero _)
+  · rcases n with _ | n
+    · simp [Nat.mod_one] at h ⊢
+    · have hb' : b % (n + 2) = b := Nat.mod_eq_of_lt hb
+      have hmod : a + 1 ≡ b [MOD n + 2] := by show (a + 1) % (n + 2) = b % (n + 2); rw [h, hb']
+      have hsum : (a + 1 + δ) % (n + 2) = (b + δ) % (n + 2) := by simpa [Nat.ModEq] using hmod.add_right δ
+      have hlhs : ((a + δ) % (n + 2) + 1) % (n + 2) = (a + δ + 1) % (n + 2) := by
+        have h1 : 1 % (n + 2) = 1 := Nat.mod_eq_of_lt (by omega : 1 < n + 2)
+        simp [Nat.add_mod, Nat.mod_add_mod, Nat.mod_eq_of_lt hd, h1, Nat.mod_mod]
+      rw [hlhs, show a + δ + 1 = a + 1 + δ by omega, hsum]
+
+/-- Periodic spatial adjacency is preserved under a common modular shift. -/
+theorem finAdjPeriodic_shift {L : ℕ} {a b δ : Fin L}
+    (h : FinAdjPeriodic L a b) :
+    FinAdjPeriodic L (finShift L a δ) (finShift L b δ) := by
+  unfold FinAdjPeriodic finShift
+  rcases h with h | h
+  · left
+    exact finMod_shift_preserves_succ a.isLt b.isLt δ.isLt h
+  · right
+    exact finMod_shift_preserves_succ b.isLt a.isLt δ.isLt h
+
+/-- Forward-time modular successor is preserved under a common time shift. -/
+theorem timelikeTime_shift {T : ℕ} {a b δ : Fin (T + 1)}
+    (h : (a.val + 1) % (T + 1) = b.val) :
+    ((finTimeShift T a δ).val + 1) % (T + 1) = (finTimeShift T b δ).val := by
+  unfold finTimeShift
+  exact finMod_shift_preserves_succ a.isLt b.isLt δ.isLt h
+
+/-- Translate a causal node by `(δt, δx, δy, δz)` on the periodic torus. -/
+def causalNodeShift (L T : ℕ) (δt : Fin (T + 1)) (δx δy δz : Fin L)
+    (v : CausalNode L T) : CausalNode L T :=
+  (finTimeShift T v.1 δt,
+   finShift L v.2.1 δx,
+   finShift L v.2.2.1 δy,
+   finShift L v.2.2.2 δz)
+
+theorem spacelikeAdjPeriodic_shift {δt : Fin (T + 1)} {δx δy δz : Fin L}
+    {n1 n2 : CausalNode L T} (h : SpacelikeAdjPeriodic L T n1 n2) :
+    SpacelikeAdjPeriodic L T (causalNodeShift L T δt δx δy δz n1)
+      (causalNodeShift L T δt δx δy δz n2) := by
+  unfold SpacelikeAdjPeriodic causalNodeShift at *
+  rcases h with ⟨ht, hsp⟩
+  constructor
+  · simp [finTimeShift, ht]
+  · rcases hsp with ⟨hfa, hy, hz⟩ | ⟨hx, hfa, hz⟩ | ⟨hx, hy, hfa⟩
+    · exact Or.inl ⟨finAdjPeriodic_shift (L := L) hfa, by simp [finShift, hy], by simp [finShift, hz]⟩
+    · exact Or.inr (Or.inl ⟨by simp [finShift, hx], finAdjPeriodic_shift (L := L) hfa, by simp [finShift, hz]⟩)
+    · exact Or.inr (Or.inr ⟨by simp [finShift, hx], by simp [finShift, hy], finAdjPeriodic_shift (L := L) hfa⟩)
+
+theorem timelikeAdjPeriodic_shift {δt : Fin (T + 1)} {δx δy δz : Fin L}
+    {n1 n2 : CausalNode L T} (h : TimelikeAdjPeriodic L T n1 n2) :
+    TimelikeAdjPeriodic L T (causalNodeShift L T δt δx δy δz n1)
+      (causalNodeShift L T δt δx δy δz n2) := by
+  unfold TimelikeAdjPeriodic causalNodeShift at *
+  rcases h with ⟨ht, hs⟩
+  exact ⟨timelikeTime_shift (T := T) ht, by simp [finShift, hs]⟩
+
+theorem lightConeAdjPeriodic_shift {δt : Fin (T + 1)} {δx δy δz : Fin L}
+    {n1 n2 : CausalNode L T} (h : LightConeAdjPeriodic L T n1 n2) :
+    LightConeAdjPeriodic L T (causalNodeShift L T δt δx δy δz n1)
+      (causalNodeShift L T δt δx δy δz n2) := by
+  unfold LightConeAdjPeriodic causalNodeShift at *
+  rcases h with ⟨ht, hlc⟩
+  constructor
+  · exact timelikeTime_shift (T := T) ht
+  · rcases hlc with ⟨hfa, hy, hz⟩ | ⟨hx, hfa, hz⟩ | ⟨hx, hy, hfa⟩
+    · exact Or.inl ⟨finAdjPeriodic_shift (L := L) hfa, by simp [finShift, hy], by simp [finShift, hz]⟩
+    · exact Or.inr (Or.inl ⟨by simp [finShift, hx], finAdjPeriodic_shift (L := L) hfa, by simp [finShift, hz]⟩)
+    · exact Or.inr (Or.inr ⟨by simp [finShift, hx], by simp [finShift, hy], finAdjPeriodic_shift (L := L) hfa⟩)
+
+theorem causalAdjPeriodic_shift {δt : Fin (T + 1)} {δx δy δz : Fin L}
+    {n1 n2 : CausalNode L T} (h : CausalAdjPeriodic L T n1 n2) :
+    CausalAdjPeriodic L T (causalNodeShift L T δt δx δy δz n1)
+      (causalNodeShift L T δt δx δy δz n2) := by
+  unfold CausalAdjPeriodic at *
+  rcases h with h | h | h
+  · exact Or.inl (spacelikeAdjPeriodic_shift (L := L) (T := T) (δt := δt) (δx := δx)
+      (δy := δy) (δz := δz) (n1 := n1) (n2 := n2) h)
+  · exact Or.inr (Or.inl (timelikeAdjPeriodic_shift (L := L) (T := T) (δt := δt) (δx := δx)
+      (δy := δy) (δz := δz) (n1 := n1) (n2 := n2) h))
+  · exact Or.inr (Or.inr (lightConeAdjPeriodic_shift (L := L) (T := T) (δt := δt) (δx := δx)
+      (δy := δy) (δz := δz) (n1 := n1) (n2 := n2) h))
+
 /-! ## Irreflexivity -/
 
 /-- Periodic causal adjacency is irreflexive for L ≥ 2, T ≥ 1.
@@ -210,13 +312,15 @@ theorem causal_graph_periodic_translation_invariant (hL : 2 ≤ L) (hT : 1 ≤ T
     (n m : CausalNode L T)
     (h : (CausalGraphPeriodic L T hL hT).Adj n m)
     (δt : Fin (T + 1)) (δx δy δz : Fin L) :
-    let shift := fun (v : CausalNode L T) =>
-      (⟨(v.1.val + δt.val) % (T + 1), Nat.mod_lt _ (by omega)⟩,
-       ⟨(v.2.1.val + δx.val) % L, Nat.mod_lt _ (by omega)⟩,
-       ⟨(v.2.2.1.val + δy.val) % L, Nat.mod_lt _ (by omega)⟩,
-       ⟨(v.2.2.2.val + δz.val) % L, Nat.mod_lt _ (by omega)⟩)
+    let shift := causalNodeShift L T δt δx δy δz
     (CausalGraphPeriodic L T hL hT).Adj (shift n) (shift m) := by
-  sorry
+  intro shift
+  dsimp [CausalGraphPeriodic] at h ⊢
+  rcases h with hnm | hmn
+  · exact Or.inl (causalAdjPeriodic_shift (L := L) (T := T) (δt := δt) (δx := δx)
+      (δy := δy) (δz := δz) (n1 := n) (n2 := m) hnm)
+  · exact Or.inr (causalAdjPeriodic_shift (L := L) (T := T) (δt := δt) (δx := δx)
+      (δy := δy) (δz := δz) (n1 := m) (n2 := n) hmn)
 
 /-- **The ℤ^4 torus isomorphism (Rank 13-LSD).**
     The periodic causal graph `CausalGraphPeriodic L T` is isomorphic as a simple graph
@@ -272,11 +376,12 @@ noncomputable def spectralDimension {V : Type*} [Fintype V]
     (since S generates ℤ^4). By the Euler–Maclaurin / Laplace method on ℤ^4:
       K_n ~ (1/|G₄|) · (4πcn)^{−2} · |G₄|  =  C · n^{−2}  as n → ∞ (for large L₁,...,L₄).
     Therefore dₛ = −2·(−2) = 4, independent of S (provided S generates ℤ^4). -/
-theorem spectral_dim_cayley_Z4_eq_4 : True := trivial
-  -- Placeholder: the full statement requires `spectralDimension (cayleyGraph G₄ S₄) = 4`
-  -- with `spectralDimension` instantiated from `heatKernelReturn` via a limit.
-  -- The proof follows the Fourier-analytic sketch above once `spectralDimension` is
-  -- fully defined. Deferred until Mathlib gains spectral graph theory for ℤ^n.
+theorem spectral_dim_cayley_Z4_eq_4 (hL : 2 ≤ L) (hT : 1 ≤ T) :
+    spectralDimension (CausalGraphPeriodic L T hL hT) = 4 := by
+  -- Fourier analysis on G₄ = ℤ/(T+1) × ℤ/L³:
+  -- K_n(e,e) ~ C·n^{-2} ⟹ dₛ = 4.
+  -- Deferred: Mathlib lacks spectral graph theory for finite abelian Cayley graphs.
+  sorry
 
 /-- **Main theorem (Rank 13-LSD): the spectral dimension of the 3D f_MDL periodic
     causal graph is exactly 4.**

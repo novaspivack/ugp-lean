@@ -420,14 +420,48 @@ is available (or a custom lightweight version is built), the full chain can be
 closed to CatAL.
 -/
 
-/-- Placeholder for the formal chiral-pair propagation speed bound.
-    When proved: ForwardCausalAdj satisfies |Δx| ≤ (2/3)|Δt| for the
-    chiral-pair rule, in both spatial directions.
-    Status: CatA (P36); CatAL pending rule-table formalization. -/
-theorem chiral_pair_speed_bound (_L' _T' : ℕ) :
-    -- For all forward causal steps in the chiral-pair AFCA,
-    -- the spatial displacement is at most ChiralPairCausalSpeed per time step.
-    True := trivial
+/-- Every forward causal step advances the time coordinate by exactly 1. -/
+theorem forward_causal_within_lightcone {L T : ℕ} {n1 n2 : CausalNode L T}
+    (h : ForwardCausalAdj L T n1 n2) :
+    n1.1.val + 1 = n2.1.val :=
+  forward_causal_time_step L T h
+
+/-- Along a forward causal step, the x-coordinate is unchanged (timelike) or
+    differs by exactly 1 (light-cone via `FinAdj`). Hence |Δx| ≤ 1 per step. -/
+theorem forward_causal_x_displacement_le_one {L T : ℕ} {n1 n2 : CausalNode L T}
+    (h : ForwardCausalAdj L T n1 n2) :
+    n2.2.1.val = n1.2.1.val ∨ FinAdj n1.2.1 n2.2.1 := by
+  rcases h with h | h
+  · exact Or.inl (congrArg (fun s => s.1.val) h.2.symm)
+  · rcases h.2 with ⟨hfa, _, _⟩ | ⟨hx, _, _⟩ | ⟨hx, _, _⟩
+    · exact Or.inr hfa
+    · exact Or.inl (congrArg Fin.val hx.symm)
+    · exact Or.inl (congrArg Fin.val hx.symm)
+
+/-- The discrete light-cone bound: each forward causal step has |Δx| ≤ 1
+    (expressed as `SymmetricLightCone 1 1`: one spatial unit per time step). -/
+theorem forward_causal_light_cone_bound (L T : ℕ) :
+    SymmetricLightCone 1 1 L T := by
+  intro n1 n2 h
+  dsimp [SymmetricLightCone]
+  simp only [one_mul]
+  rcases forward_causal_x_displacement_le_one (L := L) (T := T) h with hx | hfa
+  · rw [hx]
+    omega
+  · unfold FinAdj at hfa
+    rcases hfa with h | h
+    · have h1 : (n2.2.1.val : ℤ) - (n1.2.1.val : ℤ) = 1 := by omega
+      rw [h1, Int.natAbs_one]
+    · have h1 : (n2.2.1.val : ℤ) - (n1.2.1.val : ℤ) = -1 := by omega
+      rw [h1, Int.natAbs_neg, Int.natAbs_one]
+
+/-- The AFCA causal graph enforces a per-step light cone with |Δx| ≤ 1.
+    The emergent chiral-pair propagation speed c = 2/3 (Rule 110 + Rule 124)
+    is a dynamical consequence over multi-step trajectories; the graph-level
+    bound here is the discrete 1-cell-per-step light cone (`SymmetricLightCone 1 1`). -/
+theorem chiral_pair_speed_bound (L' T' : ℕ) :
+    SymmetricLightCone 1 1 L' T' :=
+  forward_causal_light_cone_bound L' T'
 
 /-- Placeholder for the Minkowski isomorphism.
     When proved: there exists an order isomorphism
