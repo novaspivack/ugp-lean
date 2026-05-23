@@ -1,0 +1,35 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout ugp-lean-exp
+        uses: actions/checkout@v6
+
+      - name: Install Elan
+        run: |
+          set -euo pipefail
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Select toolchain
+        run: elan toolchain install "$(tr -d '\n' < lean-toolchain)"
+
+      - name: Mathlib cache (prebuilt artifacts)
+        run: lake exe cache get
+
+      - name: Build default target
+        run: lake build
+
+      - name: Build Rank 85 chiral glider bridge
+        run: lake build UgpLean.Spacetime.ChiralGliderDynamics
+
+      - name: Build CausalInvariance (SR causal bridge)
+        run: lake build UgpLean.Spacetime.CausalInvariance
