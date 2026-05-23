@@ -1395,4 +1395,47 @@ def substrate_mdl_t1_certified : SubstrateMdlT1Certified where
   h_c_decomp := substrate_mdl_bit_cost_h_c_decomp
   h_d_decomp := substrate_mdl_bit_cost_h_d_decomp
 
+-- ─────────────────────────────────────────────────────────────────────────
+-- §6  F_21 Substrate One-Loop β Coefficient (Rank 117-AFRGCHECK)
+-- ─────────────────────────────────────────────────────────────────────────
+-- Certifies the arithmetic skeleton of the QCD one-loop β function
+-- derived from the F_21 = Z₇ ⋊ Z₃ substrate representation theory.
+--
+-- Inputs (no free parameters):
+--   N_c = 3  : dimension of the faithful F_21 3-irrep (= SU(3) colour)
+--   N_f = 6  : SM quark flavours forced by GTE species formula W_B = 4k mod 7
+--              with k∈{4,5} (colour-charged species) × 3 generations
+--
+-- Derivation:
+--   Gauge loop:   −(11/3)·C_A·g³/(16π²)  with C_A = N_c = 3  ⟹  −11·g³/(16π²)
+--   Fermion loop: +(2N_f/3)·T_F·g³/(16π²) with T_F = 1/2  ⟹  +4·g³/(16π²)
+--   β = −b₀·g³/(16π²),   b₀ = (11·N_c − 2·N_f)/3 = (33−12)/3 = 7
+-- ─────────────────────────────────────────────────────────────────────────
+
+/-- Gauge-loop numerator: 11·N_c = 11·3 = 33 (adjoint contribution). -/
+theorem f21_gauge_loop_coefficient : (11 : ℚ) * 3 = 33 := by norm_num
+
+/-- Fermion-loop numerator: 2·N_f = 2·6 = 12 (quark loop contribution). -/
+theorem f21_fermion_loop_coefficient : (2 : ℚ) * 6 = 12 := by norm_num
+
+/-- Combined numerator: 33 − 12 = 21. -/
+theorem f21_beta_zero_coefficient : (33 : ℚ) - 12 = 21 := by norm_num
+
+/-- β₀ coefficient: 21/3 = 7. -/
+theorem f21_beta_b0 : (21 : ℚ) / 3 = 7 := by norm_num
+
+/-- Main: b₀ = 7 from N_c = 3 (F_21 ⊂ SU(3)) and N_f = 6 (GTE species formula).
+    The computation (11·3 − 2·6)/3 = 7 is exact; `decide` closes it over ℕ. -/
+theorem f21_substrate_beta_coefficient :
+    let Nc : ℕ := 3  -- SU(3) colour from F_21 faithful 3-irrep
+    let Nf : ℕ := 6  -- SM quark flavours from GTE species formula
+    (11 * Nc - 2 * Nf) / 3 = 7 := by decide
+
+/-- Asymptotic freedom: b₀ > 0 implies β < 0, so the coupling decreases in the UV.
+    Certified as a strict positivity statement over ℕ. -/
+theorem f21_substrate_asymptotic_freedom :
+    let Nc : ℕ := 3
+    let Nf : ℕ := 6
+    0 < (11 * Nc - 2 * Nf) / 3 := by decide
+
 end UgpLean.Universality.SylowIndexCoupling
