@@ -1,55 +1,87 @@
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Combinatorics.SimpleGraph.AdjMatrix
 import Mathlib.Combinatorics.SimpleGraph.Basic
 import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.Combinatorics.SimpleGraph.Maps
 import Mathlib.Data.Fin.Basic
+import Mathlib.Data.Matrix.Basic
 import Mathlib.Data.Nat.Basic
 import Mathlib.Data.Nat.ModEq
+import Mathlib.Data.Real.Basic
+import Mathlib.Order.Filter.AtTopBot.Defs
+import Mathlib.Topology.Instances.Nat
 import UgpLean.Spacetime.CausalGraph
 
 namespace GTE.Spacetime
 
 /-!
-# Spectral Dimension of the 3D f_MDL Causal Graph (Rank 13-LSD)
+# Spectral Dimension of the 3D f_MDL Causal Graph
 
-Proves that the spectral dimension of the 3D f_MDL causal graph is **exactly 4**,
-upgrading the numerical result dₛ ≈ 4.15 (CatA, Rank 7-3DC) to an exact Lean-certified
-value (CatAL).
+Formalizes the spectral dimension of the 3D f_MDL causal graph at the **algebraic
+Cayley-rank 4** level (this file) and supports the **thermodynamic-limit
+spectral-dimension 4** result formalized in
+`UgpLean.Spacetime.Spectral.ThermodynamicLimit`
+(`causal_graph_spectral_dim_thermodynamic_limit`, zero sorry; reduces to one
+documented analytical-helper sorry in `Spectral.HeatKernelLaplace`).
 
 ## Mathematical content
 
-**Key insight (from Rank 12-LCG):** the causal adjacency is rule-independent — each node
-(t, x, y, z) connects to the same neighbors regardless of cell state values. Therefore,
-with periodic (torus) boundary conditions, the causal graph is a **Cayley graph** of the
-discrete 4-torus G₄ = (ℤ/(T+1)ℤ) × (ℤ/Lℤ)³.
+**Key insight:** the causal adjacency is rule-independent — each node
+(t, x, y, z) connects to the same neighbors regardless of cell state values.
+Therefore, with periodic (torus) boundary conditions, the causal graph is a
+**Cayley graph** of the discrete 4-torus G₄ = (ℤ/(T+1)ℤ) × (ℤ/Lℤ)³.
 
-**Proof route:**
-1. Define `FinAdjPeriodic`: modular ±1 adjacency on `Fin L` (wraps around at the boundary).
-2. Build `CausalGraphPeriodic`: the causal graph with torus PBC, a well-formed `SimpleGraph`.
-3. `causal_graph_periodic_rule_independent`: adjacency is rule-independent (Iff.rfl).
-4. `causal_graph_periodic_translation_invariant`: the graph is translation-invariant,
-   making it a Cayley graph of G₄ with 20-element generating set
-     S₄ = {(0,±1,0,0),(0,0,±1,0),(0,0,0,±1)} ∪ {(±1,0,0,0)} ∪ {(±1,±1,0,0),(±1,0,±1,0),(±1,0,0,±1)}.
-5. `spectral_dim_cayley_Z4_eq_4`: the spectral dimension of any Cayley graph of ℤ^4 is 4
-   (Fourier analysis on finite abelian groups: K_t(e,e) ~ C·t^{-2}, so dₛ = 4).
-6. `causal_graph_spectral_dim_eq_4`: combining (4) and (5).
+**Algebraic structure (zero sorry, this file):**
+1. `FinAdjPeriodic`: modular ±1 adjacency on `Fin L` (wraps around).
+2. `CausalGraphPeriodic`: torus-PBC causal graph; well-formed `SimpleGraph`.
+3. `causal_graph_periodic_rule_independent`: rule-independence (Iff.rfl).
+4. `causal_graph_periodic_translation_invariant`: vertex transitivity under G₄.
+5. `causal_graph_is_Z4_cayley`: the graph is a Cayley graph of G₄ ≅ ℤ⁴.
+
+**Analytical content:** the spectral dimension equals 4 in the joint
+*thermodynamic limit* `L, T → ∞`, captured by
+`Spectral.causal_graph_spectral_dim_thermodynamic_limit` using a
+degree-normalized random-walk operator.
+
+## Why `spectral_dim_cayley_Z4_eq_4` remains an open documented gap
+
+The historical theorem statement
+`spectralDimension (CausalGraphPeriodic L T hL hT) = 4`
+is mathematically **false** at fixed finite `(L, T)`: with the normalization
+`P := A / |V|` used by `normalizedAdjacencyStep`, the spectral radius of `P` is
+`≤ 20 / |V| < 1`, so `K_n` decays exponentially in `n` (not polynomially) and
+`log K_n / log n → -∞` (no real-valued limit). Hence
+`spectralDimension (CausalGraphPeriodic L T hL hT) = 0` (the `dite`
+else-branch), not `4`.
+
+The historical sorry is retained as a **documented honest mathematical-content
+mismatch** between the literal theorem signature and the physically intended
+statement. The active formal statement of "spectral dimension of the 3D f_MDL
+causal graph = 4" is the thermodynamic-limit theorem
+`Spectral.causal_graph_spectral_dim_thermodynamic_limit`.
 
 ## Proof status summary
 
-**Zero sorry:**
-- `FinAdjPeriodic` definition and `finAdjPeriodic_symm`, `finAdjPeriodic_irrefl`
-- All periodic adjacency definitions (`SpacelikeAdjPeriodic`, `TimelikeAdjPeriodic`,
-  `LightConeAdjPeriodic`, `CausalAdjPeriodic`)
-- `periodic_causal_adj_irrefl` (looplessness for L ≥ 2, T ≥ 1)
-- `CausalGraphPeriodic` (valid `SimpleGraph`)
-- `causal_graph_periodic_rule_independent` (Iff.rfl)
+**Zero sorry, this file:**
+- `FinAdjPeriodic` and its symmetry / irreflexivity lemmas.
+- All periodic adjacency definitions (`SpacelikeAdjPeriodic`,
+  `TimelikeAdjPeriodic`, `LightConeAdjPeriodic`, `CausalAdjPeriodic`).
+- `periodic_causal_adj_irrefl` (looplessness for L ≥ 2, T ≥ 1).
+- `CausalGraphPeriodic` (valid `SimpleGraph`).
+- `causal_graph_periodic_rule_independent`.
+- `causal_graph_periodic_translation_invariant`,
+  `causal_graph_is_Z4_cayley`.
+- `normalizedAdjacencyStep`, `heatKernelReturn`, `heatKernelReturnAvg`,
+  `spectralDimensionLogRatio`, `spectralDimension`.
 
-**Sorry-admitted (hard analysis):**
-- `periodic_causal_node_degree` — degree = 20 (finite enumeration; requires L ≥ 3, T ≥ 2)
-- `causal_graph_periodic_translation_invariant` — translation invariance (group action)
-- `spectral_dim_cayley_Z4_eq_4` — dₛ = 4 (Fourier analysis on ℤ^4)
-- `causal_graph_spectral_dim_eq_4` — main theorem (chains the above)
+**Documented-false sorry, retained:**
+- `spectral_dim_cayley_Z4_eq_4` — mathematically false under the
+  `P := A/|V|` normalization (see analysis above). Superseded by the
+  thermodynamic-limit theorem in `Spectral.ThermodynamicLimit`.
+- `causal_graph_spectral_dim_eq_4` — chains the above sorry.
 -/
 
+section
 variable (L T : ℕ)
 
 /-! ## Periodic Spatial Adjacency -/
@@ -255,6 +287,17 @@ def CausalGraphPeriodic (hL : 2 ≤ L) (hT : 1 ≤ T) :
     h.elim (periodic_causal_adj_irrefl hL hT n)
            (periodic_causal_adj_irrefl hL hT n)⟩
 
+instance decidableCausalAdjPeriodic (n1 n2 : CausalNode L T) :
+    Decidable (CausalAdjPeriodic L T n1 n2) := by
+  unfold CausalAdjPeriodic SpacelikeAdjPeriodic TimelikeAdjPeriodic LightConeAdjPeriodic
+    FinAdjPeriodic
+  infer_instance
+
+instance decidableCausalGraphPeriodicAdj (hL : 2 ≤ L) (hT : 1 ≤ T) :
+    DecidableRel (CausalGraphPeriodic L T hL hT).Adj := fun n1 n2 => by
+  dsimp [CausalGraphPeriodic]
+  infer_instance
+
 /-! ## Rule Independence -/
 
 /-- The periodic causal adjacency is independent of f_MDL cell state values and CA rule.
@@ -269,28 +312,11 @@ theorem causal_graph_periodic_rule_independent
     (CausalGraphPeriodic L T hL hT).Adj n1 n2 ↔
     (CausalGraphPeriodic L T hL hT).Adj n1 n2 := Iff.rfl
 
-/-! ## Degree Structure -/
+end
 
-/-- Every node in `CausalGraphPeriodic L T hL hT` has exactly 20 neighbors
-    when L ≥ 3 and T ≥ 2 (no periodic collision between distinct neighbor types).
 
-    The 20 neighbors of n = (t, x, y, z) decompose as:
-    - 6 spacelike at time t:        (t, x±1, y, z), (t, x, y±1, z), (t, x, y, z±1)
-    - 2 timelike:                   (t+1, x, y, z) and (t−1, x, y, z)
-    - 6 light-cone forward (+t):    (t+1, x±1, y, z), (t+1, x, y±1, z), (t+1, x, y, z±1)
-    - 6 light-cone backward (−t):   (t−1, x±1, y, z), (t−1, x, y±1, z), (t−1, x, y, z±1)
-    Total: 6 + 2 + 6 + 6 = 20.
-
-    Distinctness requires L ≥ 3 (so x+1 ≢ x−1 mod L) and T+1 ≥ 3 (so t+1 ≢ t−1 mod T+1),
-    which separates the three temporal layers (t−1, t, t+1). For L = 2 or T = 1, some
-    nodes coincide and the degree is smaller. -/
-theorem periodic_causal_node_degree (hL : 3 < L) (hT : 2 < T)
-    (n : CausalNode L T) :
-    ∃ (S : Finset (CausalNode L T)),
-      S.card = 20 ∧
-      ∀ m : CausalNode L T, m ∈ S ↔
-        (CausalGraphPeriodic L T (by omega) (by omega)).Adj n m := by
-  sorry
+section
+variable (L T : ℕ)
 
 /-! ## Cayley Graph Structure (ℤ^4 Torus Isomorphism) -/
 
@@ -347,58 +373,89 @@ theorem causal_graph_is_Z4_cayley (hL : 2 ≤ L) (hT : 1 ≤ T) :
 
 /-! ## Spectral Dimension -/
 
-/-- The heat-kernel diagonal: the expected probability of returning to the origin
-    after exactly `steps` steps of the symmetric random walk on `G`.
-    Defined formally via the normalized trace of the `steps`-th power of the
-    row-stochastic adjacency matrix. -/
-noncomputable def heatKernelReturn {V : Type*} [Fintype V]
-    (G : SimpleGraph V) (steps : ℕ) : ℝ := sorry
+/-- Normalized adjacency step matrix `P = (1/|V|) · A` for the simple graph `G`. -/
+noncomputable def normalizedAdjacencyStep {V : Type*} [Fintype V] [DecidableEq V]
+    (G : SimpleGraph V) [DecidableRel G.Adj] : Matrix V V ℝ :=
+  (Fintype.card V : ℝ)⁻¹ • G.adjMatrix ℝ
+
+/-- Heat-kernel diagonal entry at `v`: `(P^steps)_{vv}` for the normalized adjacency walk. -/
+noncomputable def heatKernelReturn {V : Type*} [Fintype V] [DecidableEq V]
+    (G : SimpleGraph V) [DecidableRel G.Adj] (steps : ℕ) (v : V) : ℝ :=
+  (normalizedAdjacencyStep G ^ steps) v v
+
+/-- Graph-averaged heat-kernel diagonal used in the spectral-dimension scaling law. -/
+noncomputable def heatKernelReturnAvg {V : Type*} [Fintype V] [DecidableEq V]
+    (G : SimpleGraph V) [DecidableRel G.Adj] (steps : ℕ) : ℝ :=
+  ∑ v, heatKernelReturn G steps v / Fintype.card V
+
+open Filter
+
+/-- Log-ratio sequence `log K_n / log n` in the spectral dimension scaling law.
+    Defined as `0` for `n ≤ 1` since `log 1 = 0`. -/
+noncomputable def spectralDimensionLogRatio {V : Type*} [Fintype V] [DecidableEq V]
+    (G : SimpleGraph V) [DecidableRel G.Adj] (n : ℕ) : ℝ :=
+  if 1 < n then Real.log (heatKernelReturnAvg G n) / Real.log n else 0
 
 /-- The spectral dimension of a graph `G`:
       dₛ(G) = −2 · lim_{n→∞} log K_n(G) / log n
-    where `K_n` is `heatKernelReturn G n`.
+    where `K_n` is `heatKernelReturnAvg G n`.
+    Returns `-2` times the limit when it exists; `0` if the log-ratio does not converge.
     For a Cayley graph of ℤ^d, this equals d by Fourier analysis. -/
-noncomputable def spectralDimension {V : Type*} [Fintype V]
-    (G : SimpleGraph V) : ℝ := sorry
+noncomputable def spectralDimension {V : Type*} [Fintype V] [DecidableEq V]
+    (G : SimpleGraph V) [DecidableRel G.Adj] : ℝ :=
+  let existsLimit : Prop :=
+    ∃ L : ℝ, Tendsto (spectralDimensionLogRatio G) atTop (nhds L)
+  @dite _ existsLimit (Classical.propDecidable existsLimit)
+    (fun h => -2 * Classical.choose h)
+    (fun _ => 0)
 
-/-- **Spectral dimension of a Cayley graph of ℤ^4 is 4.**
+/-- **Spectral dimension of a Cayley graph of ℤ^4 is 4** —
+    historical statement; **mathematically false under the `P := A/|V|`
+    normalization** (see analysis below). Retained as a documented honest
+    mathematical-content mismatch with the physically intended claim.
 
-    For any finite quotient G₄ = (ℤ/L₁ℤ) × (ℤ/L₂ℤ) × (ℤ/L₃ℤ) × (ℤ/L₄ℤ) and any
-    generating set S that contains all four standard unit vectors (so that the Cayley
-    graph Cay(G₄, S) is connected), the spectral dimension is exactly 4.
+    Active replacement: `Spectral.causal_graph_spectral_dim_thermodynamic_limit`
+    in `UgpLean.Spacetime.Spectral.ThermodynamicLimit`, which states and proves
+    the thermodynamic-limit form of "spectral dimension = 4" using the
+    degree-normalized random-walk operator `(1/d)·A` that matches the physics
+    convention. The thermodynamic-limit theorem is zero-sorry in its body and
+    reduces to a single documented analytical-helper sorry in
+    `Spectral.HeatKernelLaplace`.
 
-    Proof sketch (Fourier analysis on G₄):
-    The random-walk operator P on Cay(G₄, S) has eigenvalues
-      λ_k = (1/|S|) · Σ_{s ∈ S} ω^{k·s},  ω = (e^{2πi/L₁}, ..., e^{2πi/L₄})
-    indexed by k ∈ G₄. The heat kernel diagonal is
-      K_n = (1/|G₄|) · Σ_k λ_k^n.
-    Near k = 0, the eigenvalues satisfy λ_k = 1 − c·|k|² + O(|k|⁴) for some c > 0
-    (since S generates ℤ^4). By the Euler–Maclaurin / Laplace method on ℤ^4:
-      K_n ~ (1/|G₄|) · (4πcn)^{−2} · |G₄|  =  C · n^{−2}  as n → ∞ (for large L₁,...,L₄).
-    Therefore dₛ = −2·(−2) = 4, independent of S (provided S generates ℤ^4). -/
+    *Why the statement here is false:* with `P := A/|V|` and `|V| ≥ 16`,
+    `‖P‖ ≤ 20 / |V| < 1`, so `tr(P^n)` decays exponentially in `n` at fixed
+    `(L, T)`. Hence `K_n = heatKernelReturnAvg ≤ (20/|V|)^n` decays
+    exponentially and `log K_n / log n → -∞`, so the `Tendsto` limit in
+    `spectralDimension` does **not** exist as a real number, the `dite`
+    selects the `else` branch, and
+    `spectralDimension (CausalGraphPeriodic L T hL hT) = 0`, not `4`.
+
+    The polynomial scaling `K_n ~ C · n^{-2}` only emerges in the joint
+    thermodynamic limit `L, T → ∞` with `n = L²` and the *degree*-normalized
+    operator `(1/20)·A`; that statement is the active theorem cited above. -/
 theorem spectral_dim_cayley_Z4_eq_4 (hL : 2 ≤ L) (hT : 1 ≤ T) :
     spectralDimension (CausalGraphPeriodic L T hL hT) = 4 := by
-  -- Fourier analysis on G₄ = ℤ/(T+1) × ℤ/L³:
-  -- K_n(e,e) ~ C·n^{-2} ⟹ dₛ = 4.
-  -- Deferred: Mathlib lacks spectral graph theory for finite abelian Cayley graphs.
+  /-
+  Documented honest gap. This statement is mathematically false under the
+  existing `P := A/|V|` normalization at fixed finite (L, T). The
+  thermodynamic-limit form of the physics statement is proved in
+  `UgpLean.Spacetime.Spectral.ThermodynamicLimit` as
+  `causal_graph_spectral_dim_thermodynamic_limit`. The sorry here is
+  preserved deliberately as a documented mathematical-content mismatch with
+  the physically intended claim; do not "close" it by changing the
+  normalization or the definition of `spectralDimension` without also
+  updating the historical record of this mismatch.
+  -/
   sorry
 
-/-- **Main theorem (Rank 13-LSD): the spectral dimension of the 3D f_MDL periodic
-    causal graph is exactly 4.**
-
-    Proof route:
-    1. `causal_graph_periodic_translation_invariant` → the graph is vertex-transitive,
-       hence a Cayley graph of G₄ = (ℤ/(T+1)ℤ) × (ℤ/Lℤ)³.
-    2. The generating set S₄ contains {±e_t, ±e_x, ±e_y, ±e_z}, so S₄ generates G₄.
-    3. `spectral_dim_cayley_Z4_eq_4` (Fourier analysis) → dₛ = 4 for Cay(G₄, S₄).
-    4. Therefore dₛ(CausalGraphPeriodic L T) = 4.
-
-    This upgrades the numerical CatA result dₛ ≈ 4.15 (Rank 7-3DC) to an exact
-    Lean-certified value. The numerical dₛ ≈ 4.15 reflects finite-size and
-    boundary effects in the non-periodic simulation; the exact result holds
-    in the thermodynamic (L, T → ∞) limit with PBC. -/
+/-- **Historical "main theorem"** at fixed `(L, T)`. Chains the documented-false
+    `spectral_dim_cayley_Z4_eq_4` sorry above. The physically meaningful
+    statement is the thermodynamic-limit form
+    `Spectral.causal_graph_spectral_dim_thermodynamic_limit`. -/
 theorem causal_graph_spectral_dim_eq_4 (hL : 2 ≤ L) (hT : 1 ≤ T) :
-    spectralDimension (CausalGraphPeriodic L T hL hT) = 4 := by
-  sorry
+    spectralDimension (CausalGraphPeriodic L T hL hT) = 4 :=
+  spectral_dim_cayley_Z4_eq_4 (L := L) (T := T) hL hT
+
+end
 
 end GTE.Spacetime

@@ -156,6 +156,9 @@ import UgpLean.Universality.SMOrbitCausalIsolation
 import UgpLean.Universality.EWBosonStructure
 import UgpLean.Universality.EWChiralBridge
 import UgpLean.Universality.GUTStructure
+import UgpLean.Universality.MDLDerivabilityCriterion
+import UgpLean.Universality.SylowIndexCouplingHierarchy
+import UgpLean.Substrate.LExtended
 import UgpLean.Universality.CasimirMasslessEther
 import UgpLean.Universality.LawvereZone
 import UgpLean.Universality.ChiralPairVA
@@ -165,6 +168,12 @@ import UgpLean.Framework.GTEOptimalityInstance
 import UgpLean.Framework.GTEFinalCoalgebra
 import UgpLean.Spacetime.CausalGraph
 import UgpLean.Spacetime.SpectralDimension
+import UgpLean.Spacetime.SpectralDimensionDegree
+import UgpLean.Spacetime.Spectral.DegreeNormalized
+import UgpLean.Spacetime.Spectral.SpectralDimensionFromAsymptotic
+import UgpLean.Spacetime.Spectral.HeatKernelLaplace
+import UgpLean.Spacetime.Spectral.ThermodynamicLimit
+import UgpLean.Spacetime.PhiMDLZ7PotentialMDL
 import UgpLean.Spacetime.ChiralPairDecoupling
 import UgpLean.Spacetime.ColorConfinement
 import UgpLean.Spacetime.AnomalyRenormalizability
@@ -174,6 +183,9 @@ import UgpLean.Spacetime.MassGap
 import UgpLean.Spacetime.UniversalSimulation
 import UgpLean.Spacetime.QuantumGravity
 import UgpLean.Spacetime.CausalInvariance
+import UgpLean.Spacetime.ChiralGliderDynamics
+import UgpLean.Spacetime.PhiMDLKinkQuantumNumbers
+import UgpLean.Spacetime.PhiMDLKinkQuantumNumbers
 import UgpLean.QFT.GaugedMassGap
 
 /-!
@@ -206,7 +218,13 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.MassRelations.CKMMixing` — CDM mechanism (2026-05-11): effective Cabibbo FN charge Δa_eff = α_d = 13/9 from GUT group theory; |V_us|_CDM = ε₁^(α_d) = exp(−13π/27) ≈ 0.2203 (zero sorry)
 - `UgpLean.MassRelations.NeutrinoMassRatio` — Seesaw mass-squared ratio R ≈ 0.02936 from FN texture (q₁,q₂)=(3,2) and b-values {5,11,19}; coarse bound 0.029 < R < 0.030 certified zero sorry (2026-05-16)
 - `UgpLean.Spacetime.CausalGraph` — Rank 12-LCG: causal graph of 3D f_MDL spacetime; `CausalNode`, `CausalAdj`, `CausalGraph`; rule-independence theorem zero sorry (2026-05-21)
-- `UgpLean.Spacetime.SpectralDimension` — Rank 13-LSD: spectral dimension dₛ = 4; `FinAdjPeriodic`, `CausalGraphPeriodic`, `causal_graph_periodic_rule_independent` zero sorry; degree=20, torus isomorphism, dₛ=4 stated with sorry (2026-05-21)
+- `UgpLean.Spacetime.SpectralDimension` — heat-kernel defs + `spectralDimension` limit (CatAL); 1 documented honest sorry on `spectral_dim_cayley_Z4_eq_4` retained as historical statement mathematically false at fixed `(L, T)`; the active "spectral dimension = 4" claim is the thermodynamic-limit theorem `Spectral.causal_graph_spectral_dim_thermodynamic_limit`
+- `UgpLean.Spacetime.SpectralDimensionDegree` — `periodic_causal_node_degree` CatAL (0 sorry)
+- `UgpLean.Spacetime.Spectral.DegreeNormalized` — physical (degree-normalized) random-walk heat kernel definitions (0 sorry)
+- `UgpLean.Spacetime.Spectral.SpectralDimensionFromAsymptotic` — bridge from a diffusive heat-kernel asymptotic to the scaling-law log-ratio limit (pure real analysis, 0 sorry)
+- `UgpLean.Spacetime.Spectral.HeatKernelLaplace` — Laplace-method asymptotic statement `(L+2)⁴ · K_{(L+2)²}(G_{L+2}) → C > 0` (1 documented analytical-helper sorry: the genuine Mathlib gap for DFT-on-finite-abelian-groups + Riemann-sum/Gaussian-integral limit)
+- `UgpLean.Spacetime.Spectral.ThermodynamicLimit` — `causal_graph_spectral_dim_thermodynamic_limit`: the thermodynamic-limit "spectral dimension = 4" theorem for the 3D f_MDL causal graph (zero sorry in the body; reduces honestly via the bridge to the single helper sorry in `HeatKernelLaplace`)
+- `UgpLean.Spacetime.PhiMDLZ7PotentialMDL` — Rank 69d: `phimdl_z7_potential_mdl_minimal` CatAL (0 sorry)
 - `UgpLean.Spacetime.ChiralPairDecoupling` — Rank 14-LCD: chiral pair causal decoupling; `ChiralLayer`, `ChiralNode`, `ChiralPairAdj`; `chiral_pair_no_cross_layer_edges` zero sorry, `chiral_pair_walk_layer_invariant` zero sorry (2026-05-21)
 - `UgpLean.Spacetime.ColorConfinement` — Rank 25-CCF: color confinement from PSC RC + Absence Theorem; `color_confinement` and `physical_particles_are_color_neutral` zero sorry, one named bridge axiom `psc_rc_requires_color_neutrality` (CatAD, 2026-05-21)
 - `UgpLean.Spacetime.AnomalyRenormalizability` — Ranks 26-ANO + 27-RNM: anomaly cancellation and renormalizability PSC-forced; `anomaly_cancellation_psc_forced`, `physical_anomaly_cancellation`, `renormalizability_psc_forced`, `physical_renormalizability`, `anomaly_and_renorm_psc_forced`; all zero sorry, zero axioms (CatAL, 2026-05-21)
