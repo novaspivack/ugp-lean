@@ -55,6 +55,7 @@ import UgpLean.GTE.UniquenessCertificates
 import UgpLean.GTE.GTBGenerationPrimes
 import UgpLean.GTE.DSIExport
 import UgpLean.GTE.NcColorArithmetic
+import UgpLean.GTE.SylowIndexCouplingHierarchy
 import UgpLean.SelfRef.LawvereKleene
 import UgpLean.SelfRef.RiceHalting
 import UgpLean.Conjectures
