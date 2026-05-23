@@ -174,6 +174,7 @@ import UgpLean.Spacetime.MassGap
 import UgpLean.Spacetime.UniversalSimulation
 import UgpLean.Spacetime.QuantumGravity
 import UgpLean.Spacetime.CausalInvariance
+import UgpLean.QFT.GaugedMassGap
 
 /-!
 # UgpLean — Universal Generative Principle: Lean 4 Formalization
