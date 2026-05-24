@@ -29,7 +29,7 @@ the CA substrate already has both sectors built in:
 2. **Quantum particle content** (Z₇ orbit states, CatAL)
    - SM generations emerge from Z₇ orbit structure (gen₁/gen₂/gen₃ = {1,2,4}, {3,5,6}, {0})
    - Color confinement is PSC-forced (CatAL, Rank 25-CCF, `no_psc_admissible_single_quark`)
-   - Mass gap exists at beable level (CatAD → CatAL, Rank 42-MGP)
+   - Mass gap exists at beable level (CatAL, Rank 42-MGP, `gte_mass_formula_physical`, zero sorry)
 
 3. **Quantum dynamics** (Hilbert space from P37, Algebraic Lifting Theorem)
    - The Lifting Theorem (CatAL, Rank 15-ALT) promotes all beable results to
@@ -58,14 +58,18 @@ causal graph. There is no classical/quantum divide at the substrate level.
 | D2 geodesic step (causal adj.)    | CatAL  | `d2_geodesic_step` (Rank 17-GEO)           |
 | Beable spatial propagation        | CatAL  | `beable_spatial_propagation` (Rank 17-GEO) |
 | Causal geodesic sequence          | CatAL  | `causal_sequence_exists` (Rank 17-GEO)     |
-| Full geodesic trajectory (⟨x⟩_D)  | CatAD  | GeodesicTheorem.lean — P34 [D] gap         |
+| P34 point-localization centroid   | CatAL  | `centroid_well_defined` (CentroidMeasure.lean) |
+| Geodesic preferred direction      | CatAL  | `geodesic_preferred_direction` (Rank 17-GEO)   |
+| Full geodesic trajectory (⟨x⟩_D)  | CatAD  | GeodesicTheorem.lean — P34 distributed [D] gap |
 | Mass gap existence                 | CatAL  | MassGap.lean (Rank 42-MGP)                 |
 | Algebraic Lifting Theorem          | CatAL  | LiftingTheorem.lean (Rank 15-ALT)          |
 
-Overall: **CatAD** — all components CatA/CatAL except the full geodesic
-trajectory (⟨x⟩_D formally traces geodesic) which is CatAD pending P34 [D]
-measure formalization.  The D2 orbit closure and causal-step sub-components
-are now CatAL (`d2_orbit_closed_under_step`, `d2_geodesic_step`).
+Overall: **CatAD** — all components CatA/CatAL except the full curvature-corrected
+geodesic trajectory (⟨x⟩_D under distributed P34 [D] measure) which is CatAD.
+Vacuum timelike trajectory and point-localization centroid are CatAL
+(`causal_sequence_exists`, `geodesic_preferred_direction`, `centroid_well_defined`,
+`d2_orbit_closed_iter`).  The D2 orbit closure, causal-step, and centroid
+sub-components are CatAL (11 `certified_*` cross-references total).
 
 ## Open questions (not resolved by this rank)
 
@@ -89,7 +93,7 @@ are now CatAL (`d2_orbit_closed_under_step`, `d2_geodesic_step`).
 - `unification_is_not_bolt_on`           — sectors are not independent
 -/
 
-open GTE.Lifting GTE.Spacetime.Geodesic GTE.Spacetime.Confinement GTE.Spacetime
+open GTE.Lifting GTE.Spacetime.Geodesic GTE.Spacetime.Confinement GTE.Spacetime GTE.Spacetime.Centroid
 open UgpLean.Universality.LawvereZone CUP3D
 
 /-!
@@ -122,12 +126,29 @@ structure ParticleEvidence where
       gives Δ ≥ 1.8 MeV, PDG m_u lower bound; zero axioms). -/
   mass_gap_positive : True
 
-/-- Evidence record: dynamics sector (geodesics, [D]-measure, quantum evolution). -/
+/-- Evidence record: dynamics sector (geodesics, [D]-measure, quantum evolution).
+
+    Dynamics is CatAL-partial: vacuum timelike trajectory and point-localization centroid
+    are fully proved; curvature-corrected geodesic (distributed P34 [D] measure) is CatAD.
+
+    CatAL sub-components (Pass 2 + Pass 3, 2026-05-24):
+    - `d2_orbit_closed_under_step` / `d2_orbit_closed_iter` — D-weighted ensemble closed
+      under CA evolution at all time scales.
+    - `d2_geodesic_step` / `causal_sequence_exists` — physical beable always has a causal
+      successor; timelike worldline with spatial position fixed.
+    - `centroid_well_defined` / `beableCentroid` — P34 point-localization centroid
+      well-defined for all physical beables.
+    - `geodesic_preferred_direction` — causal sequence with well-defined centroid at every
+      step and spatially invariant spatial coordinate.
+
+    CatAD remaining gap: curvature-corrected ⟨x⟩_D under distributed orbit-superposition
+    P34 [D] measure; full Einstein-equation derivation from causal graph (OQ-GR1 open;
+    τ_c back-reaction tested in three rounds — all NEGATIVE; Ollivier–Ricci prescription
+    deferred to EPIC_073 Cluster J). -/
 structure DynamicsEvidence where
-  /-- [D]-weighted centroid ⟨x⟩_D follows geodesics (CatAD, D2 argument, Rank 17-GEO).
-      D2 sub-components are CatAL: `d2_orbit_closed_under_step` proves the physical
-      ensemble is closed under f_MDL; `d2_geodesic_step` proves the causal step
-      exists at each timestep.  Full trajectory identification is CatAD. -/
+  /-- [D]-weighted centroid ⟨x⟩_D follows geodesics (CatAD overall; D2 sub-components CatAL).
+      Vacuum timelike trajectory + point-localization centroid: CatAL (`geodesic_preferred_direction`).
+      Curvature-corrected trajectory: CatAD (pending P34 distributed [D] measure). -/
   observables_follow_geodesics : True
   /-- All DWeight > 0 beables experience the same geometry (equivalence principle). -/
   equivalence_principle : True
@@ -162,8 +183,8 @@ proof idiom documents the logical claim clearly while the substantive component
 proofs live in the dedicated modules they cite (this avoids circular imports and
 keeps each module's certification at its own level).
 
-The overall CatAD status reflects that GeodesicTheorem (CatAD) and MassGap (CatAD)
-are cited components; the pure-algebra and causal-graph components are CatA/CatAL.
+The overall CatAD status reflects that GeodesicTheorem (CatAD) is the remaining gap;
+MassGap is CatAL (zero sorry, zero axioms) and all other cited components are CatA/CatAL.
 -/
 
 /-- **Main theorem (CatAD)**: The 3D f_MDL CA is a unified beable-level substrate
@@ -174,7 +195,7 @@ are cited components; the pure-algebra and causal-graph components are CatA/CatA
     (a) Geometry: dₛ = 4.15 ≈ 4 (Rank 7-3DC, CatA); causal graph rule-independent
         (Rank 12-LCG, zero sorry); vacuum κ_EE = 0 and matter κ_SD > 0 (CatAL).
     (b) Particles: Z₇ orbit structure → SM generations (CatAL); color confinement
-        PSC-forced (Rank 25-CCF, CatAL); mass gap (Rank 42-MGP, CatAD).
+        PSC-forced (Rank 25-CCF, CatAL); mass gap (Rank 42-MGP, CatAL, `gte_mass_formula_physical`).
     (c) Dynamics: [D]-weighted observables follow causal-graph geodesics (Rank 17-GEO,
         CatAD, D2 argument); D2 orbit closure and causal-step sub-theorems are CatAL
         (`d2_orbit_closed_under_step`, `d2_geodesic_step`); Lifting Theorem promotes
@@ -361,5 +382,70 @@ theorem certified_d2_geodesic_step
     (h_w : DWeight b > 0) (h_t : n.1.val < T) :
     ∃ n' : CausalNode L T, CausalAdj L T n n' ∧ DWeight (fmdl_step5 b) > 0 :=
   GTE.Spacetime.Geodesic.d2_geodesic_step L T n b h_w h_t
+
+/-- Iterative D2 orbit closure (CatAL, Rank 17-GEO, Pass 2): [D]-weight-positive is
+    preserved under arbitrarily many f_MDL steps.  Every physical beable stays physical
+    at all time scales — no finite CA evolution can expel a beable from the physical sector.
+
+    Status: CatAL — zero sorry. -/
+theorem certified_d2_orbit_closed_iter
+    (b : Fin 5 → Fin 7) (h : DWeight b > 0) (k : ℕ) :
+    DWeight (fmdl_step5^[k] b) > 0 :=
+  GTE.Spacetime.Geodesic.d2_orbit_closed_iter b h k
+
+/-- Causal geodesic sequence (CatAL, Rank 17-GEO, Pass 2): for any physical beable
+    at any causal node, an infinite timelike sequence exists along which the beable
+    remains physical and spatial position is fixed at every step.
+
+    This is the discrete geodesic equation at the orbit level: the beable has a
+    valid causal next position at each step and stays in the physical sector. -/
+theorem certified_causal_sequence_exists
+    (n : CausalNode L T) (b : Fin 5 → Fin 7) (h_w : DWeight b > 0) :
+    ∃ seq : ℕ → CausalNode L T,
+        seq 0 = n ∧
+        ∀ (k : ℕ), k < T - n.1.val →
+          CausalAdj L T (seq k) (seq (k + 1)) ∧
+          DWeight (fmdl_step5^[k] b) > 0 ∧
+          (seq k).2 = n.2 :=
+  GTE.Spacetime.Geodesic.causal_sequence_exists L T n b h_w
+
+/-- Geodesic preferred direction (CatAL, Rank 17-GEO, Pass 3): a timelike causal sequence
+    exists such that at every step the beable is physical, the point-localization centroid
+    is well-defined, and the spatial centroid is invariant.
+
+    This is the P34 point-localization version of the discrete geodesic equation in flat
+    (vacuum) spacetime.  Curvature-corrected deviation (matter regions, κ > 0) is CatAD
+    pending distributed P34 [D] measure (EPIC_073 Cluster J).
+
+    Status: CatAL — zero sorry. -/
+theorem certified_geodesic_preferred_direction
+    (n : CausalNode L T) (b : Fin 5 → Fin 7) (h_w : DWeight b > 0) :
+    ∃ seq : ℕ → CausalNode L T,
+        seq 0 = n ∧
+        ∀ (k : ℕ), k < T - n.1.val →
+          CausalAdj L T (seq k) (seq (k + 1)) ∧
+          DWeight (fmdl_step5^[k] b) > 0 ∧
+          CentroidWellDefined L T (fmdl_step5^[k] b) (seq k) ({seq k}) ∧
+          spatialCoords L T (seq k) = spatialCoords L T n ∧
+          beableCentroid L T (fmdl_step5^[k] b) (seq k) ({seq k}) =
+            (((spatialCoords L T (seq k)).1 : ℝ),
+             ((spatialCoords L T (seq k)).2.1 : ℝ),
+             ((spatialCoords L T (seq k)).2.2 : ℝ)) :=
+  GTE.Spacetime.Geodesic.geodesic_preferred_direction L T n b h_w
+
+/-- P34 point-localization centroid (CatAL, Rank 17-GEO, Pass 3): for any physical
+    beable localized at causal node `loc` with `loc` in the support set `S`, the
+    [D]-weighted centroid `beableCentroid b loc S` is well-defined (denominator positive).
+
+    Base case of the P34 [D] measure formalization.  Upgrade path: replace point
+    localization with distributed orbit-superposition measure (EPIC_073 / P34).
+
+    Status: CatAL — zero sorry. -/
+theorem certified_centroid_well_defined
+    (b : Fin 5 → Fin 7) (loc : CausalNode L T)
+    (S : Finset (CausalNode L T))
+    (h_w : DWeight b > 0) (h_mem : loc ∈ S) :
+    CentroidWellDefined L T b loc S :=
+  centroid_well_defined L T b loc S h_w h_mem
 
 end GTE.Spacetime.QuantumGravity

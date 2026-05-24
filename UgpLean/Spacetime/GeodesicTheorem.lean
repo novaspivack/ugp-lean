@@ -32,19 +32,22 @@ namespace GTE.Spacetime.Geodesic
    the equivalence principle (all beables with nonzero `DWeight` experience the same
    geometry).
 
-## Certification status (CatAD)
+## Certification status (CatAD overall; dynamics CatAL-partial)
 
 The logical structure (D2 → no preferred direction → geodesic) is fully stated.
-Full Lean formalization of the dynamical claim (`⟨x⟩_D` converges to geodesic)
-requires:
-- Formal definition of `⟨x⟩_D` as the `DWeight`-weighted centroid over causal nodes
-- A proved lemma connecting non-geodesic paths to preferred-direction terms
-- Application of `d2_axiom` to zero out the preferred-direction contribution
+Full Lean formalization of the dynamical claim (`⟨x⟩_D` traces curvature-corrected
+geodesic) requires:
+- Point-localization definition of `⟨x⟩_D`: **DONE** (`CentroidMeasure.lean` —
+  `beableCentroid`, `centroid_well_defined`, `beableCentroid_point`, all CatAL)
+- Vacuum timelike preferred direction: **DONE** (`geodesic_preferred_direction` CatAL —
+  spatial centroid invariant along timelike worldline)
+- Non-geodesic path → preferred-direction term: pending distributed P34 [D] measure
+- `d2_axiom` zeroes deviation term: pending distributed P34 [D] measure
 
-The `PSCPreserving` predicate and `DWeightNode` scalar are defined below as
-structural placeholders; they carry the correct types and will be instantiated
-when the P34 `[D]` measure is fully formalized (same gap as noted in
-`algebraic_lifting_theorem`).
+The `PSCPreserving` predicate and `DWeightNode` scalar are structural placeholders:
+`PSCPreserving := True` (trivially satisfied) and `DWeightNode := 0` (correct for
+identity and all PSC-preserving maps by D2). These will be instantiated when the
+full P34 `[D]` coherence measure over orbit realizations is formalized.
 
 ## Theorems in this file
 
@@ -71,20 +74,22 @@ when the P34 `[D]` measure is fully formalized (same gap as noted in
 
 ## Upgrade status (2026-05-24)
 
-Theorems `psc_admissible_orbit_closure`, `d2_orbit_closed_under_step`, and
-`d2_geodesic_step` are the newly formalized D2 components from the first
-formalization pass.  They are genuinely proved (not `True := trivial`) and
-are CatAL.
+**Pass 1 (2026-05-24):** `psc_admissible_orbit_closure`, `d2_orbit_closed_under_step`,
+`d2_geodesic_step` — genuinely proved (not `True := trivial`), CatAL.
 
-**New (2026-05-24 second pass):** `d2_orbit_closed_iter` extends single-step
-orbit closure to arbitrary iteration depth; `causal_sequence_exists` proves the
-existence of an infinite timelike causal sequence along which a physical beable
-remains physical at every step — the discrete geodesic equation at the orbit
-level. Both are CatAL.
+**Pass 2 (2026-05-24):** `d2_orbit_closed_iter` extends single-step orbit closure to
+arbitrary iteration depth; `causal_sequence_exists` proves an infinite timelike causal
+sequence along which the beable remains physical and spatial position is fixed.
+Both are CatAL.
 
-The remaining gap to full CatAL for `geodesic_theorem` is the identification of
-the beable's spatial location with a causal node (requires P34 `[D]` measure
-formalization).
+**Pass 3 (2026-05-24):** `geodesic_preferred_direction` — causal sequence with
+well-defined point-localization centroid at every step; spatial centroid invariant
+along the timelike worldline.  Uses `CentroidMeasure.lean` (`beableCentroid`,
+`centroid_well_defined`, `beableCentroid_point` — all CatAL).
+
+**Remaining gap to full `geodesic_theorem` CatAL:** identification of the beable's
+spatial location with a causal node under the distributed orbit-superposition P34 `[D]`
+measure (requires EPIC_073 Cluster J — Ollivier–Ricci + P34 distributed [D]).
 -/
 
 open GTE.Lifting GTE.Spacetime GTE.Spacetime.Centroid CUP3D UgpLean.Universality.LawvereZone
