@@ -53,8 +53,11 @@ causal graph. There is no classical/quantum divide at the substrate level.
 | Color confinement                  | CatAL  | `no_psc_admissible_single_quark` (Rank 25) |
 | Ollivier-Ricci curvature (κ_EE=0) | CatAL  | `vacuum_ollivier_ricci_flatness`           |
 | Gorard matter curvature (κ_SD>0)  | CatAL  | `gorard_matter_step_kappa_positive`        |
-| D2 orbit closure                  | CatAL  | `d2_orbit_closed_under_step` (Rank 17-GEO) |
+| D2 orbit closure (1 step)         | CatAL  | `d2_orbit_closed_under_step` (Rank 17-GEO) |
+| D2 orbit closure (k steps)        | CatAL  | `d2_orbit_closed_iter` (Rank 17-GEO)       |
 | D2 geodesic step (causal adj.)    | CatAL  | `d2_geodesic_step` (Rank 17-GEO)           |
+| Beable spatial propagation        | CatAL  | `beable_spatial_propagation` (Rank 17-GEO) |
+| Causal geodesic sequence          | CatAL  | `causal_sequence_exists` (Rank 17-GEO)     |
 | Full geodesic trajectory (⟨x⟩_D)  | CatAD  | GeodesicTheorem.lean — P34 [D] gap         |
 | Mass gap existence                 | CatAL  | MassGap.lean (Rank 42-MGP)                 |
 | Algebraic Lifting Theorem          | CatAL  | LiftingTheorem.lean (Rank 15-ALT)          |

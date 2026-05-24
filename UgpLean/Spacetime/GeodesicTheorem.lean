@@ -60,14 +60,27 @@ when the P34 `[D]` measure is fully formalized (same gap as noted in
 - `psc_admissible_orbit_closure` — PSC orbit is closed under f_MDL step (**CatAL**)
 - `d2_orbit_closed_under_step`   — D-weighted ensemble closed under CA evolution (**CatAL**)
 - `d2_geodesic_step`             — causal step exists + D-weight preserved (**CatAL-partial**)
+- `d2_orbit_closed_iter`         — DWeight > 0 preserved for all k steps (**CatAL**)
+- `BeableAt`                     — predicate: beable physically present at causal node
+- `beable_spatial_propagation`   — physical beable propagates to causally adjacent node (**CatAL**)
+- `causal_sequence_exists`       — timelike causal sequence with DWeight preservation (**CatAL**)
 
 ## Upgrade status (2026-05-24)
 
 Theorems `psc_admissible_orbit_closure`, `d2_orbit_closed_under_step`, and
-`d2_geodesic_step` are the newly formalized D2 components.  They are genuinely
-proved (not `True := trivial`) and are CatAL. The remaining gap to full CatAL
-for `geodesic_theorem` is the identification of the beable's spatial location
-with a causal node (requires P34 `[D]` measure formalization).
+`d2_geodesic_step` are the newly formalized D2 components from the first
+formalization pass.  They are genuinely proved (not `True := trivial`) and
+are CatAL.
+
+**New (2026-05-24 second pass):** `d2_orbit_closed_iter` extends single-step
+orbit closure to arbitrary iteration depth; `causal_sequence_exists` proves the
+existence of an infinite timelike causal sequence along which a physical beable
+remains physical at every step — the discrete geodesic equation at the orbit
+level. Both are CatAL.
+
+The remaining gap to full CatAL for `geodesic_theorem` is the identification of
+the beable's spatial location with a causal node (requires P34 `[D]` measure
+formalization).
 -/
 
 open GTE.Lifting GTE.Spacetime CUP3D UgpLean.Universality.LawvereZone
@@ -412,5 +425,163 @@ theorem d2_geodesic_step
     exact Or.inr (Or.inl ⟨rfl, rfl⟩)
   · -- DWeight (fmdl_step5 b) > 0 by D2 orbit closure
     exact d2_orbit_closed_under_step b h_w
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- §11  Iterative D2 orbit closure (CatAL)
+-- ─────────────────────────────────────────────────────────────────────────────
+
+/-- **Iterative D2 orbit closure** (CatAL).
+
+    The `[D]`-weight-positive condition is preserved under arbitrarily many
+    f_MDL steps: if `DWeight b > 0`, then `DWeight (fmdl_step5^[k] b) > 0`
+    for every `k : ℕ`.
+
+    Proof: induction on `k` with generalised beable variable.
+    - Base: `fmdl_step5^[0] b = b`, so the hypothesis is the conclusion.
+    - Step: `fmdl_step5^[k+1] b = fmdl_step5^[k] (fmdl_step5 b)` by the
+      definition of `Function.iterate`. Apply `d2_orbit_closed_under_step`
+      to obtain `DWeight (fmdl_step5 b) > 0`, then apply the IH (instantiated
+      at `fmdl_step5 b`) to close the goal.
+
+    Physical meaning: no finite number of CA time steps can remove a `[D]`-weighted
+    beable from the physical sector. The orbit `{vacuum, gen₁, gen₂, gen₃}` is
+    invariant under arbitrarily long f_MDL evolution. This is the content of
+    "the CA dynamics respect the physical sector" at all time scales.
+
+    Status: CatAL — zero sorry. -/
+theorem d2_orbit_closed_iter (b : Fin 5 → Fin 7) (h : DWeight b > 0) (k : ℕ) :
+    DWeight (fmdl_step5^[k] b) > 0 := by
+  revert h b
+  induction k with
+  | zero => intros b h; exact h
+  | succ k ih =>
+    intros b h
+    exact ih (fmdl_step5 b) (d2_orbit_closed_under_step b h)
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- §12  BeableAt predicate and spatial propagation (CatAL)
+-- ─────────────────────────────────────────────────────────────────────────────
+
+/-- A beable `b` is "physically present" at causal node `n` when it carries
+    positive `[D]`-weight.
+
+    This is the **weak (algebraic) localization** predicate: it certifies that
+    the beable is in the physical sector but does not specify which cells of the
+    outer CA tape at node `n` encode its Z₇⁵ state.  The **strong version**
+    would require the outer tape state at the spatial coordinates `n.2` to be
+    consistent with the Z₇⁵ configuration `b`; this requires the full P34
+    `[D]` coherence measure.
+
+    Status: structural definition; physical content is in
+    `beable_spatial_propagation` and `causal_sequence_exists`. -/
+def BeableAt (b : Fin 5 → Fin 7) (_n : CausalNode L T) : Prop :=
+  DWeight b > 0
+
+/-- **Beable spatial propagation** (CatAL).
+
+    If a physical beable `b` is present at node `n` and the node is not at the
+    terminal time step (`n.1.val + 1 < T`), then there exists a causally
+    adjacent successor node `n'` at which the f_MDL-evolved beable
+    `fmdl_step5 b` is also physically present.
+
+    This is the spatial statement of `d2_geodesic_step`: given the explicit
+    `BeableAt` predicate, a physical beable always has a physical causal
+    successor location.
+
+    Proof: `d2_geodesic_step` with hypothesis `n.1.val < T` (from
+    `n.1.val + 1 < T` by `omega`) and `BeableAt` unfolded to `DWeight b > 0`.
+
+    Status: CatAL — zero sorry. -/
+theorem beable_spatial_propagation
+    (n : CausalNode L T) (b : Fin 5 → Fin 7)
+    (h_w : DWeight b > 0) (h_T : n.1.val + 1 < T) :
+    ∃ n' : CausalNode L T,
+        CausalAdj L T n n' ∧ BeableAt L T (fmdl_step5 b) n' :=
+  d2_geodesic_step L T n b h_w (by omega)
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- §13  Causal geodesic sequence (CatAL — main new result)
+-- ─────────────────────────────────────────────────────────────────────────────
+
+/-- **Causal sequence from a physical beable** (CatAL).
+
+    For any physical beable `b` (DWeight b > 0) at any causal node `n`,
+    there exists an infinite sequence of causal nodes
+    `seq : ℕ → CausalNode L T` such that:
+
+    1. `seq 0 = n` — the sequence starts at `n`.
+    2. For every step `k < T - n.1.val` (while time steps remain in the lattice):
+       - `CausalAdj L T (seq k) (seq (k + 1))` — consecutive nodes are
+         causally adjacent (connected by a `TimelikeAdj` edge).
+       - `DWeight (fmdl_step5^[k] b) > 0` — the beable remains in the
+         physical sector after `k` f_MDL steps.
+
+    ## Construction
+
+    The sequence is the straight **timelike worldline** from `n`:
+    ```
+    seq k = (⟨n.1.val + k, _⟩, n.2)   for n.1.val + k ≤ T
+    seq k = n                            (clamped, unreachable in the ∀ range)
+    ```
+
+    ## Why this is the discrete geodesic equation
+
+    - **Causal adjacency** certifies that the sequence traces a valid causal
+      path through the 3D f_MDL graph.  Consecutive nodes differ only in the
+      time coordinate by one step (`TimelikeAdj`).
+    - **DWeight preservation** (`d2_orbit_closed_iter`) certifies that the
+      beable remains physical at every step — no CA evolution can expel it from
+      the physical sector.
+
+    Together these are the two conditions defining a **physical causal trajectory**
+    in the GTE framework: the beable has a valid next causal position at each
+    step, and it stays in the physical sector at every step.  This is the discrete
+    analog of the geodesic equation "a test particle moves along a causal path
+    without leaving the physical sector."
+
+    ## Remaining gap to full CatAL for `geodesic_theorem`
+
+    The sequence constructed here is the **straight timelike path** — a special
+    geodesic in flat (vacuum) spacetime.  In curved regions (positive Ollivier-Ricci
+    κ, P36), the geodesic deviates from the straight worldline.  Proving that
+    `⟨x⟩_D` (the `DWeight`-weighted centroid) follows the *curvature-corrected*
+    geodesic requires:
+
+    1. A formal definition of `⟨x⟩_D` as a weighted sum over `CausalNode L T`
+       (requires P34 `[D]` measure formalization).
+    2. A proved lemma that deviation from the geodesic produces a non-zero
+       `DWeightNode` under some PSC-preserving reflection (D2 argument).
+    3. Application of `d2_axiom` to zero out the deviation term.
+
+    Status: CatAL — zero sorry. -/
+theorem causal_sequence_exists
+    (n : CausalNode L T) (b : Fin 5 → Fin 7)
+    (h_w : DWeight b > 0) :
+    ∃ seq : ℕ → CausalNode L T,
+      seq 0 = n ∧
+      ∀ (k : ℕ), k < T - n.1.val →
+        CausalAdj L T (seq k) (seq (k + 1)) ∧
+        DWeight (fmdl_step5^[k] b) > 0 := by
+  have hn_le : n.1.val ≤ T := Nat.le_of_lt_succ n.1.isLt
+  -- Timelike sequence: step k maps (t, x, y, z) to (t+k, x, y, z), clamped at T
+  refine ⟨fun k => if h : n.1.val + k ≤ T
+      then (⟨n.1.val + k, by omega⟩, n.2)
+      else n, ?_, ?_⟩
+  · -- seq 0 = n: beta-reduce the lambda application first with `show`, then unfold the dif
+    show (if h : n.1.val + 0 ≤ T then (⟨n.1.val + 0, by omega⟩, n.2) else n) = n
+    rw [dif_pos (show n.1.val + 0 ≤ T from Nat.le_of_lt_succ n.1.isLt)]
+    exact Prod.ext (Fin.ext (by simp)) rfl
+  · -- CausalAdj and DWeight for each step k < T - n.1.val
+    intro k hk
+    have hk_le  : n.1.val + k ≤ T       := by omega
+    have hk1_le : n.1.val + (k + 1) ≤ T := by omega
+    refine ⟨?_, d2_orbit_closed_iter b h_w k⟩
+    -- Beta-reduce the two lambda applications, then unfold the dif branches
+    show CausalAdj L T
+        (if h : n.1.val + k ≤ T then (⟨n.1.val + k, by omega⟩, n.2) else n)
+        (if h : n.1.val + (k + 1) ≤ T then (⟨n.1.val + (k + 1), by omega⟩, n.2) else n)
+    rw [dif_pos hk_le, dif_pos hk1_le]
+    -- TimelikeAdj: (n.1.val + k).val + 1 = (n.1.val + (k+1)).val is rfl (nat arithmetic)
+    exact Or.inr (Or.inl ⟨rfl, rfl⟩)
 
 end GTE.Spacetime.Geodesic
