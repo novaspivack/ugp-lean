@@ -140,6 +140,7 @@ import UgpLean.Framework.GTEFinalCoalgebra
 import UgpLean.Universality.CasimirMasslessEther
 import UgpLean.Universality.ChiralPairVA
 import UgpLean.Universality.CouplingNoGo
+import UgpLean.Universality.ChiralityEigenstates
 import UgpLean.TE22.ScanCertificate
 import UgpLean.PSC.RCCInfiniteFamilies
 import UgpLean.PSC.RCCComplete
