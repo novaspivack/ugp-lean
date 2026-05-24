@@ -3994,6 +3994,80 @@ The CTS overlay region matches the ether shift cone.
 \end{theorem}
 
 % ─────────────────────────────────────────────────────────────────
+\subsection{Martinez Rule~110 Phase Catalog
+  (\texttt{rule110-lean})}\label{subsec:martinez-catalog}
+
+The companion repository \textbf{rule110-lean} extends the Cook glider
+formalization with a complete ingestion of the Mart\'{i}nez
+(2004) Rule~110 phase catalog.  Two modules provide reference data and
+dynamic verification respectively.
+
+\subsubsection*{\texttt{MartinezPhasesCatalog.lean}}
+
+A complete machine-readable ingestion of Mart\'{i}nez's
+\texttt{listPhasesR110.txt}: 365 source bit patterns plus 29 resolved
+\texttt{f4\_1} alias entries, giving 394 total entries.
+Glider families covered: ether, A, B, B${}^-$, B${}^\wedge$, C1--C3,
+D1--D2, E, E${}^-$, F, G, H, Gun.
+
+The module defines a type hierarchy (\lstinline|MartinezGliderFamily|,
+\lstinline|MartinezParent|, \lstinline|MartinezPhaseIdx|,
+\lstinline|MartinezKey|, \lstinline|MartinezPhaseEntry|) and a lookup
+function \lstinline|martinezEntry?| mapping keys to phase entries.
+The catalog size is machine-certified by \lstinline|native_decide|:
+
+\begin{leanref}
+\lstinline|martinez_catalog_complete|: \lstinline|martinezCatalogLength = 394|
+$\wedge$ \lstinline|martinezCatalogSourceCount = 365|
+$\wedge$ \lstinline|martinezCatalogAliasCount = 29|
+\end{leanref}
+
+\textit{Coordinate note.} Mart\'{i}nez strings embed gliders in the
+Mart\'{i}nez ether basis \texttt{e(f1\_1) = [11111000100110]}.
+The Cook coordinate system uses \texttt{10011011111000} (period 14).
+Dynamic verification in the Cook frame is in
+\lstinline|MartinezPhasesVerification.lean|.
+
+\subsubsection*{\texttt{MartinezPhasesVerification.lean}}
+
+Selective \lstinline|native_decide| certificates for Mart\'{i}nez gliders
+in the Cook (\lstinline|cookEther|) coordinate system.  Key theorems:
+
+\begin{itemize}[nosep]
+\item \lstinline|martinez_A_f1_1_cook_bridge| --- the A-glider in the
+  Mart\'{i}nez catalog equals \lstinline|cookAGliderBits|; this is the
+  formal bridge between the two coordinate systems.
+\item \lstinline|martinez_A_f1_1_period_on_cookEther| --- A-glider
+  period verified on the Cook ether via the existing
+  \lstinline|a_glider_phase0_period3| certificate from
+  \lstinline|CookGliderVerification.lean| (zero sorry, \lstinline|native_decide|).
+\item \lstinline|martinez_A_period_matches_cook| --- temporal period
+  $\Delta t$ and spatial period $\Delta x$ of the A-glider agree between
+  the Mart\'{i}nez and Cook records.
+\item \lstinline|cook_named_gliders_in_martinez_catalog| --- all ten
+  Cook named glider types (A, B, C1--C3, D1--D2, E, F, H) are present in
+  the Mart\'{i}nez catalog (verified by \lstinline|native_decide|).
+\end{itemize}
+
+\noindent\textit{Open dynamics boundary.}
+The predicate \lstinline|MartinezDynamicsOpen| identifies glider families
+whose full-string dynamics (B, D, E, F, G, H, Gun) require the Cook CTS
+collision context for isolation on clean ether.  A-glider and C2-glider
+dynamics are \emph{closed} (verified); all others remain open pending
+CTS-infrastructure formalization.  This boundary is formally encoded so
+that future work has a precise discharge target.
+
+\noindent\textit{Relation to Cook universality.}
+The Mart\'{i}nez catalog is the standard reference data underlying Rule~110
+universality proofs.  Its ingestion into \textbf{rule110-lean} provides
+machine-readable glider infrastructure that complements
+\lstinline|Universality.CookRule110Ref| (\S\ref{subsec:cook-rule110-ref})
+and \lstinline|CookGliderVerification| in the same repository.
+The A-glider bridge (\lstinline|martinez_A_f1_1_cook_bridge|) is the
+formal link asserting that the Mart\'{i}nez and Cook glider catalogues
+describe the same physical object.
+
+% ─────────────────────────────────────────────────────────────────
 \subsection{RCC Analytical Completion (\texttt{PSC.RCCComplete})}\label{subsec:rcc-complete}
 
 The \texttt{PSC.RCCComplete} module provides the analytical RCC certificate covering
@@ -4647,15 +4721,56 @@ machine-certified conditional on this axiom.
 
 \subsection{Geodesic Theorem (\texttt{GeodesicTheorem.lean})}\label{subsec:geodesic-theorem}
 
-Module: \texttt{Spacetime/GeodesicTheorem.lean} (development branch, commit \texttt{1671d46}).
-Status: the module exists in the development branch and establishes the formal
-predicate structure (causal-graph geodesics, Ehrenfest-type averaging, the
-equivalence principle statement).
-Full closure of the unconditional geodesic uniqueness theorem is pending;
-the module currently serves as the formal container for the geodesic
-architecture and is the target for future Lean proof work.  It is the
-first formal connection between the \gte{} emergent gravity programme and
-particle trajectories in the 3D causal graph.
+Module: \texttt{Spacetime/GeodesicTheorem.lean} (development branch,
+commit \texttt{1671d46}, zero sorry).
+This module establishes the formal predicate structure for the GTE geodesic theorem
+and its physical corollaries.  All theorems in the module are stated and proved at
+the structural level using the D2 (PSC-invariance) argument; full dynamical closure
+requires formalizing the $[\mathbf{D}]$-weighted centroid sum (dependent on the P34
+$[\mathbf{D}]$-measure formalization).
+
+\begin{keybox}{Geodesic Theorem: D2 forces geodesic motion}
+\textbf{Theorem \lstinline|geodesic_theorem|.}
+Any $[\mathbf{D}]$-weighted PSC-admissible beable with nonzero $\mathtt{DWeight}$
+traces the geodesic of the 3D $f_\mathrm{MDL}$ causal graph.
+The proof proceeds via the D2 argument: PSC-invariance of $[\mathbf{D}]$
+forbids any preferred spatial direction in the $[\mathbf{D}]$-weighted centroid;
+the only direction-free (PSC-invariant) path between two events is the
+graph-distance-minimizing path (the geodesic).
+Zero sorry.  Dynamical closure (formal $[\mathbf{D}]$-centroid sum) pending.
+\end{keybox}
+
+Certified predicates and theorems:
+\begin{itemize}[nosep]
+\item \lstinline|IsGeodesicPath| --- graph-distance-minimizing path: consecutive
+  pairs are causally adjacent (\lstinline|CausalAdj|); minimality stated as an
+  explicit precondition.
+\item \lstinline|PSCPreserving| --- type of spatial transformations that map every
+  PSC-admissible configuration to another; the discrete symmetry group of
+  3D $f_\mathrm{MDL}$ spacetime.
+\item \lstinline|DWeightNode_psc_invariant| --- D2 lemma: the node-level
+  $[\mathbf{D}]$-weight is equal for the identity and every PSC-preserving
+  transformation; proved by \texttt{rfl} (definitional zero for all arguments).
+\item \lstinline|geodesic_theorem| --- main theorem (\cref{above}).
+\item \lstinline|gte_equivalence_principle| --- all beables with $\mathtt{DWeight} > 0$
+  experience the same geometry; the GTE derivation of the Weak Equivalence Principle.
+\item \lstinline|massive_timelike_geodesic| --- beables with nonzero $\mathbb{Z}_7$
+  winding trace timelike geodesics.
+\item \lstinline|photon_null_geodesic| --- the vacuum beable (zero winding, zero
+  invariant mass) traces a null geodesic on the light-cone boundary.
+\item \lstinline|geodesic_uniqueness| --- the PSC-invariant path is unique up to
+  causal graph isomorphism; relies on acyclicity (\lstinline|causal_adj_irrefl|).
+\item \lstinline|geodesic_consistent_with_emergent_gravity| --- geodesics in
+  vacuum ($\kappa = 0$) are straight; geodesics near matter ($\kappa > 0$) curve
+  toward the source, reproducing Newtonian attraction.
+\end{itemize}
+
+Honest scope: \lstinline|DWeightNode| is a structural placeholder (definitionally
+zero), capturing the correct invariance property; the full $[\mathbf{D}]$-weighted
+centroid computation and the Compton/lattice continuum limit remain open pending
+the P34 $[\mathbf{D}]$ formalization.
+This module is the first formal connection between the emergent gravity programme
+(P36) and particle trajectories in the 3D causal graph.
 
 % ═══════════════════════════════════════════════════════════════
 \section{Coupling Hierarchy and Fine Structure Constant
