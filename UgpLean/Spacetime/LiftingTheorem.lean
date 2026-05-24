@@ -95,6 +95,36 @@ theorem gen3_psc_admissible : PSCAdmissible fmdl_gen3_z7 := by
   rw [gen3_is_L1]
   decide
 
+/-- PSC-admissible beables are exactly the four certified f_MDL orbit states.
+
+    Proof: `PSCAdmissible` is `zoneOf v ≠ L2`; `zoneOf` assigns L2 to every state
+    outside {vacuum, gen₁, gen₂, gen₃} by definition (LawvereZone §3).
+
+    The empirical orbit content — gen₁, gen₂, gen₃ are pairwise distinct and form the
+    period-3 chain to vacuum — is certified separately by `three_generations_physical`
+    and `fmdl_z7_three_gens_distinct` (CUP3D, CatAL).
+
+    Status: CatAL — zero sorry. -/
+theorem psc_admissible_iff_orbit (v : Fin 5 → Fin 7) :
+    PSCAdmissible v ↔
+      v = fmdl_vacuum5 ∨ v = fmdl_gen1_z7 ∨ v = fmdl_gen2_z7 ∨ v = fmdl_gen3_z7 := by
+  constructor
+  · intro h
+    unfold PSCAdmissible zoneOf at h
+    split_ifs at h with hv hgen
+    · exact Or.inl hv
+    · rcases hgen with h1 | h2 | h3
+      · exact Or.inr (Or.inl h1)
+      · exact Or.inr (Or.inr (Or.inl h2))
+      · exact Or.inr (Or.inr (Or.inr h3))
+    · exact absurd rfl h
+  · intro h
+    rcases h with rfl | rfl | rfl | rfl
+    · exact vacuum_psc_admissible
+    · exact gen1_psc_admissible
+    · exact gen2_psc_admissible
+    · exact gen3_psc_admissible
+
 -- ─────────────────────────────────────────────────────────────────────────────
 -- §2  The [D] Coherence Measure (step-function model)
 -- ─────────────────────────────────────────────────────────────────────────────
@@ -264,19 +294,51 @@ theorem algebraic_absence_theorem
 
 /-- Corollary: No 4th-generation physical particle.
 
-    The orbit depth of f_MDL on Z₇^5 is exactly 3 (gen₁ → gen₂ → gen₃ →
-    vacuum), forcing N_gen = 3.  A 4th-generation beable would require orbit
-    depth 4, which is PSC-inadmissible.  By `algebraic_absence_theorem` no
-    such [D]-weighted physical state exists.
+    Every non-vacuum [D]-weighted beable is one of gen₁, gen₂, or gen₃.
+    A hypothetical fourth generation would require a fourth distinct
+    PSC-admissible non-vacuum orbit class with nonzero [D]-weight; the Z₇^5
+    orbit table has exactly three such classes.
 
-    The `True` conclusion is a placeholder until the orbit-depth predicate is
-    formalized; the structural argument is complete. -/
+    Proof path:
+    1. `d2_axiom`: `DWeight b > 0` forces `PSCAdmissible b`.
+    2. `psc_admissible_iff_orbit`: PSC-admissible states are exactly
+       {vacuum, gen₁, gen₂, gen₃}.
+    3. Excluding vacuum leaves exactly three physical generations.
+
+    Equivalently, by `algebraic_absence_theorem` applied to the predicate
+    "is a fourth distinct generation orbit seed", no such [D]-weighted state exists.
+
+    Status: CatAL — zero sorry. -/
 theorem no_fourth_generation_physical
     (beable : Fin 5 → Fin 7)
-    (_h_weighted : DWeight beable > 0) :
-    -- 4th-generation beables are PSC-inadmissible; placeholder until
-    -- orbit-depth predicate is formalized.
-    True := trivial
+    (h_weighted : DWeight beable > 0)
+    (h_nonvacuum : beable ≠ fmdl_vacuum5) :
+    beable = fmdl_gen1_z7 ∨ beable = fmdl_gen2_z7 ∨ beable = fmdl_gen3_z7 := by
+  have hpsc := d2_axiom beable h_weighted
+  rcases (psc_admissible_iff_orbit beable).mp hpsc with hv | h1 | h2 | h3
+  · exact absurd hv h_nonvacuum
+  · exact Or.inl h1
+  · exact Or.inr (Or.inl h2)
+  · exact Or.inr (Or.inr h3)
+
+/-- No exotic [D]-weighted generation outside the certified three-generation orbit.
+
+    Direct absence statement: there is no fourth distinct physical generation seed.
+    Derived from `no_fourth_generation_physical` via proof by contradiction.
+
+    Status: CatAL — zero sorry. -/
+theorem no_exotic_physical_generation :
+    ¬∃ b : Fin 5 → Fin 7,
+      DWeight b > 0 ∧
+      b ≠ fmdl_vacuum5 ∧
+      b ≠ fmdl_gen1_z7 ∧
+      b ≠ fmdl_gen2_z7 ∧
+      b ≠ fmdl_gen3_z7 := by
+  intro ⟨b, hw, hvac, h1, h2, h3⟩
+  rcases no_fourth_generation_physical b hw hvac with hg1 | hg2 | hg3
+  · exact h1 hg1
+  · exact h2 hg2
+  · exact h3 hg3
 
 -- ─────────────────────────────────────────────────────────────────────────────
 -- §7  Charge Quantization and Three Generations at Physical Scale
@@ -503,28 +565,63 @@ theorem scattering_existence
 
 /-- Complete S-Matrix Framework Theorem.
 
-    The four-theorem S-matrix framework at beable level:
-    1. Composition: A + B → composite (Rank 22-CPT, zero sorry)
-    2. Decomposition: composite → A' + B' (Rank 24-DCT, zero sorry)
-    3. Vertex catalog: which transitions are Z₇-winding-conserving (P22/P28, CatAL)
-    4. Lifting Theorem: all of the above hold at physical scale (Rank 15-ALT, zero sorry)
+    Bundles the five CatAL pillar theorems and their primary physical corollaries:
 
-    Consequence: ALL algebraically allowed SM scattering processes
-    (e⁻ + μ⁺ → ν_e + ν̄_μ, Compton scattering, etc.) exist at physical scale.
-    Absence Theorem: NO disallowed processes occur physically.
-    Scattering Existence: scattering_existence (Rank 16-ESC, zero sorry).
+    | Pillar | Theorem | Rank |
+    |--------|---------|------|
+    | Scattering existence | `scattering_existence` | 16-ESC |
+    | Composition | `composition_theorem` | 22-CPT |
+    | Color confinement | `no_psc_admissible_single_quark` | 25-CCF (ColorConfinement.lean) |
+    | Absence / exclusion | `algebraic_absence_theorem` | 19-ABT |
+    | Decomposability | `decomposability_theorem` | 24-DCT |
 
-    Quantitative cross-sections require the 3D f_MDL Hamiltonian dynamics
-    (Rank 6-MPD Round 2+). Process existence and conservation laws are proved here.
+    Supporting corollaries in this module:
+    - `three_generations_physical` (Rank 21-3GP)
+    - `no_fourth_generation_physical` / `no_exotic_physical_generation`
+    - `algebraic_lifting_theorem` (Rank 15-ALT)
 
-    Status: CatAL (all five pillars proved zero sorry). -/
+    Color confinement (Rank 25-CCF) is proved in `ColorConfinement.lean` via
+    `no_physical_single_quark` to avoid a circular import; it composes with this
+    bundle downstream in `AlgebraicDescentTheorem.lean`.
+
+    Quantitative cross-sections require the 3D f_MDL Hamiltonian dynamics.
+    Process existence and conservation laws are proved here.
+
+    Status: CatAL — zero sorry. -/
 theorem smatrix_framework_exists :
-    -- The beable-level S-matrix framework is complete:
-    -- Existence:        algebraic_lifting_theorem
-    -- Exclusion:        algebraic_absence_theorem
-    -- Bound states:     composition_theorem
-    -- Decays:           decomposability_theorem
-    -- Scattering exist: scattering_existence
-    True := trivial
+    -- Pillar 1 (Rank 16-ESC): allowed vertices yield physical scattering outputs
+    (∀ (composite component_a component_b : Fin 5 → Fin 7)
+      (h_vertex : AllowedVertex composite component_a component_b)
+      (P : (Fin 5 → Fin 7) → Prop)
+      (hP : ∀ b : Fin 5 → Fin 7, PSCAdmissible b → P b),
+      P component_a ∧ P component_b) ∧
+    -- Pillar 2 (Rank 22-CPT): PSC-admissible composites inherit algebraic properties
+    (∀ (beable1 beable2 composite : Fin 5 → Fin 7)
+      (_h1 : PSCAdmissible beable1) (_h2 : PSCAdmissible beable2)
+      (h_composite : PSCAdmissible composite)
+      (P : (Fin 5 → Fin 7) → Prop)
+      (hP : ∀ b : Fin 5 → Fin 7, PSCAdmissible b → P b),
+      P composite) ∧
+    -- Pillar 3 (Rank 24-DCT): decomposability extracts component properties
+    (∀ (composite component_a component_b : Fin 5 → Fin 7)
+      (_h_composite : PSCAdmissible composite)
+      (h_vertex : PSCAdmissible component_a ∧ PSCAdmissible component_b)
+      (P : (Fin 5 → Fin 7) → Prop)
+      (hP : ∀ b : Fin 5 → Fin 7, PSCAdmissible b → P b),
+      P component_a ∧ P component_b) ∧
+    -- Pillar 4 (Rank 19-ABT corollary): no exotic [D]-weighted generation
+    (¬∃ b : Fin 5 → Fin 7,
+      DWeight b > 0 ∧
+      b ≠ fmdl_vacuum5 ∧
+      b ≠ fmdl_gen1_z7 ∧
+      b ≠ fmdl_gen2_z7 ∧
+      b ≠ fmdl_gen3_z7) ∧
+    -- Pillar 5 (Rank 21-3GP): three physical generations exist
+    (∃ g1 g2 g3 : Fin 5 → Fin 7,
+      g1 ≠ g2 ∧ g2 ≠ g3 ∧ g1 ≠ g3 ∧
+      fmdl_step5 g1 = g2 ∧ fmdl_step5 g2 = g3 ∧ fmdl_step5 g3 = fmdl_vacuum5 ∧
+      DWeight g1 > 0 ∧ DWeight g2 > 0 ∧ DWeight g3 > 0) :=
+  ⟨scattering_existence, composition_theorem, decomposability_theorem,
+   no_exotic_physical_generation, three_generations_physical⟩
 
 end GTE.Lifting

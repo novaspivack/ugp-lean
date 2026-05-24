@@ -154,14 +154,15 @@ theorem dweight_spatial_tensor_product
 
 /-- **Causal path existence** on a non-degenerate spatial lattice.
 
-    Justification: `SpacelikeAdj` connects any two nodes at the same timestep
-    along a chain of single-coordinate steps; `TimelikeAdj` connects `(t,x,y,z)` to
-    `(t+1,x,y,z)`. The undirected `CausalGraph` is connected for `L > 0`.
+    This axiom captures graph connectivity: in the 3D f_MDL causal graph, any two
+    nodes can be connected by a path. This is a standard property of connected
+    graphs and follows from the periodic boundary conditions of `CausalGraphPeriodic`.
+    Discharging this axiom requires Mathlib's `SimpleGraph.connected` API applied
+    to the Z₄ Cayley graph structure.
 
-    Full graph-theoretic connectivity proof is deferred; this axiom carries only
-    the lattice-connectivity content required by `vacuum_path_exists`. The main
-    theorem `spatially_extended_composite_lifting` takes an explicit path hypothesis
-    and does not depend on this axiom. -/
+    It is used ONLY in `vacuum_path_exists`; the main theorem
+    `spatially_extended_composite_lifting` takes an explicit path hypothesis and
+    does NOT depend on this axiom. -/
 axiom causal_path_exists (hL : 0 < L) (a b : CausalNode L T) :
   ∃ path : List (CausalNode L T), IsCausalPath L T a b path
 
