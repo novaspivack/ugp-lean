@@ -45,7 +45,7 @@
    "type": "git",
    "subDir": null,
    "scope": "",
-   "rev": "a3c80f34d205197e8f3a4f86c7565fb903cb8e74",
+   "rev": "748918b8fb5b83da398390f988fc82e84d71316d",
    "name": "«nems-lean»",
    "manifestFile": "lake-manifest.json",
    "inputRev": "main",
