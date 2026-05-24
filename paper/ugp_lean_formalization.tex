@@ -483,7 +483,7 @@ The artifact is organized into 148~\lean{} modules across thirteen layers
    OrbitPerturbationCatalog, Z7ChargeConjugation, DimensionalSliceUniqueness,
    Z5TransitivityUniqueness, GTPNeutralDiscrimination, SMOrbitCausalIsolation,
    EWBosonStructure, EWChiralBridge, \textbf{GUTStructure}, LawvereZone,
-   CasimirMasslessEther, \textbf{ChiralPairVA}, \textbf{CouplingNoGo}};
+   CasimirMasslessEther, \textbf{ChiralPairVA}, \textbf{CouplingNoGo}, \textbf{ChiralityEigenstates}};
 \node[layer, fill=gray!8,   below=of univ]  (self)
   {\textbf{SelfRef}~(2)\quad LawvereKleene, RiceHalting};
 \node[layer, fill=pink!10,  below=of self]  (fwk)
@@ -4492,6 +4492,39 @@ The SM orbit constraint propagates to all spatial dimensions: $D_{\rm spatial} =
 forced by the requirement that 3 orthogonal Rule~110 slices simultaneously satisfy the
 SM orbit.  No 2-dimensional or $>$3-dimensional assignment is consistent.
 \end{theorem}
+
+\subsection{CA-Level Chirality and Parity (\texttt{ChiralityEigenstates})}\label{subsec:chirality-eigenstates}
+
+The \texttt{ChiralityEigenstates} module (159 lines, 5 items) proves four
+machine-certified facts about the spatial parity structure of $f_{\rm MDL}$ and the SM
+generation orbit (commit \texttt{cb4191b}, zero \texttt{sorry}, zero named axioms;
+all proofs by \lstinline|native_decide| or \lstinline|decide|).
+
+Spatial parity $P$ acts on the 5-cell ring by reversing cell order:
+$P(v)(i) = v(4 - i)$, defined as \lstinline|fmdl_mirror|.
+
+\begin{theorem}[\lstinline|fmdl_p_violation_count|, zero \texttt{sorry}]
+Exactly 14 of the 343 triples $(l,c,r)\in\mathbb{Z}_7^3$ satisfy
+$f_{\rm MDL}(l,c,r) \neq f_{\rm MDL}(r,c,l)$ (CA-level parity-violation count).
+\end{theorem}
+
+\begin{theorem}[\lstinline|gen1_is_chiral|, zero \texttt{sorry}]
+$\mathrm{gen}_1 = [1,5,2,2,1] \neq P(\mathrm{gen}_1) = [1,2,2,5,1]$:
+the first-generation vector is not parity-invariant.
+\end{theorem}
+
+\begin{theorem}[\lstinline|p_gen1_two_step_decay|, zero \texttt{sorry}]
+$f_{\rm MDL}^2(P(\mathrm{gen}_1)) = \mathrm{vac}$: the spatial mirror of
+$\mathrm{gen}_1$ decays to vacuum in 2 steps vs.\ 3 for the physical orbit.
+\end{theorem}
+
+\begin{theorem}[\lstinline|gen3_p_covariant|, zero \texttt{sorry}]
+$f_{\rm MDL}(P(\mathrm{gen}_3)) = P(f_{\rm MDL}(\mathrm{gen}_3))$:
+$\mathrm{gen}_3$ is parity-covariant --- the orbit endpoint is chirally neutral.
+\end{theorem}
+
+The combined theorem \lstinline|sm_orbit_is_left_handed| packages all four results:
+the SM generation orbit is structurally left-handed.
 
 \subsection{GTP Neutral Discrimination (\texttt{GTPNeutralDiscrimination})}\label{subsec:gtp-neutral}
 

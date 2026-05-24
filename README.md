@@ -38,7 +38,7 @@ A clean build completes with zero `sorry` and the standard Mathlib axiom signatu
 | **Structural** | 19 | QuarterLock, LModelDerivation; *ElegantKernel/*: ChiralityFeature, D5StructuralAxiom, FibonacciHessian, KGen, KGen2, MuTriple, PentagonalUniqueness; *ElegantKernel/Unconditional/*: CyclotomicChain, D5Renormalization, FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure, KLFullClosure, PentagonConstraint, RiccatiFixedPoint |
 | **MassRelations** | 25 | *MassRelations* [umbrella], KoideClosedForm, KoideNewtonFlow, KoideAngle, KoideS3DiscreteIdentities, BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential, FroggattNielsen, NeutrinoFroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational, UpLeptonCyclotomic, Z2OrbifoldDepth, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex, VVMechanism, VVAllCoefficientsFromNc, CKMTheta23, CKMMixing, **NeutrinoMassRatio** |
 | **BraidAtlas** | 13 | ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation, CoxeterConductor, CoxeterConductorTowerLaw, EWBosons, MirrorWindingNumber, EWBosonRHNConnection, **RHNGapTheorem**, **DarkBraidAtlas**, **DarkQuarkCharge**, **DarkGaugeCoupling** |
-| **Universality** | 36 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, CUP4TotalParity, CUP11ModSeven, CUP3DUniqueness, CUP3DPSCUnification, CUP3DPhysicalIncompleteness, TwoLayerConfluence, GTECompilation, GTEUniqueness, GoEHierarchy, **GoEStabilityHierarchy**, GTEInfTapeEncoding, GTEComputability, HypothesisB, HypothesisBCChain, PSCUniversality, CookRule110Ref, **OrbitPerturbationCatalog**, **Z7ChargeConjugation**, **Z5TransitivityUniqueness**, **DimensionalSliceUniqueness**, **GTPNeutralDiscrimination**, **SMOrbitCausalIsolation**, **EWBosonStructure**, **EWChiralBridge**, **GUTStructure**, **CasimirMasslessEther**, **LawvereZone**, **ChiralPairVA**, **CouplingNoGo** |
+| **Universality** | 37 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, CUP4TotalParity, CUP11ModSeven, CUP3DUniqueness, CUP3DPSCUnification, CUP3DPhysicalIncompleteness, TwoLayerConfluence, GTECompilation, GTEUniqueness, GoEHierarchy, **GoEStabilityHierarchy**, GTEInfTapeEncoding, GTEComputability, HypothesisB, HypothesisBCChain, PSCUniversality, CookRule110Ref, **OrbitPerturbationCatalog**, **Z7ChargeConjugation**, **Z5TransitivityUniqueness**, **DimensionalSliceUniqueness**, **GTPNeutralDiscrimination**, **SMOrbitCausalIsolation**, **EWBosonStructure**, **EWChiralBridge**, **GUTStructure**, **CasimirMasslessEther**, **LawvereZone**, **ChiralPairVA**, **CouplingNoGo**, **ChiralityEigenstates** |
 | **Framework** | 3 | **GTEFrameworkInstance**, **GTEOptimalityInstance**, **GTEFinalCoalgebra** |
 | **SelfRef** | 2 | LawvereKleene, RiceHalting |
 
@@ -664,6 +664,16 @@ Physical motivation: The CA masslessness criterion implies a left-right asymmetr
 - `helicity_plus_stable` — fmdl 0 1 0 = 1 (native_decide, CatAL)
 - `helicity_minus_decays` — fmdl 0 6 0 = 0 (native_decide, CatAL)
 - `helicity_parity_violation` — fmdl 0 1 0 = 1 ∧ fmdl 0 6 0 = 0 ∧ fmdl 0 1 0 ≠ fmdl 0 6 0 (native_decide, CatAL)
+
+**CA-Level Chirality and Parity (ChiralityEigenstates.lean, Rank 12, 2026-05-24; 5 theorems, 0 sorry)**
+
+Spatial parity `P` on the 5-cell ring reverses cell order: `fmdl_mirror v i = v (4 − i)`. Four machine-certified results (native_decide / decide, zero sorry, zero named axioms; commit `cb4191b`):
+
+- `fmdl_p_violation_count` — #{(l,c,r) | fmdl l c r ≠ fmdl r c l} = 14 (native_decide, CatAL)
+- `gen1_is_chiral` — fmdl_gen1_z7 ≠ fmdl_mirror fmdl_gen1_z7 (decide, CatAL)
+- `p_gen1_two_step_decay` — fmdl_step5² (fmdl_mirror gen₁) = vac (native_decide, CatAL)
+- `gen3_p_covariant` — fmdl_step5 (fmdl_mirror gen₃) = fmdl_mirror (fmdl_step5 gen₃) (native_decide, CatAL)
+- `sm_orbit_is_left_handed` — combined theorem: all four properties simultaneously (zero sorry)
 
 <!-- NOVA_ZPO_ZENODO_SOFTWARE_BEGIN -->
 **Archival software (Zenodo):** https://doi.org/10.5281/zenodo.19429247
