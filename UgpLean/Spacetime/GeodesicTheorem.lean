@@ -50,14 +50,27 @@ when the P34 `[D]` measure is fully formalized (same gap as noted in
 - `IsGeodesicPath`               — graph-distance-minimizing path definition
 - `PSCPreserving`                — symmetry type: maps preserving PSC structure
 - `DWeightNode`                  — node-level D-weight (placeholder for P34 measure)
+- `DWeightNode_psc_invariant`    — structural D2 invariance (rfl, CatAD)
 - `geodesic_theorem`             — main result: `⟨x⟩_D` follows geodesic (CatAD)
-- `gte_equivalence_principle`    — all `DWeight > 0` beables feel the same geometry
-- `massive_timelike_geodesic`    — massive beables trace timelike geodesics
-- `photon_null_geodesic`         — photon-type beables trace null geodesics (light cone)
-- `geodesic_uniqueness`          — geodesic is the unique PSC-invariant path
+- `gte_equivalence_principle`    — all `DWeight > 0` beables feel the same geometry (CatAD)
+- `massive_timelike_geodesic`    — massive beables trace timelike geodesics (CatAD)
+- `photon_null_geodesic`         — photon-type beables trace null geodesics (CatAD)
+- `geodesic_uniqueness`          — geodesic is the unique PSC-invariant path (CatAD)
+- `geodesic_consistent_with_emergent_gravity` — connection to P36 curvature (CatAD)
+- `psc_admissible_orbit_closure` — PSC orbit is closed under f_MDL step (**CatAL**)
+- `d2_orbit_closed_under_step`   — D-weighted ensemble closed under CA evolution (**CatAL**)
+- `d2_geodesic_step`             — causal step exists + D-weight preserved (**CatAL-partial**)
+
+## Upgrade status (2026-05-24)
+
+Theorems `psc_admissible_orbit_closure`, `d2_orbit_closed_under_step`, and
+`d2_geodesic_step` are the newly formalized D2 components.  They are genuinely
+proved (not `True := trivial`) and are CatAL. The remaining gap to full CatAL
+for `geodesic_theorem` is the identification of the beable's spatial location
+with a causal node (requires P34 `[D]` measure formalization).
 -/
 
-open GTE.Lifting GTE.Spacetime
+open GTE.Lifting GTE.Spacetime CUP3D UgpLean.Universality.LawvereZone
 
 variable (L T : ℕ)
 
@@ -292,5 +305,112 @@ theorem geodesic_uniqueness
     **Status: CatAD — zero sorry.** -/
 theorem geodesic_consistent_with_emergent_gravity :
     True := trivial
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- §9  D2 orbit closure (CatAL)
+-- ─────────────────────────────────────────────────────────────────────────────
+
+/-- **PSC orbit closure under f_MDL** (CatAL).
+
+    The set of PSC-admissible beables is closed under one f_MDL step: if b is
+    PSC-admissible, so is `fmdl_step5 b`.
+
+    Proof: `psc_admissible_iff_orbit` reduces the claim to four cases:
+    - b = vacuum → `fmdl_step5 vacuum = vacuum` (`vacuum_step5_fixed`) → `vacuum_psc_admissible`
+    - b = gen₁   → `fmdl_step5 gen₁ = gen₂` (`sm_period3_orbit_chain.1`) → `gen2_psc_admissible`
+    - b = gen₂   → `fmdl_step5 gen₂ = gen₃` (`sm_period3_orbit_chain.2.1`) → `gen3_psc_admissible`
+    - b = gen₃   → `fmdl_step5 gen₃ = vacuum` (`sm_period3_orbit_chain.2.2`) → `vacuum_psc_admissible`
+
+    Physical meaning: a D-weighted beable cannot escape the physical sector in one
+    CA step.  The orbit {vacuum, gen₁, gen₂, gen₃} is closed under the f_MDL rule.
+    This is the algebraic prerequisite for the D2 geodesic theorem: the beable
+    always has a well-defined physical successor.
+
+    Status: CatAL — zero sorry. -/
+theorem psc_admissible_orbit_closure (b : Fin 5 → Fin 7) (h : PSCAdmissible b) :
+    PSCAdmissible (fmdl_step5 b) := by
+  rcases (psc_admissible_iff_orbit b).mp h with rfl | rfl | rfl | rfl
+  · rw [vacuum_step5_fixed]; exact vacuum_psc_admissible
+  · rw [sm_period3_orbit_chain.1]; exact gen2_psc_admissible
+  · rw [sm_period3_orbit_chain.2.1]; exact gen3_psc_admissible
+  · rw [sm_period3_orbit_chain.2.2]; exact vacuum_psc_admissible
+
+/-- **D2 orbit closure** (CatAL): the `[D]`-weighted physical ensemble is closed
+    under one f_MDL step.
+
+    If b has positive `[D]`-weight (is a physical beable), then `fmdl_step5 b` also
+    has positive `[D]`-weight: no single CA step can remove a beable from the
+    physical sector.
+
+    Proof:
+    1. `d2_axiom b h` gives `PSCAdmissible b`.
+    2. `psc_admissible_orbit_closure b` gives `PSCAdmissible (fmdl_step5 b)`.
+    3. The `DWeight` definition (= 1 if PSC-admissible, else 0) immediately gives
+       `DWeight (fmdl_step5 b) = 1 > 0`.
+
+    Physical meaning: every `[D]`-weighted observable has a well-defined physical
+    successor at each CA time step.  This is the beable-level content of D2
+    orbit invariance — the key algebraic component of the geodesic theorem.
+
+    Status: CatAL — zero sorry. -/
+theorem d2_orbit_closed_under_step (b : Fin 5 → Fin 7) (h : DWeight b > 0) :
+    DWeight (fmdl_step5 b) > 0 := by
+  have hpsc  := d2_axiom b h
+  have hpsc' := psc_admissible_orbit_closure b hpsc
+  simp only [DWeight]
+  rw [if_pos hpsc']
+  norm_num
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- §10  D2 geodesic step (CatAL orbit-closure + causal adjacency)
+-- ─────────────────────────────────────────────────────────────────────────────
+
+/-- **D2 Geodesic Step** (Rank 17-GEO, partial CatAL).
+
+    Given a physical beable `b` (DWeight b > 0) at a non-terminal causal node `n`
+    (timestep `t < T`), there exists a causally adjacent successor node `n'` such that:
+    (a) `CausalAdj L T n n'` — `n → n'` is a valid causal (timelike) step.
+    (b) `DWeight (fmdl_step5 b) > 0` — the beable's f_MDL successor remains physical.
+
+    This is the discrete geodesic equation at the orbit level:
+    - (a) certifies that the beable always has a valid next position in the causal
+      graph (the minimum content of the geodesic claim).
+    - (b) certifies that the physical sector is preserved under one CA step
+      (D2 orbit closure, `d2_orbit_closed_under_step`).
+
+    Together (a) and (b) say: a physical beable always has a physical causal step.
+    This is the beable-level analog of the geodesic equation: the dynamical
+    evolution is non-terminating, stays in the physical sector, and proceeds along
+    causal graph edges.
+
+    Proof:
+    - (a) Construct `n' := (⟨t+1, _⟩, x, y, z)` — the timelike successor of `n`.
+      `TimelikeAdj L T n n'` holds by `rfl` (`n.1.val + 1 = n'.1.val` and
+      `n.2 = n'.2`).  `CausalAdj = SpacelikeAdj ∨ TimelikeAdj ∨ LightConeAdj`
+      is proved by `Or.inr (Or.inl ⟨rfl, rfl⟩)`.
+    - (b) Immediate from `d2_orbit_closed_under_step b h_w`.
+
+    **Remaining formal gap (CatAD component):** this theorem proves (a) and (b)
+    independently.  The identification of the beable's spatial location with the
+    specific causal node `n` — needed to say "the beable moves from `n` to `n'`"
+    — requires the P34 `[D]` measure formalization.  Until then, `geodesic_theorem`
+    remains CatAD and this theorem provides the two CatAL sub-components.
+
+    Status: CatAL for (a) and (b) individually; overall Rank 17-GEO CatAD until
+    P34 `[D]` measure provides the trajectory identification. -/
+theorem d2_geodesic_step
+    (n : CausalNode L T) (b : Fin 5 → Fin 7)
+    (h_w : DWeight b > 0)
+    (h_t : n.1.val < T) :
+    ∃ n' : CausalNode L T,
+        CausalAdj L T n n' ∧
+        DWeight (fmdl_step5 b) > 0 := by
+  -- Construct the timelike successor node (t+1, x, y, z)
+  let n' : CausalNode L T := (⟨n.1.val + 1, by omega⟩, n.2)
+  refine ⟨n', ?_, ?_⟩
+  · -- TimelikeAdj L T n n': n.1.val + 1 = n'.1.val ∧ n.2 = n'.2, both rfl
+    exact Or.inr (Or.inl ⟨rfl, rfl⟩)
+  · -- DWeight (fmdl_step5 b) > 0 by D2 orbit closure
+    exact d2_orbit_closed_under_step b h_w
 
 end GTE.Spacetime.Geodesic
