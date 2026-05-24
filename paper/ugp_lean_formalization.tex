@@ -4720,15 +4720,26 @@ Meson and baryon existence are unconditional on this result.
 
 \subsection{Geodesic Theorem (\texttt{GeodesicTheorem.lean})}\label{subsec:geodesic-theorem}
 
-Module: \texttt{Spacetime/GeodesicTheorem.lean} (development branch,
-commit \texttt{1671d46}, zero sorry).
-This module establishes the formal predicate structure for the GTE geodesic theorem
-and its physical corollaries.  All theorems in the module are stated and proved at
-the structural level using the D2 (PSC-invariance) argument; full dynamical closure
-requires formalizing the $[\mathbf{D}]$-weighted centroid sum (dependent on the P34
-$[\mathbf{D}]$-measure formalization).
+Modules: \texttt{Spacetime/GeodesicTheorem.lean} and \texttt{Spacetime/CentroidMeasure.lean}
+(development branch, zero sorry).
+These modules establish the formal predicate structure for the GTE geodesic theorem,
+the P34 $[\mathbf{D}]$-weighted centroid (point-localization model), and physical
+corollaries.  Vacuum timelike geodesic motion with well-defined centroid is proved
+at CatAL level; the full D2 preferred-direction argument via distributed orbit
+superposition and curvature correction remains CatAD pending the P34 coherence
+measure and Ollivier--Ricci computation (registered in EPIC\_073 Cluster~J).
 
-\begin{keybox}{Geodesic Theorem: D2 forces geodesic motion}
+\begin{keybox}{Geodesic preferred direction (CatAL)}
+\textbf{Theorem \lstinline|geodesic_preferred_direction|.}
+For any physical beable ($\mathtt{DWeight}\,b > 0$) at causal node $n$, there
+exists a timelike causal sequence along which: (i)~$\mathtt{DWeight}$ is
+preserved at every step; (ii)~the $[\mathbf{D}]$-weighted centroid
+(\lstinline|beableCentroid|) is well-defined at every step; (iii)~spatial
+centroid coordinates are invariant (discrete vacuum geodesic).
+Zero sorry.
+\end{keybox}
+
+\begin{keybox}{Geodesic Theorem: D2 forces geodesic motion (CatAD)}
 \textbf{Theorem \lstinline|geodesic_theorem|.}
 Any $[\mathbf{D}]$-weighted PSC-admissible beable with nonzero $\mathtt{DWeight}$
 traces the geodesic of the 3D $f_\mathrm{MDL}$ causal graph.
@@ -4736,7 +4747,7 @@ The proof proceeds via the D2 argument: PSC-invariance of $[\mathbf{D}]$
 forbids any preferred spatial direction in the $[\mathbf{D}]$-weighted centroid;
 the only direction-free (PSC-invariant) path between two events is the
 graph-distance-minimizing path (the geodesic).
-Zero sorry.  Dynamical closure (formal $[\mathbf{D}]$-centroid sum) pending.
+Zero sorry.  Full distributed-measure and curvature-corrected closure pending.
 \end{keybox}
 
 Certified predicates and theorems:
@@ -4761,6 +4772,19 @@ Certified predicates and theorems:
   $f_{\mathrm{MDL}}$ step; $\mathtt{DWeight}$ preserved (CatAL, 2026-05-24).
 \item \lstinline|d2_geodesic_step| --- for non-terminal causal node and physical
   beable, an adjacent node with positive $\mathtt{DWeight}$ exists (CatAL).
+\item \lstinline|d2_orbit_closed_iter| --- $\mathtt{DWeight}$ preserved under
+  arbitrarily many $f_{\mathrm{MDL}}$ steps (CatAL).
+\item \lstinline|beable_spatial_propagation| --- physical beable propagates to
+  causally adjacent node with positive $\mathtt{DWeight}$ (CatAL).
+\item \lstinline|causal_sequence_exists| --- timelike causal sequence with
+  $\mathtt{DWeight}$ preservation and fixed spatial position (CatAL).
+\item \lstinline|beableCentroid| --- $[\mathbf{D}]$-weighted spatial centroid
+  over finite node support (\texttt{CentroidMeasure.lean}; point-localization
+  model; CatAL).
+\item \lstinline|centroid_well_defined| --- centroid denominator positive for
+  physical beables with localization node in support (CatAL).
+\item \lstinline|geodesic_preferred_direction| --- timelike sequence with
+  well-defined centroid at every step; spatial centroid invariant (CatAL).
 \item \lstinline|geodesic_uniqueness| --- the PSC-invariant path is unique up to
   causal graph isomorphism; relies on acyclicity (\lstinline|causal_adj_irrefl|).
 \item \lstinline|geodesic_consistent_with_emergent_gravity| --- geodesics in
@@ -4769,9 +4793,10 @@ Certified predicates and theorems:
 \end{itemize}
 
 Honest scope: \lstinline|DWeightNode| is a structural placeholder (definitionally
-zero), capturing the correct invariance property; the full $[\mathbf{D}]$-weighted
-centroid computation and the Compton/lattice continuum limit remain open pending
-the P34 $[\mathbf{D}]$ formalization.
+zero), capturing the correct invariance property.  The point-localization centroid
+(\texttt{CentroidMeasure.lean}) certifies vacuum timelike geodesic motion at CatAL;
+curvature-corrected deviation and the full distributed P34 orbit-superposition
+measure remain open pending Ollivier--Ricci formalization (EPIC\_073).
 This module is the first formal connection between the emergent gravity programme
 (P36) and particle trajectories in the 3D causal graph.
 

@@ -1,5 +1,6 @@
 import UgpLean.Spacetime.LiftingTheorem
 import UgpLean.Spacetime.CausalGraph
+import UgpLean.Spacetime.CentroidMeasure
 
 namespace GTE.Spacetime.Geodesic
 
@@ -64,6 +65,9 @@ when the P34 `[D]` measure is fully formalized (same gap as noted in
 - `BeableAt`                     — predicate: beable physically present at causal node
 - `beable_spatial_propagation`   — physical beable propagates to causally adjacent node (**CatAL**)
 - `causal_sequence_exists`       — timelike causal sequence with DWeight preservation (**CatAL**)
+- `beableCentroid`               — `[D]`-weighted spatial centroid (P34 point-localization, **CatAL**)
+- `centroid_well_defined`        — centroid denominator positive for physical beables (**CatAL**)
+- `geodesic_preferred_direction` — causal sequence with well-defined centroid at every step (**CatAL**)
 
 ## Upgrade status (2026-05-24)
 
@@ -83,7 +87,7 @@ the beable's spatial location with a causal node (requires P34 `[D]` measure
 formalization).
 -/
 
-open GTE.Lifting GTE.Spacetime CUP3D UgpLean.Universality.LawvereZone
+open GTE.Lifting GTE.Spacetime GTE.Spacetime.Centroid CUP3D UgpLean.Universality.LawvereZone
 
 variable (L T : ℕ)
 
@@ -515,6 +519,8 @@ theorem beable_spatial_propagation
          causally adjacent (connected by a `TimelikeAdj` edge).
        - `DWeight (fmdl_step5^[k] b) > 0` — the beable remains in the
          physical sector after `k` f_MDL steps.
+       - `(seq k).2 = n.2` — spatial position is fixed along the timelike
+         worldline (discrete preferred direction: timelike only).
 
     ## Construction
 
@@ -561,7 +567,8 @@ theorem causal_sequence_exists
       seq 0 = n ∧
       ∀ (k : ℕ), k < T - n.1.val →
         CausalAdj L T (seq k) (seq (k + 1)) ∧
-        DWeight (fmdl_step5^[k] b) > 0 := by
+        DWeight (fmdl_step5^[k] b) > 0 ∧
+        (seq k).2 = n.2 := by
   have hn_le : n.1.val ≤ T := Nat.le_of_lt_succ n.1.isLt
   -- Timelike sequence: step k maps (t, x, y, z) to (t+k, x, y, z), clamped at T
   refine ⟨fun k => if h : n.1.val + k ≤ T
@@ -575,13 +582,77 @@ theorem causal_sequence_exists
     intro k hk
     have hk_le  : n.1.val + k ≤ T       := by omega
     have hk1_le : n.1.val + (k + 1) ≤ T := by omega
-    refine ⟨?_, d2_orbit_closed_iter b h_w k⟩
-    -- Beta-reduce the two lambda applications, then unfold the dif branches
-    show CausalAdj L T
-        (if h : n.1.val + k ≤ T then (⟨n.1.val + k, by omega⟩, n.2) else n)
-        (if h : n.1.val + (k + 1) ≤ T then (⟨n.1.val + (k + 1), by omega⟩, n.2) else n)
-    rw [dif_pos hk_le, dif_pos hk1_le]
-    -- TimelikeAdj: (n.1.val + k).val + 1 = (n.1.val + (k+1)).val is rfl (nat arithmetic)
-    exact Or.inr (Or.inl ⟨rfl, rfl⟩)
+    refine ⟨?_, d2_orbit_closed_iter b h_w k, ?_⟩
+    · -- Beta-reduce the two lambda applications, then unfold the dif branches
+      show CausalAdj L T
+          (if h : n.1.val + k ≤ T then (⟨n.1.val + k, by omega⟩, n.2) else n)
+          (if h : n.1.val + (k + 1) ≤ T then (⟨n.1.val + (k + 1), by omega⟩, n.2) else n)
+      rw [dif_pos hk_le, dif_pos hk1_le]
+      exact Or.inr (Or.inl ⟨rfl, rfl⟩)
+    · -- Spatial position fixed: both branches carry n.2
+      simp only [dif_pos hk_le]
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- §14  D-measure centroid and preferred direction (CatAL)
+-- ─────────────────────────────────────────────────────────────────────────────
+
+/-- **Geodesic preferred direction** (Rank 17-GEO, CatAL).
+
+    For any physical beable `b` at causal node `n`, there exists a timelike
+    causal sequence `seq` such that at every step `k`:
+
+    1. The beable `fmdl_step5^[k] b` remains physical (`DWeight > 0`).
+    2. The `[D]`-weighted centroid localized at `seq k` is well-defined.
+    3. The spatial centroid is constant: `spatialCoords (seq k) = spatialCoords n`.
+
+    This is the **discrete geodesic equation in flat (vacuum) spacetime**:
+    the beable's spatial location (centroid) does not deviate from its initial
+    spatial position; evolution proceeds along the unique timelike direction
+    preserving `[D]`-weight.  Consecutive nodes differ only in the time
+    coordinate (`TimelikeAdj`).
+
+    ## Relation to full geodesic theorem
+
+    - **CatAL (this theorem):** point-localization centroid + timelike causal
+      sequence + spatial centroid invariance under f_MDL evolution.
+    - **CatAD (remaining gap):** curvature-corrected centroid shift toward
+      regions of higher `[D]` density requires the full P34 orbit-superposition
+      measure and Ollivier–Ricci curvature (P36 / EPIC_073 Cluster J).
+      In matter regions (κ > 0), the geodesic deviates from the straight
+      timelike worldline; proving that deviation requires the distributed
+      `DWeight(b, n)` not yet formalized.
+
+    Proof: `causal_sequence_exists` gives the sequence; at each step `k`,
+    `d2_orbit_closed_iter` gives `DWeight (fmdl_step5^[k] b) > 0`;
+    `centroid_well_defined` with singleton support `{seq k}` closes
+    well-definedness; `beableCentroid_point` identifies the centroid with
+    `spatialCoords (seq k)`; timelike construction keeps spatial coords fixed.
+
+    Status: CatAL — zero sorry. -/
+theorem geodesic_preferred_direction
+    (n : CausalNode L T) (b : Fin 5 → Fin 7) (h_w : DWeight b > 0) :
+    ∃ seq : ℕ → CausalNode L T,
+      seq 0 = n ∧
+      ∀ (k : ℕ), k < T - n.1.val →
+        CausalAdj L T (seq k) (seq (k + 1)) ∧
+        DWeight (fmdl_step5^[k] b) > 0 ∧
+        CentroidWellDefined L T (fmdl_step5^[k] b) (seq k) ({seq k}) ∧
+        spatialCoords L T (seq k) = spatialCoords L T n ∧
+        beableCentroid L T (fmdl_step5^[k] b) (seq k) ({seq k}) =
+          (((spatialCoords L T (seq k)).1 : ℝ),
+           ((spatialCoords L T (seq k)).2.1 : ℝ),
+           ((spatialCoords L T (seq k)).2.2 : ℝ)) := by
+  obtain ⟨seq, h0, hstep⟩ := causal_sequence_exists L T n b h_w
+  refine ⟨seq, h0, ?_⟩
+  intro k hk
+  have ⟨hadj, hdw, hsp⟩ := hstep k hk
+  have hmem : seq k ∈ ({seq k} : Finset (CausalNode L T)) := Finset.mem_singleton_self _
+  have hcwd := centroid_well_defined L T (fmdl_step5^[k] b) (seq k) ({seq k}) hdw hmem
+  have hcent := beableCentroid_point L T (fmdl_step5^[k] b) (seq k) hdw
+  have hsp' : spatialCoords L T (seq k) = spatialCoords L T n := by
+    rw [spatialCoords, spatialCoords, hsp]
+  refine ⟨hadj, hdw, hcwd, hsp', ?_⟩
+  dsimp [spatialCoords] at hcent ⊢
+  exact hcent
 
 end GTE.Spacetime.Geodesic

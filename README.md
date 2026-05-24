@@ -698,3 +698,29 @@ Formal certification of the CA ether dispersion relation E(k) = v_CA × k evalua
 - `ether_energy_denominator_factored` — 3 × 7 × 13 = 273 (norm_num, CatAL)
 - `ether_dispersion_complete` — **Master conjunction**: v_CA=2/3 ∧ k_BZ=1/14 ∧ v_CA×k_BZ=1/21 (⟨rfl,rfl,norm_num⟩, CatAL)
 - `dispersion_denominator_chain` — 21×13=273 ∧ (2/3)/14=1/21 (norm_num, CatAL)
+
+---
+
+**Spacetime Layer — Geodesic, Centroid, Mass Gap, Spatial Lifting (2026-05-24; zero sorry on listed theorems)**
+
+*Rank 17-GEO — Geodesic Theorem + P34 Centroid (`GeodesicTheorem.lean`, `CentroidMeasure.lean`)*
+
+- `causal_sequence_exists` — timelike causal sequence with DWeight preservation and fixed spatial position (CatAL)
+- `geodesic_preferred_direction` — well-defined `[D]`-weighted centroid at every step; spatial centroid invariant along timelike worldline (CatAL)
+- `beableCentroid` / `centroid_well_defined` — point-localization P34 `[D]` centroid over causal nodes (CatAL)
+- `d2_orbit_closed_iter` / `beable_spatial_propagation` — D2 orbit closure and spatial propagation (CatAL)
+- `geodesic_theorem` — full D2 preferred-direction via distributed measure (CatAD; structural)
+
+*Rank 42-MGP — Mass Gap (`MassGap.lean`)*
+
+- `gte_mass_gap` — positive mass gap Δ > 0 for all physical non-vacuum beables (CatAL, zero axioms)
+- `gte_mass_formula_physical` — Δ ≥ 1.8 MeV (PDG conservative up-quark lower bound); `smGenMass` (CatAL)
+
+*Rank 55-3DLT — Spatially Extended Lifting (`SpatiallyExtendedLifting.lean`)*
+
+- `causal_path_exists` — causal path existence for forward-causal pairs (theorem, not axiom; CatAL)
+- `spatially_extended_composite_lifting` / `meson_bound_state_exists` — 3D meson existence (CatAL)
+
+*Rank 28-QGR — Quantum Gravity (`QuantumGravity.lean`)*
+
+- Beable-level QGR evidence structure; geometry CatA, particles CatAL, dynamics CatAD-strong (centroid CatAL partial)
