@@ -178,6 +178,7 @@ import UgpLean.Spacetime.ChiralPairDecoupling
 import UgpLean.Spacetime.ColorConfinement
 import UgpLean.Spacetime.AnomalyRenormalizability
 import UgpLean.Spacetime.LiftingTheorem
+import UgpLean.Universality.AlgebraicDescentTheorem
 import UgpLean.Spacetime.GeodesicTheorem
 import UgpLean.Spacetime.SpatiallyExtendedLifting
 import UgpLean.Spacetime.MassGap
@@ -209,6 +210,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.CyclotomicCompleteness.*` — CoxeterBiconditional: h|60 ↔ 2h|120 arithmetic biconditional; per-algebra h|60 certs (G₂,F₄,E₆,E₈); B₄ conductor analysis; e7_double_failure; coxeter_biconditional_summary. CyclotomicContainment: full field-theoretic embedding CyclotomicField(2h)ℚ →ₐ[ℚ] CyclotomicField(120)ℚ when h|60; per-algebra certificates for G₂,F₄/E₆,E₈ (all zero sorry). [H9SelfConsistency and GoldenRatioFixedPoint migrated to ugp-physics-lean]
 - `UgpLean.Universality.*`       — Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, Turing universality, Architecture bridge
 - `UgpLean.Universality.FMDLClassification` — Cat IV structural prerequisites: 14/343 sparsity cert, binary sublayer = Rule 110 (zero sorry), SM encoding, Law=Description=Execution (2026-05-21)
+- `UgpLean.Universality.AlgebraicDescentTheorem` — Rank 135-ALDESC: Algebraic Descent Theorem; M-independence of F_21 orbit structure, PSC admissibility, three generations, color confinement, b₀=7, θ=0, Casimir invariants C_F=4/3 C_A=3; all CatAL zero sorry (2026-05-23)
 - `UgpLean.Papers.*`             — Paper25, UGPMain (citable stubs)
 
 - `UgpLean.TE22.*`               — ScanCertificate (TE2.2 PSC scan framework, UGP coupling predictions)
