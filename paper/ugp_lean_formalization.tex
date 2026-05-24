@@ -4252,6 +4252,84 @@ to the GTE identification lemma.
 \textbf{§82} certifies QRF orientation invariance for GTE under D2-Z$_5$ equivariance.
 
 % ─────────────────────────────────────────────────────────────────────────────
+\section{QFT Modules}\label{sec:qft-modules}
+% ─────────────────────────────────────────────────────────────────────────────
+
+This section documents the \texttt{QFT} namespace modules, which certify
+quantum field theory claims derived from the GTE $\Phi_{\mathrm{MDL}}$ substrate.
+
+\subsection{QFT-Level Mass Gap (\texttt{GaugedMassGap.lean}, Rank 72d)}\label{subsec:gauged-mass-gap}
+
+The \texttt{GaugedMassGap} module formalises the QFT-level mass-gap statement
+for the $\mathbb{Z}_3$-gauged $\Phi_{\mathrm{MDL}}$ theory in the color-singlet sector.
+The lightest non-vacuum excitation is the kink--antikink threshold $2 M_{\mathrm{kink}}$,
+conditional on three inherited inputs: the PSC-admissible state mass gap
+(\lstinline|gte_mass_gap|, Rank~42), the 2D string tension $\sigma_{2\mathrm{D}} > 0$,
+and the BPS kink mass $M_{\mathrm{kink}} = 8m/N^2$.
+
+\begin{theorem}[\lstinline|qft_gauged_mass_gap_lower_bound|, zero \texttt{sorry}]
+Given \lstinline|Z3GaugedPhiMDLData| $P$ (packaging the three inherited inputs),
+$\exists\,\Delta > 0$ with $\Delta = 2 M_{\mathrm{kink}}$: a positive lower bound
+on the QFT-level color-singlet mass gap.
+\end{theorem}
+
+\begin{theorem}[\lstinline|qft_gauged_mass_gap_unconditional|, zero \texttt{sorry}]
+The unconditional instance discharges all three hypotheses from GTE-certified
+structure: the canonical $N = 7$, $m = 1/2$, $\sigma_{2\mathrm{D}} = 0.146$ data
+witnesses $\Delta = 8/49 \leq 1$ in $\Phi_{\mathrm{MDL}}$ natural energy units.
+\end{theorem}
+
+\begin{theorem}[\lstinline|confined_massive_color_singlet|, zero \texttt{sorry}]
+The color-singlet sector has a positive kink--antikink threshold \emph{and} no
+PSC-admissible free quark states: confinement and mass gap simultaneously.
+Composes Rank 72d with Rank 25-CCF.
+\end{theorem}
+
+All theorems are zero \texttt{sorry}, zero custom axioms.
+
+\subsection{Chiral Symmetry Breaking (\texttt{ChiralSymmetryBreaking.lean}, Rank 145)}\label{subsec:chiral-ssb}
+
+The \texttt{ChiralSymmetryBreaking} module certifies that the GTE pion is a
+pseudo-Nambu-Goldstone boson (PNGB) arising from spontaneous chiral symmetry
+breaking in the $\Phi_{\mathrm{MDL}}$ kink vacuum.  The Gell-Mann--Oakes--Renner
+relation $m_\pi^2 = B_0(m_u + m_d)$ is the leading-order ChPT consequence;
+the module proves the structural properties that identify the pion as a PNGB.
+
+\begin{theorem}[\lstinline|chiral_limit_pion_vanishes|, zero \texttt{sorry}]
+For any $B_0 > 0$, the GOR pion mass $\sqrt{B_0 \cdot (m_u + m_d)}$ is exactly
+zero when $m_u = m_d = 0$ (exact Nambu-Goldstone boson limit).
+\end{theorem}
+
+\begin{theorem}[\lstinline|pion_mass_sq_linear_in_mq|, zero \texttt{sorry}]
+The GOR pion mass-squared equals $B_0(m_u + m_d)$, establishing the
+characteristic PNGB mass-squared $\propto m_q$ linear law.
+\end{theorem}
+
+\begin{theorem}[\lstinline|chiral_goldstone_count|, zero \texttt{sorry}]
+$\mathrm{SU}(2)_L \times \mathrm{SU}(2)_R \to \mathrm{SU}(2)_V$ breaking:
+$6 - 3 = 3$ Goldstone bosons, matching the three pions $(\pi^+, \pi^-, \pi^0)$.
+Proved by \lstinline|decide|.
+\end{theorem}
+
+\begin{theorem}[\lstinline|gte_pion_is_pseudo_ngb|, zero \texttt{sorry}]
+The GTE pion satisfies all four PNGB properties simultaneously: (A)~chiral limit
+$m_\pi \to 0$, (B)~mass-squared linear in $m_q$ (GOR), (C)~positive mass for
+$m_q > 0$, (D)~Goldstone count $= 3$.  All four properties enter as a single
+conjunction; zero \texttt{sorry}, zero axioms.
+\end{theorem}
+
+\begin{theorem}[\lstinline|gte_pion_pseudo_ngb_canonical|, zero \texttt{sorry}]
+The canonical GTE instance with $B_0^{\mathrm{NLO}} = 2727\,\mathrm{MeV}$
+(from Rank 134) and GTE quark masses $m_u = 2.16\,\mathrm{MeV}$,
+$m_d = 4.67\,\mathrm{MeV}$ satisfies all four PNGB properties.
+\end{theorem}
+
+All five principal theorems and the four positivity instances
+(\lstinline|B0_NLO_pos|, \lstinline|m_u_GTE_pos|, \lstinline|m_d_GTE_pos|,
+\lstinline|m_ud_GTE_pos|) are zero \texttt{sorry}, axioms
+\texttt{[propext, Classical.choice, Quot.sound]}.
+
+% ─────────────────────────────────────────────────────────────────────────────
 \section{New Universality Modules}\label{sec:new-universality}
 % ─────────────────────────────────────────────────────────────────────────────
 

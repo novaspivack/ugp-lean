@@ -183,13 +183,15 @@ import UgpLean.Universality.AlgebraicDescentTheorem
 import UgpLean.Spacetime.GeodesicTheorem
 import UgpLean.Spacetime.SpatiallyExtendedLifting
 import UgpLean.Spacetime.MassGap
-import UgpLean.Spacetime.UniversalSimulation
 import UgpLean.Spacetime.QuantumGravity
+import UgpLean.Spacetime.PhysicalExclusion
+import UgpLean.Spacetime.ThreeGenerationCapstone
 import UgpLean.Spacetime.CausalInvariance
 import UgpLean.Spacetime.ChiralGliderDynamics
 import UgpLean.Spacetime.PhiMDLKinkQuantumNumbers
 import UgpLean.Spacetime.PhiMDLKinkQuantumNumbers
 import UgpLean.QFT.GaugedMassGap
+import UgpLean.QFT.ChiralSymmetryBreaking
 
 /-!
 # UgpLean — Universal Generative Principle: Lean 4 Formalization
