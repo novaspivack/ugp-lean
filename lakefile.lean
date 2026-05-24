@@ -26,7 +26,7 @@ require mathlib from git
 
 /-- Cook Rule 110 pipeline (cyclic tag prelude, ether background, A-glider verification). -/
 require «Rule110» from git
-  "https://github.com/novaspivack/rule110-lean.git" @ "7cf2d88"
+  "https://github.com/novaspivack/rule110-lean.git" @ "13811a3"
 
 @[default_target]
 lean_lib «UgpLean» where
