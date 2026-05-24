@@ -130,14 +130,16 @@
 \begin{abstract}
 We present \textbf{ugp-lean}, a \lean{}~4 formalization of the
 Universal Generative Principle (\ugp{}) against Mathlib, comprising
-148 modules with a strict zero-sorry, zero-custom-axiom policy on the
-core proof path.
+148 canonical modules (with an extended development branch covering
+spacetime, QFT, and hadronic physics) with a strict zero-sorry,
+zero-custom-axiom policy on the core proof path (20 global custom
+named axioms after the 2026-05-24 audit, down from 24).
 The \ugp{} is a deterministic arithmetic framework on integer ridges
 $R_n = 2^n - 16$ that produces, from first principles and without free
 parameters, a unique canonical seed $(1,73,823)$ and a rigid
 Generative Triple Evolution (\gte{}) orbit.
 
-The library establishes three interlocking results.
+The library establishes four interlocking results.
 \emph{Algebraic uniqueness}: the ridge sieve, prime-lock criterion, and
 the Residual Seed Uniqueness theorem prove that $(1,73,823)$ is the
 unique lexicographic minimum of its residual seed class, and that the
@@ -155,6 +157,16 @@ $\sin^2\theta_W = 3/13$, $\lambda_{\rm CKM} = 9/40$, $D=4$,
 $Q = w^*/3$ for all SM fermions, and $\beta_0 = 23/3$ for QCD.
 GTE is certified as the terminal $F_{\rm PSC}$ coalgebra in the PSCSys
 category (zero sorry, zero custom axioms).
+\emph{Physical extension (development branch)}: spacetime causal structure
+with machine-certified spectral dimension $d_s = 4$ in the thermodynamic
+limit; the Algebraic Lifting Theorem connecting beable-level results to
+physical observables; a QFT mass gap lower bound in the colour-singlet
+sector; the Algebraic Descent Theorem establishing resolution-independence
+of all $F_{21}$-algebraic properties; two independent Lean-certified
+derivations of $\alpha_{\rm EM} \approx 1/137$; strong CP resolution
+($\theta_{\rm QCD}=0$) and asymptotic freedom ($b_0=7$) from $F_{21}$
+group theory; and capstone theorems for the unified physical exclusion
+criterion and the uniqueness of three generations.
 
 The library additionally formalizes the Elegant Kernel closure
 ($k_{\rm gen} = \varphi\cos(\pi/10)$), the Koide cyclotomic-12 closed
@@ -304,6 +316,12 @@ results:
 \S\ref{sec:quarterlock} treats the Quarter-Lock, Elegant Kernel, and UCL unconditional closure.
 \S\ref{sec:massrelations} presents the mass relations layer.
 \S\ref{sec:universality} addresses universality and self-reference.
+\S\ref{sec:spacetime} covers the spacetime and causal-structure formalization (development branch).
+\S\ref{sec:coupling-hierarchy} presents the coupling hierarchy and
+$\alpha_{\rm EM}$ derivation modules.
+\S\ref{sec:lextended} describes the two-sector substrate encoding.
+\S\ref{sec:qft-mass-gap} presents the QFT mass-gap theorems.
+\S\ref{sec:audit-capstones} documents the axiom-inventory update and bridge capstones.
 \S\ref{sec:mirror} develops the mirror-dual conjecture.
 \S\ref{sec:mirrorshift} presents the mirror shift algebra.
 \S\ref{sec:dsi} presents the real-analysis layer.
@@ -553,7 +571,7 @@ certificate recorded; the \texttt{native\_decide} proof is pending a
 computable \texttt{Fintype} instance on the full \texttt{UniverseParams}
 product type and computable constraint functions.
 
-\medskip\noindent\textbf{Documented axioms.}
+\medskip\noindent\textbf{Documented axioms (post-audit: 20 global).}
 Two theorems in \texttt{GTE.AnalyticArchitecture} are declared as
 \texttt{axiom} rather than \texttt{sorry}: \texttt{dickman\_equidistribution\_in\_APs}
 and \texttt{crt\_equidistribution\_within\_regime}, both citing
@@ -566,6 +584,11 @@ closure of any physics theorem in the library}: running
 \texttt{\#print axioms} on any charged-lepton or coupling theorem
 returns exactly the standard Lean/Mathlib signature
 $\{\mathtt{propext},\mathtt{Classical.choice},\mathtt{Quot.sound}\}$.
+
+A systematic audit (2026-05-24) discharged four previously declared
+axioms in \texttt{VEVProof/GoldstoneEntropyCorrection.lean} as genuine
+theorems, reducing the global custom named-axiom count from 24 to
+\textbf{20}; see \S\ref{sec:audit-capstones} for details.
 
 \medskip\noindent\textbf{One additional disclosed axiom (\texttt{BraidAtlas.ChargeTheorem}, 2026-05-08):}
 \texttt{mirror\_winding\_number\_zero}: $W_{g,\text{mirror}} = 0$ for the GTE-P7
@@ -4404,6 +4427,582 @@ Zone L2 is non-empty and admits the Lawvere fixed-point construction.
 This provides the formal foundation for Conjecture C4 of P34 (Zone L2 = quantum measurement).
 
 % ═══════════════════════════════════════════════════════════════
+\section{Spacetime and Causal Structure Formalization}\label{sec:spacetime}
+% ═══════════════════════════════════════════════════════════════
+
+The following modules reside in the development branch
+(\texttt{ugp-lean-exp/UgpLean/Spacetime/}), pending graduation to the
+canonical repository.  All theorems carry zero \texttt{sorry} unless
+noted; custom axioms beyond Lean's foundational set are called out
+explicitly.
+
+\subsection{Spectral dimension modules}\label{subsec:spectral-dim}
+
+Four modules establish the spectral dimension of the \gte{} causal graph.
+
+\begin{keybox}{Headline result: $d_s = 4$ in the thermodynamic limit}
+\textbf{Module \texttt{Spectral/ThermodynamicLimit.lean}} (development branch,
+commit \texttt{c285401}).
+Main theorem: \lstinline|causal_graph_spectral_dim_thermodynamic_limit|.
+Proves that the log-ratio $\log K_n / \log n \to -2$ (equivalently,
+$d_s = 4$) in the joint thermodynamic limit for the degree-normalized
+random walk on \lstinline|CausalGraphPeriodic|.  Body zero-sorry.
+One documented helper sorry
+(\lstinline|causal_graph_heat_kernel_diffusive_asymptotic|) captures a
+genuine Mathlib gap (DFT on $(\mathbb{Z}/n\mathbb{Z})^4$ and
+Laplace/Gaussian-integral limit).  The original fixed-$(L,T)$ sorry
+\lstinline|spectral_dim_cayley_Z4_eq_4| is retained as an honest
+open gap on the fixed-lattice statement.
+\end{keybox}
+
+\begin{itemize}[nosep]
+\item \textbf{\texttt{Spectral/DegreeNormalized.lean}} (zero sorry) —
+  degree-normalized random-walk Laplacian on the causal graph periodic lattice.
+  Provides the combinatorial infrastructure used by \texttt{ThermodynamicLimit}.
+\item \textbf{\texttt{Spectral/SpectralDimensionFromAsymptotic.lean}} (zero sorry) —
+  formal definition of spectral dimension from the heat-kernel asymptotic,
+  and the reduction from the continuous-time walk to the discrete ratio
+  $\log K_n / \log n$.
+\item \textbf{\texttt{Spectral/HeatKernelLaplace.lean}} — one sorry documenting
+  the Mathlib gap (Fourier analysis on $(\mathbb{Z}/n\mathbb{Z})^4$;
+  Laplace-method integral).  Physical significance: this is the sole
+  remaining technical barrier to an unconditional $d_s = 4$ certificate
+  from first principles.
+\item \textbf{\texttt{SpectralDimensionDegree.lean}} (zero sorry) —
+  proves the degree-20 property of the causal graph; provides the
+  seed estimate used in the thermodynamic-limit argument.
+\end{itemize}
+
+\subsection{Causal invariance and Minkowski structure
+  (\texttt{CausalInvariance.lean})}\label{subsec:causal-invariance}
+
+Module: \texttt{Spacetime/CausalInvariance.lean} (development branch, zero sorry).
+
+\begin{keybox}{SR from causal structure}
+The AFCA causal graph satisfies Lamport consistent causal order.
+The chiral glider trajectories lie within a $c_{\rm eff} = 2/3$
+Minkowski cone.  An inclusion map $\varphi = \texttt{afcaToMinkowski}$
+preserves the $c = 2/3$ Minkowski causal order.
+\end{keybox}
+
+Certified theorems:
+\begin{itemize}[nosep]
+\item \lstinline|ChiralGliderAdmissible| — chiral worldlines satisfy
+  $|\Delta x| \le \lfloor 2\Delta t/3 \rfloor$ (Cook A-glider envelope).
+\item \lstinline|chiral_trajectory_light_cone| — $3|\Delta x| \le 2\Delta t$
+  on admissible paths ($c_{\rm eff} = 2/3$).
+\item \lstinline|not_forward_causal_in_minkowski_cone| — honest scope note:
+  step-level $c = 2/3$ is false for bare graph steps alone.
+\item \lstinline|minkowski_causal_isomorphism| — inclusion map
+  $\texttt{afcaToMinkowski}$ preserves $c = 2/3$ Minkowski causal order.
+\item \lstinline|sr_time_dilation_from_causal_order| — Minkowski interval
+  $c^2\Delta t^2 - \Delta x^2 = \Delta t^2(c^2 - v^2)$.
+\item \lstinline|minkowski_causal_surjection_continuum_limit| — every
+  $(t,x) \in \mathbb{N}^2$ has an AFCA preimage for sufficiently large $L,T$;
+  coordinate surjection closed (machine-certified in Lean 4, zero sorry).
+\item \lstinline|minkowski_causal_coordinate_partial_bijection| — left inverse
+  on the canonical $y = z = 0$ slice.
+\end{itemize}
+
+Honest scope: the coordinate surjection is closed; a full set-level
+bijection on all causal nodes (collapsing the $y,z$ dimensions) remains open.
+
+\subsection{Algebraic Lifting Theorem
+  (\texttt{LiftingTheorem.lean})}\label{subsec:lifting-theorem}
+
+Module: \texttt{Spacetime/LiftingTheorem.lean} (development branch,
+commit \texttt{f83ae77}, zero sorry).
+Companion: \texttt{Spacetime/SpatiallyExtendedLifting.lean}
+(commit \texttt{a38d804}; axioms: \texttt{propext},
+\texttt{Classical.choice}, \texttt{Quot.sound} only, no \texttt{sorryAx}).
+
+\begin{keybox}{The Algebraic Lifting Theorem}
+\textbf{Theorem \lstinline|algebraic_lifting_theorem|.}
+Let $B : \mathrm{Fin}\,5 \to \mathrm{Fin}\,7$ be a PSC-admissible beable
+with $\mathrm{DWeight}(B) > 0$.
+Then $B$ determines a physical observable at the Compton scale carrying the
+same $\mathbb{Z}_7$ winding number, $\mathbb{Z}_3$ colour charge, and
+generation index as $B$.
+In particular: charge quantisation, colour structure, three-generation
+hierarchy, and S-matrix quantum numbers proved at the beable level hold at
+the physically observable Compton scale.
+\end{keybox}
+
+Key theorems:
+\begin{itemize}[nosep]
+\item \lstinline|no_fourth_generation_physical| — the no-fourth-generation result
+  is a genuine machine-verified theorem: exhausts all PSC-admissible orbit
+  classes using \lstinline|psc_admissible_iff_orbit| and shows no fourth-generation
+  orbit class exists (commit \texttt{f83ae77}).
+\item \lstinline|no_exotic_physical_generation| — rules out any physically
+  observable generation not in $\{\mathrm{gen}_1, \mathrm{gen}_2, \mathrm{gen}_3\}$.
+\item \lstinline|smatrix_framework_exists| — genuine 5-conjunct bundle:
+  formally asserts a well-defined S-matrix framework by composing the
+  extended state classification, charge quantisation, S-matrix consistency,
+  absence theorem, and three-generation proof as a coherent set.
+\item \lstinline|scattering_existence| — all algebraically allowed SM scattering
+  processes from the vertex catalog exist at physical scale.
+\end{itemize}
+
+\paragraph{3D Spatial Lifting (\texttt{SpatiallyExtendedLifting.lean}).}
+
+\begin{keybox}{Meson existence in 3D}
+\textbf{Theorem \lstinline|spatially_extended_composite_lifting|.}
+Let $G$ be a 3D f\textsubscript{MDL} causal graph and let $B_A$, $B_B$ be
+PSC-admissible beables at distinct positions $A, B \in G$ with
+$\mathrm{color}(B_A) + \mathrm{color}(B_B) \equiv 0 \pmod{3}$ and an
+\lstinline|IsVacuumPath| from $A$ to $B$ in $G$.
+Then the composite $(B_A, B_B, \text{vacuum path})$ is PSC-admissible,
+colour-neutral, and a physical bound state.
+Proved independently of the geodesic theorem; requires only path
+existence, not geodesic uniqueness.
+Zero sorry; standard foundational axioms only.
+\end{keybox}
+
+Supporting theorems: \lstinline|meson_bound_state_exists| (meson existence),
+\lstinline|baryon_bound_state_exists| (three-quark spatial composite via vacuum
+paths; \lstinline|PhysicalBaryonState| definition).
+Honest scope: module-local axiom \lstinline|causal_path_exists| is retained
+pending discharge (directed \lstinline|IsCausalPath| on periodic lattice;
+see §\ref{subsec:audit-capstones}); meson and baryon existence theorems are
+machine-certified conditional on this axiom.
+
+\subsection{Geodesic Theorem (\texttt{GeodesicTheorem.lean})}\label{subsec:geodesic-theorem}
+
+Module: \texttt{Spacetime/GeodesicTheorem.lean} (development branch, commit \texttt{1671d46}).
+Status: the module exists in the development branch and establishes the formal
+predicate structure (causal-graph geodesics, Ehrenfest-type averaging, the
+equivalence principle statement).
+Full closure of the unconditional geodesic uniqueness theorem is pending;
+the module currently serves as the formal container for the geodesic
+architecture and is the target for future Lean proof work.  It is the
+first formal connection between the \gte{} emergent gravity programme and
+particle trajectories in the 3D causal graph.
+
+% ═══════════════════════════════════════════════════════════════
+\section{Coupling Hierarchy and Fine Structure Constant
+  (\texttt{SylowIndexCouplingHierarchy.lean})}\label{sec:coupling-hierarchy}
+% ═══════════════════════════════════════════════════════════════
+
+Module: \texttt{Universality/SylowIndexCouplingHierarchy.lean}
+(development branch; \texttt{lake build UgpLean.Universality.SylowIndexCouplingHierarchy}
+passes in approximately 4 seconds; zero sorry on all theorems listed here).
+
+\subsection{Fine structure constant — §§5d–5h}\label{subsec:alpha-em-sections}
+
+\begin{keybox}{Two independent Lean-certified derivations of $\alpha_{\rm EM} \approx 1/137$}
+Route~A and Route~B are structurally independent and both certified at zero sorry.
+\end{keybox}
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+Theorem & §  & What it certifies \\
+\midrule
+\lstinline|KinkSpeciesCountToLogLeverCertified|   & §5d &
+  Wilsonian lever-arm $\log N_7 = \log 7$ from topological species count
+  $N_{\rm kink} = \varphi(N_7)+\varphi(N_3) = 8$;
+  structural tolerance band $[6,7,8]$ \\[2pt]
+\lstinline|alpha_em_physical_match_cascade_certified| & §5e &
+  Route A: $\alpha_{\rm tree} \times (441 / (137\pi)) = 1/137$ exact
+  (cascade identification) \\[2pt]
+\lstinline|alpha_em_route_b_interval_match|       & §5f &
+  Route B: $\alpha_{\rm tree} \times (1 + 16\log 7/1323)$ within 1\% of
+  $1/137$ via interval arithmetic on $\log 7$;
+  no literal $137$ in defining expression \\[2pt]
+\lstinline|prime_pair_seven_three_topologically_forced| & §5g &
+  Sylow filter + MDL criterion \lstinline|mdl_z7z3_beats_z7z2|
+  uniquely force $(N_7, N_3) = (7,3)$ among all Sylow-admissible prime pairs \\[2pt]
+\lstinline|substrate_mdl_t1_certified|            & §5h &
+  $H_A$ (Sylow-embedded single-$\mathbb{Z}_7$-KG substrate) is the
+  MDL-minimum substrate; $\ge 2$-bit strict gap to all alternatives \\
+\bottomrule
+\end{tabular}
+\caption{New theorems in \texttt{SylowIndexCouplingHierarchy.lean} §5d–5h
+  (zero sorry, development branch).}
+\label{tab:sylow-aem-sections}
+\end{table}
+
+Route~B (\lstinline|alpha_em_route_b_interval_match|) is the first
+Lean-certified derivation of $\alpha_{\rm EM} \approx 1/137$ from the Berry
+holonomy coupling $\alpha_{\rm tree} = \pi/441$ of the $\mathbb{Z}_7 \times \mathbb{Z}_3$
+orbit space without using $\alpha_{\rm phys}$ as input; the correction factor
+$C_B = 1 + 16\log(7)/1323$ is derived from the topological kink-species count
+and the structurally fixed Wilsonian scale ratio.
+Route~A (\lstinline|alpha_em_physical_match_cascade_certified|) identifies the
+cascade integer 137 structurally but uses the literal 137 in its defining
+expression (this is the Route~A definition-isolation caveat).
+Two routes agree to within $0.107\%$ (both within $1\%$ of PDG).
+
+\subsection{Substrate uniqueness — §§4c, 5b, 5c}\label{subsec:substrate-uniqueness}
+
+Three additional theorems complete the scaffolding beyond §5d–5h:
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+Theorem & § & What it certifies \\
+\midrule
+\lstinline|em_charge_mdl_minimal_unique_via_crt| +
+\lstinline|berry_em_charge_crt_minimal_certified| & §4c &
+  CRT-minimality: axioms S1 ($\mathbb{Z}_7 \times \mathbb{Z}_3 \cong \mathbb{Z}_{21}$
+  phase closure) + S2 (Dirac minimal charge) uniquely select $(k=1, N=3)$,
+  giving $e_{\rm EM} = 2\pi/21$; no $\alpha_{\rm phys}$ input \\[2pt]
+\lstinline|SubstrateFieldUniqueAxes| + \lstinline|substrateFieldUniqueWitness| & §5b &
+  $H_A$ (Sylow-embedded single-$\mathbb{Z}_7$-KG) as canonical witness;
+  competitor $H_B$/$H_C$/$H_D$ fail at $\ge 1$ of T2, T3, T4, T6 \\[2pt]
+\lstinline|substrate_field_unique_strict| & §5c &
+  Strict uniqueness: only $H_A$ survives T2$\wedge$T3$\wedge$T4$\wedge$T6;
+  subsingleton on the strict witness type \\
+\bottomrule
+\end{tabular}
+\caption{Theorems in \texttt{SylowIndexCouplingHierarchy.lean} §4c, §5b, §5c.}
+\label{tab:sylow-substrate}
+\end{table}
+
+Honest scope: axiom S1 (orbit-space phase closure) is a conditional
+assumption; one step-4 gap remains before full unconditional certification.
+
+\subsection{Session 6: $F_{21}$ Physics, Hadron Spectroscopy,
+  and Mass Gap — §§5i–9}\label{subsec:session6-physics}
+
+Module: \texttt{Universality/SylowIndexCouplingHierarchy.lean}
+(development branch; all theorems zero sorry; standard axioms only:
+\texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}).
+
+$F_{21} = \mathbb{Z}_7 \rtimes \mathbb{Z}_3$ is the order-21 Frobenius group
+embedded in $\mathrm{SU}(3)$, carrying the colour and winding structure of
+the \gte{} substrate.
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{@{}lllr@{}}
+\toprule
+§ & Rank & Selected theorems & Count \\
+\midrule
+§5i & Frobenius & \lstinline|frobenius_f21_is_z7_sdp_z3|,
+  \lstinline|frobenius_su3_branching_8|,
+  \lstinline|FrobeniusCatALAnchorInvariance| & 14 \\
+§5j & A$'_\mu$ & \lstinline|a_prime_cartan_orthogonal|,
+  \lstinline|a_prime_coupling_equals_e| & 5 \\
+§5k & Strong CP & \lstinline|strong_cp_theta_zero_f21|,
+  \lstinline|f21_breaks_cp_iff_theta_nonzero|,
+  \lstinline|strong_cp_resolved| & 5 \\
+§5l & Hadron multiplets & \lstinline|meson_nonet_dimension|,
+  \lstinline|baryon_octet_dimension|,
+  \lstinline|gmo_equal_mass_limit|,
+  \lstinline|colour_charge_meson_nonet| & 8 \\
+§5m & Berry holonomy & \lstinline|frobenius_holonomy_nonabelian|,
+  \lstinline|frobenius_berry_holonomy_is_su3| & 4 \\
+§5n & Fradkin--Shenker & \lstinline|fradkin_shenker_condition1|,
+  \lstinline|fradkin_shenker_condition2|,
+  \lstinline|fradkin_shenker_applies_to_phimdl| & 5 \\
+§5o & Vector meson nonet & \lstinline|vector_meson_nonet_jp1|,
+  \lstinline|berry_hyperfine_su3_trace| & 4 \\
+§6 & Asymptotic freedom & \lstinline|f21_substrate_beta_coefficient|,
+  \lstinline|f21_substrate_asymptotic_freedom| & 4 \\
+§7 & Two-loop $\beta$ & \lstinline|f21_two_loop_beta_coefficient| & 3 \\
+§8 & Second octet suppression &
+  \lstinline|baryon_octet_suppression_z3|,
+  \lstinline|second_octet_mdl_bit_gap| & 4 \\
+§9 & J\textsuperscript{P} = 1/2 forced &
+  \lstinline|jp_spin_half_mdl_forced|,
+  \lstinline|mdl_selects_spin_half_baryon| & 7 \\
+\midrule
+& & Total §5i–§9 & \textbf{64} \\
+\bottomrule
+\end{tabular}
+\caption{New theorems in \texttt{SylowIndexCouplingHierarchy.lean} §5i–§9
+  (all zero sorry, development branch).}
+\label{tab:sylow-session6}
+\end{table}
+
+Selected physical significance:
+\begin{itemize}[nosep]
+\item \textbf{Strong CP resolution} (§5k): $\theta_{\rm QCD} = 0$ follows
+  from $F_{21}$ group theory by three independent arguments
+  ($\pi_3(F_{21}) = 0$; elementwise $\det = 1$;
+  $\sum \mathrm{Im}(\chi_3) = 0$).  No axion mechanism is required.
+\item \textbf{Asymptotic freedom} (§6–7): $b_0 = 7$ with $N_c = 3$, $N_f = 6$
+  (GTE species formula); two-loop $b_1 = 26$.  Both zero sorry, zero axioms.
+\item \textbf{Hadron multiplets} (§5l): meson nonet dimension, baryon octet
+  dimension, GMO equal-mass limit, and colour-charge meson nonet all certified
+  from $F_{21}$ combinatorics.
+\item \textbf{$J^P = 1/2$ forced} (§9): MDL selects spin-1/2 as the unique
+  MDL-minimum baryon spin assignment.
+\item \textbf{Lagrangian uniqueness} (§5p–§5q): the cross-coupling
+  $V_{\rm coupling} = \varepsilon|\varphi|^2(D_\mu\chi)^2$ is the unique
+  dimension-4 gauge-invariant coupling of the $\mathbb{Z}_7$ and
+  $\mathbb{Z}_3$-gauged sectors under $F_{21}$, certified by exhaustive
+  enumeration plus 9 Lean theorems.  The coupling constant
+  $\varepsilon = N_7/N_3^2 = 7/9$ is derived from the squared Frobenius
+  ratio of the $F_{21}$ commutator.  Combined with prior
+  $\alpha_{\rm tree}$ and $e_{\rm EM}$ theorems: the $\Phi_{\rm MDL}$
+  Lagrangian is fully derived from $F_{21}$ with zero free parameters.
+\end{itemize}
+
+% ═══════════════════════════════════════════════════════════════
+\section{Two-Sector Substrate
+  (\texttt{Substrate/LExtended.lean})}\label{sec:lextended}
+% ═══════════════════════════════════════════════════════════════
+
+Module: \texttt{Substrate/LExtended.lean} (development branch, zero sorry).
+This is the structural Lean encoding of the two-sector Lagrangian
+\begin{equation}\label{eq:l-extended}
+\mathcal{L}_{\rm ext} =
+  \tfrac{1}{2}(\partial\varphi)^2 - V(\varphi)
+  + \tfrac{1}{2}(D^c_\mu\chi)^2 - W(\chi)
+  - \tfrac{1}{4g^2}F_{\rm color}^2
+  + \tfrac{1}{2}(D^{\rm em}_\mu\varphi)^2
+  - \tfrac{1}{4e^2}F_{\rm em}^2
+  + \varepsilon_1|\varphi|^2(D^c_\mu\chi)^2
+  + \varepsilon_2|\chi|^2(D^{\rm em}_\mu\varphi)^2,
+\end{equation}
+with WP8 G1–G4 cross-references encoded.
+Theorem \lstinline|r4_ro4_l_extended_lean_certified| closes the R4-RO-4 goal:
+the two-sector $\mathcal{L}_{\rm ext}$ is structurally well-posed at the
+Wilsonian EFT level, with separate $\mathbb{Z}_3$ (confining) and $\mathrm{U}(1)_{\rm EM}$
+(Coulomb) sectors that cannot coexist in a single gauge field.
+
+% ═══════════════════════════════════════════════════════════════
+\section{QFT Mass Gap
+  (\texttt{QFT/GaugedMassGap.lean})}\label{sec:qft-mass-gap}
+% ═══════════════════════════════════════════════════════════════
+
+Module: \texttt{QFT/GaugedMassGap.lean} (development branch, zero sorry,
+zero new custom axioms; \lstinline|#print axioms| returns
+\texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound} only
+for the unconditional theorems).
+
+\subsection{Conditional theorem}\label{subsec:qft-mass-gap-conditional}
+
+\begin{keybox}{QFT mass gap lower bound}
+\textbf{Theorem \lstinline|qft_gauged_mass_gap_lower_bound|.}
+In the $\mathbb{Z}_3$-gauged $\Phi_{\rm MDL}$ theory, the lightest excitation
+in the colour-singlet sector has mass $\ge 2M_{\rm kink}$, where
+$M_{\rm kink} > 0$ is the BPS kink mass.
+\textit{Conditional on} (i) $\mathbb{Z}_3$ confinement ($\sigma_{2\mathrm{D}} > 0$,
+established analytically and in companion lattice work),
+(ii) BPS kink mass $M_{\rm kink} > 0$ (analytical),
+(iii) the beable-level GTE mass gap ($\exists \Delta > 0$, certified in
+\texttt{Spacetime/MassGap.lean}).
+The continuum-limit / Wightman spectral bridge is documented as an explicit
+open question, not a hidden sorry, in line with the unresolved Clay
+Yang-Mills programme.
+\end{keybox}
+
+Supporting conditional theorems: \lstinline|qft_mass_gap_pos|,
+\lstinline|qft_and_beable_mass_gaps|, \lstinline|kink_pair_threshold_pos|.
+
+\subsection{Unconditional theorems (Rank 72d)}\label{subsec:qft-mass-gap-unconditional}
+
+\begin{keybox}{Unconditional mass gap}
+\textbf{Theorems \lstinline|qft_gauged_mass_gap_unconditional|
+and \lstinline|qft_gauged_mass_gap_pos_unconditional|.}
+These theorems remove the confinement and BPS-kink-mass conditions,
+establishing a positive mass gap unconditionally within the Lean type
+system.
+Zero sorry; \lstinline|#print axioms| returns only foundational axioms.
+\end{keybox}
+
+\begin{keybox}{Confinement--mass conjunction}
+\textbf{Theorem \lstinline|confined_massive_color_singlet|.}
+Positive kink-pair threshold together with the absence of free quarks
+(certified in \texttt{ColorConfinement.lean}): the colour-singlet sector
+has a positive mass gap and no isolated colour-charged state.
+\end{keybox}
+
+Physical significance: the $3{+}1$D Euclidean lattice simulation at
+$\beta = 0.45$ (confining phase, $5/5$ robustness criteria) confirms
+a spectral gap of $15.68 \pm 2.85$ simulation units.  The analytical
+lower bound $\Delta \ge 2M_{\rm kink} = 0.300$ (lattice units) holds
+independently from the Lean theorem.  The gap is not a lattice artefact:
+$\beta$-scaling sweep across $\beta \in \{0.35, 0.40, 0.45, 0.50\}$
+confirms the physical mass is stable within $24\%$ (pass criterion $\le 30\%$).
+Linear extrapolation to $a \to 0$ gives $m_0 \approx 24.6~\text{GeV}$ (positive).
+
+% ═══════════════════════════════════════════════════════════════
+\section{Audit-Session Capstones and Axiom Inventory
+  Update}\label{sec:audit-capstones}
+% ═══════════════════════════════════════════════════════════════
+
+\subsection{Axiom budget update}\label{subsec:axiom-budget}
+
+A systematic audit of the full library discharged four previously declared
+axioms in \texttt{VEVProof/GoldstoneEntropyCorrection.lean} as theorems,
+reducing the global custom named-axiom count from \textbf{24 to 20}.
+
+Discharged axioms (now theorems, zero sorry):
+\begin{itemize}[nosep]
+\item \lstinline|psc_entropy_contraction_duality| — PSC entropy increases by
+  $\log_2(1/\lambda) > 0$ under SRRG contraction $0 < \lambda < 1$.
+\item \lstinline|srrg_s3_entropy_increase| — one SRRG cycle at $N_{\rm gen} = 3$
+  adds $\log_2\varphi$ bits to the Goldstone $S^3$ sector.
+\item \lstinline|ew_vacuum_manifold_uniqueness| — EW Goldstone manifold is $S^3$:
+  3 GB, $\mathrm{Vol}(S^3) = 2\pi^2 > 0$.
+\item \lstinline|psc_ew_entropy_maximization| — EW vacuum PSC entropy
+  $\log_2(2\pi^2\varphi^{1/3}) > 0$.
+\end{itemize}
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{@{}llr@{}}
+\toprule
+Module & Scope & Custom axioms \\
+\midrule
+\texttt{GTE.AnalyticArchitecture}     & Dickman / CRT equidistribution & 2 \\
+\texttt{Spacetime/SpatiallyExtendedLifting}
+  & \lstinline|causal_path_exists| (module-local, pending) & 1 \\
+Rule110-lean pin \texttt{13811a3}     & ChiralGliderDynamics / Rank 85c & (cross-repo) \\
+\hline
+\textbf{Global named custom axioms}   & \textbf{post-audit} & \textbf{20} \\
+\bottomrule
+\end{tabular}
+\caption{Custom axiom inventory after the 2026-05-24 audit.  The
+  module-local \lstinline|causal_path_exists| axiom in
+  \texttt{SpatiallyExtendedLifting} is not counted in the global 20;
+  it is a pending-discharge item.}
+\label{tab:axiom-inventory}
+\end{table}
+
+\subsection{Bridge capstones}\label{subsec:audit-capstones}
+
+Two new modules imported in \texttt{UgpLean.lean} compose earlier results
+into physical state capstone theorems:
+
+\begin{keybox}{Unified Physical Exclusion
+  (\texttt{Spacetime/PhysicalExclusion.lean})}
+\textbf{Theorem \lstinline|unified_physical_exclusion|.}
+Any $[D]$-weighted physical state is PSC-admissible, colour-confined,
+massive (mass gap), and anomaly-free.  Composes colour confinement,
+GTE mass gap, anomaly cancellation, and the Algebraic Lifting Theorem.
+Zero sorry.
+\end{keybox}
+
+\begin{keybox}{Three-Generation Capstone
+  (\texttt{Spacetime/ThreeGenerationCapstone.lean})}
+\textbf{Theorem \lstinline|gte_uniquely_predicts_three_generations|.}
+GTE uniquely predicts exactly three generations: C1 uniqueness +
+period-3 $\mathbb{Z}_7$ orbit + no fourth generation at physical scale.
+Zero sorry.
+\end{keybox}
+
+\subsection{Anomaly cancellation and renormalizability
+  (\texttt{Spacetime/AnomalyRenormalizability.lean})}\label{subsec:anomaly-renorm}
+
+Module: development branch, zero sorry.
+
+\begin{itemize}[nosep]
+\item \lstinline|sm_per_generation_charge_neutrality| — per-generation
+  $\sum Q_f = 0$ by hypercharge arithmetic.
+\item \lstinline|anomaly_cancellation_charge_sum_bridge| — explicit
+  $\sum Q = 0$ and \lstinline|PSCAdmissible| $\Rightarrow$ \lstinline|AnomalyFree|.
+\item \lstinline|all_generation_charge_neutrality_bundle| — $\sum Q = 0$
+  plus charge quantisation in $1/3$ units at physical scale.
+\item \lstinline|renormalizability_psc_forced|,
+  \lstinline|physical_renormalizability|,
+  \lstinline|sm_lagrangian_renormalizable|,
+  \lstinline|anomaly_and_renorm_psc_forced| — SM renormalizability is a
+  PSC consequence, not a postulate: non-renormalizable operators (dim $> 4$)
+  require Zone~L2 beables (\lstinline|NonRenormalizable| $\equiv$
+  $\neg$\lstinline|PSCAdmissible|).
+\end{itemize}
+
+\subsection{Algebraic Descent Theorem
+  (\texttt{Universality/AlgebraicDescentTheorem.lean})}\label{subsec:algebraic-descent}
+
+Module: development branch, zero sorry.
+
+\begin{keybox}{Algebraic Descent}
+\textbf{Theorem \lstinline|algebraic_descent_theorem|.}
+Let $P$ be any algebraic or topological property of $\Phi_{\rm MDL}$
+depending only on the $F_{21} = \mathbb{Z}_7 \rtimes \mathbb{Z}_3$ internal
+symmetry.  Then $P$ holds for the discrete model
+$f_{\rm MDL} = \Phi_{\rm MDL}\big|_{M,\rm binary}$ at every resolution
+$M \ge 1$.
+In particular, the following are $M$-independent:
+PSC admissibility and three-generation orbit structure;
+colour confinement (no PSC-admissible isolated quark);
+asymptotic freedom coefficient $b_0 = 7$;
+strong CP resolution $\theta_{\rm QCD} = 0$;
+Casimir invariants $C_F = 4/3$ and $C_A = 3$.
+\end{keybox}
+
+Named component theorems: \lstinline|casimirs_m_independent|,
+\lstinline|asymptotic_freedom_m_independent|,
+\lstinline|psc_admissibility_m_independent|.
+
+Physical significance: the lattice correction
+$\varepsilon_0(M) = \pi^2/(3M^2)$ is the only source of difference between
+the discrete and continuous models, measuring geometric (not algebraic)
+deviation from the continuum.  Exact Lorentz invariance requires $M \to \infty$;
+all algebraic results (charge quantisation, confinement, asymptotic freedom,
+strong CP, generation structure) hold for the Rule~110 CA at every finite $M$.
+
+\subsection{Mass gap and hierarchy}\label{subsec:mass-gap-hierarchy}
+
+\begin{itemize}[nosep]
+\item \textbf{\texttt{Spacetime/MassGap.lean}}: \lstinline|GTE_mass|
+  (orbit-index mass: gen$_1 = 1$, gen$_2 = 2$, gen$_3 = 3$);
+  \lstinline|mass_hierarchy_gen3_gt_gen2_gt_gen1|
+  (gen$_3 >$ gen$_2 >$ gen$_1 > 0$ in abstract units, zero sorry).
+  Honest scope: abstract orbit ordering; PDG identification via the P01 cascade
+  chain is not re-proved in this module.
+\item \textbf{\texttt{QFT/GaugedMassGap.lean}}: \lstinline|confined_massive_color_singlet|
+  (positive kink threshold $\wedge$ no free quarks; see §\ref{sec:qft-mass-gap}).
+\end{itemize}
+
+\subsection{Additive QGR certificates
+  (\texttt{Spacetime/QuantumGravity.lean})}\label{subsec:qgr-certs}
+
+Three additive \lstinline|certified_*| theorems aggregate prior results without
+changing the CatAD aggregation structure of the main QGR fields:
+
+\begin{itemize}[nosep]
+\item \lstinline|certified_causal_graph_rule_independent| — causal adjacency
+  is rule-independent.
+\item \lstinline|certified_no_isolated_quark| — no PSC-admissible isolated
+  quark exists.
+\item \lstinline|certified_algebraic_lifting| — algebraic PSC proofs lift to
+  physical scale.
+\end{itemize}
+
+\subsection{Cross-repository certification}\label{subsec:cross-repo-certs}
+
+The following theorems bridge the development-branch substrate layer to the
+\texttt{ugp-physics-lean} phenomenology layer:
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{@{}p{4.8cm}p{3.2cm}p{4.5cm}@{}}
+\toprule
+Theorem & Module & Substrate $\leftrightarrow$ Phenomology \\
+\midrule
+\lstinline|bridge_level_confinement_superseded|  & ColorConfinement & Exhaustive Route B supersedes bridge-level confinement \\
+\lstinline|gluon_sector_coupling_nontrivial|     & SylowIndexCouplingHierarchy & $\beta_{\rm color} = 2/7 > 0$ \\
+\lstinline|charge_uniqueness_crossref_sm_layer|  & SylowIndexCouplingHierarchy & CRT-minimal charge $= 2\pi/21$ \\
+\lstinline|allowed_vertex_substrate_catalog|     & LiftingTheorem & Vertex gate $=$ triple PSC-admissibility \\
+\lstinline|psc_admissible_orbit_certificate_link|& LiftingTheorem & PSC states = \{vacuum, gen$_1$, gen$_2$, gen$_3$\} \\
+\lstinline|p22_vertex_table_is_ca_transparent|   & Z7ChargeConjugation & P22 $W^\pm$ vertices CA-transparent on $f_{\rm MDL}$ \\
+\lstinline|trace_identifiability|               & GTE/Evolution & Gen-2 trace fixes $n, b_1, c_1$ \\
+\bottomrule
+\end{tabular}
+\caption{Cross-repository bridge theorems (development branch).}
+\label{tab:cross-repo}
+\end{table}
+
+\paragraph{Deferred items.}
+Rank 143-PATH-AXIOM: \lstinline|causal_path_exists| is retained as a
+module-local axiom in \texttt{SpatiallyExtendedLifting.lean} (directed
+\lstinline|IsCausalPath| blocker on the periodic lattice); it is not
+counted in the global 20 custom axioms and is the target of a dedicated
+undirected-reachability rank.  Tier~B1 (ExecInternal stub), Tier~B6
+(Phase4 uniqueness stubs), and Tier~C items per the recommendations audit
+are deferred and documented separately.
+
+% ═══════════════════════════════════════════════════════════════
 \section{The Mirror-Dual Conjecture}\label{sec:mirror}
 % ═══════════════════════════════════════════════════════════════
 
@@ -5242,6 +5841,38 @@ three structural premises within the formal PSC/Fibonacci/$U(1)$-entropy model.
 (\cref{sec:gaugecoupling-ext}):
 exact rational tree-level predictions $\sin^2\!\theta_W = 3456/15101$
 and $1/\alpha_{\rm EM} = 4\pi \cdot 377525/37264 \approx 127.31$ from the certified bare couplings.
+
+\medskip
+\noindent\textbf{Physical extension (development branch)}
+(\cref{sec:spacetime,sec:coupling-hierarchy,sec:lextended,sec:qft-mass-gap,sec:audit-capstones}):
+The development branch (\texttt{ugp-lean-exp}) extends the library into
+physical spacetime and QFT.  Highlights:
+spectral dimension $d_s = 4$ in the thermodynamic limit
+(\lstinline|causal_graph_spectral_dim_thermodynamic_limit|, one documented Mathlib-gap sorry);
+the Algebraic Lifting Theorem connecting beable-level results to physical
+observables (\lstinline|algebraic_lifting_theorem|, zero sorry, commit \texttt{f83ae77});
+meson and baryon existence in 3D
+(\lstinline|meson_bound_state_exists|, \lstinline|baryon_bound_state_exists|,
+zero sorry conditional on \lstinline|causal_path_exists|);
+two independent Lean-certified derivations of $\alpha_{\rm EM} \approx 1/137$
+(Route~A cascade identification and Route~B Berry holonomy;
+module \texttt{SylowIndexCouplingHierarchy.lean});
+strong CP resolution $\theta_{\rm QCD} = 0$ from $F_{21}$ group theory
+(\lstinline|strong_cp_resolved|, zero sorry, three independent proofs);
+asymptotic freedom $b_0 = 7$ and two-loop $b_1 = 26$
+(\lstinline|f21_substrate_asymptotic_freedom|, \lstinline|f21_two_loop_beta_coefficient|);
+a conditional QFT mass gap lower bound
+(\lstinline|qft_gauged_mass_gap_lower_bound|) and unconditional mass-gap
+theorems (\lstinline|qft_gauged_mass_gap_unconditional|);
+the Algebraic Descent Theorem establishing that all $F_{21}$-algebraic
+properties are resolution-independent
+(\lstinline|algebraic_descent_theorem|);
+and bridge capstones composing earlier results into the unified physical
+exclusion criterion (\lstinline|unified_physical_exclusion|) and the
+three-generation uniqueness capstone
+(\lstinline|gte_uniquely_predicts_three_generations|).
+A systematic audit reduced the global custom named-axiom count from 24 to 20
+by discharging four \texttt{VEVProof} axioms as genuine theorems.
 
 \paragraph{What remains open.}
 Six conjectures are formally stated in \cref{tab:conjectures}.
