@@ -4714,10 +4714,9 @@ Zero sorry; standard foundational axioms only.
 Supporting theorems: \lstinline|meson_bound_state_exists| (meson existence),
 \lstinline|baryon_bound_state_exists| (three-quark spatial composite via vacuum
 paths; \lstinline|PhysicalBaryonState| definition).
-Honest scope: module-local axiom \lstinline|causal_path_exists| is retained
-pending discharge (directed \lstinline|IsCausalPath| on periodic lattice;
-see §\ref{subsec:audit-capstones}); meson and baryon existence theorems are
-machine-certified conditional on this axiom.
+\lstinline|causal_path_exists| is proved as a theorem for forward-causal pairs
+($t_a \leq t_b$); zero sorry; standard foundational axioms only.
+Meson and baryon existence are unconditional on this result.
 
 \subsection{Geodesic Theorem (\texttt{GeodesicTheorem.lean})}\label{subsec:geodesic-theorem}
 
@@ -4758,6 +4757,10 @@ Certified predicates and theorems:
   winding trace timelike geodesics.
 \item \lstinline|photon_null_geodesic| --- the vacuum beable (zero winding, zero
   invariant mass) traces a null geodesic on the light-cone boundary.
+\item \lstinline|d2_orbit_closed_under_step| --- PSC orbit closed under
+  $f_{\mathrm{MDL}}$ step; $\mathtt{DWeight}$ preserved (CatAL, 2026-05-24).
+\item \lstinline|d2_geodesic_step| --- for non-terminal causal node and physical
+  beable, an adjacent node with positive $\mathtt{DWeight}$ exists (CatAL).
 \item \lstinline|geodesic_uniqueness| --- the PSC-invariant path is unique up to
   causal graph isomorphism; relies on acyclicity (\lstinline|causal_adj_irrefl|).
 \item \lstinline|geodesic_consistent_with_emergent_gravity| --- geodesics in
@@ -5046,17 +5049,14 @@ Discharged axioms (now theorems, zero sorry):
 Module & Scope & Custom axioms \\
 \midrule
 \texttt{GTE.AnalyticArchitecture}     & Dickman / CRT equidistribution & 2 \\
-\texttt{Spacetime/SpatiallyExtendedLifting}
-  & \lstinline|causal_path_exists| (module-local, pending) & 1 \\
 Rule110-lean pin \texttt{13811a3}     & ChiralGliderDynamics / Rank 85c & (cross-repo) \\
 \hline
 \textbf{Global named custom axioms}   & \textbf{post-audit} & \textbf{20} \\
 \bottomrule
 \end{tabular}
-\caption{Custom axiom inventory after the 2026-05-24 audit.  The
-  module-local \lstinline|causal_path_exists| axiom in
-  \texttt{SpatiallyExtendedLifting} is not counted in the global 20;
-  it is a pending-discharge item.}
+\caption{Custom axiom inventory after the 2026-05-24 audit.
+  Rank~143-PATH-AXIOM discharged \lstinline|causal_path_exists| as a theorem
+  (forward-causal pairs only); it is no longer a module-local axiom.}
 \label{tab:axiom-inventory}
 \end{table}
 
@@ -5140,9 +5140,11 @@ strong CP, generation structure) hold for the Rule~110 CA at every finite $M$.
 \item \textbf{\texttt{Spacetime/MassGap.lean}}: \lstinline|GTE_mass|
   (orbit-index mass: gen$_1 = 1$, gen$_2 = 2$, gen$_3 = 3$);
   \lstinline|mass_hierarchy_gen3_gt_gen2_gt_gen1|
-  (gen$_3 >$ gen$_2 >$ gen$_1 > 0$ in abstract units, zero sorry).
-  Honest scope: abstract orbit ordering; PDG identification via the P01 cascade
-  chain is not re-proved in this module.
+  (gen$_3 >$ gen$_2 >$ gen$_1 > 0$ in abstract units, zero sorry);
+  \lstinline|gte_mass_formula_physical| ($\Delta \geq 1.8\,\mathrm{MeV}$, PDG $m_u$
+  lower bound, zero sorry).
+  Honest scope: conservative floor for all non-vacuum PSC states; per-generation
+  UCL cascade masses remain external (P01).
 \item \textbf{\texttt{QFT/GaugedMassGap.lean}}: \lstinline|confined_massive_color_singlet|
   (positive kink threshold $\wedge$ no free quarks; see §\ref{sec:qft-mass-gap}).
 \end{itemize}
@@ -5150,8 +5152,7 @@ strong CP, generation structure) hold for the Rule~110 CA at every finite $M$.
 \subsection{Additive QGR certificates
   (\texttt{Spacetime/QuantumGravity.lean})}\label{subsec:qgr-certs}
 
-Three additive \lstinline|certified_*| theorems aggregate prior results without
-changing the CatAD aggregation structure of the main QGR fields:
+Six additive \lstinline|certified_*| theorems aggregate prior results without
 
 \begin{itemize}[nosep]
 \item \lstinline|certified_causal_graph_rule_independent| — causal adjacency
@@ -5160,6 +5161,11 @@ changing the CatAD aggregation structure of the main QGR fields:
   quark exists.
 \item \lstinline|certified_algebraic_lifting| — algebraic PSC proofs lift to
   physical scale.
+\item \lstinline|certified_mass_gap_positive| — beable mass gap $\Delta > 0$.
+\item \lstinline|certified_d2_orbit_closure| — PSC orbit closed under
+  $f_{\mathrm{MDL}}$ step (CatAL).
+\item \lstinline|certified_d2_geodesic_step| — adjacent causal node exists for
+  physical beable (CatAL).
 \end{itemize}
 
 \subsection{Cross-repository certification}\label{subsec:cross-repo-certs}
@@ -5187,11 +5193,7 @@ Theorem & Module & Substrate $\leftrightarrow$ Phenomology \\
 \end{table}
 
 \paragraph{Deferred items.}
-Rank 143-PATH-AXIOM: \lstinline|causal_path_exists| is retained as a
-module-local axiom in \texttt{SpatiallyExtendedLifting.lean} (directed
-\lstinline|IsCausalPath| blocker on the periodic lattice); it is not
-counted in the global 20 custom axioms and is the target of a dedicated
-undirected-reachability rank.  Tier~B1 (ExecInternal stub), Tier~B6
+Tier~B1 (ExecInternal stub), Tier~B6
 (Phase4 uniqueness stubs), and Tier~C items per the recommendations audit
 are deferred and documented separately.
 

@@ -72,6 +72,11 @@ are now CatAL (`d2_orbit_closed_under_step`, `d2_geodesic_step`).
 - OQ-CL1: Continuum limit — does 3D f_MDL converge to a smooth Lorentzian manifold?
 - OQ-SR1: Special relativity — how does discrete lattice Lorentz symmetry emerge?
 - OQ-GR1: Full Einstein equations — do the curvature fluctuations reproduce GR dynamics?
+  The τ_c back-reaction prescription was tested computationally in three independent
+  rounds; all three found negative or inconclusive results. The dynamical Einstein-equation
+  derivation requires a different approach and is deferred to a future programme.
+  The beable-level QGR claim is supported by the D2 orbit closure and geodesic step
+  theorems (`d2_orbit_closed_under_step`, `d2_geodesic_step`) at CatAL.
 - OQ-QG1: Hawking radiation / black holes — what is the CA picture of horizon entropy?
 
 ## Theorems in this file
@@ -113,7 +118,8 @@ structure ParticleEvidence where
   no_isolated_quark : True
   /-- Algebraic Lifting Theorem: beable results extend to [D]-weighted observables (CatAL). -/
   lifting_theorem_applies : True
-  /-- Mass gap: every physical excitation has positive mass (CatAD). -/
+  /-- Mass gap: every physical excitation has positive mass (CatAL, `gte_mass_formula_physical`
+      gives Δ ≥ 1.8 MeV, PDG m_u lower bound; zero axioms). -/
   mass_gap_positive : True
 
 /-- Evidence record: dynamics sector (geodesics, [D]-measure, quantum evolution). -/
@@ -250,18 +256,20 @@ theorem particles_source_and_follow_curvature :
 
     2. Yang-Mills mass gap (Clay #7):
        `gte_mass_gap` — positive mass of every physical excitation; **CatAL** (zero sorry,
-       zero axioms; trivial abstract-unit witness Δ = 1; physical value Δ = m_u pending
-       Round 2 formalization). Rank 42-MGP.
+       zero axioms; trivial abstract-unit witness Δ = 1; physical lower bound Δ ≥ 1.8 MeV
+       certified by `gte_mass_formula_physical`, PDG conservative m_u lower bound,
+       zero axioms, `MassGap.lean`). Rank 42-MGP.
 
     3. Yang-Mills existence (Clay #7 — mathematical):
        Requires a continuum limit of 3D f_MDL (OQ-CL1). Currently open in GTE.
        The beable-level theory exists; the limit to a smooth Riemannian manifold
        satisfying the Yang-Mills axioms is not yet established.
 
-    Status: confinement CatAL; mass gap CatAL (Δ = 1 abstract unit; Δ = m_u physical pending Round 2); YM existence open (OQ-CL1). -/
+    Status: confinement CatAL; mass gap CatAL (abstract Δ = 1 and physical Δ ≥ 1.8 MeV
+    both certified, zero axioms); YM existence open (OQ-CL1). -/
 theorem gte_clay_millennium_status :
     -- Color confinement: CatAL (native_decide, zero axioms).
-    -- Mass gap: CatAL (zero sorry, zero axioms; abstract gap Δ = 1; physical Δ = m_u is Round 2).
+    -- Mass gap: CatAL (zero sorry, zero axioms; abstract Δ = 1; physical Δ ≥ 1.8 MeV, `gte_mass_formula_physical`).
     -- Yang-Mills existence: open (OQ-CL1 — continuum limit unresolved).
     True := trivial
 
