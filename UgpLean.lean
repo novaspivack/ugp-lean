@@ -233,6 +233,7 @@ import UgpLean.Universality.PSCEffectMeasureGeneric
 import UgpLean.Universality.PSCEffectMeasure
 import UgpLean.Framework.PhiMDLBridge
 import UgpLean.Framework.CMCAMDLMinimality
+import UgpLean.Framework.CMCAContinuumLimit
 
 /-!
 # UgpLean — Universal Generative Principle: Lean 4 Formalization
