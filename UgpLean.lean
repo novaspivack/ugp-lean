@@ -141,6 +141,7 @@ import UgpLean.Framework.GTEOptimalityInstance
 import UgpLean.Framework.GTEFinalCoalgebra
 import UgpLean.Framework.PhiMDLBridge
 import UgpLean.Framework.GTECategoryStructure
+import UgpLean.Framework.CMCAMDLMinimality
 import UgpLean.Universality.ChiralPairVA
 import UgpLean.Universality.CouplingNoGo
 import UgpLean.Universality.DynamicalCouplingBridge
