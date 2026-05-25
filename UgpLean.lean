@@ -175,6 +175,7 @@ import UgpLean.Substrate.CoherenceMeasure
 import UgpLean.Substrate.LagrangianLorentzScalar
 import UgpLean.Substrate.PSCStructureLorentzPreserved
 import UgpLean.Substrate.PSCPILorentzMain
+import UgpLean.Substrate.NoetherAngularMomentum
 import UgpLean.Universality.CasimirMasslessEther
 import UgpLean.Universality.LawvereZone
 import UgpLean.Universality.ChiralPairVA
