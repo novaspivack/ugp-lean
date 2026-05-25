@@ -4,7 +4,7 @@
 
 This repository is part of the **Reflexive Reality** research program by [Nova Spivack](https://www.novaspivack.com/).
 
-**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, and self-reference.  **149 modules, zero sorry on the core proof path** (see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).
+**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, and self-reference.  **150 modules, zero sorry on the core proof path** (see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).
 
 | Link | Description |
 |------|-------------|
@@ -27,7 +27,7 @@ A clean build completes with zero `sorry` and the standard Mathlib axiom signatu
 
 ---
 
-## Module structure (149 modules; **14 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
+## Module structure (150 modules; **14 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
 
 | Layer | Count | Modules |
 |-------|-------|---------|
@@ -711,7 +711,7 @@ Formal certification of the CA ether dispersion relation E(k) = v_CA × k evalua
 
 ---
 
-**Spacetime Layer — Geodesic, Centroid, Mass Gap, Spatial Lifting (2026-05-24; zero sorry on listed theorems)**
+**Spacetime Layer — Geodesic, Centroid, Mass Gap, Spatial Lifting, QEC Stabilizer (2026-05-24; zero sorry on listed theorems)**
 
 *Rank 17-GEO — Geodesic Theorem + P34 Centroid (`GeodesicTheorem.lean`, `CentroidMeasure.lean`)*
 
@@ -730,6 +730,15 @@ Formal certification of the CA ether dispersion relation E(k) = v_CA × k evalua
 
 - `causal_path_exists` — causal path existence for forward-causal pairs (theorem, not axiom; CatAL)
 - `spatially_extended_composite_lifting` / `meson_bound_state_exists` — 3D meson existence (CatAL)
+
+*Rank 38-QEC — QEC Stabilizer Code (`QECStabilizer.lean`)*
+
+- `qec_gte_is_stabilizer_code` — the [D]-measure defines a QEC structure: code subspace = PSC-admissible beables; fmdl_step5 is the stabilizer; DWeight = 0 is the syndrome; mass gap bounds error energy (CatAL, zero sorry)
+- `qec_orbit_closure` — fmdl_step5 maps every code word to a code word (vacuum is fixed point; gen₁→gen₂→gen₃→vacuum; CatAL)
+- `qec_dweight_projector` — DWeight > 0 ↔ InCodeSubspace (projector onto code subspace; CatAL)
+- `qec_error_detected` — perfect error detection: ¬PSCAdmissible b → DWeight b = 0 (CatAL)
+- `qec_generation_mass_advance` — generation mass index (GTE_mass) is a logical observable: fmdl_step5 advances mass monotonically along non-vacuum orbit (CatAL)
+- `qec_mass_gap_error_energy` — error energy bounded below by Δ ≥ 1.8 MeV (from gte_mass_gap; CatAL)
 
 *Rank 28-QGR — Quantum Gravity (`QuantumGravity.lean`)*
 

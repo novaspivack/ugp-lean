@@ -141,6 +141,7 @@ import UgpLean.Universality.CasimirMasslessEther
 import UgpLean.Universality.ChiralPairVA
 import UgpLean.Universality.CouplingNoGo
 import UgpLean.Universality.ChiralityEigenstates
+import UgpLean.Universality.WeakIsospin
 import UgpLean.TE22.ScanCertificate
 import UgpLean.PSC.RCCInfiniteFamilies
 import UgpLean.PSC.RCCComplete
@@ -185,6 +186,8 @@ import UgpLean.Spacetime.GeodesicTheorem
 import UgpLean.Spacetime.CentroidMeasure
 import UgpLean.Spacetime.SpatiallyExtendedLifting
 import UgpLean.Spacetime.MassGap
+import UgpLean.Spacetime.OrbitMassHierarchy
+import UgpLean.Spacetime.QECStabilizer
 import UgpLean.Spacetime.QuantumGravity
 import UgpLean.Spacetime.PhysicalExclusion
 import UgpLean.Spacetime.ThreeGenerationCapstone

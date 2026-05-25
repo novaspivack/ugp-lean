@@ -5207,6 +5207,76 @@ strong CP, generation structure) hold for the Rule~110 CA at every finite $M$.
   (positive kink threshold $\wedge$ no free quarks; see §\ref{sec:qft-mass-gap}).
 \end{itemize}
 
+\subsection{QEC Stabilizer Code Interpretation of the
+  \texorpdfstring{$[\mathbf{D}]$}{[D]}-Measure
+  (\texttt{Spacetime/QECStabilizer.lean})}\label{subsec:qec-stabilizer}
+
+Module: \texttt{Spacetime/QECStabilizer.lean} (development branch,
+zero sorry; one use of \lstinline|native_decide| for the vacuum
+fixed-point computation).
+
+The $[\mathbf{D}]$-measure has a quantum error correcting code (QEC)
+interpretation: PSC-admissible beables are the \emph{code words};
+$f_{\mathrm{MDL}}$ is the \emph{stabilizer action}; non-PSC states are
+\emph{error states} detected by the syndrome measurement $\mathrm{DWeight}(b) = 0$.
+The complete QEC dictionary is:
+
+\begin{center}
+\small
+\begin{tabular}{@{}ll@{}}
+\toprule
+QEC concept & GTE analog \\
+\midrule
+Code subspace / code words & PSC-admissible beables: \{vacuum, gen$_1$, gen$_2$, gen$_3$\} \\
+Stabilizer generator & \lstinline|fmdl_step5| (generation orbit map) \\
+Syndrome measurement & $\mathrm{DWeight}(b) = 0$ (error) vs.\ $> 0$ (no error) \\
+Logical observable & Generation mass index \lstinline|GTE_mass| \\
+Code distance & $\geq 1$: any non-orbit perturbation is immediately detected \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{keybox}{\lstinline|qec_gte_is_stabilizer_code| (zero sorry)}
+The four properties of the GTE QEC structure are machine-certified as a
+conjunction:
+\begin{enumerate}[nosep]
+\item \textbf{Code subspace.}
+  $\lstinline|InCodeSubspace|(b) \Leftrightarrow \lstinline|PSCAdmissible|(b)$:
+  the code words are exactly the four orbit-certified PSC states.
+\item \textbf{Stabilizer closure.}
+  $\lstinline|InCodeSubspace|(b) \Rightarrow \lstinline|InCodeSubspace|(\lstinline|fmdl_step5|(b))$:
+  $f_{\mathrm{MDL}}$ maps every code word to a code word.
+\item \textbf{Perfect error detection.}
+  $\neg\lstinline|InCodeSubspace|(b) \Rightarrow \mathrm{DWeight}(b) = 0$:
+  the $[\mathbf{D}]$-measure projects out all error states immediately.
+\item \textbf{Mass gap bound.}
+  $\exists\,\Delta > 0$ such that every non-vacuum code word has
+  mass $\geq \Delta$.  The energy cost of any error is bounded below.
+\end{enumerate}
+\end{keybox}
+
+Supporting theorems (all zero sorry):
+
+\begin{itemize}[nosep]
+\item \lstinline|qec_dweight_projector| --- $\mathrm{DWeight}(b) > 0
+  \Leftrightarrow \lstinline|InCodeSubspace|(b)$: the DWeight function is the
+  projector onto the code subspace.
+\item \lstinline|qec_orbit_closure| --- stabilizer closure of the four code words
+  (vacuum is a fixed point; gen$_1 \to$ gen$_2 \to$ gen$_3 \to$ vacuum).
+\item \lstinline|qec_error_detected| --- perfect error detection:
+  non-PSC states have $\mathrm{DWeight} = 0$.
+\item \lstinline|qec_code_words_distinct| --- the four code words are pairwise
+  distinct (via \lstinline|decide|).
+\item \lstinline|qec_generation_mass_advance| --- generation mass index
+  (\lstinline|GTE_mass|) is a logical observable: $f_{\mathrm{MDL}}$ advances
+  mass index monotonically along the non-vacuum orbit.
+\item \lstinline|qec_mass_gap_error_energy| --- error energy bounded below by
+  $\Delta \geq 1.8\,\mathrm{MeV}$ (derived from \lstinline|gte_mass_gap|).
+\end{itemize}
+
+The QEC interpretation provides the conceptual foundation for the
+$[\mathbf{D}]$-measure special relativity derivation.
+
 \subsection{Additive QGR certificates
   (\texttt{Spacetime/QuantumGravity.lean})}\label{subsec:qgr-certs}
 
