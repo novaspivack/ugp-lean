@@ -232,6 +232,7 @@ import UgpLean.Universality.LorentzInvariance
 import UgpLean.Universality.PSCEffectMeasureGeneric
 import UgpLean.Universality.PSCEffectMeasure
 import UgpLean.Framework.PhiMDLBridge
+import UgpLean.Framework.CMCAMDLMinimality
 
 /-!
 # UgpLean — Universal Generative Principle: Lean 4 Formalization

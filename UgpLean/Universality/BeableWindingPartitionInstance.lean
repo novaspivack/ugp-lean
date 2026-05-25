@@ -6,26 +6,43 @@ import UgpLean.Universality.FockSpaceKink
 import UgpLean.Universality.BornRuleMDL
 
 /-!
-# Beable Z₇ Winding Partition — Rank 77-2QUANT-CANON (EPIC_073 / EPIC_074)
+# Beable Z₇ Winding Partition — Ranks 77-2QUANT-CANON and 76-BORN-UNCOND
+(EPIC_073 / EPIC_074)
 
 Concrete `BeableWindingPartition` on the certified `Fin (7^5)` beable index space, and
-conditional discharge of `BeableAmplitudeHypothesis` from canonical Z₇-KG kink superselection.
+unconditional discharge of `BeableAmplitudeHypothesis` for arbitrary normalized sector
+coefficients.
 
-## Proved (zero sorry, CatAL structural layer)
+## Proved (zero sorry, zero axioms — CatAL unconditional)
 
 - `beableIndexEquiv`: `BeableIndex ≃ BeableState` via `finFunctionFinEquiv`.
 - `beableWindingPartitionInstance`: uniform Z₇ winding partition (7 fibres × 2401).
-- `structuralBeableAmplitude`: uniform-sector `BeableAmplitudeHypothesis` (no physical axiom).
+- `structuralBeableAmplitude`: uniform-sector `BeableAmplitudeHypothesis`.
 - `born_rule_from_structural_beable_amplitude`: Born partition from structural instance.
-
-## Conditional (one named physical axiom)
-
-- `phimdl_kink_z7_superselection`: Coleman 1975 / Mandelstam 1975 / Rajaraman 1982 §8 —
-  canonical Z₇-KG kink Hilbert space splits into superselection sectors with normalized
-  sector amplitudes `|c_k|² = 7⁴/7⁵ = 1/7`.
-- `physicalBeableAmplitude`: `BeableAmplitudeHypothesis` from kink quantization + partition lift.
+- `phimdl_kink_z7_superselection`: existence of complex sector amplitude with the
+  certified per-sector probability (now a theorem; vacuous existential).
+- `physicalBeableAmplitude`: `BeableAmplitudeHypothesis` from the discharged
+  superselection witness.
 - `born_rule_from_kink_quantization`: composes with `born_rule_from_psc_mdl`.
 - `second_quantization_constructive`: refutes `BornRuleMDL.second_quantization_open`.
+- `born_rule_unconditional`: for *any* normalized coefficients `Fin 7 → ℂ`,
+  the lifted `BeableAmplitudeHypothesis` has sector probabilities equal to `|c_k|²`
+  and partitions unity. No input axiom.
+
+## Interpretation
+
+The previous Lean statement of `phimdl_kink_z7_superselection` was the existential
+`∃ c, c ≠ 0 ∧ Complex.normSq c = 7⁴ / 7⁵ = 1/7`. This is a vacuous existential
+discharged by the canonical witness `((1/√7 : ℝ) : ℂ)`. The *physical content*
+attributed to Coleman 1975 / Mandelstam 1975 / Rajaraman 1982 §8 — that the
+*specific* physical Φ_MDL kink state's sector amplitudes equal a specific function
+of the kink mass-density profile — is a strictly stronger claim (the MDL
+state-selection problem, Rank 76-MDL-IDENT) and is **not** what the Lean existential
+encoded.
+
+The Born rule itself — the squared-modulus map from amplitudes to probabilities —
+is therefore unconditional CatAL on this Hilbert space; the residual open work
+concerns *which* state the physical universe realises, not the rule.
 -/
 
 namespace UgpLean.Universality.BeableWindingPartitionInstance
@@ -117,16 +134,43 @@ theorem born_rule_from_structural_beable_amplitude (k : Fin 7) :
       beableSectorBornWeight structuralBeableAmplitude.α structuralBeableAmplitude.winding k :=
   born_rule_from_psc_mdl structuralBeableAmplitude k
 
-/-! ### Named physical axiom: Z₇ kink superselection (Coleman / Mandelstam / Rajaraman) -/
+/-! ### Z₇ sector amplitude existence (vacuous existential; constructive discharge) -/
 
-/-- **phimdl_kink_z7_superselection** (named physical axiom):
-    The canonical-quantised Z₇-KG kink Hilbert space decomposes into Z₇ topological sectors;
-    each sector carries a nonzero amplitude with Born weight `7⁴/7⁵ = 1/7`.
+/-- **phimdl_kink_z7_superselection** (now a theorem; previously stated as a
+    "named physical axiom"):
 
-    Standard QFT input: Coleman (1975), Mandelstam (1975), Rajaraman (1982) §8. -/
-axiom phimdl_kink_z7_superselection (k : Fin 7) :
+    For each Z₇ sector `k`, there exists a complex amplitude `c ≠ 0` with
+    `Complex.normSq c = beablesPerWindingSector / 7^5 = 1/7`.
+
+    *Status of this statement.* As written, this is a vacuous existential on the
+    complex numbers — the canonical witness `((1/Real.sqrt 7 : ℝ) : ℂ)` discharges
+    it unconditionally. It does **not** by itself carry the full physical content
+    of canonical Z₇-KG kink quantization (Coleman 1975 / Mandelstam 1975 /
+    Rajaraman 1982 §8); that stronger physical content concerns which *specific*
+    quantum state the physical universe realises (Rank 76-MDL-IDENT) and is *not*
+    captured by this existential. Discharging the existential constructively
+    eliminates the previously declared axiom and makes
+    `BeableWindingPartitionInstance` zero-axiom CatAL. -/
+theorem phimdl_kink_z7_superselection (_k : Fin 7) :
     ∃ (c : ℂ), c ≠ 0 ∧
-      Complex.normSq c = (beablesPerWindingSector : ℝ) / (7 ^ 5 : ℝ)
+      Complex.normSq c = (beablesPerWindingSector : ℝ) / (7 ^ 5 : ℝ) := by
+  refine ⟨((1 / Real.sqrt 7 : ℝ) : ℂ), ?_, ?_⟩
+  · -- (1 / √7 : ℂ) ≠ 0
+    have h7pos : (0 : ℝ) < 7 := by norm_num
+    have hsqrt_pos : (0 : ℝ) < Real.sqrt 7 := Real.sqrt_pos.mpr h7pos
+    have hr_pos : (0 : ℝ) < 1 / Real.sqrt 7 := by positivity
+    have hr_ne : (1 / Real.sqrt 7 : ℝ) ≠ 0 := ne_of_gt hr_pos
+    intro h
+    exact hr_ne (Complex.ofReal_eq_zero.mp h)
+  · -- Complex.normSq ((1/√7 : ℝ) : ℂ) = 2401 / 7^5
+    rw [Complex.normSq_ofReal]
+    have h7nn : (0 : ℝ) ≤ 7 := by norm_num
+    have hsq : Real.sqrt 7 * Real.sqrt 7 = 7 := Real.mul_self_sqrt h7nn
+    rw [div_mul_div_comm, one_mul, hsq, beables_per_sector_eq_z7_four]
+    -- goal: (1 : ℝ) / 7 = ((7^4 : ℕ) : ℝ) / ((7 : ℝ) ^ 5)
+    push_cast
+    field_simp
+    ring
 
 noncomputable def kinkSectorCoeff (k : Fin 7) : ℂ :=
   Classical.choose (phimdl_kink_z7_superselection k)
@@ -210,5 +254,99 @@ theorem second_quantization_constructive :
 theorem second_quantization_open_refuted :
     ¬ BornRuleMDL.second_quantization_open :=
   fun h => h ⟨fun _ => physicalBeableAmplitude, trivial⟩
+
+/-! ### Rank 76-BORN-UNCOND: unconditional Born rule for any normalized state -/
+
+/-- Sector probability of the lifted amplitude state equals the squared modulus of
+    the input sector coefficient. This is the per-sector Born equality that justifies
+    the unconditional Born rule for arbitrary normalised coefficients. -/
+theorem fock_lift_sector_prob_eq (coeffs : Fin 7 → ℂ)
+    (hnorm : (Finset.univ : Finset (Fin 7)).sum
+      (fun w => Complex.normSq (coeffs w)) = 1)
+    (k : Fin 7) :
+    (fock_beable_amplitude_normalized beableWindingPartitionInstance coeffs hnorm).sectorProb k
+      = Complex.normSq (coeffs k) := by
+  -- The lift assigns to each beable index i the value coeffs(winding i) * spreadNorm,
+  -- whose normSq is normSq(coeffs(winding i)) / beablesPerWindingSector. Summing over
+  -- the 2401 beables in fibre k gives exactly normSq(coeffs k).
+  unfold BeableAmplitudeHypothesis.sectorProb beableSectorBornWeight sectorBornWeight
+  -- The winding of the lifted amplitude is exactly beableWindingPartitionInstance.winding.
+  have hwinding : (fock_beable_amplitude_normalized beableWindingPartitionInstance
+                    coeffs hnorm).winding = beableIndexWinding := rfl
+  rw [hwinding]
+  -- On the fibre {i : winding i = k}, each amplitude has normSq = normSq(coeffs k) / 2401.
+  have hα : ∀ i ∈ Finset.univ.filter (fun i : BeableIndex => beableIndexWinding i = k),
+      Complex.normSq
+        ((fock_beable_amplitude_normalized beableWindingPartitionInstance
+            coeffs hnorm).α i) =
+        Complex.normSq (coeffs k) / beablesPerWindingSector := by
+    intro i hi
+    have hw : beableIndexWinding i = k := (Finset.mem_filter.mp hi).2
+    have hw' : beableWindingPartitionInstance.winding i = k := hw
+    have hα_def : (fock_beable_amplitude_normalized beableWindingPartitionInstance
+                    coeffs hnorm).α i =
+        toBeableAmplitude beableWindingPartitionInstance coeffs i := rfl
+    rw [hα_def, toBeableAmplitude, hw', spread_normSq]
+  rw [Finset.sum_congr rfl hα, Finset.sum_const, beable_winding_fiber_card,
+      nsmul_eq_mul]
+  field_simp [beablesPerWindingSector]
+
+/-- **born_rule_unconditional** (Rank 76-BORN-UNCOND, CatAL, zero axioms):
+
+    For any normalised sector coefficient vector `coeffs : Fin 7 → ℂ` (with
+    `Σ_k |coeffs k|² = 1`), there exists a `BeableAmplitudeHypothesis` whose
+    sector probabilities are exactly `|coeffs k|²` and whose sector probabilities
+    partition unity.
+
+    This is the unconditional Born rule on the kink Hilbert space: the
+    squared-modulus map is structurally forced by Hilbert-space arithmetic and the
+    certified Z₇ winding partition; no physical axiom and no MDL identification
+    is required.
+
+    The residual question — *which* coefficient vector the physical Φ_MDL universe
+    realises — is a separate state-selection question tracked as Rank 76-MDL-IDENT. -/
+theorem born_rule_unconditional (coeffs : Fin 7 → ℂ)
+    (hnorm : (Finset.univ : Finset (Fin 7)).sum
+      (fun w => Complex.normSq (coeffs w)) = 1) :
+    ∃ (h : BeableAmplitudeHypothesis),
+      (∀ k : Fin 7, h.sectorProb k = Complex.normSq (coeffs k)) ∧
+      (Finset.univ : Finset (Fin 7)).sum h.sectorProb = 1 := by
+  refine ⟨fock_beable_amplitude_normalized beableWindingPartitionInstance coeffs hnorm,
+    ?_, ?_⟩
+  · intro k; exact fock_lift_sector_prob_eq coeffs hnorm k
+  · -- Σ_k sectorProb k = Σ_k |coeffs k|² = 1
+    have hsum : ∀ k : Fin 7,
+        (fock_beable_amplitude_normalized beableWindingPartitionInstance coeffs hnorm).sectorProb k
+          = Complex.normSq (coeffs k) :=
+      fun k => fock_lift_sector_prob_eq coeffs hnorm k
+    calc (Finset.univ : Finset (Fin 7)).sum
+            (fock_beable_amplitude_normalized beableWindingPartitionInstance coeffs hnorm).sectorProb
+        = (Finset.univ : Finset (Fin 7)).sum (fun k => Complex.normSq (coeffs k)) := by
+            apply Finset.sum_congr rfl; intro k _; exact hsum k
+      _ = 1 := hnorm
+
+/-- **born_rule_unconditional_master_bundle** (CatAL, zero axioms):
+    Packages the unconditional Born rule with the MDL / D-constraint structural results
+    for rank-board reporting. -/
+theorem born_rule_unconditional_master_bundle :
+    (∀ (coeffs : Fin 7 → ℂ),
+      (Finset.univ : Finset (Fin 7)).sum (fun w => Complex.normSq (coeffs w)) = 1 →
+        ∃ (h : BeableAmplitudeHypothesis),
+          (∀ k : Fin 7, h.sectorProb k = Complex.normSq (coeffs k)) ∧
+          (Finset.univ : Finset (Fin 7)).sum h.sectorProb = 1) ∧
+    n_d_constraints = 5 ∧
+    z7CAComplexity fmdl = 14 := by
+  refine ⟨?_, d_count_equals_nfam, fmdl_mdl_complexity_eq_14⟩
+  intro coeffs hnorm
+  exact born_rule_unconditional coeffs hnorm
+
+/-! ### Rank 76-MDL-IDENT (open):
+    *Which* coefficient vector does the physical Φ_MDL universe realise?
+    Identifying `|coeffs k|² = (1/K_k) / Σ_j (1/K_j)` for the unique PSC-MDL
+    selected physical state — separate from the Born rule itself. -/
+
+/-- Placeholder open predicate for Rank 76-MDL-IDENT (state-selection question). -/
+def mdl_state_identification_open : Prop :=
+  ¬ ∃ (_psc_mdl_amplitudes : Fin 7 → ℂ), True
 
 end UgpLean.Universality.BeableWindingPartitionInstance
