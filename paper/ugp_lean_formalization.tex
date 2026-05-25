@@ -5635,6 +5635,68 @@ DWeight selects the physical PSC-admissible beable.  All three null tests pass
 continuum companion (Rank 67-KGS, Klein--Gordon substrate) achieves
 $0.069\%$ mean error across $\beta\in[0.05,0.90]$.
 
+\subsection{PSC Presentation Invariance $\Rightarrow$ $[\mathbf{D}]$ Lorentz Equivariance
+  (\texttt{Substrate/PSCPILorentzMain.lean})}\label{subsec:pscpi-lorentz-main}
+
+Module: \texttt{Substrate/PSCPILorentzMain.lean} (development branch, zero
+\lstinline|sorry|, one project axiom \lstinline|d2_universal| from P34~\S6 D2
+Presentation Invariance, formalized in \texttt{Substrate/CoherenceMeasure.lean}).
+
+This module certifies that PSC Presentation Invariance forces the coherence
+measure $[\mathbf{D}]$ to be Lorentz-equivariant on the $\Phi_{\mathrm{MDL}}$
+continuum substrate.  The proof chain assembles: (i)~Lorentz boosts preserve
+PSC structure on $\Phi_{\mathrm{MDL}}$ (\lstinline|lorentz_boost_preserves_psc|,
+from \texttt{Substrate/PSCStructureLorentzPreserved.lean}); (ii)~every
+PSC-preserving transformation acts equivariantly on $[\mathbf{D}]$
+(\lstinline|d2_universal|); (iii)~the main theorem below.
+
+\begin{keybox}{PSC/PI forces $[\mathbf{D}]$ Lorentz equivariance (CatAL)}
+\textbf{Theorem \lstinline|psc_pi_forces_d_lorentz_equivariant|.}
+Let $\Sigma$ be a PSC-consistent $\Phi_{\mathrm{MDL}}$ substrate and let
+$\Lambda$ be a Lorentz boost in $O(1,3)$.  Then for all configurations
+$\rho$, $w$ on the $\Phi_{\mathrm{MDL}}$ Klein--Gordon field,
+\[
+  D(\rho \mid w) \;=\; D(\Lambda\cdot\rho \mid \Lambda\cdot w),
+\]
+where $D$ denotes the substrate coherence functional
+(\lstinline|Substrate.coherence|) and $\Lambda\cdot$ is the Lorentz action
+on field configurations (\lstinline|lorentzBoostAct|).
+Zero \lstinline|sorry|; one named axiom \lstinline|d2_universal|.
+\end{keybox}
+
+\begin{keybox}{No preferred inertial frame for $[\mathbf{D}]$ observables (CatAL)}
+\textbf{Corollary \lstinline|psc_pi_no_preferred_frame|.}
+Under the same hypotheses, no inertial frame is distinguishable by
+$[\mathbf{D}]$-selected observables: the coherence functional is invariant
+under arbitrary Lorentz boosts of both the field configuration and the
+reference state.
+Zero \lstinline|sorry|.
+\end{keybox}
+
+\paragraph{Physical interpretation.}
+Lorentz symmetry is an emergent property of the $[\mathbf{D}]$-selection
+mechanism, not an axiom on the cellular-automaton beable layer.  The CA
+operates at Planck-scale resolution with a preferred frame; Presentation
+Invariance (D2) forbids that preference from propagating into
+$[\mathbf{D}]$-weighted physical observables on the $\Phi_{\mathrm{MDL}}$
+continuum.  Flat-vacuum Lorentz invariance of $[\mathbf{D}]$ is therefore
+derived from PSC structure together with the universal D2 axiom, rather
+than postulated at the discrete layer.
+
+Certified predicates and theorems:
+\begin{itemize}[nosep]
+\item \lstinline|realizedOnPhiMDL| --- substrate realized on the
+  $\Phi_{\mathrm{MDL}}$ Klein--Gordon field (\lstinline|KGConfig|).
+\item \lstinline|lorentzBoostAct| --- Lorentz action on $\Phi_{\mathrm{MDL}}$
+  configurations (scalar field and four-gradient).
+\item \lstinline|lorentz_boost_is_psc_preserving| --- Lorentz boost is
+  PSC-preserving on $\Phi_{\mathrm{MDL}}$ (bridges Phase~2 to D2).
+\item \lstinline|psc_pi_forces_d_lorentz_equivariant| --- main theorem
+  (CatAL, zero \lstinline|sorry|).
+\item \lstinline|psc_pi_no_preferred_frame| --- corollary: no preferred
+  inertial frame for $[\mathbf{D}]$ observables (CatAL).
+\end{itemize}
+
 \subsection{Multi-particle Hilbert space
   (\texttt{Spacetime/MultiParticleHilbert.lean})}\label{subsec:multiparticle-hilbert}
 
