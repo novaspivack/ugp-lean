@@ -222,6 +222,7 @@ import UgpLean.Substrate.PSCPILorentzMain
 import UgpLean.Substrate.NoetherAngularMomentum
 import UgpLean.Substrate.QECStabilizer
 import UgpLean.Substrate.TransputationStateSelector
+import UgpLean.Substrate.CoherenceMeasureUniqueness
 import UgpLean.Universality.FockSpaceKink
 import UgpLean.Universality.BeableWindingPartitionInstance
 import UgpLean.Universality.ExcitationCoupling
@@ -232,6 +233,7 @@ import UgpLean.Universality.ThooftEffectMeasureBridge
 import UgpLean.Universality.LorentzInvariance
 import UgpLean.Universality.PSCEffectMeasureGeneric
 import UgpLean.Universality.PSCEffectMeasure
+import UgpLean.Universality.PhiMDLThermalState
 import UgpLean.Framework.PhiMDLBridge
 import UgpLean.Framework.CMCAMDLMinimality
 import UgpLean.Framework.CMCAContinuumLimit
