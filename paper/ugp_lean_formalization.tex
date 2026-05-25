@@ -5440,9 +5440,98 @@ Six additive \lstinline|certified_*| theorems aggregate prior results without
   physical beable (CatAL).
 \end{itemize}
 
-\subsection{Cross-repository certification}\label{subsec:cross-repo-certs}
+\subsection{[D]-Weighted SR Formula
+  (\texttt{Spacetime/DWeightSRFormula.lean})}\label{subsec:dweight-sr-formula}
 
-The following theorems bridge the development-branch substrate layer to the
+Module: \texttt{Spacetime/DWeightSRFormula.lean} (Rank 63-DMDL, zero
+\lstinline|sorry|, axioms: \lstinline|propext|, \lstinline|Classical.choice|,
+\lstinline|Quot.sound| only).
+
+This module formalises the algebraic framework for the D2 [D]-weighted average
+of the MDL transit time $\tau_c$ reproducing the SR Lorentz factor
+$\gamma(v) = 1/\sqrt{1-v^2/c^2}$.  It combines the QEC projector structure
+(Rank 38-QEC, \texttt{QECStabilizer.lean}) with the SR proper-time ratio
+identity (Rank 37-LCI, \texttt{CausalInvariance.lean}).
+
+The central claim: for a PSC-admissible beable at velocity $v < c$, the
+[D]-weighted average $\langle\tau_c\rangle_D(\text{excitation}) /
+\langle\tau_c\rangle_D(\text{vacuum}) = (1-\varepsilon_0(M))\,\gamma(v)$,
+where $\varepsilon_0(M) = \pi^2/(3M^2)$ is the CA lattice-discretisation
+correction (Rank 68-KGGTE).  In the continuum limit $M\to\infty$ this gives
+exact SR; computationally, at $M=7$ and $\beta=0.798$, the corrected
+residual is $1.2$--$1.8\%$.
+
+\begin{itemize}[nosep]
+\item \lstinline|dmdl_dweight_positive| — every PSC-admissible beable $b$
+  satisfies $\mathrm{DWeight}(b)>0$ (CatAL; delegates to \lstinline|qec_dweight_projector|).
+\item \lstinline|dmdl_psc_dweight_positive| — same, stated at
+  \lstinline|PSCAdmissible| level (CatAL).
+\item \lstinline|dmdl_dweight_iff_code| — $\mathrm{DWeight}(b)>0 \iff
+  \mathrm{InCodeSubspace}(b)$ (CatAL).
+\item \lstinline|dmdl_error_weight_zero| — non-code states have
+  $\mathrm{DWeight}=0$ (CatAL; zero weight in [D]-average).
+\item \lstinline|dmdl_proper_time_ratio| — SR proper-time ratio:
+  $(c^2-v^2)/c^2 = 1-(v/c)^2 > 0$ for $0\leq v < c$ (CatAL; algebraic).
+\item \lstinline|dmdl_time_dilation_nonzero| — for $v>0$: $1-(v/c)^2 < 1$
+  (moving beable's clock is dilated; CatAL).
+\item \lstinline|dmdl_dweight_sr_formula| — combined: DWeight positivity
+  + SR proper-time identity for any PSC-admissible beable at $v<c$ (CatAL).
+\item \lstinline|dmdl_lorentz_factor_algebraic| — algebraic
+  $\gamma^{-2} = (c^2-v^2)/c^2$ identity (CatAL).
+\item \lstinline|dmdl_tau_c_ratio_structure| — structural bridge: if
+  $\tau_\mathrm{exc}(c^2-v^2)=\tau_\mathrm{vac}\,c^2$ then
+  $\tau_\mathrm{vac}/\tau_\mathrm{exc} = (c^2-v^2)/c^2$ (CatAL).
+\item \lstinline|dmdl_qec_sr_bundle| — main bundle: DWeight projector
+  + SR ratio + combined formula for all PSC-admissible beables (CatAL, zero
+  sorry, standard axioms only).
+\end{itemize}
+
+Computational evidence (CatA, 2026-05-24): true AFCA at $M=7$, $L=300$,
+canonical A-glider ($v=0.532$, $\beta=0.798$), $N_\mathrm{trans}\in\{100,200,300,400\}$
+gives $\tau_c$ ratio $= 1.569\pm0.003$, $\gamma=1.659$, raw error $5.4\%$
+(consistent with $\varepsilon_0(M=7)=6.71\%$), corrected residual $1.2$--$1.8\%$.
+Non-canonical patterns fail (structural $\tau_c$ bias 55--105\%), confirming
+DWeight selects the physical PSC-admissible beable.  All three null tests pass
+(N1: uniform weights, N2: scrambled velocity, N3: ether control).  The
+continuum companion (Rank 67-KGS, Klein--Gordon substrate) achieves
+$0.069\%$ mean error across $\beta\in[0.05,0.90]$.
+
+\subsection{Multi-particle Hilbert space
+  (\texttt{Spacetime/MultiParticleHilbert.lean})}\label{subsec:multiparticle-hilbert}
+
+Module: \texttt{Spacetime/MultiParticleHilbert.lean} (Rank 244-MPH, zero
+\lstinline|sorry|, zero custom axioms except those inherited from
+\lstinline|QECStabilizer.lean|).
+
+This module formalizes the algebraic layer of the GTE multi-particle
+Hilbert space, built from the QEC code subspace
+$\{\mathrm{vac}, \mathrm{gen}_1, \mathrm{gen}_2, \mathrm{gen}_3\}$ certified
+in \texttt{QECStabilizer.lean} (Rank 38-QEC).
+
+\begin{itemize}[nosep]
+\item \lstinline|code_word_cardinality| — $|\mathrm{CodeWord}| = 4$
+  (bijection with \lstinline|Fin 4| via \lstinline|codeWordEquiv|; CatAL).
+\item \lstinline|n_particle_state_count| — the $N$-particle state space
+  \lstinline|NParticleState n| has Fintype cardinality $4^N$ (CatAL).
+\item \lstinline|multiDWeight_eq_one| — the DWeight product of any
+  multi-beable state equals~$1$ (CatAL).
+\item \lstinline|multiMass_append| — total mass is additive under
+  particle concatenation (CatAL).
+\item \lstinline|multiMass_le| — total mass $\leq 3N$ for $N$ particles
+  (CatAL).
+\item \lstinline|mass_hierarchy_three_states| — $\mathrm{gen}_3 > \mathrm{gen}_2 >
+  \mathrm{gen}_1 > 0$ in abstract orbit-index units (CatAL).
+\item \lstinline|smGenMass_multi_anchor| — every non-vacuum code word
+  carries physical mass $\geq 1.8\,\mathrm{MeV}$ (CatAL).
+\item \lstinline|multiparticle_orbit_closure| — $f_{\mathrm{MDL}}$
+  preserves every code word in a multi-state (CatAL).
+\item \lstinline|inner_product_positive_definite| — the Kronecker basis
+  inner product on \lstinline|NParticleState n| is positive definite (CatAL).
+\item \lstinline|multiparticle_space_well_defined| — bundle theorem
+  assembling all structural properties (CatAL).
+\end{itemize}
+
+\subsection{Cross-repository certification}\label{subsec:cross-repo-certs}
 \texttt{ugp-physics-lean} phenomenology layer:
 
 \begin{table}[h]

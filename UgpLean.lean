@@ -188,6 +188,8 @@ import UgpLean.Spacetime.SpatiallyExtendedLifting
 import UgpLean.Spacetime.MassGap
 import UgpLean.Spacetime.OrbitMassHierarchy
 import UgpLean.Spacetime.QECStabilizer
+import UgpLean.Spacetime.DWeightSRFormula
+import UgpLean.Spacetime.MultiParticleHilbert
 import UgpLean.Spacetime.QuantumGravity
 import UgpLean.Spacetime.PhysicalExclusion
 import UgpLean.Spacetime.ThreeGenerationCapstone
@@ -244,7 +246,9 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Spacetime.SpatiallyExtendedLifting` — Rank 55-3DLT: `causal_path_exists` theorem (CatAL); meson/baryon bound states
 - `UgpLean.Spacetime.MassGap` — Rank 42-MGP: `gte_mass_gap`, `gte_mass_formula_physical`, `smGenMass` (CatAL, zero sorry)
 - `UgpLean.Spacetime.QuantumGravity` — Rank 28-QGR: beable-level quantum gravity evidence structure (CatAD-strong)
+- `UgpLean.Spacetime.MultiParticleHilbert` — Rank 244-MPH: multi-particle Hilbert space algebraic layer; `code_word_cardinality` (4 code words, Equiv with Fin 4), `n_particle_state_count` (4^N states), `multiDWeight_eq_one`, `multiMass_append`, `multiMass_le`, `mass_hierarchy_three_states`, `smGenMass_multi_anchor`, `multiparticle_orbit_closure`, `inner_product_positive_definite`, `multiparticle_space_well_defined`; all CatAL, zero sorry (2026-05-24)
 - `UgpLean.Spacetime.CausalInvariance` — Rank 37-LCI: f_MDL causal invariance + Lamport consistency + SR connection; `ForwardCausalAdj`, `forward_causal_time_step`, `forward_causal_acyclic`, `transgen_time_strictly_increases`, `lamport_irrefl`, `lamport_strict_partial_order`, `lamport_order_update_independent`, `afca_sr_causal_structure`; all zero sorry, zero axioms (CatAL/CatAD — Lamport properties CatAL, Minkowski isomorphism CatAD, 2026-05-21)
+- `UgpLean.Spacetime.DWeightSRFormula` — Rank 63-DMDL: [D]-weighted SR formula; `dmdl_dweight_positive`, `dmdl_proper_time_ratio`, `dmdl_dweight_sr_formula`, `dmdl_lorentz_factor_algebraic`, `dmdl_tau_c_ratio_structure`, `dmdl_qec_sr_bundle`; all zero sorry, zero custom axioms (CatAL, 2026-05-24)
 
 **Non-circularity:** Core/ does not import Compute/. See README.md.
 -/

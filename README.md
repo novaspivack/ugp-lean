@@ -768,3 +768,31 @@ Formal certification of the CA ether dispersion relation E(k) = v_CA × k evalua
 *Rank 28-QGR — Quantum Gravity (`QuantumGravity.lean`)*
 
 - Beable-level QGR evidence structure; geometry CatA, particles CatAL, dynamics CatAD-strong (centroid CatAL partial)
+
+*Rank 63-DMDL — [D]-Weighted SR Formula (`DWeightSRFormula.lean`)*
+
+- Algebraic framework for the [D]-average of τ_c reproducing γ(v) = 1/√(1−v²/c²)
+- `dmdl_dweight_positive`: every PSC-admissible beable has DWeight > 0 (CatAL)
+- `dmdl_dweight_iff_code`: DWeight > 0 ↔ InCodeSubspace (CatAL)
+- `dmdl_error_weight_zero`: non-PSC states have DWeight = 0 in [D]-average (CatAL)
+- `dmdl_proper_time_ratio`: SR algebraic identity (c²−v²)/c² = 1−(v/c)² (CatAL)
+- `dmdl_time_dilation_nonzero`: for v > 0, proper-time ratio < 1 (CatAL)
+- `dmdl_dweight_sr_formula`: DWeight positivity + SR formula combined (CatAL)
+- `dmdl_lorentz_factor_algebraic`: γ⁻² = (c²−v²)/c² identity (CatAL)
+- `dmdl_tau_c_ratio_structure`: structural τ_c ratio bridge (CatAL)
+- `dmdl_qec_sr_bundle`: full bundle — DWeight projector + SR formula (CatAL, zero sorry, propext+choice+Quot only)
+- Computational (CatA): τ_c_ratio = 1.569±0.003, γ = 1.659, corrected error 1.2–1.8% at β=0.798, M=7
+
+*Rank 244-MPH — Multi-Particle Hilbert Space (`MultiParticleHilbert.lean`)*
+
+- Multi-particle state space built from QEC code subspace {vac, gen₁, gen₂, gen₃}
+- `code_word_cardinality`: 4 code words (bijection with Fin 4, CatAL)
+- `n_particle_state_count`: 4^N basis states for N particles (CatAL)
+- `multiDWeight_eq_one`: DWeight product = 1 on all multi-states (CatAL)
+- `multiMass_append`: mass observable is additive (CatAL)
+- `multiMass_le`: total mass ≤ 3N for N particles (CatAL)
+- `mass_hierarchy_three_states`: gen₃ > gen₂ > gen₁ > 0 (CatAL)
+- `smGenMass_multi_anchor`: non-vacuum mass ≥ 1.8 MeV (CatAL)
+- `multiparticle_orbit_closure`: f_MDL preserves code words (CatAL)
+- `inner_product_positive_definite`: Kronecker basis IP positive definite (CatAL)
+- `multiparticle_space_well_defined`: bundle theorem (CatAL); zero sorry
