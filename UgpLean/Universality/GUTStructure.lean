@@ -5073,6 +5073,44 @@ theorem pascal_times_threshold_structure :
 
 end OrbitAbsorption
 
+/-- **ew_threshold_definitional_route** (CatAL, Rank 168-EWD ★★★★):
+    Packages the definitional EW-threshold route from orbit-vacuum absorption:
+
+    (1) **Orbit absorption** (`orbit_absorption_at_ngen`): gen₁→gen₂→gen₃→vacuum in
+        exactly N_gen = 3 f_MDL steps; k = 1, 2 remain in excited non-vacuum states.
+
+    (2) **Threshold uniqueness** (`ew_threshold_step_unique`): the EW threshold step
+        predicate holds iff k = N_gen = 3.
+
+    (3) **Non-threshold steps** (`k_lt_ngen_not_threshold`): k = 1, 2 fail the predicate.
+
+    (4) **Two-layer joint structure** (`pascal_times_threshold_structure`): Pascal row-3
+        interior coefficients C(3,1) = C(3,2) = N_gen match non-threshold orbit steps;
+        terminal C(3,3) = 1 matches the unique vacuum-reaching threshold step.
+
+    The physical identification of this structural threshold with the M_Z electroweak
+    scale (absolute energy units) is CatAD — isolated in rank 169-P2B (P22 vacuum scale).
+
+    LEAN-CERTIFIED (decide + simp + omega, zero sorry). -/
+theorem ew_threshold_definitional_route :
+    (CUP3D.fmdl_step5 CUP3D.fmdl_gen1_z7 = CUP3D.fmdl_gen2_z7 ∧
+      CUP3D.fmdl_gen2_z7 ≠ (fun _ => (0 : Fin 7)) ∧
+      CUP3D.fmdl_step5 CUP3D.fmdl_gen2_z7 = CUP3D.fmdl_gen3_z7 ∧
+      CUP3D.fmdl_gen3_z7 ≠ (fun _ => (0 : Fin 7)) ∧
+      CUP3D.fmdl_step5 CUP3D.fmdl_gen3_z7 = (fun _ => (0 : Fin 7))) ∧
+    (∀ k : ℕ, isEWThresholdStep k ↔ k = 3) ∧
+    (∀ k : ℕ, k < 3 → ¬ isEWThresholdStep k) ∧
+    (Nat.choose 3 1 = 3 ∧ Nat.choose 3 2 = 3 ∧ Nat.choose 3 3 = 1 ∧
+     isEWThresholdStep 3 ∧ ¬ isEWThresholdStep 1 ∧ ¬ isEWThresholdStep 2) := by
+  apply And.intro
+  · exact ⟨CUP3D.fmdl_z7_gen1_to_gen2, by decide, CUP3D.fmdl_z7_gen2_to_gen3, by decide,
+            CUP3D.fmdl_z7_gen3_to_vacuum⟩
+  apply And.intro
+  · exact ew_threshold_step_unique
+  apply And.intro
+  · exact k_lt_ngen_not_threshold
+  · exact pascal_times_threshold_structure
+
 -- ════════════════════════════════════════════════════════════════
 -- §41  Quark G1 Permutation Rule — MDL Lex-Min Formal Derivation (B-81 Thread A, CatAL)
 --
