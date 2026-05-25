@@ -50,6 +50,9 @@ theorem gcd_step_ether : Nat.gcd c2_glider_step ether_period = 2 := by native_de
 /-- The glider visits only 7 distinct ether phases per orbit (14 / 2 = 7) -/
 theorem orbit_length_eq_seven : ether_orbit_length = 7 := by native_decide
 
+/-- gcd(3, 14) = 1: glider period and raw ether period are coprime -/
+theorem gcd_glider_ether : Nat.gcd c2_glider_period ether_period = 1 := by native_decide
+
 /-- gcd(3, 7) = 1: the glider period and the ether orbit length are coprime — no common sub-period -/
 theorem gcd_glider_orbit : Nat.gcd c2_glider_period ether_orbit_length = 1 := by native_decide
 
@@ -101,6 +104,7 @@ theorem no_escape_via_offset :
     This applies to vertical couplings (δ=0) and all diagonal offsets (δ=1..13). -/
 theorem coupling_no_go_master :
     Nat.gcd c2_glider_step ether_period = 2 ∧
+    Nat.gcd c2_glider_period ether_period = 1 ∧
     ether_orbit_length = 7 ∧
     Nat.gcd c2_glider_period ether_orbit_length = 1 ∧
     Nat.lcm c2_glider_period ether_orbit_length = 21 ∧

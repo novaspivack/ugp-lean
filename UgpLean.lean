@@ -140,6 +140,7 @@ import UgpLean.Framework.GTEFinalCoalgebra
 import UgpLean.Universality.CasimirMasslessEther
 import UgpLean.Universality.ChiralPairVA
 import UgpLean.Universality.CouplingNoGo
+import UgpLean.Universality.LorentzInvariance
 import UgpLean.Universality.ChiralityEigenstates
 import UgpLean.Universality.WeakIsospin
 import UgpLean.TE22.ScanCertificate
@@ -166,6 +167,7 @@ import UgpLean.Universality.CasimirMasslessEther
 import UgpLean.Universality.LawvereZone
 import UgpLean.Universality.ChiralPairVA
 import UgpLean.Universality.CouplingNoGo
+import UgpLean.Universality.LorentzInvariance
 import UgpLean.Framework.GTEFrameworkInstance
 import UgpLean.Framework.GTEOptimalityInstance
 import UgpLean.Framework.GTEFinalCoalgebra
