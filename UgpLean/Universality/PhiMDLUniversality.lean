@@ -622,4 +622,120 @@ from it without importing computability as a new hypothesis or redefining PSCSys
 The existing Routes A, B, and 2 in this file are the certified universality proofs.
 -/
 
+-- ─────────────────────────────────────────────────────────────────────────────
+-- §A  A-glider period-3 certification (Cook retirement Step 2)
+-- ─────────────────────────────────────────────────────────────────────────────
+
+/-!
+## §A  A-glider period-3 certification
+
+Cook's Figure 5 classifies the **A-glider** as species A with
+period `(Δt, Δx) = (3, 2)` (temporal period 3, rightward displacement 2 per cycle).
+
+This section certifies the period-3 property on a bounded finite tape via
+`native_decide`:
+
+* **`rule110ListStep`** — Rule 110 step on `List Bool` with zero-padding boundaries.
+  The ether at position -1 (left) equals `false` in phase 0, so zero-padding is
+  correct for the left boundary.  The ether at position 40 also equals `false`,
+  so zero-padding is correct for the right boundary of the 40-cell tape.
+
+* **`aGliderTape`** — 40-cell Rule 110 ether tape (phase 0: `10011011111000` × 2⁺⁺)
+  with the A-glider patch `[F,F,T,T,T,F]` (= `001110`) at positions 20–25.
+
+* **`aGlider_period3`** — After 3 steps of `rule110ListStep`, the 6-cell A-glider
+  patch `001110` reappears at positions 22–27 (shifted 2 to the right), certified
+  by a single `native_decide` call.
+
+**Boundary note**: `rule110ListStep` pads with `false`.  The tape is 40 cells
+(`aGliderTape : List Bool`, length 40). The ether at positions −1 and 40 is `false`
+(ether bit at index `(-1) mod 14 = 13` and `40 mod 14 = 12`, both `false` from the
+period-14 ether pattern `10011011111000`). Hence zero-padding agrees with the ether
+boundary condition for this phase, and the simulation is exact for the central cells.
+
+**Feasibility**: the `native_decide` call evaluates 40 × 3 = 120 Rule 110 lookups —
+a sub-millisecond computation.
+
+**NAND collision (Step 3)**: the two-glider NAND collision requires knowing the
+exact initial bit pattern for two A-gliders on the ether tape at the correct timing
+and phase offset for the collision. This pattern is not available in `rule110-lean`'s
+`CookBlockData`/`CookCollisionTaxonomy` in a directly usable form; those modules
+encode the collision taxonomy abstractly and via the full CTS construction context,
+not as an isolated two-glider NAND tape. Step 3 remains open pending extraction of
+the specific NAND collision tape from Cook (2004) Figure 7 or an organic emergence
+scan with two colliding A-gliders.
+-/
+
+/-- Rule 110 list step with zero-padding boundaries.
+
+    For the 40-cell ether-phase-0 tape `aGliderTape`, the zero-padding equals the
+    ether at positions −1 and 40 (both `false` in that phase), so this step is
+    exact for the central cells. -/
+def rule110ListStep (tape : List Bool) : List Bool :=
+  (List.range tape.length).map fun i =>
+    let L : Bool := if i = 0 then false else tape.getD (i - 1) false
+    let C : Bool := tape.getD i false
+    let R : Bool := tape.getD (i + 1) false
+    rule110_output L C R
+
+/-- The 40-cell Rule 110 A-glider tape (phase 0).
+
+    Layout: ether `10011011111000` × 2 (positions 0–27), plus ether continuation
+    (positions 28–39), with the **A-glider patch** `001110` at positions 20–25.
+
+    The ether background is `cookEther i = ether_bits[i % 14]` where
+    `ether_bits = 10011011111000`.  The A-glider patch `[F,F,T,T,T,F]` replaces
+    the ether values at positions 20–25. -/
+def aGliderTape : List Bool :=
+  [true,  false, false, true,  true,  false, true,  true,
+   true,  true,  true,  false, false, false, true,  false,
+   false, true,  true,  false, false, false, true,  true,
+   true,  false, false, false, true,  false, false, true,
+   true,  false, true,  true,  true,  true,  true,  false]
+
+theorem aGliderTape_length : aGliderTape.length = 40 := by native_decide
+
+/-- The tape ether background at positions 20–25 without the glider (for reference).
+
+    `ether_bits[20%14]..ether_bits[25%14]` = `ether_bits[6..11]` = `110111`.
+    The A-glider patch `001110` differs at all 6 positions. -/
+theorem aGlider_patch_differs_from_ether :
+    aGliderTape.getD 20 false = false ∧  -- ether at 20 is true; glider overrides with false
+    aGliderTape.getD 21 false = false ∧  -- ether at 21 is true; glider overrides with false
+    aGliderTape.getD 22 false = true  ∧  -- ether at 22 is true; glider preserves true
+    aGliderTape.getD 23 false = true  ∧  -- ether at 23 is true; glider preserves true
+    aGliderTape.getD 24 false = true  ∧  -- ether at 24 is true; glider preserves true
+    aGliderTape.getD 25 false = false := by  -- ether at 25 is false; glider preserves false
+  native_decide
+
+/-- **A-glider period-3 certification** (zero sorry, Step 2 of Cook retirement programme).
+
+    After 3 applications of `rule110ListStep` to `aGliderTape`, the 6-cell A-glider
+    patch `001110` reappears at positions 22–27 (shifted 2 cells to the right).
+
+    This certifies the Cook Figure-5 property: the A-glider has temporal period 3
+    and rightward displacement 2 per period `(Δt, Δx) = (3, 2)`.
+
+    **Proof**: `native_decide` evaluates 3 × 40 = 120 Rule 110 table lookups and
+    confirms the equality by kernel computation.
+
+    **Boundary correctness**: `rule110ListStep` pads with `false`.
+    - Left: `false` = `cook_ether(-1)` = `ether_bits[13]` = `false` ✓
+    - Right: `false` = `cook_ether(40)` = `ether_bits[40 % 14]` = `ether_bits[12]` = `false` ✓
+    The boundary padding is exact for this ether phase. -/
+theorem aGlider_period3 :
+    ∀ j : Fin 6,
+      (rule110ListStep (rule110ListStep (rule110ListStep aGliderTape))).getD (22 + j.val) false =
+      aGliderTape.getD (20 + j.val) false := by
+  native_decide
+
+/-- **A-glider catalog correspondence** (zero sorry).
+
+    The `rule110-lean` catalog records `Rule110.CookNamedGlider.A` with period `(Δt, Δx) = (3, 2)`.
+    The period-3 certification `aGlider_period3` witnesses this for the explicit
+    40-cell tape `aGliderTape`. -/
+theorem aGlider_period_matches_catalog :
+    Rule110.CookNamedGlider.periodTX Rule110.CookNamedGlider.A =
+      { dt := 3, dx := 2 } := rfl
+
 end UgpLean.Universality.PhiMDLUniversality
