@@ -167,6 +167,7 @@ import UgpLean.Universality.EWChiralBridge
 import UgpLean.Universality.GUTStructure
 import UgpLean.Universality.MDLDerivabilityCriterion
 import UgpLean.Universality.BornRuleMDL
+import UgpLean.Universality.DualFrameBornRule
 import UgpLean.Universality.SylowIndexCouplingHierarchy
 import UgpLean.Substrate.LExtended
 import UgpLean.Universality.CasimirMasslessEther
@@ -221,7 +222,6 @@ import UgpLean.Substrate.PSCPILorentzMain
 import UgpLean.Substrate.NoetherAngularMomentum
 import UgpLean.Substrate.QECStabilizer
 import UgpLean.Substrate.TransputationStateSelector
-import UgpLean.Universality.BornRuleMDL
 import UgpLean.Universality.FockSpaceKink
 import UgpLean.Universality.BeableWindingPartitionInstance
 import UgpLean.Universality.ExcitationCoupling
