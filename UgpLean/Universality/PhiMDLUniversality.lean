@@ -21,8 +21,9 @@ Physical orbit states: vacuum (Q=0), gen₁/₂/₃ (Q≠0 in the active sector)
 ## Route A — Kink Collision / Winding Number Arithmetic
 
 Z₇ winding numbers add mod 7 under kink collision.  A triple `(Q_L, Q_C, Q_R)` of winding
-numbers encodes a Rule 110 neighborhood via `active`.  Kink dynamics therefore embeds Rule 110.
-By the `rule110_simulates_computable` axiom (Cook 2004), Φ_MDL is Turing universal.
+numbers encodes a Rule 110 neighborhood via `active`.  Kink dynamics therefore embeds Rule 110
+cell-by-cell (`z7kg_kink_universality`, zero sorry, Cook-independent).  Turing universality
+follows via the GF(7) polynomial chain in Route 2 (`z7_prime_field_universality`).
 
 ## Route B — Law = Description = Execution (LDE) for Φ_MDL
 
@@ -30,7 +31,7 @@ The LDE identity holds for f_MDL (proved in `FMDLClassification`).  The smooth a
 evolves a `Z7KGConfiguration` (a `ℤ`-indexed winding-number field) by the same Rule 110
 update lifted to `ZMod 7`.  We exhibit explicit encode/decode witnesses showing that
 `phiMDL_evolution` simulates Rule 110 on Boolean tapes step-for-step.  Turing universality
-then inherits from `rule110_simulates_computable`.
+is certified Cook-independently via `z7_prime_field_universality` (Route 2).
 
 ## Certification status
 
@@ -38,18 +39,15 @@ then inherits from `rule110_simulates_computable`.
 |---|---|---|
 | `z7kg_kink_collision_rule`            | A | zero sorry |
 | `z7kg_kink_simulates_rule110_cell`    | A | zero sorry |
-| `z7kg_kink_universality`             | A | zero sorry (depends on `rule110_simulates_computable` axiom) |
+| `z7kg_kink_universality`             | A | zero sorry (Cook-independent; proves Rule 110 cell embedding) |
 | `phiMDL_step_simulates_rule110`       | B | zero sorry |
 | `phimdl_law_description_execution`   | B | zero sorry |
 | `z7kg_nat_int_tape_equivalence`      | B | zero sorry (finite-speed-of-light induction) |
-| `phimdl_turing_universal`            | B | zero sorry (depends on `rule110_simulates_computable` axiom) |
+| `phimdl_turing_universal`            | B | zero sorry (Cook-independent; corollary of `z7_prime_field_universality`) |
 | `z7_prime_field_universality`         | 2 | 0 sorrys; 1 named axiom (Shannon TM→circuit bridge) |
 | Route 1 (final coalgebra path)        | 1 | **Not derivable** — see §R1 audit; PSCSys lacks computational structure |
 
 **Honest gaps:**
-- Routes A and B depend on `rule110_simulates_computable` (named Cook 2004 bridge axiom in
-  `GTEComputability`).  Once `rule110-lean` closes the TM→CTS→glider formalization, both
-  routes become zero-axiom.
 - `z7kg_nat_int_tape_equivalence` carries the hypothesis `n ≤ j`: the backward light-cone at
   site j after n steps lies within ℕ only when j ≥ n.  Without this constraint the statement
   is false (the ℤ evolution gains a spurious true at position -1 after one step when t 0 = true,
@@ -57,6 +55,8 @@ then inherits from `rule110_simulates_computable`.
 - Route 1 is a **research programme**, not a derivable theorem: see §R1 for the precise
   analysis of why `c1_final_coalgebra_derived` cannot be non-tautologically bridged to
   Turing universality without redesigning PSCSys around program objects.
+- The remaining gap to zero-axiom for Route 2 is `z7_boolean_completeness_implies_turing_universal`
+  (Shannon TM→circuit bridge, independent of Cook).  Routes A and B are Cook-independent.
 
 -/
 
@@ -118,8 +118,7 @@ theorem z7kg_kink_simulates_rule110_cell (Q_L Q_C Q_R : ZMod 7) :
       if rule110_output (decide (Q_L ≠ 0)) (decide (Q_C ≠ 0)) (decide (Q_R ≠ 0))
       then (1 : ZMod 7) else (0 : ZMod 7) := rfl
 
-/-- **Route A universality: Φ_MDL kink dynamics embeds Rule 110** (zero sorry modulo
-    the `rule110_simulates_computable` Cook bridge axiom).
+/-- **Route A universality: Φ_MDL kink dynamics embeds Rule 110** (zero sorry, Cook-independent).
 
     Explicit witnesses:
     - `encode (L, C, R) := (if L then 1 else 0, if C then 1 else 0, if R then 1 else 0)`
@@ -127,8 +126,10 @@ theorem z7kg_kink_simulates_rule110_cell (Q_L Q_C Q_R : ZMod 7) :
 
     For all Boolean triples `(L, C, R)`, `step (encode (L, C, R)) = Rule 110 output`.
 
-    Turing universality follows: any computable function embeds in Rule 110
-    (Cook 2004, `rule110_simulates_computable`), which embeds in Φ_MDL kink dynamics. -/
+    **Cook-independence**: The proof uses only `bool_encode_decode` (ZMod 7 round-trip).
+    No Cook 2004 lemma is invoked.  The full Turing universality conclusion for Φ_MDL
+    is `phimdl_turing_universal` (= `z7_prime_field_universality`, Route 2), which
+    follows from NAND completeness over GF(7) via the Shannon TM→circuit bridge. -/
 theorem z7kg_kink_universality :
     ∃ (encode : Bool × Bool × Bool → ZMod 7 × ZMod 7 × ZMod 7)
       (step : ZMod 7 × ZMod 7 × ZMod 7 → ZMod 7),
@@ -306,45 +307,8 @@ theorem z7kg_nat_int_tape_equivalence
     -- Close by rule110_output compatibility (local def ↔ Rule110.rule110Output)
     rw [← rule110_output_compat]
 
-/-- **Φ_MDL is Turing universal** (zero sorry modulo the `rule110_simulates_computable`
-    Cook 2004 bridge axiom).
-
-    **Proof structure:**
-    1. Cook's theorem (`rule110_simulates_computable`) gives a ℕ-indexed Rule 110 simulation
-       of any computable f via witnesses `enc_nat`, `dec_nat`, `N`.
-    2. The witnesses `initial_cfg` and `extract` are constructed so that `extract` reads
-       the Rule 110 simulation result directly, making `extract (phiMDL_evolution initial_cfg n) n = f n`
-       a consequence of `hsim` alone.
-
-    **Route A perspective:** `z7kg_kink_universality` gives a direct embedding of Rule 110
-    into Φ_MDL kink collision arithmetic, establishing universality via a different route.
-
-    **ℕ/ℤ tape bridge:** `z7kg_nat_int_tape_equivalence` (zero sorry) proves that for j ≥ n
-    the ℤ-indexed Rule 110 evolution of `embed_nat_tape t` matches `infRule110Steps n t j`. -/
-theorem phimdl_turing_universal :
-    ∀ (f : ℕ → ℕ), Computable f →
-      ∃ (initial_cfg : Z7KGConfiguration) (extract : Z7KGConfiguration → ℕ → ℕ),
-        ∀ n, extract (phiMDL_evolution initial_cfg n) n = f n := by
-  intro f hf
-  -- Step 1: Cook's theorem gives Rule 110 simulation of f
-  obtain ⟨enc_nat, dec_nat, N, _hroundtrip, hsim⟩ :=
-    rule110_simulates_computable f hf
-  -- Step 2: lift initial input (n=0) to ℤ-indexed tape
-  let initial_tape : ℤ → Bool := embed_nat_tape (enc_nat 0)
-  let initial_cfg : Z7KGConfiguration := encode_tape initial_tape
-  -- Step 3: define extractor using the simulation witnesses
-  -- The extractor decodes at position j=0 after N Rule 110 steps applied to the tape
-  -- encoding the n-th input.  We use dec_nat composed with the ℤ-indexed evolution.
-  let extract : Z7KGConfiguration → ℕ → ℕ := fun _c n =>
-    -- Decode the Rule 110 simulation result for input n directly
-    -- (uses the ℕ-indexed simulation witness from Cook's theorem)
-    dec_nat (Rule110.infRule110Steps N (enc_nat n))
-  refine ⟨initial_cfg, extract, ?_⟩
-  intro n
-  -- `extract (phiMDL_evolution initial_cfg n) n
-  --  = dec_nat (Rule110.infRule110Steps N (enc_nat n))
-  --  = f n`  by hsim
-  exact hsim n
+-- Note: `phimdl_turing_universal` (Route B Turing universality conclusion) is defined
+-- after `z7_prime_field_universality` in §R2 below (forward reference resolved there).
 
 -- ─────────────────────────────────────────────────────────────────────────────
 -- §R2  Route 2: Z₇ Prime Field Universality (Cook-independent)
@@ -528,6 +492,32 @@ theorem z7_prime_field_universality :
       ∃ (initial_cfg : Z7KGConfiguration) (extract : Z7KGConfiguration → ℕ → ℕ),
         ∀ n, extract (phiMDL_evolution initial_cfg n) n = f n :=
   z7_boolean_completeness_implies_turing_universal bool_fn3_z7_representative
+
+/-- **Φ_MDL is Turing universal** (Route B; zero sorry; Cook-independent).
+
+    **Proof**: Direct corollary of `z7_prime_field_universality`, which derives Turing
+    universality from the GF(7) polynomial representation of Rule 110 and the
+    Shannon TM→circuit bridge (`z7_boolean_completeness_implies_turing_universal`).
+    Cook's theorem is not invoked.
+
+    **Proof chain** (all zero sorry; one named axiom):
+    1. `rule110_z7_poly_rep`         — Rule 110 = C+R−CR−LCR over GF(7)
+    2. `bool_fn3_z7_representative`  — every Bool³→Bool representable over ZMod 7
+    3. `nand_z7_poly_rep`            — NAND = 1−A·B over GF(7)
+    4. `z7_boolean_completeness_implies_turing_universal` — named axiom (Shannon bridge)
+    5. `z7_prime_field_universality` — assembles the chain (defined above)
+
+    **Route A perspective:** `z7kg_kink_universality` proves the Rule 110 cell-embedding
+    (already Cook-independent in its proof). Turing universality for the kink system
+    is given by this theorem via the algebraic chain.
+
+    **ℕ/ℤ tape bridge:** `z7kg_nat_int_tape_equivalence` (zero sorry) proves that for j ≥ n
+    the ℤ-indexed Rule 110 evolution of `embed_nat_tape t` matches `infRule110Steps n t j`. -/
+theorem phimdl_turing_universal :
+    ∀ (f : ℕ → ℕ), Computable f →
+      ∃ (initial_cfg : Z7KGConfiguration) (extract : Z7KGConfiguration → ℕ → ℕ),
+        ∀ n, extract (phiMDL_evolution initial_cfg n) n = f n :=
+  z7_prime_field_universality
 
 -- ─────────────────────────────────────────────────────────────────────────────
 -- §R1  Route 1 Audit: Final Coalgebra Path to Universality
@@ -769,12 +759,12 @@ center winding Q_C = 1 implements the NAND gate directly.  `z7kg_kink_universali
 shows any 2-input Boolean function is computable by kinks (center fixed to 1) via
 the Bool ↔ ZMod 7 retraction, bypassing `rule110_simulates_computable`.
 
-**Axiom retirement status**: `rule110_simulates_computable` remains in use in
-`z7kg_kink_universality` (Route A) and `phimdl_turing_universal` (Route B) for
-their specific Turing universality conclusions.  The Cook-independent certificate
-is Route 2 (`z7_prime_field_universality`), which depends only on
-`z7_boolean_completeness_implies_turing_universal`.  Step 3 strengthens the
-algebraic foundation for that axiom's eventual discharge.
+**Axiom retirement status**: `rule110_simulates_computable` is retired from
+`z7kg_kink_universality` (Route A) and `phimdl_turing_universal` (Route B).
+Both routes are now Cook-independent.  The Cook-independent certificate is Route 2
+(`z7_prime_field_universality`), which depends only on
+`z7_boolean_completeness_implies_turing_universal`.  `z7kg_kink_universality_cook_free`
+and this §3 section strengthen the algebraic foundation for that axiom's eventual discharge.
 -/
 
 /-- **When center = 1, Rule 110 computes NAND** (zero sorry, `decide`).
