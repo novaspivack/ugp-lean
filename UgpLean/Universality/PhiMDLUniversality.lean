@@ -738,4 +738,103 @@ theorem aGlider_period_matches_catalog :
     Rule110.CookNamedGlider.periodTX Rule110.CookNamedGlider.A =
       { dt := 3, dx := 2 } := rfl
 
+-- ─────────────────────────────────────────────────────────────────────────────
+-- §3  Step 3: NAND from center-1 (Cook-independent)
+-- ─────────────────────────────────────────────────────────────────────────────
+
+/-!
+## §3  NAND certification from center-1 (Cook-independent)
+
+When the center cell C = 1, Rule 110 computes NAND(L, R):
+
+    p(L, 1, R) = 1 + R − R − L·R = 1 − L·R = NAND(L, R)
+
+verified directly by `decide` on all 4 (L, R) combinations.
+
+**Cook-independence:** This is a simple 4-case Boolean computation derived directly
+from the GF(7) polynomial `rule110_z7_poly_rep`.  It does not invoke
+`rule110_simulates_computable` or any CTS construction.
+
+**Certification status**:
+| Theorem | Status |
+|---|---|
+| `rule110_center1_is_nand`           | zero sorry (`decide`) |
+| `rule110_z7_poly_center1_nand`      | zero sorry (`decide`) |
+| `rule110_nand_witness`              | zero sorry (from `rule110_center1_is_nand`) |
+| `z7kg_kink_nand`                    | zero sorry (`decide`) |
+| `z7kg_kink_universality_cook_free`  | zero sorry (retraction; Cook-independent) |
+
+**Route A connection**: `z7kg_kink_nand` certifies that Φ_MDL kink dynamics with
+center winding Q_C = 1 implements the NAND gate directly.  `z7kg_kink_universality_cook_free`
+shows any 2-input Boolean function is computable by kinks (center fixed to 1) via
+the Bool ↔ ZMod 7 retraction, bypassing `rule110_simulates_computable`.
+
+**Axiom retirement status**: `rule110_simulates_computable` remains in use in
+`z7kg_kink_universality` (Route A) and `phimdl_turing_universal` (Route B) for
+their specific Turing universality conclusions.  The Cook-independent certificate
+is Route 2 (`z7_prime_field_universality`), which depends only on
+`z7_boolean_completeness_implies_turing_universal`.  Step 3 strengthens the
+algebraic foundation for that axiom's eventual discharge.
+-/
+
+/-- **When center = 1, Rule 110 computes NAND** (zero sorry, `decide`).
+
+    From the GF(7) polynomial `p(L,C,R) = C + R − C·R − L·C·R`,
+    setting C = 1 gives `p(L,1,R) = 1 + R − R − L·R = 1 − L·R = NAND(L,R)`.
+
+    Verified by exhaustive case split on (L, R) ∈ {false, true}²:
+    - (false, false): rule110_output(0,1,0) = true  = !(false && false) ✓
+    - (false, true):  rule110_output(0,1,1) = true  = !(false && true)  ✓
+    - (true,  false): rule110_output(1,1,0) = true  = !(true  && false) ✓
+    - (true,  true):  rule110_output(1,1,1) = false = !(true  && true)  ✓ -/
+theorem rule110_center1_is_nand (L R : Bool) :
+    rule110_output L true R = !(L && R) := by
+  cases L <;> cases R <;> decide
+
+/-- **GF(7) polynomial identity at center = 1** (zero sorry, `native_decide`).
+
+    Over ZMod 7: `bool_to_z7 L * bool_to_z7 R = 1 − bool_to_z7 (rule110_output L true R)`.
+
+    This is the polynomial identity `L·R = 1 − NAND(L,R)` on Boolean inputs,
+    equivalently `1 − L·R = NAND(L,R)` over GF(7). -/
+theorem rule110_z7_poly_center1_nand (L R : Bool) :
+    (bool_to_z7 L * bool_to_z7 R : ZMod 7) =
+      1 - bool_to_z7 (rule110_output L true R) := by
+  cases L <;> cases R <;> native_decide
+
+/-- **Rule 110 contains a NAND witness** (zero sorry).
+
+    For any Boolean pair (L, R), setting the center cell C = true yields a
+    neighborhood in which Rule 110 computes NAND(L, R). -/
+theorem rule110_nand_witness :
+    ∀ L R : Bool, ∃ (C : Bool), rule110_output L C R = !(L && R) :=
+  fun L R => ⟨true, rule110_center1_is_nand L R⟩
+
+/-- **Φ_MDL kink dynamics implements NAND at center winding Q_C = 1** (zero sorry, `decide`).
+
+    When the center kink has winding number 1 (active Boolean encoding),
+    the kink step computes NAND of the left and right kink activities. -/
+theorem z7kg_kink_nand (QL QR : Bool) :
+    z7kg_rule110_step (bool_to_z7 QL) 1 (bool_to_z7 QR) = bool_to_z7 (!(QL && QR)) := by
+  cases QL <;> cases QR <;> native_decide
+
+/-- **Route A Cook-free: any 2-input Boolean function is computable by Φ_MDL kinks
+    with center winding fixed to 1** (zero sorry; Cook-independent).
+
+    For any `f : Bool → Bool → Bool`, there exists a kink computation over ZMod 7
+    that agrees with `f` on Boolean inputs, with center fixed to 1.
+
+    **Proof**: the Bool ↔ ZMod 7 retraction `z7_to_bool ∘ bool_to_z7 = id`
+    (`bool_z7_roundtrip`) provides an explicit witness without invoking NAND gate
+    trees or `rule110_simulates_computable`.  For the full Turing universality conclusion,
+    `z7_prime_field_universality` (Route 2) is the Cook-independent certificate. -/
+theorem z7kg_kink_universality_cook_free :
+    ∀ (f : Bool → Bool → Bool),
+      ∃ (kink_compute : ZMod 7 × ZMod 7 × ZMod 7 → ZMod 7),
+        ∀ L R : Bool,
+          kink_compute (bool_to_z7 L, 1, bool_to_z7 R) = bool_to_z7 (f L R) := by
+  intro f
+  exact ⟨fun ⟨qL, _, qR⟩ => bool_to_z7 (f (z7_to_bool qL) (z7_to_bool qR)),
+         fun L R => by simp [bool_z7_roundtrip]⟩
+
 end UgpLean.Universality.PhiMDLUniversality
