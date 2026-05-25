@@ -195,6 +195,7 @@ import UgpLean.Spacetime.PhysicalExclusion
 import UgpLean.Spacetime.ThreeGenerationCapstone
 import UgpLean.Spacetime.CausalInvariance
 import UgpLean.Spacetime.ChiralGliderDynamics
+import UgpLean.Spacetime.ChiralMirrorSpeedSymmetry
 import UgpLean.Spacetime.PhiMDLKinkQuantumNumbers
 import UgpLean.Spacetime.PhiMDLKinkQuantumNumbers
 import UgpLean.QFT.GaugedMassGap
