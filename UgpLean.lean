@@ -166,6 +166,7 @@ import UgpLean.Universality.EWChiralBridge
 import UgpLean.Universality.GUTStructure
 import UgpLean.Universality.MDLDerivabilityCriterion
 import UgpLean.Universality.BornRuleMDL
+import UgpLean.Universality.ThooftEffectMeasureBridge
 import UgpLean.Universality.FockSpaceKink
 import UgpLean.Universality.SylowIndexCouplingHierarchy
 import UgpLean.Substrate.LExtended
