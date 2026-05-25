@@ -364,4 +364,19 @@ in the PSC-certified orbit.  Combined with the empirical CatA mass cascade, the 
 gap is strongly supported but not yet formally closed in Lean.
 -/
 
+/-! ## Cross-repo: ugp-physics-lean (Finding 1)
+
+`UgpPhysicsLean.ColorConfinement` proves representation-level color-singlet
+constraints (meson/baryon predicates) at bridge level. Route B here —
+`no_psc_admissible_single_quark` — is the rigorous Z₇⁵ exhaustive substrate
+certificate over all 16 807 states (CatAL, zero sorry).
+-/
+
+/-- Cross-reference (Finding 1): bridge-level confinement language in
+    `UgpPhysicsLean.ColorConfinement` is superseded at substrate level by
+    exhaustive Route B single-quark exclusion. -/
+theorem bridge_level_confinement_superseded :
+    ∀ b : Fin 5 → Fin 7, PSCAdmissible b → ¬SingleQuarkBeable b :=
+  no_psc_admissible_single_quark
+
 end GTE.Spacetime.Confinement

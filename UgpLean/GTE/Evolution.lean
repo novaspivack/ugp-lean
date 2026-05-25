@@ -53,7 +53,10 @@ theorem worked_orbit_enforced :
     canonicalGen2 = ⟨9, 42, 1023⟩ ∧
     canonicalGen3 = ⟨5, 275, 65535⟩ := canonical_orbit_triples
 
-/-- Trace identifiability: if G₂=(9,42,1023), then n=10, b₁=73, q₁∈{11,29}, c₁∈{823,2137}. -/
+/-- Trace identifiability: if G₂=(9,42,1023), then n=10, b₁=73, q₁∈{11,29}, c₁∈{823,2137}.
+
+    Cross-reference (Finding 4): consumed by `UgpPhysicsLean.PSCOrbitCertificate.seed_from_orbit`;
+    complements zone-based `PSCAdmissible` in `LiftingTheorem`. -/
 theorem trace_identifiability :
     canonicalGen2.a = 9 ∧ canonicalGen2.b = 42 ∧ canonicalGen2.c = 1023 ∧
     1023 = 2^10 - 1 ∧ leptonB = 73 ∧ leptonC1 = 823 ∧ mirrorC1 = 2137 := by

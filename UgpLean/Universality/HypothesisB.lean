@@ -389,7 +389,8 @@ theorem gte_embeds_in_rule110 :
     **GTE sector** (infinite tape, `InfTape` encoding):
       N Rule 110 steps on the encoded GTE state produce the next GTE state. The encoding
       maps GTEState into `InfTape = ℕ → Bool` with a faithful round-trip.
-      Source: `gte_embeds_in_rule110` — proved zero sorry, one axiom (gte_in_rule110_sim_ax).
+      Source: `gte_embeds_in_rule110` — proved zero sorry, one axiom
+      (`GTEComputability.rule110_simulates_computable`).
 
     Together: the Rule 110 Boolean tape is the **single universal computational substrate** —
     it simultaneously computes the SM charge sector (fMDL winding, finite tape) and the mass
@@ -400,7 +401,7 @@ theorem gte_embeds_in_rule110 :
     lattice of L sites); the GTE sector uses `InfTape` (natural for Turing simulation).
     Both are concretely-typed instantiations of the Boolean Rule 110 CA.
 
-    **Status**: zero sorry. One explicit named axiom (`gte_in_rule110_sim_ax`) stands in
+    **Status**: zero sorry. One explicit named axiom (`rule110_simulates_computable`) stands in
     for Cook (2004)'s tape encoding formalization — the same gap as §3a. -/
 theorem hypothesis_b_tape_level :
     -- fMDL sector: finite tape coherence (zero sorry, zero axioms)

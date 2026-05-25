@@ -79,7 +79,10 @@ theorem gammaFreeIdentity_delta_1
   linarith
 
 /-- The abstract claim: the VV formula holds on PDG charged-fermion masses.
- Numerical verification is external ( json). -/
+
+ **Marker theorem (CatAD):** numerical verification is external (JSON artifact).
+ Rational-coefficient structural identities are proved in this file; the stub marks
+ external numerics, not missing in-file algebra. -/
 theorem DownRationalFormulaHolds : True := trivial
 
 /-- Combined closed-form formula derived from TT + VV substitution:

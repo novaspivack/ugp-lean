@@ -108,7 +108,10 @@ def IsPSC (_ : Type) : Prop :=
     The full generalization (arbitrary PSC universe type → CU) awaits the NEMS ↔ UWCA
     bridge. This theorem covers the UGP universe specifically.
 
-    LEAN-CERTIFIED: zero sorry. -/
+    Proof: `IsPSC U` and `IsComputationallyUniversal U` are the **same definition**
+    (`UGP_substrate_turing_universal`), so `id` is the correct proof — not a smuggled
+    tautology. Full NEMS PSC (gauge-side rigidity) awaits the NEMS ↔ UWCA bridge;
+    this theorem certifies the computational-minimum slice only. -/
 theorem psc_implies_computational_universality (U : Type) :
     IsPSC U → IsComputationallyUniversal U := id
 

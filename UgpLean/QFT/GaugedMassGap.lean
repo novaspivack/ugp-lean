@@ -1,6 +1,7 @@
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Tactic
 import UgpLean.Spacetime.MassGap
+import UgpLean.Spacetime.ColorConfinement
 
 /-!
 # QFT-level mass gap for the Z₃-gauged Φ_MDL theory
@@ -221,5 +222,14 @@ theorem qft_gauged_mass_gap_hypotheses_derived :
     (∃ Δ : ℚ, Δ > 0) := by
   refine ⟨sigma_2d_canonical_positive, ?_, beable_mass_gap_positive⟩
   exact canonicalZ3GaugedPhiMDLData.M_kink_pos
+
+/-- **Confinement + mass gap conjunction** (CatAL bridge).
+
+    The color-singlet sector has a positive QFT kink–antikink threshold and no
+    PSC-admissible free quark states. Combines Rank 72-MG-KG with Rank 25-CCF. -/
+theorem confined_massive_color_singlet (P : Z3GaugedPhiMDLData) :
+    0 < P.kink_pair_threshold ∧
+    ∀ b : Fin 5 → Fin 7, GTE.Lifting.PSCAdmissible b → ¬GTE.Spacetime.Confinement.SingleQuarkBeable b :=
+  ⟨P.kink_pair_threshold_pos, fun b hpsc => GTE.Spacetime.Confinement.no_psc_admissible_single_quark b hpsc⟩
 
 end UgpLean.QFT

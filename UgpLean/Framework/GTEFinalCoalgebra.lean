@@ -170,6 +170,7 @@ def GTEReflexiveSpace : ReflexiveTheorySpace where
   iso_complexity _ _ h := h ▸ rfl
   -- Meta-explanation = record-equivalent extension (T' claims to "explain" T)
   MetaExplanation T' T := z7CARecordEq T' T
+  -- Executability stub: C1 orbit proof uses substrate fields; z7CA execution hook is future work.
   ExecInternal _ := True
   -- Any record-equivalent theory is either PSC-violating or record-equivalent (trivial)
   meta_implies_selection_or_req _ _ h := Or.inr h

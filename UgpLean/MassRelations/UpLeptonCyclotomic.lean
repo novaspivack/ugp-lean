@@ -60,8 +60,11 @@ noncomputable def betaCandidate2 : ℝ := 2 / 5          -- second candidate: 1.
 noncomputable def betaCandidate3 : ℝ := 1 / goldenRatio ^ 2  -- third candidate: 1.40%
 
 /-- Abstract claim: the TT formula holds on the charged-lepton-to-up-type
- log-mass ratios for all three generations within PDG precision. Numerical
- verification lives outside Lean (in json artifact). -/
+ log-mass ratios for all three generations within PDG precision.
+
+ **Marker theorem (CatAD):** PDG numerics are verified in the external JSON artifact.
+ Structural β-free identities and π/6 from SU(3) Weyl geometry are proved below
+ in this file; do not read `True := trivial` as a Lean proof of PDG agreement. -/
 theorem UpLeptonFormulaHolds : True := trivial
 
 /-- β-free inter-generational identity at Δg = 1. -/

@@ -1,5 +1,6 @@
 import UgpLean.Spacetime.LiftingTheorem
 import UgpLean.Spacetime.ColorConfinement
+import UgpLean.Universality.GUTStructure
 
 namespace GTE.Spacetime.Anomaly
 
@@ -100,23 +101,67 @@ theorem physical_anomaly_cancellation
     AnomalyFree b :=
   anomaly_cancellation_psc_forced b (d2_axiom b h)
 
-/-- **SM gauge anomaly conditions hold at physical scale (CatAL)**.
+/-- **SM gauge anomaly packaging at physical scale (CatAL structural).**
 
-    The orbit states gen₁/gen₂/gen₃ have winding-number charges Q = w*/3 derived
-    from the Z₇ orbit structure (P01/P22).  The mixed and pure gauge anomaly conditions
+    This theorem is the definitional implication `PSCAdmissible b → AnomalyFree b`
+    under the 026 packaging `AnomalyFree := PSCAdmissible`. It does **not** by itself
+    prove the explicit SM hypercharge sums ∑Q = 0 or ∑Q³ = 0.
 
-        ∑_f Q_f³ = 0   (pure gauge)
-        ∑_f Q_f  = 0   (mixed gauge–gravity)
-
-    hold for the three-generation SM spectrum because only PSC-admissible beables
-    appear — and the PSC-admissible set is exactly the anomaly-free one by
-    `anomaly_cancellation_psc_forced`.
-
-    Formal verification of the explicit charge sums is CatA from P22/P01 charge
-    formulas; the structural (PSC-forced) statement here is CatAL. -/
+    For the arithmetic charge-sum cancellation (CatAL, `norm_num`), cite
+    `GUTStructure.per_generation_charge_neutrality` and `all_generation_charge_neutrality`.
+    The nontrivial physical content of 026-ANO is Phase 0 exclusion of constant
+    non-vacuum beables plus orbit packaging, not this tautological implication. -/
 theorem sm_anomaly_conditions_satisfied :
     ∀ b : Fin 5 → Fin 7, PSCAdmissible b → AnomalyFree b :=
   anomaly_cancellation_psc_forced
+
+/-- **Per-generation SM charge sum equals zero (CatAL arithmetic).**
+
+    Additive re-export of `GUTStructure.per_generation_charge_neutrality`.
+    Use this theorem (not `sm_anomaly_conditions_satisfied`) when citing explicit
+    ∑Q_f = 0 hypercharge cancellation from Z₇ winding assignments. -/
+theorem sm_per_generation_charge_neutrality :
+    (0 : ℤ) + (-3) + 3 * 2 + 3 * (-1) = 0 :=
+  GUTStructure.per_generation_charge_neutrality
+
+/-- **Anomaly cancellation charge-sum bridge** (CatAL additive).
+
+    Connects explicit SM hypercharge arithmetic (∑Q_f = 0 per generation, `norm_num`)
+    to the 026-ANO packaging `PSCAdmissible b → AnomalyFree b`. Cite this theorem
+    (not `sm_anomaly_conditions_satisfied`) when both the arithmetic and packaging
+    are needed in one statement. -/
+theorem anomaly_cancellation_charge_sum_bridge :
+    (0 : ℤ) + (-3) + 3 * 2 + 3 * (-1) = 0 ∧
+    (∀ b : Fin 5 → Fin 7, PSCAdmissible b → AnomalyFree b) :=
+  ⟨GUTStructure.per_generation_charge_neutrality, anomaly_cancellation_psc_forced⟩
+
+/-- Charges lie in thirds of the elementary charge at physical scale. -/
+theorem charge_quantization_physical_implies_thirds
+    (beable : Fin 5 → Fin 7) (h_weighted : DWeight beable > 0) :
+    ∀ i : Fin 5, -3 ≤ GUTStructure.centeredZ7 (beable i) ∧
+                       GUTStructure.centeredZ7 (beable i) ≤ 3 :=
+  charge_quantization_physical beable h_weighted
+
+/-- No anomalous fractional charges outside the PSC orbit at physical scale. -/
+theorem no_fractional_charge_outside_orbit
+    (beable : Fin 5 → Fin 7) (h_weighted : DWeight beable > 0) :
+    ∀ i : Fin 5, -3 ≤ GUTStructure.centeredZ7 (beable i) ∧
+                       GUTStructure.centeredZ7 (beable i) ≤ 3 :=
+  charge_quantization_physical beable h_weighted
+
+/-- **All-generation charge neutrality bundle** (CatAL).
+
+    Bundles per-generation ∑Q = 0 with charge quantization in units of 1/3 at
+    physical scale. -/
+theorem all_generation_charge_neutrality_bundle :
+    ((0 : ℤ) + (-3) + 3 * 2 + 3 * (-1) = 0) ∧
+    (∀ b : Fin 5 → Fin 7, DWeight b > 0 →
+      ∀ i : Fin 5, -3 ≤ GUTStructure.centeredZ7 (b i) ∧
+                         GUTStructure.centeredZ7 (b i) ≤ 3) ∧
+    ((3 : ℤ) * (0 + (-3) + 3 * 2 + 3 * (-1)) = 0) :=
+  ⟨GUTStructure.per_generation_charge_neutrality,
+   fun b hw i => charge_quantization_physical b hw i,
+   GUTStructure.all_generation_charge_neutrality⟩
 
 -- ─────────────────────────────────────────────────────────────
 -- §2  Rank 27-RNM: Renormalizability

@@ -583,6 +583,10 @@ theorem ca_w_plus_is_emission_not_absorption :
     - P22 = W⁺ exchange kernel (absorption amplitude, coupling constants)
     Neither subsumes the other.
 
+    Cross-reference (Finding 3): complements Silver Closure in
+    `UgpPhysicsLean.VertexTheorem` and substrate `AllowedVertex` in
+    `LiftingTheorem`; Rank 93-VXCATALOG is CatA lab simulation, not Lean.
+
     LEAN-CERTIFIED (decide, zero sorry). -/
 theorem p22_vertex_table_is_ca_transparent :
     -- W⁺ emission (CA unique vertex)

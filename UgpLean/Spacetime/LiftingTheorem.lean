@@ -35,6 +35,16 @@ formula, generation hierarchy, vertex catalog, C1 uniqueness — automatically
 holds at Compton scale without additional simulation. The algebraic proofs are
 the physical proofs.
 
+## Cross-repo: ugp-physics-lean (Findings 3–4)
+
+- **Finding 3:** `AllowedVertex` (§11) is the substrate PSC vertex catalog; Silver
+  Closure is `UgpPhysicsLean.VertexTheorem`; CA bridge is
+  `Z7ChargeConjugation.p22_vertex_table_is_ca_transparent`. Rank 93-VXCATALOG is
+  CatA lab simulation only — not a Lean module.
+- **Finding 4:** Zone-based `PSCAdmissible` complements seed arithmetic in
+  `UgpPhysicsLean.PSCOrbitCertificate` (b=73, c=823); shared root
+  `GTE.Evolution.trace_identifiability`.
+
 ## Certification status
 
 | Component | Status |
@@ -539,6 +549,20 @@ def AllowedVertex (composite component_a component_b : Fin 5 → Fin 7) : Prop :
   PSCAdmissible composite ∧
   PSCAdmissible component_a ∧
   PSCAdmissible component_b
+
+/-- Cross-reference (Finding 3): substrate vertex gate; complements Silver Closure
+    (`UgpPhysicsLean.VertexTheorem`) and CA bridge
+    (`Z7ChargeConjugation.p22_vertex_table_is_ca_transparent`). -/
+theorem allowed_vertex_substrate_catalog (C A B : Fin 5 → Fin 7) :
+    AllowedVertex C A B ↔ PSCAdmissible C ∧ PSCAdmissible A ∧ PSCAdmissible B :=
+  Iff.rfl
+
+/-- Cross-reference (Finding 4): zone-based PSC orbit table links to seed certificate
+    chain in `UgpPhysicsLean.PSCOrbitCertificate` via `trace_identifiability`. -/
+theorem psc_admissible_orbit_certificate_link :
+    ∀ b : Fin 5 → Fin 7, PSCAdmissible b →
+      b = fmdl_vacuum5 ∨ b = fmdl_gen1_z7 ∨ b = fmdl_gen2_z7 ∨ b = fmdl_gen3_z7 :=
+  fun b h => (psc_admissible_iff_orbit b).mp h
 
 /-- Scattering Existence Theorem (Rank 16-ESC).
     For every allowed vertex in the algebraic catalog, the corresponding physical
