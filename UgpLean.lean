@@ -175,11 +175,13 @@ import UgpLean.Universality.PSCEffectMeasure
 import UgpLean.Universality.FockSpaceKink
 import UgpLean.Universality.BeableWindingPartitionInstance
 import UgpLean.Universality.DualFrameBornRule
+import UgpLean.Universality.PhiMDLThermalState
 import UgpLean.Universality.SylowIndexCouplingHierarchy
 import UgpLean.Substrate.LExtended
 import UgpLean.Substrate.Substrate
 import UgpLean.Substrate.PSCPreservingTransformation
 import UgpLean.Substrate.CoherenceMeasure
+import UgpLean.Substrate.CoherenceMeasureUniqueness
 import UgpLean.Substrate.QECStabilizer
 import UgpLean.Substrate.TransputationStateSelector
 import UgpLean.Substrate.LagrangianLorentzScalar
