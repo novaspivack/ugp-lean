@@ -9,7 +9,8 @@ import UgpLean.Universality.GTEComputability
 /-!
 # UgpLean.Universality.PhiMDLUniversality — Rank 81-EANALOG
 
-**Turing universality of the smooth Φ_MDL (Z₇-KG) field via two independent routes.**
+**Turing universality of the smooth Φ_MDL (Z₇-KG) field via two independent routes,
+plus a Route 1 audit (final coalgebra path) at §R1.**
 
 ## Physical setup
 
@@ -41,14 +42,19 @@ then inherits from `rule110_simulates_computable`.
 | `phiMDL_step_simulates_rule110`       | B | zero sorry |
 | `phimdl_law_description_execution`   | B | zero sorry |
 | `phimdl_turing_universal`            | B | 1 documented sorry (ℕ→ℤ tape equivalence bridge) |
+| `z7_prime_field_universality`         | 2 | 0 sorrys; 1 named axiom (Shannon TM→circuit bridge) |
+| Route 1 (final coalgebra path)        | 1 | **Not derivable** — see §R1 audit; PSCSys lacks computational structure |
 
 **Honest gaps:**
-- Both routes depend on `rule110_simulates_computable` (named Cook 2004 bridge axiom in
+- Routes A and B depend on `rule110_simulates_computable` (named Cook 2004 bridge axiom in
   `GTEComputability`).  Once `rule110-lean` closes the TM→CTS→glider formalization, both
   routes become zero-axiom.
 - `phimdl_turing_universal` has one additional sorry for the equivalence between Rule 110 on
   ℕ-indexed tapes (with false left boundary) and ℤ-indexed tapes embedded from ℕ.  This is
   a standard finite-speed-of-light argument requiring careful induction on step count.
+- Route 1 is a **research programme**, not a derivable theorem: see §R1 for the precise
+  analysis of why `c1_final_coalgebra_derived` cannot be non-tautologically bridged to
+  Turing universality without redesigning PSCSys around program objects.
 
 -/
 
@@ -464,5 +470,98 @@ theorem z7_prime_field_universality :
       ∃ (initial_cfg : Z7KGConfiguration) (extract : Z7KGConfiguration → ℕ → ℕ),
         ∀ n, extract (phiMDL_evolution initial_cfg n) n = f n :=
   z7_boolean_completeness_implies_turing_universal bool_fn3_z7_representative
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- §R1  Route 1 Audit: Final Coalgebra Path to Universality
+-- ─────────────────────────────────────────────────────────────────────────────
+
+/-!
+## Route 1 Audit: `c1_final_coalgebra_derived` and Turing Universality
+
+### What `c1_final_coalgebra_derived` actually states
+
+```
+theorem c1_final_coalgebra_derived :
+    PSCSubstrate.IsTerminal GTEPSCSubstrate
+```
+
+where `PSCSubstrate.IsTerminal A := ∀ B : PSCSubstrate S, S.RecordEquivalent B.T A.T`.
+
+Expanding fully: **for every Z₇ CA function `B.T : Fin 7 → Fin 7 → Fin 7 → Fin 7` that
+is PSC-optimal and orbit-admissible, `z7CARecordEq B.T fmdl` — i.e., `B.T` agrees with
+`fmdl` on all 18 fixed neighborhoods.**
+
+The proof is one line: `fun B => B.oa_proof`, which extracts the orbit-admissibility
+certificate that every `PSCSubstrate` must carry by construction.
+
+### Tautology verdict: **Route 1 is non-derivable without importing computability**
+
+Route 1 is definitively non-derivable as a non-tautological path from
+`c1_final_coalgebra_derived` to Turing universality.  The precise reasons:
+
+**1. PSCSys has no computational structure.**
+The objects of `PSCSys` are elements of type `Fin 7 → Fin 7 → Fin 7 → Fin 7` — finite
+lookup tables with 343 entries.  Morphisms are record-equivalence (agreement on 18 of
+343 entries).  This category contains no programs, no Turing machines, no computable
+functions.  It is a thin preorder on a finite set.
+
+**2. `FPSC` is the identity functor.**
+By `fpsc_is_identity : FPSC S = 𝟭 (PSCSubstrate S)`, the PSC endofunctor is
+definitionally the identity.  Every object is therefore a fixed point; the Lambek
+isomorphism `c1_lambek_isomorphism` holds by `rfl`.  Being a fixed point of the identity
+selects nothing — all 343-entry lookup tables are fixed points.
+
+**3. `IsTerminal` = greatest element in a finite preorder.**
+In the thin category PSCSys, `IsTerminal GTEPSCSubstrate` means fmdl is the most
+constrained theory — every record-equivalent theory agrees with it on the 18 fixed
+neighborhoods.  This is a uniqueness-and-minimality fact about a 343-entry lookup table
+with no computational interpretation.
+
+**4. Any bridge argument imports computability as hypothesis.**
+The natural universality argument would be: "A unique fixed point of a functor acting
+on the category containing all computable objects must represent all such objects."
+But PSCSys does not contain computable objects — its objects are finite lookup tables.
+Extending PSCSys to include Turing machines as objects would require redefining
+`PSCCompatibleSpace.Theory := Program` (or similar), at which point computability
+is imported by the new definition, making the derivation tautological.
+
+**5. `ExecInternal` is a non-computational stub.**
+`GTEReflexiveSpace` sets `ExecInternal _ := True` — all theories are declared
+internally executable by fiat.  Even this notion does not connect to Turing universality;
+it is a structural placeholder with no computational content in the proofs.
+
+### What genuine non-tautological Route 1 would require
+
+For `c1_final_coalgebra_derived` to genuinely imply Turing universality, the following
+would need to be established independently of any computability hypothesis:
+
+1. **A PSCCompatibleSpace with computational objects.**  Replace
+   `Theory := Fin 7 → Fin 7 → Fin 7 → Fin 7` with a type of programs or partial
+   recursive functions.  Record-equivalence would become observational equivalence.
+   PSC-optimality would become MDL over programs.
+
+2. **A non-trivial PSC functor.**  `FPSC` must have a genuine action — e.g., the
+   Kolmogorov-complexity compression of a program.  The functor must not be the
+   identity; its fixed points must be characterised by a non-trivial condition.
+
+3. **Terminality from functor structure alone.**  The proof that the fixed point is
+   terminal must come from algebraic properties of the functor (e.g., cocompleteness
+   of the program category), not from a finiteness argument on a lookup table.
+
+4. **Universality from terminality.**  A theorem of the form: "The terminal object of
+   a PSCSys category whose objects are programs is Turing universal" — proved without
+   importing `Computable` as a hypothesis.  This would require a purely algebraic
+   characterisation of Turing universality in terms of category-theoretic terminality.
+
+### Conclusion
+
+Route 1 remains open as a **research programme**, not a derivation.  The existing
+`c1_final_coalgebra_derived` theorem has genuine algebraic content (terminality in
+PSCSys), but that content concerns a finite lookup table under record-equivalence, not
+a Turing-universal process.  No Lean proof of Turing universality can be extracted
+from it without importing computability as a new hypothesis or redefining PSCSys.
+
+The existing Routes A, B, and 2 in this file are the certified universality proofs.
+-/
 
 end UgpLean.Universality.PhiMDLUniversality
