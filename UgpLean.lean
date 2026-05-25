@@ -141,6 +141,7 @@ import UgpLean.Universality.CasimirMasslessEther
 import UgpLean.Universality.ChiralPairVA
 import UgpLean.Universality.CouplingNoGo
 import UgpLean.Universality.DynamicalCouplingBridge
+import UgpLean.Universality.ExcitationCoupling
 import UgpLean.Universality.LorentzInvariance
 import UgpLean.Universality.ChiralityEigenstates
 import UgpLean.Universality.WeakIsospin
