@@ -4,6 +4,7 @@ open Lake DSL
 package «ugp-lean» where
   -- UGP (Universal Generative Principle) and GTE (Generative Triple Evolution)
   -- Formalization for UGP papers, Paper 25, and MFRR
+  weakLeanArgs := #["--tstack=65536"]
 
 -- nems-lean (Lawvere/Kleene fixed-point theorems, Paper 26; SelfReference is a lean_lib within it)
 -- Using «nems-lean» as package name to avoid duplicate-module conflicts when transputation

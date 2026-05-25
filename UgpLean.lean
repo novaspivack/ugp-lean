@@ -210,6 +210,24 @@ import UgpLean.Spacetime.PhiMDLKinkQuantumNumbers
 import UgpLean.QFT.GaugedMassGap
 import UgpLean.QFT.ChiralSymmetryBreaking
 import UgpLean.Universality.PhiMDLUniversality
+-- EPIC_073 batch graduation (2026-05-25)
+import UgpLean.Substrate.Substrate
+import UgpLean.Substrate.CoherenceMeasure
+import UgpLean.Substrate.PSCPreservingTransformation
+import UgpLean.Substrate.LagrangianLorentzScalar
+import UgpLean.Substrate.PSCStructureLorentzPreserved
+import UgpLean.Substrate.PSCPILorentzMain
+import UgpLean.Substrate.NoetherAngularMomentum
+import UgpLean.Universality.BornRuleMDL
+import UgpLean.Universality.FockSpaceKink
+import UgpLean.Universality.ExcitationCoupling
+import UgpLean.Universality.DynamicalCouplingBridge
+import UgpLean.Universality.TwoRoleTheorem
+import UgpLean.Universality.EWScalePrediction
+import UgpLean.Universality.ThooftEffectMeasureBridge
+import UgpLean.Universality.LorentzInvariance
+import UgpLean.Universality.PSCEffectMeasure
+import UgpLean.Framework.PhiMDLBridge
 
 /-!
 # UgpLean — Universal Generative Principle: Lean 4 Formalization
