@@ -220,6 +220,7 @@ import UgpLean.Substrate.PSCPILorentzMain
 import UgpLean.Substrate.NoetherAngularMomentum
 import UgpLean.Universality.BornRuleMDL
 import UgpLean.Universality.FockSpaceKink
+import UgpLean.Universality.BeableWindingPartitionInstance
 import UgpLean.Universality.ExcitationCoupling
 import UgpLean.Universality.DynamicalCouplingBridge
 import UgpLean.Universality.TwoRoleTheorem
