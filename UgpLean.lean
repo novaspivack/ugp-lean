@@ -174,6 +174,7 @@ import UgpLean.Universality.PSCEffectMeasureGeneric
 import UgpLean.Universality.PSCEffectMeasure
 import UgpLean.Universality.FockSpaceKink
 import UgpLean.Universality.BeableWindingPartitionInstance
+import UgpLean.Universality.DualFrameBornRule
 import UgpLean.Universality.SylowIndexCouplingHierarchy
 import UgpLean.Substrate.LExtended
 import UgpLean.Substrate.Substrate
