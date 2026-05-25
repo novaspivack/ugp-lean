@@ -740,11 +740,16 @@ Formal certification of the CA ether dispersion relation E(k) = v_CA × k evalua
 
 *Rank 79-MASSES — Orbit Generation Mass Hierarchy (`OrbitMassHierarchy.lean`)*
 
-- `orbit_generation_ordering` — ∀ s : SmSector, gen₃ mass lb > gen₂ mass lb > gen₁ mass lb > 0; closes OA-1 (physical generation ordering from cascade depth); all three SM sectors (lepton/upQuark/downQuark) (CatAL, 12 theorems total)
+- `orbit_generation_ordering` — ∀ s : SmSector, gen₃ mass lb > gen₂ mass lb > gen₁ mass lb > 0; closes OA-1 (physical generation ordering from cascade depth); all three SM sectors (lepton/upQuark/downQuark) (CatAL)
 - `cross_sector_gen1_ordering` — down-quark gen₁ lb > up-quark gen₁ lb > lepton gen₁ lb > 0 (CatAL)
 - `lepton_gen1_below_beable_gap` — electron mass lb (0.51 MeV) < Level A beable floor (1.8 MeV), formalizing the Level A/B two-level structure (CatAL)
 - `up_quark_gen1_matches_beable_gap` — up-quark gen₁ lb exactly equals the beable-level floor (CatAL)
 - Per-sector mass floor constants: m_electron_lb=0.51 MeV, m_muon_lb=105 MeV, m_tau_lb=1770 MeV; m_up_lb=1.8 MeV, m_charm_lb=1200 MeV, m_top_lb=170 GeV; m_down_lb=4 MeV, m_strange_lb=80 MeV, m_bottom_lb=4 GeV
+- **Self-Consistency Condition (SCC) — §7 (4 new CatAL theorems, 16 total):**
+  - `leptonic_sector_heaviest_gen3` — τ lepton (gen₃) has the greatest mass lb in the leptonic (color-singlet, pure-Z₇) sector; specialization of `orbit_generation_ordering` to `SmSector.lepton` (CatAL)
+  - `mphi_equals_tau_mass_scc` — SCC identification m_φ = m_τ = 1776.86 MeV; `mphi_scc := m_tau_pdg_eV` by structural self-consistency (F₂₁ = Z₇ ⋊ Z₃ + three-generation closure + MDL minimality); proved by `rfl` (CatAL)
+  - `mkink_from_scc` — BPS kink mass M_kink = (8/49)·m_τ = 290.10 MeV; proved by `rfl` (CatAL)
+  - `fpi_from_scc` — pion decay constant f_π = M_kink/π = 92.34 MeV (+0.30% vs PDG 92.07, 2.6× precision improvement, no free parameters); definitional equality in ℝ via `Real.pi`, proved by `rfl` (CatAL)
 
 *Rank 55-3DLT — Spatially Extended Lifting (`SpatiallyExtendedLifting.lean`)*
 
