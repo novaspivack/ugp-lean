@@ -5002,16 +5002,18 @@ full matrix \texttt{EffectMeasure} instantiation is completed in
   (\texttt{Universality/PSCEffectMeasure.lean})}\label{subsec:psc-effect-measure}
 
 Module: \texttt{Universality/PSCEffectMeasure.lean} (Rank 070-97B2-LEAN,
-zero \lstinline|sorry|, \textbf{conditional CatAL}: seven private axioms plus
-one imported axiom \lstinline|re_trace_psd_mul_psd_nonneg| from nems-lean).
+zero \lstinline|sorry|, \textbf{conditional CatAL}: zero private axioms plus
+one imported axiom \lstinline|re_trace_psd_mul_psd_nonneg| from nems-lean,
+discharged via \texttt{PSCEffectMeasureGeneric.lean}, commit 648cba7).
 
 Constructive B2 bridge: given \lstinline|BeableAmplitudeHypothesis|, the
 rank-one Born density $\rho_\alpha = |\alpha\rangle\langle\alpha|$ on
 $\mathrm{BeableDim} = 7^5$ induces an \lstinline|EffectMeasureProxy| via
 $\mu_\alpha(E) = \mathrm{Re}\,\mathrm{Tr}(\rho_\alpha E)$.
-The seven private axioms are kernel workarounds for matrix operations at
-dimension $7^5$ (PSD/trace lemmas, opaque sector projectors, effect-one
-normalization); they are not physical assumptions.
+The module previously carried seven private kernel-workaround axioms for matrix
+operations at dimension $7^5$ (PSD/trace lemmas, opaque sector projectors,
+effect-one normalization); all have been discharged via parametric proofs over
+\texttt{Fin n} in \texttt{PSCEffectMeasureGeneric.lean} (commit 648cba7).
 
 \begin{theorem}[\lstinline|psc_fmdl_implies_effect_measure|, conditional CatAL, zero \texttt{sorry}]
 For every \lstinline|BeableAmplitudeHypothesis| $h$, there exists
