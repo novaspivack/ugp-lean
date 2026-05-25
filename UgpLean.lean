@@ -134,6 +134,7 @@ import UgpLean.Universality.SMOrbitCausalIsolation
 import UgpLean.Universality.EWBosonStructure
 import UgpLean.Universality.EWChiralBridge
 import UgpLean.Universality.GUTStructure
+import UgpLean.Universality.TwoRoleTheorem
 import UgpLean.Universality.EWScalePrediction
 import UgpLean.Framework.GTEFrameworkInstance
 import UgpLean.Framework.GTEOptimalityInstance
