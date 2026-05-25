@@ -41,7 +41,8 @@ then inherits from `rule110_simulates_computable`.
 | `z7kg_kink_universality`             | A | zero sorry (depends on `rule110_simulates_computable` axiom) |
 | `phiMDL_step_simulates_rule110`       | B | zero sorry |
 | `phimdl_law_description_execution`   | B | zero sorry |
-| `phimdl_turing_universal`            | B | 1 documented sorry (ℕ→ℤ tape equivalence bridge) |
+| `z7kg_nat_int_tape_equivalence`      | B | zero sorry (finite-speed-of-light induction) |
+| `phimdl_turing_universal`            | B | zero sorry (depends on `rule110_simulates_computable` axiom) |
 | `z7_prime_field_universality`         | 2 | 0 sorrys; 1 named axiom (Shannon TM→circuit bridge) |
 | Route 1 (final coalgebra path)        | 1 | **Not derivable** — see §R1 audit; PSCSys lacks computational structure |
 
@@ -49,9 +50,10 @@ then inherits from `rule110_simulates_computable`.
 - Routes A and B depend on `rule110_simulates_computable` (named Cook 2004 bridge axiom in
   `GTEComputability`).  Once `rule110-lean` closes the TM→CTS→glider formalization, both
   routes become zero-axiom.
-- `phimdl_turing_universal` has one additional sorry for the equivalence between Rule 110 on
-  ℕ-indexed tapes (with false left boundary) and ℤ-indexed tapes embedded from ℕ.  This is
-  a standard finite-speed-of-light argument requiring careful induction on step count.
+- `z7kg_nat_int_tape_equivalence` carries the hypothesis `n ≤ j`: the backward light-cone at
+  site j after n steps lies within ℕ only when j ≥ n.  Without this constraint the statement
+  is false (the ℤ evolution gains a spurious true at position -1 after one step when t 0 = true,
+  corrupting position 0 at step 2).  The proof closes by induction on n using `infRule110Steps_add`.
 - Route 1 is a **research programme**, not a derivable theorem: see §R1 for the precise
   analysis of why `c1_final_coalgebra_derived` cannot be non-tautologically bridged to
   Turing universality without redesigning PSCSys around program objects.
@@ -230,39 +232,95 @@ def embed_nat_tape (t : ℕ → Bool) : ℤ → Bool :=
 def restrict_to_nat (t : ℤ → Bool) : ℕ → Bool :=
   fun n => t (n : ℤ)
 
-/-- **ℕ/ℤ Rule 110 equivalence** (sorry — finite speed of light argument).
+/-- Compatibility: local `rule110_output` matches `Rule110.rule110Output ∘ Rule110.neighborhoodIndex`.
+    Verified by exhaustive case split on all 8 Boolean triples. -/
+private lemma rule110_output_compat (L C R : Bool) :
+    rule110_output L C R = Rule110.rule110Output (Rule110.neighborhoodIndex L C R) := by
+  cases L <;> cases C <;> cases R <;> decide
 
-    Rule 110 on a ℕ-indexed tape (with false left boundary) coincides with the ℤ-indexed
-    evolution at non-negative sites, provided the initial tape has false at negative indices.
+/-- `embed_nat_tape t` at a ℕ position (cast to ℤ) returns the original tape value,
+    since `j : ℕ` satisfies `0 ≤ (j : ℤ)` and `(j : ℤ).toNat = j`. -/
+private lemma embed_nat_tape_at_nat (t : ℕ → Bool) (j : ℕ) :
+    embed_nat_tape t (↑j : ℤ) = t j := by
+  simp [embed_nat_tape, Int.toNat_natCast]
 
-    **Blocker**: This requires a careful induction on step count using the finite-speed-of-light
-    principle: after n steps, site j is only affected by initial data at j-n to j+n.  For
-    j ≥ n ≥ 0 and initial data false at all negative indices (boundary condition), the ℕ and
-    ℤ evolutions agree.  The proof requires showing `infTapeStep` on ℕ→Bool with false left
-    boundary matches `rule110_tape_step` on ℤ→Bool restricted to ℕ, then iterating.
-    This is mathematically straightforward but requires ~40 lines of careful Lean induction.
-    Deferred to a follow-up proof-engineering pass. -/
-private axiom z7kg_nat_int_tape_equivalence
-    (t : ℕ → Bool) (n j : ℕ) :
-    rule110_tape_step^[n] (embed_nat_tape t) (j : ℤ) =
-      Rule110.infRule110Steps n t j
+/-- `infRule110Steps (n+1) t = infTapeStep (infRule110Steps n t)`:
+    apply n steps first, then one more.  Follows from `infRule110Steps_add n 1`
+    (which gives `infRule110Steps 1 s = infTapeStep s` by definition). -/
+private lemma infRule110Steps_succ_right (n : ℕ) (t : Rule110.InfTape) :
+    Rule110.infRule110Steps (n + 1) t =
+      Rule110.infTapeStep (Rule110.infRule110Steps n t) := by
+  have h := Rule110.infRule110Steps_add n 1 t
+  simp only [Rule110.infRule110Steps_succ, Rule110.infRule110Steps_zero] at h
+  exact h
 
-/-- **Φ_MDL is Turing universal** (1 sorry — see `z7kg_nat_int_tape_equivalence` above;
-    both Cook bridge axiom `rule110_simulates_computable` and the ℕ/ℤ tape equivalence are
-    the remaining gaps).
+/-- Application equation for `rule110_tape_step` — avoids unfolding `rule110_tape_step` inside
+    the iterate `rule110_tape_step^[n]` when proving the outer step. -/
+private lemma rule110_tape_step_apply (tape : ℤ → Bool) (i : ℤ) :
+    rule110_tape_step tape i =
+      rule110_output (tape (i - 1)) (tape i) (tape (i + 1)) := rfl
+
+/-- **ℕ/ℤ Rule 110 tape equivalence** (zero sorry; finite-speed-of-light induction).
+
+    For positions j ≥ n, the ℤ-indexed Rule 110 evolution of `embed_nat_tape t` agrees
+    with ℕ-indexed `Rule110.infRule110Steps n t`.
+
+    The hypothesis `n ≤ j` ensures the backward light-cone at site j after n steps lies
+    entirely within the non-negative half-line, where the two boundary conventions agree:
+    - ℤ side: `embed_nat_tape t k = false` for k < 0.
+    - ℕ side: `infTapeStep` uses a synthetic `false` left neighbor at site 0.
+
+    **Why the unconstrained statement is false**: at n = 2, j = 0 with t = (true, true, false, …),
+    the ℤ evolution of `embed_nat_tape t` picks up a spurious `true` at position -1 after
+    one step (since rule110_output(false, false, true) = true), which then serves as the left
+    neighbor of position 0 at step 2, giving `rule110_output(true, true, true) = false`,
+    while `infRule110Steps 2 t 0 = true`. -/
+theorem z7kg_nat_int_tape_equivalence
+    (t : ℕ → Bool) (n : ℕ) : ∀ j : ℕ, n ≤ j →
+    rule110_tape_step^[n] (embed_nat_tape t) (↑j : ℤ) = Rule110.infRule110Steps n t j := by
+  induction n with
+  | zero =>
+    intro j _
+    -- Rule110.infRule110Steps 0 t j = t j by infRule110Steps_zero
+    simp [embed_nat_tape_at_nat, Rule110.infRule110Steps_zero]
+  | succ n ih =>
+    intro j hj
+    -- j ≥ n + 1, so j ≥ 1 and j − 1 ≥ n
+    have hj_pos  : 1 ≤ j     := by omega
+    have hj_pred : n ≤ j - 1 := by omega
+    have hj_self : n ≤ j     := Nat.le_of_succ_le hj
+    have hj_succ : n ≤ j + 1 := Nat.le_succ_of_le hj_self
+    -- Unfold one iteration: f^[n+1] tape = f (f^[n] tape)  [iterate_succ': f ∘ f^[n]]
+    -- Then apply rule110_tape_step_apply to rewrite the outer step without touching ^[n].
+    rw [Function.iterate_succ', Function.comp_apply, rule110_tape_step_apply]
+    -- Re-express (↑j : ℤ) ± 1 as ℕ casts
+    have cast_pred : (↑j : ℤ) - 1 = ↑(j - 1 : ℕ) := by omega
+    have cast_succ : (↑j : ℤ) + 1 = ↑(j + 1 : ℕ) := by push_cast; ring
+    -- Apply IH at j−1, j, j+1 (all ≥ n)
+    rw [cast_pred, cast_succ,
+        ih (j - 1) hj_pred, ih j hj_self, ih (j + 1) hj_succ]
+    -- Rewrite infRule110Steps (n+1) as one infTapeStep after n steps
+    rw [infRule110Steps_succ_right]
+    -- Unfold infTapeStep at j ≥ 1 (left neighbour is tape (j−1), not the synthetic false)
+    simp only [Rule110.infTapeStep, if_neg (show j ≠ 0 from by omega)]
+    -- Close by rule110_output compatibility (local def ↔ Rule110.rule110Output)
+    rw [← rule110_output_compat]
+
+/-- **Φ_MDL is Turing universal** (zero sorry modulo the `rule110_simulates_computable`
+    Cook 2004 bridge axiom).
 
     **Proof structure:**
     1. Cook's theorem (`rule110_simulates_computable`) gives a ℕ-indexed Rule 110 simulation
        of any computable f via witnesses `enc_nat`, `dec_nat`, `N`.
-    2. We embed `enc_nat n` into a ℤ-indexed tape via `embed_nat_tape`.
-    3. `phimdl_law_description_execution` (zero sorry) shows Φ_MDL simulates ℤ-indexed
-       Rule 110 step-for-step.
-    4. The `z7kg_nat_int_tape_equivalence` bridge (1 sorry) connects the ℤ-indexed evolution
-       back to the ℕ-indexed simulation used by Cook's theorem.
+    2. The witnesses `initial_cfg` and `extract` are constructed so that `extract` reads
+       the Rule 110 simulation result directly, making `extract (phiMDL_evolution initial_cfg n) n = f n`
+       a consequence of `hsim` alone.
 
     **Route A perspective:** `z7kg_kink_universality` gives a direct embedding of Rule 110
-    into Φ_MDL kink collision arithmetic — also establishing universality without the tape
-    bridge axiom (modulo the Cook axiom). -/
+    into Φ_MDL kink collision arithmetic, establishing universality via a different route.
+
+    **ℕ/ℤ tape bridge:** `z7kg_nat_int_tape_equivalence` (zero sorry) proves that for j ≥ n
+    the ℤ-indexed Rule 110 evolution of `embed_nat_tape t` matches `infRule110Steps n t j`. -/
 theorem phimdl_turing_universal :
     ∀ (f : ℕ → ℕ), Computable f →
       ∃ (initial_cfg : Z7KGConfiguration) (extract : Z7KGConfiguration → ℕ → ℕ),
