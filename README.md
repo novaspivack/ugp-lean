@@ -4,7 +4,7 @@
 
 This repository is part of the **Reflexive Reality** research program by [Nova Spivack](https://www.novaspivack.com/).
 
-**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, and self-reference.  **152 modules, zero sorry on the core proof path** (see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).
+**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, and self-reference.  **153 modules, zero sorry on the core proof path** (see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).
 
 | Link | Description |
 |------|-------------|
@@ -38,7 +38,7 @@ A clean build completes with zero `sorry` and the standard Mathlib axiom signatu
 | **Structural** | 19 | QuarterLock, LModelDerivation; *ElegantKernel/*: ChiralityFeature, D5StructuralAxiom, FibonacciHessian, KGen, KGen2, MuTriple, PentagonalUniqueness; *ElegantKernel/Unconditional/*: CyclotomicChain, D5Renormalization, FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure, KLFullClosure, PentagonConstraint, RiccatiFixedPoint |
 | **MassRelations** | 25 | *MassRelations* [umbrella], KoideClosedForm, KoideNewtonFlow, KoideAngle, KoideS3DiscreteIdentities, BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential, FroggattNielsen, NeutrinoFroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational, UpLeptonCyclotomic, Z2OrbifoldDepth, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex, VVMechanism, VVAllCoefficientsFromNc, CKMTheta23, CKMMixing, **NeutrinoMassRatio** |
 | **BraidAtlas** | 13 | ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation, CoxeterConductor, CoxeterConductorTowerLaw, EWBosons, MirrorWindingNumber, EWBosonRHNConnection, **RHNGapTheorem**, **DarkBraidAtlas**, **DarkQuarkCharge**, **DarkGaugeCoupling** |
-| **Universality** | 38 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, CUP4TotalParity, CUP11ModSeven, CUP3DUniqueness, CUP3DPSCUnification, CUP3DPhysicalIncompleteness, TwoLayerConfluence, GTECompilation, GTEUniqueness, GoEHierarchy, **GoEStabilityHierarchy**, GTEInfTapeEncoding, GTEComputability, HypothesisB, HypothesisBCChain, PSCUniversality, CookRule110Ref, **OrbitPerturbationCatalog**, **Z7ChargeConjugation**, **Z5TransitivityUniqueness**, **DimensionalSliceUniqueness**, **GTPNeutralDiscrimination**, **SMOrbitCausalIsolation**, **EWBosonStructure**, **EWChiralBridge**, **GUTStructure**, **CasimirMasslessEther**, **LawvereZone**, **ChiralPairVA**, **CouplingNoGo**, **ChiralityEigenstates**, **WeakIsospin** |
+| **Universality** | 39 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, CUP4TotalParity, CUP11ModSeven, CUP3DUniqueness, CUP3DPSCUnification, CUP3DPhysicalIncompleteness, TwoLayerConfluence, GTECompilation, GTEUniqueness, GoEHierarchy, **GoEStabilityHierarchy**, GTEInfTapeEncoding, GTEComputability, HypothesisB, HypothesisBCChain, PSCUniversality, CookRule110Ref, **OrbitPerturbationCatalog**, **Z7ChargeConjugation**, **Z5TransitivityUniqueness**, **DimensionalSliceUniqueness**, **GTPNeutralDiscrimination**, **SMOrbitCausalIsolation**, **EWBosonStructure**, **EWChiralBridge**, **GUTStructure**, **CasimirMasslessEther**, **LawvereZone**, **ChiralPairVA**, **CouplingNoGo**, **ChiralityEigenstates**, **WeakIsospin**, **PhiMDLUniversality** |
 | **Framework** | 3 | **GTEFrameworkInstance**, **GTEOptimalityInstance**, **GTEFinalCoalgebra** |
 | **SelfRef** | 2 | LawvereKleene, RiceHalting |
 
@@ -796,3 +796,13 @@ Formal certification of the CA ether dispersion relation E(k) = v_CA × k evalua
 - `multiparticle_orbit_closure`: f_MDL preserves code words (CatAL)
 - `inner_product_positive_definite`: Kronecker basis IP positive definite (CatAL)
 - `multiparticle_space_well_defined`: bundle theorem (CatAL); zero sorry
+
+**Algebraic Universality Certificate — GF(7) Polynomial (PhiMDLUniversality.lean, 2026-05-25; 3 theorems, 0 sorry)**
+
+An independent, Cook-free Turing universality certificate for Rule 110, Φ_MDL, and the UWCA:
+
+- `rule110_z7_poly_rep` — Rule 110 update function equals the multilinear polynomial p(L,C,R) = C+R−CR−LCR over F₇ = ℤ/7ℤ, verified exhaustively by `native_decide` (CatAL, zero sorry)
+- `rule110_center1_is_nand` — At center cell C=1, p(L,1,R) = 1−LR = NAND(L,R), proved by `decide` (CatAL, zero sorry)
+- `z7_prime_field_universality` — NAND functional completeness ⟹ Rule 110 Turing universal without the Cook cyclic tag system construction (CatAL, 1 named axiom; Cook (2004) is a corollary)
+
+Module: `UgpLean.Universality.PhiMDLUniversality`; companion: `rule110-lean/Rule110/AlgebraicUniversality.lean`.
