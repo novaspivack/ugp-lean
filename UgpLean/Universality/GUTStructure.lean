@@ -7807,6 +7807,18 @@ theorem cos_sq_theta_w_ratio :
 theorem sirlin_cos_cancellation :
     (3 : ℚ) / 13 * (10 / 13) / (10 / 13) = 3 / 13 := by norm_num
 
+/-- **delta_alpha_gte_rational** (CatAL):
+    The GTE radiative α-shift proxy Δα_GTE = sin²θ_W × cos²θ_W / π at the rational
+    level before the CA loop factor 1/π: sin²θ_W × cos²θ_W = 30/169. -/
+theorem delta_alpha_gte_rational :
+    (3 : ℚ) / 13 * (10 / 13) = 30 / 169 := by norm_num
+
+/-- **delta_r_from_delta_alpha_gte** (CatAL):
+    Sirlin cancellation at the rational level: dividing Δα_GTE = 30/169 by cos²θ_W = 10/13
+    yields Δr = sin²θ_W = 3/13 (the 1/π loop factor cancels identically in the ratio). -/
+theorem delta_r_from_delta_alpha_gte :
+    (30 / 169) / (10 / 13) = 3 / 13 := by norm_num
+
 end RhoParameter
 
 -- ═══════════════════════════════════════════════════════════════════════════

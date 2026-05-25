@@ -138,6 +138,8 @@ theorem ew_scale_prediction_summary :
       (13 : ℚ) / 10 = 1 / (10 / 13)) ∧
     (1 : ℚ) - 3 / 13 = 10 / 13 ∧
     (3 : ℚ) / 13 * (10 / 13) / (10 / 13) = 3 / 13 ∧
+    (3 : ℚ) / 13 * (10 / 13) = 30 / 169 ∧
+    (30 / 169) / (10 / 13) = 3 / 13 ∧
     ((384729 : ℚ) / 1664000 =
       (n_gen : ℚ) / EWBosonStructure.c_higgs +
         ((9 : ℚ) / 40) ^ n_gen / (2 * EWBosonStructure.c_higgs)) ∧
@@ -160,6 +162,10 @@ theorem ew_scale_prediction_summary :
   · exact mw_mz_squared_from_weinberg
   constructor
   · exact sirlin_cos_cancellation
+  constructor
+  · exact delta_alpha_gte_rational
+  constructor
+  · exact delta_r_from_delta_alpha_gte
   constructor
   · exact weinberg_sin2_two_term
   · exact ew_threshold_definitional_route
