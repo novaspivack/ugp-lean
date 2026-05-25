@@ -1,9 +1,4 @@
 % ═══════════════════════════════════════════════════════════════
-% NOTE: The canonical source for this file is ugp-lean-exp/paper/ugp_lean_formalization.tex.
-% DO NOT EDIT this copy in ugp-lean directly — edits here will be overwritten
-% when ugp-lean-exp is graduated to ugp-lean canonical.
-% ═══════════════════════════════════════════════════════════════
-% ═══════════════════════════════════════════════════════════════
 %  ugp-lean: A Machine-Checked Formalization of the
 %            Universal Generative Principle
 %
@@ -3642,10 +3637,19 @@ constraints at the GTE orbit, formalizing the dimensional-uniqueness claim of P3
 % ─────────────────────────────────────────────────────────────────
 \subsection{GTE as Final $F_{\rm PSC}$ Coalgebra (\texttt{GTEFinalCoalgebra})}\label{subsec:gte-final-coalgebra}
 
-The \texttt{Framework.GTEFinalCoalgebra} module proves that the GTE-Möbius substrate
-is the \emph{terminal object} in the category \texttt{PSCSys} of PSC-compatible spaces,
-i.e., GTE is the final $F_{\rm PSC}$ coalgebra.  This is the C1 Final Coalgebra result
-(7 stages, all zero sorry, zero custom axioms).
+The \texttt{Framework.GTEFinalCoalgebra} module proves that $f_{\rm MDL}$ is the
+\emph{unique} $\mathbb{Z}/7\mathbb{Z}$ CA lookup table that is both PSC-optimal and
+orbit-admissible.  The category \texttt{PSCSys} is a thin preorder whose objects are
+343-entry finite functions $(\mathbb{Z}/7\mathbb{Z})^3\to\mathbb{Z}/7\mathbb{Z}$;
+terminality in this preorder is a \emph{uniqueness and minimality condition}: any
+orbit-admissible PSC-optimal table must agree with $f_{\rm MDL}$ on all 18 fixed
+neighborhoods and be zero on the remaining 325 free neighborhoods.  The functor
+$F_{\rm PSC}$ is the identity on \texttt{PSCSys}, so the Lambek fixed-point equation
+holds by \lstinline|rfl| without further argument; the mathematical content lies
+entirely in the uniqueness characterization, not in any categorical universality
+property (Turing universality of $f_{\rm MDL}$ is established separately in
+\texttt{PhiMDLUniversality}).
+This is the C1 Final Coalgebra result (7 stages, all zero sorry, zero custom axioms).
 
 \textbf{Stage 5 — Optimality forces free-neighborhood zeros.}
 \lstinline|psc_optimal_zero_on_free| proves that any PSCOptimal CA function must output~0
@@ -3656,11 +3660,14 @@ function with strictly lower Kolmogorov complexity, contradicting optimality.
 derives that \lstinline|GTEPSCSubstrate| is terminal in \texttt{PSCSys} via the bridge lemma
 \lstinline|psc_optimal_implies_orbit_admissible|: any valid \texttt{PSCSubstrate} for
 \texttt{GTECompatibleSpace} must satisfy orbit-admissibility by construction, forcing it
-to agree with $f_{\rm MDL}$ on all fixed neighborhoods.
+to agree with $f_{\rm MDL}$ on all fixed neighborhoods.  Terminality here is a
+uniqueness statement in a thin preorder of finite lookup tables — it is not a claim
+about computational completeness or dynamical-systems universality.
 
 \textbf{Stage 7 — Lambek isomorphism.}  \lstinline|c1_lambek_isomorphism| proves
-$F_{\rm PSC}(\mathsf{GTEPSCSubstrate}) = \mathsf{GTEPSCSubstrate}$ by \lstinline|rfl|
-(the functor $F_{\rm PSC} = \mathbf{1}_{\mathsf{PSCSys}}$ is the identity).
+$F_{\rm PSC}(\mathsf{GTEPSCSubstrate}) = \mathsf{GTEPSCSubstrate}$ by \lstinline|rfl|:
+since $F_{\rm PSC} = \mathbf{1}_{\mathsf{PSCSys}}$ is the identity functor, the
+fixed-point equation is immediate and carries no additional content beyond terminality.
 
 \begin{leanref}
 \lstinline|psc_optimal_zero_on_free|, \lstinline|c1_final_coalgebra_derived|,
@@ -3668,11 +3675,16 @@ $F_{\rm PSC}(\mathsf{GTEPSCSubstrate}) = \mathsf{GTEPSCSubstrate}$ by \lstinline
 \textup{(in \texttt{Framework.GTEFinalCoalgebra}, zero \texttt{sorry}, zero custom axioms)}
 \end{leanref}
 
-The C1 Final Coalgebra result completes the categorical characterization of the GTE
-substrate: GTE is simultaneously a terminal object (by this module), the unique
-orbit-admissible MDL-minimal function (by \texttt{GUTStructure}), and a
-\texttt{NemS.Framework} instance with transputation classification (by
-\texttt{GTEFrameworkInstance}).
+The C1 Final Coalgebra result establishes that $f_{\rm MDL}$ is the most parsimonious
+$\mathbb{Z}/7\mathbb{Z}$ CA rule compatible with the PSC constraints and orbit structure:
+it is nonzero on exactly 18 of 343 inputs (the 18 fixed neighborhoods), and no other
+rule can satisfy both PSC-optimality and orbit-admissibility simultaneously.  This
+uniqueness and sparsity is the physical content of the result — the MDL principle
+selects the least complex rule consistent with the constraints.  The module also
+confirms that \lstinline|GTEPSCSubstrate| is the unique record-equivalent orbit-admissible
+CA in this thin preorder, and places it alongside the unique orbit-admissible MDL-minimal
+function established in \texttt{GUTStructure} and the \texttt{NemS.Framework} instance
+with transputation classification in \texttt{GTEFrameworkInstance}.
 
 % ─────────────────────────────────────────────────────────────────
 \subsection{Two-Layer Confluence (\texttt{TwoLayerConfluence})}\label{subsec:two-layer-confluence}
@@ -6370,7 +6382,7 @@ Lawvere zone classification L0/L1/L2 for P34 Conjecture C4 (\texttt{LawvereZone}
 (\cref{subsec:gte-framework-instance,subsec:gte-optimality-instance,subsec:gte-final-coalgebra}, 3 modules):
 GTE as a \texttt{NemS.Framework} with transputation classification (\texttt{GTEFrameworkInstance});
 GTE D-uniqueness and optimality (\texttt{GTEOptimalityInstance});
-GTE as the terminal $F_{\rm PSC}$ coalgebra in \texttt{PSCSys}, zero sorry, zero custom axioms (\texttt{GTEFinalCoalgebra}).
+uniqueness of $f_{\rm MDL}$ as the PSC-optimal orbit-admissible $\mathbb{Z}/7\mathbb{Z}$ CA rule (terminality in a thin finite preorder of 343-entry lookup tables), zero sorry, zero custom axioms (\texttt{GTEFinalCoalgebra}).
 
 \medskip
 \noindent\textbf{GTE extended structure}
