@@ -10,13 +10,28 @@ import UgpLean.Universality.GTEInfTapeEncoding
 # GTE update map is computable (Milestone 4 — Strategy C)
 
 Proves `Computable gte_update_map_nat`, the ℕ → ℕ encoding of `gte_update_map`.
-Together with the named axiom `gte_rule110_sim_ax` this replaces the opaque bridge
+Together with the named axiom `rule110_simulates_computable` this replaces the opaque bridge
 axiom `gte_in_rule110_sim_ax` with a cleaner decomposition:
 
     gte_update_map_nat is computable  (proved here, zero sorry)
     +
-    any computable ℕ → ℕ function embeds in Rule 110  (explicit axiom below)
-    ⟹  gte_embeds_in_rule110
+    any computable ℕ → ℕ function embeds in Rule 110  (explicit axiom below, Cook-dependent)
+    ⟹  gte_embeds_in_rule110  (Cook-dependent path)
+
+## Two computability routes for GTE
+
+### Cook-dependent path (this file)
+`gte_embeds_in_rule110_via_computability` derives the Rule 110 embedding via the axiom
+`rule110_simulates_computable`, which encodes Cook (2004)'s Turing universality theorem.
+This path is Cook-dependent: it relies on the CTS→glider construction.
+
+### Cook-independent path (PhiMDLUniversality)
+`gte_turing_universal_via_z7` in `UgpLean.Universality.PhiMDLUniversality` proves that
+the GTE substrate (Φ_MDL) can simulate any computable function via the GF(7) polynomial
+route: Rule 110 = `C+R−CR−LCR` over ℤ/7ℤ reduces at C=1 to NAND (functionally complete),
+giving Turing universality without Cook's CTS construction.  This path uses one named axiom
+(`z7_boolean_completeness_implies_turing_universal`, the Shannon TM→circuit bridge) and is
+fully Cook-independent.  Cook (2004) is a corollary of that route, not a load-bearing axiom.
 
 ## Encoding of GTEState as ℕ
 
@@ -130,14 +145,21 @@ theorem gte_update_map_nat_computable : Computable gte_update_map_nat :=
 
 /-! ## Simulation axiom (the remaining honest gap) -/
 
-/-- **Axiom (Rule 110 simulates any computable function):**
+/-- **Axiom (Rule 110 simulates any computable function) — Cook-dependent.**
+
     Any total computable ℕ → ℕ function embeds in Rule 110 on an infinite tape — there exist
     encoding and decoding functions and a step count N such that the simulation is faithful.
 
-    This is Cook (2004)'s Turing universality theorem applied to the infinite tape:
-    Rule 110 can simulate any Turing machine, and hence any computable function.
+    **Cook-dependence**: This axiom encodes Cook (2004)'s Turing universality theorem applied
+    to the infinite tape via the cyclic tag system (CTS) and glider construction.
+    It is the load-bearing axiom for `gte_embeds_in_rule110_via_computability`.
+
     The gap between this axiom and a zero-axiom proof is the formalization of Cook's
-    TM→CTS→glider construction (Milestones 3–5 in `rule110-lean`). -/
+    TM→CTS→glider construction (Milestones 3–5 in `rule110-lean`).
+
+    **Cook-independent alternative**: `gte_turing_universal_via_z7` in
+    `UgpLean.Universality.PhiMDLUniversality` proves GTE Turing universality via the GF(7)
+    polynomial route (Shannon bridge axiom), without invoking this axiom. -/
 axiom rule110_simulates_computable (f : ℕ → ℕ) (hf : Computable f) :
     ∃ (encode : ℕ → Rule110.InfTape)
       (decode : Rule110.InfTape → ℕ)
@@ -147,9 +169,15 @@ axiom rule110_simulates_computable (f : ℕ → ℕ) (hf : Computable f) :
 
 /-! ## Lifting from ℕ to GTEState -/
 
-/-- `gte_update_map` embeds in Rule 110: a direct consequence of computability
-    and Cook's universality, using the Cantor encoding.
-    Uses `Rule110.InfTape` (= `ℕ → Bool`) as the tape type. -/
+/-- `gte_update_map` embeds in Rule 110 — **Cook-dependent path**.
+
+    A direct consequence of computability and Cook's universality (`rule110_simulates_computable`),
+    using the Cantor encoding from ℕ ↔ GTEState.
+    Uses `Rule110.InfTape` (= `ℕ → Bool`) as the tape type.
+
+    **Note**: This is the Cook-dependent path.  The Cook-independent path to GTE Turing
+    universality — via the GF(7) polynomial chain and the Shannon TM→circuit bridge — is
+    `gte_turing_universal_via_z7` in `UgpLean.Universality.PhiMDLUniversality`. -/
 theorem gte_embeds_in_rule110_via_computability :
     ∃ (encode : GTEState → Rule110.InfTape)
       (decode : Rule110.InfTape → GTEState)

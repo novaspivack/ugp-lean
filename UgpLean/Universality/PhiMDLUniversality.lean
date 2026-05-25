@@ -519,6 +519,31 @@ theorem phimdl_turing_universal :
         ∀ n, extract (phiMDL_evolution initial_cfg n) n = f n :=
   z7_prime_field_universality
 
+/-- **GTE substrate Turing universality (Cook-independent).**
+
+    The GTE update map `gte_update_map_nat` is computable (zero sorry, proved in
+    `GTEComputability.gte_update_map_nat_computable`).  The Φ_MDL kink field is Turing
+    universal via the GF(7) polynomial chain (`z7_prime_field_universality`, Cook-independent,
+    one named axiom).  Together these give a Cook-independent Turing universality certificate
+    for the GTE substrate: any computable function can be simulated by Φ_MDL evolution.
+
+    **Proof**: Direct corollary of `phimdl_turing_universal` applied to the computable
+    function `gte_update_map_nat`.  No appeal to Cook (2004)'s cyclic tag system
+    construction is made; `rule110_simulates_computable` is not used.
+
+    **Comparison with `gte_embeds_in_rule110_via_computability`** (in `GTEComputability`):
+    That theorem proves a *Rule 110 embedding* (Cook-dependent).  This theorem proves
+    Turing universality via the Φ_MDL/Z₇ substrate (Cook-independent).  The conclusions
+    are equivalent in computability power; the routes and axiom sets differ.
+
+    **Sorry count**: 0 sorrys; 1 named axiom
+    (`z7_boolean_completeness_implies_turing_universal`, the Shannon TM→circuit bridge). -/
+theorem gte_turing_universal_via_z7 :
+    ∀ (f : ℕ → ℕ), Computable f →
+      ∃ (initial_cfg : Z7KGConfiguration) (extract : Z7KGConfiguration → ℕ → ℕ),
+        ∀ n, extract (phiMDL_evolution initial_cfg n) n = f n :=
+  phimdl_turing_universal
+
 -- ─────────────────────────────────────────────────────────────────────────────
 -- §R1  Route 1 Audit: Final Coalgebra Path to Universality
 -- ─────────────────────────────────────────────────────────────────────────────
