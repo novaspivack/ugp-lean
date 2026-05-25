@@ -139,6 +139,7 @@ import UgpLean.Universality.EWScalePrediction
 import UgpLean.Framework.GTEFrameworkInstance
 import UgpLean.Framework.GTEOptimalityInstance
 import UgpLean.Framework.GTEFinalCoalgebra
+import UgpLean.Framework.GTECategoryStructure
 import UgpLean.Universality.CasimirMasslessEther
 import UgpLean.Universality.ChiralPairVA
 import UgpLean.Universality.CouplingNoGo
@@ -218,6 +219,7 @@ import UgpLean.Substrate.LagrangianLorentzScalar
 import UgpLean.Substrate.PSCStructureLorentzPreserved
 import UgpLean.Substrate.PSCPILorentzMain
 import UgpLean.Substrate.NoetherAngularMomentum
+import UgpLean.Substrate.QECStabilizer
 import UgpLean.Universality.BornRuleMDL
 import UgpLean.Universality.FockSpaceKink
 import UgpLean.Universality.BeableWindingPartitionInstance
@@ -227,6 +229,7 @@ import UgpLean.Universality.TwoRoleTheorem
 import UgpLean.Universality.EWScalePrediction
 import UgpLean.Universality.ThooftEffectMeasureBridge
 import UgpLean.Universality.LorentzInvariance
+import UgpLean.Universality.PSCEffectMeasureGeneric
 import UgpLean.Universality.PSCEffectMeasure
 import UgpLean.Framework.PhiMDLBridge
 
