@@ -220,6 +220,7 @@ import UgpLean.Substrate.PSCStructureLorentzPreserved
 import UgpLean.Substrate.PSCPILorentzMain
 import UgpLean.Substrate.NoetherAngularMomentum
 import UgpLean.Substrate.QECStabilizer
+import UgpLean.Substrate.TransputationStateSelector
 import UgpLean.Universality.BornRuleMDL
 import UgpLean.Universality.FockSpaceKink
 import UgpLean.Universality.BeableWindingPartitionInstance
