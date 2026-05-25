@@ -59,7 +59,7 @@ def SatisfiesD1ZeroCharacterization (S : Substrate) : Prop :=
 
 /-- **D2 (PSC invariance):** [D] is invariant under all PSC-preserving maps.
     Encoded as `d2_universal` in `CoherenceMeasure.lean`. -/
-def SatisfiesD2 (S : Substrate) (hS : S.psc_consistent) : Prop :=
+def SatisfiesD2 (S : Substrate) (_hS : S.psc_consistent) : Prop :=
   ∀ f : S.config → S.config, IsPSCPreserving f →
     ∀ ρ w : S.config, S.coherence (f ρ) (f w) = S.coherence ρ w
 
