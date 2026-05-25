@@ -3,9 +3,13 @@ import Mathlib.Data.Complex.Basic
 import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.LinearAlgebra.Matrix.Hermitian
 import Mathlib.LinearAlgebra.Matrix.ConjTranspose
+import Mathlib.LinearAlgebra.Matrix.PosDef
+import Mathlib.Data.Matrix.Mul
+import Mathlib.Analysis.Matrix.PosDef
 import NemS.Quantum.MatrixBasics
 import UgpLean.Universality.BornRuleMDL
 import UgpLean.Universality.FockSpaceKink
+import UgpLean.Universality.PSCEffectMeasureGeneric
 
 set_option maxRecDepth 65536
 set_option maxHeartbeats 4000000
@@ -20,13 +24,10 @@ Constructive bridge: given `BeableAmplitudeHypothesis`, the rank-1 Born density
 
 | Item | Status |
 |------|--------|
-| `NemS.Quantum.re_trace_psd_mul_psd_nonneg` | Imported from nems-lean |
-| `beable_rank1_density_psd` | Private axiom — kernel `7⁵` workaround; content = `vecMulVec_psd` |
-| `beable_re_trace_psd_nonneg` | Private axiom — kernel `7⁵` workaround |
-| `beableSectorProjector_*` | Private axioms — opaque sector projectors at `7⁵` |
-| `pureBornMu_effect_one_ax`, `pureBornMu_sectorProjector_eq` | Private axioms — avoid `EffectProxy.one` / projector equality at `7⁵` |
+| `NemS.Quantum.re_trace_psd_mul_psd_nonneg` | Imported from nems-lean (standard PSD trace fact) |
+| Rank-one PSD / trace / sector projectors | Proved generically at parametric `Fin n` (070-97B2-AXIOM-CLOSURE) |
 | `pureBornMu_le_one_gen` | Proved (uses imported trace axiom) |
-| RankOne PSD/trace lemmas | Proved where feasible; remaining gaps = private axioms above |
+| Private kernel axioms | **0** — discharged 2026-05-25 |
 -/
 
 namespace UgpLean.Universality.PSCEffectMeasure
@@ -34,7 +35,9 @@ namespace UgpLean.Universality.PSCEffectMeasure
 open BornRuleMDL
 open FockSpaceKink
 open NemS.Quantum
-open scoped BigOperators
+open Matrix
+open scoped BigOperators ComplexOrder
+open UgpLean.Universality.PSCEffectMeasureGeneric
 
 abbrev BeableDim : ℕ := 7 ^ 5
 
@@ -119,62 +122,56 @@ private lemma trace_mul_one_right (A : Op n) : Matrix.trace (A * (1 : Op n)) = M
 
 end RankOne
 
+/-  Parametric matrix lemmas are imported from `PSCEffectMeasureGeneric`. -/
+
 noncomputable def pureBornDensity (h : BeableAmplitudeHypothesis) : Op BeableDim :=
-  Matrix.vecMulVec h.α (star h.α)
-
-private axiom beable_rank1_density_psd (h : BeableAmplitudeHypothesis) :
-    IsPosSemidef (pureBornDensity h)
-
-private axiom beable_re_trace_psd_nonneg {A B : Op BeableDim}
-    (hA : IsPosSemidef A) (hB : IsPosSemidef B) :
-    (0 : ℝ) ≤ (Matrix.trace (A * B)).re
-
-private axiom beable_pureBornDensity_trace (h : BeableAmplitudeHypothesis) :
-    (Matrix.trace (pureBornDensity h)).re = 1
+  rank1Density h.α
 
 theorem pureBornDensity_hermitian (h : BeableAmplitudeHypothesis) :
     (pureBornDensity h).IsHermitian :=
-  (beable_rank1_density_psd h).1
+  rank1Density_hermitian h.α
 
 theorem pureBornDensity_psd (h : BeableAmplitudeHypothesis) : IsPosSemidef (pureBornDensity h) :=
-  beable_rank1_density_psd h
+  rank1Density_psd h.α
 
 theorem pureBornDensity_trace (h : BeableAmplitudeHypothesis) :
     (opTrace (pureBornDensity h)).re = 1 := by
-  rw [opTrace, beable_pureBornDensity_trace h]
+  unfold pureBornDensity
+  rw [opTrace, rank1Density_trace_re, h.normalized]
 
 noncomputable def pureBornMu (h : BeableAmplitudeHypothesis) (E : EffectProxy BeableDim) : ℝ :=
-  (Matrix.trace (Matrix.vecMulVec h.α (star h.α) * E.op)).re
+  (Matrix.trace (pureBornDensity h * E.op)).re
 
 private lemma pureBornMu_sum (h : BeableAmplitudeHypothesis) {k : ℕ}
     (effects : Fin k → EffectProxy BeableDim)
     (hsum : (∑ i, (effects i).op) = 1) :
     (∑ i, pureBornMu h (effects i)) = 1 := by
   have h1 : (∑ i, pureBornMu h (effects i)) =
-      (Matrix.trace (Matrix.vecMulVec h.α (star h.α) * (∑ i, (effects i).op))).re := by
+      (Matrix.trace (pureBornDensity h * (∑ i, (effects i).op))).re := by
     unfold pureBornMu
     rw [Matrix.mul_sum, Matrix.trace_sum, Complex.re_sum]
   rw [h1, hsum, trace_mul_one_right]
-  change (Matrix.trace (pureBornDensity h)).re = 1
-  exact beable_pureBornDensity_trace h
-
-private axiom pureBornMu_effect_one_ax (h : BeableAmplitudeHypothesis) :
-    pureBornMu h EffectProxy.one = 1
+  unfold pureBornDensity
+  rw [rank1Density_trace_re, h.normalized]
 
 theorem pureBornMu_effect_one (h : BeableAmplitudeHypothesis) :
-    pureBornMu h EffectProxy.one = 1 :=
-  pureBornMu_effect_one_ax h
+    pureBornMu h EffectProxy.one = 1 := by
+  unfold pureBornMu EffectProxy.one
+  change (Matrix.trace (pureBornDensity h * (1 : Op BeableDim))).re = 1
+  rw [Matrix.mul_one]
+  unfold pureBornDensity
+  rw [rank1Density_trace_re, h.normalized]
 
 theorem pureBornMu_nonneg (h : BeableAmplitudeHypothesis) (E : EffectProxy BeableDim) :
     0 ≤ pureBornMu h E := by
   change (0 : ℝ) ≤ (Matrix.trace (pureBornDensity h * E.op)).re
-  exact beable_re_trace_psd_nonneg (beable_rank1_density_psd h) E.psd
+  exact re_trace_psd_mul_psd_nonneg (pureBornDensity_psd h) E.psd
 
 theorem pureBornMu_le_one (h : BeableAmplitudeHypothesis) (E : EffectProxy BeableDim) :
     pureBornMu h E ≤ 1 := by
   change (Matrix.trace (pureBornDensity h * E.op)).re ≤ 1
-  exact pureBornMu_le_one_gen (pureBornDensity h) (beable_rank1_density_psd h) E
-    (beable_pureBornDensity_trace h)
+  exact pureBornMu_le_one_gen (pureBornDensity h) (pureBornDensity_psd h) E
+    (by unfold pureBornDensity; rw [rank1Density_trace_re, h.normalized])
 
 noncomputable def pureBornEffectMeasure (h : BeableAmplitudeHypothesis) : EffectMeasureProxy BeableDim where
   μ := pureBornMu h
@@ -183,25 +180,32 @@ noncomputable def pureBornEffectMeasure (h : BeableAmplitudeHypothesis) : Effect
   le_one := pureBornMu_le_one h
   povm_additive := fun P => pureBornMu_sum h P.effects P.sum_eq_one
 
-opaque beableSectorProjectorOp (winding : BeableIndex → Fin 7) (k : Fin 7) : Op BeableDim
+noncomputable def beableSectorProjectorOp (winding : BeableIndex → Fin 7) (k : Fin 7) : Op BeableDim :=
+  sectorProjectorOp winding k
 
-private axiom beableSectorProjector_hermitian (winding : BeableIndex → Fin 7) (k : Fin 7) :
-    (beableSectorProjectorOp winding k).IsHermitian
+theorem beableSectorProjector_hermitian (winding : BeableIndex → Fin 7) (k : Fin 7) :
+    (beableSectorProjectorOp winding k).IsHermitian :=
+  sectorProjectorOp_hermitian winding k
 
-private axiom beableSectorProjector_psd (winding : BeableIndex → Fin 7) (k : Fin 7) :
-    IsPosSemidef (beableSectorProjectorOp winding k)
+theorem beableSectorProjector_psd (winding : BeableIndex → Fin 7) (k : Fin 7) :
+    IsPosSemidef (beableSectorProjectorOp winding k) :=
+  sectorProjectorOp_psd winding k
 
-private axiom beableSectorProjector_bounded (winding : BeableIndex → Fin 7) (k : Fin 7) :
-    IsPosSemidef ((1 : Op BeableDim) - beableSectorProjectorOp winding k)
+theorem beableSectorProjector_bounded (winding : BeableIndex → Fin 7) (k : Fin 7) :
+    IsPosSemidef ((1 : Op BeableDim) - beableSectorProjectorOp winding k) :=
+  sectorProjectorOp_bounded winding k
 
-def sectorProjectorEffect (h : BeableAmplitudeHypothesis) (k : Fin 7) : EffectProxy BeableDim where
+noncomputable def sectorProjectorEffect (h : BeableAmplitudeHypothesis) (k : Fin 7) : EffectProxy BeableDim where
   op := beableSectorProjectorOp h.winding k
   hermitian := beableSectorProjector_hermitian h.winding k
   psd := beableSectorProjector_psd h.winding k
   bounded := beableSectorProjector_bounded h.winding k
 
-private axiom pureBornMu_sectorProjector_eq (h : BeableAmplitudeHypothesis) (k : Fin 7) :
-    pureBornMu h (sectorProjectorEffect h k) = h.sectorProb k
+theorem pureBornMu_sectorProjector_eq (h : BeableAmplitudeHypothesis) (k : Fin 7) :
+    pureBornMu h (sectorProjectorEffect h k) = h.sectorProb k := by
+  unfold pureBornMu sectorProjectorEffect beableSectorProjectorOp
+  simp only [BeableAmplitudeHypothesis.sectorProb, beableSectorBornWeight]
+  exact rank1_trace_sectorProjector h.α h.winding k
 
 theorem psc_fmdl_implies_effect_measure (h : BeableAmplitudeHypothesis) :
     ∃ m : EffectMeasureProxy BeableDim,

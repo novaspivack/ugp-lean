@@ -168,6 +168,7 @@ import UgpLean.Universality.GUTStructure
 import UgpLean.Universality.MDLDerivabilityCriterion
 import UgpLean.Universality.BornRuleMDL
 import UgpLean.Universality.ThooftEffectMeasureBridge
+import UgpLean.Universality.PSCEffectMeasureGeneric
 import UgpLean.Universality.PSCEffectMeasure
 import UgpLean.Universality.FockSpaceKink
 import UgpLean.Universality.BeableWindingPartitionInstance
