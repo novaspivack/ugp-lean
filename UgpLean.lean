@@ -176,6 +176,7 @@ import UgpLean.Substrate.LExtended
 import UgpLean.Substrate.Substrate
 import UgpLean.Substrate.PSCPreservingTransformation
 import UgpLean.Substrate.CoherenceMeasure
+import UgpLean.Substrate.QECStabilizer
 import UgpLean.Substrate.LagrangianLorentzScalar
 import UgpLean.Substrate.PSCStructureLorentzPreserved
 import UgpLean.Substrate.PSCPILorentzMain
