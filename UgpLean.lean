@@ -199,6 +199,7 @@ import UgpLean.Spacetime.PhiMDLKinkQuantumNumbers
 import UgpLean.Spacetime.PhiMDLKinkQuantumNumbers
 import UgpLean.QFT.GaugedMassGap
 import UgpLean.QFT.ChiralSymmetryBreaking
+import UgpLean.Universality.PhiMDLUniversality
 
 /-!
 # UgpLean — Universal Generative Principle: Lean 4 Formalization
