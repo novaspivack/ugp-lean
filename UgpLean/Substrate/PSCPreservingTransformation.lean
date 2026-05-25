@@ -1,32 +1,34 @@
 import UgpLean.Substrate.Substrate
+import UgpLean.Substrate.LagrangianLorentzScalar
 
 /-!
-# PSC-Preserving Transformations — Rank 070-107 Phase 1
+# PSC-Preserving Transformations — Rank 070-107 Phase 1–2
 
 Defines when a configuration map preserves the Layer-I PSC structure
-(RC, NM*, TV, SA). Phase 1 uses stub predicates (`True`); Phase 2 replaces
-these with Lagrangian-level content for Φ_MDL.
+(RC, NM*, TV, SA).
 
-Instances for Z₇ gauge, Z₅ orbit, and Lorentz boosts are Phase 2 targets.
+Phase 2 supplies real RC content on `KGConfig` via `PSCStructureLorentzPreserved`;
+generic substrates still use conservative stubs until specialized.
 -/
 
 namespace UgpLean.Substrate
 
 variable {S : Substrate}
 
-/-- **Phase 2 stub:** `f` preserves Reflexive Closure (RC). -/
+/-- **Generic stub (Phase 1):** RC specialized on `KGConfig` in
+    `PSCStructureLorentzPreserved.PreservesRC`. -/
 def PreservesRC (_f : S.config → S.config) : Prop :=
   True
 
-/-- **Phase 2 stub:** `f` preserves Structural Stability (NM*). -/
+/-- **Phase 3 target:** structural stability (NM*). See `PSCStructureLorentzPreserved`. -/
 def PreservesNMStar (_f : S.config → S.config) : Prop :=
   True
 
-/-- **Phase 2 stub:** `f` preserves Thermodynamic Viability (TV). -/
+/-- **Phase 3 target:** thermodynamic viability (TV) at spectral level. -/
 def PreservesTV (_f : S.config → S.config) : Prop :=
   True
 
-/-- **Phase 2 stub:** `f` preserves Semantic Admissibility (SA). -/
+/-- **Phase 3 target:** semantic admissibility (SA) — anomaly polynomials. -/
 def PreservesSA (_f : S.config → S.config) : Prop :=
   True
 
