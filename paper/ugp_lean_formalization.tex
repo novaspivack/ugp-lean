@@ -483,7 +483,8 @@ The artifact is organized into 148~\lean{} modules across thirteen layers
    OrbitPerturbationCatalog, Z7ChargeConjugation, DimensionalSliceUniqueness,
    Z5TransitivityUniqueness, GTPNeutralDiscrimination, SMOrbitCausalIsolation,
    EWBosonStructure, EWChiralBridge, \textbf{GUTStructure}, LawvereZone,
-   CasimirMasslessEther, \textbf{ChiralPairVA}, \textbf{CouplingNoGo}, \textbf{ChiralityEigenstates}};
+   CasimirMasslessEther, \textbf{ChiralPairVA}, \textbf{CouplingNoGo}, \textbf{ChiralityEigenstates},
+   \textbf{WeakIsospin}};
 \node[layer, fill=gray!8,   below=of univ]  (self)
   {\textbf{SelfRef}~(2)\quad LawvereKleene, RiceHalting};
 \node[layer, fill=pink!10,  below=of self]  (fwk)
@@ -4526,6 +4527,52 @@ $\mathrm{gen}_3$ is parity-covariant --- the orbit endpoint is chirally neutral.
 The combined theorem \lstinline|sm_orbit_is_left_handed| packages all four results:
 the SM generation orbit is structurally left-handed.
 
+\subsection{Weak Isospin Identification (\texttt{WeakIsospin})}\label{subsec:weak-isospin}
+
+The \texttt{WeakIsospin} module formalizes the identification of weak isospin
+as $\mathbb{Z}_7$ species-winding arithmetic (Rank 94c, CatAL; zero sorry,
+all proofs by \lstinline|decide|).
+
+In the GTE framework, weak isospin is not carried by a gauge $\mathrm{SU}(2)_L$
+field---which is absent from the $\mathbb{Z}_7 \times \mathbb{Z}_3$ automorphism
+group---but is instead encoded in the species winding number $W_B \in \mathbb{Z}_7$.
+The SM species winding assignments are: vacuum/$\nu_e \leftrightarrow W_B=0$,
+$u$-quark $\leftrightarrow W_B=2$, $W^+\leftrightarrow W_B=3$, $e^-/W^-\leftrightarrow W_B=4$,
+$d$-quark $\leftrightarrow W_B=6$.
+
+\begin{theorem}[\lstinline|weak_isospin_doublet_delta_four|, zero \texttt{sorry}]
+Both SM fermion weak-isospin doublet pairs differ by $\Delta W_B = 4 \pmod{7}$:
+\[
+  W_B(\nu) + 4 \equiv W_B(e^-) \pmod{7}, \qquad
+  W_B(u) + 4 \equiv W_B(d) \pmod{7}.
+\]
+This is forced by the species formula $W_B = 4k \bmod 7$ with $\Delta k = +1$
+between doublet partners.
+\end{theorem}
+
+\begin{theorem}[\lstinline|wb_conservation_charged_current|, zero \texttt{sorry}]
+$W_B$ is conserved modulo 7 at all four SM charged-current vertices:
+\[
+  W_B(u) = W_B(d) + W_B(W^+),\quad
+  W_B(\nu) = W_B(e^-) + W_B(W^+),
+\]
+\[
+  W_B(d) = W_B(u) + W_B(W^-),\quad
+  W_B(e^-) = W_B(\nu) + W_B(W^-).
+\]
+\end{theorem}
+
+\begin{theorem}[\lstinline|wb_wplus_uniquely_determined| and \lstinline|wb_wminus_uniquely_determined|, zero \texttt{sorry}]
+$W_B(W^+) = 3$ is the unique $w \in \mathbb{Z}_7$ satisfying both CC constraints
+simultaneously; $W_B(W^-) = 4$ is the unique $w$ satisfying the conjugate
+constraints. The $W$-boson winding numbers are arithmetically forced.
+\end{theorem}
+
+The combined theorem \lstinline|weak_isospin_identification| packages the
+doublet partition ($I_3 = \pm\tfrac{1}{2}$ sectors disjoint and of size 2),
+the $\Delta W_B = 4$ rule, CC conservation at all four vertices, and the
+$W$-boson winding values $W_B(W^+)=3$, $W_B(W^-)=4$.
+
 \subsection{GTP Neutral Discrimination (\texttt{GTPNeutralDiscrimination})}\label{subsec:gtp-neutral}
 
 The \texttt{GTPNeutralDiscrimination} module (261 lines, 16 items) proves that the
@@ -5203,6 +5250,21 @@ strong CP, generation structure) hold for the Rule~110 CA at every finite $M$.
   lower bound, zero sorry).
   Honest scope: conservative floor for all non-vacuum PSC states; per-generation
   UCL cascade masses remain external (P01).
+\item \textbf{\texttt{Spacetime/OrbitMassHierarchy.lean}} (Rank 79-MASSES, zero sorry):
+  extends \texttt{MassGap.lean} with per-sector, per-generation mass lower bounds
+  across all three SM fermion sectors.  The inductive type \lstinline|SmSector|
+  ($= \{\text{lepton}, \text{upQuark}, \text{downQuark}\}$, identified by $k$-occupation
+  in the species formula $W_B = 4k \bmod 7$) carries PDG conservative lower bounds
+  for each generation.  The main theorem \lstinline|orbit_generation_ordering|
+  proves $\forall s : \text{SmSector},\ \text{gen}_3 > \text{gen}_2 > \text{gen}_1 > 0$
+  at Level~B physical scale in eV, with explicit rational constants.
+  This closes Open Assumption OA-1 (generation ordering from cascade depth):
+  the orbit cascade position $g \in \{1,2,3\}$ strictly orders particle mass for
+  every SM sector.  Additional theorems \lstinline|lepton_gen1_below_beable_gap|
+  and \lstinline|up_quark_gen1_matches_beable_gap| formalize the Level~A/B bridge:
+  the uniform beable floor ($1.8\,\mathrm{MeV}$) is exact for the up-quark sector
+  but the electron ($0.51\,\mathrm{MeV}$) sits below it at Level~B, as expected
+  from the two-level structure.  12 theorems total, all zero sorry, standard axioms only.
 \item \textbf{\texttt{QFT/GaugedMassGap.lean}}: \lstinline|confined_massive_color_singlet|
   (positive kink threshold $\wedge$ no free quarks; see §\ref{sec:qft-mass-gap}).
 \end{itemize}

@@ -4,7 +4,7 @@
 
 This repository is part of the **Reflexive Reality** research program by [Nova Spivack](https://www.novaspivack.com/).
 
-**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, and self-reference.  **150 modules, zero sorry on the core proof path** (see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).
+**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, and self-reference.  **152 modules, zero sorry on the core proof path** (see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).
 
 | Link | Description |
 |------|-------------|
@@ -27,7 +27,7 @@ A clean build completes with zero `sorry` and the standard Mathlib axiom signatu
 
 ---
 
-## Module structure (150 modules; **14 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
+## Module structure (152 modules; **14 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
 
 | Layer | Count | Modules |
 |-------|-------|---------|
@@ -38,7 +38,7 @@ A clean build completes with zero `sorry` and the standard Mathlib axiom signatu
 | **Structural** | 19 | QuarterLock, LModelDerivation; *ElegantKernel/*: ChiralityFeature, D5StructuralAxiom, FibonacciHessian, KGen, KGen2, MuTriple, PentagonalUniqueness; *ElegantKernel/Unconditional/*: CyclotomicChain, D5Renormalization, FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure, KLFullClosure, PentagonConstraint, RiccatiFixedPoint |
 | **MassRelations** | 25 | *MassRelations* [umbrella], KoideClosedForm, KoideNewtonFlow, KoideAngle, KoideS3DiscreteIdentities, BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential, FroggattNielsen, NeutrinoFroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational, UpLeptonCyclotomic, Z2OrbifoldDepth, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex, VVMechanism, VVAllCoefficientsFromNc, CKMTheta23, CKMMixing, **NeutrinoMassRatio** |
 | **BraidAtlas** | 13 | ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation, CoxeterConductor, CoxeterConductorTowerLaw, EWBosons, MirrorWindingNumber, EWBosonRHNConnection, **RHNGapTheorem**, **DarkBraidAtlas**, **DarkQuarkCharge**, **DarkGaugeCoupling** |
-| **Universality** | 37 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, CUP4TotalParity, CUP11ModSeven, CUP3DUniqueness, CUP3DPSCUnification, CUP3DPhysicalIncompleteness, TwoLayerConfluence, GTECompilation, GTEUniqueness, GoEHierarchy, **GoEStabilityHierarchy**, GTEInfTapeEncoding, GTEComputability, HypothesisB, HypothesisBCChain, PSCUniversality, CookRule110Ref, **OrbitPerturbationCatalog**, **Z7ChargeConjugation**, **Z5TransitivityUniqueness**, **DimensionalSliceUniqueness**, **GTPNeutralDiscrimination**, **SMOrbitCausalIsolation**, **EWBosonStructure**, **EWChiralBridge**, **GUTStructure**, **CasimirMasslessEther**, **LawvereZone**, **ChiralPairVA**, **CouplingNoGo**, **ChiralityEigenstates** |
+| **Universality** | 38 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, CUP4TotalParity, CUP11ModSeven, CUP3DUniqueness, CUP3DPSCUnification, CUP3DPhysicalIncompleteness, TwoLayerConfluence, GTECompilation, GTEUniqueness, GoEHierarchy, **GoEStabilityHierarchy**, GTEInfTapeEncoding, GTEComputability, HypothesisB, HypothesisBCChain, PSCUniversality, CookRule110Ref, **OrbitPerturbationCatalog**, **Z7ChargeConjugation**, **Z5TransitivityUniqueness**, **DimensionalSliceUniqueness**, **GTPNeutralDiscrimination**, **SMOrbitCausalIsolation**, **EWBosonStructure**, **EWChiralBridge**, **GUTStructure**, **CasimirMasslessEther**, **LawvereZone**, **ChiralPairVA**, **CouplingNoGo**, **ChiralityEigenstates**, **WeakIsospin** |
 | **Framework** | 3 | **GTEFrameworkInstance**, **GTEOptimalityInstance**, **GTEFinalCoalgebra** |
 | **SelfRef** | 2 | LawvereKleene, RiceHalting |
 
@@ -675,6 +675,18 @@ Spatial parity `P` on the 5-cell ring reverses cell order: `fmdl_mirror v i = v 
 - `gen3_p_covariant` — fmdl_step5 (fmdl_mirror gen₃) = fmdl_mirror (fmdl_step5 gen₃) (native_decide, CatAL)
 - `sm_orbit_is_left_handed` — combined theorem: all four properties simultaneously (zero sorry)
 
+**Weak Isospin Identification (WeakIsospin.lean, Rank 94c, 2026-05-24; 10+ theorems, 0 sorry)**
+
+Formalizes the identification of weak isospin as $\mathbb{Z}_7$ species-winding arithmetic. Key results (all proved by `decide`, zero sorry, zero custom axioms):
+
+- `wb_conservation_charged_current` — W_B conserved at all 4 SM charged-current vertices mod 7
+- `weak_isospin_doublet_delta_four` — ΔW_B = 4 between both SM doublet partner pairs
+- `species_formula_forces_delta_four` — species formula W_B = 4k mod 7 at k = 0,1,4,5 forces doublet structure
+- `wb_wplus_uniquely_determined` — W_B(W⁺) = 3 is the unique Z₇ element satisfying both CC constraints
+- `wb_wminus_uniquely_determined` — W_B(W⁻) = 4 is the unique Z₇ element satisfying conjugate CC constraints
+- `w_bosons_z7_conjugate` — W_B(W⁺) + W_B(W⁻) = 0 mod 7 (charge-conjugate pair)
+- `weak_isospin_identification` — combined certification: doublet partition + ΔW_B=4 + CC conservation + W-boson uniqueness
+
 <!-- NOVA_ZPO_ZENODO_SOFTWARE_BEGIN -->
 **Archival software (Zenodo):** https://doi.org/10.5281/zenodo.19429247
 <!-- NOVA_ZPO_ZENODO_SOFTWARE_END -->
@@ -725,6 +737,14 @@ Formal certification of the CA ether dispersion relation E(k) = v_CA × k evalua
 
 - `gte_mass_gap` — positive mass gap Δ > 0 for all physical non-vacuum beables (CatAL, zero axioms)
 - `gte_mass_formula_physical` — Δ ≥ 1.8 MeV (PDG conservative up-quark lower bound); `smGenMass` (CatAL)
+
+*Rank 79-MASSES — Orbit Generation Mass Hierarchy (`OrbitMassHierarchy.lean`)*
+
+- `orbit_generation_ordering` — ∀ s : SmSector, gen₃ mass lb > gen₂ mass lb > gen₁ mass lb > 0; closes OA-1 (physical generation ordering from cascade depth); all three SM sectors (lepton/upQuark/downQuark) (CatAL, 12 theorems total)
+- `cross_sector_gen1_ordering` — down-quark gen₁ lb > up-quark gen₁ lb > lepton gen₁ lb > 0 (CatAL)
+- `lepton_gen1_below_beable_gap` — electron mass lb (0.51 MeV) < Level A beable floor (1.8 MeV), formalizing the Level A/B two-level structure (CatAL)
+- `up_quark_gen1_matches_beable_gap` — up-quark gen₁ lb exactly equals the beable-level floor (CatAL)
+- Per-sector mass floor constants: m_electron_lb=0.51 MeV, m_muon_lb=105 MeV, m_tau_lb=1770 MeV; m_up_lb=1.8 MeV, m_charm_lb=1200 MeV, m_top_lb=170 GeV; m_down_lb=4 MeV, m_strange_lb=80 MeV, m_bottom_lb=4 GeV
 
 *Rank 55-3DLT — Spatially Extended Lifting (`SpatiallyExtendedLifting.lean`)*
 
