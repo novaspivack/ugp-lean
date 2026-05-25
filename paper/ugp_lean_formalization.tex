@@ -3,6 +3,7 @@
 % DO NOT EDIT this copy in ugp-lean directly — edits here will be overwritten
 % when ugp-lean-exp is graduated to ugp-lean canonical.
 % ═══════════════════════════════════════════════════════════════
+% ═══════════════════════════════════════════════════════════════
 %  ugp-lean: A Machine-Checked Formalization of the
 %            Universal Generative Principle
 %
@@ -34,6 +35,7 @@
 % \doi{} macro for bibliography entries using this command
 \providecommand{\doi}[1]{\href{https://doi.org/#1}{\nolinkurl{doi:#1}}}
 
+% Suite §2.8-style overfull tolerance (matches NEMS suite_preamble guidance).
 % Suite §2.8-style overfull tolerance (matches NEMS suite_preamble guidance).
 \hfuzz=30pt
 % Relax line-breaking globally to avoid overfull \hbox from long \lstinline tokens.
@@ -137,7 +139,7 @@ Universal Generative Principle (\ugp{}) against Mathlib, comprising
 148 canonical modules (with an extended development branch covering
 spacetime, QFT, and hadronic physics) with a strict zero-sorry,
 zero-custom-axiom policy on the core proof path (20 global custom
-named axioms after the 2026-05-24 audit, down from 24).
+named axioms after the 2026-05-24 audit,\linebreak[2] down from 24).
 The \ugp{} is a deterministic arithmetic framework on integer ridges
 $R_n = 2^n - 16$ that produces, from first principles and without free
 parameters, a unique canonical seed $(1,73,823)$ and a rigid
@@ -168,7 +170,7 @@ physical observables; a QFT mass gap lower bound in the colour-singlet
 sector; the Algebraic Descent Theorem establishing resolution-independence
 of all $F_{21}$-algebraic properties; two independent Lean-certified
 derivations of $\alpha_{\rm EM} \approx 1/137$; strong CP resolution
-($\theta_{\rm QCD}=0$) and asymptotic freedom ($b_0=7$) from $F_{21}$
+($\theta_{\rm QCD}=0$)\linebreak[2] and asymptotic freedom ($b_0=7$) from $F_{21}$
 group theory; and capstone theorems for the unified physical exclusion
 criterion and the uniqueness of three generations.
 
@@ -181,14 +183,14 @@ All proved statements are scoped to the ridged arithmetic framework.
 \NovaZenodoInAbstract
 \end{abstract}
 
-{\footnotesize\tableofcontents}
+{\footnotesize\pdfprotrudechars=0\tableofcontents}
 \clearpage
 \bigskip
 
 \section[Premises, Disagreement Coordinates, Trust Boundary]{Premises, disagreement coordinates, and trust boundary}\label{sec:premises-ugp-lean-paper}
 \begin{keybox}{Where disagreement can (and cannot) live}
 \textbf{Formal spine.}
-Classification and forcing lemmas refer to definitions in \texttt{Ugcp/} (or as cited in the module tree); numerical witnesses are \texttt{\#eval}-friendly where~stated.
+Classification and forcing lemmas refer to definitions in \texttt{Ugcp/} (or as cited in the module tree); numerical witnesses are \texttt{\#eval}-friendly where stated.
 
 \medskip
 \textbf{Premise coordinates (for external readers).}
@@ -3555,7 +3557,7 @@ A round-trip encoder is machine-checked zero sorry:
 for all \texttt{FmdlTape}~$t$, establishing a concrete injective coding.
 
 % ─────────────────────────────────────────────────────────────────
-\subsection{GTE-NEMS Framework Instance (\texttt{GTEFrameworkInstance})}\label{subsec:gte-framework-instance}
+\subsection[GTE-NEMS Framework Instance]{GTE-NEMS Framework Instance (\texttt{GTEFrameworkInstance})}\label{subsec:gte-framework-instance}
 
 The \texttt{Framework.GTEFrameworkInstance} module closes the gap between the
 abstract NEMS/transputation classification theorem (\texttt{transputation\_classification},
@@ -3623,7 +3625,7 @@ The arithmetic proxy layer in \texttt{GUTStructure}~(\S67,
 content; \lstinline|gte_tpc_from_nems_classification| is the substrate-specific upgrade.
 
 % ─────────────────────────────────────────────────────────────────
-\subsection{GTE Optimality (\texttt{GTEOptimalityInstance})}\label{subsec:gte-optimality-instance}
+\subsection[GTE Optimality]{GTE Optimality (\texttt{GTEOptimalityInstance})}\label{subsec:gte-optimality-instance}
 
 The \texttt{Framework.GTEOptimalityInstance} module derives GTE's optimality properties
 from the substrate definition, complementing \texttt{GTEFrameworkInstance}.
@@ -3970,7 +3972,7 @@ one named axiom \texttt{rcc\_physics\_ax} from \texttt{PSC.RCCComplete})}
 \end{theorem}
 
 % ─────────────────────────────────────────────────────────────────
-\subsection{Cook Rule~110 Reference (\texttt{CookRule110Ref})}\label{subsec:cook-rule110-ref}
+\subsection[Cook Rule~110 Reference]{Cook Rule~110 Reference (\texttt{CookRule110Ref})}\label{subsec:cook-rule110-ref}
 
 The \texttt{Universality.CookRule110Ref} module formalizes Cook's ether-based
 analysis of Rule~110: periodic ``ether'' patterns and their shifts are machine-checked,
@@ -4073,7 +4075,7 @@ formal link asserting that the Mart\'{i}nez and Cook glider catalogues
 describe the same physical object.
 
 % ─────────────────────────────────────────────────────────────────
-\subsection{RCC Analytical Completion (\texttt{PSC.RCCComplete})}\label{subsec:rcc-complete}
+\subsection[RCC Analytical Completion]{RCC Analytical Completion (\texttt{PSC.RCCComplete})}\label{subsec:rcc-complete}
 
 The \texttt{PSC.RCCComplete} module provides the analytical RCC certificate covering
 \emph{all} compact simple Lie groups (infinite classical families via
@@ -4096,7 +4098,7 @@ providing a citable Lean handle for the RCC at arbitrary gauge-theory spaces.
 This axiom is the entry point used by \texttt{PSCUniversality.hypothesis\_c\_psc\_forces\_universality}.
 
 % ═══════════════════════════════════════════════════════════════
-\section{GUT Structure and Physical Formalization (\texttt{GUTStructure})}\label{sec:gutstructure}
+\section[GUT Structure and Physical Formalization]{GUT Structure and Physical Formalization (\texttt{GUTStructure})}\label{sec:gutstructure}
 % ═══════════════════════════════════════════════════════════════
 
 The \texttt{Universality.GUTStructure} module is the largest module in \textbf{ugp-lean},
@@ -4486,7 +4488,7 @@ For $p = 5$: the SM orbit vector $g_1 = [1,1,0,0,1]$ and its cyclic shifts all d
 
 This gives the CA-internal arithmetic reason for the SM family count $N_{\rm fam} = 5$.
 
-\subsection{Dimensional Slice Uniqueness (\texttt{DimensionalSliceUniqueness})}\label{subsec:dimensional-slice}
+\subsection[Dimensional Slice Uniqueness]{Dimensional Slice Uniqueness (\texttt{DimensionalSliceUniqueness})}\label{subsec:dimensional-slice}
 
 The \texttt{DimensionalSliceUniqueness} module (468 lines, 21 items) proves that any
 $d$-dimensional binary CA whose axis-aligned 5-cell periodic ring slices satisfy the SM
@@ -4642,7 +4644,7 @@ from the Casimir/photon-vacuum analysis:
 \end{itemize}
 \end{theorem}
 
-\subsection{Lawvere Zone (\texttt{LawvereZone})}\label{subsec:lawvere-zone}
+\subsection[Lawvere Zone]{Lawvere Zone (\texttt{LawvereZone})}\label{subsec:lawvere-zone}
 
 The \texttt{LawvereZone} module (322 lines, 22 items) formalizes the three
 Lawvere-zone classification for the GTE-Möbius substrate:
@@ -4780,10 +4782,11 @@ Key theorems:
   processes from the vertex catalog exist at physical scale.
 \end{itemize}
 
-\paragraph{3D Spatial Lifting (\texttt{SpatiallyExtendedLifting.lean}).}
+\par\medskip\noindent\textbf{3D Spatial Lifting
+  (\texttt{SpatiallyExtended\allowbreak Lifting.lean}).}\par\smallskip
 
 \begin{keybox}{Meson existence in 3D}
-\textbf{Theorem \lstinline|spatially_extended_composite_lifting|.}
+\textbf{Theorem \texttt{spatially\_extended\_\allowbreak composite\_lifting}.}
 Let $G$ be a 3D f\textsubscript{MDL} causal graph and let $B_A$, $B_B$ be
 PSC-admissible beables at distinct positions $A, B \in G$ with
 $\mathrm{color}(B_A) + \mathrm{color}(B_B) \equiv 0 \pmod{3}$ and an
@@ -4901,25 +4904,25 @@ Route~A and Route~B are structurally independent and both certified at zero sorr
 
 \begin{table}[h]
 \centering\small
-\begin{tabular}{@{}lll@{}}
+\begin{tabular}{@{}p{4.5cm}p{1.2cm}p{9.3cm}@{}}
 \toprule
-Theorem & §  & What it certifies \\
+Theorem & § & What it certifies \\
 \midrule
-\lstinline|KinkSpeciesCountToLogLeverCertified|   & §5d &
+\texttt{KinkSpecies\allowbreak CountToLog\allowbreak LeverCertified}   & §5d &
   Wilsonian lever-arm $\log N_7 = \log 7$ from topological species count
   $N_{\rm kink} = \varphi(N_7)+\varphi(N_3) = 8$;
   structural tolerance band $[6,7,8]$ \\[2pt]
-\lstinline|alpha_em_physical_match_cascade_certified| & §5e &
+\texttt{alpha\_em\_\allowbreak physical\_\allowbreak match\_\allowbreak cascade\_\allowbreak certified} & §5e &
   Route A: $\alpha_{\rm tree} \times (441 / (137\pi)) = 1/137$ exact
   (cascade identification) \\[2pt]
-\lstinline|alpha_em_route_b_interval_match|       & §5f &
+\texttt{alpha\_em\_\allowbreak route\_b\_\allowbreak interval\_match}  & §5f &
   Route B: $\alpha_{\rm tree} \times (1 + 16\log 7/1323)$ within 1\% of
   $1/137$ via interval arithmetic on $\log 7$;
   no literal $137$ in defining expression \\[2pt]
-\lstinline|prime_pair_seven_three_topologically_forced| & §5g &
+\texttt{prime\_pair\_\allowbreak seven\_three\_\allowbreak topologically\_\allowbreak forced} & §5g &
   Sylow filter + MDL criterion \lstinline|mdl_z7z3_beats_z7z2|
   uniquely force $(N_7, N_3) = (7,3)$ among all Sylow-admissible prime pairs \\[2pt]
-\lstinline|substrate_mdl_t1_certified|            & §5h &
+\texttt{substrate\_\allowbreak mdl\_t1\_\allowbreak certified}         & §5h &
   $H_A$ (Sylow-embedded single-$\mathbb{Z}_7$-KG substrate) is the
   MDL-minimum substrate; $\ge 2$-bit strict gap to all alternatives \\
 \bottomrule
@@ -4946,19 +4949,20 @@ Three additional theorems complete the scaffolding beyond §5d–5h:
 
 \begin{table}[h]
 \centering\small
-\begin{tabular}{@{}lll@{}}
+\begin{tabular}{@{}p{5cm}p{1.2cm}p{8.8cm}@{}}
 \toprule
 Theorem & § & What it certifies \\
 \midrule
-\lstinline|em_charge_mdl_minimal_unique_via_crt| +
-\lstinline|berry_em_charge_crt_minimal_certified| & §4c &
+\texttt{em\_charge\_\allowbreak mdl\_minimal\_\allowbreak unique\_via\_crt} $+$
+\texttt{berry\_\allowbreak em\_charge\_\allowbreak crt\_minimal\_\allowbreak certified} & §4c &
   CRT-minimality: axioms S1 ($\mathbb{Z}_7 \times \mathbb{Z}_3 \cong \mathbb{Z}_{21}$
   phase closure) + S2 (Dirac minimal charge) uniquely select $(k=1, N=3)$,
   giving $e_{\rm EM} = 2\pi/21$; no $\alpha_{\rm phys}$ input \\[2pt]
-\lstinline|SubstrateFieldUniqueAxes| + \lstinline|substrateFieldUniqueWitness| & §5b &
+\texttt{Substrate\allowbreak FieldUnique\allowbreak Axes} $+$
+\texttt{substrate\allowbreak FieldUnique\allowbreak Witness} & §5b &
   $H_A$ (Sylow-embedded single-$\mathbb{Z}_7$-KG) as canonical witness;
   competitor $H_B$/$H_C$/$H_D$ fail at $\ge 1$ of T2, T3, T4, T6 \\[2pt]
-\lstinline|substrate_field_unique_strict| & §5c &
+\texttt{substrate\_\allowbreak field\_\allowbreak unique\_strict} & §5c &
   Strict uniqueness: only $H_A$ survives T2$\wedge$T3$\wedge$T4$\wedge$T6;
   subsingleton on the strict witness type \\
 \bottomrule
@@ -4970,7 +4974,7 @@ Theorem & § & What it certifies \\
 Honest scope: axiom S1 (orbit-space phase closure) is a conditional
 assumption; one step-4 gap remains before full unconditional certification.
 
-\subsection{Session 6: $F_{21}$ Physics, Hadron Spectroscopy,
+\subsection{$F_{21}$ Physics, Hadron Spectroscopy,
   and Mass Gap — §§5i–9}\label{subsec:session6-physics}
 
 Module: \texttt{Universality/SylowIndexCouplingHierarchy.lean}
@@ -4983,38 +4987,38 @@ the \gte{} substrate.
 
 \begin{table}[h]
 \centering\small
-\begin{tabular}{@{}lllr@{}}
+\begin{tabular}{@{}p{0.7cm}p{2.5cm}p{9.8cm}r@{}}
 \toprule
 § & Rank & Selected theorems & Count \\
 \midrule
-§5i & Frobenius & \lstinline|frobenius_f21_is_z7_sdp_z3|,
-  \lstinline|frobenius_su3_branching_8|,
-  \lstinline|FrobeniusCatALAnchorInvariance| & 14 \\
-§5j & A$'_\mu$ & \lstinline|a_prime_cartan_orthogonal|,
-  \lstinline|a_prime_coupling_equals_e| & 5 \\
-§5k & Strong CP & \lstinline|strong_cp_theta_zero_f21|,
-  \lstinline|f21_breaks_cp_iff_theta_nonzero|,
-  \lstinline|strong_cp_resolved| & 5 \\
-§5l & Hadron multiplets & \lstinline|meson_nonet_dimension|,
-  \lstinline|baryon_octet_dimension|,
-  \lstinline|gmo_equal_mass_limit|,
-  \lstinline|colour_charge_meson_nonet| & 8 \\
-§5m & Berry holonomy & \lstinline|frobenius_holonomy_nonabelian|,
-  \lstinline|frobenius_berry_holonomy_is_su3| & 4 \\
-§5n & Fradkin--Shenker & \lstinline|fradkin_shenker_condition1|,
-  \lstinline|fradkin_shenker_condition2|,
-  \lstinline|fradkin_shenker_applies_to_phimdl| & 5 \\
-§5o & Vector meson nonet & \lstinline|vector_meson_nonet_jp1|,
-  \lstinline|berry_hyperfine_su3_trace| & 4 \\
-§6 & Asymptotic freedom & \lstinline|f21_substrate_beta_coefficient|,
-  \lstinline|f21_substrate_asymptotic_freedom| & 4 \\
-§7 & Two-loop $\beta$ & \lstinline|f21_two_loop_beta_coefficient| & 3 \\
+§5i & Frobenius & \texttt{frobenius\_\allowbreak f21\_is\_\allowbreak z7\_sdp\_z3},
+  \texttt{frobenius\_\allowbreak su3\_branching\_8},
+  \texttt{Frobenius\allowbreak CatAL\allowbreak Anchor\allowbreak Invariance} & 14 \\
+§5j & A$'_\mu$ & \texttt{a\_prime\_\allowbreak cartan\_\allowbreak orthogonal},
+  \texttt{a\_prime\_\allowbreak coupling\_\allowbreak equals\_e} & 5 \\
+§5k & Strong CP & \texttt{strong\_cp\_\allowbreak theta\_zero\_f21},
+  \texttt{f21\_breaks\_\allowbreak cp\_iff\_\allowbreak theta\_nonzero},
+  \texttt{strong\_cp\_\allowbreak resolved} & 5 \\
+§5l & Hadron multiplets & \texttt{meson\_\allowbreak nonet\_\allowbreak dimension},
+  \texttt{baryon\_\allowbreak octet\_\allowbreak dimension},
+  \texttt{gmo\_equal\_\allowbreak mass\_limit},
+  \texttt{colour\_\allowbreak charge\_\allowbreak meson\_nonet} & 8 \\
+§5m & Berry holonomy & \texttt{frobenius\_\allowbreak holonomy\_\allowbreak nonabelian},
+  \texttt{frobenius\_\allowbreak berry\_\allowbreak holonomy\_is\_su3} & 4 \\
+§5n & Fradkin--Shenker & \texttt{fradkin\_\allowbreak shenker\_\allowbreak condition1},
+  \texttt{fradkin\_\allowbreak shenker\_\allowbreak condition2},
+  \texttt{fradkin\_\allowbreak shenker\_\allowbreak applies\_\allowbreak to\_phimdl} & 5 \\
+§5o & Vector meson nonet & \texttt{vector\_\allowbreak meson\_\allowbreak nonet\_jp1},
+  \texttt{berry\_\allowbreak hyperfine\_\allowbreak su3\_trace} & 4 \\
+§6 & Asymptotic freedom & \texttt{f21\_\allowbreak substrate\_\allowbreak beta\_\allowbreak coefficient},
+  \texttt{f21\_\allowbreak substrate\_\allowbreak asymptotic\_\allowbreak freedom} & 4 \\
+§7 & Two-loop $\beta$ & \texttt{f21\_two\_\allowbreak loop\_beta\_\allowbreak coefficient} & 3 \\
 §8 & Second octet suppression &
-  \lstinline|baryon_octet_suppression_z3|,
-  \lstinline|second_octet_mdl_bit_gap| & 4 \\
+  \texttt{baryon\_\allowbreak octet\_\allowbreak suppression\_z3},
+  \texttt{second\_\allowbreak octet\_\allowbreak mdl\_bit\_gap} & 4 \\
 §9 & J\textsuperscript{P} = 1/2 forced &
-  \lstinline|jp_spin_half_mdl_forced|,
-  \lstinline|mdl_selects_spin_half_baryon| & 7 \\
+  \texttt{jp\_spin\_\allowbreak half\_\allowbreak mdl\_forced},
+  \texttt{mdl\_\allowbreak selects\_\allowbreak spin\_half\_\allowbreak baryon} & 7 \\
 \midrule
 & & Total §5i–§9 & \textbf{64} \\
 \bottomrule
@@ -5056,14 +5060,16 @@ Selected physical significance:
 Module: \texttt{Substrate/LExtended.lean} (development branch, zero sorry).
 This is the structural Lean encoding of the two-sector Lagrangian
 \begin{equation}\label{eq:l-extended}
-\mathcal{L}_{\rm ext} =
+\begin{split}
+\mathcal{L}_{\rm ext} =\; &
   \tfrac{1}{2}(\partial\varphi)^2 - V(\varphi)
   + \tfrac{1}{2}(D^c_\mu\chi)^2 - W(\chi)
-  - \tfrac{1}{4g^2}F_{\rm color}^2
-  + \tfrac{1}{2}(D^{\rm em}_\mu\varphi)^2
-  - \tfrac{1}{4e^2}F_{\rm em}^2
-  + \varepsilon_1|\varphi|^2(D^c_\mu\chi)^2
+  - \tfrac{1}{4g^2}F_{\rm color}^2 \\
+  &+ \tfrac{1}{2}(D^{\rm em}_\mu\varphi)^2
+  - \tfrac{1}{4e^2}F_{\rm em}^2 \\
+  &+ \varepsilon_1|\varphi|^2(D^c_\mu\chi)^2
   + \varepsilon_2|\chi|^2(D^{\rm em}_\mu\varphi)^2,
+\end{split}
 \end{equation}
 with WP8 G1–G4 cross-references encoded.
 Theorem \lstinline|r4_ro4_l_extended_lean_certified| closes the R4-RO-4 goal:
@@ -5072,7 +5078,7 @@ Wilsonian EFT level, with separate $\mathbb{Z}_3$ (confining) and $\mathrm{U}(1)
 (Coulomb) sectors that cannot coexist in a single gauge field.
 
 % ═══════════════════════════════════════════════════════════════
-\section{QFT Mass Gap
+\section[QFT Mass Gap]{QFT Mass Gap
   (\texttt{QFT/GaugedMassGap.lean})}\label{sec:qft-mass-gap}
 % ═══════════════════════════════════════════════════════════════
 
@@ -5129,7 +5135,7 @@ confirms the physical mass is stable within $24\%$ (pass criterion $\le 30\%$).
 Linear extrapolation to $a \to 0$ gives $m_0 \approx 24.6~\text{GeV}$ (positive).
 
 % ═══════════════════════════════════════════════════════════════
-\section{Audit-Session Capstones and Axiom Inventory
+\section{Capstone Certification and Axiom Inventory
   Update}\label{sec:audit-capstones}
 % ═══════════════════════════════════════════════════════════════
 
@@ -5213,7 +5219,7 @@ Module: development branch, zero sorry.
 \end{itemize}
 
 \subsection{Algebraic Descent Theorem
-  (\texttt{Universality/AlgebraicDescentTheorem.lean})}\label{subsec:algebraic-descent}
+  (\texttt{Universality/\allowbreak AlgebraicDescentTheorem.lean})}\label{subsec:algebraic-descent}
 
 Module: development branch, zero sorry.
 
@@ -5321,7 +5327,7 @@ Proof: immediate specialization of \lstinline|orbit_generation_ordering| to
 \begin{keybox}{\lstinline|mphi_equals_tau_mass_scc| (zero sorry)}
 The SCC identification $m_\varphi = m_\tau$, certified by definitional equality:
 \[
-  \lstinline|mphi_scc| = \lstinline|m_tau_pdg_eV| = 1\,776\,860\,000\,\text{eV}.
+  \texttt{mphi\_scc} = \texttt{m\_tau\_pdg\_eV} = 1\,776\,860\,000\,\text{eV}.
 \]
 \lstinline|mphi_scc| is defined to equal \lstinline|m_tau_pdg_eV| by the SCC;
 the \lstinline|rfl| proof machine-certifies that the $\Phi_{\rm MDL}$ bare mass
@@ -5350,12 +5356,12 @@ $\mathbb{R}$:
 \]
 Since $\pi$ is transcendental, \lstinline|fpi_scc_eV| lives in $\mathbb{R}$;
 the \lstinline|rfl| proof certifies the definitional equality
-$\lstinline|fpi_scc_eV| = ({}^\uparrow\!\lstinline|mkink_scc|)/\pi$.
+$\texttt{fpi\_scc\_eV} = ({}^\uparrow\!\texttt{mkink\_scc})/\pi$.
 This is a $2.6\times$ precision improvement over the previous calibrated value
 $91.35\,\mathrm{MeV}$ ($-0.81\%$), achieved with zero free parameters.
 \end{keybox}
 
-\subsection{QEC Stabilizer Code Interpretation of the
+\subsection[QEC Stabilizer Code]{QEC Stabilizer Code Interpretation of the
   \texorpdfstring{$[\mathbf{D}]$}{[D]}-Measure
   (\texttt{Spacetime/QECStabilizer.lean})}\label{subsec:qec-stabilizer}
 
@@ -5389,13 +5395,13 @@ The four properties of the GTE QEC structure are machine-certified as a
 conjunction:
 \begin{enumerate}[nosep]
 \item \textbf{Code subspace.}
-  $\lstinline|InCodeSubspace|(b) \Leftrightarrow \lstinline|PSCAdmissible|(b)$:
+  $\texttt{InCodeSubspace}(b) \Leftrightarrow \texttt{PSCAdmissible}(b)$:
   the code words are exactly the four orbit-certified PSC states.
 \item \textbf{Stabilizer closure.}
-  $\lstinline|InCodeSubspace|(b) \Rightarrow \lstinline|InCodeSubspace|(\lstinline|fmdl_step5|(b))$:
+  $\texttt{InCodeSubspace}(b) \Rightarrow \texttt{InCodeSubspace}(\texttt{fmdl\_step5}(b))$:
   $f_{\mathrm{MDL}}$ maps every code word to a code word.
 \item \textbf{Perfect error detection.}
-  $\neg\lstinline|InCodeSubspace|(b) \Rightarrow \mathrm{DWeight}(b) = 0$:
+  $\neg\texttt{InCodeSubspace}(b) \Rightarrow \mathrm{DWeight}(b) = 0$:
   the $[\mathbf{D}]$-measure projects out all error states immediately.
 \item \textbf{Mass gap bound.}
   $\exists\,\Delta > 0$ such that every non-vacuum code word has
@@ -5407,7 +5413,7 @@ Supporting theorems (all zero sorry):
 
 \begin{itemize}[nosep]
 \item \lstinline|qec_dweight_projector| --- $\mathrm{DWeight}(b) > 0
-  \Leftrightarrow \lstinline|InCodeSubspace|(b)$: the DWeight function is the
+  \Leftrightarrow \texttt{InCodeSubspace}(b)$: the DWeight function is the
   projector onto the code subspace.
 \item \lstinline|qec_orbit_closure| --- stabilizer closure of the four code words
   (vacuum is a fixed point; gen$_1 \to$ gen$_2 \to$ gen$_3 \to$ vacuum).
@@ -5542,15 +5548,15 @@ in \texttt{QECStabilizer.lean} (Rank 38-QEC).
 \centering\small
 \begin{tabular}{@{}p{4.8cm}p{3.2cm}p{4.5cm}@{}}
 \toprule
-Theorem & Module & Substrate $\leftrightarrow$ Phenomology \\
+Theorem & Module & Substrate $\leftrightarrow$ Phenomenology \\
 \midrule
-\lstinline|bridge_level_confinement_superseded|  & ColorConfinement & Exhaustive Route B supersedes bridge-level confinement \\
-\lstinline|gluon_sector_coupling_nontrivial|     & SylowIndexCouplingHierarchy & $\beta_{\rm color} = 2/7 > 0$ \\
-\lstinline|charge_uniqueness_crossref_sm_layer|  & SylowIndexCouplingHierarchy & CRT-minimal charge $= 2\pi/21$ \\
-\lstinline|allowed_vertex_substrate_catalog|     & LiftingTheorem & Vertex gate $=$ triple PSC-admissibility \\
-\lstinline|psc_admissible_orbit_certificate_link|& LiftingTheorem & PSC states = \{vacuum, gen$_1$, gen$_2$, gen$_3$\} \\
-\lstinline|p22_vertex_table_is_ca_transparent|   & Z7ChargeConjugation & P22 $W^\pm$ vertices CA-transparent on $f_{\rm MDL}$ \\
-\lstinline|trace_identifiability|               & GTE/Evolution & Gen-2 trace fixes $n, b_1, c_1$ \\
+\texttt{bridge\_level\_\allowbreak confinement\_\allowbreak superseded}  & ColorConfinement & Exhaustive Route B supersedes bridge-level confinement \\
+\texttt{gluon\_sector\_\allowbreak coupling\_\allowbreak nontrivial}     & \texttt{SylowIndex\allowbreak CouplingHierarchy} & $\beta_{\rm color} = 2/7 > 0$ \\
+\texttt{charge\_\allowbreak uniqueness\_\allowbreak crossref\_\allowbreak sm\_layer}  & \texttt{SylowIndex\allowbreak CouplingHierarchy} & CRT-minimal charge $= 2\pi/21$ \\
+\texttt{allowed\_\allowbreak vertex\_\allowbreak substrate\_\allowbreak catalog}     & LiftingTheorem & Vertex gate $=$ triple PSC-admissibility \\
+\texttt{psc\_admissible\_\allowbreak orbit\_\allowbreak certificate\_\allowbreak link}& LiftingTheorem & PSC states = \{vacuum, gen$_1$, gen$_2$, gen$_3$\} \\
+\texttt{p22\_vertex\_\allowbreak table\_is\_\allowbreak ca\_transparent}   & \texttt{Z7Charge\allowbreak Conjugation} & P22 $W^\pm$ vertices CA-transparent on $f_{\rm MDL}$ \\
+\texttt{trace\_\allowbreak identifiability}               & GTE/Evolution & Gen-2 trace fixes $n, b_1, c_1$ \\
 \bottomrule
 \end{tabular}
 \caption{Cross-repository bridge theorems (development branch).}
