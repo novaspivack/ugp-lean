@@ -135,6 +135,20 @@ theorem psc_admissible_iff_orbit (v : Fin 5 → Fin 7) :
     · exact gen2_psc_admissible
     · exact gen3_psc_admissible
 
+/-- **PSC orbit closure** (Rank 17-GEO / 076-GEO-CATAL, CatAL).
+
+    The f_MDL period-3 orbit {vacuum, gen₁, gen₂, gen₃} is closed under `fmdl_step5`.
+    PSC-admissible beables evolve to PSC-admissible successors.
+
+    Status: CatAL — zero sorry. -/
+theorem psc_admissible_preserved_by_fmdl_step (b : Fin 5 → Fin 7) (h : PSCAdmissible b) :
+    PSCAdmissible (fmdl_step5 b) := by
+  rcases (psc_admissible_iff_orbit b).mp h with rfl | rfl | rfl | rfl
+  · rw [vacuum_step5_fixed]; exact vacuum_psc_admissible
+  · rw [sm_period3_orbit_chain.1]; exact gen2_psc_admissible
+  · rw [sm_period3_orbit_chain.2.1]; exact gen3_psc_admissible
+  · rw [sm_period3_orbit_chain.2.2]; exact vacuum_psc_admissible
+
 -- ─────────────────────────────────────────────────────────────────────────────
 -- §2  The [D] Coherence Measure (step-function model)
 -- ─────────────────────────────────────────────────────────────────────────────

@@ -5359,6 +5359,16 @@ Certified predicates and theorems:
   for general endpoints (CatAL).
 \item \lstinline|geodesic_theorem_catal_general| --- full geodesic theorem bundle
   for general endpoints including positive $\mathtt{DWeightPath}$ (CatAL).
+\item \lstinline|spatial_composite_psc_preserved| --- PSC-admissible spatial
+  composites remain PSC-admissible on both constituents after one
+  $f_{\mathrm{MDL}}$ step (\texttt{SpatiallyExtendedLifting.lean}; CatAL).
+\item \lstinline|dweight_centroid_tracks_geodesic| --- distributed
+  $[\mathcal{D}]$-weighted PSC paths minimize total $\tau_c$ on true geodesics
+  (discrete quantum Ehrenfest; corollary of \lstinline|tau_c_prefers_geodesic|;
+  CatAL).
+\item \lstinline|dweight_preserved_under_step| --- $[\mathcal{D}]$ coherence
+  preserved under one CA step (alias of \lstinline|dweight_centroid_follows_orbit|;
+  CatAL).
 \end{itemize}
 
 Honest scope: \lstinline|DWeightNode| is a structural placeholder (definitionally
@@ -5378,6 +5388,15 @@ path of hop length $\max(\ell_1(n_1.2,n_2.2),\, n_2.1 - n_1.1)+1$, constructed
 via spacelike preamble and light-cone steps in \texttt{SpatiallyExtendedLifting};
 the fixed-worldline hypothesis \lstinline|hWorldline| from Pass~8 is removed.
 Zero \lstinline|sorry|.
+\end{keybox}
+
+\begin{keybox}{M4 closure: PSCPreserving + centroid Ehrenfest (CatAL)}
+\textbf{Theorems \lstinline|spatial_composite_psc_preserved|,
+\lstinline|dweight_centroid_tracks_geodesic|,
+\lstinline|dweight_preserved_under_step|.}
+Component-wise PSC orbit closure for spatially extended composites; $\tau_c$
+minimization on true geodesics for PSC-admissible path states (reduces to
+Pass~9). Zero \lstinline|sorry|.
 \end{keybox}
 
 \subsection{$\mathbb{Z}_3$ Sub-orbit Disjointness

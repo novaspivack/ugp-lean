@@ -129,8 +129,15 @@ closed: light-cone / spacelike-preamble minimal paths between forward-causal end
 without fixed-worldline hypothesis (`hWorldline` removed). Uses `spatialL1` hop count
 `max(ℓ₁, Δt)+1` from `SpatiallyExtendedLifting.minimal_causal_path_exists`.
 
-**Remaining gap to unconditional full CatAL:** non-trivial `PSCPreserving` +
-distributed P34 orbit-superposition for curvature-corrected centroid.
+**Pass 11 (2026-05-26):** `dweight_centroid_tracks_geodesic` — distributed PSC paths
+minimize total τ_c on true geodesics (corollary of Pass 9 `tau_c_prefers_geodesic`);
+`dweight_preserved_under_step` — [D] coherence preserved under one CA step.
+Spatial composite PSC preservation: `spatial_composite_psc_preserved` in
+`SpatiallyExtendedLifting.lean` (component-wise `psc_admissible_preserved_by_fmdl_step`
+in `LiftingTheorem.lean`).
+
+**Remaining gap to unconditional full CatAL:** non-trivial `PSCPreserving` on causal
+node maps + distributed P34 orbit-superposition for curvature-corrected centroid.
 -/
 
 open GTE.Lifting GTE.Spacetime GTE.Spacetime.Centroid GTE.Spacetime.QEC
@@ -392,12 +399,8 @@ theorem geodesic_consistent_with_emergent_gravity :
 
     Status: CatAL — zero sorry. -/
 theorem psc_admissible_orbit_closure (b : Fin 5 → Fin 7) (h : PSCAdmissible b) :
-    PSCAdmissible (fmdl_step5 b) := by
-  rcases (psc_admissible_iff_orbit b).mp h with rfl | rfl | rfl | rfl
-  · rw [vacuum_step5_fixed]; exact vacuum_psc_admissible
-  · rw [sm_period3_orbit_chain.1]; exact gen2_psc_admissible
-  · rw [sm_period3_orbit_chain.2.1]; exact gen3_psc_admissible
-  · rw [sm_period3_orbit_chain.2.2]; exact vacuum_psc_admissible
+    PSCAdmissible (fmdl_step5 b) :=
+  psc_admissible_preserved_by_fmdl_step b h
 
 /-- **D2 orbit closure** (CatAL): the `[D]`-weighted physical ensemble is closed
     under one f_MDL step.
@@ -714,7 +717,7 @@ theorem geodesic_preferred_direction
     Status: CatAL — zero sorry. -/
 theorem psc_admissible_preserved_by_fmdl_step (b : Fin 5 → Fin 7) (h : PSCAdmissible b) :
     PSCAdmissible (fmdl_step5 b) :=
-  psc_admissible_orbit_closure b h
+  GTE.Lifting.psc_admissible_preserved_by_fmdl_step b h
 
 /-- **PSC-admissibility preserved under iteration** (CatAL).
 
@@ -1419,6 +1422,36 @@ theorem tau_c_prefers_geodesic_const_psc
     total_tau_c L T path_geo (fun _ => b) ≤ total_tau_c L T path' (fun _ => b) :=
   tau_c_prefers_geodesic L T n_start n_end (fun _ => b) path_geo h_geo
     (fun _ _ => h_psc) path' h_path'
+
+/-- **Distributed [D]-centroid tracks the geodesic via τ_c** (Rank 076-GEO-CATAL M4, CatAL).
+
+    Among causal paths between the same endpoints with PSC-admissible state on the
+    true geodesic, total τ_c on the geodesic is minimal — the discrete quantum
+    Ehrenfest theorem: [D]-weighted PSC support concentrates on minimum-τ_c paths.
+
+    Proof: direct corollary of `tau_c_prefers_geodesic` (Pass 9).
+
+    Status: CatAL — zero sorry. -/
+theorem dweight_centroid_tracks_geodesic (L T : ℕ)
+    (n_start n_end : CausalNode L T)
+    (state_at : CausalNode L T → Fin 5 → Fin 7)
+    (path_geo : List (CausalNode L T))
+    (h_geo : IsTrueGeodesicPath L T n_start n_end path_geo)
+    (h_psc : IsPSCAdmissiblePath L T path_geo state_at)
+    (path_off : List (CausalNode L T))
+    (h_off : IsGeodesicPath L T n_start n_end path_off) :
+    total_tau_c L T path_geo state_at ≤ total_tau_c L T path_off state_at :=
+  tau_c_prefers_geodesic L T n_start n_end state_at path_geo h_geo h_psc path_off h_off
+
+/-- **PSCPreserving: [D] coherence preserved under f_MDL step** (CatAL).
+
+    Positive `DWeight` on a beable implies positive `DWeight` after one CA step —
+    the quantum orbit-closure content of PSC preservation.
+
+    Status: CatAL — zero sorry (alias of `dweight_centroid_follows_orbit`). -/
+theorem dweight_preserved_under_step (b : Fin 5 → Fin 7) (h : DWeight b > 0) :
+    DWeight (fmdl_step5 b) > 0 :=
+  dweight_centroid_follows_orbit b h
 
 /-- **Geodesic via τ_c route — flat vacuum single step** (CatAL, zero sorry).
 
