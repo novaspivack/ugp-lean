@@ -823,6 +823,11 @@ Module: `UgpLean.Universality.PhiMDLUniversality`; companion: `rule110-lean/Rule
 - `gte_beta_coefficient_bundle` — b₀ = (11N_c − 2N_f)/3 = |F₂₁|/N_c = |Z₇| = 7 (CatAL)
 - `gte_planck_cascade_group_identity` — Planck cascade group-order identity (CatAL)
 
+*Z₃-Invariant Entropy & Hierarchy CatAL Closure (`Z3InvariantEntropy.lean`, `Z3SubOrbitDisjointness.lean`, `PSCOrbitWindows.lean`)*
+
+- `psc_admissible_implies_color_neutral` — PSC-admissible beables exclude free single-quark color carriers (CatAL)
+- `z3_invariant_entropy_closes_hierarchy` — bundles numeric identity, PSC confinement, two-equal orbit non-selection, and Z₃ sub-orbit disjointness (CatAL)
+
 *Rank 075-GR — Stress–Energy & Async Lifting (`StressEnergyTensor.lean`, `AsyncLiftingTheorem.lean`)*
 
 - `phimdl_tmunu_symmetric` / `phimdl_tmunu_vacuum_zero` — Klein–Gordon T_μν symmetry and vacuum cancellation (CatAL)
