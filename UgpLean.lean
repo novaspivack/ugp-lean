@@ -169,6 +169,7 @@ import UgpLean.Universality.PhiMDLThermalState
 import UgpLean.Universality.SylowIndexCouplingHierarchy
 import UgpLean.Universality.BetaCoefficientIdentity
 import UgpLean.Universality.FrobeniusPrimeIdentity
+import UgpLean.Universality.Z3SubOrbitDisjointness
 import UgpLean.Substrate.LExtended
 import UgpLean.Substrate.Substrate
 import UgpLean.Substrate.PSCPreservingTransformation
@@ -207,6 +208,7 @@ import UgpLean.Spacetime.QECStabilizer
 import UgpLean.Spacetime.DWeightSRFormula
 import UgpLean.Spacetime.MultiParticleHilbert
 import UgpLean.Spacetime.QuantumGravity
+import UgpLean.Spacetime.GravitonFockSpace
 import UgpLean.Spacetime.StressEnergyTensor
 import UgpLean.Spacetime.PhysicalExclusion
 import UgpLean.Spacetime.ThreeGenerationCapstone
