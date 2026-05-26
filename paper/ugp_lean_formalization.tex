@@ -136,7 +136,7 @@
 \begin{abstract}
 We present \textbf{ugp-lean}, a \lean{}~4 formalization of the
 Universal Generative Principle (\ugp{}) against Mathlib, comprising
-148 canonical modules (with an extended development branch covering
+224~\lean{} modules across seventeen layers (extended development branch covering
 spacetime, QFT, and hadronic physics) with a strict zero-sorry,
 zero-custom-axiom policy on the core proof path (20 global custom
 named axioms after the 2026-05-24 audit,\linebreak[2] down from 24).
@@ -423,7 +423,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 221~\lean{} modules across seventeen layers
+The artifact is organized into 224~\lean{} modules across seventeen layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -480,7 +480,7 @@ The artifact is organized into 221~\lean{} modules across seventeen layers
   {\textbf{IPT}~(1) \textit{migrated to ugp-physics-lean}:
    InformationProfitThreshold};
 \node[layer, fill=purple!8, below=of ipt]   (univ)
-  {\textbf{Universality}~(60)\quad Rule110, UWCA, UWCASimulation,
+  {\textbf{Universality}~(62)\quad Rule110, UWCA, UWCASimulation,
    UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge,
    CUP4TotalParity, CUP11ModSeven, CUP3DUniqueness, CUP3DPSCUnification,
    CUP3DPhysicalIncompleteness, TwoLayerConfluence, GTECompilation, GTEUniqueness,
@@ -498,7 +498,8 @@ The artifact is organized into 221~\lean{} modules across seventeen layers
    PhiMDLThermalState, BornRuleMDL, DualFrameBornRule, FMDLClassification,
    FockSpaceKink, MDLDerivabilityCriterion, ThooftEffectMeasureBridge,
    ExcitationCoupling, EWScalePrediction, AlgebraicDescentTheorem,
-   BeableWindingPartitionInstance, TwoRoleTheorem (\textrm{+1 more})};
+   BeableWindingPartitionInstance, TwoRoleTheorem,
+   \textbf{Z3SubOrbitDisjointness}, \textbf{PSCOrbitWindows}};
 \node[layer, fill=gray!8,   below=of univ]  (self)
   {\textbf{SelfRef}~(2)\quad LawvereKleene, RiceHalting};
 \node[layer, fill=pink!10,  below=of self]  (fwk)
@@ -508,7 +509,7 @@ The artifact is organized into 221~\lean{} modules across seventeen layers
    \textit{new:} GTECategoryStructure, \textbf{CMCAContinuumLimit},
    CMCAMDLMinimality, PhiMDLBridge};
 \node[layer, fill=olive!8,  below=of fwk]   (space)
-  {\textbf{Spacetime}~(31)\quad CausalGraph, CausalInvariance, LiftingTheorem,
+  {\textbf{Spacetime}~(32)\quad CausalGraph, CausalInvariance, LiftingTheorem,
    SpatiallyExtendedLifting, ChiralGliderDynamics, ChiralMirrorSpeedSymmetry,
    ChiralPairDecoupling, OrbitDepthEtherPeriod, ColorConfinement, MassGap,
    OrbitMassHierarchy, ThreeGenerationCapstone, PhysicalExclusion,
@@ -516,6 +517,7 @@ The artifact is organized into 221~\lean{} modules across seventeen layers
    DWeightSRFormula, MultiParticleHilbert, GeodesicTheorem, CentroidMeasure,
    PhiMDLKinkQuantumNumbers, PhiMDLZ7PotentialMDL,
    \textbf{StressEnergyTensor}, \textbf{AsyncLiftingTheorem},
+   \textbf{GravitonFockSpace},
    SpectralDimension, SpectralDimensionDegree, \textbf{HeatKernelFourier}
    (+ 3 Spectral sub-modules; dev branch, zero sorry unless noted)};
 \node[layer, fill=brown!6,  below=of space] (subs)
@@ -5347,6 +5349,16 @@ Certified predicates and theorems:
   a graph-distance geodesic in flat vacuum (CatAL).
 \item \lstinline|d2_geodesic_step_is_geodesic_path| --- one $f_{\mathrm{MDL}}$ step
   traces a geodesic edge with $\mathtt{DWeight}$ preservation (CatAL).
+\item \lstinline|minimal_causal_path_exists| --- length-minimal causal path with
+  hop count $\max(\ell_1,\Delta t)+1$ between forward-causal endpoints
+  (\texttt{SpatiallyExtendedLifting.lean}; CatAL).
+\item \lstinline|geodesic_theorem_spatial_general| --- true geodesic with constant
+  PSC state between forward-causal endpoints without fixed spatial-worldline
+  hypothesis (Pass~10 / M4; CatAL, zero \lstinline|sorry|).
+\item \lstinline|psc_orbit_is_curvature_geodesic_general| --- curved-spacetime geodesic
+  for general endpoints (CatAL).
+\item \lstinline|geodesic_theorem_catal_general| --- full geodesic theorem bundle
+  for general endpoints including positive $\mathtt{DWeightPath}$ (CatAL).
 \end{itemize}
 
 Honest scope: \lstinline|DWeightNode| is a structural placeholder (definitionally
@@ -5356,6 +5368,57 @@ curvature-corrected deviation and the full distributed P34 orbit-superposition
 measure remain open pending Ollivier--Ricci formalization (EPIC\_073).
 This module is the first formal connection between the emergent gravity programme
 (P36) and particle trajectories in the 3D causal graph.
+
+\begin{keybox}{Pass~10: spatial displacement geodesics (M4, CatAL)}
+\textbf{Theorems \lstinline|geodesic_theorem_spatial_general|,
+\lstinline|psc_orbit_is_curvature_geodesic_general|,
+\lstinline|geodesic_theorem_catal_general|.}
+Forward-causal pairs $(n_1,n_2)$ with $n_1.1 \leq n_2.1$ admit a true geodesic
+path of hop length $\max(\ell_1(n_1.2,n_2.2),\, n_2.1 - n_1.1)+1$, constructed
+via spacelike preamble and light-cone steps in \texttt{SpatiallyExtendedLifting};
+the fixed-worldline hypothesis \lstinline|hWorldline| from Pass~8 is removed.
+Zero \lstinline|sorry|.
+\end{keybox}
+
+\subsection{$\mathbb{Z}_3$ Sub-orbit Disjointness
+  (\texttt{Universality/\allowbreak Z3SubOrbitDisjointness.lean})}\label{subsec:z3-suborbit}
+
+Module: \texttt{Universality/Z3SubOrbitDisjointness.lean} (EPIC\_076, zero \lstinline|sorry|).
+
+\begin{keybox}{\lstinline|z7_suborbit_disjoint_z3_conjugate| (zero \texttt{sorry})}
+For two-equal states $(a,a,b)$ with $a \neq b$ in $\mathbb{Z}_7^3$, the
+$\mathbb{Z}_7$-translation sub-orbit and its $\mathbb{Z}_3$-conjugate are disjoint.
+Corollary \lstinline|mpl_mtau_formula_catal| certifies the $M_{\rm Pl}/m_\tau$ numeric
+identity at CatAL level.
+\end{keybox}
+
+\subsection{PSC Orbit Window Structure
+  (\texttt{Universality/\allowbreak PSCOrbitWindows.lean})}\label{subsec:psc-orbit-windows}
+
+Module: \texttt{Universality/PSCOrbitWindows.lean} (EPIC\_076, zero \lstinline|sorry|).
+
+\begin{itemize}[nosep]
+\item \lstinline|gen1_one_generic_window|, \lstinline|gen2_one_generic_window|,
+  \lstinline|gen3_one_generic_window| --- each generation beable has exactly one
+  generic-sector 3-cell window.
+\item \lstinline|gen_beables_four_two_equal_windows| --- four two-equal windows per
+  generation beable; vacuum has five all-equal windows.
+\item \lstinline|two_equal_orbits_not_psc_selected| --- two-equal $F_{21}$ orbit
+  representatives are disjoint from PSC generic windows (OQ-G1-LEAN2).
+\end{itemize}
+
+\subsection{Graviton Fock Space
+  (\texttt{Spacetime/\allowbreak GravitonFockSpace.lean})}\label{subsec:graviton-fock}
+
+Module: \texttt{Spacetime/GravitonFockSpace.lean} (EPIC\_076, zero \lstinline|sorry|).
+
+\begin{keybox}{GTE gravitational coupling (zero \texttt{sorry})}
+\lstinline|gravitational_coupling_from_hierarchy|:
+$\alpha_g = 4/(21^{20}\cdot 7^{14})$;
+\lstinline|gravitational_coupling_at_planck_is_one|:
+$\alpha_g(M_{\rm Pl})=1$ at the GTE Planck scale
+\lstinline|gte_planck_mass| $= 21^{10}\cdot 7^7/2$.
+\end{keybox}
 
 % ═══════════════════════════════════════════════════════════════
 \section{Coupling Hierarchy and Fine Structure Constant
@@ -5900,6 +5963,18 @@ Theorem & Module & Physical role \\
 \texttt{async\_\allowbreak algebraic\_\allowbreak lifting\_\allowbreak theorem}
   & AsyncLifting\allowbreak Theorem
   & Async eval $=$ sync eval on every beable config \\[1pt]
+\texttt{geodesic\_\allowbreak theorem\_\allowbreak spatial\_\allowbreak general}
+  & GeodesicTheorem
+  & True geodesic without fixed worldline (M4; CatAL) \\[1pt]
+\texttt{z7\_\allowbreak suborbit\_\allowbreak disjoint\_\allowbreak z3\_\allowbreak conjugate}
+  & Z3SubOrbit\allowbreak Disjointness
+  & $Z_7$ vs.\ $Z_3$ sub-orbit disjointness for two-equal states \\[1pt]
+\texttt{two\_\allowbreak equal\_\allowbreak orbits\_\allowbreak not\_\allowbreak psc\_\allowbreak selected}
+  & PSCOrbit\allowbreak Windows
+  & Two-equal $F_{21}$ orbits not PSC-selected (OQ-G1-LEAN2) \\[1pt]
+\texttt{gravitational\_\allowbreak coupling\_\allowbreak at\_\allowbreak planck\_\allowbreak is\_\allowbreak one}
+  & GravitonFock\allowbreak Space
+  & $\alpha_g(M_{\rm Pl})=1$; GTE Planck mass self-consistency \\[1pt]
 \texttt{diagonal\_\allowbreak coin\_\allowbreak decouples\_\allowbreak sectors}
   & WindingCoin\allowbreak Decoupling
   & Winding--coin decoupling; BPS ratio certified \\[1pt]
