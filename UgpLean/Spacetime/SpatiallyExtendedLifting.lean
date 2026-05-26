@@ -31,6 +31,8 @@ inter-particle vacuum region; geodesic uniqueness is not used.
 | `baryon_bound_state_exists` | CatAL — zero sorry |
 | `causal_path_exists` | CatAL — zero sorry (proved for forward-causal pairs; zero custom axioms) |
 | `vacuum_path_exists` | CatAL — zero sorry (proved for forward-causal pairs) |
+| `spatial_composite_psc_preserved` | CatAL — zero sorry (PSCPreserving for spatial composites) |
+| `spatial_composite_dweight_preserved` | CatAL — zero sorry |
 -/
 
 open GTE.Lifting GTE.Spacetime GTE.Spacetime.Confinement
@@ -954,5 +956,28 @@ theorem spatial_composition_lifts
     P c.beableA ∧ P c.beableB :=
   ⟨particle_lifts_independently c.beableA h_spatial.1 hP,
    particle_lifts_independently c.beableB h_spatial.2.1 hP⟩
+
+/-- **PSCPreserving for spatial composites** (Rank 076-GEO-CATAL M4, CatAL).
+
+    PSC-admissible spatial composites remain PSC-admissible on both constituents
+    after one `fmdl_step5` evolution step.  Component-wise application of
+    `psc_admissible_preserved_by_fmdl_step` (GeodesicTheorem Pass 4).
+
+    Status: CatAL — zero sorry. -/
+theorem spatial_composite_psc_preserved
+    (c : SpatiallyExtendedComposite L T)
+    (hspa : c.PSCAdmissibleSpatial) :
+    PSCAdmissible (fmdl_step5 c.beableA) ∧
+    PSCAdmissible (fmdl_step5 c.beableB) :=
+  ⟨psc_admissible_preserved_by_fmdl_step c.beableA hspa.1,
+   psc_admissible_preserved_by_fmdl_step c.beableB hspa.2.1⟩
+
+/-- **[D]-weight preserved on spatial composite constituents** (CatAL). -/
+theorem spatial_composite_dweight_preserved
+    (c : SpatiallyExtendedComposite L T)
+    (hspa : c.PSCAdmissibleSpatial) :
+    DWeight (fmdl_step5 c.beableA) > 0 ∧ DWeight (fmdl_step5 c.beableB) > 0 := by
+  rcases spatial_composite_psc_preserved L T c hspa with ⟨hA, hB⟩
+  exact ⟨dweight_pos_of_psc _ hA, dweight_pos_of_psc _ hB⟩
 
 end GTE.Spacetime.SpatialExtension
