@@ -1,4 +1,5 @@
 import Mathlib.Data.Complex.Basic
+import Mathlib.Algebra.Order.Field.Basic
 import UgpLean.Universality.FockSpaceKink
 import UgpLean.Framework.CMCAContinuumLimit
 
@@ -47,6 +48,38 @@ theorem gravitational_coupling_from_hierarchy :
 /-- The gravitational coupling is extremely small: `α_g ≪ 1`. -/
 theorem gravitational_coupling_lt_one :
     (4 : ℚ) / (21^20 * 7^14) < 1 := by norm_num
+
+/-- GTE Planck mass scale: `M_Pl_GTE = 21^10 × 7^7 / 2` (MeV units in the physics layer). -/
+def gte_planck_mass : ℚ := 21^10 * 7^7 / 2
+
+/-- At the Planck scale the gravitational coupling is O(1): EFT breakdown point.
+
+    `α_g(M_Pl) × (M_Pl/m_τ)² = 1` — the hierarchy factor cancels the small coupling. -/
+theorem gravitational_coupling_at_planck_is_one :
+    (4 : ℚ) / (21^20 * 7^14) * gte_planck_mass^2 = 1 := by
+  unfold gte_planck_mass
+  norm_num
+
+/-- The GTE Planck mass is the unique energy scale (up to sign) with `α_g(E) = 1`. -/
+theorem gte_planck_mass_self_consistency (E : ℚ) :
+    E^2 * (4 / (21^20 * 7^14)) = 1 ↔ E = gte_planck_mass ∨ E = -gte_planck_mass := by
+  have key : gte_planck_mass^2 * (4 / (21^20 * 7^14)) = 1 := by
+    rw [mul_comm]
+    exact gravitational_coupling_at_planck_is_one
+  have hcoeff : (4 / (21^20 * 7^14 : ℚ)) ≠ 0 := by norm_num
+  constructor
+  · intro h
+    have hE2 : E^2 = gte_planck_mass^2 := by
+      apply (mul_right_cancel₀ hcoeff)
+      calc E^2 * (4 / (21^20 * 7^14))
+          = 1 := h
+        _ = gte_planck_mass^2 * (4 / (21^20 * 7^14)) := by rw [← key]
+    exact eq_or_eq_neg_of_sq_eq_sq E gte_planck_mass hE2
+  · rintro (rfl | rfl)
+    · exact key
+    · unfold gte_planck_mass
+      field_simp
+      ring
 
 /-- The physical Hilbert space structure (structural, not Lean-quantized). -/
 structure PhysicalHilbertSpace where

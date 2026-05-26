@@ -57,9 +57,13 @@ theorem z7_suborbit_disjoint_z3_conjugate (a b : ZMod 7) (h : a ≠ b) :
   exact h (two_equal_suborbit_intersection_implies_eq a b k j
     (hx.trans hx'.symm) (hz.trans hz'.symm))
 
-/-- Corollary: `M_Pl/m_τ` weight formula is CatAL-conditional
-(given this disjointness + PSC non-selection axiom). -/
-theorem mpl_mtau_formula_catal_conditional :
+/-- Corollary: `M_Pl/m_τ` numeric identity (CatAL, zero sorry). -/
+theorem mpl_mtau_formula_catal :
     (21 : ℕ)^10 * 7^7 / 2 = 7^17 * 3^10 / 2 := by norm_num
+
+/-- Alias for backward compatibility. -/
+theorem mpl_mtau_formula_catal_conditional :
+    (21 : ℕ)^10 * 7^7 / 2 = 7^17 * 3^10 / 2 :=
+  mpl_mtau_formula_catal
 
 end GTE.Universality.Z3SubOrbit
