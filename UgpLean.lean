@@ -178,6 +178,7 @@ import UgpLean.Universality.DualFrameBornRule
 import UgpLean.Universality.PhiMDLThermalState
 import UgpLean.Universality.SylowIndexCouplingHierarchy
 import UgpLean.Universality.BetaCoefficientIdentity
+import UgpLean.Universality.FrobeniusPrimeIdentity
 import UgpLean.Substrate.LExtended
 import UgpLean.Substrate.Substrate
 import UgpLean.Substrate.PSCPreservingTransformation
@@ -260,6 +261,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Universality.AlgebraicDescentTheorem` — Rank 135-ALDESC: Algebraic Descent Theorem; M-independence of F_21 orbit structure, PSC admissibility, three generations, color confinement, b₀=7, θ=0, Casimir invariants C_F=4/3 C_A=3; all CatAL zero sorry (2026-05-23)
 - `UgpLean.Universality.AlgebraicNecessityTheorem` — Rank 075-ALGEC-NECESSITY: Algebraic Necessity Theorem; F₂₁ = Z₇ ⋊ Z₃ is the unique non-abelian group of order 21 (Burnside pq certificates, zero sorry); N_gen=3 uniquely forced; no-CA-replica as corollary; all CatAL zero sorry (2026-05-26)
 - `UgpLean.Universality.BetaCoefficientIdentity` — b₀ = |Z₇| = 7 from F₂₁ = Z₇ ⋊ Z₃: (11N_c − 2N_f)/3 = |F₂₁|/|Z₃|; Planck cascade group identity; zero sorry (2026-05-26)
+- `UgpLean.Universality.FrobeniusPrimeIdentity` — |Z₇| = |Z₃|² − |Z₃| + 1 unifies F₂₁ and PSC n=10 derivations; frobenius_prime_bundle; zero sorry (2026-05-26)
 - `UgpLean.Papers.*`             — Paper25, UGPMain (citable stubs)
 
 - `UgpLean.TE22.*`               — ScanCertificate (TE2.2 PSC scan framework, UGP coupling predictions)
