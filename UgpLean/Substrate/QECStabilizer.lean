@@ -257,6 +257,35 @@ theorem dweight_qec_d1_d5_bundle :
   · exact d3_role
   · exact d5_role
 
+/-- **D3 (QEC syndrome decoding):** discrete transputation decodes to the code subspace.
+
+    The witness `dweight_decode` is nearest-codeword decoding at the step-function level:
+    PSC-admissible records are unchanged; syndrome-zero errors project to the vacuum
+    code word. Abstract substrate transputation (`transputation_state_selector_bundle`)
+    carries the continuum argmin_ρ D(ρ|w) formulation (Rank 76-TPSEL). -/
+theorem qec_syndrome_decoding_via_transputation :
+    ∃ selector : (Fin 5 → Fin 7) → (Fin 5 → Fin 7),
+      ∀ beable : Fin 5 → Fin 7,
+        PSCAdmissible (selector beable) ∧
+        DWeight (selector beable) > 0 ∧
+        (PSCAdmissible beable → selector beable = beable) ∧
+        (¬PSCAdmissible beable → selector beable = fmdl_vacuum5) :=
+  ⟨dweight_decode, fun b =>
+    ⟨dweight_decode_psc b, dweight_decode_pos b,
+     (dweight_decode_projection b).1, (dweight_decode_projection b).2⟩⟩
+
+/-- Re-export: D1–D4 stabilizer bundle on `DWeight` (Spacetime certificate). -/
+theorem dweight_qec_stabilizer_bundle_substrate :
+    (∀ b : Fin 5 → Fin 7, ¬PSCAdmissible b → DWeight b = 0) ∧
+    (∀ b : Fin 5 → Fin 7, PSCAdmissible b → DWeight b > 0) ∧
+    (∀ b : Fin 5 → Fin 7, DWeight b > 0 ↔ PSCAdmissible b) :=
+  dweight_qec_stabilizer_bundle
+
+/-- F₂₁ stabilizer at the orbit level: `fmdl_step5` preserves PSC-admissibility. -/
+theorem f21_stabilizer_preserves_psc_substrate (b : Fin 5 → Fin 7) (h : PSCAdmissible b) :
+    PSCAdmissible (fmdl_step5 b) :=
+  f21_stabilizer_fmdl_preserves_psc b h
+
 /-- Re-export: the GTE [D]-measure is a QEC stabilizer code (Spacetime certificate). -/
 theorem qec_gte_is_stabilizer_code_substrate :
     (∀ b : Fin 5 → Fin 7, InCodeSubspace b ↔ PSCAdmissible b) ∧

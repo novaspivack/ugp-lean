@@ -174,6 +174,61 @@ theorem qec_code_iff_no_error (b : Fin 5 → Fin 7) :
   (qec_dweight_projector b).symm
 
 -- ─────────────────────────────────────────────────────────────────────────────
+-- §5b  D1–D4 on DWeight (Rank 38-QEC stabilizer bundle inputs)
+-- ─────────────────────────────────────────────────────────────────────────────
+
+/-- **D1 (code exclusion):** PSC-inadmissible beables have zero [D]-weight. -/
+theorem dweight_zero_of_inadmissible (b : Fin 5 → Fin 7) (h : ¬PSCAdmissible b) :
+    DWeight b = 0 := by
+  unfold DWeight
+  rw [if_neg h]
+
+/-- **D2 (code inclusion):** PSC-admissible beables have positive [D]-weight. -/
+theorem dweight_pos_of_admissible (b : Fin 5 → Fin 7) (h : PSCAdmissible b) :
+    DWeight b > 0 :=
+  psc_implies_dweight_pos b h
+
+/-- **D4 (bidirectional code projector):** nonzero [D]-weight iff PSC-admissible. -/
+theorem dweight_pos_iff_admissible (b : Fin 5 → Fin 7) :
+    DWeight b > 0 ↔ PSCAdmissible b :=
+  (qec_dweight_projector b).trans (qec_code_subspace_iff_psc b).symm
+
+/-- Discrete syndrome decoder: map errors to the canonical vacuum code word. -/
+noncomputable def dweight_decode (b : Fin 5 → Fin 7) : Fin 5 → Fin 7 :=
+  if PSCAdmissible b then b else fmdl_vacuum5
+
+/-- The decoder always lands in the PSC-admissible code subspace. -/
+theorem dweight_decode_psc (b : Fin 5 → Fin 7) : PSCAdmissible (dweight_decode b) := by
+  unfold dweight_decode
+  split_ifs with h
+  · exact h
+  · exact vacuum_psc_admissible
+
+/-- Decoded states have positive [D]-weight (on-code syndrome clearance). -/
+theorem dweight_decode_pos (b : Fin 5 → Fin 7) : DWeight (dweight_decode b) > 0 :=
+  dweight_pos_of_admissible _ (dweight_decode_psc b)
+
+/-- **D4 (projection):** decoding fixes code words and corrects errors to vacuum. -/
+theorem dweight_decode_projection (b : Fin 5 → Fin 7) :
+    (PSCAdmissible b → dweight_decode b = b) ∧
+    (¬PSCAdmissible b → dweight_decode b = fmdl_vacuum5) := by
+  unfold dweight_decode
+  constructor
+  · intro h; exact if_pos h
+  · intro h; exact if_neg h
+
+/-- **Rank 38-QEC stabilizer bundle (D1, D2, D4 discrete; zero sorry).
+
+    The [D] step-function is the syndrome projector onto PSC-admissible beables:
+    inadmissible states carry weight 0; admissible states carry weight 1; and
+    nonzero weight characterizes admissibility. -/
+theorem dweight_qec_stabilizer_bundle :
+    (∀ b : Fin 5 → Fin 7, ¬PSCAdmissible b → DWeight b = 0) ∧
+    (∀ b : Fin 5 → Fin 7, PSCAdmissible b → DWeight b > 0) ∧
+    (∀ b : Fin 5 → Fin 7, DWeight b > 0 ↔ PSCAdmissible b) :=
+  ⟨dweight_zero_of_inadmissible, dweight_pos_of_admissible, dweight_pos_iff_admissible⟩
+
+-- ─────────────────────────────────────────────────────────────────────────────
 -- §6  Code words are pairwise distinct
 -- ─────────────────────────────────────────────────────────────────────────────
 
@@ -284,5 +339,33 @@ theorem qec_gte_is_stabilizer_code :
     (∃ Δ : ℚ, Δ > 0 ∧ ∀ b : Fin 5 → Fin 7, InCodeSubspace b → b ≠ fmdl_vacuum5 →
      ∃ mass : ℚ, mass ≥ Δ) :=
   ⟨fun _ => Iff.rfl, qec_orbit_closure, qec_error_detected, qec_mass_gap_error_energy⟩
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- §10  F₂₁ stabilizer group (discrete orbit action)
+-- ─────────────────────────────────────────────────────────────────────────────
+
+/-- **F₂₁ stabilizer on code words:** the f_MDL orbit map preserves PSC-admissibility.
+
+    At the discrete Z₇⁵ level the concrete stabilizer generator is `fmdl_step5`
+    (generation orbit). The gauge-theory group F₂₁ = Z₇ ⋊ Z₃ is certified at the
+    Sylow-index layer (`f21_orbit_structure_m_independent`); uniform cell translation
+    in Z₇ is not a stabilizer of `zoneOf` — see `z7_uniform_translation_breaks_psc`. -/
+theorem f21_stabilizer_fmdl_preserves_psc (b : Fin 5 → Fin 7) (h : PSCAdmissible b) :
+    PSCAdmissible (fmdl_step5 b) :=
+  qec_orbit_closure b h
+
+/-- Uniform Z₇ translation is **not** the discrete stabilizer: it can break PSC-admissibility.
+
+    Proof: translate the vacuum by `1 ∈ ZMod 7` on every cell; the result is not one of
+    the four orbit-certified code words, hence lies in Zone L2. -/
+theorem z7_uniform_translation_breaks_psc :
+    ∃ b : Fin 5 → Fin 7, PSCAdmissible b ∧
+      ∃ g : Fin 7, ¬PSCAdmissible (fun i => b i + g) := by
+  refine ⟨fmdl_vacuum5, vacuum_psc_admissible, 1, ?_⟩
+  intro h
+  have hzone : zoneOf (fun _ : Fin 5 => (1 : Fin 7)) = .L2_transput := by
+    native_decide
+  unfold PSCAdmissible at h
+  exact h hzone
 
 end GTE.Spacetime.QEC
