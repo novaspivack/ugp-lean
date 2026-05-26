@@ -499,7 +499,7 @@ The artifact is organized into 224~\lean{} modules across seventeen layers
    FockSpaceKink, MDLDerivabilityCriterion, ThooftEffectMeasureBridge,
    ExcitationCoupling, EWScalePrediction, AlgebraicDescentTheorem,
    BeableWindingPartitionInstance, TwoRoleTheorem,
-   \textbf{Z3SubOrbitDisjointness}, \textbf{PSCOrbitWindows}};
+   \textbf{Z3SubOrbitDisjointness}, \textbf{Z3InvariantEntropy}, \textbf{PSCOrbitWindows}};
 \node[layer, fill=gray!8,   below=of univ]  (self)
   {\textbf{SelfRef}~(2)\quad LawvereKleene, RiceHalting};
 \node[layer, fill=pink!10,  below=of self]  (fwk)
@@ -5409,6 +5409,23 @@ For two-equal states $(a,a,b)$ with $a \neq b$ in $\mathbb{Z}_7^3$, the
 $\mathbb{Z}_7$-translation sub-orbit and its $\mathbb{Z}_3$-conjugate are disjoint.
 Corollary \lstinline|mpl_mtau_formula_catal| certifies the $M_{\rm Pl}/m_\tau$ numeric
 identity at CatAL level.
+\end{keybox}
+
+\subsection{$\mathbb{Z}_3$-Invariant Entropy and Hierarchy CatAL Closure
+  (\texttt{Universality/\allowbreak Z3InvariantEntropy.lean})}\label{subsec:z3-invariant-entropy}
+
+Module: \texttt{Universality/Z3InvariantEntropy.lean} (EPIC\_075/076, zero \lstinline|sorry|).
+
+\begin{keybox}{\lstinline|z3_invariant_entropy_closes_hierarchy| (zero \texttt{sorry})}
+\lstinline|psc_admissible_implies_color_neutral|: PSC-admissible beables exclude free
+single-quark (single-parton color carrier) configurations (Route~B confinement;
+re-export of \lstinline|no_psc_admissible_single_quark|).
+\lstinline|z3_invariant_entropy_closes_hierarchy| bundles the hierarchy formula numeric
+identity, PSC confinement, two-equal orbit PSC non-selection
+(\lstinline|two_equal_orbits_not_psc_selected|), and
+$\mathbb{Z}_7$-sub-orbit/$\mathbb{Z}_3$-conjugate disjointness
+(\lstinline|z7_suborbit_disjoint_z3_conjugate|), closing the CatAL gap for
+$M_{\rm Pl}/m_\tau = |F_{21}|^{10}|Z_7|^7/2$.
 \end{keybox}
 
 \subsection{PSC Orbit Window Structure
