@@ -1,6 +1,7 @@
 import UgpLean.Spacetime.LiftingTheorem
 import UgpLean.Spacetime.CausalGraph
 import UgpLean.Spacetime.CentroidMeasure
+import UgpLean.Spacetime.QECStabilizer
 
 namespace GTE.Spacetime.Geodesic
 
@@ -71,6 +72,12 @@ full P34 `[D]` coherence measure over orbit realizations is formalized.
 - `beableCentroid`               — `[D]`-weighted spatial centroid (P34 point-localization, **CatAL**)
 - `centroid_well_defined`        — centroid denominator positive for physical beables (**CatAL**)
 - `geodesic_preferred_direction` — causal sequence with well-defined centroid at every step (**CatAL**)
+- `psc_admissible_preserved_by_fmdl_step` — PSC-admissibility preserved under f_MDL step (**CatAL**)
+- `dweight_centroid_follows_orbit` — discrete Ehrenfest: DWeight preserved under step (**CatAL**)
+- `gte_discrete_equivalence_principle` — DWeight preserved under arbitrary iteration (**CatAL**)
+- `gte_geodesic_theorem_orbital` — PSC orbit persistence under iteration (**CatAL**)
+- `timelike_adjacent_is_geodesic_path` — single timelike edge is a geodesic path (**CatAL**)
+- `d2_geodesic_step_is_geodesic_path` — f_MDL step traces a geodesic edge (**CatAL**)
 
 ## Upgrade status (2026-05-24)
 
@@ -87,12 +94,17 @@ well-defined point-localization centroid at every step; spatial centroid invaria
 along the timelike worldline.  Uses `CentroidMeasure.lean` (`beableCentroid`,
 `centroid_well_defined`, `beableCentroid_point` — all CatAL).
 
+**Pass 4 (2026-05-26):** Ehrenfest chain with explicit theorem names wired to
+38-QEC `DWeight` machinery; PSC preservation under iteration; single-step geodesic
+identification (`timelike_adjacent_is_geodesic_path`, `d2_geodesic_step_is_geodesic_path`).
+Discrete orbit persistence and flat-vacuum geodesic edges are CatAL zero sorry.
+
 **Remaining gap to full `geodesic_theorem` CatAL:** identification of the beable's
 spatial location with a causal node under the distributed orbit-superposition P34 `[D]`
 measure (requires EPIC_073 Cluster J — Ollivier–Ricci + P34 distributed [D]).
 -/
 
-open GTE.Lifting GTE.Spacetime GTE.Spacetime.Centroid CUP3D UgpLean.Universality.LawvereZone
+open GTE.Lifting GTE.Spacetime GTE.Spacetime.Centroid GTE.Spacetime.QEC CUP3D UgpLean.Universality.LawvereZone
 
 variable (L T : ℕ)
 
@@ -659,5 +671,120 @@ theorem geodesic_preferred_direction
   refine ⟨hadj, hdw, hcwd, hsp', ?_⟩
   dsimp [spatialCoords] at hcent ⊢
   exact hcent
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- §15  Ehrenfest chain (Pass 4 — explicit names, 38-QEC wired)
+-- ─────────────────────────────────────────────────────────────────────────────
+
+/-- **PSC-admissibility preserved under f_MDL step** (Rank 17-GEO, CatAL).
+
+    Alias of `psc_admissible_orbit_closure`; restated for the Ehrenfest argument.
+    PSC-admissible beables evolve to PSC-admissible beables under `fmdl_step5`.
+
+    Status: CatAL — zero sorry. -/
+theorem psc_admissible_preserved_by_fmdl_step (b : Fin 5 → Fin 7) (h : PSCAdmissible b) :
+    PSCAdmissible (fmdl_step5 b) :=
+  psc_admissible_orbit_closure b h
+
+/-- **PSC-admissibility preserved under iteration** (CatAL).
+
+    If `b` is PSC-admissible, then every iterate `fmdl_step5^[n] b` remains
+    PSC-admissible.  Direct induction on `n` using single-step preservation.
+
+    Status: CatAL — zero sorry. -/
+theorem psc_admissible_preserved_iter (b : Fin 5 → Fin 7) (h : PSCAdmissible b) (n : ℕ) :
+    PSCAdmissible (fmdl_step5^[n] b) := by
+  revert h b
+  induction n with
+  | zero => intros b h; simp; exact h
+  | succ n ih =>
+    intros b h
+    exact ih (fmdl_step5 b) (psc_admissible_preserved_by_fmdl_step b h)
+
+/-- **Discrete Ehrenfest theorem** (Rank 17-GEO, CatAL).
+
+    The `[D]`-weighted centroid support of a physical beable ensemble evolves
+    along the PSC-admissible orbit: positive `DWeight` is preserved under one
+    f_MDL step.
+
+    Proof: `d2_axiom` → PSC-admissible; orbit closure → successor PSC-admissible;
+    `dweight_pos_of_admissible` (38-QEC) → positive weight.
+
+    Status: CatAL — zero sorry. -/
+theorem dweight_centroid_follows_orbit (b : Fin 5 → Fin 7) (h : DWeight b > 0) :
+    DWeight (fmdl_step5 b) > 0 :=
+  dweight_pos_of_admissible _ (psc_admissible_preserved_by_fmdl_step b (d2_axiom b h))
+
+/-- **Discrete equivalence principle** (Rank 17-GEO, CatAL).
+
+    All beables with nonzero `[D]`-weight remain in the physical sector under
+    arbitrarily many f_MDL steps.  This is the iterated Ehrenfest content:
+    the `[D]`-measure cannot expel a physical beable from the PSC orbit.
+
+    Status: CatAL — zero sorry. -/
+theorem gte_discrete_equivalence_principle (b : Fin 5 → Fin 7) (h : DWeight b > 0) (n : ℕ) :
+    DWeight (fmdl_step5^[n] b) > 0 :=
+  d2_orbit_closed_iter b h n
+
+/-- **Orbital geodesic theorem** (Rank 17-GEO, CatAL partial).
+
+    Physical beables (`DWeight > 0`) remain PSC-admissible under arbitrary
+    f_MDL iteration.  Combined with `causal_sequence_exists` and
+    `geodesic_preferred_direction`, this certifies discrete orbit persistence
+    — the algebraic core of the geodesic theorem before curvature correction.
+
+    The full geodesic identification (minimum τ_c path = geodesic in curved
+    regions) remains CatAD pending distributed P34 `[D]` + Ollivier–Ricci.
+
+    Status: CatAL — zero sorry. -/
+theorem gte_geodesic_theorem_orbital (b : Fin 5 → Fin 7) (h : DWeight b > 0) (n : ℕ) :
+    PSCAdmissible (fmdl_step5^[n] b) :=
+  psc_admissible_preserved_iter b (d2_axiom b h) n
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- §16  Geodesic path identification (flat vacuum, single step)
+-- ─────────────────────────────────────────────────────────────────────────────
+
+/-- A single timelike adjacency edge is a geodesic path in the causal graph.
+
+    In flat (vacuum) spacetime, the unique timelike connection between
+    `(t, x, y, z)` and `(t+1, x, y, z)` is the graph-distance minimizer along
+    the time direction — a geodesic segment.
+
+    Status: CatAL — zero sorry. -/
+theorem timelike_adjacent_is_geodesic_path
+    (n n' : CausalNode L T) (h : TimelikeAdj L T n n') :
+    IsGeodesicPath L T n n' [n, n'] := by
+  refine ⟨?_, ?_, ?_⟩
+  · rfl
+  · simp
+  · intro i hi
+    have hi0 : i = 0 := by simp at hi; omega
+    subst hi0
+    simp
+    exact Or.inr (Or.inl h)
+
+/-- **f_MDL step traces a geodesic edge** (Rank 17-GEO, CatAL partial).
+
+    Given a physical beable at causal node `n` with time remaining, the
+    timelike successor `(t+1, x, y, z)` is causally adjacent and forms a
+    geodesic path segment together with `n`.  DWeight is preserved on the
+    evolved beable.
+
+    This is the single-step identification of PSC-orbit evolution with a
+    geodesic edge in the 3D f_MDL causal graph (flat vacuum limit).
+
+    Status: CatAL — zero sorry. -/
+theorem d2_geodesic_step_is_geodesic_path
+    (n : CausalNode L T) (b : Fin 5 → Fin 7)
+    (h_w : DWeight b > 0) (h_t : n.1.val < T) :
+    ∃ n' : CausalNode L T,
+        CausalAdj L T n n' ∧
+        DWeight (fmdl_step5 b) > 0 ∧
+        IsGeodesicPath L T n n' [n, n'] := by
+  let n' : CausalNode L T := (⟨n.1.val + 1, by omega⟩, n.2)
+  refine ⟨n', ?_, dweight_centroid_follows_orbit b h_w, ?_⟩
+  · exact Or.inr (Or.inl ⟨rfl, rfl⟩)
+  · exact timelike_adjacent_is_geodesic_path L T n n' ⟨rfl, rfl⟩
 
 end GTE.Spacetime.Geodesic
