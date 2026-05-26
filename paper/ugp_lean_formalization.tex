@@ -423,7 +423,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 148~\lean{} modules across thirteen layers
+The artifact is organized into 239~\lean{} modules across fifteen layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -3982,6 +3982,7 @@ is the Shannon~(1948) TM$\to$Boolean-circuit bridge, independent of Cook~(2004).
 Cook's theorem~\cite{Cook2004,Wolfram1984} --- that Rule~110 is Turing universal via cyclic
 tag system embedding --- is now a corollary of the algebraic chain above, confirmed from a
 completely independent direction.
+The algebraic characterization of Rule~110 as a polynomial over $\text{GF}(7)$ and its role in Cook-independent Turing universality are documented in the companion paper~\cite{SpivackGF7Universality}.
 
 % ─────────────────────────────────────────────────────────────────
 \subsection{Hypothesis~B: Single Universal Substrate (\texttt{HypothesisB})}\label{subsec:hypothesis-b}
@@ -4757,6 +4758,65 @@ results, this axiom discharges the remaining hypothesis in
 \lstinline|weinberg_angle_closure|, yielding the fully unconditional theorem
 \lstinline|weinberg_angle_unconditional| ($\sin^2\theta_W = 3/13$, zero sorry).
 
+\subsection{EW Absolute Scale Prediction
+  (\texttt{Universality/EWScalePrediction.lean})}\label{subsec:ew-scale-prediction}
+
+Module: \texttt{Universality/EWScalePrediction.lean} (Rank 158-EWS, zero
+\lstinline|sorry|, zero custom axioms).
+Chains the Schwinger--SM vacuum-scale identity and tree-level $W/Z$ mass ratios
+to existing \texttt{GUTStructure} CatAL anchors
+(\lstinline|weinberg_two_term_prediction|, \lstinline|mw_mz_squared_from_weinberg|,
+\lstinline|sirlin_cos_cancellation|, \lstinline|ew_threshold_definitional_route|).
+
+\begin{theorem}[\lstinline|ew_scale_prediction_summary|, zero \texttt{sorry}]
+Packages: (i)~$E_0/v_H = \sqrt{\pi/8}$ (Schwinger--SM identity);
+(ii)~$M_W/v_H = \tfrac{1}{2}\sqrt{1-\sin^2\theta_W}$ with GTE two-term
+$\sin^2\theta_W = 384729/1664000$; (iii)~$M_Z/v_H = \tfrac{1}{2}$ and
+$M_W/M_Z = \sqrt{10/13}$; (iv)~EW threshold step $k = N_{\rm gen} = 3$.
+\end{theorem}
+
+Physical meaning: the electroweak absolute scale and boson mass ratios follow
+from the Higgs VEV and GTE-certified Weinberg-angle inputs with zero free parameters
+at tree level.
+
+\subsection{Two-Role Structural Principle
+  (\texttt{Universality/TwoRoleTheorem.lean})}\label{subsec:two-role-theorem}
+
+Module: \texttt{Universality/TwoRoleTheorem.lean} (Rank 070-94, zero
+\lstinline|sorry|, zero custom axioms).
+
+\begin{theorem}[\lstinline|two_role_structural_separation|, zero \texttt{sorry}]
+The cogwheel (uniform $N_{\rm eff}$ spacing) and GTE cascade (non-monotone tail
+lengths, $b_{\rm gen1}=73$, $b_{\rm gen2}=42$, $b_{\rm gen3}=275$) are
+structurally non-redundant: equal-spacing cogwheel fails, mass ordering requires
+the cascade, and the vacuum attractor is unique.
+\end{theorem}
+
+Physical meaning: generation mass hierarchy and orbit topology require two
+distinct structural roles that cannot be collapsed into a single mechanism.
+
+\subsection{Event-Triggered Coupling Escape
+  (\texttt{Universality/DynamicalCouplingBridge.lean})}\label{subsec:dynamical-coupling-bridge}
+
+Module: \texttt{Universality/DynamicalCouplingBridge.lean} (Rank 070-137,
+zero \lstinline|sorry|, \textbf{one named axiom}
+\lstinline|discrete_w_vertex_interpretation| for the EW charged-current identification).
+
+Formalizes the arithmetic resonance escape from \texttt{CouplingNoGo.lean}:
+CA-local per-cell coupling introduces period-7 modulation incommensurable with
+the period-3 C$_2$ glider ($\mathrm{lcm}(3,7)=21$, and $21 \nmid 3$);
+event-triggered injection at multiples of $\mathrm{lcm}(N_{\rm gen}, T_{\rm ether})=21$
+preserves glider coherence.
+
+\begin{theorem}[\lstinline|coupling_no_go_escape_via_event|, zero \texttt{sorry}]
+For all $k$, orbit resonance holds at $t = k\cdot 21$; per-step coupling at
+$t=1$ fails resonance.  Event-triggered coupling satisfies both glider-period
+and ether-orbit divisibility, escaping the cell-level no-go.
+\end{theorem}
+
+Physical meaning: cross-layer excitation coupling is sparse in time at
+orbit-resonant events, not at every CA step.
+
 \subsection{Casimir Massless Ether (\texttt{CasimirMasslessEther})}\label{subsec:casimir-massless}
 
 The \texttt{CasimirMasslessEther} module (235 lines, 15 items) certifies three results
@@ -4793,13 +4853,194 @@ Zone L2 is non-empty and admits the Lawvere fixed-point construction.
 
 This provides the formal foundation for Conjecture C4 of P34 (Zone L2 = quantum measurement).
 
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Quantum Mechanics and Measurement Formalization}\label{sec:quantum-mechanics}
+% ─────────────────────────────────────────────────────────────────────────────
+
+The following modules formalize continuum Lorentz invariance, MDL-derived Born
+weights, Fock-space kink quantization, excitation-level coupling, and the
+\texttt{'t Hooft} coarse-graining bridge to effect measures.  All theorems carry
+zero \texttt{sorry} unless noted; custom axioms and conditional hypotheses are
+disclosed explicitly.
+
+\subsection{Klein--Gordon Lorentz Invariance
+  (\texttt{Universality/LorentzInvariance.lean})}\label{subsec:lorentz-invariance}
+
+Module: \texttt{Universality/LorentzInvariance.lean} (Rank 073-LOR3, zero
+\lstinline|sorry|, zero custom axioms).
+
+\begin{theorem}[\lstinline|kg_dispersion_lorentz_invariant|, zero \texttt{sorry}]
+The Klein--Gordon mass-shell condition $\eta(p,p)=-m^2$ (equivalently
+$\omega^2 = |k|^2 + m^2$) is preserved under $O(1,3)$ Lorentz transformations;
+on-shell momenta map to on-shell momenta.
+\end{theorem}
+
+Certified infrastructure: \lstinline|minkowski_metric_def| ($\eta=\mathrm{diag}(-1,1,1,1)$),
+\lstinline|lorentz_transform_preserves_inner|, \lstinline|lorentz_boost_preserves_metric|,
+\lstinline|poincare_invariance_of_kg|.
+
+Physical meaning: Poincar\'e invariance of the continuum $\Phi_{\mathrm{MDL}}$
+dispersion relation; foundation for Lemma~1
+(\S\ref{subsec:lagrangian-lorentz-scalar}).
+
+\subsection{Born Rule from MDL-Minimality
+  (\texttt{Universality/BornRuleMDL.lean})}\label{subsec:born-rule-mdl}
+
+Module: \texttt{Universality/BornRuleMDL.lean} (Rank 76-BORN, zero
+\lstinline|sorry|, zero custom axioms).
+Extends the MDL/$[\mathbf{D}]$ selection chain toward winding-sector Born
+weights $P(k) \propto |\varphi_k|^2$.
+
+\begin{theorem}[\lstinline|born_rule_from_psc_mdl|, conditional, zero \texttt{sorry}]
+Given normalized beable amplitudes (\lstinline|BeableAmplitudeHypothesis|),
+sector probabilities equal Born weights
+$\sum_{s: W(s)=k}|\alpha_s|^2$, are non-negative, and partition unity over
+$\mathbb{Z}_7$ winding sectors.
+\end{theorem}
+
+The full unconditional theorem---deriving \lstinline|BeableAmplitudeHypothesis|
+from second quantization rather than assuming it---remains open (Rank 77-2QUANT).
+Supporting theorems: \lstinline|mdl_selects_minimum_description|,
+\lstinline|sector_born_weight_partition|, \lstinline|born_rule_is_d5_constraint|
+(D5 = Born consistency in the $[\mathbf{D}]$ constraint bundle).
+
+Physical meaning: MDL-minimal PSC structure plus normalized amplitudes forces
+Born-rule sector weights as the fifth $[\mathbf{D}]$ defining constraint.
+
+\subsection{Fock-Space Kink Quantization
+  (\texttt{Universality/FockSpaceKink.lean})}\label{subsec:fock-space-kink}
+
+Module: \texttt{Universality/FockSpaceKink.lean} (Rank 77-2QUANT, zero
+\lstinline|sorry|, zero custom axioms).
+
+Algebraic Fock-space layer over four GTE-orbit $\Phi_{\mathrm{MDL}}$ kink modes
+with certified $q_\Phi$ winding labels, creation/annihilation on
+$\{0,1\}$ occupations, and uniform sector lift over a certified
+\lstinline|BeableWindingPartition|.
+
+\begin{theorem}[\lstinline|born_rule_from_fock_lift|, zero \texttt{sorry}]
+The Fock lift \lstinline|fock_beable_amplitude_normalized| satisfies
+\lstinline|BeableAmplitudeHypothesis| and inherits sector Born weights from
+\lstinline|born_rule_from_psc_mdl|.
+\end{theorem}
+
+Physical meaning: second-quantization scaffolding connects kink-mode Fock
+occupations to the conditional Born-rule certificate.
+
+\subsection{Beable Z\textsubscript{7} Winding Partition Instance
+  (\texttt{Universality/BeableWindingPartitionInstance.lean})}\label{subsec:beable-winding-partition}
+
+Module: \texttt{Universality/BeableWindingPartitionInstance.lean} (Rank
+77-2QUANT-CANON, zero \lstinline|sorry|, \textbf{one named physical axiom}
+\lstinline|phimdl_kink_z7_superselection|).
+
+Constructs the canonical $\mathbb{Z}_7$ winding partition on the certified
+$\mathrm{Fin}(7^5)$ beable index space: seven fibres of cardinality
+$7^4 = 2401$ each, with uniform sector probability $1/7$.
+A structural \lstinline|BeableAmplitudeHypothesis| with equal sector weights
+is proved without physical input; the conditional physical instance lifts
+kink-quantization sector coefficients via Coleman/Mandelstam/Rajaraman
+superselection.
+
+\begin{theorem}[\lstinline|born_rule_from_kink_quantization|, conditional CatAL, zero \texttt{sorry}]
+Under \lstinline|phimdl_kink_z7_superselection|, the physical beable amplitude
+\lstinline|physicalBeableAmplitude| satisfies sector Born weights
+$P(k) = 1/7$, partitions unity, and refutes
+\lstinline|BornRuleMDL.second_quantization_open|.
+\end{theorem}
+
+Supporting theorems: \lstinline|beableWindingPartitionInstance|,
+\lstinline|born_rule_from_structural_beable_amplitude|,
+\lstinline|second_quantization_constructive|,
+\lstinline|kink_quantization_master_bundle|.
+
+Physical meaning: canonical $\mathbb{Z}_7$ winding on the full beable Hilbert
+space yields equal Born sector weights from kink superselection.
+
+\subsection{Excitation-Level Coupling
+  (\texttt{Universality/ExcitationCoupling.lean})}\label{subsec:excitation-coupling}
+
+Module: \texttt{Universality/ExcitationCoupling.lean} (Rank 070-124, zero
+\lstinline|sorry|, zero custom axioms).
+Formal excitation-state algebra for inter-layer coupling at glider-frame events,
+extending the Class~B escape (\S\ref{subsec:dynamical-coupling-bridge}).
+
+\begin{theorem}[\lstinline|event_triggered_times_are_resonant|, zero \texttt{sorry}]
+Excitation-level coupling fires only at orbit-resonant global times
+$t = k\cdot\mathrm{lcm}(N_{\rm gen}, T_{\rm ether}) = 21k$; off-resonant
+times (e.g.\ $t=1$) are excluded.
+\end{theorem}
+
+Physical meaning: the coupling operator $C_{\rm exc}$ acts on excitation pairs
+(front position, velocity class, period-3 phase), bypassing the cell-level
+obstruction by sparse event triggering.
+
+\subsection{'t Hooft Effect-Measure Bridge
+  (\texttt{Universality/ThooftEffectMeasureBridge.lean})}\label{subsec:thooft-effect-measure}
+
+Module: \texttt{Universality/ThooftEffectMeasureBridge.lean} (Rank 070-97B,
+zero \lstinline|sorry|, zero custom axioms; \textbf{partial CatAL}).
+
+Certifies the algebraic core at the $\mathbb{Z}_7$ winding-sector
+coarse-graining level: sector probabilities from
+\lstinline|BeableAmplitudeHypothesis| are normalized, non-negative, and
+bounded by~1---the winding-sector analogue of \texttt{NemS.Quantum.EffectMeasure}
+fields.
+
+\begin{theorem}[\lstinline|thooft_b1_effect_measure_axiom_bundle|, partial CatAL, zero \texttt{sorry}]
+Winding-sector Born weights from normalized amplitudes form a probability
+measure on $\mathbb{Z}_7$ satisfying normalization and non-negativity
+(\lstinline|WindingSectorProbabilityMeasure|).
+\end{theorem}
+
+Physical meaning: 't~Hooft coarse-graining of beable superpositions yields
+effect-measure-compatible sector probabilities at the winding-sector level;
+full matrix \texttt{EffectMeasure} instantiation is completed in
+\S\ref{subsec:psc-effect-measure} (Rank 070-97B2).
+
+\subsection{PSC + f\textsubscript{MDL} $\Rightarrow$ Effect Measure
+  (\texttt{Universality/PSCEffectMeasure.lean})}\label{subsec:psc-effect-measure}
+
+Module: \texttt{Universality/PSCEffectMeasure.lean} (Rank 070-97B2-LEAN,
+zero \lstinline|sorry|, \textbf{conditional CatAL}: zero private axioms plus
+one imported axiom \lstinline|re_trace_psd_mul_psd_nonneg| from nems-lean,
+discharged via \texttt{PSCEffectMeasureGeneric.lean}, commit 648cba7).
+
+Constructive B2 bridge: given \lstinline|BeableAmplitudeHypothesis|, the
+rank-one Born density $\rho_\alpha = |\alpha\rangle\langle\alpha|$ on
+$\mathrm{BeableDim} = 7^5$ induces an \lstinline|EffectMeasureProxy| via
+$\mu_\alpha(E) = \mathrm{Re}\,\mathrm{Tr}(\rho_\alpha E)$.
+The module previously carried seven private kernel-workaround axioms for matrix
+operations at dimension $7^5$ (PSD/trace lemmas, opaque sector projectors,
+effect-one normalization); all have been discharged via parametric proofs over
+\texttt{Fin n} in \texttt{PSCEffectMeasureGeneric.lean} (commit 648cba7).
+
+\begin{theorem}[\lstinline|psc_fmdl_implies_effect_measure|, conditional CatAL, zero \texttt{sorry}]
+For every \lstinline|BeableAmplitudeHypothesis| $h$, there exists
+\lstinline|EffectMeasureProxy| $m$ on $\mathrm{BeableDim}$ such that sector
+projector effects yield Born weights:
+$m.\mu(\mathrm{sectorProjectorEffect}\,h\,k) = h.\mathrm{sectorProb}\,k$.
+\end{theorem}
+
+\begin{theorem}[\lstinline|born_rule_unconditional|, conditional CatAL, zero \texttt{sorry}]
+The same effect measure satisfies normalization over all seven
+$\mathbb{Z}_7$ winding-sector projectors.
+\end{theorem}
+
+Supporting theorems: \lstinline|pureBornEffectMeasure|,
+\lstinline|psc_fmdl_effect_measure_from_fock|,
+\lstinline|pureBornMu_nonneg|, \lstinline|pureBornMu_le_one|.
+
+Physical meaning: PSC plus MDL-minimal amplitudes constructively yield a
+full matrix effect measure compatible with Born sector probabilities.
+
 % ═══════════════════════════════════════════════════════════════
 \section{Spacetime and Causal Structure Formalization}\label{sec:spacetime}
 % ═══════════════════════════════════════════════════════════════
 
 The following modules reside in the development branch
-(\texttt{ugp-lean-exp/UgpLean/Spacetime/}), pending graduation to the
-canonical repository.  All theorems carry zero \texttt{sorry} unless
+(\texttt{ugp-lean-exp/UgpLean/Spacetime/} and \texttt{UgpLean/Substrate/}),
+pending graduation to the canonical repository.  All theorems carry zero \texttt{sorry} unless
 noted; custom axioms beyond Lean's foundational set are called out
 explicitly.
 
@@ -4873,6 +5114,57 @@ Certified theorems:
 
 Honest scope: the coordinate surjection is closed; a full set-level
 bijection on all causal nodes (collapsing the $y,z$ dimensions) remains open.
+
+\subsection{Chiral Mirror Speed Symmetry
+  (\texttt{Spacetime/ChiralMirrorSpeedSymmetry.lean})}\label{subsec:chiral-mirror-speed}
+
+Module: \texttt{Spacetime/ChiralMirrorSpeedSymmetry.lean} (Rank 070-115,
+CatAL, zero \lstinline|sorry|, zero custom axioms).
+
+Rule~124 is the spatial mirror of Rule~110 at the $\mathrm{Fin}\,2$ lookup
+level: $R_{124}(l,c,r) = R_{110}(r,c,l)$.
+Cook A-glider period kinematics on the period-14 ether advance
+$|\Delta x| = 2$ per $\Delta t = 3$ outer steps, so
+$|v| = 2/3 = \texttt{ChiralPairCausalSpeed}$; mirror duality maps rightward
+Rule-110 propagation to leftward Rule-124 propagation with opposite signed
+speeds.
+
+\begin{theorem}[\lstinline|mirror_rule_speed_symmetry|, CatAL, zero \texttt{sorry}]
+Rule~124 is the spatial mirror of Rule~110; emergent chiral-pair causal speed
+is $2/3$ with \lstinline|chiralRightSpeed| $= -$\lstinline|chiralLeftSpeed|;
+A-glider period composition holds for all $k$.
+\end{theorem}
+
+Supporting theorems: \lstinline|rule124Fin2_is_spatial_mirror|,
+\lstinline|mirror_rule_opposite_signed_speeds|,
+\lstinline|chiralRightSpeed_eq_causal_speed|.
+
+Physical meaning: the decoupled two-layer chiral CA pair carries equal and
+opposite propagation speeds $|v| = 2/3$ enforced by mirror-rule duality.
+
+\subsection{Orbit Depth = Ether Temporal Period
+  (\texttt{Spacetime/OrbitDepthEtherPeriod.lean})}\label{subsec:orbit-depth-ether}
+
+Module: \texttt{Spacetime/OrbitDepthEtherPeriod.lean} (Rank 070-110, CatAL,
+zero \lstinline|sorry|, zero custom axioms).
+
+Two independent routes to the integer~7, both grounded in the GTE mod-7 ring:
+(1)~$f_{\rm MDL}$ maximum decay depth on $\mathbb{Z}_7^5$ is at most~7
+(\lstinline|fmdl_max_depth_is_7|, from \texttt{CUP3DUniqueness}); (2)~Rule~110
+ether spatial period 14 with drift 4 per outer step yields temporal period
+$14/\gcd(4,14) = 7$.
+
+\begin{theorem}[\lstinline|orbit_depth_ether_period_z7_identity|, CatAL, zero \texttt{sorry}]
+The GTE substrate period, $f_{\rm MDL}$ orbit depth bound, and Rule~110
+ether temporal period all equal $|\mathbb{Z}_7| = 7$.
+\end{theorem}
+
+Supporting theorems: \lstinline|ether_temporal_period_eq_seven|,
+\lstinline|z7_substrate_period_matches_order|,
+\lstinline|ether_outer_half_period_matches|.
+
+Physical meaning: the mod-7 ring order simultaneously certifies $f_{\rm MDL}$
+vacuum decay depth and Cook-ether temporal return period.
 
 \subsection{Algebraic Lifting Theorem
   (\texttt{LiftingTheorem.lean})}\label{subsec:lifting-theorem}
@@ -5006,6 +5298,17 @@ Certified predicates and theorems:
 \item \lstinline|geodesic_consistent_with_emergent_gravity| --- geodesics in
   vacuum ($\kappa = 0$) are straight; geodesics near matter ($\kappa > 0$) curve
   toward the source, reproducing Newtonian attraction.
+\item \lstinline|dweight_centroid_follows_orbit| --- discrete Ehrenfest:
+  positive $\mathtt{DWeight}$ preserved under one $f_{\mathrm{MDL}}$ step via
+  QEC projector (\texttt{QECStabilizer}; CatAL, 2026-05-26).
+\item \lstinline|gte_discrete_equivalence_principle| --- iterated Ehrenfest:
+  $\mathtt{DWeight}$ preserved under $n$ orbit steps (CatAL).
+\item \lstinline|gte_geodesic_theorem_orbital| --- PSC-admissibility preserved
+  under arbitrary orbit iteration; algebraic core of geodesic motion (CatAL).
+\item \lstinline|timelike_adjacent_is_geodesic_path| --- single timelike edge is
+  a graph-distance geodesic in flat vacuum (CatAL).
+\item \lstinline|d2_geodesic_step_is_geodesic_path| --- one $f_{\mathrm{MDL}}$ step
+  traces a geodesic edge with $\mathtt{DWeight}$ preservation (CatAL).
 \end{itemize}
 
 Honest scope: \lstinline|DWeightNode| is a structural placeholder (definitionally
@@ -5378,6 +5681,137 @@ deviation from the continuum.  Exact Lorentz invariance requires $M \to \infty$;
 all algebraic results (charge quantisation, confinement, asymptotic freedom,
 strong CP, generation structure) hold for the Rule~110 CA at every finite $M$.
 
+\subsection{Algebraic Necessity Theorem
+  (\texttt{Universality/\allowbreak AlgebraicNecessityTheorem.lean})}\label{subsec:algebraic-necessity}
+
+Module: \texttt{Universality/AlgebraicNecessityTheorem.lean} (Rank 075-ALGEC-NECESSITY,
+zero \lstinline|sorry|, zero custom axioms).
+
+\begin{keybox}{\lstinline|algebraic_necessity_theorem| (zero \texttt{sorry})}
+$F_{21} = \mathbb{Z}_7 \rtimes \mathbb{Z}_3$ is the unique non-abelian group of
+order~$21$ (Burnside $pq$-group certificates); $N_{\rm gen} = 3$ is uniquely
+forced by the one-loop QCD coefficient identity $b_0 = |F_{21}|/|Z_3| = |Z_7| = 7$;
+the no-CA-replica structural corollary follows as
+\lstinline|no_ca_replica_as_corollary|.
+\end{keybox}
+
+Named theorems: \lstinline|f21_unique_nonabelian_order_21_numeric|,
+\lstinline|b0_uniquely_forces_n7|, \lstinline|algebraic_necessity_master_bundle|.
+
+\subsection{Frobenius Prime Identity
+  (\texttt{Universality/\allowbreak FrobeniusPrimeIdentity.lean})}\label{subsec:frobenius-prime}
+
+Module: \texttt{Universality/FrobeniusPrimeIdentity.lean} (zero \lstinline|sorry|).
+
+\begin{keybox}{\lstinline|frobenius_prime_bundle| (zero \texttt{sorry})}
+$|Z_7| = |Z_3|^2 - |Z_3| + 1$ unifies the $F_{21}$ orbit count and PSC
+$n=10$ ridge derivation: both routes yield $N_{\rm ridge} = 10$ cells on
+$\mathbb{Z}_7^3$ via independent arithmetic (\lstinline|n_ridge_dual_derivation|,
+\lstinline|n_ridge_unifying_identity|).
+\end{keybox}
+
+\subsection{Beta Coefficient Identity
+  (\texttt{Universality/\allowbreak BetaCoefficientIdentity.lean})}\label{subsec:beta-coefficient}
+
+Module: \texttt{Universality/BetaCoefficientIdentity.lean} (zero \lstinline|sorry|).
+
+\begin{keybox}{\lstinline|gte_beta_coefficient_bundle| (zero \texttt{sorry})}
+One-loop QCD coefficient $b_0 = (11 N_c - 2 N_f)/3 = 7 = |Z_7|$ from
+$F_{21} = \mathbb{Z}_7 \rtimes \mathbb{Z}_3$ group orders; Planck cascade
+identity \lstinline|gte_planck_cascade_group_identity| packages the structural
+identification $b_0 = |F_{21}|/N_c$.
+\end{keybox}
+
+\subsection{No Class~4 Outer-Totalistic \texorpdfstring{$\mathbb{Z}_7$}{Z7} Rules
+  (\texttt{Universality/\allowbreak NoClass4OuterTotalisticZ7.lean})}\label{subsec:no-class4-z7}
+
+Module: \texttt{Universality/NoClass4OuterTotalisticZ7.lean} (zero \lstinline|sorry|
+in all listed theorems; \textbf{one named axiom}
+\lstinline|chirality_necessary_for_class4|).
+
+\begin{keybox}{\lstinline|no_class4_outer_totalistic_z7_3d| (zero \texttt{sorry})}
+No outer-totalistic $\mathbb{Z}_7$ VN6 rule on the 3D $f_{\mathrm{MDL}}$ lattice
+is Wolfram Class~4: reflection-invariance lemmas are zero \lstinline|sorry|;
+\lstinline|outer_totalistic_z7_vn6_rule_space_card| certifies the finite rule space.
+\end{keybox}
+
+\subsection{Stress--Energy Tensor for \texorpdfstring{$\Phi_{\rm MDL}$}{PhiMDL}
+  (\texttt{Spacetime/\allowbreak StressEnergyTensor.lean})}\label{subsec:stress-energy}
+
+Module: \texttt{Spacetime/StressEnergyTensor.lean} (Rank 075-GR, zero \lstinline|sorry|).
+
+\begin{itemize}[nosep]
+\item \lstinline|phimdl_tmunu_symmetric| --- Klein--Gordon $T_{\mu\nu}$ symmetric
+  in Lorentz indices (CatAL).
+\item \lstinline|phimdl_tmunu_vacuum_zero| --- vacuum energy density zero at
+  $\varphi = 0$ (CatAL).
+\item \lstinline|phimdl_gravity_sector_prerequisites| --- bundle of symmetry,
+  vacuum, and positivity prerequisites for the emergent-gravity sector (CatAL).
+\end{itemize}
+
+\subsection{Async Lifting Equals Sync Lifting
+  (\texttt{Spacetime/\allowbreak AsyncLiftingTheorem.lean})}\label{subsec:async-lifting}
+
+Module: \texttt{Spacetime/AsyncLiftingTheorem.lean} (Rank 075-ALT, zero \lstinline|sorry|).
+
+\begin{keybox}{\lstinline|async_algebraic_lifting_theorem| (zero \texttt{sorry})}
+Asynchronous (local-cell) evaluation of $\mathtt{DWeight}$ and PSC-admissibility
+agrees with synchronous global evaluation on every beable configuration;
+\lstinline|async_color_confinement| inherits color confinement unchanged.
+\end{keybox}
+
+\subsection{Fourier Heat-Kernel Scaffolding
+  (\texttt{Spacetime/\allowbreak Spectral/\allowbreak HeatKernelFourier.lean})}\label{subsec:heat-kernel-fourier}
+
+Module: \texttt{Spacetime/Spectral/HeatKernelFourier.lean} (Rank 13-LSD).
+
+Certified: \lstinline|cayley_eigenvalue_at_zero_eq_degree| (zero \lstinline|sorry|).
+Three documented analytical \lstinline|sorry| placeholders remain in the
+character-sum/Gaussian-limit chain
+(\lstinline|physical_heat_kernel_eq_character_sum|,
+\lstinline|cayley_eigenvalue_quadratic_expansion|,
+\lstinline|discrete_torus_gaussian_limit|); assembled in
+\lstinline|causal_graph_heat_kernel_diffusive_asymptotic_fourier|.
+
+\subsection{$\mathbb{Z}_7$ Winding--Coin Decoupling
+  (\texttt{Substrate/\allowbreak WindingCoinDecoupling.lean})}\label{subsec:winding-coin}
+
+Module: \texttt{Substrate/WindingCoinDecoupling.lean} (Rank 074-3D, zero \lstinline|sorry|).
+
+\begin{keybox}{\lstinline|diagonal_coin_decouples_sectors| (zero \texttt{sorry})}
+PSC-preserving transformations commuting with $\mathbb{Z}_7$ winding are
+diagonal in the winding basis; domain-wall junction tension
+\lstinline|phimdl_domain_wall_junction_tension_exact| and BPS ratio
+\lstinline|phimdl_junction_to_wall_ratio| certified (CatAL).
+\end{keybox}
+
+\subsection{C2 Coherence Measure Uniqueness
+  (\texttt{Substrate/\allowbreak CoherenceMeasureUniqueness.lean})}\label{subsec:c2-coherence-uniqueness}
+
+Module: \texttt{Substrate/CoherenceMeasureUniqueness.lean} (Rank 074-C2, zero \lstinline|sorry|
+on the C2/Gibbs closure chain).
+
+\begin{itemize}[nosep]
+\item \lstinline|c2_uniqueness_structural_bundle| --- MDL-unique $[\mathbf{D}]$ on
+  $\Phi_{\mathrm{MDL}}$ substrate under architectural restrictions (CatAL).
+\item \lstinline|c2_thermal_closure_bundle| --- Gibbs free-energy gap uniquely
+  selects the canonical sector distribution (CatAL; KL sorrys closed 2026-05-26).
+\item Lorentz/CPT equivariance from D2:
+  \lstinline|lorentz_cpt_implicit_in_d2|, \lstinline|cpt_equivariant_from_d2|.
+\end{itemize}
+
+\subsection{CMCA Continuum Limit and No-CA-Replica
+  (\texttt{Framework/\allowbreak CMCAContinuumLimit.lean})}\label{subsec:cmca-continuum}
+
+Module: \texttt{Framework/CMCAContinuumLimit.lean} (zero \lstinline|sorry|).
+
+\begin{keybox}{\lstinline|no_finite_ca_exact_lorentz_replica| (zero \texttt{sorry})}
+No finite-resolution CA achieves exact Lorentz invariance;
+$\Phi_{\mathrm{MDL}}$ is the unique exact-Lorentz model and the CMCA continuum
+limit (\lstinline|cmca_continuum_limit_is_phimdl|) with correction
+$\varepsilon_0(M) = \pi^2/(3M^2) \to 0$.
+\end{keybox}
+
 \subsection{Mass gap and hierarchy}\label{subsec:mass-gap-hierarchy}
 
 \begin{itemize}[nosep]
@@ -5634,6 +6068,190 @@ DWeight selects the physical PSC-admissible beable.  All three null tests pass
 (N1: uniform weights, N2: scrambled velocity, N3: ether control).  The
 continuum companion (Rank 67-KGS, Klein--Gordon substrate) achieves
 $0.069\%$ mean error across $\beta\in[0.05,0.90]$.
+
+% ── Rank 070-107 substrate infrastructure (EPIC\_073, 2026-05-25) ──
+
+\subsection{Substrate Typeclass
+  (\texttt{Substrate/Substrate.lean})}\label{subsec:substrate-typeclass}
+
+Module: \texttt{Substrate/Substrate.lean} (Rank 070-107 Phase~1, zero
+\lstinline|sorry|, zero custom axioms).
+
+Defines the GTE-Möbius substrate triple $(\mathtt{config}, [\mathbf{D}], \mathtt{psc\_consistent})$:
+configuration space, coherence measure $[\mathbf{D}]$ on configuration pairs, and a
+PSC-consistency flag.  Provides reflexivity and symmetry predicates
+(\lstinline|CoherenceReflexive|, \lstinline|CoherenceSymmetric|) with certified lemmas
+\lstinline|coherence_refl| and \lstinline|coherence_symm|.
+
+\begin{theorem}[\lstinline|coherence_refl| and \lstinline|coherence_symm|, zero \texttt{sorry}]
+Under the reflexivity (resp.\ symmetry) hypothesis, $D(\rho\mid\rho)=0$
+(resp.\ $D(\rho\mid w)=D(w\mid\rho)$) for all configurations $\rho,w$.
+\end{theorem}
+
+Physical meaning: the substrate packages P34's configuration-space coherence
+functional together with the PSC-consistency predicate that gates all
+Presentation-Invariance arguments.
+
+\subsection{PSC-Preserving Transformations
+  (\texttt{Substrate/PSCPreservingTransformation.lean})}\label{subsec:psc-preserving-transformation}
+
+Module: \texttt{Substrate/PSCPreservingTransformation.lean} (Rank 070-107
+Phase~1--2, zero \lstinline|sorry|, zero custom axioms).
+
+Defines Layer-I PSC structure preservation via four predicates
+(\lstinline|PreservesRC|, \lstinline|PreservesNMStar|, \lstinline|PreservesTV|,
+\lstinline|PreservesSA|) bundled as \lstinline|IsPSCPreserving|.
+Phase~1 uses conservative stubs; Phase~2 supplies real RC content on
+\texttt{KGConfig} in \texttt{PSCStructureLorentzPreserved.lean}.
+
+\begin{theorem}[\lstinline|id_is_psc_preserving|, zero \texttt{sorry}]
+The identity map on configurations is PSC-preserving.
+\end{theorem}
+
+Physical meaning: transformations that preserve renormalizability, structural
+stability, thermodynamic viability, and semantic admissibility form the
+symmetry group under which $[\mathbf{D}]$ must be invariant (D2).
+
+\subsection{Coherence Measure D2
+  (\texttt{Substrate/CoherenceMeasure.lean})}\label{subsec:coherence-measure-d2}
+
+Module: \texttt{Substrate/CoherenceMeasure.lean} (Rank 070-107 Phase~1,
+zero \lstinline|sorry|, \textbf{one named axiom} \lstinline|d2_universal|).
+
+Encodes P34~\S6 D2 (Presentation Invariance at configuration space):
+any PSC-preserving map leaves $[\mathbf{D}]$ invariant.
+
+\begin{theorem}[\lstinline|d2_universal|, one axiom]
+For PSC-consistent substrate $\Sigma$ and PSC-preserving $f$:
+$D(f\rho, fw) = D(\rho, w)$ for all configurations $\rho,w$.
+\end{theorem}
+
+The substantive content that Lorentz boosts are PSC-preserving is Lemma~2
+(\lstinline|lorentz_boost_preserves_psc|, \S\ref{subsec:psc-structure-lorentz}).
+Sanity check \lstinline|d2_universal_id| certifies invariance under the identity.
+
+\subsection{$\Phi_{\mathrm{MDL}}$ Lagrangian Lorentz Scalarity
+  (\texttt{Substrate/LagrangianLorentzScalar.lean})}\label{subsec:lagrangian-lorentz-scalar}
+
+Module: \texttt{Substrate/LagrangianLorentzScalar.lean} (Rank 070-107
+Phase~2 Lemma~1, zero \lstinline|sorry|, zero custom axioms).
+Builds on \texttt{Universality/LorentzInvariance.lean}
+(\S\ref{subsec:lorentz-invariance}).
+
+\begin{theorem}[\lstinline|phimdl_lagrangian_is_lorentz_scalar|, zero \texttt{sorry}]
+The $\Phi_{\mathrm{MDL}}$ Klein--Gordon Lagrangian density
+$\mathcal{L} = -\tfrac{1}{2}\eta(p,p) - V(\Phi)$ is a Lorentz scalar:
+$\mathcal{L}(\varphi,p) = \mathcal{L}(\varphi, \Lambda\cdot p)$ for all
+$\Lambda \in O(1,3)$.
+\end{theorem}
+
+Physical meaning: the continuum $\Phi_{\mathrm{MDL}}$ action is
+Poincar\'e-covariant; the $Z_7$ potential $V(\Phi)=\Phi^2$ depends only on
+the scalar field value.
+
+\subsection{PSC Structure Preserved Under Lorentz Boosts
+  (\texttt{Substrate/PSCStructureLorentzPreserved.lean})}\label{subsec:psc-structure-lorentz}
+
+Module: \texttt{Substrate/PSCStructureLorentzPreserved.lean} (Rank 070-107
+Phase~2 Lemma~2, zero \lstinline|sorry|, zero custom axioms).
+RC is proved; NM$^*$/TV/SA remain Phase~3 stubs (\texttt{True}).
+
+\begin{theorem}[\lstinline|lorentz_boost_preserves_psc|, zero \texttt{sorry}]
+A Lorentz boost \lstinline|lorentzBoostActConfig| is PSC-preserving on
+$\Phi_{\mathrm{MDL}}$ configurations (\lstinline|IsPSCPreservingKG|):
+the Renormalizability Criterion is satisfied because $\mathcal{L}_{\Phi_{\mathrm{MDL}}}$
+is unchanged on Lorentz-related configurations (Lemma~1).
+\end{theorem}
+
+Physical meaning: Lorentz boosts preserve the Layer-I PSC structure on the
+continuum substrate; RG $\beta$-functions built from $\mathcal{L}$ are Lorentz scalars.
+
+\subsection{SO(3) Noether Angular Momentum
+  (\texttt{Substrate/NoetherAngularMomentum.lean})}\label{subsec:noether-angular-momentum}
+
+Module: \texttt{Substrate/NoetherAngularMomentum.lean} (Rank 280-NTH
+Phase~2, zero \lstinline|sorry|, \textbf{one PDE axiom}
+\lstinline|kg_angular_momentum_time_conserved|).
+
+Certifies that the continuum $\Phi_{\mathrm{MDL}}$ Klein--Gordon Lagrangian
+carries a conserved angular-momentum 3-vector via Noether's theorem for the
+SO(3) rotation subgroup of $O(1,3)$.  The discrete CA realises only the cubic
+point group $O_h$; continuous SO(3) and its Noether charge live on the
+continuum field theory (Wilson regulator paradigm).
+
+\begin{theorem}[\lstinline|noether_so3_full_closure|, zero \texttt{sorry}, one axiom]
+Full three-generator SO(3) Noether closure: (i)~$\mathcal{L}$ is SO(3)-invariant;
+(ii)~stress-energy tensor $T_{\mu\nu}$ is symmetric; (iii)~Noether contractions
+vanish for all three rotation axes; (iv)~SO(3) Killing-matrix commutator algebra
+$[K^i,K^j]=K^k$; (v)~cross-product Lie algebra on Cartesian unit vectors;
+(vi)~time conservation $dL^i/dt=0$ on KG equations of motion
+(via axiom \lstinline|kg_angular_momentum_time_conserved|).
+\end{theorem}
+
+Physical meaning: angular momentum conservation emerges from spatial rotation
+symmetry of the $\Phi_{\mathrm{MDL}}$ continuum Lagrangian.
+
+\subsection{PSC Presentation Invariance $\Rightarrow$ $[\mathbf{D}]$ Lorentz Equivariance
+  (\texttt{Substrate/PSCPILorentzMain.lean})}\label{subsec:pscpi-lorentz-main}
+
+Module: \texttt{Substrate/PSCPILorentzMain.lean} (development branch, zero
+\lstinline|sorry|, one project axiom \lstinline|d2_universal| from P34~\S6 D2
+Presentation Invariance, formalized in \texttt{Substrate/CoherenceMeasure.lean}).
+
+This module certifies that PSC Presentation Invariance forces the coherence
+measure $[\mathbf{D}]$ to be Lorentz-equivariant on the $\Phi_{\mathrm{MDL}}$
+continuum substrate.  The proof chain assembles: (i)~Lorentz boosts preserve
+PSC structure on $\Phi_{\mathrm{MDL}}$ (\lstinline|lorentz_boost_preserves_psc|,
+from \texttt{Substrate/PSCStructureLorentzPreserved.lean}); (ii)~every
+PSC-preserving transformation acts equivariantly on $[\mathbf{D}]$
+(\lstinline|d2_universal|); (iii)~the main theorem below.
+
+\begin{keybox}{PSC/PI forces $[\mathbf{D}]$ Lorentz equivariance (CatAL)}
+\textbf{Theorem \lstinline|psc_pi_forces_d_lorentz_equivariant|.}
+Let $\Sigma$ be a PSC-consistent $\Phi_{\mathrm{MDL}}$ substrate and let
+$\Lambda$ be a Lorentz boost in $O(1,3)$.  Then for all configurations
+$\rho$, $w$ on the $\Phi_{\mathrm{MDL}}$ Klein--Gordon field,
+\[
+  D(\rho \mid w) \;=\; D(\Lambda\cdot\rho \mid \Lambda\cdot w),
+\]
+where $D$ denotes the substrate coherence functional
+(\lstinline|Substrate.coherence|) and $\Lambda\cdot$ is the Lorentz action
+on field configurations (\lstinline|lorentzBoostAct|).
+Zero \lstinline|sorry|; one named axiom \lstinline|d2_universal|.
+\end{keybox}
+
+\begin{keybox}{No preferred inertial frame for $[\mathbf{D}]$ observables (CatAL)}
+\textbf{Corollary \lstinline|psc_pi_no_preferred_frame|.}
+Under the same hypotheses, no inertial frame is distinguishable by
+$[\mathbf{D}]$-selected observables: the coherence functional is invariant
+under arbitrary Lorentz boosts of both the field configuration and the
+reference state.
+Zero \lstinline|sorry|.
+\end{keybox}
+
+\paragraph{Physical interpretation.}
+Lorentz symmetry is an emergent property of the $[\mathbf{D}]$-selection
+mechanism, not an axiom on the cellular-automaton beable layer.  The CA
+operates at Planck-scale resolution with a preferred frame; Presentation
+Invariance (D2) forbids that preference from propagating into
+$[\mathbf{D}]$-weighted physical observables on the $\Phi_{\mathrm{MDL}}$
+continuum.  Flat-vacuum Lorentz invariance of $[\mathbf{D}]$ is therefore
+derived from PSC structure together with the universal D2 axiom, rather
+than postulated at the discrete layer.
+
+Certified predicates and theorems:
+\begin{itemize}[nosep]
+\item \lstinline|realizedOnPhiMDL| --- substrate realized on the
+  $\Phi_{\mathrm{MDL}}$ Klein--Gordon field (\lstinline|KGConfig|).
+\item \lstinline|lorentzBoostAct| --- Lorentz action on $\Phi_{\mathrm{MDL}}$
+  configurations (scalar field and four-gradient).
+\item \lstinline|lorentz_boost_is_psc_preserving| --- Lorentz boost is
+  PSC-preserving on $\Phi_{\mathrm{MDL}}$ (bridges Phase~2 to D2).
+\item \lstinline|psc_pi_forces_d_lorentz_equivariant| --- main theorem
+  (CatAL, zero \lstinline|sorry|).
+\item \lstinline|psc_pi_no_preferred_frame| --- corollary: no preferred
+  inertial frame for $[\mathbf{D}]$ observables (CatAL).
+\end{itemize}
 
 \subsection{Multi-particle Hilbert space
   (\texttt{Spacetime/MultiParticleHilbert.lean})}\label{subsec:multiparticle-hilbert}

@@ -139,8 +139,10 @@ import UgpLean.Universality.EWScalePrediction
 import UgpLean.Framework.GTEFrameworkInstance
 import UgpLean.Framework.GTEOptimalityInstance
 import UgpLean.Framework.GTEFinalCoalgebra
+import UgpLean.Framework.PhiMDLBridge
 import UgpLean.Framework.GTECategoryStructure
-import UgpLean.Universality.CasimirMasslessEther
+import UgpLean.Framework.CMCAContinuumLimit
+import UgpLean.Framework.CMCAMDLMinimality
 import UgpLean.Universality.ChiralPairVA
 import UgpLean.Universality.CouplingNoGo
 import UgpLean.Universality.DynamicalCouplingBridge
@@ -167,9 +169,28 @@ import UgpLean.Universality.EWChiralBridge
 import UgpLean.Universality.GUTStructure
 import UgpLean.Universality.MDLDerivabilityCriterion
 import UgpLean.Universality.BornRuleMDL
+import UgpLean.Universality.ThooftEffectMeasureBridge
+import UgpLean.Universality.PSCEffectMeasureGeneric
+import UgpLean.Universality.PSCEffectMeasure
+import UgpLean.Universality.FockSpaceKink
+import UgpLean.Universality.BeableWindingPartitionInstance
 import UgpLean.Universality.DualFrameBornRule
+import UgpLean.Universality.PhiMDLThermalState
 import UgpLean.Universality.SylowIndexCouplingHierarchy
+import UgpLean.Universality.BetaCoefficientIdentity
+import UgpLean.Universality.FrobeniusPrimeIdentity
 import UgpLean.Substrate.LExtended
+import UgpLean.Substrate.Substrate
+import UgpLean.Substrate.PSCPreservingTransformation
+import UgpLean.Substrate.CoherenceMeasure
+import UgpLean.Substrate.CoherenceMeasureUniqueness
+import UgpLean.Substrate.QECStabilizer
+import UgpLean.Substrate.TransputationStateSelector
+import UgpLean.Substrate.LagrangianLorentzScalar
+import UgpLean.Substrate.PSCStructureLorentzPreserved
+import UgpLean.Substrate.PSCPILorentzMain
+import UgpLean.Substrate.NoetherAngularMomentum
+import UgpLean.Substrate.WindingCoinDecoupling
 import UgpLean.Universality.CasimirMasslessEther
 import UgpLean.Universality.LawvereZone
 import UgpLean.Universality.ChiralPairVA
@@ -184,14 +205,17 @@ import UgpLean.Spacetime.SpectralDimension
 import UgpLean.Spacetime.SpectralDimensionDegree
 import UgpLean.Spacetime.Spectral.DegreeNormalized
 import UgpLean.Spacetime.Spectral.SpectralDimensionFromAsymptotic
+import UgpLean.Spacetime.Spectral.HeatKernelFourier
 import UgpLean.Spacetime.Spectral.HeatKernelLaplace
 import UgpLean.Spacetime.Spectral.ThermodynamicLimit
+import UgpLean.Universality.NoClass4OuterTotalisticZ7
 import UgpLean.Spacetime.PhiMDLZ7PotentialMDL
 import UgpLean.Spacetime.ChiralPairDecoupling
 import UgpLean.Spacetime.ColorConfinement
 import UgpLean.Spacetime.AnomalyRenormalizability
 import UgpLean.Spacetime.LiftingTheorem
 import UgpLean.Universality.AlgebraicDescentTheorem
+import UgpLean.Universality.AlgebraicNecessityTheorem
 import UgpLean.Spacetime.GeodesicTheorem
 import UgpLean.Spacetime.CentroidMeasure
 import UgpLean.Spacetime.SpatiallyExtendedLifting
@@ -201,6 +225,7 @@ import UgpLean.Spacetime.QECStabilizer
 import UgpLean.Spacetime.DWeightSRFormula
 import UgpLean.Spacetime.MultiParticleHilbert
 import UgpLean.Spacetime.QuantumGravity
+import UgpLean.Spacetime.StressEnergyTensor
 import UgpLean.Spacetime.PhysicalExclusion
 import UgpLean.Spacetime.ThreeGenerationCapstone
 import UgpLean.Spacetime.CausalInvariance
@@ -208,35 +233,10 @@ import UgpLean.Spacetime.ChiralGliderDynamics
 import UgpLean.Spacetime.ChiralMirrorSpeedSymmetry
 import UgpLean.Spacetime.OrbitDepthEtherPeriod
 import UgpLean.Spacetime.PhiMDLKinkQuantumNumbers
-import UgpLean.Spacetime.PhiMDLKinkQuantumNumbers
+import UgpLean.Spacetime.AsyncLiftingTheorem
 import UgpLean.QFT.GaugedMassGap
 import UgpLean.QFT.ChiralSymmetryBreaking
 import UgpLean.Universality.PhiMDLUniversality
--- EPIC_073 batch graduation (2026-05-25)
-import UgpLean.Substrate.Substrate
-import UgpLean.Substrate.CoherenceMeasure
-import UgpLean.Substrate.PSCPreservingTransformation
-import UgpLean.Substrate.LagrangianLorentzScalar
-import UgpLean.Substrate.PSCStructureLorentzPreserved
-import UgpLean.Substrate.PSCPILorentzMain
-import UgpLean.Substrate.NoetherAngularMomentum
-import UgpLean.Substrate.QECStabilizer
-import UgpLean.Substrate.TransputationStateSelector
-import UgpLean.Substrate.CoherenceMeasureUniqueness
-import UgpLean.Universality.FockSpaceKink
-import UgpLean.Universality.BeableWindingPartitionInstance
-import UgpLean.Universality.ExcitationCoupling
-import UgpLean.Universality.DynamicalCouplingBridge
-import UgpLean.Universality.TwoRoleTheorem
-import UgpLean.Universality.EWScalePrediction
-import UgpLean.Universality.ThooftEffectMeasureBridge
-import UgpLean.Universality.LorentzInvariance
-import UgpLean.Universality.PSCEffectMeasureGeneric
-import UgpLean.Universality.PSCEffectMeasure
-import UgpLean.Universality.PhiMDLThermalState
-import UgpLean.Framework.PhiMDLBridge
-import UgpLean.Framework.CMCAMDLMinimality
-import UgpLean.Framework.CMCAContinuumLimit
 
 /-!
 # UgpLean — Universal Generative Principle: Lean 4 Formalization
@@ -259,6 +259,9 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Universality.*`       — Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, Turing universality, Architecture bridge
 - `UgpLean.Universality.FMDLClassification` — Cat IV structural prerequisites: 14/343 sparsity cert, binary sublayer = Rule 110 (zero sorry), SM encoding, Law=Description=Execution (2026-05-21)
 - `UgpLean.Universality.AlgebraicDescentTheorem` — Rank 135-ALDESC: Algebraic Descent Theorem; M-independence of F_21 orbit structure, PSC admissibility, three generations, color confinement, b₀=7, θ=0, Casimir invariants C_F=4/3 C_A=3; all CatAL zero sorry (2026-05-23)
+- `UgpLean.Universality.AlgebraicNecessityTheorem` — Rank 075-ALGEC-NECESSITY: Algebraic Necessity Theorem; F₂₁ = Z₇ ⋊ Z₃ is the unique non-abelian group of order 21 (Burnside pq certificates, zero sorry); N_gen=3 uniquely forced; no-CA-replica as corollary; all CatAL zero sorry (2026-05-26)
+- `UgpLean.Universality.BetaCoefficientIdentity` — b₀ = |Z₇| = 7 from F₂₁ = Z₇ ⋊ Z₃: (11N_c − 2N_f)/3 = |F₂₁|/|Z₃|; Planck cascade group identity; zero sorry (2026-05-26)
+- `UgpLean.Universality.FrobeniusPrimeIdentity` — |Z₇| = |Z₃|² − |Z₃| + 1 unifies F₂₁ and PSC n=10 derivations; frobenius_prime_bundle; zero sorry (2026-05-26)
 - `UgpLean.Papers.*`             — Paper25, UGPMain (citable stubs)
 
 - `UgpLean.TE22.*`               — ScanCertificate (TE2.2 PSC scan framework, UGP coupling predictions)
@@ -273,8 +276,10 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Spacetime.SpectralDimensionDegree` — `periodic_causal_node_degree` CatAL (0 sorry)
 - `UgpLean.Spacetime.Spectral.DegreeNormalized` — physical (degree-normalized) random-walk heat kernel definitions (0 sorry)
 - `UgpLean.Spacetime.Spectral.SpectralDimensionFromAsymptotic` — bridge from a diffusive heat-kernel asymptotic to the scaling-law log-ratio limit (pure real analysis, 0 sorry)
-- `UgpLean.Spacetime.Spectral.HeatKernelLaplace` — Laplace-method asymptotic statement `(L+2)⁴ · K_{(L+2)²}(G_{L+2}) → C > 0` (1 documented analytical-helper sorry: the genuine Mathlib gap for DFT-on-finite-abelian-groups + Riemann-sum/Gaussian-integral limit)
-- `UgpLean.Spacetime.Spectral.ThermodynamicLimit` — `causal_graph_spectral_dim_thermodynamic_limit`: the thermodynamic-limit "spectral dimension = 4" theorem for the 3D f_MDL causal graph (zero sorry in the body; reduces honestly via the bridge to the single helper sorry in `HeatKernelLaplace`)
+- `UgpLean.Spacetime.Spectral.HeatKernelFourier` — Rank 13-LSD Fourier-on-`ZMod` reduction: `cayley_eigenvalue_at_zero_eq_degree` (zero sorry); 3 documented analytical sorrys in `physical_heat_kernel_eq_character_sum`, `cayley_eigenvalue_quadratic_expansion`, `discrete_torus_gaussian_limit`; assembled in `causal_graph_heat_kernel_diffusive_asymptotic_fourier`
+- `UgpLean.Spacetime.Spectral.HeatKernelLaplace` — Laplace-method asymptotic delegates to `HeatKernelFourier` (zero sorry in body; 3 analytical sorrys in dependency chain)
+- `UgpLean.Spacetime.Spectral.ThermodynamicLimit` — `causal_graph_spectral_dim_thermodynamic_limit`: the thermodynamic-limit "spectral dimension = 4" theorem for the 3D f_MDL causal graph (zero sorry in the body; reduces via the bridge to the Fourier/Laplace chain in `HeatKernelFourier`)
+- `UgpLean.Universality.NoClass4OuterTotalisticZ7` — OQ-3DALG-6: `no_class4_outer_totalistic_z7_3d` zero sorry (1 axiom `chirality_necessary_for_class4`); reflection-invariance lemmas zero sorry; `outer_totalistic_z7_vn6_rule_space_card` zero sorry
 - `UgpLean.Spacetime.PhiMDLZ7PotentialMDL` — Rank 69d: `phimdl_z7_potential_mdl_minimal` CatAL (0 sorry)
 - `UgpLean.Spacetime.ChiralPairDecoupling` — Rank 14-LCD: chiral pair causal decoupling; `ChiralLayer`, `ChiralNode`, `ChiralPairAdj`; `chiral_pair_no_cross_layer_edges` zero sorry, `chiral_pair_walk_layer_invariant` zero sorry (2026-05-21)
 - `UgpLean.Spacetime.ColorConfinement` — Rank 25-CCF: color confinement from PSC RC + Absence Theorem; `color_confinement` and `physical_particles_are_color_neutral` zero sorry, one named bridge axiom `psc_rc_requires_color_neutrality` (CatAD, 2026-05-21)
@@ -284,9 +289,11 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Spacetime.SpatiallyExtendedLifting` — Rank 55-3DLT: `causal_path_exists` theorem (CatAL); meson/baryon bound states
 - `UgpLean.Spacetime.MassGap` — Rank 42-MGP: `gte_mass_gap`, `gte_mass_formula_physical`, `smGenMass` (CatAL, zero sorry)
 - `UgpLean.Spacetime.QuantumGravity` — Rank 28-QGR: beable-level quantum gravity evidence structure (CatAD-strong)
+- `UgpLean.Spacetime.StressEnergyTensor` — Rank 075-TMUNU: Φ_MDL T_μν symmetry, vacuum-zero, BPS pressure-free axiom, gravity prerequisites bundle (CatAL/CatAD, 2026-05-26)
 - `UgpLean.Spacetime.MultiParticleHilbert` — Rank 244-MPH: multi-particle Hilbert space algebraic layer; `code_word_cardinality` (4 code words, Equiv with Fin 4), `n_particle_state_count` (4^N states), `multiDWeight_eq_one`, `multiMass_append`, `multiMass_le`, `mass_hierarchy_three_states`, `smGenMass_multi_anchor`, `multiparticle_orbit_closure`, `inner_product_positive_definite`, `multiparticle_space_well_defined`; all CatAL, zero sorry (2026-05-24)
 - `UgpLean.Spacetime.CausalInvariance` — Rank 37-LCI: f_MDL causal invariance + Lamport consistency + SR connection; `ForwardCausalAdj`, `forward_causal_time_step`, `forward_causal_acyclic`, `transgen_time_strictly_increases`, `lamport_irrefl`, `lamport_strict_partial_order`, `lamport_order_update_independent`, `afca_sr_causal_structure`; all zero sorry, zero axioms (CatAL/CatAD — Lamport properties CatAL, Minkowski isomorphism CatAD, 2026-05-21)
 - `UgpLean.Spacetime.DWeightSRFormula` — Rank 63-DMDL: [D]-weighted SR formula; `dmdl_dweight_positive`, `dmdl_proper_time_ratio`, `dmdl_dweight_sr_formula`, `dmdl_lorentz_factor_algebraic`, `dmdl_tau_c_ratio_structure`, `dmdl_qec_sr_bundle`; all zero sorry, zero custom axioms (CatAL, 2026-05-24)
+- `UgpLean.Spacetime.AsyncLiftingTheorem` — Rank 32-ALT2: Asynchronous Lifting Theorem; `async_algebraic_lifting_theorem`, `async_color_confinement`, `async_dweight_is_local`, `async_psc_admissible_is_local`; all CatAL, zero sorry — async ALT is definitionally the sync ALT because DWeight and PSCAdmissible are local state predicates (2026-05-26)
 
 **Non-circularity:** Core/ does not import Compute/. See README.md.
 -/

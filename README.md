@@ -4,7 +4,7 @@
 
 This repository is part of the **Reflexive Reality** research program by [Nova Spivack](https://www.novaspivack.com/).
 
-**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, and self-reference.  **153 modules, zero sorry on the core proof path** (see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).
+**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, and self-reference.  **239 modules, zero sorry on the core proof path** (see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).
 
 | Link | Description |
 |------|-------------|
@@ -27,7 +27,7 @@ A clean build completes with zero `sorry` and the standard Mathlib axiom signatu
 
 ---
 
-## Module structure (152 modules; **14 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
+## Module structure (239 modules; **15 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
 
 | Layer | Count | Modules |
 |-------|-------|---------|
@@ -806,3 +806,55 @@ An independent, Cook-free Turing universality certificate for Rule 110, Φ_MDL, 
 - `z7_prime_field_universality` — NAND functional completeness ⟹ Rule 110 Turing universal without the Cook cyclic tag system construction (CatAL, 1 named axiom; Cook (2004) is a corollary)
 
 Module: `UgpLean.Universality.PhiMDLUniversality`; companion: `rule110-lean/Rule110/AlgebraicUniversality.lean`.
+
+---
+
+**EPIC 074/075/076 Graduation — Algebraic Necessity, Gravity Sector, QCA/QEC (2026-05-26; zero sorry on listed theorems)**
+
+*Rank 075-ALGEC — Algebraic Necessity (`Universality/AlgebraicNecessityTheorem.lean`)*
+
+- `algebraic_necessity_theorem` — F₂₁ = Z₇ ⋊ Z₃ is the unique non-abelian group of order 21; N_gen = 3 uniquely forced (CatAL)
+- `b0_uniquely_forces_n7` — one-loop QCD b₀ = |Z₇| = 7 forces the Z₇ orbit period (CatAL)
+- `no_ca_replica_as_corollary` — no finite-CA exact Lorentz replica as structural corollary (CatAL)
+
+*Frobenius Prime & Beta Coefficient (`FrobeniusPrimeIdentity.lean`, `BetaCoefficientIdentity.lean`)*
+
+- `frobenius_prime_bundle` — |Z₇| = |Z₃|² − |Z₃| + 1 unifies F₂₁ and PSC n=10 derivations (CatAL)
+- `gte_beta_coefficient_bundle` — b₀ = (11N_c − 2N_f)/3 = |F₂₁|/N_c = |Z₇| = 7 (CatAL)
+- `gte_planck_cascade_group_identity` — Planck cascade group-order identity (CatAL)
+
+*Rank 075-GR — Stress–Energy & Async Lifting (`StressEnergyTensor.lean`, `AsyncLiftingTheorem.lean`)*
+
+- `phimdl_tmunu_symmetric` / `phimdl_tmunu_vacuum_zero` — Klein–Gordon T_μν symmetry and vacuum cancellation (CatAL)
+- `phimdl_gravity_sector_prerequisites` — emergent-gravity prerequisite bundle (CatAL)
+- `async_algebraic_lifting_theorem` — async DWeight/PSC evaluation equals sync global evaluation (CatAL)
+
+*Geodesic Pass 4 (`GeodesicTheorem.lean` updates)*
+
+- `dweight_centroid_follows_orbit` / `gte_discrete_equivalence_principle` — discrete Ehrenfest and iterated DWeight preservation (CatAL)
+- `gte_geodesic_theorem_orbital` — PSC orbit persistence under f_MDL iteration (CatAL)
+- `timelike_adjacent_is_geodesic_path` / `d2_geodesic_step_is_geodesic_path` — single-step geodesic identification (CatAL)
+
+*Rank 074-3D — Winding–Coin Decoupling (`Substrate/WindingCoinDecoupling.lean`)*
+
+- `diagonal_coin_decouples_sectors` — PSC maps commuting with Z₇ winding are diagonal (CatAL)
+- `phimdl_domain_wall_junction_tension_exact` — domain-wall junction tension from BPS action (CatAL)
+
+*Rank 074-C2 — Coherence Measure Uniqueness (`Substrate/CoherenceMeasureUniqueness.lean`)*
+
+- `c2_uniqueness_structural_bundle` — MDL-unique [D] under architectural restrictions (CatAL)
+- `c2_thermal_closure_bundle` — Gibbs free-energy gap selects canonical sector distribution; KL sorrys closed (CatAL)
+
+*No Class 4 & CMCA Continuum (`NoClass4OuterTotalisticZ7.lean`, `Framework/CMCAContinuumLimit.lean`)*
+
+- `no_class4_outer_totalistic_z7_3d` — no outer-totalistic Z₇ VN6 rule is Wolfram Class 4 (1 axiom `chirality_necessary_for_class4`)
+- `no_finite_ca_exact_lorentz_replica` / `cmca_continuum_limit_is_phimdl` — no-CA-replica theorem; Φ_MDL is unique exact-Lorentz limit (CatAL)
+
+*Rank 38-QEC — Updated QEC bundle (`Spacetime/QECStabilizer.lean`)*
+
+- `dweight_pos_of_admissible` / `dweight_pos_iff_admissible` — DWeight projector ↔ PSC code subspace (CatAL)
+- `qec_gte_is_stabilizer_code` — full 38-QEC dictionary bundle (CatAL)
+
+*Rank 13-LSD — Fourier heat-kernel scaffolding (`Spacetime/Spectral/HeatKernelFourier.lean`)*
+
+- `cayley_eigenvalue_at_zero_eq_degree` — zero sorry; 3 documented analytical sorrys in Gaussian-limit chain
