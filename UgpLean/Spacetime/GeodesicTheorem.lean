@@ -2,6 +2,7 @@ import UgpLean.Spacetime.LiftingTheorem
 import UgpLean.Spacetime.CausalGraph
 import UgpLean.Spacetime.CentroidMeasure
 import UgpLean.Spacetime.QECStabilizer
+import UgpLean.Spacetime.SpatiallyExtendedLifting
 
 namespace GTE.Spacetime.Geodesic
 
@@ -99,12 +100,19 @@ along the timelike worldline.  Uses `CentroidMeasure.lean` (`beableCentroid`,
 identification (`timelike_adjacent_is_geodesic_path`, `d2_geodesic_step_is_geodesic_path`).
 Discrete orbit persistence and flat-vacuum geodesic edges are CatAL zero sorry.
 
-**Remaining gap to full `geodesic_theorem` CatAL:** identification of the beable's
-spatial location with a causal node under the distributed orbit-superposition P34 `[D]`
-measure (requires EPIC_073 Cluster J — Ollivier–Ricci + P34 distributed [D]).
+**Pass 5 (2026-05-26):** Distributed `[D]` along causal paths — `DWeightPath`,
+`IsPSCAdmissiblePath`, `dweight_path_pos_of_psc_admissible` (distributed Ehrenfest);
+`orbit_forms_psc_geodesic_path`; `geodesic_theorem_v2`; spatial composite positivity
+via `geodesic_extended_composite`; certification bundle `geodesic_cat_certification_bundle`.
+
+**Remaining gap to full `geodesic_theorem` CatAL:** formal identification of PSC orbit
+with minimum-τ_c geodesic in Ollivier–Ricci-curved regions (CatA-empirical at Ranks
+48–50); curvature-corrected centroid motion requires distributed P34 orbit-superposition
+measure beyond per-node `state_at` assignment (EPIC_073 Cluster J).
 -/
 
-open GTE.Lifting GTE.Spacetime GTE.Spacetime.Centroid GTE.Spacetime.QEC CUP3D UgpLean.Universality.LawvereZone
+open GTE.Lifting GTE.Spacetime GTE.Spacetime.Centroid GTE.Spacetime.QEC
+  GTE.Spacetime.SpatialExtension CUP3D UgpLean.Universality.LawvereZone
 
 variable (L T : ℕ)
 
@@ -786,5 +794,119 @@ theorem d2_geodesic_step_is_geodesic_path
   refine ⟨n', ?_, dweight_centroid_follows_orbit b h_w, ?_⟩
   · exact Or.inr (Or.inl ⟨rfl, rfl⟩)
   · exact timelike_adjacent_is_geodesic_path L T n n' ⟨rfl, rfl⟩
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- §17  Distributed [D] along causal paths (Pass 5 — 076-GEO-CATAL)
+-- ─────────────────────────────────────────────────────────────────────────────
+
+/-- [D]-weight of a causal path: product of per-node `DWeight` values along the path.
+
+    When `state_at n` assigns the beable configuration at causal node `n`, this is
+    the discrete tensor-product [D]-measure over path-supported nodes.  Intermediate
+    vacuum nodes contribute factor `DWeight fmdl_vacuum5 = 1`. -/
+noncomputable def DWeightPath
+    (path : List (CausalNode L T))
+    (state_at : CausalNode L T → Fin 5 → Fin 7) : ℝ :=
+  match path with
+  | [] => 1
+  | n :: rest => DWeight (state_at n) * DWeightPath rest state_at
+
+/-- A causal path is PSC-admissible when every node on the path carries a
+    PSC-admissible beable configuration. -/
+def IsPSCAdmissiblePath
+    (path : List (CausalNode L T))
+    (state_at : CausalNode L T → Fin 5 → Fin 7) : Prop :=
+  ∀ n ∈ path, PSCAdmissible (state_at n)
+
+/-- **Distributed Ehrenfest theorem** (Rank 076-GEO-CATAL, CatAL).
+
+    Along any PSC-admissible causal path, the path [D]-weight is strictly positive.
+
+    Proof: induction on the path; each factor `DWeight (state_at n) > 0` by
+    `dweight_pos_of_admissible`; empty path contributes factor `1`.
+
+    Status: CatAL — zero sorry. -/
+theorem dweight_path_pos_of_psc_admissible
+    (path : List (CausalNode L T))
+    (state_at : CausalNode L T → Fin 5 → Fin 7)
+    (hpath : IsPSCAdmissiblePath L T path state_at) :
+    DWeightPath L T path state_at > 0 := by
+  induction path with
+  | nil =>
+    simp [DWeightPath]
+  | cons n rest ih =>
+    simp only [DWeightPath]
+    apply mul_pos
+    · exact dweight_pos_of_admissible (state_at n) (hpath n List.mem_cons_self)
+    · exact ih (fun m hm => hpath m (List.mem_cons_of_mem n hm))
+
+/-- **PSC orbit along f_MDL iteration** (CatAL).
+
+    If the initial beable is PSC-admissible, every iterate along the f_MDL orbit
+    remains PSC-admissible.  Restated for path-based geodesic arguments. -/
+theorem orbit_forms_psc_geodesic_path
+    (b0 : Fin 5 → Fin 7) (h_psc : PSCAdmissible b0) (n : ℕ) :
+    ∀ k : Fin n, PSCAdmissible (fmdl_step5^[k.val] b0) := by
+  intro k
+  exact psc_admissible_preserved_iter b0 h_psc k.val
+
+/-- **Full geodesic theorem — discrete orbital part** (Rank 17-GEO, CatAL).
+
+    Alias of `gte_discrete_equivalence_principle`: physical beables remain in the
+    positive-[D] sector under arbitrary f_MDL iteration.  The spatial geodesic
+    identification (minimum τ_c path in curved regions) remains CatAD pending
+    distributed P34 orbit-superposition + Ollivier–Ricci curvature correction.
+
+    Status: CatAL — zero sorry. -/
+theorem geodesic_theorem_v2 (b : Fin 5 → Fin 7) (h : DWeight b > 0) (n : ℕ) :
+    DWeight (fmdl_step5^[n] b) > 0 :=
+  gte_discrete_equivalence_principle b h n
+
+/-- Product [D]-weight of a spatially extended composite (meson / bound state). -/
+noncomputable def dweightSpatialComposite (c : SpatiallyExtendedComposite L T) : ℝ :=
+  DWeight c.beableA * DWeight c.beableB
+
+/-- **Spatially extended geodesic support** (Rank 076-GEO-CATAL, CatAL).
+
+    A PSC-admissible spatially extended composite has positive path [D]-weight at
+    both constituent nodes.  Connects Rank 55-3DLT spatial lifting to the geodesic
+    certification chain without requiring geodesic uniqueness.
+
+    Status: CatAL — zero sorry. -/
+theorem geodesic_extended_composite
+    (c : SpatiallyExtendedComposite L T)
+    (h_admissible : c.PSCAdmissibleSpatial) :
+    dweightSpatialComposite L T c > 0 := by
+  dsimp [dweightSpatialComposite, SpatiallyExtendedComposite.PSCAdmissibleSpatial]
+    at h_admissible ⊢
+  exact mul_pos h_admissible.2.2.1 h_admissible.2.2.2.1
+
+/-- **Geodesic certification bundle** (Rank 076-GEO-CATAL, CatAL partial).
+
+    Packages the CatAL-certified components achieved so far:
+
+    1. **Orbital persistence:** `DWeight (fmdl_step5^[n] b) > 0` for physical `b`.
+    2. **PSC orbit closure:** every iterate remains PSC-admissible.
+    3. **Distributed Ehrenfest:** any PSC-admissible causal path has positive
+       `DWeightPath`.
+
+    **Not included (remaining gap to full CatAL):**
+    - Identification of PSC orbit with minimum-τ_c geodesic in OR-curved regions
+      (CatA-empirical, Ranks 48–50).
+    - Curvature-corrected centroid motion via distributed P34 orbit-superposition
+      (beyond per-node `state_at` assignment).
+
+    Status: CatAL partial — zero sorry on bundled components. -/
+theorem geodesic_cat_certification_bundle
+    (b : Fin 5 → Fin 7) (h : DWeight b > 0) (n : ℕ)
+    (path : List (CausalNode L T))
+    (state_at : CausalNode L T → Fin 5 → Fin 7)
+    (hpath : IsPSCAdmissiblePath L T path state_at) :
+    DWeight (fmdl_step5^[n] b) > 0 ∧
+    PSCAdmissible (fmdl_step5^[n] b) ∧
+    DWeightPath L T path state_at > 0 :=
+  ⟨geodesic_theorem_v2 b h n,
+   gte_geodesic_theorem_orbital b h n,
+   dweight_path_pos_of_psc_admissible L T path state_at hpath⟩
 
 end GTE.Spacetime.Geodesic
