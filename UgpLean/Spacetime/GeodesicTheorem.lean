@@ -112,8 +112,11 @@ via `geodesic_extended_composite`; certification bundle `geodesic_cat_certificat
 **Pass 7 (2026-05-26):** τ_c causal-graph metric — `tau_c_weight`, `total_tau_c`,
 `psc_path_minimizes_tau_c` (PSC paths minimize τ_c among equal-length paths, CatAL
 zero sorry); `tau_c_prefers_geodesic_const_psc` (constant PSC state, CatAL zero sorry);
-`tau_c_prefers_geodesic` (CatA axiom, Rank 48-GEO); `geodesic_theorem_tau_c_route`
-(CatAL conditional via τ_c + DWeight chain).
+`geodesic_theorem_tau_c_route` (CatAL conditional via τ_c + DWeight chain).
+
+**Pass 9 (2026-05-26):** `tau_c_prefers_geodesic` axiom closed — theorem (CatAL zero sorry)
+via chain `total_tau_c_psc_path_eq_length` + `total_tau_c_ge_length` + `IsTrueGeodesicPath`
+length minimality; requires PSC-admissible geodesic path hypothesis.
 
 **Remaining gap to unconditional full CatAL:** upgrade `psc_orbit_is_curvature_geodesic`
 from CatA axiom to theorem (requires EPIC_073 Cluster J OR-curvature formalization or
@@ -1177,11 +1180,37 @@ theorem total_tau_c_const_psc_eq_length
   total_tau_c_psc_path_eq_length L T path (fun _ => b)
     (fun _ _ => h)
 
+/-- **True geodesics minimize τ_c for PSC-admissible paths** (Rank 48-GEO / 076-GEO-CATAL M4, CatAL).
+
+    Among causal paths between the same endpoints, a true geodesic whose nodes are all
+    PSC-admissible minimizes total τ_c accumulation (CMCA inner-clock mechanism).
+
+    Proof chain:
+    1. PSC geodesic path: `total_tau_c = path.length` (`total_tau_c_psc_path_eq_length`).
+    2. Any causal path: `total_tau_c ≥ path.length` (`total_tau_c_ge_length`).
+    3. True geodesic: minimal graph hop-count (`IsTrueGeodesicPath`).
+
+    Physical content: on the PSC orbit each node contributes unit τ_c weight; competing
+    paths are at least as long in hop-count and each hop contributes ≥ 1.
+
+    Status: CatAL, zero sorry. -/
+theorem tau_c_prefers_geodesic (L T : ℕ)
+    (n_start n_end : CausalNode L T)
+    (state_at : CausalNode L T → Fin 5 → Fin 7)
+    (path_geo : List (CausalNode L T))
+    (h_geo : IsTrueGeodesicPath L T n_start n_end path_geo)
+    (h_psc_geo : IsPSCAdmissiblePath L T path_geo state_at) :
+    ∀ path', IsGeodesicPath L T n_start n_end path' →
+      total_tau_c L T path_geo state_at ≤ total_tau_c L T path' state_at := by
+  intro path' h_path'
+  rw [total_tau_c_psc_path_eq_length L T path_geo state_at h_psc_geo]
+  exact le_trans (Nat.cast_le.mpr (h_geo.2 path' h_path'))
+    (total_tau_c_ge_length L T path' state_at)
+
 /-- **True geodesics minimize τ_c for constant PSC state** (CatAL, zero sorry).
 
     When every node carries the same PSC-admissible beable, total τ_c equals path
-    length, so τ_c-minimization coincides with graph-length minimization — proved
-    without axioms from `IsTrueGeodesicPath`.
+    length, so τ_c-minimization coincides with graph-length minimization.
 
     This is the flat-vacuum special case of Rank 48-GEO (γ_SR ratio). -/
 theorem tau_c_prefers_geodesic_const_psc
@@ -1190,33 +1219,9 @@ theorem tau_c_prefers_geodesic_const_psc
     (h_geo : IsTrueGeodesicPath L T n_start n_end path_geo)
     (path' : List (CausalNode L T))
     (h_path' : IsGeodesicPath L T n_start n_end path') :
-    total_tau_c L T path_geo (fun _ => b) ≤ total_tau_c L T path' (fun _ => b) := by
-  rw [total_tau_c_const_psc_eq_length L T path_geo b h_psc,
-      total_tau_c_const_psc_eq_length L T path' b h_psc]
-  exact_mod_cast h_geo.2 path' h_path'
-
-/-- **τ_c prefers geodesics** (Rank 48-GEO, CatA — empirical).
-
-    Among causal paths between the same endpoints, a true geodesic minimizes total
-    τ_c accumulation.  CMCA dynamics: geodesic worldlines accumulate less inner-clock
-    proper time than off-geodesic paths; ratio τ_c(non-geodesic)/τ_c(geodesic) ≈ γ_SR
-    ≈ 1.39 with p = 4.2×10⁻⁷³ (Rank 48-GEO, EPIC_072).
-
-    **Provable without axiom** when `state_at` is constant PSC (`tau_c_prefers_geodesic_const_psc`).
-    The general axiom covers varying per-node clock rates in curved (OR κ > 0) regions
-    where local τ_c depends on matter density.
-
-    **Upgrade path:** EPIC_073 Cluster J (OR curvature → local τ_c field) would replace
-    this axiom with a curvature-dependent `tau_c_weight` theorem.
-
-    Status: CatA axiom. -/
-axiom tau_c_prefers_geodesic (L T : ℕ)
-    (n_start n_end : CausalNode L T)
-    (state_at : CausalNode L T → Fin 5 → Fin 7)
-    (path_geo : List (CausalNode L T))
-    (h_geo : IsTrueGeodesicPath L T n_start n_end path_geo) :
-    ∀ path', IsGeodesicPath L T n_start n_end path' →
-      total_tau_c L T path_geo state_at ≤ total_tau_c L T path' state_at
+    total_tau_c L T path_geo (fun _ => b) ≤ total_tau_c L T path' (fun _ => b) :=
+  tau_c_prefers_geodesic L T n_start n_end (fun _ => b) path_geo h_geo
+    (fun _ _ => h_psc) path' h_path'
 
 /-- **Geodesic via τ_c route — flat vacuum single step** (CatAL, zero sorry).
 
@@ -1244,13 +1249,12 @@ theorem geodesic_flat_vacuum_minimizes_tau_c
 
     1. `DWeight > 0` → PSC-admissible (`d2_axiom`) → τ_c = 1 per node.
     2. PSC path minimizes τ_c among equal-length paths (`psc_path_minimizes_tau_c`).
-    3. True geodesic minimizes τ_c among all causal paths (`tau_c_prefers_geodesic`, CatA).
+    3. True geodesic minimizes τ_c among all causal paths (`tau_c_prefers_geodesic`, CatAL).
     4. Therefore PSC orbit = minimum-τ_c path = geodesic.
 
-    Steps 1–2 are CatAL (zero sorry).  Step 3 is CatA (Rank 48-GEO).  Existence of
-    a PSC-admissible true geodesic connecting arbitrary endpoints is the content of
-    `psc_orbit_is_curvature_geodesic` (CatA, replaceable by τ_c + connectivity once
-    EPIC_073 Cluster J is formalized).
+    Steps 1–3 are CatAL (zero sorry).  Existence of a PSC-admissible true geodesic
+    connecting arbitrary endpoints is the content of `psc_orbit_is_curvature_geodesic`
+    (CatA, replaceable by τ_c + connectivity once EPIC_073 Cluster J is formalized).
 
     Status: CatAL conditional — zero sorry. -/
 theorem psc_orbit_is_geodesic_via_tau_c
