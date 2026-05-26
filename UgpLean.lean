@@ -170,6 +170,7 @@ import UgpLean.Universality.SylowIndexCouplingHierarchy
 import UgpLean.Universality.BetaCoefficientIdentity
 import UgpLean.Universality.FrobeniusPrimeIdentity
 import UgpLean.Universality.Z3SubOrbitDisjointness
+import UgpLean.Universality.Z3InvariantEntropy
 import UgpLean.Universality.PSCOrbitWindows
 import UgpLean.Substrate.LExtended
 import UgpLean.Substrate.Substrate
