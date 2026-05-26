@@ -177,6 +177,7 @@ import UgpLean.Universality.BeableWindingPartitionInstance
 import UgpLean.Universality.DualFrameBornRule
 import UgpLean.Universality.PhiMDLThermalState
 import UgpLean.Universality.SylowIndexCouplingHierarchy
+import UgpLean.Universality.BetaCoefficientIdentity
 import UgpLean.Substrate.LExtended
 import UgpLean.Substrate.Substrate
 import UgpLean.Substrate.PSCPreservingTransformation
@@ -256,6 +257,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Universality.*`       — Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, Turing universality, Architecture bridge
 - `UgpLean.Universality.FMDLClassification` — Cat IV structural prerequisites: 14/343 sparsity cert, binary sublayer = Rule 110 (zero sorry), SM encoding, Law=Description=Execution (2026-05-21)
 - `UgpLean.Universality.AlgebraicDescentTheorem` — Rank 135-ALDESC: Algebraic Descent Theorem; M-independence of F_21 orbit structure, PSC admissibility, three generations, color confinement, b₀=7, θ=0, Casimir invariants C_F=4/3 C_A=3; all CatAL zero sorry (2026-05-23)
+- `UgpLean.Universality.BetaCoefficientIdentity` — b₀ = |Z₇| = 7 from F₂₁ = Z₇ ⋊ Z₃: (11N_c − 2N_f)/3 = |F₂₁|/|Z₃|; Planck cascade group identity; zero sorry (2026-05-26)
 - `UgpLean.Papers.*`             — Paper25, UGPMain (citable stubs)
 
 - `UgpLean.TE22.*`               — ScanCertificate (TE2.2 PSC scan framework, UGP coupling predictions)
