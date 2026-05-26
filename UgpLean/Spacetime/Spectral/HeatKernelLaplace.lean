@@ -3,6 +3,7 @@ import Mathlib.Topology.Basic
 import Mathlib.Topology.Instances.Real.Lemmas
 import UgpLean.Spacetime.SpectralDimension
 import UgpLean.Spacetime.Spectral.DegreeNormalized
+import UgpLean.Spacetime.Spectral.HeatKernelFourier
 
 namespace GTE.Spacetime.Spectral
 
@@ -134,17 +135,8 @@ theorem causal_graph_heat_kernel_diffusive_asymptotic :
               (CausalGraphPeriodic (L + 2) (L + 2)
                 (by omega : 2 ≤ L + 2) (by omega : 1 ≤ L + 2))
               20 ((L + 2)^2))
-        atTop (nhds C) := by
-  /-
-  Honest analytical-gap sorry. See module docstring for the mathematical
-  reduction (DFT on `(ZMod n)⁴` + Laplace-method asymptotic). The asymptotic
-  is independent of every other lemma in this development; only the existing
-  `Mathlib.Analysis.SpecialFunctions.Gaussian` value of the 4-D Gaussian
-  integral and the discrete-Fourier orthogonality of `ZMod n` characters
-  would suffice to discharge it. No new axioms; the proof reduces to a
-  standard Laplace-method argument exactly as documented above.
-  -/
-  sorry
+        atTop (nhds C) :=
+  causal_graph_heat_kernel_diffusive_asymptotic_fourier
 
 /-- Convenience corollary: the positive heat-kernel value is eventually positive
     (a trivial consequence of the asymptotic limit `C > 0`). Used to feed the
