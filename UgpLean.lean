@@ -202,8 +202,10 @@ import UgpLean.Spacetime.SpectralDimension
 import UgpLean.Spacetime.SpectralDimensionDegree
 import UgpLean.Spacetime.Spectral.DegreeNormalized
 import UgpLean.Spacetime.Spectral.SpectralDimensionFromAsymptotic
+import UgpLean.Spacetime.Spectral.HeatKernelFourier
 import UgpLean.Spacetime.Spectral.HeatKernelLaplace
 import UgpLean.Spacetime.Spectral.ThermodynamicLimit
+import UgpLean.Universality.NoClass4OuterTotalisticZ7
 import UgpLean.Spacetime.PhiMDLZ7PotentialMDL
 import UgpLean.Spacetime.ChiralPairDecoupling
 import UgpLean.Spacetime.ColorConfinement
@@ -266,8 +268,10 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Spacetime.SpectralDimensionDegree` — `periodic_causal_node_degree` CatAL (0 sorry)
 - `UgpLean.Spacetime.Spectral.DegreeNormalized` — physical (degree-normalized) random-walk heat kernel definitions (0 sorry)
 - `UgpLean.Spacetime.Spectral.SpectralDimensionFromAsymptotic` — bridge from a diffusive heat-kernel asymptotic to the scaling-law log-ratio limit (pure real analysis, 0 sorry)
-- `UgpLean.Spacetime.Spectral.HeatKernelLaplace` — Laplace-method asymptotic statement `(L+2)⁴ · K_{(L+2)²}(G_{L+2}) → C > 0` (1 documented analytical-helper sorry: the genuine Mathlib gap for DFT-on-finite-abelian-groups + Riemann-sum/Gaussian-integral limit)
-- `UgpLean.Spacetime.Spectral.ThermodynamicLimit` — `causal_graph_spectral_dim_thermodynamic_limit`: the thermodynamic-limit "spectral dimension = 4" theorem for the 3D f_MDL causal graph (zero sorry in the body; reduces honestly via the bridge to the single helper sorry in `HeatKernelLaplace`)
+- `UgpLean.Spacetime.Spectral.HeatKernelFourier` — Rank 13-LSD Fourier-on-`ZMod` reduction: `cayley_eigenvalue_at_zero_eq_degree` (zero sorry); 3 documented analytical sorrys in `physical_heat_kernel_eq_character_sum`, `cayley_eigenvalue_quadratic_expansion`, `discrete_torus_gaussian_limit`; assembled in `causal_graph_heat_kernel_diffusive_asymptotic_fourier`
+- `UgpLean.Spacetime.Spectral.HeatKernelLaplace` — Laplace-method asymptotic delegates to `HeatKernelFourier` (zero sorry in body; 3 analytical sorrys in dependency chain)
+- `UgpLean.Spacetime.Spectral.ThermodynamicLimit` — `causal_graph_spectral_dim_thermodynamic_limit`: the thermodynamic-limit "spectral dimension = 4" theorem for the 3D f_MDL causal graph (zero sorry in the body; reduces via the bridge to the Fourier/Laplace chain in `HeatKernelFourier`)
+- `UgpLean.Universality.NoClass4OuterTotalisticZ7` — OQ-3DALG-6 stub: `no_class4_outer_totalistic_z7_3d` (1 sorry; `outer_totalistic_z7_vn6_rule_space_card` zero sorry via `native_decide`)
 - `UgpLean.Spacetime.PhiMDLZ7PotentialMDL` — Rank 69d: `phimdl_z7_potential_mdl_minimal` CatAL (0 sorry)
 - `UgpLean.Spacetime.ChiralPairDecoupling` — Rank 14-LCD: chiral pair causal decoupling; `ChiralLayer`, `ChiralNode`, `ChiralPairAdj`; `chiral_pair_no_cross_layer_edges` zero sorry, `chiral_pair_walk_layer_invariant` zero sorry (2026-05-21)
 - `UgpLean.Spacetime.ColorConfinement` — Rank 25-CCF: color confinement from PSC RC + Absence Theorem; `color_confinement` and `physical_particles_are_color_neutral` zero sorry, one named bridge axiom `psc_rc_requires_color_neutrality` (CatAD, 2026-05-21)
