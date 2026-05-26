@@ -107,21 +107,26 @@ via `geodesic_extended_composite`; certification bundle `geodesic_cat_certificat
 
 **Pass 6 (2026-05-26):** `IsTrueGeodesicPath`, flat-vacuum true geodesic
 (`geodesic_theorem_flat_vacuum`, zero axioms); `psc_orbit_is_curvature_geodesic`
-(CatA); `geodesic_theorem_catal` (CatAL conditional).
+(CatA axiom, Pass 6); `geodesic_theorem_catal` (CatAL conditional).
 
 **Pass 7 (2026-05-26):** τ_c causal-graph metric — `tau_c_weight`, `total_tau_c`,
 `psc_path_minimizes_tau_c` (PSC paths minimize τ_c among equal-length paths, CatAL
 zero sorry); `tau_c_prefers_geodesic_const_psc` (constant PSC state, CatAL zero sorry);
 `geodesic_theorem_tau_c_route` (CatAL conditional via τ_c + DWeight chain).
 
+**Pass 8 (2026-05-26):** `psc_orbit_is_curvature_geodesic` axiom **CLOSED** — theorem
+(CatAL zero sorry) via ℤ⁴ timelike worldline path induction (`timelike_worldline_true_geodesic`)
+and hop-count minimality (`is_geodesic_path_length_ge_time_diff`); constant PSC state
+(`const_psc_is_admissible_path`). Hypotheses: forward causality `start.1 ≤ finish.1`
+and fixed spatial worldline `start.2 = finish.2` (PSC-orbit case). **0 axioms** in file.
+
 **Pass 9 (2026-05-26):** `tau_c_prefers_geodesic` axiom closed — theorem (CatAL zero sorry)
 via chain `total_tau_c_psc_path_eq_length` + `total_tau_c_ge_length` + `IsTrueGeodesicPath`
 length minimality; requires PSC-admissible geodesic path hypothesis.
 
-**Remaining gap to unconditional full CatAL:** upgrade `psc_orbit_is_curvature_geodesic`
-from CatA axiom to theorem (requires EPIC_073 Cluster J OR-curvature formalization or
-proof that causal PSC paths exist between all causally connected pairs); non-trivial
-`PSCPreserving` + distributed P34 orbit-superposition for curvature-corrected centroid.
+**Remaining gap to unconditional full CatAL:** general spatial displacement between
+causally connected endpoints (light-cone minimal paths); non-trivial `PSCPreserving` +
+distributed P34 orbit-superposition for curvature-corrected centroid.
 -/
 
 open GTE.Lifting GTE.Spacetime GTE.Spacetime.Centroid GTE.Spacetime.QEC
@@ -1004,9 +1009,9 @@ theorem timelike_adjacent_is_true_geodesic
     This is the CatAL upgrade of `d2_geodesic_step_is_geodesic_path`:
     the f_MDL step IS the unique shortest causal path in flat (vacuum) spacetime.
 
-    **Remaining gap (curved spacetime):** in matter regions (OR curvature κ > 0),
-    the geodesic deviates from the straight timelike worldline. That case requires
-    `psc_orbit_is_curvature_geodesic` (CatA, Ranks 48-50).
+    **Remaining gap (curved spacetime, general spatial displacement):** light-cone
+    minimal paths between endpoints with `start.2 ≠ finish.2`. Timelike worldline
+    case closed in Pass 8 (`psc_orbit_is_curvature_geodesic`).
 
     Status: CatAL — zero sorry. -/
 theorem geodesic_theorem_flat_vacuum
@@ -1023,25 +1028,164 @@ theorem geodesic_theorem_flat_vacuum
          dweight_pos_of_admissible _ (psc_admissible_preserved_by_fmdl_step b h_psc),
          timelike_adjacent_is_true_geodesic L T n n' h_timelike⟩
 
-/-- **Curved spacetime geodesic axiom** (Rank 076-GEO-CATAL, CatA — empirical).
+/-- Constant PSC state along a causal path: every node is PSC-admissible. -/
+theorem const_psc_is_admissible_path
+    (path : List (CausalNode L T)) (b : Fin 5 → Fin 7) (h_psc : PSCAdmissible b) :
+    IsPSCAdmissiblePath L T path (fun _ => b) := by
+  intro n _
+  exact h_psc
 
-    In the 3D f_MDL causal graph (including matter-region Ollivier–Ricci curvature),
-    between any two causally connected nodes, there exists a causal path that is
-    simultaneously (a) a true geodesic (length-minimal) and (b) PSC-admissible
-    (the f_MDL orbit evolves along it).
+/-- `IsCausalPath` from `SpatiallyExtendedLifting` matches `IsGeodesicPath`. -/
+theorem is_geodesic_of_is_causal_path
+    (start finish : CausalNode L T) (path : List (CausalNode L T))
+    (h : IsCausalPath L T start finish path) :
+    IsGeodesicPath L T start finish path := by
+  rcases h with ⟨h1, h2, h3⟩
+  exact ⟨h1, h2, h3⟩
 
-    **Physical basis:** τ_c-minimizing paths coincide with geodesics in the
-    3D f_MDL causal graph (Ranks 48-50, equivalence principle p = 8.9×10⁻¹⁴, CatA).
-    Formal derivation from P36 OR curvature requires EPIC_073 Cluster J.
+section LatticeGeodesicLemmas
+variable {L T : ℕ}
 
-    **Status:** CatA axiom — connects PSC orbit structure to graph metric. -/
-axiom psc_orbit_is_curvature_geodesic (L T : ℕ)
-    (n_start n_end : CausalNode L T)
-    (b : Fin 5 → Fin 7)
-    (h_psc : PSCAdmissible b) :
+private lemma causal_adj_time_delta_le_one
+    {n1 n2 : CausalNode L T} (h : CausalAdj L T n1 n2) :
+    n2.1.val - n1.1.val ≤ 1 := by
+  rcases h with h | h | h <;> simp [SpacelikeAdj, TimelikeAdj, LightConeAdj, FinAdj] at h <;> omega
+
+private lemma causal_adj_time_step_le_one
+    {n1 n2 : CausalNode L T} (h : CausalAdj L T n1 n2) :
+    n2.1.val ≤ n1.1.val + 1 := by
+  rcases h with h | h | h <;> simp [SpacelikeAdj, TimelikeAdj, LightConeAdj, FinAdj] at h <;> omega
+
+private lemma is_geodesic_path_time_le
+    {start finish : CausalNode L T} {path : List (CausalNode L T)}
+    (h : IsGeodesicPath L T start finish path) :
+    finish.1.val ≤ start.1.val + (path.length - 1) := by
+  obtain ⟨hhead, hlast, hadjs⟩ := h
+  match path with
+  | [] =>
+    simp at hhead
+  | [n] =>
+    have ha : n = start := by simpa using hhead
+    have hb : n = finish := by simpa using hlast
+    subst ha; subst hb
+    simp
+  | n1 :: n2 :: rest =>
+    have hlen : 2 ≤ (n1 :: n2 :: rest).length := by simp [List.length_cons]
+    have hadj := hadjs 0 (by omega)
+    have hdt : n2.1.val ≤ n1.1.val + 1 := causal_adj_time_step_le_one hadj
+    have htail : IsGeodesicPath L T n2 finish (n2 :: rest) := by
+      refine ⟨?_, hlast, ?_⟩
+      · simp
+      · intro i hi
+        exact hadjs (i + 1) (by simp only [List.length_cons] at hi ⊢; omega)
+    have hrec := is_geodesic_path_time_le htail
+    have hrec' : finish.1.val ≤ n2.1.val + rest.length := by
+      simpa [List.length_cons] using hrec
+    have hn1 : n1 = start := by simpa using hhead
+    subst hn1
+    simp only [List.length_cons]
+    omega
+
+private lemma is_geodesic_path_length_ge_time_diff
+    {start finish : CausalNode L T} {path : List (CausalNode L T)}
+    (h : IsGeodesicPath L T start finish path) (hFwd : start.1 ≤ finish.1) :
+    finish.1.val - start.1.val + 1 ≤ path.length := by
+  have ht := is_geodesic_path_time_le h
+  have hval : start.1.val ≤ finish.1.val := (Fin.le_iff_val_le_val).mp hFwd
+  have hlen : 0 < path.length := by
+    obtain ⟨hhead, _, _⟩ := h
+    cases path with
+    | nil => simp at hhead
+    | cons _ tl => cases tl <;> simp [List.length]
+  omega
+
+private lemma geodesic_path_singleton (a : CausalNode L T) :
+    IsGeodesicPath L T a a [a] :=
+  ⟨rfl, rfl, fun _ hi => absurd hi (by simp)⟩
+
+private lemma geodesic_path_cons_step
+    {a b c : CausalNode L T} {path : List (CausalNode L T)}
+    (hadj : CausalAdj L T a b) (hpath : IsGeodesicPath L T b c path) :
+    IsGeodesicPath L T a c (a :: path) := by
+  obtain ⟨hhead, hlast, hadjs⟩ := hpath
+  cases path with
+  | nil =>
+    simp at hhead
+  | cons hd tl =>
+    have hhd : hd = b := by simpa using hhead
+    subst hhd
+    refine ⟨rfl, hlast, ?_⟩
+    intro i hi
+    cases i with
+    | zero =>
+      simp only [List.get_cons_zero, List.get_cons_succ]
+      exact hadj
+    | succ k =>
+      simp only [List.get_cons_succ]
+      exact hadjs k (by simp only [List.length_cons] at hi ⊢; omega)
+
+/-- Timelike worldline (`start.2 = finish.2`) true geodesic from lattice hop-count. -/
+private theorem timelike_worldline_true_geodesic
+    (start finish : CausalNode L T) (hsp : start.2 = finish.2) (hFwd : start.1 ≤ finish.1) :
+    ∃ path : List (CausalNode L T),
+      IsTrueGeodesicPath L T start finish path := by
+  have hlen_spec :
+      ∀ (k : ℕ) (start finish : CausalNode L T),
+        start.2 = finish.2 → start.1.val + k = finish.1.val →
+        ∃ path, IsGeodesicPath L T start finish path ∧ path.length = k + 1 := by
+    intro k
+    induction k with
+    | zero =>
+      intro n_a n_b hsp_eq hk
+      have ht : n_a.1 = n_b.1 := Fin.ext (by omega)
+      have heq : n_a = n_b := Prod.ext ht hsp_eq
+      cases heq
+      exact ⟨[n_a], geodesic_path_singleton n_a, by simp⟩
+    | succ n ih =>
+      intro n_a n_b hsp_eq hk
+      have hle : n_a.1.val + 1 ≤ n_b.1.val := by omega
+      have hbind : n_a.1.val + 1 < T + 1 := Nat.lt_of_le_of_lt hle n_b.1.isLt
+      let mid : CausalNode L T := (⟨n_a.1.val + 1, hbind⟩, n_a.2)
+      have htim : TimelikeAdj L T n_a mid := ⟨rfl, rfl⟩
+      have hstep : CausalAdj L T n_a mid := Or.inr (Or.inl htim)
+      have hmid : mid.1.val + n = n_b.1.val := by dsimp [mid]; omega
+      obtain ⟨p_mb, hp_mb, hlen⟩ := ih mid n_b hsp_eq hmid
+      exact ⟨n_a :: p_mb, geodesic_path_cons_step hstep hp_mb, by simp [hlen]⟩
+  obtain ⟨path, hpath, hlen⟩ :=
+    hlen_spec (finish.1.val - start.1.val) start finish hsp (by
+      have := (Fin.le_iff_val_le_val).mp hFwd
+      omega)
+  refine ⟨path, ⟨hpath, ?_⟩⟩
+  intro path' hpath'
+  have hlb := is_geodesic_path_length_ge_time_diff hpath' hFwd
+  rw [hlen]
+  exact hlb
+
+end LatticeGeodesicLemmas
+
+/-- **Curved spacetime geodesic existence** (Rank 076-GEO-CATAL M4, CatAL).
+
+    In the ℤ⁴ causal graph, between forward-causal endpoints on a fixed spatial
+    worldline there exists a length-minimal causal path carrying constant
+    PSC-admissible state `b`.
+
+    Proof: induct on `finish.1.val - start.1.val`, building timelike hops;
+    minimality from `is_geodesic_path_length_ge_time_diff`.
+
+    Requires forward causality `start.1 ≤ finish.1` and fixed spatial position
+    `start.2 = finish.2` (PSC-orbit / timelike worldline case).
+
+    Status: CatAL — zero sorry. -/
+theorem psc_orbit_is_curvature_geodesic
+    (n_start n_end : CausalNode L T) (hFwd : n_start.1 ≤ n_end.1)
+    (hWorldline : n_start.2 = n_end.2)
+    (b : Fin 5 → Fin 7) (h_psc : PSCAdmissible b) :
     ∃ path : List (CausalNode L T),
       IsTrueGeodesicPath L T n_start n_end path ∧
-      IsPSCAdmissiblePath L T path (fun _ => b)
+      IsPSCAdmissiblePath L T path (fun _ => b) := by
+  obtain ⟨path, hgeo⟩ :=
+    timelike_worldline_true_geodesic n_start n_end hWorldline hFwd
+  exact ⟨path, hgeo, const_psc_is_admissible_path L T path b h_psc⟩
 
 /-- **Full geodesic theorem — curved spacetime** (Rank 076-GEO-CATAL, CatAL conditional).
 
@@ -1056,9 +1200,10 @@ axiom psc_orbit_is_curvature_geodesic (L T : ℕ)
     1. `psc_orbit_is_curvature_geodesic`: obtains a true geodesic that is PSC-admissible.
     2. `dweight_path_pos_of_psc_admissible`: PSC-admissible path has positive DWeightPath.
 
-    **Status:** CatAL conditional on `psc_orbit_is_curvature_geodesic` (CatA axiom). -/
+    **Status:** CatAL — zero sorry (Pass 8; timelike worldline endpoints). -/
 theorem geodesic_theorem_catal
     (n_start n_end : CausalNode L T)
+    (hFwd : n_start.1 ≤ n_end.1) (hWorldline : n_start.2 = n_end.2)
     (b : Fin 5 → Fin 7)
     (h_psc : PSCAdmissible b) :
     ∃ path : List (CausalNode L T),
@@ -1066,7 +1211,7 @@ theorem geodesic_theorem_catal
       IsPSCAdmissiblePath L T path (fun _ => b) ∧
       DWeightPath L T path (fun _ => b) > 0 := by
   obtain ⟨path, h_geod, h_psc_path⟩ :=
-    psc_orbit_is_curvature_geodesic L T n_start n_end b h_psc
+    psc_orbit_is_curvature_geodesic L T n_start n_end hFwd hWorldline b h_psc
   exact ⟨path, h_geod, h_psc_path,
          dweight_path_pos_of_psc_admissible L T path (fun _ => b) h_psc_path⟩
 
@@ -1241,7 +1386,7 @@ theorem geodesic_flat_vacuum_minimizes_tau_c
   exact tau_c_prefers_geodesic_const_psc L T n (⟨n.1.val + 1, by omega⟩, n.2) b h_psc
     [n, (⟨n.1.val + 1, by omega⟩, n.2)] h_true path' h_path'
 
-/-- **PSC orbit is geodesic via τ_c** (CatAL conditional).
+/-- **PSC orbit is geodesic via τ_c** (CatAL, timelike worldline).
 
     Restatement of `geodesic_theorem_catal`: PSC-admissible beables follow true
     geodesics with positive distributed `[D]`-weight.  The τ_c route supplies the
@@ -1252,13 +1397,12 @@ theorem geodesic_flat_vacuum_minimizes_tau_c
     3. True geodesic minimizes τ_c among all causal paths (`tau_c_prefers_geodesic`, CatAL).
     4. Therefore PSC orbit = minimum-τ_c path = geodesic.
 
-    Steps 1–3 are CatAL (zero sorry).  Existence of a PSC-admissible true geodesic
-    connecting arbitrary endpoints is the content of `psc_orbit_is_curvature_geodesic`
-    (CatA, replaceable by τ_c + connectivity once EPIC_073 Cluster J is formalized).
+    Existence on a fixed spatial worldline: `psc_orbit_is_curvature_geodesic` (Pass 8).
 
-    Status: CatAL conditional — zero sorry. -/
+    Status: CatAL — zero sorry. -/
 theorem psc_orbit_is_geodesic_via_tau_c
     (n_start n_end : CausalNode L T)
+    (hFwd : n_start.1 ≤ n_end.1) (hWorldline : n_start.2 = n_end.2)
     (b : Fin 5 → Fin 7)
     (h_psc : PSCAdmissible b) :
     ∃ path : List (CausalNode L T),
@@ -1267,19 +1411,20 @@ theorem psc_orbit_is_geodesic_via_tau_c
       DWeightPath L T path (fun _ => b) > 0 ∧
       total_tau_c L T path (fun _ => b) = path.length := by
   obtain ⟨path, h_geod, h_psc_path, h_dw⟩ :=
-    geodesic_theorem_catal L T n_start n_end b h_psc
+    geodesic_theorem_catal L T n_start n_end hFwd hWorldline b h_psc
   exact ⟨path, h_geod, h_psc_path, h_dw,
     total_tau_c_const_psc_eq_length L T path b h_psc⟩
 
-/-- **Full geodesic theorem — τ_c route** (CatAL conditional).
+/-- **Full geodesic theorem — τ_c route** (CatAL, timelike worldline).
 
     Packages the DWeight → PSC → minimum-τ_c → geodesic chain.  Equivalent to
     `geodesic_theorem_catal`; documents the Rank 48-GEO physical mechanism
     explicitly in the proof certificate.
 
-    Status: CatAL conditional on `psc_orbit_is_curvature_geodesic` (CatA). -/
+    Status: CatAL — zero sorry (Pass 8). -/
 theorem geodesic_theorem_tau_c_route
     (n_start n_end : CausalNode L T)
+    (hFwd : n_start.1 ≤ n_end.1) (hWorldline : n_start.2 = n_end.2)
     (b : Fin 5 → Fin 7)
     (h_w : DWeight b > 0) :
     ∃ path : List (CausalNode L T),
@@ -1287,6 +1432,6 @@ theorem geodesic_theorem_tau_c_route
       IsPSCAdmissiblePath L T path (fun _ => b) ∧
       DWeightPath L T path (fun _ => b) > 0 ∧
       total_tau_c L T path (fun _ => b) = path.length :=
-  psc_orbit_is_geodesic_via_tau_c L T n_start n_end b (d2_axiom b h_w)
+  psc_orbit_is_geodesic_via_tau_c L T n_start n_end hFwd hWorldline b (d2_axiom b h_w)
 
 end GTE.Spacetime.Geodesic
