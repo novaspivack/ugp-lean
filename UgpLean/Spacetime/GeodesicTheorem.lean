@@ -124,8 +124,12 @@ and fixed spatial worldline `start.2 = finish.2` (PSC-orbit case). **0 axioms** 
 via chain `total_tau_c_psc_path_eq_length` + `total_tau_c_ge_length` + `IsTrueGeodesicPath`
 length minimality; requires PSC-admissible geodesic path hypothesis.
 
-**Remaining gap to unconditional full CatAL:** general spatial displacement between
-causally connected endpoints (light-cone minimal paths); non-trivial `PSCPreserving` +
+**Pass 10 (2026-05-26):** `geodesic_theorem_spatial_general` — M4 spatial displacement
+closed: light-cone / spacelike-preamble minimal paths between forward-causal endpoints
+without fixed-worldline hypothesis (`hWorldline` removed). Uses `spatialL1` hop count
+`max(ℓ₁, Δt)+1` from `SpatiallyExtendedLifting.minimal_causal_path_exists`.
+
+**Remaining gap to unconditional full CatAL:** non-trivial `PSCPreserving` +
 distributed P34 orbit-superposition for curvature-corrected centroid.
 -/
 
@@ -1162,6 +1166,54 @@ private theorem timelike_worldline_true_geodesic
   exact hlb
 
 end LatticeGeodesicLemmas
+
+section SpatialGeodesicGeneral
+variable {L T : ℕ}
+
+/-- **Geodesic theorem — general spatial displacement** (Rank 076-GEO M4, CatAL).
+
+    Between forward-causal endpoints, a true geodesic path exists with constant
+    PSC-admissible state — no fixed spatial-worldline hypothesis.
+
+    Status: CatAL — zero sorry. -/
+theorem geodesic_theorem_spatial_general
+    (n_start n_end : CausalNode L T) (hFwd : n_start.1 ≤ n_end.1)
+    (b : Fin 5 → Fin 7) (h_psc : PSCAdmissible b) :
+    ∃ path : List (CausalNode L T),
+      IsTrueGeodesicPath L T n_start n_end path ∧
+      IsPSCAdmissiblePath L T path (fun _ => b) := by
+  obtain ⟨path, hpath, hlen⟩ := minimal_causal_path_exists n_start n_end hFwd
+  have hgeo : IsGeodesicPath L T n_start n_end path :=
+    @is_geodesic_of_is_causal_path L T n_start n_end path hpath
+  refine ⟨path, ⟨hgeo, ?_⟩, const_psc_is_admissible_path L T path b h_psc⟩
+  intro path' hpath'
+  rw [hlen]
+  exact causal_path_length_ge_max (L := L) (T := T) hpath' hFwd
+
+/-- **Curved spacetime geodesic — general endpoints** (CatAL). -/
+theorem psc_orbit_is_curvature_geodesic_general
+    (n_start n_end : CausalNode L T) (hFwd : n_start.1 ≤ n_end.1)
+    (b : Fin 5 → Fin 7) (h_psc : PSCAdmissible b) :
+    ∃ path : List (CausalNode L T),
+      IsTrueGeodesicPath L T n_start n_end path ∧
+      IsPSCAdmissiblePath L T path (fun _ => b) :=
+  geodesic_theorem_spatial_general n_start n_end hFwd b h_psc
+
+/-- **Full geodesic theorem — general endpoints** (CatAL). -/
+theorem geodesic_theorem_catal_general
+    (n_start n_end : CausalNode L T)
+    (hFwd : n_start.1 ≤ n_end.1)
+    (b : Fin 5 → Fin 7)
+    (h_psc : PSCAdmissible b) :
+    ∃ path : List (CausalNode L T),
+      IsTrueGeodesicPath L T n_start n_end path ∧
+      IsPSCAdmissiblePath L T path (fun _ => b) ∧
+      DWeightPath L T path (fun _ => b) > 0 := by
+  obtain ⟨path, hgeo, hpsc⟩ :=
+    geodesic_theorem_spatial_general n_start n_end hFwd b h_psc
+  exact ⟨path, hgeo, hpsc, dweight_path_pos_of_psc_admissible L T path (fun _ => b) hpsc⟩
+
+end SpatialGeodesicGeneral
 
 /-- **Curved spacetime geodesic existence** (Rank 076-GEO-CATAL M4, CatAL).
 

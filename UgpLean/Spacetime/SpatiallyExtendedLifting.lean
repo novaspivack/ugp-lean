@@ -397,6 +397,367 @@ private lemma spacelike_path_exists {L T : ℕ}
     ⟨px, hpx⟩
     (causal_path_trans ⟨py, hpy⟩ ⟨pz, hpz⟩)
 
+/-! ### Light-cone adjacency and minimal geodesic paths (Rank 076-GEO M4) -/
+
+/-- ℓ₁ spatial distance between two 3D lattice positions. -/
+def spatialL1 {L : ℕ} (a b : Fin L × Fin L × Fin L) : ℕ :=
+  Int.natAbs ((b.1.val : ℤ) - (a.1.val : ℤ)) +
+  Int.natAbs ((b.2.1.val : ℤ) - (a.2.1.val : ℤ)) +
+  Int.natAbs ((b.2.2.val : ℤ) - (a.2.2.val : ℤ))
+
+private lemma lightcone_adj_x {L T : ℕ} {t : Fin (T + 1)} {x1 x2 y z : Fin L}
+    (h : x1.val + 1 = x2.val) (_ht : t.val + 1 ≤ T) :
+    CausalAdj L T (t, x1, y, z) ((⟨t.val + 1, by omega⟩ : Fin (T + 1)), x2, y, z) :=
+  Or.inr (Or.inr ⟨rfl, Or.inl ⟨Or.inl h, rfl, rfl⟩⟩)
+
+private lemma lightcone_adj_x_rev {L T : ℕ} {t : Fin (T + 1)} {x1 x2 y z : Fin L}
+    (h : x2.val + 1 = x1.val) (_ht : t.val + 1 ≤ T) :
+    CausalAdj L T (t, x1, y, z) ((⟨t.val + 1, by omega⟩ : Fin (T + 1)), x2, y, z) :=
+  Or.inr (Or.inr ⟨rfl, Or.inl ⟨Or.inr h, rfl, rfl⟩⟩)
+
+private lemma lightcone_adj_y {L T : ℕ} {t : Fin (T + 1)} {x y1 y2 z : Fin L}
+    (h : y1.val + 1 = y2.val) (_ht : t.val + 1 ≤ T) :
+    CausalAdj L T (t, x, y1, z) ((⟨t.val + 1, by omega⟩ : Fin (T + 1)), x, y2, z) :=
+  Or.inr (Or.inr ⟨rfl, Or.inr (Or.inl ⟨rfl, Or.inl h, rfl⟩)⟩)
+
+private lemma lightcone_adj_y_rev {L T : ℕ} {t : Fin (T + 1)} {x y1 y2 z : Fin L}
+    (h : y2.val + 1 = y1.val) (_ht : t.val + 1 ≤ T) :
+    CausalAdj L T (t, x, y1, z) ((⟨t.val + 1, by omega⟩ : Fin (T + 1)), x, y2, z) :=
+  Or.inr (Or.inr ⟨rfl, Or.inr (Or.inl ⟨rfl, Or.inr h, rfl⟩)⟩)
+
+private lemma lightcone_adj_z {L T : ℕ} {t : Fin (T + 1)} {x y z1 z2 : Fin L}
+    (h : z1.val + 1 = z2.val) (_ht : t.val + 1 ≤ T) :
+    CausalAdj L T (t, x, y, z1) ((⟨t.val + 1, by omega⟩ : Fin (T + 1)), x, y, z2) :=
+  Or.inr (Or.inr ⟨rfl, Or.inr (Or.inr ⟨rfl, rfl, Or.inl h⟩)⟩)
+
+private lemma lightcone_adj_z_rev {L T : ℕ} {t : Fin (T + 1)} {x y z1 z2 : Fin L}
+    (h : z2.val + 1 = z1.val) (_ht : t.val + 1 ≤ T) :
+    CausalAdj L T (t, x, y, z1) ((⟨t.val + 1, by omega⟩ : Fin (T + 1)), x, y, z2) :=
+  Or.inr (Or.inr ⟨rfl, Or.inr (Or.inr ⟨rfl, rfl, Or.inr h⟩)⟩)
+
+private lemma spatial_l1_spacelike_step {L T : ℕ}
+    (t : Fin (T + 1)) (pos target : Fin L × Fin L × Fin L)
+    (hpos : pos ≠ target) :
+    ∃ pos' : Fin L × Fin L × Fin L,
+      spatialL1 pos' target + 1 = spatialL1 pos target ∧
+      CausalAdj L T (t, pos) (t, pos') := by
+  obtain ⟨x, y, z⟩ := pos
+  obtain ⟨xt, yt, zt⟩ := target
+  by_cases hx : x.val ≠ xt.val
+  · by_cases hlt : x.val < xt.val
+    · let x' : Fin L := ⟨x.val + 1, by omega⟩
+      use (x', y, z)
+      constructor
+      · dsimp [spatialL1]
+        simp only [x', Fin.val_mk]
+        omega
+      · exact spacelike_adj_x (by simp [x'])
+    · let x' : Fin L := ⟨x.val - 1, by omega⟩
+      use (x', y, z)
+      constructor
+      · dsimp [spatialL1]
+        simp only [x', Fin.val_mk]
+        omega
+      · exact spacelike_adj_x_rev (by simp [x']; omega)
+  · push_neg at hx
+    have hx' : x = xt := Fin.ext hx
+    by_cases hy : y.val ≠ yt.val
+    · by_cases hlt : y.val < yt.val
+      · let y' : Fin L := ⟨y.val + 1, by omega⟩
+        use (x, y', z)
+        constructor
+        · dsimp [spatialL1]
+          subst hx'
+          simp only [y', Fin.val_mk]
+          omega
+        · exact spacelike_adj_y (by simp [y'])
+      · let y' : Fin L := ⟨y.val - 1, by omega⟩
+        use (x, y', z)
+        constructor
+        · dsimp [spatialL1]
+          subst hx'
+          simp only [y', Fin.val_mk]
+          omega
+        · exact spacelike_adj_y_rev (by simp [y']; omega)
+    · push_neg at hy
+      have hy' : y = yt := Fin.ext hy
+      have hz : z.val ≠ zt.val := by
+        intro heq
+        apply hpos
+        exact Prod.ext hx' (Prod.ext hy' (Fin.ext heq))
+      by_cases hlt : z.val < zt.val
+      · let z' : Fin L := ⟨z.val + 1, by omega⟩
+        use (x, y, z')
+        constructor
+        · dsimp [spatialL1]
+          subst hx' hy'
+          simp only [z', Fin.val_mk]
+          omega
+        · exact spacelike_adj_z (by simp [z'])
+      · let z' : Fin L := ⟨z.val - 1, by omega⟩
+        use (x, y, z')
+        constructor
+        · dsimp [spatialL1]
+          subst hx' hy'
+          simp only [z', Fin.val_mk]
+          omega
+        · exact spacelike_adj_z_rev (by simp [z']; omega)
+
+private lemma spatial_l1_lightcone_step {L T : ℕ}
+    (t : Fin (T + 1)) (pos target : Fin L × Fin L × Fin L)
+    (hpos : pos ≠ target) (ht : t.val + 1 ≤ T) :
+    ∃ pos' : Fin L × Fin L × Fin L,
+      spatialL1 pos' target + 1 = spatialL1 pos target ∧
+      CausalAdj L T (t, pos) ((⟨t.val + 1, by omega⟩ : Fin (T + 1)), pos') := by
+  obtain ⟨x, y, z⟩ := pos
+  obtain ⟨xt, yt, zt⟩ := target
+  by_cases hx : x.val ≠ xt.val
+  · by_cases hlt : x.val < xt.val
+    · let x' : Fin L := ⟨x.val + 1, by omega⟩
+      use (x', y, z)
+      constructor
+      · dsimp [spatialL1]
+        simp only [x', Fin.val_mk]
+        omega
+      · exact lightcone_adj_x (by simp [x']) ht
+    · let x' : Fin L := ⟨x.val - 1, by omega⟩
+      use (x', y, z)
+      constructor
+      · dsimp [spatialL1]
+        simp only [x', Fin.val_mk]
+        omega
+      · exact lightcone_adj_x_rev (by simp [x']; omega) ht
+  · push_neg at hx
+    have hx' : x = xt := Fin.ext hx
+    by_cases hy : y.val ≠ yt.val
+    · by_cases hlt : y.val < yt.val
+      · let y' : Fin L := ⟨y.val + 1, by omega⟩
+        use (x, y', z)
+        constructor
+        · dsimp [spatialL1]
+          subst hx'
+          simp only [y', Fin.val_mk]
+          omega
+        · exact lightcone_adj_y (by simp [y']) ht
+      · let y' : Fin L := ⟨y.val - 1, by omega⟩
+        use (x, y', z)
+        constructor
+        · dsimp [spatialL1]
+          subst hx'
+          simp only [y', Fin.val_mk]
+          omega
+        · exact lightcone_adj_y_rev (by simp [y']; omega) ht
+    · push_neg at hy
+      have hy' : y = yt := Fin.ext hy
+      have hz : z.val ≠ zt.val := by
+        intro heq
+        apply hpos
+        exact Prod.ext hx' (Prod.ext hy' (Fin.ext heq))
+      by_cases hlt : z.val < zt.val
+      · let z' : Fin L := ⟨z.val + 1, by omega⟩
+        use (x, y, z')
+        constructor
+        · dsimp [spatialL1]
+          subst hx' hy'
+          simp only [z', Fin.val_mk]
+          omega
+        · exact lightcone_adj_z (by simp [z']) ht
+      · let z' : Fin L := ⟨z.val - 1, by omega⟩
+        use (x, y, z')
+        constructor
+        · dsimp [spatialL1]
+          subst hx' hy'
+          simp only [z', Fin.val_mk]
+          omega
+        · exact lightcone_adj_z_rev (by simp [z']; omega) ht
+
+private lemma spatialL1_eq_zero_iff {L : ℕ} (a b : Fin L × Fin L × Fin L) :
+    spatialL1 a b = 0 ↔ a = b := by
+  constructor
+  · intro h0
+    obtain ⟨x, y, z⟩ := a
+    obtain ⟨xt, yt, zt⟩ := b
+    have hdx : Int.natAbs ((xt.val : ℤ) - (x.val : ℤ)) = 0 := by
+      dsimp [spatialL1] at h0
+      omega
+    have hdy : Int.natAbs ((yt.val : ℤ) - (y.val : ℤ)) = 0 := by
+      dsimp [spatialL1] at h0
+      omega
+    have hdz : Int.natAbs ((zt.val : ℤ) - (z.val : ℤ)) = 0 := by
+      dsimp [spatialL1] at h0
+      omega
+    have hx : x = xt := Fin.ext (by rw [Int.natAbs_eq_zero] at hdx; omega)
+    have hy : y = yt := Fin.ext (by rw [Int.natAbs_eq_zero] at hdy; omega)
+    have hz : z = zt := Fin.ext (by rw [Int.natAbs_eq_zero] at hdz; omega)
+    exact Prod.ext hx (Prod.ext hy hz)
+  · intro h
+    subst h
+    simp [spatialL1]
+
+/-- Minimal-hop causal path between forward-causal endpoints (Rank 076-GEO M4).
+
+    Hop count is `max(spatialL1, Δt)`; path length is that plus one.
+    When `spatialL1 > Δt`, a spacelike preamble at the start time is used;
+    otherwise light-cone and timelike hops interleave. -/
+private lemma minimal_geodesic_path_spec {L T : ℕ}
+    (start finish : CausalNode L T) (hFwd : start.1 ≤ finish.1) :
+    let dt := finish.1.val - start.1.val
+    let dl := spatialL1 start.2 finish.2
+    let hops := max dl dt
+    ∃ path : List (CausalNode L T),
+      IsCausalPath L T start finish path ∧
+      path.length = hops + 1 := by
+  intro dt dl hops
+  suffices ∀ (m : ℕ) (cur : CausalNode L T),
+      cur.1 ≤ finish.1 →
+      max (spatialL1 cur.2 finish.2) (finish.1.val - cur.1.val) = m →
+      ∃ path : List (CausalNode L T),
+        IsCausalPath L T cur finish path ∧
+        path.length = m + 1 by
+    have hm : max (spatialL1 start.2 finish.2) (finish.1.val - start.1.val) = hops := by
+      simp [hops, dt, dl]
+    obtain ⟨path, hp, hlen⟩ := this hops start hFwd hm
+    exact ⟨path, hp, hlen⟩
+  intro m
+  induction m with
+  | zero =>
+    intro cur hle hm
+    have hsp : cur.2 = finish.2 := (spatialL1_eq_zero_iff cur.2 finish.2).1 (by omega)
+    have ht : cur.1 = finish.1 := Fin.ext (by omega)
+    have heq : cur = finish := Prod.ext ht hsp
+    rw [heq]
+    exact ⟨[finish], is_causal_path_singleton' finish, by simp⟩
+  | succ n ih =>
+    intro cur hle hm
+    by_cases heq : cur = finish
+    · exfalso
+      rw [heq, spatialL1] at hm
+      omega
+    · by_cases hsp_preamble :
+          spatialL1 cur.2 finish.2 > finish.1.val - cur.1.val
+      · have hne : cur.2 ≠ finish.2 := by
+          intro heqsp
+          have : 1 ≤ spatialL1 cur.2 finish.2 := by omega
+          simp [heqsp, spatialL1] at this
+        obtain ⟨pos', _hdec, hadj⟩ :=
+          spatial_l1_spacelike_step cur.1 cur.2 finish.2 hne
+        let cur' : CausalNode L T := ⟨cur.1, pos'⟩
+        have hm' : max (spatialL1 cur'.2 finish.2) (finish.1.val - cur'.1.val) = n := by
+          dsimp [cur']
+          omega
+        obtain ⟨path, hp, hlen⟩ := ih cur' hle hm'
+        exact ⟨cur :: path, is_causal_path_cons_step hadj hp, by simp [hlen]⟩
+      · by_cases hdl_pos : 0 < spatialL1 cur.2 finish.2
+        · have hne : cur.2 ≠ finish.2 := by
+            intro heqsp
+            have := hdl_pos
+            simp [heqsp, spatialL1] at this
+          have hdt_pos : 0 < finish.1.val - cur.1.val := by
+            push_neg at hsp_preamble
+            omega
+          have hcur_lt_T : cur.1.val < T := by
+            have : cur.1.val + 1 ≤ finish.1.val := by omega
+            have : finish.1.val ≤ T := Nat.le_of_lt_succ finish.1.isLt
+            omega
+          have ht : cur.1.val + 1 ≤ T := by omega
+          obtain ⟨pos', hdec, hadj⟩ :=
+            spatial_l1_lightcone_step cur.1 cur.2 finish.2 hne ht
+          let cur' : CausalNode L T := (⟨cur.1.val + 1, Nat.lt_succ_iff.mpr hcur_lt_T⟩, pos')
+          have hm' : max (spatialL1 cur'.2 finish.2) (finish.1.val - cur'.1.val) = n := by
+            dsimp [cur']
+            omega
+          have hlt : cur.1.val < finish.1.val := by omega
+          have hle' : cur'.1 ≤ finish.1 := (Fin.le_iff_val_le_val).2 (Nat.succ_le_iff.mpr hlt)
+          obtain ⟨path, hp, hlen⟩ := ih cur' hle' hm'
+          refine ⟨cur :: path, is_causal_path_cons_step hadj hp, by simp [hlen]⟩
+        · have hzero : spatialL1 cur.2 finish.2 = 0 := Nat.eq_zero_of_not_pos hdl_pos
+          have hdt : finish.1.val - cur.1.val = n + 1 := by
+            simp [hzero] at hm
+            omega
+          have hcur_lt_T : cur.1.val < T := by
+            have : finish.1.val ≤ T := Nat.le_of_lt_succ finish.1.isLt
+            omega
+          have ht : cur.1.val + 1 ≤ T := by omega
+          let cur' : CausalNode L T := (⟨cur.1.val + 1, Nat.lt_succ_iff.mpr hcur_lt_T⟩, cur.2)
+          have hm' : max (spatialL1 cur'.2 finish.2) (finish.1.val - cur'.1.val) = n := by
+            dsimp [cur']
+            simp [hzero]
+            omega
+          have hstep : cur.1.val + 1 ≤ finish.1.val := by omega
+          have hle' : cur'.1 ≤ finish.1 := (Fin.le_iff_val_le_val).2 hstep
+          obtain ⟨path, hp, hlen⟩ := ih cur' hle' hm'
+          refine ⟨cur :: path, is_causal_path_cons_step (timelike_adj_fwd cur ht) hp, by simp [hlen]⟩
+
+/-- **Minimal causal path for forward-causal pairs** (Rank 076-GEO M4, CatAL).
+
+    Constructs a length-minimal causal path between `start` and `finish` when
+    `start.1 ≤ finish.1`.  Hop count is `max(spatialL1, Δt)`.
+
+    Status: CatAL — zero sorry. -/
+theorem minimal_causal_path_exists {L T : ℕ} (start finish : CausalNode L T)
+    (hFwd : start.1 ≤ finish.1) :
+    let dt := finish.1.val - start.1.val
+    let dl := spatialL1 start.2 finish.2
+    ∃ path : List (CausalNode L T),
+      IsCausalPath L T start finish path ∧
+      path.length = max dl dt + 1 :=
+  minimal_geodesic_path_spec start finish hFwd
+
+private def causalReachMetric {L T : ℕ} (cur finish : CausalNode L T) : ℕ :=
+  max (spatialL1 cur.2 finish.2) (finish.1.val - cur.1.val)
+
+private lemma causal_adj_reach_metric_step
+    {L T : ℕ} {n1 n2 finish : CausalNode L T} (h : CausalAdj L T n1 n2) :
+    causalReachMetric n2 finish + 1 ≥ causalReachMetric n1 finish := by
+  dsimp [causalReachMetric]
+  have ht : n2.1.val ≤ n1.1.val + 1 := by
+    rcases h with h | h | h <;> simp [SpacelikeAdj, TimelikeAdj, LightConeAdj] at h <;> omega
+  have hsp : spatialL1 n2.2 finish.2 + 1 ≥ spatialL1 n1.2 finish.2 := by
+    dsimp [spatialL1]
+    rcases h with h | h | h
+    · rcases h.2 with h | h | h <;> simp [SpacelikeAdj, FinAdj] at h <;> omega
+    · rcases h with ⟨ht', hs⟩
+      rw [hs]
+      omega
+    · rcases h.2 with h | h | h <;> simp [LightConeAdj, FinAdj] at h <;> omega
+  omega
+
+private theorem causal_path_reach_metric_bound
+    {L T : ℕ} {cur finish : CausalNode L T} {path : List (CausalNode L T)}
+    (h : IsCausalPath L T cur finish path) :
+    causalReachMetric cur finish + 1 ≤ path.length := by
+  obtain ⟨hhead, hlast, hadjs⟩ := h
+  match path with
+  | [] => simp at hhead
+  | [n] =>
+    have ha : n = cur := by simpa using hhead
+    have hb : n = finish := by simpa using hlast
+    subst ha hb
+    simp [causalReachMetric, spatialL1]
+  | n1 :: n2 :: rest =>
+    have hn1 : n1 = cur := by simpa using hhead
+    have hadj : CausalAdj L T cur n2 := by simpa [hn1] using hadjs 0 (by simp)
+    have hstep := causal_adj_reach_metric_step (finish := finish) hadj
+    have htail : IsCausalPath L T n2 finish (n2 :: rest) := by
+      refine ⟨?_, hlast, ?_⟩
+      · simp
+      · intro i hi
+        exact hadjs (i + 1) (by simp at hi ⊢; omega)
+    have ih := causal_path_reach_metric_bound htail
+    have hcore : causalReachMetric cur finish ≤ (n2 :: rest).length := by
+      have hstep := causal_adj_reach_metric_step (finish := finish) hadj
+      omega
+    simpa [List.length_cons] using Nat.succ_le_succ hcore
+
+/-- Any causal path has length at least `max(spatialL1, Δt) + 1`. -/
+theorem causal_path_length_ge_max {L T : ℕ}
+    {start finish : CausalNode L T} {path : List (CausalNode L T)}
+    (h : IsCausalPath L T start finish path) (_hFwd : start.1 ≤ finish.1) :
+    max (spatialL1 start.2 finish.2) (finish.1.val - start.1.val) + 1 ≤ path.length := by
+  have hlen := causal_path_reach_metric_bound h
+  simp only [causalReachMetric] at hlen
+  exact hlen
+
 /-- **Causal path existence for forward-causal pairs** (Rank 143-PATH-AXIOM).
 
     For any two causal nodes `a` and `b` with `a.1 ≤ b.1` (forward or equal time),
