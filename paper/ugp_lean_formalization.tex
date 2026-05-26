@@ -183,7 +183,7 @@ All proved statements are scoped to the ridged arithmetic framework.
 \NovaZenodoInAbstract
 \end{abstract}
 
-{\footnotesize\pdfprotrudechars=0\tableofcontents}
+{\footnotesize\pdfprotrudechars=0\begingroup\raggedright\tableofcontents\endgroup}
 \clearpage
 \bigskip
 
@@ -423,7 +423,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 239~\lean{} modules across fifteen layers
+The artifact is organized into 221~\lean{} modules across seventeen layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -480,7 +480,7 @@ The artifact is organized into 239~\lean{} modules across fifteen layers
   {\textbf{IPT}~(1) \textit{migrated to ugp-physics-lean}:
    InformationProfitThreshold};
 \node[layer, fill=purple!8, below=of ipt]   (univ)
-  {\textbf{Universality}~(36)\quad Rule110, UWCA, UWCASimulation,
+  {\textbf{Universality}~(60)\quad Rule110, UWCA, UWCASimulation,
    UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge,
    CUP4TotalParity, CUP11ModSeven, CUP3DUniqueness, CUP3DPSCUnification,
    CUP3DPhysicalIncompleteness, TwoLayerConfluence, GTECompilation, GTEUniqueness,
@@ -490,13 +490,40 @@ The artifact is organized into 239~\lean{} modules across fifteen layers
    Z5TransitivityUniqueness, GTPNeutralDiscrimination, SMOrbitCausalIsolation,
    EWBosonStructure, EWChiralBridge, \textbf{GUTStructure}, LawvereZone,
    CasimirMasslessEther, \textbf{ChiralPairVA}, \textbf{CouplingNoGo}, \textbf{ChiralityEigenstates},
-   \textbf{WeakIsospin}};
+   \textbf{WeakIsospin}; \textit{new:}
+   \textbf{AlgebraicNecessityTheorem}, \textbf{BetaCoefficientIdentity},
+   \textbf{FrobeniusPrimeIdentity}, \textbf{NoClass4OuterTotalisticZ7},
+   SylowIndexCouplingHierarchy, DynamicalCouplingBridge, LorentzInvariance,
+   PSCEffectMeasure, PSCEffectMeasureGeneric, PhiMDLUniversality,
+   PhiMDLThermalState, BornRuleMDL, DualFrameBornRule, FMDLClassification,
+   FockSpaceKink, MDLDerivabilityCriterion, ThooftEffectMeasureBridge,
+   ExcitationCoupling, EWScalePrediction, AlgebraicDescentTheorem,
+   BeableWindingPartitionInstance, TwoRoleTheorem (\textrm{+1 more})};
 \node[layer, fill=gray!8,   below=of univ]  (self)
   {\textbf{SelfRef}~(2)\quad LawvereKleene, RiceHalting};
 \node[layer, fill=pink!10,  below=of self]  (fwk)
-  {\textbf{Framework}~(3)\quad \textbf{GTEFrameworkInstance},
+  {\textbf{Framework}~(7)\quad \textbf{GTEFrameworkInstance},
    \textbf{GTEOptimalityInstance}, \textbf{GTEFinalCoalgebra}
-   (NemS + TPC + C1 final coalgebra)};
+   (NemS + TPC + C1 final coalgebra);
+   \textit{new:} GTECategoryStructure, \textbf{CMCAContinuumLimit},
+   CMCAMDLMinimality, PhiMDLBridge};
+\node[layer, fill=olive!8,  below=of fwk]   (space)
+  {\textbf{Spacetime}~(31)\quad CausalGraph, CausalInvariance, LiftingTheorem,
+   SpatiallyExtendedLifting, ChiralGliderDynamics, ChiralMirrorSpeedSymmetry,
+   ChiralPairDecoupling, OrbitDepthEtherPeriod, ColorConfinement, MassGap,
+   OrbitMassHierarchy, ThreeGenerationCapstone, PhysicalExclusion,
+   AnomalyRenormalizability, UniversalSimulation, QECStabilizer, QuantumGravity,
+   DWeightSRFormula, MultiParticleHilbert, GeodesicTheorem, CentroidMeasure,
+   PhiMDLKinkQuantumNumbers, PhiMDLZ7PotentialMDL,
+   \textbf{StressEnergyTensor}, \textbf{AsyncLiftingTheorem},
+   SpectralDimension, SpectralDimensionDegree, \textbf{HeatKernelFourier}
+   (+ 3 Spectral sub-modules; dev branch, zero sorry unless noted)};
+\node[layer, fill=brown!6,  below=of space] (subs)
+  {\textbf{Substrate}~(12)\quad Substrate, LExtended, LagrangianLorentzScalar,
+   NoetherAngularMomentum, PSCPILorentzMain, PSCPreservingTransformation,
+   PSCStructureLorentzPreserved, CoherenceMeasure, CoherenceMeasureUniqueness,
+   QECStabilizer, TransputationStateSelector,
+   \textbf{WindingCoinDecoupling} (dev branch, zero sorry)};
 
 \draw[arr] (core.south)  -- (comp.north);
 \draw[arr] (comp.south)  -- (class.north);
@@ -508,7 +535,9 @@ The artifact is organized into 239~\lean{} modules across fifteen layers
 \draw[arr] (null.south)  -- (ipt.north);
 \draw[arr] (ipt.south)   -- (univ.north);
 \draw[arr] (univ.south)  -- (self.north);
-\draw[arr] (univ.south)  -- (fwk.north);
+\draw[arr] (self.south)  -- (fwk.north);
+\draw[arr] (fwk.south)   -- (space.north);
+\draw[arr] (space.south) -- (subs.north);
 \end{tikzpicture}
 \end{center}
 
@@ -5820,6 +5849,73 @@ $\Phi_{\mathrm{MDL}}$ is the unique exact-Lorentz model and the CMCA continuum
 limit (\lstinline|cmca_continuum_limit_is_phimdl|) with correction
 $\varepsilon_0(M) = \pi^2/(3M^2) \to 0$.
 \end{keybox}
+
+\subsection{New theorem inventory (EPIC\_074 / EPIC\_075)}\label{subsec:new-theorem-inventory}
+
+The following table summarises all novel zero-sorry theorems introduced across
+EPIC\_074 (QM / Born-rule / 3D substrate) and EPIC\_075 (GR / gravity sector),
+with module location and physical role.  All theorems use only standard Lean/Mathlib
+axioms unless a named axiom is explicitly noted.
+
+\begin{table}[h]
+\centering\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}p{5.2cm}p{3.5cm}p{6.6cm}@{}}
+\toprule
+Theorem & Module & Physical role \\
+\midrule
+\texttt{b0\_\allowbreak eq\_\allowbreak z7\_\allowbreak order}
+  & BetaCoefficient\allowbreak Identity
+  & $b_0 = |Z_7| = 7$ from $F_{21}$ group orders \\[1pt]
+\texttt{frobenius\_\allowbreak prime\_\allowbreak bundle}
+  & FrobeniusPrime\allowbreak Identity
+  & $|Z_7| = |Z_3|^2 - |Z_3| + 1$; unifies $n=10$ \\[1pt]
+\texttt{n\_\allowbreak ridge\_\allowbreak dual\_\allowbreak derivation}
+  & FrobeniusPrime\allowbreak Identity
+  & Two independent $n=10$ ridge derivations \\[1pt]
+\texttt{algebraic\_\allowbreak necessity\_\allowbreak theorem\_\allowbreak f21}
+  & AlgebraicNecessity\allowbreak Theorem
+  & $F_{21}$ uniquely required; $N_{\rm gen}=3$ forced \\[1pt]
+\texttt{outer\_\allowbreak totalistic\_\allowbreak is\_\allowbreak reflection\_\allowbreak invariant}
+  & NoClass4Outer\allowbreak TotalisticZ7
+  & OT-$\mathbb{Z}_7$ reflection invariance (CatAL) \\[1pt]
+\texttt{no\_\allowbreak class4\_\allowbreak outer\_\allowbreak totalistic\_\allowbreak z7\_\allowbreak 3d}
+  & NoClass4Outer\allowbreak TotalisticZ7
+  & No Class~4 OT rule in 3D (cond.; named axiom) \\[1pt]
+\texttt{commutes\_\allowbreak with\_\allowbreak winding\_\allowbreak iff\_\allowbreak diagonal}
+  & WindingCoin\allowbreak Decoupling
+  & PSC-preserving QCA diagonal in winding basis \\[1pt]
+\texttt{no\_\allowbreak finite\_\allowbreak ca\_\allowbreak exact\_\allowbreak lorentz\_\allowbreak replica}
+  & CMCAContinuum\allowbreak Limit
+  & No finite CA achieves exact Lorentz invariance \\[1pt]
+\texttt{phimdl\_\allowbreak gravity\_\allowbreak sector\_\allowbreak prerequisites}
+  & StressEnergy\allowbreak Tensor
+  & $T_{\mu\nu}$ symmetry, vacuum zero, positivity \\[1pt]
+\texttt{gte\_\allowbreak geodesic\_\allowbreak theorem\_\allowbreak orbital}
+  & GeodesicTheorem
+  & PSC preserved under arbitrary orbit iteration (CatAL) \\[1pt]
+\texttt{d2\_\allowbreak geodesic\_\allowbreak step\_\allowbreak is\_\allowbreak geodesic\_\allowbreak path}
+  & GeodesicTheorem
+  & One $f_{\rm MDL}$ step traces a geodesic edge (CatAL) \\[1pt]
+\texttt{async\_\allowbreak algebraic\_\allowbreak lifting\_\allowbreak theorem}
+  & AsyncLifting\allowbreak Theorem
+  & Async eval $=$ sync eval on every beable config \\[1pt]
+\texttt{diagonal\_\allowbreak coin\_\allowbreak decouples\_\allowbreak sectors}
+  & WindingCoin\allowbreak Decoupling
+  & Winding--coin decoupling; BPS ratio certified \\[1pt]
+\texttt{c2\_\allowbreak thermal\_\allowbreak closure\_\allowbreak bundle}
+  & CoherenceMeasure\allowbreak Uniqueness
+  & Gibbs gap selects canonical sector distribution \\[1pt]
+\texttt{cmca\_\allowbreak continuum\_\allowbreak limit\_\allowbreak is\_\allowbreak phimdl}
+  & CMCAContinuum\allowbreak Limit
+  & $\Phi_{\rm MDL}$ is unique exact-Lorentz CMCA limit \\
+\bottomrule
+\end{tabular}
+\caption{New zero-sorry theorems from EPIC\_074/075, grouped by introducing module.
+  ``CatAL'' denotes physically calibrated category-A level; all others are
+  unconditional unless noted.}
+\label{tab:new-theorem-inventory}
+\end{table}
 
 \subsection{Mass gap and hierarchy}\label{subsec:mass-gap-hierarchy}
 
