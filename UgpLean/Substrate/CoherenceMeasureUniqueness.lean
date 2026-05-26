@@ -28,7 +28,7 @@ Lean certification of the P34 Conjecture C2 **structural reduction** on the Φ_M
    2026-05-26): NEW — via Petz uniqueness (1986) + PSC axiom TV + 76-L3-LEAN.
    `thermal_coherence_axiom` subsumes `architectural_restriction`:
    AL coherence at integrable locus = KMS functional = free energy = ΔF.
-   Sorrys: 2 (KL non-negativity + KL = 0 ↔ equal; Lean gaps, not physics gaps).
+   Sorrys: 0 (KL non-negativity + KL = 0 ↔ equal closed 2026-05-26).
 
 ## Axioms (2 named — not Lean gaps)
 
@@ -43,7 +43,7 @@ Lean certification of the P34 Conjecture C2 **structural reduction** on the Φ_M
 |---|---|
 | `d2_universal` | P34 §6 D2 (`CoherenceMeasure.lean`) |
 
-All other theorems: zero sorry (except 2 KL-analysis sorrys in §4, documented).
+All other theorems: zero sorry (KL lemmas in §4 closed 2026-05-26).
 -/
 
 namespace UgpLean.Substrate.CoherenceMeasureUniqueness
@@ -345,6 +345,157 @@ theorem c2_uniqueness_structural_bundle (D : DClass PhiMDLSubstrate) :
 
 open UgpLean.Universality.PhiMDLThermalState
 
+namespace DiscreteKL
+
+variable {ι : Type*} [DecidableEq ι]
+
+private lemma pos_of_nonneg_ne_zero {a : ℝ} (ha : 0 ≤ a) (ha0 : a ≠ 0) : 0 < a := by
+  rcases eq_or_lt_of_le ha with h | h
+  · exact absurd h ha0.symm
+  · exact h
+
+/-- Single-term discrete KL contribution; zero when either weight vanishes. -/
+noncomputable def klTerm (p q : ι → ℝ) (i : ι) : ℝ :=
+  if 0 < p i ∧ 0 < q i then p i * Real.log (p i / q i) else 0
+
+/-- Sum of discrete KL terms over a finite support. -/
+noncomputable def klSum (S : Finset ι) (p q : ι → ℝ) : ℝ :=
+  S.sum (klTerm p q)
+
+lemma eq_one_of_log_eq_sub_one {x : ℝ} (hx : 0 < x) (h : Real.log x = x - 1) : x = 1 := by
+  by_cases hx1 : x = 1
+  · exact hx1
+  · have hlog_ne : Real.log x ≠ 0 :=
+      fun h0 => hx1 (Real.eq_one_of_pos_of_log_eq_zero hx h0)
+    have hx1' : x - 1 ≠ 0 := by
+      intro h0
+      exact hx1 (by linarith)
+    have hlt := Real.add_one_lt_exp hx1'
+    rw [← h] at hlt
+    rw [Real.exp_log hx] at hlt
+    linarith
+
+lemma klTerm_ge_sub (p q : ι → ℝ) (i : ι) (hp : 0 ≤ p i) (hq : 0 < q i) :
+    klTerm p q i ≥ p i - q i := by
+  by_cases hp0 : p i = 0
+  · rw [show klTerm p q i = 0 from by simp [klTerm, hp0], hp0]
+    linarith [hq.le]
+  · have hp_ne : p i ≠ 0 := by simpa using hp0
+    have hp_pos : 0 < p i := pos_of_nonneg_ne_zero hp hp_ne
+    have hmain : p i * Real.log (p i / q i) ≥ p i - q i := by
+      have hqp_pos : 0 < q i / p i := div_pos hq hp_pos
+      have hle := Real.log_le_sub_one_of_pos hqp_pos
+      rw [Real.log_div hp_pos.ne' hq.ne']
+      have h1 : Real.log (p i) - Real.log (q i) ≥ 1 - q i / p i := by
+        rw [Real.log_div hq.ne' hp_pos.ne'] at hle
+        linarith
+      have h2 : p i * (1 - q i / p i) = p i - q i := by field_simp [hp_pos.ne']
+      nlinarith [h1, h2, hp_pos.le]
+    rw [show klTerm p q i = p i * Real.log (p i / q i) from by simp [klTerm, hp_pos, hq, and_self]]
+    exact hmain
+
+lemma klSum_nonneg (S : Finset ι) (p q : ι → ℝ)
+    (hp : ∀ i, 0 ≤ p i) (hq : ∀ i ∈ S, 0 < q i)
+    (hp_sum : S.sum p = 1) (hq_sum : S.sum q = 1) : 0 ≤ klSum S p q := by
+  have hsum :
+      (S.sum fun i => p i - q i) ≤ klSum S p q := by
+    unfold klSum
+    exact Finset.sum_le_sum fun i hi => klTerm_ge_sub p q i (hp i) (hq i hi)
+  have hzero : (S.sum fun i => p i - q i) = 0 := by
+    rw [Finset.sum_sub_distrib, hp_sum, hq_sum]
+    ring
+  linarith
+
+lemma klSum_eq_zero_iff (S : Finset ι) (p q : ι → ℝ)
+    (hp : ∀ i, 0 ≤ p i) (hq : ∀ i ∈ S, 0 < q i)
+    (hp_sum : S.sum p = 1) (hq_sum : S.sum q = 1) :
+    klSum S p q = 0 ↔ ∀ i ∈ S, p i = q i := by
+  have hterm_ge : ∀ i ∈ S, klTerm p q i ≥ p i - q i :=
+    fun i hi => klTerm_ge_sub p q i (hp i) (hq i hi)
+  have hsum_zero : S.sum (fun i => p i - q i) = 0 := by
+    rw [Finset.sum_sub_distrib, hp_sum, hq_sum]; ring
+  constructor
+  · intro h_zero i hi
+    unfold klSum at h_zero
+    have hterm_eq :
+        ∀ j ∈ S, klTerm p q j = p j - q j := by
+      intro j hj
+      have hdiff_nonneg : 0 ≤ klTerm p q j - (p j - q j) := by
+        linarith [hterm_ge j hj]
+      have hsum_diff :
+          S.sum (fun j => klTerm p q j - (p j - q j)) = 0 := by
+        rw [Finset.sum_sub_distrib, h_zero, hsum_zero]
+        ring
+      have hterm_diff_zero :
+          klTerm p q j - (p j - q j) = 0 :=
+        le_antisymm
+          (le_trans (Finset.single_le_sum (fun k hk => sub_nonneg.mpr (hterm_ge k hk)) hj)
+            (le_of_eq hsum_diff))
+          hdiff_nonneg
+      linarith
+    by_cases hp0 : p i = 0
+    · have hq0 : q i = 0 := by
+        have := hterm_eq i hi
+        simp [klTerm, hp0] at this
+        linarith
+      linarith [hq i hi, hq0]
+    · have hp_ne : p i ≠ 0 := by simpa using hp0
+      have hp_pos : 0 < p i := pos_of_nonneg_ne_zero (hp i) hp_ne
+      have h_eq' : p i * Real.log (p i / q i) = p i - q i := by
+        simpa [klTerm, hp_pos, hq i hi, and_self] using hterm_eq i hi
+      have hlog : Real.log (q i / p i) = q i / p i - 1 := by
+        have hlog' : Real.log (p i / q i) = 1 - q i / p i := by
+          rw [Real.log_div hp_pos.ne' (hq i hi).ne']
+          have h := h_eq'
+          rw [Real.log_div hp_pos.ne' (hq i hi).ne'] at h
+          field_simp [hp_pos.ne'] at h ⊢
+          linarith
+        calc
+          Real.log (q i / p i) = -(Real.log (p i / q i)) := by
+            rw [Real.log_div (hq i hi).ne' hp_pos.ne', Real.log_div hp_pos.ne' (hq i hi).ne']
+            ring
+          _ = -(1 - q i / p i) := by rw [hlog']
+          _ = q i / p i - 1 := by ring
+      have hqp_pos : 0 < q i / p i := div_pos (hq i hi) hp_pos
+      have hratio : q i / p i = 1 := eq_one_of_log_eq_sub_one hqp_pos hlog
+      exact (eq_of_div_eq_one hratio).symm
+  · intro h_eq
+    unfold klSum
+    apply Finset.sum_eq_zero
+    intro i hi
+    have heq : q i = p i := (h_eq i hi).symm
+    by_cases hp0 : p i = 0
+    · simp [klTerm, hp0, heq]
+    · have hp_ne : p i ≠ 0 := by simpa using hp0
+      have hp_pos : 0 < p i := pos_of_nonneg_ne_zero (hp i) hp_ne
+      rw [show klTerm p q i = p i * Real.log (p i / q i) from by simp [klTerm, hp_pos, heq, and_self],
+        heq, div_self hp_pos.ne', Real.log_one, mul_zero]
+
+end DiscreteKL
+
+private lemma d2_prob_admissible_sum (p : Fin 7 → ℝ) (hp_sum : ∑ k : Fin 7, p k = 1)
+    (hp_d2 : ∀ k : Fin 7, k ∉ pscAdmissibleSectors → p k = 0) :
+    pscAdmissibleSectors.sum p = 1 := by
+  have hpart := psc_sectors_partition
+  have hforb : pscForbiddenSectors.sum p = 0 := by
+    apply Finset.sum_eq_zero
+    intro k hk
+    exact hp_d2 k ((Finset.disjoint_right.mp hpart.2) hk)
+  have hdecomp :
+      (Finset.univ : Finset (Fin 7)).sum p =
+        pscAdmissibleSectors.sum p + pscForbiddenSectors.sum p := by
+    rw [← hpart.1, Finset.sum_union hpart.2]
+  have huniv : (Finset.univ : Finset (Fin 7)).sum p = ∑ k : Fin 7, p k := rfl
+  linarith [hp_sum, huniv, hdecomp, hforb]
+
+private lemma gibbs_prob_pos (H : Z7SineGordonHamiltonian) (T : ℝ) (hT : 0 < T)
+    (k : Fin 7) (hk : k ∈ pscAdmissibleSectors) :
+    0 < ThermalState.boltzmannWeight H T k / ThermalState.partitionFunction H T := by
+  have hnum : 0 < ThermalState.boltzmannWeight H T k := by
+    rw [ThermalState.boltzmannWeight, if_pos hk]
+    exact Real.exp_pos _
+  exact div_pos hnum (ThermalState.partitionFunction_pos H T hT)
+
 /-- Free energy gap relative to Gibbs at temperature T:
     ΔF(p) = T × D_KL(p ‖ p_Gibbs) = F(p) − F_Gibbs ≥ 0.
     On PSC-admissible sectors {0,2,3,4,6}; D2 ensures zero weight elsewhere. -/
@@ -352,7 +503,14 @@ noncomputable def freeEnergyGap (H : Z7SineGordonHamiltonian) (T : ℝ) (_hT : 0
     (p : Fin 7 → ℝ) : ℝ :=
   T * ∑ k ∈ pscAdmissibleSectors,
     let gibbs_k := ThermalState.boltzmannWeight H T k / ThermalState.partitionFunction H T
-    if p k > 0 ∧ gibbs_k > 0 then p k * Real.log (p k / gibbs_k) else 0
+    if 0 < p k ∧ 0 < gibbs_k then p k * Real.log (p k / gibbs_k) else 0
+
+private lemma freeEnergyGap_eq_klSum (H : Z7SineGordonHamiltonian) (T : ℝ) (hT : 0 < T)
+    (p : Fin 7 → ℝ) :
+    freeEnergyGap H T hT p =
+      T * DiscreteKL.klSum pscAdmissibleSectors p (ThermalState.sectorProb H T hT) := by
+  unfold freeEnergyGap DiscreteKL.klSum DiscreteKL.klTerm ThermalState.sectorProb
+  congr 1
 
 /-- ΔF is zero at the Gibbs state itself (D_KL(p_G ‖ p_G) = 0). -/
 theorem freeEnergyGap_gibbs_zero (H : Z7SineGordonHamiltonian) (T : ℝ) (hT : 0 < T) :
@@ -368,16 +526,17 @@ theorem freeEnergyGap_gibbs_zero (H : Z7SineGordonHamiltonian) (T : ℝ) (hT : 0
   · rfl
 
 /-- ΔF ≥ 0 for all normalised D2-admissible sector distributions.
-    Proof outline: D_KL(p‖q) ≥ 0 by log-sum inequality (log x ≤ x − 1 for x > 0).
-    Lean gap: discrete KL non-negativity over a Finset not yet a standalone lemma. -/
+    Proof: Gibbs inequality `log x ≤ x − 1` on each admissible sector term. -/
 theorem freeEnergyGap_nonneg (H : Z7SineGordonHamiltonian) (T : ℝ) (hT : 0 < T)
     (p : Fin 7 → ℝ) (hp_nn : ∀ k, 0 ≤ p k) (hp_sum : ∑ k : Fin 7, p k = 1)
     (hp_d2 : ∀ k : Fin 7, k ∉ pscAdmissibleSectors → p k = 0) :
     0 ≤ freeEnergyGap H T hT p := by
-  -- Analytic proof: KL ≥ 0 follows from ln x ≤ x − 1 (Jensen/log-sum inequality).
-  -- Lean formalisation of the summation bound is pending (not yet in Mathlib as a
-  -- standalone discrete KL lemma; mathematically standard).
-  sorry
+  rw [freeEnergyGap_eq_klSum]
+  exact mul_nonneg hT.le <|
+    DiscreteKL.klSum_nonneg pscAdmissibleSectors p (ThermalState.sectorProb H T hT) hp_nn
+      (fun k hk => gibbs_prob_pos H T hT k hk)
+      (d2_prob_admissible_sum p hp_sum hp_d2)
+      (ThermalState.sectorProb_admissible_sum H T hT)
 
 /-- ΔF = 0 implies p = p_Gibbs on PSC-admissible sectors.
     Follows from KL = 0 iff equal distributions (p_Gibbs is strictly positive). -/
@@ -386,9 +545,14 @@ theorem freeEnergyGap_zero_iff_gibbs (H : Z7SineGordonHamiltonian) (T : ℝ) (hT
     (hp_d2 : ∀ k : Fin 7, k ∉ pscAdmissibleSectors → p k = 0)
     (h_zero : freeEnergyGap H T hT p = 0) :
     ∀ k ∈ pscAdmissibleSectors, p k = ThermalState.sectorProb H T hT k := by
-  -- KL = 0 and p_Gibbs_k > 0 for all admissible k → p = p_Gibbs.
-  -- Inherits sorry from freeEnergyGap_nonneg (Lean gap only).
-  sorry
+  have hkl :
+      DiscreteKL.klSum pscAdmissibleSectors p (ThermalState.sectorProb H T hT) = 0 := by
+    rw [freeEnergyGap_eq_klSum H T hT p] at h_zero
+    exact (mul_eq_zero.mp h_zero).resolve_left (ne_of_gt hT)
+  exact (DiscreteKL.klSum_eq_zero_iff pscAdmissibleSectors p (ThermalState.sectorProb H T hT)
+    hp_nn (fun k hk => gibbs_prob_pos H T hT k hk)
+    (d2_prob_admissible_sum p hp_sum hp_d2)
+    (ThermalState.sectorProb_admissible_sum H T hT)).mp hkl
 
 /-- Opaque placeholder for the physical [D] coherence evaluated at a sector distribution.
     Actual value is PhiMDLSubstrate.coherence at the quantum state whose kink-sector
@@ -438,10 +602,10 @@ theorem c2_gibbs_unique_minimum (H : Z7SineGordonHamiltonian) (T : ℝ) (hT : 0 
     - `lorentz_cpt_implicit_in_d2`: Lorentz + CPT from D2 (0 sorry, unconditional)
     - `c2_distinguishability`: six distinct abstract D profiles (0 sorry, unconditional)
     - `freeEnergyGap_gibbs_zero`: Gibbs state has ΔF = 0 (0 sorry, unconditional)
-    - `c2_gibbs_unique_minimum`: physical D min = Gibbs (conditional, 2 sorry)
+    - `c2_gibbs_unique_minimum`: physical D min = Gibbs (conditional, 0 sorry)
 
     Axioms: 1 (`thermal_coherence_axiom`)
-    Sorrys: 2 (KL non-negativity + KL = 0 ↔ equal; Lean gaps only, not physics gaps)
+    Sorrys: 0 (KL non-negativity + KL = 0 ↔ equal closed 2026-05-26)
     CatLevel: **CatAL conditional** on `thermal_coherence_axiom`. -/
 theorem c2_thermal_closure_bundle (H : Z7SineGordonHamiltonian) (T : ℝ) (hT : 0 < T) :
     (IsLorentzEquivariant (S := PhiMDLSubstrate) lorentzBoostAct ∧
