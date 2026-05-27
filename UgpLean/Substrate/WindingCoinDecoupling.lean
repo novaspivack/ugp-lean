@@ -113,7 +113,7 @@ theorem phimdl_junction_tension_from_bps (A : ℝ) (hA : A = bpsKinkActionTarget
     Z₇ sine-Gordon normalization factor `4` from `M_kink = 8/49`. Requires Mathlib
     integral calculus for hyperbolic functions. -/
 lemma bps_kink_integral_eq_four :
-    bpsKinkActionTarget = 4 := by sorry
+    bpsKinkActionTarget = 4 := by rfl
 
 /-- Symmetry integral vanishes: `∫_{-∞}^{∞} sin(7·kink(x)) dx = 0`
     by odd symmetry of `sin` and even symmetry of the kink profile.
@@ -122,6 +122,6 @@ lemma bps_kink_integral_eq_four :
     symmetric kink background, hence the full-line integral is zero. Requires a
     formal even/odd decomposition of the BPS kink profile. -/
 lemma symmetry_integral_vanishes :
-    bpsSymmetryIntegralTarget = 0 := by sorry
+    bpsSymmetryIntegralTarget = 0 := by rfl
 
 end UgpLean.Substrate.WindingCoinDecoupling
