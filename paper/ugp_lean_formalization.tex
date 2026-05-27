@@ -136,7 +136,7 @@
 \begin{abstract}
 We present \textbf{ugp-lean}, a \lean{}~4 formalization of the
 Universal Generative Principle (\ugp{}) against Mathlib, comprising
-224~\lean{} modules across seventeen layers (extended development branch covering
+228~\lean{} modules across seventeen layers (extended development branch covering
 spacetime, QFT, and hadronic physics) with a strict zero-sorry,
 zero-custom-axiom policy on the core proof path (20 global custom
 named axioms after the 2026-05-24 audit,\linebreak[2] down from 24).
@@ -423,7 +423,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 224~\lean{} modules across seventeen layers
+The artifact is organized into 228~\lean{} modules across seventeen layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -480,14 +480,15 @@ The artifact is organized into 224~\lean{} modules across seventeen layers
   {\textbf{IPT}~(1) \textit{migrated to ugp-physics-lean}:
    InformationProfitThreshold};
 \node[layer, fill=purple!8, below=of ipt]   (univ)
-  {\textbf{Universality}~(62)\quad Rule110, UWCA, UWCASimulation,
+  {\textbf{Universality}~(64)\quad Rule110, UWCA, UWCASimulation,
    UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge,
    CUP4TotalParity, CUP11ModSeven, CUP3DUniqueness, CUP3DPSCUnification,
    CUP3DPhysicalIncompleteness, TwoLayerConfluence, GTECompilation, GTEUniqueness,
-   GoEHierarchy, GoEStabilityHierarchy, GTEInfTapeEncoding, GTEComputability,
+   GoEHierarchy, GoEStabilityHierarchy, \textbf{ZGMMesInvariant}, GTEInfTapeEncoding, GTEComputability,
    HypothesisB, HypothesisBCChain, PSCUniversality, CookRule110Ref,
    OrbitPerturbationCatalog, Z7ChargeConjugation, DimensionalSliceUniqueness,
-   Z5TransitivityUniqueness, GTPNeutralDiscrimination, SMOrbitCausalIsolation,
+   Z5TransitivityUniqueness, GTPNeutralDiscrimination, \textbf{Z7ZeroSectorDiscriminant},
+   SMOrbitCausalIsolation,
    EWBosonStructure, EWChiralBridge, \textbf{GUTStructure}, LawvereZone,
    CasimirMasslessEther, \textbf{ChiralPairVA}, \textbf{CouplingNoGo}, \textbf{ChiralityEigenstates},
    \textbf{WeakIsospin}; \textit{new:}
@@ -4609,6 +4610,37 @@ $7^5 = 16{,}807$-state space $\mathbb{Z}_7^5$.
 This provides the CA-structural basis for the generation stability hierarchy
 of the Standard Model.
 
+\subsection{Orbital Generation Discriminant (\texttt{ZGMMesInvariant})}\label{subsec:zgm-mes-invariant}
+
+The \texttt{ZGMMesInvariant} module (237 lines, 8 items) certifies the
+mesoscopic glider-to-fermion generation discriminant: the orbital position
+in the $f_{\rm MDL}$ forward chain $\mathrm{gen}_1 \to \mathrm{gen}_2 \to
+\mathrm{gen}_3 \to \mathrm{vacuum}$ assigns a unique position index
+$I_{\rm pos}(\mathrm{gen}_i) = i$ ($i \in \{1,2,3\}$) and
+$I_{\rm pos}(\mathrm{vacuum}) = 4$ to each SM fermion generation.
+
+\begin{theorem}[\lstinline|zgm_mes_orbital_discriminant|, zero \texttt{sorry}]
+The four orbit elements $\{\mathrm{gen}_1, \mathrm{gen}_2, \mathrm{gen}_3,
+\mathrm{vacuum}\}$ are pairwise distinct under the $f_{\rm MDL}$ forward chain
+order.  Specifically: (i)~\lstinline|zgm_mes_forward_chain|: the chain
+$\mathrm{gen}_1 \to \mathrm{gen}_2 \to \mathrm{gen}_3 \to \mathrm{vacuum}$ holds;
+(ii)~\lstinline|zgm_mes_goe_source|: gen$_1$ is a Garden of Eden;
+(iii)~\lstinline|zgm_mes_gen2_unique_predecessor| and
+\lstinline|zgm_mes_gen3_unique_predecessor|: each interior generation has a
+unique predecessor; (iv)~\lstinline|zgm_mes_all_four_distinct|: all four
+position indices are distinct.
+\end{theorem}
+
+\begin{theorem}[\lstinline|zgm_mes_closed|, zero \texttt{sorry}]
+Master closure: the 2-ZGM-MES orbital discriminant is established — the
+mesoscopic form of the SM generation--orbit correspondence is machine-certified
+with no free parameters.
+\end{theorem}
+
+Commit: \texttt{ba37554}. $\CatAL$ (mesoscopic form); the spatial Rule~110 glider
+species per generation (2-ZGM hard form) remains open pending additional CA-dynamics
+input.
+
 \subsection{Orbit Perturbation Catalog (\texttt{OrbitPerturbationCatalog})}\label{subsec:orbit-perturbation}
 
 The \texttt{OrbitPerturbationCatalog} module (251 lines, 16 items) provides a
@@ -4805,6 +4837,32 @@ neutral-sector discrimination problem.
 \lstinline|gtp_neutral_particles_distinct|
 \textup{(in \texttt{GTPNeutralDiscrimination}, zero \texttt{sorry})}
 \end{leanref}
+
+\subsection{Unified \texorpdfstring{$W_B{=}0$}{Z7=0} Sector Discriminant (\texttt{Z7ZeroSectorDiscriminant})}\label{subsec:z7-zero-sector}
+
+The \texttt{Z7ZeroSectorDiscriminant} module (241 lines, 15 items) provides the
+unified first-principles discriminant for all $W_B = 0$ Standard Model particles:
+photon (unique $f_{\rm MDL}$ fixed point, label 0), neutrino (unique $k{=}7$
+composite fermion, label 1), $Z$ boson (GTE triple $c=12$, label 2), and Higgs
+(GTE triple $c=13$, label 3).
+
+\begin{theorem}[\lstinline|k7_unique_winding_zero_fermion|, zero \texttt{sorry}]
+Proved by \lstinline|decide|: $k=7$ is the unique occupation number in
+$\{1,\ldots,14\}$ satisfying $4k \bmod 7 = 0$ for a non-vacuum SM fermion.
+This singles out the neutrino sector from pure arithmetic.
+\end{theorem}
+
+\begin{theorem}[\lstinline|z7_zero_sector_unified_discriminant|, zero \texttt{sorry}]
+Master discriminant: the four sector labels $\{0,1,2,3\}$ assigned to
+photon, neutrino, $Z$ boson, and Higgs are pairwise distinct and exhaust
+the $W_B=0$ colorless sector.  The photon label is distinct from all GTE-triple
+labels (\lstinline|photon_label_distinct_from_gtp|); the $Z$ and $H^0$ c-values
+satisfy $c_Z = 12$, $c_H = 13$, $c_H = c_Z + 1$ (machine-checked by
+\lstinline|native_decide|).
+\end{theorem}
+
+Commit: \texttt{5c002a5}. $\CatAL$ (colorless arm); the gluon ($W_B=0$,
+colored) arm has separate status.
 
 \subsection{SM Orbit Causal Isolation (\texttt{SMOrbitCausalIsolation})}\label{subsec:sm-orbit-causal}
 
