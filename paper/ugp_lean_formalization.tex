@@ -4751,6 +4751,49 @@ doublet partition ($I_3 = \pm\tfrac{1}{2}$ sectors disjoint and of size 2),
 the $\Delta W_B = 4$ rule, CC conservation at all four vertices, and the
 $W$-boson winding values $W_B(W^+)=3$, $W_B(W^-)=4$.
 
+\subsection{V--A Chiral Mismatch (\texttt{ChiralPairVA})}\label{subsec:chiral-pair-va}
+
+The \texttt{ChiralPairVA} module formalizes the discrete V--A chirality structure of
+f$_{\rm MDL}$ under the two-layer (Rule~110 + Rule~124) chiral CA pair (Rank~133, CatAL;
+all proofs by \lstinline|native_decide|, \lstinline|decide|, or \lstinline|norm_num|,
+zero \texttt{sorry}).
+
+Rule~124 is the spatial mirror of Rule~110: $R_{124}(l,c,r) = R_{110}(r,c,l)$.
+Their disagreements over the SM vocabulary $\{0, 2, 3, 4, 6\}\subset\mathbb{Z}_7$
+define the discrete V--A chirality structure.
+
+\begin{theorem}[\lstinline|bit_mismatch_iff|, zero \texttt{sorry}]
+$R_{110}(l,c,r) \neq R_{124}(l,c,r)$ if and only if $l \neq r$ and $c = 0$ (parity bit).
+\end{theorem}
+
+\begin{theorem}[\lstinline|va_mismatch_count|, zero \texttt{sorry}]
+Exactly $32$ of the $5^3 = 125$ SM-vocabulary triples $(l,c,r)\in\{0,2,3,4,6\}^3$
+produce a mismatch between Rule~110 and Rule~124.
+\end{theorem}
+
+\begin{theorem}[\lstinline|va_mismatch_involves_wplus|, zero \texttt{sorry}]
+Every mismatch triple has $W^+$ (winding $= 3$) as the left or right neighbor.
+No center-$W^+$ or $W^+$-absent triple is a mismatch.
+\end{theorem}
+
+The bridging lemma package connects the count result to the V--A coupling structure.
+
+\begin{theorem}[\lstinline|va_chiral_ratio_eq|, zero \texttt{sorry}]
+The mismatch ratio equals $32/125\in\mathbb{Q}$, derived directly from
+\lstinline|va_mismatch_count| and \lstinline|va_total_triple_count|.
+\end{theorem}
+
+\begin{theorem}[\lstinline|fmdl_va_bundle|, zero \texttt{sorry}]
+The two-layer chiral CA has a definite structural L$\leftrightarrow$R asymmetry:
+$32/125 \neq 1$ (parity not conserved), $0 < 32/125 < 1$ (left-handed preference),
+and the asymmetry degree $1 - 32/125 = 93/125$.  Every mismatch involves $W^+$
+as a neighbor, connecting V--A chirality directly to the charged-current $W^+$
+winding structure identified in \texttt{WeakIsospin.lean}.
+\end{theorem}
+
+The identification of the ratio $32/125$ with the SM V--A coupling constant is CatAD;
+the Lean results certify the \emph{structural} GTE origin of V--A chirality.
+
 \subsection{GTP Neutral Discrimination (\texttt{GTPNeutralDiscrimination})}\label{subsec:gtp-neutral}
 
 The \texttt{GTPNeutralDiscrimination} module (261 lines, 16 items) proves that the
