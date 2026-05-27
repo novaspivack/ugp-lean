@@ -167,6 +167,7 @@ import UgpLean.Universality.BeableWindingPartitionInstance
 import UgpLean.Universality.DualFrameBornRule
 import UgpLean.Universality.PhiMDLThermalState
 import UgpLean.Universality.SylowIndexCouplingHierarchy
+import UgpLean.Universality.GaugeInvariance
 import UgpLean.Universality.BetaCoefficientIdentity
 import UgpLean.Universality.FrobeniusPrimeIdentity
 import UgpLean.Universality.Z3SubOrbitDisjointness
