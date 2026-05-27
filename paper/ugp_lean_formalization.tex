@@ -493,7 +493,7 @@ The artifact is organized into 224~\lean{} modules across seventeen layers
    \textbf{WeakIsospin}; \textit{new:}
    \textbf{AlgebraicNecessityTheorem}, \textbf{BetaCoefficientIdentity},
    \textbf{FrobeniusPrimeIdentity}, \textbf{NoClass4OuterTotalisticZ7},
-   SylowIndexCouplingHierarchy, DynamicalCouplingBridge, LorentzInvariance,
+   SylowIndexCouplingHierarchy, \textbf{GaugeInvariance}, DynamicalCouplingBridge, LorentzInvariance,
    PSCEffectMeasure, PSCEffectMeasureGeneric, PhiMDLUniversality,
    PhiMDLThermalState, BornRuleMDL, DualFrameBornRule, FMDLClassification,
    FockSpaceKink, MDLDerivabilityCriterion, ThooftEffectMeasureBridge,
@@ -5687,6 +5687,66 @@ Selected physical significance:
   $\alpha_{\rm tree}$ and $e_{\rm EM}$ theorems: the $\Phi_{\rm MDL}$
   Lagrangian is fully derived from $F_{21}$ with zero free parameters.
 \end{itemize}
+
+% ═══════════════════════════════════════════════════════════════
+\section{$\mathbb{Z}_3$ Gauge Invariance of $\Phi_{\rm MDL}$ Coupling
+  (\texttt{GaugeInvariance.lean})}\label{sec:gauge-invariance}
+% ═══════════════════════════════════════════════════════════════
+
+Module: \texttt{Universality/GaugeInvariance.lean}
+(development branch; \texttt{lake build UgpLean.Universality.GaugeInvariance}).
+Zero sorry.
+
+\subsection*{Purpose}
+
+This module certifies the algebraic $\mathbb{Z}_3$ gauge invariance of the
+corrected $\Phi_{\rm MDL}$ coupling:
+\[
+  V_{\rm coupling} = \varepsilon|\varphi|^2(D_\mu\chi)^2,
+  \qquad
+  D_\mu\chi = \partial_\mu\chi - A_\mu.
+\]
+Under the local $\mathbb{Z}_3$ gauge transformation $\chi \to \chi + \alpha(x)$,
+$A_\mu \to A_\mu + \partial_\mu\alpha(x)$, the gauge-covariant derivative $D_\mu\chi$
+is invariant (ring identity), and therefore $V_{\rm coupling}$ is gauge-invariant.
+All seven GTE vertex types (Z$_7$ winding conservation at kink collisions) remain
+valid under this gauge transformation because $\varphi$ (the Z$_7$ winding field)
+carries no $\mathbb{Z}_3$ gauge charge.
+
+\subsection*{Key theorems}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+\S & Theorem & Statement \\
+\midrule
+§1 & \texttt{z3\_covariant\_deriv\_invariant}
+  & $D_\mu\chi$ gauge-invariant (ring) \\
+§1 & \texttt{z3\_dmu\_sq\_gauge\_invariant}
+  & $(D_\mu\chi)^2$ gauge-invariant (ring) \\
+§1 & \texttt{phimdl\_coupling\_gauge\_invariant}
+  & $\varepsilon|\varphi|^2(D_\mu\chi)^2$ gauge-invariant (ring) \\
+§2 & \texttt{gte\_seven\_vertices\_z7\_winding}
+  & All 7 GTE vertex $\mathbb{Z}_7$ equations hold (\texttt{decide}) \\
+§3 & \texttt{dmu\_coefficient\_forced\_neg\_one}
+  & Coefficient $-1$ in $D_\mu\chi$ algebraically forced \\
+§4 & \texttt{phimdl\_z3\_gauge\_invariant\_bundle}
+  & Master bundle: (1)+(2)+(3) above \\
+\bottomrule
+\end{tabular}
+\caption{Theorems in \texttt{GaugeInvariance.lean} (all zero sorry).}
+\label{tab:gauge-invariance}
+\end{table}
+
+\subsection*{Scope (honest)}
+What is certified here (CatAL): the algebraic/arithmetic skeleton.
+What is not certified here (remains CatA): full quantum field dynamics of
+the $A_\mu$ sector; the gauge field equation from the action; the statement
+that local $\mathbb{Z}_3$ invariance is MDL-forced (the algebraic skeleton,
+not the forcing theorem).  Coupling uniqueness and $\varepsilon = 7/9$ are
+certified in \texttt{SylowIndexCouplingHierarchy.lean} §5p–§5q.
 
 % ═══════════════════════════════════════════════════════════════
 \section{Two-Sector Substrate

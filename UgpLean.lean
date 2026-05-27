@@ -130,6 +130,7 @@ import UgpLean.Universality.FMDLClassification
 import UgpLean.Universality.DimensionalSliceUniqueness
 import UgpLean.Universality.Z5TransitivityUniqueness
 import UgpLean.Universality.GTPNeutralDiscrimination
+import UgpLean.Universality.Z7ZeroSectorDiscriminant
 import UgpLean.Universality.SMOrbitCausalIsolation
 import UgpLean.Universality.EWBosonStructure
 import UgpLean.Universality.EWChiralBridge
@@ -167,6 +168,7 @@ import UgpLean.Universality.BeableWindingPartitionInstance
 import UgpLean.Universality.DualFrameBornRule
 import UgpLean.Universality.PhiMDLThermalState
 import UgpLean.Universality.SylowIndexCouplingHierarchy
+import UgpLean.Universality.GaugeInvariance
 import UgpLean.Universality.BetaCoefficientIdentity
 import UgpLean.Universality.FrobeniusPrimeIdentity
 import UgpLean.Universality.Z3SubOrbitDisjointness
