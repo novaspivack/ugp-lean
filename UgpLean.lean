@@ -118,6 +118,7 @@ import UgpLean.Universality.HypothesisB
 import UgpLean.Universality.HypothesisBCChain
 import UgpLean.Universality.GoEHierarchy
 import UgpLean.Universality.GoEStabilityHierarchy
+import UgpLean.Universality.ZGMMesInvariant
 import UgpLean.Universality.LawvereZone
 import UgpLean.Universality.PSCUniversality
 import UgpLean.Universality.CUP3DUniqueness
@@ -130,6 +131,7 @@ import UgpLean.Universality.FMDLClassification
 import UgpLean.Universality.DimensionalSliceUniqueness
 import UgpLean.Universality.Z5TransitivityUniqueness
 import UgpLean.Universality.GTPNeutralDiscrimination
+import UgpLean.Universality.Z7ZeroSectorDiscriminant
 import UgpLean.Universality.SMOrbitCausalIsolation
 import UgpLean.Universality.EWBosonStructure
 import UgpLean.Universality.EWChiralBridge
