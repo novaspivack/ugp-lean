@@ -136,7 +136,7 @@
 \begin{abstract}
 We present \textbf{ugp-lean}, a \lean{}~4 formalization of the
 Universal Generative Principle (\ugp{}) against Mathlib, comprising
-224~\lean{} modules across seventeen layers (extended development branch covering
+229~\lean{} modules across seventeen layers (extended development branch covering
 spacetime, QFT, and hadronic physics) with a strict zero-sorry,
 zero-custom-axiom policy on the core proof path (20 global custom
 named axioms after the 2026-05-24 audit,\linebreak[2] down from 24).
@@ -423,7 +423,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 224~\lean{} modules across seventeen layers
+The artifact is organized into 229~\lean{} modules across seventeen layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -480,20 +480,21 @@ The artifact is organized into 224~\lean{} modules across seventeen layers
   {\textbf{IPT}~(1) \textit{migrated to ugp-physics-lean}:
    InformationProfitThreshold};
 \node[layer, fill=purple!8, below=of ipt]   (univ)
-  {\textbf{Universality}~(62)\quad Rule110, UWCA, UWCASimulation,
+  {\textbf{Universality}~(64)\quad Rule110, UWCA, UWCASimulation,
    UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge,
    CUP4TotalParity, CUP11ModSeven, CUP3DUniqueness, CUP3DPSCUnification,
    CUP3DPhysicalIncompleteness, TwoLayerConfluence, GTECompilation, GTEUniqueness,
-   GoEHierarchy, GoEStabilityHierarchy, GTEInfTapeEncoding, GTEComputability,
+   GoEHierarchy, GoEStabilityHierarchy, \textbf{ZGMMesInvariant}, GTEInfTapeEncoding, GTEComputability,
    HypothesisB, HypothesisBCChain, PSCUniversality, CookRule110Ref,
    OrbitPerturbationCatalog, Z7ChargeConjugation, DimensionalSliceUniqueness,
-   Z5TransitivityUniqueness, GTPNeutralDiscrimination, SMOrbitCausalIsolation,
+   Z5TransitivityUniqueness, GTPNeutralDiscrimination, \textbf{Z7ZeroSectorDiscriminant},
+   SMOrbitCausalIsolation,
    EWBosonStructure, EWChiralBridge, \textbf{GUTStructure}, LawvereZone,
    CasimirMasslessEther, \textbf{ChiralPairVA}, \textbf{CouplingNoGo}, \textbf{ChiralityEigenstates},
    \textbf{WeakIsospin}; \textit{new:}
    \textbf{AlgebraicNecessityTheorem}, \textbf{BetaCoefficientIdentity},
    \textbf{FrobeniusPrimeIdentity}, \textbf{NoClass4OuterTotalisticZ7},
-   SylowIndexCouplingHierarchy, DynamicalCouplingBridge, LorentzInvariance,
+   SylowIndexCouplingHierarchy, \textbf{GaugeInvariance}, DynamicalCouplingBridge, LorentzInvariance,
    PSCEffectMeasure, PSCEffectMeasureGeneric, PhiMDLUniversality,
    PhiMDLThermalState, BornRuleMDL, DualFrameBornRule, FMDLClassification,
    FockSpaceKink, MDLDerivabilityCriterion, ThooftEffectMeasureBridge,
@@ -4586,8 +4587,8 @@ All five principal theorems and the four positivity instances
 \section{New Universality Modules}\label{sec:new-universality}
 % ─────────────────────────────────────────────────────────────────────────────
 
-This section documents the twelve \texttt{Universality} modules added in the
-\textbf{ugp-lean-exp} expansion beyond the original 22-module core.
+This section documents the twelve \texttt{Universality} modules added to the
+canonical \texttt{ugp-lean} library beyond the original 22-module core.
 
 \subsection{GoE Stability Hierarchy (\texttt{GoEStabilityHierarchy})}\label{subsec:goe-stability}
 
@@ -4608,6 +4609,37 @@ $7^5 = 16{,}807$-state space $\mathbb{Z}_7^5$.
 
 This provides the CA-structural basis for the generation stability hierarchy
 of the Standard Model.
+
+\subsection{Orbital Generation Discriminant (\texttt{ZGMMesInvariant})}\label{subsec:zgm-mes-invariant}
+
+The \texttt{ZGMMesInvariant} module (237 lines, 8 items) certifies the
+mesoscopic glider-to-fermion generation discriminant: the orbital position
+in the $f_{\rm MDL}$ forward chain $\mathrm{gen}_1 \to \mathrm{gen}_2 \to
+\mathrm{gen}_3 \to \mathrm{vacuum}$ assigns a unique position index
+$I_{\rm pos}(\mathrm{gen}_i) = i$ ($i \in \{1,2,3\}$) and
+$I_{\rm pos}(\mathrm{vacuum}) = 4$ to each SM fermion generation.
+
+\begin{theorem}[\lstinline|zgm_mes_orbital_discriminant|, zero \texttt{sorry}]
+The four orbit elements $\{\mathrm{gen}_1, \mathrm{gen}_2, \mathrm{gen}_3,
+\mathrm{vacuum}\}$ are pairwise distinct under the $f_{\rm MDL}$ forward chain
+order.  Specifically: (i)~\lstinline|zgm_mes_forward_chain|: the chain
+$\mathrm{gen}_1 \to \mathrm{gen}_2 \to \mathrm{gen}_3 \to \mathrm{vacuum}$ holds;
+(ii)~\lstinline|zgm_mes_goe_source|: gen$_1$ is a Garden of Eden;
+(iii)~\lstinline|zgm_mes_gen2_unique_predecessor| and
+\lstinline|zgm_mes_gen3_unique_predecessor|: each interior generation has a
+unique predecessor; (iv)~\lstinline|zgm_mes_all_four_distinct|: all four
+position indices are distinct.
+\end{theorem}
+
+\begin{theorem}[\lstinline|zgm_mes_closed|, zero \texttt{sorry}]
+Master closure: the 2-ZGM-MES orbital discriminant is established — the
+mesoscopic form of the SM generation--orbit correspondence is machine-certified
+with no free parameters.
+\end{theorem}
+
+Commit: \texttt{ba37554}. $\CatAL$ (mesoscopic form); the spatial Rule~110 glider
+species per generation (2-ZGM hard form) remains open pending additional CA-dynamics
+input.
 
 \subsection{Orbit Perturbation Catalog (\texttt{OrbitPerturbationCatalog})}\label{subsec:orbit-perturbation}
 
@@ -4751,6 +4783,49 @@ doublet partition ($I_3 = \pm\tfrac{1}{2}$ sectors disjoint and of size 2),
 the $\Delta W_B = 4$ rule, CC conservation at all four vertices, and the
 $W$-boson winding values $W_B(W^+)=3$, $W_B(W^-)=4$.
 
+\subsection{V--A Chiral Mismatch (\texttt{ChiralPairVA})}\label{subsec:chiral-pair-va}
+
+The \texttt{ChiralPairVA} module formalizes the discrete V--A chirality structure of
+f$_{\rm MDL}$ under the two-layer (Rule~110 + Rule~124) chiral CA pair (Rank~133, CatAL;
+all proofs by \lstinline|native_decide|, \lstinline|decide|, or \lstinline|norm_num|,
+zero \texttt{sorry}).
+
+Rule~124 is the spatial mirror of Rule~110: $R_{124}(l,c,r) = R_{110}(r,c,l)$.
+Their disagreements over the SM vocabulary $\{0, 2, 3, 4, 6\}\subset\mathbb{Z}_7$
+define the discrete V--A chirality structure.
+
+\begin{theorem}[\lstinline|bit_mismatch_iff|, zero \texttt{sorry}]
+$R_{110}(l,c,r) \neq R_{124}(l,c,r)$ if and only if $l \neq r$ and $c = 0$ (parity bit).
+\end{theorem}
+
+\begin{theorem}[\lstinline|va_mismatch_count|, zero \texttt{sorry}]
+Exactly $32$ of the $5^3 = 125$ SM-vocabulary triples $(l,c,r)\in\{0,2,3,4,6\}^3$
+produce a mismatch between Rule~110 and Rule~124.
+\end{theorem}
+
+\begin{theorem}[\lstinline|va_mismatch_involves_wplus|, zero \texttt{sorry}]
+Every mismatch triple has $W^+$ (winding $= 3$) as the left or right neighbor.
+No center-$W^+$ or $W^+$-absent triple is a mismatch.
+\end{theorem}
+
+The bridging lemma package connects the count result to the V--A coupling structure.
+
+\begin{theorem}[\lstinline|va_chiral_ratio_eq|, zero \texttt{sorry}]
+The mismatch ratio equals $32/125\in\mathbb{Q}$, derived directly from
+\lstinline|va_mismatch_count| and \lstinline|va_total_triple_count|.
+\end{theorem}
+
+\begin{theorem}[\lstinline|fmdl_va_bundle|, zero \texttt{sorry}]
+The two-layer chiral CA has a definite structural L$\leftrightarrow$R asymmetry:
+$32/125 \neq 1$ (parity not conserved), $0 < 32/125 < 1$ (left-handed preference),
+and the asymmetry degree $1 - 32/125 = 93/125$.  Every mismatch involves $W^+$
+as a neighbor, connecting V--A chirality directly to the charged-current $W^+$
+winding structure identified in \texttt{WeakIsospin.lean}.
+\end{theorem}
+
+The identification of the ratio $32/125$ with the SM V--A coupling constant is CatAD;
+the Lean results certify the \emph{structural} GTE origin of V--A chirality.
+
 \subsection{GTP Neutral Discrimination (\texttt{GTPNeutralDiscrimination})}\label{subsec:gtp-neutral}
 
 The \texttt{GTPNeutralDiscrimination} module (261 lines, 16 items) proves that the
@@ -4762,6 +4837,32 @@ neutral-sector discrimination problem.
 \lstinline|gtp_neutral_particles_distinct|
 \textup{(in \texttt{GTPNeutralDiscrimination}, zero \texttt{sorry})}
 \end{leanref}
+
+\subsection{Unified \texorpdfstring{$W_B{=}0$}{Z7=0} Sector Discriminant (\texttt{Z7ZeroSectorDiscriminant})}\label{subsec:z7-zero-sector}
+
+The \texttt{Z7ZeroSectorDiscriminant} module (241 lines, 15 items) provides the
+unified first-principles discriminant for all $W_B = 0$ Standard Model particles:
+photon (unique $f_{\rm MDL}$ fixed point, label 0), neutrino (unique $k{=}7$
+composite fermion, label 1), $Z$ boson (GTE triple $c=12$, label 2), and Higgs
+(GTE triple $c=13$, label 3).
+
+\begin{theorem}[\lstinline|k7_unique_winding_zero_fermion|, zero \texttt{sorry}]
+Proved by \lstinline|decide|: $k=7$ is the unique occupation number in
+$\{1,\ldots,14\}$ satisfying $4k \bmod 7 = 0$ for a non-vacuum SM fermion.
+This singles out the neutrino sector from pure arithmetic.
+\end{theorem}
+
+\begin{theorem}[\lstinline|z7_zero_sector_unified_discriminant|, zero \texttt{sorry}]
+Master discriminant: the four sector labels $\{0,1,2,3\}$ assigned to
+photon, neutrino, $Z$ boson, and Higgs are pairwise distinct and exhaust
+the $W_B=0$ colorless sector.  The photon label is distinct from all GTE-triple
+labels (\lstinline|photon_label_distinct_from_gtp|); the $Z$ and $H^0$ c-values
+satisfy $c_Z = 12$, $c_H = 13$, $c_H = c_Z + 1$ (machine-checked by
+\lstinline|native_decide|).
+\end{theorem}
+
+Commit: \texttt{5c002a5}. $\CatAL$ (colorless arm); the gluon ($W_B=0$,
+colored) arm has separate status.
 
 \subsection{SM Orbit Causal Isolation (\texttt{SMOrbitCausalIsolation})}\label{subsec:sm-orbit-causal}
 
@@ -5083,9 +5184,9 @@ full matrix effect measure compatible with Born sector probabilities.
 \section{Spacetime and Causal Structure Formalization}\label{sec:spacetime}
 % ═══════════════════════════════════════════════════════════════
 
-The following modules reside in the development branch
-(\texttt{ugp-lean-exp/UgpLean/Spacetime/} and \texttt{UgpLean/Substrate/}),
-pending graduation to the canonical repository.  All theorems carry zero \texttt{sorry} unless
+The following modules reside in the canonical repository
+(\texttt{ugp-lean/UgpLean/Spacetime/} and \texttt{UgpLean/Substrate/}).
+All theorems carry zero \texttt{sorry} unless
 noted; custom axioms beyond Lean's foundational set are called out
 explicitly.
 
@@ -5644,6 +5745,66 @@ Selected physical significance:
   $\alpha_{\rm tree}$ and $e_{\rm EM}$ theorems: the $\Phi_{\rm MDL}$
   Lagrangian is fully derived from $F_{21}$ with zero free parameters.
 \end{itemize}
+
+% ═══════════════════════════════════════════════════════════════
+\section{$\mathbb{Z}_3$ Gauge Invariance of $\Phi_{\rm MDL}$ Coupling
+  (\texttt{GaugeInvariance.lean})}\label{sec:gauge-invariance}
+% ═══════════════════════════════════════════════════════════════
+
+Module: \texttt{Universality/GaugeInvariance.lean}
+(development branch; \texttt{lake build UgpLean.Universality.GaugeInvariance}).
+Zero sorry.
+
+\subsection*{Purpose}
+
+This module certifies the algebraic $\mathbb{Z}_3$ gauge invariance of the
+corrected $\Phi_{\rm MDL}$ coupling:
+\[
+  V_{\rm coupling} = \varepsilon|\varphi|^2(D_\mu\chi)^2,
+  \qquad
+  D_\mu\chi = \partial_\mu\chi - A_\mu.
+\]
+Under the local $\mathbb{Z}_3$ gauge transformation $\chi \to \chi + \alpha(x)$,
+$A_\mu \to A_\mu + \partial_\mu\alpha(x)$, the gauge-covariant derivative $D_\mu\chi$
+is invariant (ring identity), and therefore $V_{\rm coupling}$ is gauge-invariant.
+All seven GTE vertex types (Z$_7$ winding conservation at kink collisions) remain
+valid under this gauge transformation because $\varphi$ (the Z$_7$ winding field)
+carries no $\mathbb{Z}_3$ gauge charge.
+
+\subsection*{Key theorems}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+\S & Theorem & Statement \\
+\midrule
+§1 & \texttt{z3\_covariant\_deriv\_invariant}
+  & $D_\mu\chi$ gauge-invariant (ring) \\
+§1 & \texttt{z3\_dmu\_sq\_gauge\_invariant}
+  & $(D_\mu\chi)^2$ gauge-invariant (ring) \\
+§1 & \texttt{phimdl\_coupling\_gauge\_invariant}
+  & $\varepsilon|\varphi|^2(D_\mu\chi)^2$ gauge-invariant (ring) \\
+§2 & \texttt{gte\_seven\_vertices\_z7\_winding}
+  & All 7 GTE vertex $\mathbb{Z}_7$ equations hold (\texttt{decide}) \\
+§3 & \texttt{dmu\_coefficient\_forced\_neg\_one}
+  & Coefficient $-1$ in $D_\mu\chi$ algebraically forced \\
+§4 & \texttt{phimdl\_z3\_gauge\_invariant\_bundle}
+  & Master bundle: (1)+(2)+(3) above \\
+\bottomrule
+\end{tabular}
+\caption{Theorems in \texttt{GaugeInvariance.lean} (all zero sorry).}
+\label{tab:gauge-invariance}
+\end{table}
+
+\subsection*{Scope (honest)}
+What is certified here (CatAL): the algebraic/arithmetic skeleton.
+What is not certified here (remains CatA): full quantum field dynamics of
+the $A_\mu$ sector; the gauge field equation from the action; the statement
+that local $\mathbb{Z}_3$ invariance is MDL-forced (the algebraic skeleton,
+not the forcing theorem).  Coupling uniqueness and $\varepsilon = 7/9$ are
+certified in \texttt{SylowIndexCouplingHierarchy.lean} §5p–§5q.
 
 % ═══════════════════════════════════════════════════════════════
 \section{Two-Sector Substrate
@@ -7396,9 +7557,9 @@ exact rational tree-level predictions $\sin^2\!\theta_W = 3456/15101$
 and $1/\alpha_{\rm EM} = 4\pi \cdot 377525/37264 \approx 127.31$ from the certified bare couplings.
 
 \medskip
-\noindent\textbf{Physical extension (development branch)}
+\noindent\textbf{Physical extension (canonical library)}
 (\cref{sec:spacetime,sec:coupling-hierarchy,sec:lextended,sec:qft-mass-gap,sec:audit-capstones}):
-The development branch (\texttt{ugp-lean-exp}) extends the library into
+The canonical library (\texttt{ugp-lean}) extends into
 physical spacetime and QFT.  Highlights:
 spectral dimension $d_s = 4$ in the thermodynamic limit
 (\lstinline|causal_graph_spectral_dim_thermodynamic_limit|, one documented Mathlib-gap sorry);
