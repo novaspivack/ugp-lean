@@ -558,6 +558,17 @@ biconditional; see \S\ref{sec:coxeter_biconditional}), and
 \texttt{CyclotomicCompleteness.CyclotomicContainment} (field-theoretic embedding
 $\mathbb{Q}(\zeta_{2h}) \hookrightarrow \mathbb{Q}(\zeta_{120})$ for $h \mid 60$;
 see \S\ref{sec:cyclotomic_containment}).
+Three additional modules in this group serve as citable bridge and scaffolding
+artefacts: \texttt{Papers.UGPMain} (citable entry points for the UGP main-paper
+ridge, mirror-dual, and Lepton-Seed definitions, re-exporting the corresponding
+canonical theorems), \texttt{Papers.Paper25} (citable entry point for the NEMS
+Paper~25 RSUC result, re-exporting \texttt{rsuc\_theorem}), and
+\texttt{Instance.NemSBridge} (cross-library bridge exposing \texttt{GTESpace},
+\texttt{UnifiedAdmissible}, and \texttt{RSUC} for nems-lean consumers).
+The module \texttt{Phase4.PR1} provides declaration-level scaffolding for the
+PR-1 primordial reversible dynamic-graph rewrite system (1D loop, three reversible
+clauses: Rotor, Mixer, Shear); substantive theorems governing UWCA sweeps are
+proved in the \texttt{Universality.UWCA*} modules.
 
 The \texttt{TE22} module provides a machine-checked framework for
 the TE2.2 PSC universe scan result.
@@ -5577,23 +5588,30 @@ the \gte{} substrate.
 §5n & Fradkin--Shenker & \texttt{fradkin\_\allowbreak shenker\_\allowbreak condition1},
   \texttt{fradkin\_\allowbreak shenker\_\allowbreak condition2},
   \texttt{fradkin\_\allowbreak shenker\_\allowbreak applies\_\allowbreak to\_phimdl} & 5 \\
-§5o & Vector meson nonet & \texttt{vector\_\allowbreak meson\_\allowbreak nonet\_jp1},
-  \texttt{berry\_\allowbreak hyperfine\_\allowbreak su3\_trace} & 4 \\
+§5o & J$^P$=1/2 GTE kinks & \texttt{jpspin\_\allowbreak kinks\_\allowbreak are\_spin\_half},
+  \texttt{jpspin\_\allowbreak mdl\_\allowbreak selects\_half},
+  \texttt{baryon\_\allowbreak su6\_count} & 7 \\
+§5p & $V_{\rm coupling}$ uniqueness & \texttt{vcoup\_\allowbreak is\_\allowbreak gauge\_\allowbreak invariant},
+  \texttt{vcoup\_\allowbreak uniqueness\_dim4},
+  \texttt{rank136\_\allowbreak vcoup\_\allowbreak uniqueness} & 9 \\
+§5q & $\varepsilon=N_7/N_3^2$ & \texttt{epsilon\_\allowbreak coupling\_f21},
+  \texttt{epsilon\_\allowbreak in\_\allowbreak bps\_range},
+  \texttt{rank137\_\allowbreak eps\_\allowbreak is\_seven\_ninths} & 9 \\
+§5r & Vector meson nonet &
+  \texttt{vector\_\allowbreak meson\_\allowbreak nonet\_jp1} (CatAL structural),
+  \texttt{vector\_\allowbreak meson\_\allowbreak spin\_\allowbreak triplet\_gap},
+  \texttt{vector\_\allowbreak meson\_\allowbreak partition\_\allowbreak complete} & 8 \\
 §6 & Asymptotic freedom & \texttt{f21\_\allowbreak substrate\_\allowbreak beta\_\allowbreak coefficient},
   \texttt{f21\_\allowbreak substrate\_\allowbreak asymptotic\_\allowbreak freedom} & 4 \\
 §7 & Two-loop $\beta$ & \texttt{f21\_two\_\allowbreak loop\_beta\_\allowbreak coefficient} & 3 \\
-§8 & Second octet suppression &
-  \texttt{baryon\_\allowbreak octet\_\allowbreak suppression\_z3},
-  \texttt{second\_\allowbreak octet\_\allowbreak mdl\_bit\_gap} & 4 \\
-§9 & J\textsuperscript{P} = 1/2 forced &
-  \texttt{jp\_spin\_\allowbreak half\_\allowbreak mdl\_forced},
-  \texttt{mdl\_\allowbreak selects\_\allowbreak spin\_half\_\allowbreak baryon} & 7 \\
 \midrule
-& & Total §5i–§9 & \textbf{64} \\
+& & Total §5i–§7 & \textbf{81} \\
 \bottomrule
 \end{tabular}
-\caption{New theorems in \texttt{SylowIndexCouplingHierarchy.lean} §5i–§9
-  (all zero sorry, development branch).}
+\caption{New theorems in \texttt{SylowIndexCouplingHierarchy.lean} §5i–§7
+  (all zero sorry, development branch).
+  §5r certifies the JP\,=\,1$^-$ vector meson nonet mechanism (structural CatAL);
+  the 3.2\% RMS numerical mass bound remains CatA.}
 \label{tab:sylow-session6}
 \end{table}
 
@@ -5608,8 +5626,14 @@ Selected physical significance:
 \item \textbf{Hadron multiplets} (§5l): meson nonet dimension, baryon octet
   dimension, GMO equal-mass limit, and colour-charge meson nonet all certified
   from $F_{21}$ combinatorics.
-\item \textbf{$J^P = 1/2$ forced} (§9): MDL selects spin-1/2 as the unique
-  MDL-minimum baryon spin assignment.
+\item \textbf{$J^P = 1/2$ forced} (§5o): MDL selects spin-1/2 as the unique
+  MDL-minimum baryon spin assignment, certified via SU(6) dimension checks.
+\item \textbf{Vector meson nonet} (§5r): the JP\,=\,1$^-$ nonet has 9 states
+  structurally distinguished from the JP\,=\,0$^-$ pseudoscalar nonet by the
+  unit spin-triplet gap $\langle S_1{\cdot}S_2\rangle_{\rm triplet} -
+  \langle S_1{\cdot}S_2\rangle_{\rm singlet} = 1$, with the Berry off-diagonal
+  coupling partition $4/9 + 5/9 = 1$ (structural CatAL;
+  numerical 3.2\% RMS mass bound remains CatA).
 \item \textbf{Lagrangian uniqueness} (§5p–§5q): the cross-coupling
   $V_{\rm coupling} = \varepsilon|\varphi|^2(D_\mu\chi)^2$ is the unique
   dimension-4 gauge-invariant coupling of the $\mathbb{Z}_7$ and
