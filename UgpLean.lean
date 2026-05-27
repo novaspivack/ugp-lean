@@ -182,6 +182,7 @@ import UgpLean.Substrate.CoherenceMeasure
 import UgpLean.Substrate.CoherenceMeasureUniqueness
 import UgpLean.Substrate.QECStabilizer
 import UgpLean.Substrate.TransputationStateSelector
+import UgpLean.Substrate.DConstraints
 import UgpLean.Substrate.LagrangianLorentzScalar
 import UgpLean.Substrate.PSCStructureLorentzPreserved
 import UgpLean.Substrate.PSCPILorentzMain
