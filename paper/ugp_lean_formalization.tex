@@ -558,6 +558,17 @@ biconditional; see \S\ref{sec:coxeter_biconditional}), and
 \texttt{CyclotomicCompleteness.CyclotomicContainment} (field-theoretic embedding
 $\mathbb{Q}(\zeta_{2h}) \hookrightarrow \mathbb{Q}(\zeta_{120})$ for $h \mid 60$;
 see \S\ref{sec:cyclotomic_containment}).
+Three additional modules in this group serve as citable bridge and scaffolding
+artefacts: \texttt{Papers.UGPMain} (citable entry points for the UGP main-paper
+ridge, mirror-dual, and Lepton-Seed definitions, re-exporting the corresponding
+canonical theorems), \texttt{Papers.Paper25} (citable entry point for the NEMS
+Paper~25 RSUC result, re-exporting \texttt{rsuc\_theorem}), and
+\texttt{Instance.NemSBridge} (cross-library bridge exposing \texttt{GTESpace},
+\texttt{UnifiedAdmissible}, and \texttt{RSUC} for nems-lean consumers).
+The module \texttt{Phase4.PR1} provides declaration-level scaffolding for the
+PR-1 primordial reversible dynamic-graph rewrite system (1D loop, three reversible
+clauses: Rotor, Mixer, Shear); substantive theorems governing UWCA sweeps are
+proved in the \texttt{Universality.UWCA*} modules.
 
 The \texttt{TE22} module provides a machine-checked framework for
 the TE2.2 PSC universe scan result.
