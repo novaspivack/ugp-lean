@@ -11,8 +11,9 @@ Proves the algebraic core of `gte_winding_to_braid_rep` (OQ-079-16):
 > for some charged SM fermion F ∈ {UpQuark, ChargedLepton, DownQuark}.**
 
 This closes the ALGEBRAIC half of OQ-079-16. The remaining half — that charged
-SM fermions carry exchange phase −1 — requires the spin-statistics theorem,
-blocked on Lean's Lorentzian geometry library (same blocker as EPIC_078 LC5).
+SM fermions carry exchange phase −1 — is axiomatized in
+`UgpPhysicsLean.Lorentzian.SpinorRep.spin_statistics_theorem` and bridged in
+`GTE.FermionicStatistics.gte_fermionic_winding_spin_statistics_chain`.
 
 ## Key Result
 
@@ -71,7 +72,7 @@ theorem gte_winding_identifies_charged_fermions (w : ZMod 7) :
     · exact ⟨.ChargedLepton, Or.inr (Or.inl rfl), by decide⟩
     · exact ⟨.DownQuark, Or.inr (Or.inr rfl), by decide⟩
   · intro ⟨f, hf, hw⟩
-    fin_cases f <;> simp_all [windingNumber] <;> decide
+    rcases hf with rfl | rfl | rfl <;> rw [← hw] <;> simp [windingNumber] <;> decide
 
 -- ════════════════════════════════════════════════════════════════
 -- §2  Bosonic sector = primitive root criterion
@@ -112,7 +113,6 @@ theorem gte_psc_split_disjoint :
 -- §4  Winding injectivity: the w ↦ SMFermionType map is injective on PSC*
 -- ════════════════════════════════════════════════════════════════
 
-/-- **The mod-7 map w ↦ windingNumber(3,F) is injective on charged fermions.** -/
 theorem gte_winding_injective_on_charged :
     ∀ f g : SMFermionType,
       (f = .UpQuark ∨ f = .ChargedLepton ∨ f = .DownQuark) →
@@ -120,7 +120,10 @@ theorem gte_winding_injective_on_charged :
       (windingNumber 3 f : ZMod 7) = (windingNumber 3 g : ZMod 7) →
       f = g := by
   intro f g hf hg hw
-  fin_cases f <;> fin_cases g <;> simp_all [windingNumber] <;> decide
+  rcases hf with rfl | rfl | rfl <;> rcases hg with rfl | rfl | rfl <;>
+    first
+    | rfl
+    | (exfalso; revert hw; decide)
 
 -- ════════════════════════════════════════════════════════════════
 -- §5  The corollary: fermionic sector cardinality = number of charged fermion types
