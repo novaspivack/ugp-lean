@@ -224,6 +224,8 @@ import UgpLean.Gravity.CurvedBackgroundPreconditions
 import UgpLean.Gravity.BounceAndArithmetic
 import UgpLean.Gravity.PSCQECWaldConnections
 import UgpLean.Gravity.WaldChainAndInitialState
+import UgpLean.OQ26Arithmetic
+import UgpLean.GTEDerivationChain
 import UgpLean.Algebra.CyclotomicZ7Galois
 import UgpLean.Algebra.RSCodeOrbit
 import UgpLean.Spacetime.PhysicalExclusion
