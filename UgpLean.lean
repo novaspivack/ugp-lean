@@ -218,6 +218,7 @@ import UgpLean.Spacetime.QuantumGravity
 import UgpLean.Spacetime.GravitonFockSpace
 import UgpLean.Spacetime.StressEnergyTensor
 import UgpLean.Gravity.MinimalCoupling
+import UgpLean.Gravity.FLRWFieldEquation
 import UgpLean.Spacetime.PhysicalExclusion
 import UgpLean.Spacetime.ThreeGenerationCapstone
 import UgpLean.Spacetime.CausalInvariance
