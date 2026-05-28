@@ -11,8 +11,9 @@ Proves the algebraic core of `gte_winding_to_braid_rep` (OQ-079-16):
 > for some charged SM fermion F ∈ {UpQuark, ChargedLepton, DownQuark}.**
 
 This closes the ALGEBRAIC half of OQ-079-16. The remaining half — that charged
-SM fermions carry exchange phase −1 — is axiomatized in
-`UgpPhysicsLean.Lorentzian.SpinorRep.spin_statistics_theorem` and bridged in
+SM fermions carry exchange phase −1 — derived in
+`UgpPhysicsLean.Lorentzian.SpinorRep` via `spinor_exchange_equals_2pi_rotation`
+(topological axiom) + `spin_statistics_from_topology` (zero sorry theorem), bridged in
 `GTE.FermionicStatistics.gte_fermionic_winding_spin_statistics_chain`.
 
 ## Key Result

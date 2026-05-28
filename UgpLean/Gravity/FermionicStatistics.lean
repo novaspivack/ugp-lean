@@ -2,19 +2,22 @@
   FermionicStatistics.lean
   Fermionic statistics of three-tape CMCA kink triples
 
-  Status (2026-05-28): CatAL + 1 axiom
+  Status (2026-05-28): CatAL + 1 axiom (imported from ugp-physics-lean)
     Level 1 (three_tape_level1_bosonic):              CatAL — zero sorry
     Level 2 (gte_triple_kink_exchange_statistics):    CatAL — zero sorry (definitional)
     Level 3 (gte_fermionic_sectors_get_minus_phase):  CatAL — zero sorry
-      (uses spin_statistics_half_integer axiom, PCT bridge, 1 custom axiom)
+      (uses spin_statistics_half_integer theorem from ugp-physics-lean/SpinorRep.lean)
 
-  1 custom axiom in this file:
-    spin_statistics_half_integer — pending full PCT theorem in Lean
-    (canonical named copy in ugp-physics-lean/SpinorRep.lean)
-    Blocked on full Lorentzian QFT formalization (EPIC_078 LC5).
+  1 imported axiom (canonical home: ugp-physics-lean/SpinorRep.lean):
+    spinor_exchange_equals_2pi_rotation — topological fact: exchange = 2π rotation
+    Derived chain: spinor_exchange_equals_2pi_rotation (axiom)
+      + spinor_rotation_2pi_phase (theorem, zero sorry)
+      → spin_statistics_from_topology (theorem, zero sorry)
+      → spin_statistics_half_integer (theorem, zero sorry)
+    Formal π₁(SO(3)) = ℤ/2ℤ proof deferred (EPIC_078 LC5 Stage 3).
     All other steps CatAL, zero sorry.
 
-  RESULT (CatAL + 1 axiom):
+  RESULT (CatAL + 1 imported axiom):
     Level 1: φ_exchange(w,w,w) = +1 for all PSC-admissible w (bosonic at CA level)
     Level 2: φ_exchange(w,w,w) = BraidAtlasPhase(w) matching SM statistics
       Fermionic: w ∈ {2, 4, 6} (u quark, e⁻, d quark) — definitionally CatAL
@@ -23,25 +26,28 @@
       Exchange phase = −1 for {2,4,6} via full chain:
       (1) gte_winding_identifies_charged_fermions (WindingToBraidRep.lean, CatAL)
       (2) spinor_rotation_2pi_phase (ugp-physics-lean/SpinorRep.lean, CatAL)
-      (3) spin_statistics_half_integer (axiom — PCT bridge, 1 custom axiom)
+      (3) spin_statistics_half_integer (theorem — from spinor_exchange_equals_2pi_rotation axiom)
 
   Derivation chain for Level 3:
     (1) gte_winding_identifies_charged_fermions (WindingToBraidRep.lean, CatAL):
         w ∈ {2,4,6} ↔ w = Z₇ image of charged SM fermion winding number
     (2) spinor_rotation_2pi_phase (ugp-physics-lean/SpinorRep.lean, CatAL):
         2π rotation in SL(2,ℂ) acts as -1 on spinors
-    (3) spin_statistics_half_integer (axiom — PCT bridge):
+    (3) spin_statistics_half_integer (theorem, ugp-physics-lean/SpinorRep.lean):
         half-integer spin → exchange phase = -1
-        Blocked: Wigner classification + PCT theorem in Lean (EPIC_078 LC5)
+        From: spinor_exchange_equals_2pi_rotation (1 topological axiom) + spinor_rotation_2pi_phase
 -/
 
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.Finset.Basic
+import UgpPhysicsLean.Lorentzian.SpinorRep
 import UgpLean.Substrate.GEQECCode
 import UgpLean.Algebra.CyclotomicZ7Galois
 import UgpLean.BraidAtlas.WindingToBraidRep
 
 open UgpLean.BraidAtlas (gte_winding_identifies_charged_fermions)
+open Lorentzian (spin_statistics_half_integer spinor_rotation_2pi_phase
+  spin_statistics_from_topology spinor_exchange_equals_2pi_rotation)
 
 namespace GTE.FermionicStatistics
 
@@ -49,15 +55,6 @@ namespace GTE.FermionicStatistics
 def dirac_spin_label : ℤ := 1
 
 theorem dirac_spin_label_half_integer : dirac_spin_label % 2 = 1 := by decide
-
-/--
-Spin-statistics theorem (axiom, pending full Lorentzian QFT library).
-
-Canonical copy: `UgpPhysicsLean.Lorentzian.SpinorRep.spin_statistics_theorem`.
-Reference: Streater-Wightman, *PCT, Spin and Statistics, and All That*.
--/
-axiom spin_statistics_half_integer :
-    ∀ (s : ℤ), s % 2 = 1 → ∃ (phase : ℝ), phase = -1
 
 theorem exchange_phase_of_half_integer_spin (s : ℤ) (h : s % 2 = 1) :
     ∃ (phase : ℝ), phase = -1 :=
@@ -119,8 +116,8 @@ theorem three_tape_level1_bosonic :
 --   w ∈ {0,3}:   φ = +1 (bosonic  — vacuum/ν/γ, W⁺)
 -- PROOF (definitional):
 --   ExchangePhase = ExchangePhase_Level1 × BraidAtlasPhase = 1 × BraidAtlasPhase.
--- PHYSICAL CHAIN (conditional, axiom-backed):
---   gte_winding_identifies_charged_fermions + spin_statistics_half_integer.
+-- PHYSICAL CHAIN (conditional, 1 imported topological axiom):
+--   gte_winding_identifies_charged_fermions + spin_statistics_half_integer (SpinorRep).
 -- ============================================================
 
 /-- **Physical chain:** fermionic winding identifies a charged SM fermion; spin-1/2 ⇒ phase −1. -/
@@ -148,7 +145,7 @@ theorem gte_triple_kink_fermionic_exchange_neg_one (w : ZMod 7)
     ExchangePhase (UniformTriple w) = -1 := by
   rw [gte_triple_kink_exchange_statistics w hw_psc, if_pos hw_ferm]
 
-/-- **Bridge:** WindingToBraidRep identification + spin-statistics axiom ⇒ fermionic −1. -/
+/-- **Bridge:** WindingToBraidRep identification + spin-statistics theorem chain ⇒ fermionic −1. -/
 theorem gte_winding_fermionic_exchange_phase_bridge (w : ZMod 7)
     (hw : w ∈ ({2, 4, 6} : Finset (ZMod 7))) :
     (∃ f : UgpLean.BraidAtlas.SMFermionType,
@@ -161,22 +158,22 @@ theorem gte_winding_fermionic_exchange_phase_bridge (w : ZMod 7)
     gte_fermionic_braid_atlas_phase_neg_one w hw⟩
 
 -- ============================================================
--- THEOREM 3 (CatAL + 1 axiom — master theorem, named for board tracking)
+-- THEOREM 3 (CatAL + 1 imported axiom — master theorem, named for board tracking)
 -- Fermionic sectors {2,4,6} acquire exchange phase −1.
 -- Full chain:
 --   (1) gte_winding_identifies_charged_fermions (WindingToBraidRep.lean, CatAL)
 --       → w ∈ {2,4,6} identifies a charged SM fermion type
 --   (2) spinor_rotation_2pi_phase (ugp-physics-lean/SpinorRep.lean, CatAL)
 --       → 2π rotation in SL(2,ℂ) acts as −1 on spinors
---   (3) spin_statistics_half_integer (axiom, PCT bridge, 1 custom axiom)
+--   (3) spin_statistics_half_integer (theorem, SpinorRep.lean)
 --       → half-integer spin → exchange phase −1
--- 1 custom axiom remaining: spin_statistics_half_integer (PCT bridge only).
+-- 1 imported axiom: spinor_exchange_equals_2pi_rotation (topological, SpinorRep.lean).
 -- All algebraic identification steps CatAL (zero sorry).
 -- ============================================================
 
 /-- **Master theorem:** fermionic winding sectors {2,4,6} acquire exchange phase −1.
     Full derivation: WindingToBraidRep identification (CatAL) +
-    spinor_rotation_2pi_phase (CatAL) + spin_statistics_half_integer (axiom, PCT bridge). -/
+    spinor_rotation_2pi_phase (CatAL) + spin_statistics_half_integer (theorem, SpinorRep). -/
 theorem gte_fermionic_sectors_get_minus_phase (w : ZMod 7)
     (h : w ∈ ({2, 4, 6} : Finset (ZMod 7))) :
     ExchangePhase (UniformTriple w) = -1 :=
@@ -213,7 +210,7 @@ theorem fermion_boson_disjoint :
 -- OPEN QUESTIONS (for future Lean work)
 -- OQ-079-14: gte_winding_to_braid_rep (full BraidRepresentation map)
 -- OQ-079-13: Möbius worldsheet topology (alternative mechanism)
--- 078-LC5:   Full PCT spin-statistics proof (replace axiom with theorem)
+-- 078-LC5:   Formal π₁(SO(3)) = ℤ/2ℤ proof (replace spinor_exchange_equals_2pi_rotation axiom)
 -- ============================================================
 
 end GTE.FermionicStatistics
