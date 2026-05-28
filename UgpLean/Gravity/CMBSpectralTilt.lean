@@ -182,4 +182,33 @@ theorem beta_g_from_weyl_law :
   unfold β_G_Z2 z2_binary_entropy vol_S3
   ring
 
+/-!
+## Classical Discrete RG Entropy Rate (Step 5, CatAL)
+
+The classical discrete Callan-Symanzik equation for the Z₂ NAND binary field:
+  dK_local/d(ln k) = H(Z₂) × [dN/d(ln k)|_{k_Pl}]
+                   = ln(2) × 1
+                   = ln(2)
+
+CatAL: follows directly from `weyl_log_deriv_at_planck` (CatAL) and
+the definition `z2_binary_entropy = Real.log 2`.
+-/
+
+/-- The classical discrete RG entropy rate at the Planck scale:
+    dK_local/d(ln k) = H(Z₂) × [dN/d(ln k)|_{k=1}] = ln(2) × 1 = ln(2). -/
+noncomputable def dk_local_per_efold : ℝ := z2_binary_entropy * weyl_log_deriv 1
+
+/-- The classical discrete RG entropy rate equals ln(2) exactly (CatAL). -/
+theorem classical_discrete_rg_entropy_rate :
+    dk_local_per_efold = Real.log 2 := by
+  unfold dk_local_per_efold z2_binary_entropy
+  rw [weyl_log_deriv_at_planck]
+  ring
+
+/-- β_G = dk_local_per_efold / Vol(S³) = ln(2)/(2π²) (CatAL). -/
+theorem beta_g_from_classical_rg :
+    β_G_Z2 = dk_local_per_efold / (2 * Real.pi ^ 2) := by
+  rw [classical_discrete_rg_entropy_rate]
+  exact beta_g_z2_formula
+
 end GTE.CMBTilt
