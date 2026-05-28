@@ -127,7 +127,11 @@ theorem gte_qec_rs_achieves_singleton_bound_533 :
 theorem gte_qec_rs_achieves_singleton_bound_515 :
     (5 : ℕ) = GTE.QECCode.rsCodeLength - 1 + 1 := by decide
 
-theorem qec_gte_is_stabilizer_code_sectors :=
+theorem qec_gte_is_stabilizer_code_sectors :
+    pscAdmissibleZMod7.card = 5 ∧
+    pscForbiddenZMod7.card = 2 ∧
+    pscAdmissibleZMod7 ∪ pscForbiddenZMod7 = Finset.univ ∧
+    pscAdmissibleZMod7 ∩ pscForbiddenZMod7 = ∅ :=
   GTE.QECCode.qec_gte_is_stabilizer_code
 
 theorem gte_qec_rs_code_master_bundle :
@@ -146,9 +150,18 @@ theorem gte_qec_rs_code_master_bundle :
       Disjoint pscAdmissibleSectors pscForbiddenSectors) := by decide
 
 theorem gte_qec_stabilizer_master_bundle :
-    GTE.QECCode.rs_code_parameters_533 ∧
-    GTE.QECCode.rs_code_parameters_515 ∧
-    GTE.QECCode.qec_gte_is_stabilizer_code ∧
-    gte_qec_rs_code_master_bundle := by decide
+    (GTE.QECCode.admissiblePoints.card = 5 ∧
+      (5 - 3 + 1 : ℕ) = 3 ∧
+      (3 : ℕ) ≤ 5 - 3 + 1) ∧
+    ((5 : ℕ) - 1 + 1 = 5 ∧ (3 : ℕ) ≤ 5) ∧
+    (GTE.QECCode.admissiblePoints.card = 5 ∧
+      GTE.QECCode.forbiddenPoints.card = 2 ∧
+      GTE.QECCode.admissiblePoints ∪ GTE.QECCode.forbiddenPoints = Finset.univ ∧
+      GTE.QECCode.admissiblePoints ∩ GTE.QECCode.forbiddenPoints = ∅) ∧
+    (gteQECFieldSize = Fintype.card (ZMod 7) ∧
+      gteQECCodeLength = gteQECFieldSize ∧
+      pscAdmissibleZMod7.card = gteQECCodeDimension ∧
+      pscForbiddenZMod7.card = gteQECCodeLength - gteQECCodeDimension ∧
+      gteQECMinimumDistance = gteQECCodeLength - gteQECCodeDimension + 1) := by decide
 
 end UgpLean.Substrate.GEQEC
