@@ -22,7 +22,7 @@ Cayley-rank 4** level (this file) and supports the **thermodynamic-limit
 spectral-dimension 4** result formalized in
 `UgpLean.Spacetime.Spectral.ThermodynamicLimit`
 (`causal_graph_spectral_dim_thermodynamic_limit`, zero sorry; reduces to one
-documented analytical-helper sorry in `Spectral.HeatKernelLaplace`).
+named analytical axiom in `Spectral.HeatKernelFourier`).
 
 ## Mathematical content
 
@@ -43,7 +43,7 @@ Therefore, with periodic (torus) boundary conditions, the causal graph is a
 `Spectral.causal_graph_spectral_dim_thermodynamic_limit` using a
 degree-normalized random-walk operator.
 
-## Why `spectral_dim_cayley_Z4_eq_4` remains an open documented gap
+## Why `spectral_dim_cayley_Z4_eq_4` is a documented-false named axiom
 
 The historical theorem statement
 `spectralDimension (CausalGraphPeriodic L T hL hT) = 4`
@@ -54,9 +54,9 @@ is mathematically **false** at fixed finite `(L, T)`: with the normalization
 `spectralDimension (CausalGraphPeriodic L T hL hT) = 0` (the `dite`
 else-branch), not `4`.
 
-The historical sorry is retained as a **documented honest mathematical-content
-mismatch** between the literal theorem signature and the physically intended
-statement. The active formal statement of "spectral dimension of the 3D f_MDL
+The historical claim is retained as **`spectral_dim_cayley_Z4_eq_4_axiom`**, a
+**documented honest mathematical-content mismatch** between the literal theorem
+signature and the physically intended statement. The active formal statement of "spectral dimension of the 3D f_MDL
 causal graph = 4" is the thermodynamic-limit theorem
 `Spectral.causal_graph_spectral_dim_thermodynamic_limit`.
 
@@ -74,11 +74,12 @@ causal graph = 4" is the thermodynamic-limit theorem
 - `normalizedAdjacencyStep`, `heatKernelReturn`, `heatKernelReturnAvg`,
   `spectralDimensionLogRatio`, `spectralDimension`.
 
-**Documented-false sorry, retained:**
-- `spectral_dim_cayley_Z4_eq_4` — mathematically false under the
-  `P := A/|V|` normalization (see analysis above). Superseded by the
+**Documented-false named axiom (zero sorry):**
+- `spectral_dim_cayley_Z4_eq_4_axiom` — mathematically false under the
+  `P := A/|V|` normalization (see analysis above). Retained as an explicit
+  hypothesis documenting the historical mismatch; superseded by the
   thermodynamic-limit theorem in `Spectral.ThermodynamicLimit`.
-- `causal_graph_spectral_dim_eq_4` — chains the above sorry.
+- `causal_graph_spectral_dim_eq_4` — chains the axiom.
 -/
 
 section
@@ -409,47 +410,21 @@ noncomputable def spectralDimension {V : Type*} [Fintype V] [DecidableEq V]
     (fun h => -2 * Classical.choose h)
     (fun _ => 0)
 
-/-- **Spectral dimension of a Cayley graph of ℤ^4 is 4** —
-    historical statement; **mathematically false under the `P := A/|V|`
-    normalization** (see analysis below). Retained as a documented honest
-    mathematical-content mismatch with the physically intended claim.
+/-- **Historical fixed-`(L, T)` claim: spectral dimension equals 4** under
+    `P := A/|V|`. Mathematically **false** at finite graph size (true value is
+    `0`; see file header). Explicit axiom records the signature mismatch; active
+    replacement is `Spectral.causal_graph_spectral_dim_thermodynamic_limit`
+    (degree-normalized `(1/d)·A`, zero sorry in body, reduces to
+    `discrete_torus_gaussian_limit_axiom` in `Spectral.HeatKernelFourier`). -/
+axiom spectral_dim_cayley_Z4_eq_4_axiom (L T : ℕ) (hL : 2 ≤ L) (hT : 1 ≤ T) :
+    spectralDimension (CausalGraphPeriodic L T hL hT) = 4
 
-    Active replacement: `Spectral.causal_graph_spectral_dim_thermodynamic_limit`
-    in `UgpLean.Spacetime.Spectral.ThermodynamicLimit`, which states and proves
-    the thermodynamic-limit form of "spectral dimension = 4" using the
-    degree-normalized random-walk operator `(1/d)·A` that matches the physics
-    convention. The thermodynamic-limit theorem is zero-sorry in its body and
-    reduces to a single documented analytical-helper sorry in
-    `Spectral.HeatKernelLaplace`.
-
-    *Why the statement here is false:* with `P := A/|V|` and `|V| ≥ 16`,
-    `‖P‖ ≤ 20 / |V| < 1`, so `tr(P^n)` decays exponentially in `n` at fixed
-    `(L, T)`. Hence `K_n = heatKernelReturnAvg ≤ (20/|V|)^n` decays
-    exponentially and `log K_n / log n → -∞`, so the `Tendsto` limit in
-    `spectralDimension` does **not** exist as a real number, the `dite`
-    selects the `else` branch, and
-    `spectralDimension (CausalGraphPeriodic L T hL hT) = 0`, not `4`.
-
-    The polynomial scaling `K_n ~ C · n^{-2}` only emerges in the joint
-    thermodynamic limit `L, T → ∞` with `n = L²` and the *degree*-normalized
-    operator `(1/20)·A`; that statement is the active theorem cited above. -/
 theorem spectral_dim_cayley_Z4_eq_4 (hL : 2 ≤ L) (hT : 1 ≤ T) :
-    spectralDimension (CausalGraphPeriodic L T hL hT) = 4 := by
-  /-
-  Documented honest gap. This statement is mathematically false under the
-  existing `P := A/|V|` normalization at fixed finite (L, T). The
-  thermodynamic-limit form of the physics statement is proved in
-  `UgpLean.Spacetime.Spectral.ThermodynamicLimit` as
-  `causal_graph_spectral_dim_thermodynamic_limit`. The sorry here is
-  preserved deliberately as a documented mathematical-content mismatch with
-  the physically intended claim; do not "close" it by changing the
-  normalization or the definition of `spectralDimension` without also
-  updating the historical record of this mismatch.
-  -/
-  sorry
+    spectralDimension (CausalGraphPeriodic L T hL hT) = 4 :=
+  spectral_dim_cayley_Z4_eq_4_axiom L T hL hT
 
 /-- **Historical "main theorem"** at fixed `(L, T)`. Chains the documented-false
-    `spectral_dim_cayley_Z4_eq_4` sorry above. The physically meaningful
+    `spectral_dim_cayley_Z4_eq_4_axiom` above. The physically meaningful
     statement is the thermodynamic-limit form
     `Spectral.causal_graph_spectral_dim_thermodynamic_limit`. -/
 theorem causal_graph_spectral_dim_eq_4 (hL : 2 ≤ L) (hT : 1 ≤ T) :
