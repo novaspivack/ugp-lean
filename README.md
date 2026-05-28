@@ -1,5 +1,18 @@
 # ugp-lean
 
+> **Development sandbox:** This repository (`ugp-lean-exp`) is the active development branch for GTE/UGP Lean formalizations. Work here graduates to [`ugp-lean`](https://github.com/novaspivack/ugp-lean), the canonical public library, at milestone points.
+
+## Separation of concerns
+
+| Repository | Role |
+|---|---|
+| **ugp-lean-exp** (this repo) → **ugp-lean** | GTE/UGP-specific formalizations: Z₇ algebra, PSC structure, CMCA dynamics, GTE particle spectrum, MDL initial state, RT formula, fermionic statistics, mass predictions |
+| [**ugp-physics-lean**](https://github.com/novaspivack/ugp-physics-lean) | Standard physics infrastructure: Lorentzian geometry, Minkowski spacetime, spinor representations, spin-statistics, general relativistic structures — physics facts independent of GTE theory |
+
+**Dependency:** ugp-lean-exp imports ugp-physics-lean for standard physics infrastructure. GTE-specific derivations live here; foundational physics infrastructure that is not GTE-specific belongs in ugp-physics-lean.
+
+---
+
 ## Research Program
 
 This repository is part of the **Reflexive Reality** research program by [Nova Spivack](https://www.novaspivack.com/).
