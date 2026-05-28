@@ -230,6 +230,7 @@ import UgpLean.Gravity.RelationalTime
 import UgpLean.Gravity.PMDLGravityTheorems
 import UgpLean.Gravity.GorardRicciFlatVacuum
 import UgpLean.Gravity.FermionicStatistics
+import UgpLean.Gravity.LorentzGroupSO13
 import UgpLean.Gravity.PSCEpochSelection
 import UgpLean.OQ26Arithmetic
 import UgpLean.GTEDerivationChain
@@ -307,6 +308,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Gravity.WaldChainAndInitialState` — EPIC_078 Rank 078-LC9: `rt_formula_key_precondition`, `z7_potential_zero_at_vacuum`, `mdl_initial_state_flat_spatial_sections`, `phimdl_xi_zero_implies_key_preconditions`, `epic_078_wald_chain_and_initial_state` (CatAL, zero sorry)
 - `UgpLean.Gravity.PSCQECWaldConnections` — EPIC_078 Rank 078-LC8: `psc_admissible_eq_rs_eval_points`, `gte_rs_code_params_from_psc`, `gte_ghet_t2_t5_certified`, `phimdl_rt_formula_wald_precondition_chain`, `epic_078_psc_qec_wald_master` (CatAL, zero sorry)
 - `UgpLean.Gravity.DimensionalDecomposition` — EPIC_078 Rank 078-LC11: `cmca_three_axes_give_31d`, `spacetime_dim_from_ngen`, `galois_symmetry_3d`, `so13_generator_count`, `cmca_tensor_product_gives_31d_minkowski` (CatAL, zero sorry)
+- `UgpLean.Gravity.LorentzGroupSO13` — EPIC_079 OQ-079-9: `lorentz_boost_x/y/z_in_group`, `three_tape_boosts_in_so13`, `lorentz_identity` (CatAL partial, zero sorry); `three_tape_so13_from_so11_cubed_and_so3` structural stub
 - `UgpLean.Gravity.RelationalTime` — EPIC_079 Rank 079-LC1: `without_shared_clock_uncoupled`, `shared_clock_gives_31d`, `tau_c_adds_temporal_dimension`, `dimensional_protocol_principle_master` (CatAL, zero sorry)
 - `UgpLean.Gravity.PMDLGravityTheorems` — EPIC_079 Ranks 079-MDL-UNIQUE, 079-FIXED-POINT, 079-UNIFIED-POLY: `vacuum_unique_fixed_point_z7`, `unique_cubic_gravity_coupling`, `gte_gravity_mass_hierarchy`, `gte_polynomial_three_roles_k_zero` (CatAL, zero sorry)
 - `UgpLean.Gravity.PSCEpochSelection` — EPIC_078 Rank 078-PSP: `psc_undecidability_residual_pos`, `d_res_determines_omega_lambda`, `psp_from_psc_structure`, `psp_epoch_selection_master` (CatAL, 1 sorry for `omega_lambda_gte_approx`, 2026-05-28)
