@@ -227,6 +227,7 @@ import UgpLean.Gravity.WaldChainAndInitialState
 import UgpLean.Gravity.DimensionalDecomposition
 import UgpLean.Gravity.RelationalTime
 import UgpLean.Gravity.PMDLGravityTheorems
+import UgpLean.Gravity.GorardRicciFlatVacuum
 import UgpLean.OQ26Arithmetic
 import UgpLean.GTEDerivationChain
 import UgpLean.Algebra.CyclotomicZ7Galois
