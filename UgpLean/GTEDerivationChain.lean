@@ -1,11 +1,6 @@
-import UgpLean.Gravity.MinimalCoupling
-import UgpLean.Gravity.FLRWFieldEquation
-import UgpLean.Gravity.PlanckDensityBound
 import UgpLean.Gravity.BounceAndArithmetic
 import UgpLean.Gravity.CurvedBackgroundPreconditions
 import UgpLean.Algebra.CyclotomicZ7Galois
-import UgpLean.Algebra.RSCodeOrbit
-import UgpLean.Substrate.GEQECCode
 import UgpLean.OQ26Arithmetic
 
 namespace UgpLean.GTEChain
