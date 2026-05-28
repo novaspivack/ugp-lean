@@ -244,6 +244,7 @@ import UgpLean.Algebra.RSCodeOrbit
 import UgpLean.Algebra.SU3GluonCount
 import UgpLean.Algebra.ColorConfinementMDL
 import UgpLean.Algebra.BaryonNumber
+import UgpLean.Algebra.ChargeFromPolynomial
 import UgpLean.Spacetime.PhysicalExclusion
 import UgpLean.Spacetime.ThreeGenerationCapstone
 import UgpLean.Spacetime.CausalInvariance
