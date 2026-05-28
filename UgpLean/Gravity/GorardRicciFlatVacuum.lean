@@ -128,15 +128,31 @@ theorem three_tape_gorard_vacuum_ricci_flat :
     (2t)³ × 2 from the Gorard continuum-limit analysis. -/
 noncomputable def causalDiamondIntegrand (t : ℝ) : ℝ := (2 * t) ^ 3 * 2
 
-/-- **three_tape_causal_diamond_t4** (CatAD target):
+/-- **three_tape_causal_diamond_t4** (CatAL, 2026-05-28):
     Three-tape causal diamond volume satisfies V(T) = T⁴/4 for T > 0.
 
-    Proof sketch:
-    V(T) = ∫₀^{T/2} (2t)³ × 2 dt = [2t⁴/2]₀^{T/2} = (T/2)⁴ × 2 = T⁴/4.
+    Proof:
+    V(T) = ∫₀^{T/2} (2t)³ × 2 dt = ∫₀^{T/2} 16t³ dt = [4t⁴]₀^{T/2} = 4·(T/2)⁴ = T⁴/4.
 
-    Full proof requires assembling `intervalIntegral` for the monomial on `[0, T/2]`. -/
+    Route: Set.Ioo → Set.Ioc (NoAtoms, singleton measure 0) → intervalIntegral (integral_of_le)
+    → integral_const_mul → integral_pow → ring. -/
 theorem three_tape_causal_diamond_t4 (T : ℝ) (hT : 0 < T) :
     ∫ t in Set.Ioo (0 : ℝ) (T / 2), causalDiamondIntegrand t = T ^ 4 / 4 := by
-  sorry
+  have hlt : (0 : ℝ) < T / 2 := by linarith
+  -- {T/2} has measure zero (NoAtoms), so Ioo and Ioc integrate identically
+  rw [← MeasureTheory.integral_Ioc_eq_integral_Ioo]
+  -- Ioc integral equals intervalIntegral for a ≤ b
+  rw [← intervalIntegral.integral_of_le hlt.le]
+  -- Simplify integrand: (2t)³ × 2 = 16t³
+  have heq : ∀ t : ℝ, causalDiamondIntegrand t = 16 * t ^ 3 := by
+    intro t; unfold causalDiamondIntegrand; ring
+  simp_rw [heq]
+  -- Factor constant: ∫ 16t³ = 16 · ∫ t³
+  rw [intervalIntegral.integral_const_mul]
+  -- Monomial integral: ∫₀^{T/2} t³ = (T/2)⁴ / 4
+  rw [integral_pow]
+  -- Arithmetic: 16 · ((T/2)⁴ - 0⁴) / 4 = T⁴/4
+  push_cast
+  ring
 
 end UgpLean.Gravity.GorardRicciFlatVacuum
