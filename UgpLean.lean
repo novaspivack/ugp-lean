@@ -24,6 +24,7 @@ import UgpLean.GTE.UpdateMap
 import UgpLean.GTE.MersenneGcd
 import UgpLean.GTE.MersenneLadder
 import UgpLean.BraidAtlas.ChargeTheorem
+import UgpLean.BraidAtlas.WindingToBraidRep
 import UgpLean.BraidAtlas.CompositeTriples
 import UgpLean.BraidAtlas.ChiralitySquaring
 import UgpLean.BraidAtlas.ChargeDerivation
@@ -228,6 +229,7 @@ import UgpLean.Gravity.DimensionalDecomposition
 import UgpLean.Gravity.RelationalTime
 import UgpLean.Gravity.PMDLGravityTheorems
 import UgpLean.Gravity.GorardRicciFlatVacuum
+import UgpLean.Gravity.FermionicStatistics
 import UgpLean.OQ26Arithmetic
 import UgpLean.GTEDerivationChain
 import UgpLean.Algebra.CyclotomicZ7Galois

@@ -31,6 +31,7 @@ import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.Finset.Basic
 import UgpLean.Substrate.GEQECCode
 import UgpLean.Algebra.CyclotomicZ7Galois
+import UgpLean.BraidAtlas.WindingToBraidRep
 
 namespace GTE.FermionicStatistics
 
@@ -90,19 +91,15 @@ theorem gte_triple_kink_exchange_statistics :
       ExchangePhase (UniformTriple w) =
         if w ∈ ({2, 4, 6} : Finset (ZMod 7)) then -1 else 1 := by
   intro w _hw
-  simp [ExchangePhase, UniformTriple, ExchangePhase_Level1, BraidAtlasPhase]
-  -- TODO: This is definitionally true by unfolding.
-  -- The mathematical content is in the DEFINITIONS of BraidAtlasPhase,
-  -- which encode the Braid Atlas assignment from ugp_gauge_fermion_equals_sm.
-  --   The sorry below remains only because BraidAtlasPhase currently is defined
-  -- as a LOOKUP TABLE encoding the Braid Atlas result, not derived from first principles.
-  -- First-principles derivation requires:
-  --   (A) gte_winding_to_braid_rep (OQ-079-14) — map Z₇ winding → BraidRepresentation
-  --   (B) gte_spin_statistics (requires Lorentzian geometry library)
-  -- Reference for sorry closure:
-  --   ugp_gauge_fermion_equals_sm at ugp-physics-lean/UgpPhysicsLean/VertexTheorem.lean:128
-  --   (imports UgpLean.BraidAtlas.ChargeTheorem, UgpPhysicsLean.ColorDynamics)
-  sorry
+  simp only [ExchangePhase, UniformTriple, ExchangePhase_Level1, BraidAtlasPhase, one_mul]
+  -- Definitionally true: ExchangePhase_Level1 = 1, so
+  --   ExchangePhase (w,w,w) = 1 * BraidAtlasPhase w = BraidAtlasPhase w
+  -- and BraidAtlasPhase IS defined as (if w ∈ {2,4,6} then -1 else 1).
+  -- The mathematical content (WHY BraidAtlasPhase assigns −1 to charged fermions)
+  -- is captured by gte_winding_identifies_charged_fermions in
+  -- UgpLean.BraidAtlas.WindingToBraidRep (OQ-079-16 algebraic core, zero sorry).
+  -- The remaining gap (spin-statistics: charged SM fermion → exchange phase −1)
+  -- requires the Lorentzian geometry Lean library (EPIC_078 LC5 blocker).
 
 -- ============================================================
 -- VERIFICATION: Explicit sector assignments
