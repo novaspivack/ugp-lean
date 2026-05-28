@@ -181,6 +181,7 @@ import UgpLean.Substrate.PSCPreservingTransformation
 import UgpLean.Substrate.CoherenceMeasure
 import UgpLean.Substrate.CoherenceMeasureUniqueness
 import UgpLean.Substrate.QECStabilizer
+import UgpLean.Substrate.GEQECCode
 import UgpLean.Substrate.TransputationStateSelector
 import UgpLean.Substrate.DConstraints
 import UgpLean.Substrate.LagrangianLorentzScalar
