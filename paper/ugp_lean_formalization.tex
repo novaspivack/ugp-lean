@@ -6213,6 +6213,109 @@ Theorem & Module & Physical role \\
 \label{tab:new-theorem-inventory}
 \end{table}
 
+\subsection{New theorem inventory (EPIC\_078)}\label{subsec:new-theorem-inventory-078}
+
+The following table records all novel zero-sorry theorems introduced by the EPIC\_078
+quantum-gravity completion pass (2026-05-27/28), covering the minimal-coupling / Wald chain
+(LC1--LC11), the PSP epoch-selection, fermionic statistics, Galois orbit structure, RS code
+identification, and the GF(7) vacuum fixed point.  All theorems are CatAL unless noted.
+A complete row-by-row listing appears in the master inventory
+(Tab.~\ref{tab:theorems}, section \emph{Quantum Gravity Completion}).
+
+\begin{table}[h]
+\centering\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}p{5.2cm}p{3.7cm}p{5.0cm}@{}}
+\toprule
+Theorem & Module & Physical role \\
+\midrule
+\texttt{minimal\_\allowbreak coupling\_\allowbreak is\_\allowbreak mdl\_\allowbreak minimal}
+  & Gravity.MinimalCoupling
+  & MDL selects $\xi=0$ (LC1) \\[1pt]
+\texttt{z7\_\allowbreak superselection\_\allowbreak preserved\_\allowbreak by\_\allowbreak flat\_\allowbreak metric}
+  & Gravity.MinimalCoupling
+  & $\mathbb{Z}_7$ superselection survives flat limit (LC2) \\[1pt]
+\texttt{flrw\_\allowbreak phimdl\_\allowbreak equation\_\allowbreak well\_\allowbreak defined}
+  & Gravity.FLRWFieldEquation
+  & Picard--Lindel\"of for $\Phi_{\rm MDL}$ on FLRW (LC3) \\[1pt]
+\texttt{planck\_\allowbreak density\_\allowbreak bound\_\allowbreak via\_\allowbreak lifting}
+  & Gravity.PlanckDensityBound
+  & $7^8$ states exceed Bekenstein bound (LC4) \\[1pt]
+\texttt{phimdl\_\allowbreak no\_\allowbreak curvature\_\allowbreak coupling}
+  & Gravity.CurvedBackground
+  & $\xi=0$ for $\Phi_{\rm MDL}$; Wald precondition (LC6) \\[1pt]
+\texttt{mdl\_\allowbreak selects\_\allowbreak flat\_\allowbreak cosmology}
+  & Gravity.CurvedBackground
+  & MDL selects $k=0$ spatially flat cosmology (LC6) \\[1pt]
+\texttt{gte\_\allowbreak friedmann\_\allowbreak correction\_\allowbreak at\_\allowbreak planck\_\allowbreak zero}
+  & Gravity.BounceAndArithmetic
+  & Bounce correction $f_C\to0$ at $\rho_{\rm Pl}$ (LC7) \\[1pt]
+\texttt{cpt\_\allowbreak is\_\allowbreak involution}
+  & Gravity.BounceAndArithmetic
+  & CPT: $6^2=1$ in $\mathbb{Z}_7$ (LC7) \\[1pt]
+\texttt{generation\_\allowbreak orbit\_\allowbreak has\_\allowbreak order\_\allowbreak 3}
+  & Gravity.BounceAndArithmetic
+  & Generation orbit order~3: $2^3=1$ (LC7) \\[1pt]
+\texttt{psc\_\allowbreak admissible\_\allowbreak eq\_\allowbreak rs\_\allowbreak eval\_\allowbreak points}
+  & Gravity.PSCQECWaldConn.
+  & PSC $\leftrightarrow$ RS evaluation points (LC8) \\[1pt]
+\texttt{gte\_\allowbreak ghet\_\allowbreak t2\_\allowbreak t5\_\allowbreak certified}
+  & Gravity.PSCQECWaldConn.
+  & GHET implications T2, T5 certified (LC8) \\[1pt]
+\texttt{rt\_\allowbreak formula\_\allowbreak key\_\allowbreak precondition}
+  & Gravity.WaldChainInitState
+  & $\xi=0 \Rightarrow$ Ryu--Takayanagi precondition (LC9) \\[1pt]
+\texttt{mdl\_\allowbreak initial\_\allowbreak state\_\allowbreak flat\_\allowbreak spatial\_\allowbreak sections}
+  & Gravity.WaldChainInitState
+  & MDL initial state has flat spatial sections (LC9) \\[1pt]
+\texttt{gauge\_\allowbreak spectrum\_\allowbreak total}
+  & OQ26Arithmetic
+  & $2^4 \cdot 5^3 = 2000$ total gauge states (LC10) \\[1pt]
+\texttt{omega\_\allowbreak lambda\_\allowbreak formula\_\allowbreak positive}
+  & OQ26Arithmetic
+  & $\Omega_\Lambda > 0$ from $D_{\rm res}$ (LC10) \\[1pt]
+\texttt{gte\_\allowbreak qgr\_\allowbreak derivation\_\allowbreak chain\_\allowbreak catAL\_\allowbreak summary}
+  & GTEDerivationChain
+  & Full QGR derivation chain summary (LC1--LC11) \\[1pt]
+\texttt{cmca\_\allowbreak tensor\_\allowbreak product\_\allowbreak gives\_\allowbreak 31d\_\allowbreak minkowski}
+  & Gravity.DimDecomposition
+  & $3{\times}(1{+}1)$D CMCA $\to$ $3{+}1$D Minkowski (LC11) \\[1pt]
+\texttt{psp\_\allowbreak epoch\_\allowbreak selection\_\allowbreak master}
+  & Gravity.PSCEpochSelection
+  & PSP selects unique $D_{\rm res}$-compatible epoch \\[1pt]
+\texttt{d\_\allowbreak res\_\allowbreak determines\_\allowbreak omega\_\allowbreak lambda}
+  & Gravity.PSCEpochSelection
+  & $D_{\rm res}$ determines $\Omega_\Lambda$ \\[1pt]
+\texttt{gte\_\allowbreak triple\_\allowbreak kink\_\allowbreak exchange\_\allowbreak statistics}
+  & Gravity.FermionicStatistics
+  & $\mathbb{Z}_7$ kink exchange gives $-1$ phase \\[1pt]
+\texttt{dimensional\_\allowbreak protocol\_\allowbreak principle\_\allowbreak master}
+  & Gravity.RelationalTime
+  & $\tau_c$ sync as dimensional protocol (DPP) \\[1pt]
+\texttt{cyclotomic\_\allowbreak z7\_\allowbreak master\_\allowbreak bundle}
+  & Algebra.CyclotomicZ7Galois
+  & $\mathbb{Z}_7$ Galois orbit structure bundle \\[1pt]
+\texttt{z7\_\allowbreak galois\_\allowbreak orbit\_\allowbreak partition}
+  & Algebra.CyclotomicZ7Galois
+  & Galois orbit partition of $(\mathbb{Z}/7)^\times$ \\[1pt]
+\texttt{gte\_\allowbreak orbit\_\allowbreak vectors\_\allowbreak are\_\allowbreak rs\_\allowbreak codewords}
+  & Algebra.RSCodeOrbit
+  & Generation orbit vectors are RS$[5,3,3]_7$ codewords \\[1pt]
+\texttt{gte\_\allowbreak winding\_\allowbreak identifies\_\allowbreak charged\_\allowbreak fermions}
+  & BraidAtlas.WindingToBraid
+  & $\mathbb{Z}_7$ winding $\leftrightarrow$ charged fermion (CatAL) \\[1pt]
+\texttt{qec\_\allowbreak gte\_\allowbreak is\_\allowbreak stabilizer\_\allowbreak code}
+  & Substrate.GEQECCode
+  & GTE QEC is a stabilizer code \\[1pt]
+\texttt{rule110\_\allowbreak gf7\_\allowbreak vacuum\_\allowbreak fixed\_\allowbreak point\_\allowbreak master}
+  & ContinuumLimit.GF7Vacuum
+  & $v{=}0$ is unique IR fixed point (GF(7) vacuum) \\
+\bottomrule
+\end{tabular}
+\caption{New zero-sorry CatAL theorems from EPIC\_078 quantum-gravity completion (LC1--LC11, PSP, fermionic statistics, Galois structure, RS codes, GF(7) vacuum fixed point).}
+\label{tab:new-theorem-inventory-078}
+\end{table}
+
 \subsection{Mass gap and hierarchy}\label{subsec:mass-gap-hierarchy}
 
 \begin{itemize}[nosep]
