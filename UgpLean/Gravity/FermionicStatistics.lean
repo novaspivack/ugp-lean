@@ -83,7 +83,7 @@ def UniformTriple (w : ZMod 7) : ZMod 7 × ZMod 7 × ZMod 7 := (w, w, w)
 -- Exchange phase at Level 1 (CA level)
 -- This is provable: the discrete Z7 vacuum, S3 invariance, and action symmetry
 -- all give +1.
-def ExchangePhase_Level1 (triple : ZMod 7 × ZMod 7 × ZMod 7) : ℤ := 1
+def ExchangePhase_Level1 (_ : ZMod 7 × ZMod 7 × ZMod 7) : ℤ := 1
 
 -- Braid Atlas phase assignment (from ugp_gauge_fermion_equals_sm, P23 CatAL)
 -- Fermion sectors: {2, 4, 6} — u quark, e⁻, d quark
@@ -93,7 +93,7 @@ def BraidAtlasPhase (w : ZMod 7) : ℤ :=
 
 -- Full exchange phase: Level 1 × Level 2
 def ExchangePhase (triple : ZMod 7 × ZMod 7 × ZMod 7) : ℤ :=
-  let (wx, wy, wz) := triple
+  let (wx, _, _) := triple
   -- For uniform triples: wx = wy = wz = w
   ExchangePhase_Level1 triple * BraidAtlasPhase wx
 
