@@ -2,7 +2,6 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Nat.Basic
 import UgpLean.Gravity.MinimalCoupling
-import UgpLean.Gravity.FLRWFieldEquation
 import UgpLean.Gravity.CurvedBackgroundPreconditions
 
 /-!
