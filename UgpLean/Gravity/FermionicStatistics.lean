@@ -94,11 +94,14 @@ theorem gte_triple_kink_exchange_statistics :
   -- TODO: This is definitionally true by unfolding.
   -- The mathematical content is in the DEFINITIONS of BraidAtlasPhase,
   -- which encode the Braid Atlas assignment from ugp_gauge_fermion_equals_sm.
-  -- The sorry below remains only because BraidAtlasPhase currently is defined
+  --   The sorry below remains only because BraidAtlasPhase currently is defined
   -- as a LOOKUP TABLE encoding the Braid Atlas result, not derived from first principles.
   -- First-principles derivation requires:
-  --   (A) gte_winding_to_braid_rep (OQ-079-14)
+  --   (A) gte_winding_to_braid_rep (OQ-079-14) — map Z₇ winding → BraidRepresentation
   --   (B) gte_spin_statistics (requires Lorentzian geometry library)
+  -- Reference for sorry closure:
+  --   ugp_gauge_fermion_equals_sm at ugp-physics-lean/UgpPhysicsLean/VertexTheorem.lean:128
+  --   (imports UgpLean.BraidAtlas.ChargeTheorem, UgpPhysicsLean.ColorDynamics)
   sorry
 
 -- ============================================================
