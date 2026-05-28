@@ -235,6 +235,8 @@ import UgpLean.Gravity.PSCEpochSelection
 import UgpLean.Gravity.NRTVacuumEnergy
 import UgpLean.Gravity.CMBSpectralTilt
 import UgpLean.ContinuumLimit.GF7VacuumFixedPoint
+import UgpLean.ContinuumLimit.WassersteinDistance
+import UgpLean.ContinuumLimit.DiscreteBianchi
 import UgpLean.OQ26Arithmetic
 import UgpLean.GTEDerivationChain
 import UgpLean.Algebra.CyclotomicZ7Galois
@@ -319,6 +321,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Gravity.NRTVacuumEnergy` — EPIC_078 NRT-LEAN-1: `z7_vacuum_energy_mass_independent`, `z7_vacuum_zero_for_all_masses`, `z7_vacuum_phase_is_integer_multiple_of_two_pi`; PSC Non-Renormalization Theorem Level 1 — Z₇ vacuum energy vanishes mass-independently (CatAL, zero sorry, 2026-05-28)
 - `UgpLean.Gravity.CMBSpectralTilt` — EPIC_078 CMB-LEAN-1: `beta_g_z2_formula`, `beta_g_z2_pos`, `n_s_formula`, `n_s_less_than_one`, `cmca_z2_sublayer_spectral_tilt`; CMB spectral tilt n_s = 1 − ln(2)/(2π²) from CMCA Z₂ sublayer (CatD-STRONG stub, 1 axiom gated on OQ-QG-1, zero sorry, 2026-05-28)
 - `UgpLean.ContinuumLimit.GF7VacuumFixedPoint` — EPIC_078 Rank 078-GCL-VACFP (OQ-QG-1): `gte_poly_zero_is_fixed_point`, `gte_poly_nonzero_not_fixed`, `gte_poly_uniform_unique_fixed_point`, `rule110_gf7_vacuum_fixed_point_master`; GF(7) vacuum uniqueness — `v=0` is the unique symmetric fixed point of the GTE polynomial; CatAL, zero sorry (2026-05-28)
+- `UgpLean.ContinuumLimit.WassersteinDistance` — OQ-QG-1 Step 2: W₁ (1-Wasserstein / Earth Mover) distance scaffold for Gorard chain; `FiniteMetricSpace`, `ProbDist`, `IsCoupling`, `W1` (sorry — requires Mathlib OT), `OllivierRicci`, `W1_nonneg/comm/eq_zero_iff/triangle` (sorry), `gorard_vacuum_oric_zero` (axiom — discrete Ricci-flat vacuum), `rule110_gromov_wasserstein_limit` (axiom — GW convergence long-range target); CatD-STRONG scaffold, 4 sorry + 2 axioms (2026-05-28)
 - `UgpLean.Algebra.SU3GluonCount` — EPIC_079 Ranks 079-GLUON-SELECT, 079-BARYON-COLOR: `su3_gluon_charge_vectors` (6 gluon vectors from Δw=±1), `su3_gluon_two_z3_orbits` (2 disjoint Z₃ orbits), `su3_gluon_conjugate_pairs`, `baryon_color_z3_orbit_neutral`, `su3_cmca_master_bundle`; all CatAL, zero sorry (2026-05-28)
 - `UgpLean.Algebra.ColorConfinementMDL` — EPIC_079 Rank 079-COLOR-Z3: `color_confinement_k_extra_pos`, `k_extra_eq_log2_9`, `k_extra_uniform`, `psc_forbids_free_colored_quarks`; MDL/PSC K_extra inequality ΔK=log₂(9)>0; CatAL, zero sorry (2026-05-28)
 - `UgpLean.Spacetime.MultiParticleHilbert` — Rank 244-MPH: multi-particle Hilbert space algebraic layer; `code_word_cardinality` (4 code words, Equiv with Fin 4), `n_particle_state_count` (4^N states), `multiDWeight_eq_one`, `multiMass_append`, `multiMass_le`, `mass_hierarchy_three_states`, `smGenMass_multi_anchor`, `multiparticle_orbit_closure`, `inner_product_positive_definite`, `multiparticle_space_well_defined`; all CatAL, zero sorry (2026-05-24)
