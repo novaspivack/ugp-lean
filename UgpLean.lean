@@ -226,6 +226,7 @@ import UgpLean.Gravity.PSCQECWaldConnections
 import UgpLean.Gravity.WaldChainAndInitialState
 import UgpLean.Gravity.DimensionalDecomposition
 import UgpLean.Gravity.RelationalTime
+import UgpLean.Gravity.PMDLGravityTheorems
 import UgpLean.OQ26Arithmetic
 import UgpLean.GTEDerivationChain
 import UgpLean.Algebra.CyclotomicZ7Galois
@@ -301,6 +302,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Gravity.PSCQECWaldConnections` — EPIC_078 Rank 078-LC8: `psc_admissible_eq_rs_eval_points`, `gte_rs_code_params_from_psc`, `gte_ghet_t2_t5_certified`, `phimdl_rt_formula_wald_precondition_chain`, `epic_078_psc_qec_wald_master` (CatAL, zero sorry)
 - `UgpLean.Gravity.DimensionalDecomposition` — EPIC_078 Rank 078-LC11: `cmca_three_axes_give_31d`, `spacetime_dim_from_ngen`, `galois_symmetry_3d`, `so13_generator_count`, `cmca_tensor_product_gives_31d_minkowski` (CatAL, zero sorry)
 - `UgpLean.Gravity.RelationalTime` — EPIC_079 Rank 079-LC1: `without_shared_clock_uncoupled`, `shared_clock_gives_31d`, `tau_c_adds_temporal_dimension`, `dimensional_protocol_principle_master` (CatAL, zero sorry)
+- `UgpLean.Gravity.PMDLGravityTheorems` — EPIC_079 Ranks 079-MDL-UNIQUE, 079-FIXED-POINT, 079-UNIFIED-POLY: `vacuum_unique_fixed_point_z7`, `unique_cubic_gravity_coupling`, `gte_gravity_mass_hierarchy`, `gte_polynomial_three_roles_k_zero` (CatAL, zero sorry)
 - `UgpLean.Spacetime.MultiParticleHilbert` — Rank 244-MPH: multi-particle Hilbert space algebraic layer; `code_word_cardinality` (4 code words, Equiv with Fin 4), `n_particle_state_count` (4^N states), `multiDWeight_eq_one`, `multiMass_append`, `multiMass_le`, `mass_hierarchy_three_states`, `smGenMass_multi_anchor`, `multiparticle_orbit_closure`, `inner_product_positive_definite`, `multiparticle_space_well_defined`; all CatAL, zero sorry (2026-05-24)
 - `UgpLean.Spacetime.CausalInvariance` — Rank 37-LCI: f_MDL causal invariance + Lamport consistency + SR connection; `ForwardCausalAdj`, `forward_causal_time_step`, `forward_causal_acyclic`, `transgen_time_strictly_increases`, `lamport_irrefl`, `lamport_strict_partial_order`, `lamport_order_update_independent`, `afca_sr_causal_structure`; all zero sorry, zero axioms (CatAL/CatAD — Lamport properties CatAL, Minkowski isomorphism CatAD, 2026-05-21)
 - `UgpLean.Spacetime.DWeightSRFormula` — Rank 63-DMDL: [D]-weighted SR formula; `dmdl_dweight_positive`, `dmdl_proper_time_ratio`, `dmdl_dweight_sr_formula`, `dmdl_lorentz_factor_algebraic`, `dmdl_tau_c_ratio_structure`, `dmdl_qec_sr_bundle`; all zero sorry, zero custom axioms (CatAL, 2026-05-24)
