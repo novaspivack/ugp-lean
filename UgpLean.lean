@@ -232,12 +232,14 @@ import UgpLean.Gravity.GorardRicciFlatVacuum
 import UgpLean.Gravity.FermionicStatistics
 import UgpLean.Gravity.LorentzGroupSO13
 import UgpLean.Gravity.PSCEpochSelection
+import UgpLean.ContinuumLimit.GF7VacuumFixedPoint
 import UgpLean.OQ26Arithmetic
 import UgpLean.GTEDerivationChain
 import UgpLean.Algebra.CyclotomicZ7Galois
 import UgpLean.Algebra.RSCodeOrbit
 import UgpLean.Algebra.SU3GluonCount
 import UgpLean.Algebra.ColorConfinementMDL
+import UgpLean.Algebra.BaryonNumber
 import UgpLean.Spacetime.PhysicalExclusion
 import UgpLean.Spacetime.ThreeGenerationCapstone
 import UgpLean.Spacetime.CausalInvariance
@@ -312,6 +314,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Gravity.RelationalTime` — EPIC_079 Rank 079-LC1: `without_shared_clock_uncoupled`, `shared_clock_gives_31d`, `tau_c_adds_temporal_dimension`, `dimensional_protocol_principle_master` (CatAL, zero sorry)
 - `UgpLean.Gravity.PMDLGravityTheorems` — EPIC_079 Ranks 079-MDL-UNIQUE, 079-FIXED-POINT, 079-UNIFIED-POLY: `vacuum_unique_fixed_point_z7`, `unique_cubic_gravity_coupling`, `gte_gravity_mass_hierarchy`, `gte_polynomial_three_roles_k_zero` (CatAL, zero sorry)
 - `UgpLean.Gravity.PSCEpochSelection` — EPIC_078 Rank 078-PSP: `psc_undecidability_residual_pos`, `d_res_determines_omega_lambda`, `psp_from_psc_structure`, `psp_epoch_selection_master` (CatAL, 1 sorry for `omega_lambda_gte_approx`, 2026-05-28)
+- `UgpLean.ContinuumLimit.GF7VacuumFixedPoint` — EPIC_078 Rank 078-GCL-VACFP (OQ-QG-1): `gte_poly_zero_is_fixed_point`, `gte_poly_nonzero_not_fixed`, `gte_poly_uniform_unique_fixed_point`, `rule110_gf7_vacuum_fixed_point_master`; GF(7) vacuum uniqueness — `v=0` is the unique symmetric fixed point of the GTE polynomial; CatAL, zero sorry (2026-05-28)
 - `UgpLean.Algebra.SU3GluonCount` — EPIC_079 Ranks 079-GLUON-SELECT, 079-BARYON-COLOR: `su3_gluon_charge_vectors` (6 gluon vectors from Δw=±1), `su3_gluon_two_z3_orbits` (2 disjoint Z₃ orbits), `su3_gluon_conjugate_pairs`, `baryon_color_z3_orbit_neutral`, `su3_cmca_master_bundle`; all CatAL, zero sorry (2026-05-28)
 - `UgpLean.Algebra.ColorConfinementMDL` — EPIC_079 Rank 079-COLOR-Z3: `color_confinement_k_extra_pos`, `k_extra_eq_log2_9`, `k_extra_uniform`, `psc_forbids_free_colored_quarks`; MDL/PSC K_extra inequality ΔK=log₂(9)>0; CatAL, zero sorry (2026-05-28)
 - `UgpLean.Spacetime.MultiParticleHilbert` — Rank 244-MPH: multi-particle Hilbert space algebraic layer; `code_word_cardinality` (4 code words, Equiv with Fin 4), `n_particle_state_count` (4^N states), `multiDWeight_eq_one`, `multiMass_append`, `multiMass_le`, `mass_hierarchy_three_states`, `smGenMass_multi_anchor`, `multiparticle_orbit_closure`, `inner_product_positive_definite`, `multiparticle_space_well_defined`; all CatAL, zero sorry (2026-05-24)
