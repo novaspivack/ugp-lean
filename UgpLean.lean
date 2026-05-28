@@ -245,6 +245,8 @@ import UgpLean.Algebra.SU3GluonCount
 import UgpLean.Algebra.ColorConfinementMDL
 import UgpLean.Algebra.BaryonNumber
 import UgpLean.Algebra.ChargeFromPolynomial
+import UgpLean.Algebra.ChiralDoublet
+import UgpLean.Algebra.SRRGCABridge
 import UgpLean.Spacetime.PhysicalExclusion
 import UgpLean.Spacetime.ThreeGenerationCapstone
 import UgpLean.Spacetime.CausalInvariance
