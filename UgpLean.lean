@@ -230,6 +230,7 @@ import UgpLean.Gravity.RelationalTime
 import UgpLean.Gravity.PMDLGravityTheorems
 import UgpLean.Gravity.GorardRicciFlatVacuum
 import UgpLean.Gravity.FermionicStatistics
+import UgpLean.Gravity.PSCEpochSelection
 import UgpLean.OQ26Arithmetic
 import UgpLean.GTEDerivationChain
 import UgpLean.Algebra.CyclotomicZ7Galois
@@ -307,6 +308,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Gravity.DimensionalDecomposition` — EPIC_078 Rank 078-LC11: `cmca_three_axes_give_31d`, `spacetime_dim_from_ngen`, `galois_symmetry_3d`, `so13_generator_count`, `cmca_tensor_product_gives_31d_minkowski` (CatAL, zero sorry)
 - `UgpLean.Gravity.RelationalTime` — EPIC_079 Rank 079-LC1: `without_shared_clock_uncoupled`, `shared_clock_gives_31d`, `tau_c_adds_temporal_dimension`, `dimensional_protocol_principle_master` (CatAL, zero sorry)
 - `UgpLean.Gravity.PMDLGravityTheorems` — EPIC_079 Ranks 079-MDL-UNIQUE, 079-FIXED-POINT, 079-UNIFIED-POLY: `vacuum_unique_fixed_point_z7`, `unique_cubic_gravity_coupling`, `gte_gravity_mass_hierarchy`, `gte_polynomial_three_roles_k_zero` (CatAL, zero sorry)
+- `UgpLean.Gravity.PSCEpochSelection` — EPIC_078 Rank 078-PSP: `psc_undecidability_residual_pos`, `d_res_determines_omega_lambda`, `psp_from_psc_structure`, `psp_epoch_selection_master` (CatAL, 1 sorry for `omega_lambda_gte_approx`, 2026-05-28)
 - `UgpLean.Algebra.SU3GluonCount` — EPIC_079 Ranks 079-GLUON-SELECT, 079-BARYON-COLOR: `su3_gluon_charge_vectors` (6 gluon vectors from Δw=±1), `su3_gluon_two_z3_orbits` (2 disjoint Z₃ orbits), `su3_gluon_conjugate_pairs`, `baryon_color_z3_orbit_neutral`, `su3_cmca_master_bundle`; all CatAL, zero sorry (2026-05-28)
 - `UgpLean.Spacetime.MultiParticleHilbert` — Rank 244-MPH: multi-particle Hilbert space algebraic layer; `code_word_cardinality` (4 code words, Equiv with Fin 4), `n_particle_state_count` (4^N states), `multiDWeight_eq_one`, `multiMass_append`, `multiMass_le`, `mass_hierarchy_three_states`, `smGenMass_multi_anchor`, `multiparticle_orbit_closure`, `inner_product_positive_definite`, `multiparticle_space_well_defined`; all CatAL, zero sorry (2026-05-24)
 - `UgpLean.Spacetime.CausalInvariance` — Rank 37-LCI: f_MDL causal invariance + Lamport consistency + SR connection; `ForwardCausalAdj`, `forward_causal_time_step`, `forward_causal_acyclic`, `transgen_time_strictly_increases`, `lamport_irrefl`, `lamport_strict_partial_order`, `lamport_order_update_independent`, `afca_sr_causal_structure`; all zero sorry, zero axioms (CatAL/CatAD — Lamport properties CatAL, Minkowski isomorphism CatAD, 2026-05-21)
