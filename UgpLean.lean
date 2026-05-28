@@ -223,6 +223,7 @@ import UgpLean.Gravity.PlanckDensityBound
 import UgpLean.Gravity.CurvedBackgroundPreconditions
 import UgpLean.Gravity.BounceAndArithmetic
 import UgpLean.Gravity.PSCQECWaldConnections
+import UgpLean.Gravity.WaldChainAndInitialState
 import UgpLean.Algebra.CyclotomicZ7Galois
 import UgpLean.Algebra.RSCodeOrbit
 import UgpLean.Spacetime.PhysicalExclusion
@@ -292,6 +293,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Gravity.MinimalCoupling` — EPIC_078: `minimal_coupling_is_mdl_minimal`, `z7_superselection_preserved_by_flat_metric` (CatAL, zero sorry)
 - `UgpLean.Gravity.PlanckDensityBound` — EPIC_078 Rank 078-LC4: `planck_density_bound_via_lifting`, `planck_density_state_count` (CatAL, zero sorry)
 - `UgpLean.Gravity.CurvedBackgroundPreconditions` — EPIC_078 Rank 078-LC6: `phimdl_no_curvature_coupling`, `mdl_selects_flat_cosmology`, `gte_rs_code_achieves_singleton_bound`, `epic_078_functional_completeness_lean_support` (CatAL, zero sorry)
+- `UgpLean.Gravity.WaldChainAndInitialState` — EPIC_078 Rank 078-LC9: `rt_formula_key_precondition`, `z7_potential_zero_at_vacuum`, `mdl_initial_state_flat_spatial_sections`, `phimdl_xi_zero_implies_key_preconditions`, `epic_078_wald_chain_and_initial_state` (CatAL, zero sorry)
 - `UgpLean.Gravity.PSCQECWaldConnections` — EPIC_078 Rank 078-LC8: `psc_admissible_eq_rs_eval_points`, `gte_rs_code_params_from_psc`, `gte_ghet_t2_t5_certified`, `phimdl_rt_formula_wald_precondition_chain`, `epic_078_psc_qec_wald_master` (CatAL, zero sorry)
 - `UgpLean.Spacetime.MultiParticleHilbert` — Rank 244-MPH: multi-particle Hilbert space algebraic layer; `code_word_cardinality` (4 code words, Equiv with Fin 4), `n_particle_state_count` (4^N states), `multiDWeight_eq_one`, `multiMass_append`, `multiMass_le`, `mass_hierarchy_three_states`, `smGenMass_multi_anchor`, `multiparticle_orbit_closure`, `inner_product_positive_definite`, `multiparticle_space_well_defined`; all CatAL, zero sorry (2026-05-24)
 - `UgpLean.Spacetime.CausalInvariance` — Rank 37-LCI: f_MDL causal invariance + Lamport consistency + SR connection; `ForwardCausalAdj`, `forward_causal_time_step`, `forward_causal_acyclic`, `transgen_time_strictly_increases`, `lamport_irrefl`, `lamport_strict_partial_order`, `lamport_order_update_independent`, `afca_sr_causal_structure`; all zero sorry, zero axioms (CatAL/CatAD — Lamport properties CatAL, Minkowski isomorphism CatAD, 2026-05-21)
