@@ -44,7 +44,6 @@ open UgpLean.Universality.FockSpaceKink
 open UgpLean.Universality.BeableWindingPartitionInstance
 open UgpLean.Universality.PhiMDLThermalState
 open UgpLean.Substrate
-open GTE.Spacetime KinkQuantumNumbers
 
 variable {S : Substrate}
 
@@ -103,12 +102,8 @@ theorem transputation_fock_gibbs_identification :
 G40 closed CatAD (`c2_algebraic_global_uniqueness`, zero sorry).
 G22 closed CatAL (`cmca_hilbert_fock_sector_totality`, zero sorry).
 Together: transputation's quantum state selection is CatAD globally on the sector layer. -/
-theorem transputation_closed_catad (H : Z7SineGordonHamiltonian) (T : ℝ) (hT : 0 < T) :
-    c2_algebraic_global_uniqueness H T hT ∧
-    cmca_hilbert_fock_sector_totality ∧
-    transputation_sector_layer_closed H T hT := by
-  exact ⟨c2_algebraic_global_uniqueness H T hT,
-         cmca_hilbert_fock_sector_totality,
-         transputation_sector_layer_closed H T hT⟩
+theorem transputation_closed_catad (H : Z7SineGordonHamiltonian) (T : ℝ) (hT : 0 < T) :=
+  And.intro (c2_algebraic_global_uniqueness H T hT)
+    (And.intro cmca_hilbert_fock_sector_totality (transputation_sector_layer_closed H T hT))
 
 end UgpLean.Substrate.TransputationG41
