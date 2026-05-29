@@ -31,6 +31,7 @@
 \usepackage{cleveref}
 \usepackage{needspace}
 \usepackage[most]{tcolorbox}
+\usepackage{float}
 
 % \doi{} macro for bibliography entries using this command
 \providecommand{\doi}[1]{\href{https://doi.org/#1}{\nolinkurl{doi:#1}}}
@@ -118,6 +119,7 @@
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\Fib}{\mathrm{Fib}}
+\newcommand{\CatAL}{\mathrm{CatAL}}
 
 \title{\textbf{ugp-lean}: A Machine-Checked Formalization of the\\
        Universal Generative Principle}
@@ -3995,7 +3997,7 @@ this is the content of the No-Emulation theorem (Theorem~3.1,
 
 \begin{table}[h]
 \centering\small
-\begin{tabular}{@{}p{5.5cm}p{1.8cm}p{7.7cm}@{}}
+\begin{tabular}{@{}p{6.5cm}p{1.8cm}p{6.7cm}@{}}
 \toprule
 Theorem & Sorry & What it certifies \\
 \midrule
@@ -6225,7 +6227,7 @@ A complete row-by-row listing appears in the master inventory
 \begin{table}[h]
 \centering\footnotesize
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}p{5.2cm}p{3.7cm}p{5.0cm}@{}}
+\begin{tabular}{@{}p{5.2cm}p{4.8cm}p{4.0cm}@{}}
 \toprule
 Theorem & Module & Physical role \\
 \midrule
@@ -6329,7 +6331,7 @@ space and spinor exchange lives in \texttt{ugp-physics-lean}
 \begin{table}[h]
 \centering\footnotesize
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}p{5.2cm}p{3.7cm}p{5.0cm}@{}}
+\begin{tabular}{@{}p{5.2cm}p{4.8cm}p{4.0cm}@{}}
 \toprule
 Theorem & Module & Physical role \\
 \midrule
@@ -6664,8 +6666,8 @@ Physical meaning: the substrate packages P34's configuration-space coherence
 functional together with the PSC-consistency predicate that gates all
 Presentation-Invariance arguments.
 
-\subsection{PSC-Preserving Transformations
-  (\texttt{Substrate/PSCPreservingTransformation.lean})}\label{subsec:psc-preserving-transformation}
+\subsection[PSC-Preserving Transformations (\texttt{PSCPreservingTransformation.lean})]{PSC-Preserving Transformations
+  (\texttt{Substrate/\allowbreak PSCPreservingTransformation.lean})}\label{subsec:psc-preserving-transformation}
 
 Module: \texttt{Substrate/PSCPreservingTransformation.lean} (Rank 070-107
 Phase~1--2, zero \lstinline|sorry|, zero custom axioms).
@@ -6702,8 +6704,8 @@ The substantive content that Lorentz boosts are PSC-preserving is Lemma~2
 (\lstinline|lorentz_boost_preserves_psc|, \S\ref{subsec:psc-structure-lorentz}).
 Sanity check \lstinline|d2_universal_id| certifies invariance under the identity.
 
-\subsection{$\Phi_{\mathrm{MDL}}$ Lagrangian Lorentz Scalarity
-  (\texttt{Substrate/LagrangianLorentzScalar.lean})}\label{subsec:lagrangian-lorentz-scalar}
+\subsection[$\Phi_{\mathrm{MDL}}$ Lagrangian Lorentz Scalarity (\texttt{LagrangianLorentzScalar.lean})]{$\Phi_{\mathrm{MDL}}$ Lagrangian Lorentz Scalarity
+  (\texttt{Substrate/\allowbreak LagrangianLorentzScalar.lean})}\label{subsec:lagrangian-lorentz-scalar}
 
 Module: \texttt{Substrate/LagrangianLorentzScalar.lean} (Rank 070-107
 Phase~2 Lemma~1, zero \lstinline|sorry|, zero custom axioms).
@@ -6738,8 +6740,8 @@ is unchanged on Lorentz-related configurations (Lemma~1).
 Physical meaning: Lorentz boosts preserve the Layer-I PSC structure on the
 continuum substrate; RG $\beta$-functions built from $\mathcal{L}$ are Lorentz scalars.
 
-\subsection{SO(3) Noether Angular Momentum
-  (\texttt{Substrate/NoetherAngularMomentum.lean})}\label{subsec:noether-angular-momentum}
+\subsection[SO(3) Noether Angular Momentum (\texttt{NoetherAngularMomentum.lean})]{SO(3) Noether Angular Momentum
+  (\texttt{Substrate/\allowbreak NoetherAngularMomentum.lean})}\label{subsec:noether-angular-momentum}
 
 Module: \texttt{Substrate/NoetherAngularMomentum.lean} (Rank 280-NTH
 Phase~2, zero \lstinline|sorry|, \textbf{one PDE axiom}
