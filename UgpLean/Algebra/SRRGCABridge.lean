@@ -143,9 +143,10 @@ Its unique positive real solution is `x* = 1/φ = srrgFixedPoint`.
 This identifies the FCA attractor's algebraic diagonal fixed point with the SRRG
 coupling `g* = 1/φ` (CatAL).
 
-**Scope**: partial closure of G39. Full G39 — theory-space identification of the FCA
-attractor with the SRRG fixed point selecting `η`, VEV, and gauge group — requires
-formalization of `K_CMCA(g)` and `β_SRRG = dK_CMCA/dg` (rank 080-MDLSRRG-LEAN). -/
+**Scope**: partial closure of G39 at the coupling level. Full G39 — theory-space
+identification selecting `η`, VEV, and gauge group — requires the `K_CMCA → L_EW`
+connection (not yet algebraically proved). The common-zero MDL/SRRG equivalence at
+`g* = 1/φ` is certified below (`srrg_mdl_common_zero_is_g_star`). -/
 theorem fca_attractor_diagonal_fp_equals_srrg_fp :
     srrgFixedPoint ^ 2 + srrgFixedPoint = 1 := by
   have hs : srrgFixedPoint = (Real.sqrt 5 - 1) / 2 := by
@@ -285,5 +286,26 @@ theorem srrg_mdl_common_zero_is_g_star (g : ℝ) (hg : 0 < g) :
     rw [h]
     have hfp := fca_attractor_diagonal_fp_equals_srrg_fp
     exact mul_eq_zero.mpr (Or.inr (by linarith))
+
+/-! ## G39 master bundle — FCA attractor and SRRG share g* = 1/φ (CatAL) -/
+
+/-- **fca_srrg_share_fixed_point** (CatAL, G39 strengthened partial closure):
+The FCA attractor diagonal fixed point, the SRRG golden-ratio fixed point, and the
+unique common zero of `β_SRRG` and `K_CMCA` all coincide at `g* = 1/φ`.
+
+Components (all zero sorry):
+* `ca_fixed_point_is_golden_ratio_recip` — CMCA diagonal FP equation `x² + x - 1 = 0`
+* `srrg_fixed_point_eq_inv_phi` — SRRG selects `g* = φ⁻¹`
+* `srrg_mdl_common_zero_is_g_star` — MDL/SRRG common-zero uniqueness at `g*`
+
+**Remaining open (full G39):** that this shared `g*` selection implies the same
+`η`, VEV, and gauge group (requires `K_CMCA → L_EW` connection). -/
+theorem fca_srrg_share_fixed_point :
+    (let x := (Real.sqrt 5 - 1) / 2; x ^ 2 + x - 1 = 0) ∧
+    srrgFixedPoint = Real.goldenRatio⁻¹ ∧
+    ∀ (g : ℝ), 0 < g → (srrgBetaFn g = 0 ↔ g = srrgFixedPoint) := by
+  exact ⟨ca_fixed_point_is_golden_ratio_recip,
+         srrg_fixed_point_eq_inv_phi,
+         srrg_mdl_common_zero_is_g_star⟩
 
 end SRRGCABridge
