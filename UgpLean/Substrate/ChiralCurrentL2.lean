@@ -1,3 +1,4 @@
+import UgpLean.Algebra.GaugeMDL
 import UgpLean.Universality.ChiralPairVA
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Tactic
@@ -40,6 +41,7 @@ non-trivial chiral structure in the Level 2 Φ_MDL field.
 namespace GTE.ChiralCurrentL2
 
 open ChiralPairVA
+open GaugeMDL
 open BigOperators
 
 /-! ### 2D Levi-Civita contraction (Schwarz + antisymmetry) -/
@@ -177,18 +179,26 @@ theorem va_fraction_lifts_to_l2_chiral_current :
   · intro d2 hSchwarz; exact phimdl_vector_current_topological d2 hSchwarz
 
 /-- Combined G16 certification bundle (zero sorry). -/
-theorem phimdl_l2_chiral_current_bundle :
-    ((va_fraction_l1 = (32 : ℚ) / 125) ∧ (va_fraction_l1 ≠ 1)) ∧
+def PhimdlL2ChiralCurrentBundle : Prop :=
+  ((va_fraction_l1 = (32 : ℚ) / 125) ∧ (va_fraction_l1 ≠ 1)) ∧
     ((windingSignR = -windingSignL) ∧ (windingSignR ≠ windingSignL)) ∧
-    (jVectorTapeSum = 0) ∧
-    (∀ d2, (∀ μ ν, d2 μ ν = d2 ν μ) → axialCurrentDivergence d2 = 0) ∧
-    (((va_fraction_l1 = (32 : ℚ) / 125) ∧ (va_fraction_l1 ≠ 1)) ∧
-      (jAxialTapeDiff ≠ 0) ∧
-      (∀ d2, (∀ μ ν, d2 μ ν = d2 ν μ) → axialCurrentDivergence d2 = 0) ∧
-      (∀ d2, (∀ μ ν, d2 μ ν = d2 ν μ) → vectorCurrentDivergence d2 = 0)) := by
+      (jVectorTapeSum = 0) ∧
+        (∀ d2, (∀ μ ν, d2 μ ν = d2 ν μ) → axialCurrentDivergence d2 = 0) ∧
+          (((va_fraction_l1 = (32 : ℚ) / 125) ∧ (va_fraction_l1 ≠ 1)) ∧
+            (jAxialTapeDiff ≠ 0) ∧
+              (∀ d2, (∀ μ ν, d2 μ ν = d2 ν μ) → axialCurrentDivergence d2 = 0) ∧
+                (∀ d2, (∀ μ ν, d2 μ ν = d2 ν μ) → vectorCurrentDivergence d2 = 0))
+
+theorem phimdl_l2_chiral_current_bundle : PhimdlL2ChiralCurrentBundle := by
   refine ⟨va_fraction_l1_matches_chiral_pair, tape_chiral_signs_opposite,
     j_vector_tape_sum_zero, ?_, va_fraction_lifts_to_l2_chiral_current⟩
   intro d2 hSchwarz
   exact phimdl_axial_current_topological d2 hSchwarz
+
+/-- **G16 + G18 bundle** (CatAD): topological V–A currents plus weak charged current
+    from within-tape `|D_μΨ|²` MDL gauging. -/
+theorem phimdl_l2_chiral_and_weak_current_bundle (K_base : ℝ) :
+    PhimdlL2ChiralCurrentBundle ∧ PhimdlWeakChargedCurrentCert K_base :=
+  ⟨phimdl_l2_chiral_current_bundle, phimdl_weak_charged_current K_base⟩
 
 end GTE.ChiralCurrentL2

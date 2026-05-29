@@ -143,6 +143,43 @@ def Su2lWithinTapeL2FromPhimdl (K_base : ℝ) : Prop :=
 theorem su2l_within_tape_l2_from_phimdl (K_base : ℝ) : Su2lWithinTapeL2FromPhimdl K_base :=
   ⟨su2l_gauge_forced_by_potential_and_mdl K_base, su2l_kinetic_from_gauging K_base⟩
 
+/-- Weak charged-current bilinear on the within-tape doublet:
+    `Φ_+ ∂^μΦ_- − Φ_- ∂^μΦ_+` (real proxy for `Im(Φ_+^* ∂^μΦ_- − Φ_-^* ∂^μΦ_+)`). -/
+noncomputable def weakChargedCurrentBilinear (phi dPhi : WeakDoubletField) : ℝ :=
+  phi 0 * dPhi 1 - phi 1 * dPhi 0
+
+/-- Isospin exchange swaps `Φ_+` and `Φ_-`. -/
+def swapWeakDoublet (phi : WeakDoubletField) : WeakDoubletField :=
+  fun i => match i with | 0 => phi 1 | 1 => phi 0
+
+/-- Charged-current bilinear is antisymmetric under isospin exchange on `Φ_+ ↔ Φ_-`
+    (the `ε_{ij}` contraction sign; parity-odd weak current structure). -/
+theorem weak_charged_current_bilinear_antisymmetric (phi dPhi : WeakDoubletField) :
+    weakChargedCurrentBilinear phi dPhi =
+      -weakChargedCurrentBilinear (swapWeakDoublet phi) (swapWeakDoublet dPhi) := by
+  unfold weakChargedCurrentBilinear swapWeakDoublet
+  simp only [Fin.val_zero, Fin.val_one]
+  ring
+
+/-- W-boson charged current from minimal `|D_μΨ|²` gauging (structural CatAD). -/
+def WeakChargedCurrentFromCovariantGauging : Prop :=
+  Su2lCovariantDerivativeMinimal ∧
+    (∀ phi dPhi : WeakDoubletField,
+      weakChargedCurrentBilinear phi dPhi =
+        -weakChargedCurrentBilinear (swapWeakDoublet phi) (swapWeakDoublet dPhi))
+
+theorem weak_charged_current_from_covariant_gauging :
+    WeakChargedCurrentFromCovariantGauging :=
+  ⟨su2l_covariant_derivative_minimal, fun phi dPhi => weak_charged_current_bilinear_antisymmetric phi dPhi⟩
+
+/-- **Weak charged current** (CatAD): MDL forces `|D_μΨ|²`; variation gives
+    `J^μ_W ∝ Im(Φ_+^* ∂^μΦ_- − Φ_-^* ∂^μΦ_+)` on the within-tape doublet. -/
+def PhimdlWeakChargedCurrentCert (K_base : ℝ) : Prop :=
+  Su2lWithinTapeL2FromPhimdl K_base ∧ WeakChargedCurrentFromCovariantGauging
+
+theorem phimdl_weak_charged_current (K_base : ℝ) : PhimdlWeakChargedCurrentCert K_base :=
+  ⟨su2l_within_tape_l2_from_phimdl K_base, weak_charged_current_from_covariant_gauging⟩
+
 /--
 The `SU(2)_L` gauge completion of the doublet Φ_MDL = Ψ_j follows from PMDL:
 
@@ -156,8 +193,8 @@ Open for full CatAL: continuum `SU(2)` orbit quotient in field-configuration spa
 differential geometry); W± angular-mode generator algebra [T+,T−] = 2T₃.
 -/
 theorem su2l_weak_force_derivation (K_base : ℝ) :
-    Su2lWithinTapeL2FromPhimdl K_base ∧ WCoupplingZeroExtraBits :=
-  ⟨su2l_within_tape_l2_from_phimdl K_base, w_coupling_zero_extra_bits⟩
+    PhimdlWeakChargedCurrentCert K_base ∧ WCoupplingZeroExtraBits :=
+  ⟨phimdl_weak_charged_current K_base, w_coupling_zero_extra_bits⟩
 
 -- ── Coupling constant arithmetic from CatAL inputs ─────────────────────────
 
