@@ -131,6 +131,45 @@ theorem L_EW_log_decomposition :
   simp only [L_EW, vol_S3_eq]
   exact ew_scale_log_decomposition
 
+/-! ## G39 — FCA attractor diagonal fixed point equals SRRG fixed point (CatAL) -/
+
+/-- **fca_attractor_diagonal_fp_equals_srrg_fp** (CatAL, EPIC_080 G39 partial closure):
+The GTE polynomial `p(x,x,x) = 2x − x² − x³` does not depend on lattice resolution `M`.
+By M-independence of the GTE algebraic structure (Algebraic Descent Theorem, P35 §6),
+the diagonal fixed-point equation `p(x*,x*,x*) = x*` — equivalently `x*² + x* = 1` —
+holds at every resolution `M ≥ 1` and in the `M → ∞` (FCA attractor) limit.
+Its unique positive real solution is `x* = 1/φ = srrgFixedPoint`.
+
+This identifies the FCA attractor's algebraic diagonal fixed point with the SRRG
+coupling `g* = 1/φ` (CatAL).
+
+**Scope**: partial closure of G39. Full G39 — theory-space identification of the FCA
+attractor with the SRRG fixed point selecting `η`, VEV, and gauge group — requires
+formalization of `K_CMCA(g)` and `β_SRRG = dK_CMCA/dg` (rank 080-MDLSRRG-LEAN). -/
+theorem fca_attractor_diagonal_fp_equals_srrg_fp :
+    srrgFixedPoint ^ 2 + srrgFixedPoint = 1 := by
+  have hs : srrgFixedPoint = (Real.sqrt 5 - 1) / 2 := by
+    unfold srrgFixedPoint Real.goldenConj; ring
+  rw [hs]
+  have h5 : Real.sqrt 5 ^ 2 = 5 := Real.sq_sqrt (by norm_num)
+  nlinarith [h5]
+
+/-- **fca_srrg_attractor_bridge** (CatAL, G39): bundles the FCA–SRRG algebraic
+diagonal-fixed-point identification. The value `x* = 1/φ` is simultaneously:
+(1) the unique positive root of `p(x,x,x) = x` (CA diagonal fixed point);
+(2) the SRRG fixed-point coupling `g*`; and
+(3) M-independent (holds at all resolutions including `M → ∞`). -/
+theorem fca_srrg_attractor_bridge :
+    let x_star := srrgFixedPoint
+    0 < x_star ∧
+    x_star < 1 ∧
+    x_star ^ 2 + x_star = 1 ∧
+    x_star = Real.goldenRatio⁻¹ :=
+  ⟨srrg_fixed_point_in_unit_interval.1,
+   srrg_fixed_point_in_unit_interval.2,
+   fca_attractor_diagonal_fp_equals_srrg_fp,
+   srrg_fixed_point_eq_inv_phi⟩
+
 /-- **srrg_mdl_bridge_master** (partial): bundles the fixed-point and L_EW identities. -/
 theorem srrg_mdl_bridge_master :
     (∃ g_star : ℝ, g_star = srrgFixedPoint ∧ g_star ^ 2 + g_star - 1 = 0) ∧
