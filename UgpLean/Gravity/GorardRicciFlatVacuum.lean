@@ -186,4 +186,26 @@ theorem gorard_chain_catAL_master_bundle :
   · exact GTE.ContinuumLimit.Bianchi.rule110_discrete_bianchi_identity.1
   · exact GTE.ContinuumLimit.gte_poly_uniform_unique_fixed_point
 
+/-- **gorard_bridge_coefficient** (CatAL):
+    The discrete→smooth bridge ratio κ_SD / (8π) is strictly between 0 and 1.
+
+    κ_SD = 10/13 is the Gorard SD-edge curvature at a matter source (Rule 110 CMCA,
+    G25 result). The ratio κ_SD/(8π) is the C_Gorard coefficient mapping
+    Ollivier-Ricci curvature to smooth Riemann scalar curvature:
+
+        κ_Ollivier = C_Gorard × R_smooth × ε²
+
+    Positivity: 10/13 > 0 and 8π > 0 ⇒ ratio > 0.
+    Upper bound: 10/13 < 8π (since 8π > 25 > 10/13) ⇒ ratio < 1. -/
+theorem gorard_bridge_coefficient :
+    let kappa_SD : ℝ := 10 / 13
+    let eight_pi : ℝ := 8 * Real.pi
+    kappa_SD / eight_pi > 0 ∧ kappa_SD / eight_pi < 1 := by
+  refine ⟨?_, ?_⟩
+  · positivity
+  · have hpi : (3 : ℝ) < Real.pi := Real.pi_gt_three
+    have h8pi : (0 : ℝ) < 8 * Real.pi := by positivity
+    rw [div_lt_one h8pi]
+    linarith
+
 end UgpLean.Gravity.GorardRicciFlatVacuum
