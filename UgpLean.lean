@@ -181,6 +181,7 @@ import UgpLean.Substrate.Substrate
 import UgpLean.Substrate.PSCPreservingTransformation
 import UgpLean.Substrate.CoherenceMeasure
 import UgpLean.Substrate.CoherenceMeasureUniqueness
+import UgpLean.Substrate.C2CoherenceG40
 import UgpLean.Substrate.QECStabilizer
 import UgpLean.Substrate.GEQECCode
 import UgpLean.Substrate.RSCodeOrbit
