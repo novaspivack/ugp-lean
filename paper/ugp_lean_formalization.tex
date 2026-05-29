@@ -5123,6 +5123,27 @@ The Fock lift \lstinline|fock_beable_amplitude_normalized| satisfies
 Physical meaning: second-quantization scaffolding connects kink-mode Fock
 occupations to the conditional Born-rule certificate.
 
+\subsection{Cogwheel discrete evolution (G21,
+  \texttt{Substrate/CogwheelDynamicsG21.lean})}\label{subsec:cogwheel-g21}
+
+Module: \texttt{Substrate/CogwheelDynamicsG21.lean}.  Certifies the Level~1
+'t~Hooft cogwheel unitary evolution $U(n)=\exp(-iH_{\rm cyc}n\tau_c)$ on
+$\mathbb{C}^{7^5}$ and its discrete Schr\"odinger algebra (four zero-sorry
+$\CatAL$ theorems; three $\CatAD$ axioms for vacuum eigenvalue and
+information-loss convergence gate the Level~1$\to$Level~2 continuum limit).
+
+\begin{theorem}[\lstinline|discrete_schrodinger_composition|, zero \texttt{sorry}]
+The discrete CMCA unitary evolution satisfies $U(m+n) = U(m) \cdot U(n)$ (composition law, $\CatAL$).
+\end{theorem}
+
+\begin{theorem}[\lstinline|discrete_schrodinger_step_recurrence|, zero \texttt{sorry}]
+$U(n+1) = e^{-iH_{\rm cyc}\tau_c} \cdot U(n)$ (step recurrence, $\CatAL$).
+\end{theorem}
+
+\begin{theorem}[\lstinline|discrete_evolution_unitary|, zero \texttt{sorry}]
+$U(n)$ is unitary for Hermitian $H_{\rm cyc}$ ($\CatAL$).
+\end{theorem}
+
 \subsection{Beable Z\textsubscript{7} Winding Partition Instance\linebreak
   (\texttt{\small Universality/BeableWindingPartitionInstance.lean})}\label{subsec:beable-winding-partition}
 
@@ -5940,6 +5961,21 @@ independently from the Lean theorem.  The gap is not a lattice artefact:
 $\beta$-scaling sweep across $\beta \in \{0.35, 0.40, 0.45, 0.50\}$
 confirms the physical mass is stable within $24\%$ (pass criterion $\le 30\%$).
 Linear extrapolation to $a \to 0$ gives $m_0 \approx 24.6~\text{GeV}$ (positive).
+
+\subsection{Wightman axioms for $\Phi_{\rm MDL}$ (G38,
+  \texttt{Substrate/WightmanAxioms.lean})}\label{subsec:wightman-g38}
+
+Module: \texttt{Substrate/WightmanAxioms.lean}.  Documents the continuum-limit
+Wightman spectral bridge referenced in \S\ref{subsec:qft-mass-gap-conditional}
+as an explicit structural certificate rather than a hidden sorry.
+
+\begin{theorem}[\lstinline|phimdl_satisfies_wightman_axioms|, structural ($\CatAD$)]
+The $\Phi_{\rm MDL}$ field satisfies all seven Wightman axioms at the $\CatAD$
+structural level (Hilbert space, Poincar\'e, field operator, vacuum, spectrum,
+locality, positivity); axioms~1--5 bundle in
+\lstinline|phimdl_satisfies_wightman_axioms|, axioms~6--7 in
+\lstinline|phimdl_wightman_locality_positivity_bundle|.
+\end{theorem}
 
 % ═══════════════════════════════════════════════════════════════
 \section{Capstone Certification and Axiom Inventory
@@ -6889,6 +6925,28 @@ Theorem & Module & Physical content \\
 \label{tab:new-theorem-inventory-g28-g29}
 \end{table}
 
+\begin{theorem}[\lstinline|su2l_within_tape_l2_from_phimdl|, structural ($\CatAD$)]
+The within-tape doublet $(\Phi_+,\Phi_-)$ gains SU(2)$_L$ covariant kinetic term
+$|D_\mu\Psi|^2$ via the MDL principle (structural $\CatAD$; LC5 orbit geometry
+pending for $\CatAL$).
+\end{theorem}
+
+\subsection{CMB spectral tilt (G33,
+  \texttt{Gravity/CMBSpectralTilt.lean})}\label{subsec:cmb-spectral-tilt-g33}
+
+Module: \texttt{Gravity/CMBSpectralTilt.lean}.  Certifies the GTE spectral-index
+formula $n_s^{\rm GTE}=1-\ln 2/(2\pi^2)$ and its physical identification under
+the $\mathbb{Z}_2$-EFT bounce bridge.
+
+\begin{theorem}[\lstinline|z2_eft_predicts_cmb_tilt|, named axiom ($\CatAD$)]
+The classical $\mathbb{Z}_2$-EFT on compact $S^4$ bounce predicts the observed CMB
+spectral index (bridge axiom; weaker than full OQ-QG-1).
+\end{theorem}
+
+\begin{theorem}[\lstinline|cmb_spectral_index_equals_gte_prediction|, zero \texttt{sorry}]
+Under the bridge axiom, $n_s^{\rm physical} = 1 - \ln 2/(2\pi^2) = 0.96488$ ($\CatAD$).
+\end{theorem}
+
 \subsection{$\Phi_{\rm MDL}$ propagator, quartic vertex, and ZZ exact S-matrix (G9, 2026-05-29)}\label{subsec:phimdl-propagator-g9}
 
 The module \texttt{Substrate/PhiMDLPropagator.lean} (zero \texttt{sorry}) certifies the
@@ -6917,6 +6975,12 @@ without loop integrals (CatAD; no Lean certification required for integrable-sys
 results established by ZZ 1979).  This is consistent with \lstinline|z7_no_bion_criterion|
 (G28, zero \texttt{sorry}), which already certifies the absence of bions.
 \end{theorem}
+
+\begin{remark}[G9 --- Exact S-matrix ($\CatAD$, Zamolodchikov 1979)]
+The $\mathbb{Z}_7$ sine-Gordon is exactly integrable ($\beta^2=49>8\pi$, repulsive
+regime).  The exact kink--kink S-matrix $S_{kk}=-1$ follows from ZZ~1979 (no Lean
+certification required for integrable systems; $\CatAD$ from physical derivation).
+\end{remark}
 
 \subsection{Mass gap and hierarchy}\label{subsec:mass-gap-hierarchy}
 
