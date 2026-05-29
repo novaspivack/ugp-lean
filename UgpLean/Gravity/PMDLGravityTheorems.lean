@@ -623,6 +623,30 @@ theorem tau_yukawa_catad_derivation_chain :
     (1 : ℚ) / (7^2 * 2) = 1 / 98 := by
   constructor <;> norm_num
 
+/--
+**kink_mass_from_vH_complete** (CatAD):
+
+Complete G7 derivation: `M_kink` from `v_H` via G8 + G7.
+
+Chain:
+  1. `y_τ = c_V/N_mod2 = (1/49)/2 = 1/98`  (CatAD, LEPTON-YUKAWA-MECHANISM)
+  2. `m_τ = v_H × y_τ / √2 = v_H/(98√2)`   (CatAD, from SRRG `v_H` + `y_τ`)
+  3. `M_kink = (8/49) × m_τ`                (CatAL, G7 BPS formula)
+  4. `M_kink = (8/49) × v_H/(98√2) = 4v_H/(7⁴√2) = g_hKK × v_H/√2`  (CatAD)
+
+Lean certifies the dimensionless chain as rational arithmetic:
+  `g_hKK = (8/49) × y_τ = (8/49) × (1/98) = 4/7⁴`.
+
+Bundles `kink_bps_mass_formula` (G7 BPS), `tau_yukawa_structural` (G8 Yukawa),
+and `kink_higgs_dimensionless_coupling` (G7×G8 dimensionless coupling).
+-/
+theorem kink_mass_from_vH_complete :
+    (∀ m : ℚ, 0 < m → (4 * m / 49) * 2 = 8 * m / 49) ∧
+    (1 : ℚ) / (2 * 7^2) = 1 / 98 ∧
+    (8 : ℚ) / 49 * (1 / 98) = 4 / 7^4 := by
+  exact ⟨fun m hm => kink_bps_mass_formula m hm, tau_yukawa_structural,
+         kink_higgs_dimensionless_coupling⟩
+
 -- ============================================================
 -- XVI. Hawking kink emission thresholds (G46) — CatAD
 -- ============================================================
