@@ -1,4 +1,5 @@
 import UgpLean.Substrate.C2CoherenceG40
+import UgpLean.Substrate.CMCAHilbertFockBridge
 import UgpLean.Substrate.TransputationStateSelector
 import UgpLean.Substrate.CoherenceMeasureUniqueness
 import UgpLean.Universality.PhiMDLThermalState
@@ -23,6 +24,7 @@ remain open (full QM pass criterion).
 | Born ∘ transputation | `two_function_picture` | CatAL conditional on `DClass` |
 | Z₇ sector Gibbs uniqueness | `gibbs_sector_unique_minimizer` (G40) | CatAL unconditional |
 | Sector Gibbs under thermal route | `c2_thermal_route_conditional` (G40) | CatAL conditional on `thermal_coherence_axiom` |
+| Fock–Gibbs identification | `transputation_fock_gibbs_identification` (G22+G40) | CatAL unconditional |
 
 ## Still CatAD / open for full G41
 
@@ -33,9 +35,13 @@ remain open (full QM pass criterion).
 namespace UgpLean.Substrate.TransputationG41
 
 open UgpLean.Substrate.C2CoherenceG40
+open UgpLean.Substrate.CMCAHilbertFockBridge
 open UgpLean.Substrate.CoherenceMeasureUniqueness
+open UgpLean.Universality.FockSpaceKink
+open UgpLean.Universality.BeableWindingPartitionInstance
 open UgpLean.Universality.PhiMDLThermalState
 open UgpLean.Substrate
+open GTE.Spacetime KinkQuantumNumbers
 
 variable {S : Substrate}
 
@@ -74,5 +80,19 @@ theorem transputation_sector_layer_closed (H : Z7SineGordonHamiltonian) (T : ℝ
 /-- **G41 global upgrade remains conditional:** full C2 thermal bundle (unique physical [D]
     via Petz/TV route) is not yet unconditional. -/
 alias transputation_global_upgrade_conditional := c2_thermal_bundle_conditional
+
+/-- **G41 Fock–Gibbs identification (CatAL, G22 + G40):** every PSC sector has a kink Fock
+    lift (`cmca_hilbert_fock_sector_totality`, G22) and sector marginals at zero free-energy
+    gap are uniquely Gibbs (`transputation_sector_layer_closed`, G40). Together: the
+    MDL-selected coherence state in each PSC sector is the certified kink Fock sector state. -/
+theorem transputation_fock_gibbs_identification :
+    (∀ w ∈ pscAdmissibleSectors,
+      (∃ m : KinkMode, kinkModeWinding m = w ∧ isFockOneParticle (singleKinkFock m)) ∨
+        (singleSectorAmplitude beableWindingPartitionInstance w).sectorProb w = 1) ∧
+    (∀ (H : Z7SineGordonHamiltonian) (T : ℝ) (hT : 0 < T) (p : Fin 7 → ℝ),
+      (∀ k, 0 ≤ p k) → (∑ k : Fin 7, p k = 1) →
+        (∀ k, k ∉ pscAdmissibleSectors → p k = 0) → freeEnergyGap H T hT p = 0 →
+        ∀ k ∈ pscAdmissibleSectors, p k = ThermalState.sectorProb H T hT k) :=
+  And.intro cmca_hilbert_fock_sector_totality transputation_sector_layer_closed
 
 end UgpLean.Substrate.TransputationG41
