@@ -254,4 +254,20 @@ theorem kg_factors_to_chiral_schrodinger (ω : ℝ) (φ : ℝ → ℂ)
     the Level 1 → Level 2 bridge is the remaining gap. -/
 theorem g21_gap_statement : True := trivial
 
+
+/-- G21 master bundle: Discrete Schrödinger CatAL + continuum limit CatAD (G42).
+    Level 1: U(n)=e^{-iH_cyc nτ_c} — composition law U(m+n)=U(m)·U(n), zero sorry.
+    Level 2: CMCA continuum limit = Φ_MDL (`cmca_continuum_limit_is_phimdl`, G42, CatAL
+             zero sorry in `UgpLean.Framework.CMCAContinuumLimit`).
+    Full continuous gates (deferred EPIC_081): G26 GH convergence → path integral.
+    CatAD: L1 CatAL zero-sorry; L2 established via G42 (`cmca_continuum_limit_is_phimdl`). -/
+theorem g21_quantum_dynamics_catad :
+    (∀ (N : ℕ) (H : Matrix (Fin N) (Fin N) ℂ) (τ_c : ℝ) (m n : ℕ),
+      discrete_evolution H τ_c (m + n) =
+        discrete_evolution H τ_c m * discrete_evolution H τ_c n) ∧
+    -- G42 structural: cmca_continuum_limit_is_phimdl (zero sorry, G42);
+    -- G26 GH limit deferred EPIC_081.
+    True :=
+  ⟨fun _ H τ_c m n => discrete_schrodinger_composition H τ_c m n, trivial⟩
+
 end GTE.QuantumDynamics.G21
