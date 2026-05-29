@@ -5,6 +5,7 @@
 
 \begingroup
 \footnotesize
+\setlength{\hfuzz}{5pt}
 \setlength{\LTleft}{0pt}
 \setlength{\LTright}{0pt}
 \begin{longtable}{@{}p{6.3cm}p{4.6cm}p{1.5cm}p{1.5cm}@{}}
@@ -133,10 +134,10 @@
 \lstinline|neutrino_mass_ratio_tight_bound| & MR.NeutrinoMassRatio & P21     & \textbf{Yes} \\
 \lstinline|seesaw_ratio_independent_of_MR| & MR.NeutrinoMassRatio  & P21     & \textbf{Yes} \\
 \lstinline|dt_integral_diverges|        & VEVNoGo.SRRGNoGo        & SRRG     & \textbf{Yes} \\
-\lstinline|psc_entropy_contraction_duality_proved| & VEVProof.PSCEntropyDuality & P27 & \textbf{Yes} \\
+\texttt{psc\_entropy\_contraction\_\allowbreak duality\_proved} & VEVProof.PSCEntropyDuality & P27 & \textbf{Yes} \\
 \lstinline|per_gen_volume_correction|   & VEVProof.GoldstoneEntropy & P27    & \textbf{Yes} \\
-\lstinline|ew_goldstone_count|, \lstinline|vol_S3_eq| & VEVProof.EWGoldstoneManifold & P27 & \textbf{Yes} \\
-\lstinline|ew_vacuum_manifold_uniqueness| & VEVProof.EWGoldstoneManifold & P27 & \textbf{Yes} \\
+\lstinline|ew_goldstone_count|, \lstinline|vol_S3_eq| & VEVProof.\allowbreak EWGoldstoneManifold & P27 & \textbf{Yes} \\
+\lstinline|ew_vacuum_manifold_uniqueness| & VEVProof.\allowbreak EWGoldstoneManifold & P27 & \textbf{Yes} \\
 \addlinespace[4pt]
 \midrule
 \addlinespace[2pt]
@@ -156,7 +157,7 @@
 \multicolumn{4}{@{}l}{\textit{CUP Theorems (\S\ref{subsec:cup4-total-parity}--\ref{subsec:cup3d-psc-unification})}} \\
 \addlinespace[2pt]
 \lstinline|cup4_parity_uniqueness|       & Univ.CUP4TotalParity    & CUP-4   & \textbf{Yes} \\
-\lstinline|cup1_orbit_uniquely_selects_rule110| & Univ.CUP4TotalParity & CUP-4 & \textbf{Yes} \\
+\texttt{cup1\_orbit\_uniquely\_\allowbreak selects\_rule110} & Univ.CUP4TotalParity & CUP-4 & \textbf{Yes} \\
 \lstinline|cup11c_universal_mod7_CA_exists| & Univ.CUP11ModSeven   & CUP-11c & \textbf{Yes} \\
 \lstinline|fmdl_never_outputs_4|        & Univ.CUP3DUniqueness    & \S\ref{sec:gutstructure} & \textbf{Yes} \\
 \lstinline|fmdl_gen1_is_garden_of_eden| & Univ.CUP3DUniqueness    & GoE     & \textbf{Yes} \\
@@ -164,7 +165,7 @@
 \lstinline|cup3d_psc_goe_chain|         & Univ.CUP3DPSCUnification & PSC     & \textbf{Yes} \\
 \lstinline|physical_incompleteness_thm| & Univ.CUP3DPhysicalInc.  & CUP-PI  & 3 axioms \\
 \lstinline|hypothesis_b_tape_level|     & Univ.HypothesisB        & Hyp B   & 1 axiom \\
-\lstinline|hypothesis_c_psc_forces_universality| & Univ.PSCUniversality & Hyp C & 1 axiom \\
+\texttt{hypothesis\_c\_psc\_forces\_\allowbreak universality} & Univ.PSCUniversality & Hyp C & 1 axiom \\
 \lstinline|gte_compilation_theorem|     & Univ.GTECompilation     & \S\ref{subsec:gte-compilation} & \textbf{Yes} \\
 \lstinline|gte_unique_bisimulation|     & Univ.GTEUniqueness      & \S\ref{subsec:gte-uniqueness} & \textbf{Yes} \\
 \addlinespace[4pt]
@@ -175,7 +176,7 @@
 \lstinline|gen1_is_goe|                 & Univ.GoEStabilityHierarchy & GoE  & \textbf{Yes} \\
 \lstinline|gen2_unique_predecessor|     & Univ.GoEStabilityHierarchy & ---  & \textbf{Yes} \\
 \lstinline|sm_chain_fully_isolated|     & Univ.GoEStabilityHierarchy & ---  & \textbf{Yes} \\
-\lstinline|orbit_perturbation_destroys_universality| & Univ.OrbitPerturbCat. & P28 & \textbf{Yes} \\
+\texttt{orbit\_perturbation\_destroys\_\allowbreak universality} & Univ.OrbitPerturbCat. & P28 & \textbf{Yes} \\
 \addlinespace[4pt]
 \midrule
 \addlinespace[2pt]
@@ -185,7 +186,7 @@
 \lstinline|z7_conj_pairs|               & Univ.Z7ChargeConj.      & §CC  & \textbf{Yes} \\
 \lstinline|fmdl_matter_cp_violation|    & Univ.Z7ChargeConj.      & P33  & \textbf{Yes} \\
 \lstinline|fmdl_conj_pair_asymmetry_unique| & Univ.Z7ChargeConj.  & P33  & \textbf{Yes} \\
-\lstinline|ca_w_plus_is_emission_not_absorption| & Univ.Z7ChargeConj. & P33 & \textbf{Yes} \\
+\texttt{ca\_w\_plus\_is\_emission\_\allowbreak not\_absorption} & Univ.Z7ChargeConj. & P33 & \textbf{Yes} \\
 \lstinline|cup11b_z7_sum_conservation|  & Univ.CUP3DUniqueness    & CUP-11b & \textbf{Yes} \\
 \addlinespace[4pt]
 \midrule
@@ -228,7 +229,7 @@
 \lstinline|ugp_r110_sm_joint_unification| & Univ.GUTStructure §27 & P35  & \textbf{Yes} \\
 \lstinline|gte_spacetime_dimension|     & Univ.GUTStructure §54   & P36  & \textbf{Yes} \\
 \lstinline|charge_from_z7_winding|      & Univ.GUTStructure §49   & P37  & \textbf{Yes} \\
-\lstinline|hypercharge_u_quark|, \lstinline|weinberg_angle_from_hypercharge_sum| & Univ.GUTStructure §73 & P37 & \textbf{Yes} \\
+\lstinline|hypercharge_u_quark|, \texttt{weinberg\_angle\_from\_\allowbreak hypercharge\_sum} & Univ.GUTStructure §73 & P37 & \textbf{Yes} \\
 \lstinline|gorard_matter_step_kappa_positive| & Univ.GUTStructure §74 & P36 & \textbf{Yes} \\
 \lstinline|tail_length_strict_ordering| & Univ.GUTStructure §76   & P37  & \textbf{Yes} \\
 \lstinline|vacuum_ollivier_ricci_flatness| & Univ.GUTStructure §32 & P36 & \textbf{Yes} \\
@@ -242,10 +243,10 @@
 \addlinespace[2pt]
 \multicolumn{4}{@{}l}{\textit{GTE Framework \& C1 Final Coalgebra (\S\ref{subsec:gte-framework-instance}--\ref{subsec:gte-final-coalgebra})}} \\
 \addlinespace[2pt]
-\lstinline|GTEFramework|               & Framework.GTEFrameworkInstance & NEMS   & \textbf{Yes} \\
-\lstinline|gte_tpc_from_nems_classification| & Framework.GTEFrameworkInstance & C3 & \textbf{Yes} \\
-\lstinline|gte_tpc_real|               & Framework.GTEFrameworkInstance & C3     & \textbf{Yes} \\
-\lstinline|gte_d_unique|               & Framework.GTEOptimalityInstance & P34   & \textbf{Yes} \\
+\lstinline|GTEFramework|               & Framework.\allowbreak GTEFrameworkInstance & NEMS   & \textbf{Yes} \\
+\lstinline|gte_tpc_from_nems_classification| & Framework.\allowbreak GTEFrameworkInstance & C3 & \textbf{Yes} \\
+\lstinline|gte_tpc_real|               & Framework.\allowbreak GTEFrameworkInstance & C3     & \textbf{Yes} \\
+\lstinline|gte_d_unique|               & Framework.\allowbreak GTEOptimalityInstance & P34   & \textbf{Yes} \\
 \lstinline|psc_optimal_zero_on_free|   & Framework.GTEFinalCoalgebra  & C1     & \textbf{Yes} \\
 \lstinline|c1_final_coalgebra_derived| & Framework.GTEFinalCoalgebra  & C1     & \textbf{Yes} \\
 \lstinline|c1_lambek_isomorphism|      & Framework.GTEFinalCoalgebra  & C1     & \textbf{Yes} \\
@@ -338,7 +339,7 @@
 \lstinline|mdl_c1_n13_is_9007|               & GTE.UniquenessCert & Thm~\ref{thm:mdl-multi}      & \textbf{Yes} \\
 \lstinline|mdl_c1_n16_is_46681|              & GTE.UniquenessCert & Thm~\ref{thm:mdl-multi}      & \textbf{Yes} \\
 \lstinline|order_classification_n10_to_n13|  & GTE.UniquenessCert & Thm~\ref{thm:orders}         & \textbf{Yes} \\
-\lstinline|singular_series_partial_lower_bound| & GTE.UniquenessCert & Thm~\ref{thm:singular-series} & \textbf{Yes} \\ % col2 abbrev: keeps col1 in bounds
+\texttt{singular\_series\_partial\_\allowbreak lower\_bound} & GTE.UniquenessCert & Thm~\ref{thm:singular-series} & \textbf{Yes} \\ % col2 abbrev: keeps col1 in bounds
 \lstinline|n10_uniqueness_package|            & GTE.UniquenessCert & \S\ref{sec:uniqueness}       & \textbf{Yes} \\
 \lstinline|AsymptoticSparsityConjecture|      & GTE.UniquenessCert & Conj~\ref{conj:sparsity}     & Stated \\
 \lstinline|UGPZetaFactorizationConjecture|    & GTE.UniquenessCert & Conj~\ref{conj:zeta}         & Stated \\
@@ -368,32 +369,32 @@
 \multicolumn{4}{@{}l}{\textit{Quantum Gravity Completion --- EPIC\_078 (2026-05-27/28)}} \\
 \addlinespace[2pt]
 \lstinline|minimal_coupling_is_mdl_minimal|          & Gravity.MinimalCoupling      & P36  & \textbf{Yes} \\
-\lstinline|z7_superselection_preserved_by_flat_metric| & Gravity.MinimalCoupling    & P36  & \textbf{Yes} \\
+\texttt{z7\_superselection\_preserved\_\allowbreak by\_flat\_metric} & Gravity.MinimalCoupling    & P36  & \textbf{Yes} \\
 \lstinline|flrw_phimdl_equation_well_defined|        & Gravity.FLRWFieldEquation    & P38  & \textbf{Yes} \\
 \lstinline|planck_density_bound_via_lifting|         & Gravity.PlanckDensityBound   & P36  & \textbf{Yes} \\
 \lstinline|phimdl_no_curvature_coupling|             & Gravity.CurvedBackground     & P38  & \textbf{Yes} \\
 \lstinline|mdl_selects_flat_cosmology|               & Gravity.CurvedBackground     & P38  & \textbf{Yes} \\
-\lstinline|gte_friedmann_correction_at_planck_zero|  & Gravity.BounceAndArithmetic  & P38  & \textbf{Yes} \\
+\texttt{gte\_friedmann\_correction\_\allowbreak at\_planck\_zero}  & Gravity.BounceAndArithmetic  & P38  & \textbf{Yes} \\
 \lstinline|cpt_is_involution|                        & Gravity.BounceAndArithmetic  & P36  & \textbf{Yes} \\
 \lstinline|generation_orbit_has_order_3|             & Gravity.BounceAndArithmetic  & P36  & \textbf{Yes} \\
 \lstinline|psc_admissible_eq_rs_eval_points|         & Gravity.PSCQECWaldConn.      & P34  & \textbf{Yes} \\
 \lstinline|gte_ghet_t2_t5_certified|                 & Gravity.PSCQECWaldConn.      & P43  & \textbf{Yes} \\
 \lstinline|rt_formula_key_precondition|              & Gravity.WaldChainInitState   & P36  & \textbf{Yes} \\
-\lstinline|mdl_initial_state_flat_spatial_sections|  & Gravity.WaldChainInitState   & P36  & \textbf{Yes} \\
+\texttt{mdl\_initial\_state\_flat\_\allowbreak spatial\_sections}  & Gravity.WaldChainInitState   & P36  & \textbf{Yes} \\
 \lstinline|gauge_spectrum_total|                     & OQ26Arithmetic               & P43  & \textbf{Yes} \\
 \lstinline|omega_lambda_formula_positive|            & OQ26Arithmetic               & P43  & \textbf{Yes} \\
-\lstinline|gte_qgr_derivation_chain_catAL_summary|  & GTEDerivationChain           & P43  & \textbf{Yes} \\
-\lstinline|cmca_tensor_product_gives_31d_minkowski|  & Gravity.DimDecomposition     & P41  & \textbf{Yes} \\
+\texttt{gte\_qgr\_derivation\_chain\_\allowbreak catAL\_summary}  & GTEDerivationChain           & P43  & \textbf{Yes} \\
+\texttt{cmca\_tensor\_product\_gives\_\allowbreak 31d\_minkowski}  & Gravity.DimDecomposition     & P41  & \textbf{Yes} \\
 \lstinline|psp_epoch_selection_master|               & Gravity.PSCEpochSelection    & P43  & \textbf{Yes} \\
 \lstinline|d_res_determines_omega_lambda|            & Gravity.PSCEpochSelection    & P43  & \textbf{Yes} \\
-\lstinline|gte_triple_kink_exchange_statistics|      & Gravity.FermionicStatistics  & P43  & \textbf{Yes} \\
-\lstinline|dimensional_protocol_principle_master|    & Gravity.RelationalTime       & P43  & \textbf{Yes} \\
+\texttt{gte\_triple\_kink\_\allowbreak exchange\_statistics}      & Gravity.FermionicStatistics  & P43  & \textbf{Yes} \\
+\texttt{dimensional\_protocol\_\allowbreak principle\_master}    & Gravity.RelationalTime       & P43  & \textbf{Yes} \\
 \lstinline|cyclotomic_z7_master_bundle|              & Algebra.CyclotomicZ7Galois   & P36  & \textbf{Yes} \\
 \lstinline|z7_galois_orbit_partition|                & Algebra.CyclotomicZ7Galois   & P36  & \textbf{Yes} \\
 \lstinline|gte_orbit_vectors_are_rs_codewords|       & Algebra.RSCodeOrbit          & P34  & \textbf{Yes} \\
-\lstinline|gte_winding_identifies_charged_fermions|  & BraidAtlas.WindingToBraid    & P37  & \textbf{Yes} \\
+\texttt{gte\_winding\_identifies\_\allowbreak charged\_fermions}  & BraidAtlas.WindingToBraid    & P37  & \textbf{Yes} \\
 \lstinline|qec_gte_is_stabilizer_code|               & Substrate.GEQECCode          & P34  & \textbf{Yes} \\
-\lstinline|rule110_gf7_vacuum_fixed_point_master|    & ContinuumLimit.GF7Vacuum     & P36  & \textbf{Yes} \\
+\texttt{rule110\_gf7\_vacuum\_\allowbreak fixed\_point\_master}    & ContinuumLimit.GF7Vacuum     & P36  & \textbf{Yes} \\
 \addlinespace[4pt]
 \midrule
 \addlinespace[2pt]
@@ -409,7 +410,7 @@
 \lstinline|rule124_eq_rule110_reflected|              & Algebra.ChiralDoublet        & P45  & \textbf{Yes} \\
 \lstinline|gte_poly_srrg_bridge|                     & Algebra.SRRGCABridge         & P45  & \textbf{Yes} \\
 \lstinline|su2l_weak_force_derivation|               & Algebra.GaugeMDL             & P45  & 1 axiom \\
-\lstinline|gte_fermionic_sector_no_primitive_root|   & BraidAtlas.WindingToBraidRep & P45  & \textbf{Yes} \\
+\texttt{gte\_fermionic\_sector\_\allowbreak no\_primitive\_root}   & BraidAtlas.WindingToBraidRep & P45  & \textbf{Yes} \\
 \lstinline|mdl_unique_coefficients|                   & Gravity.PMDLGravityTheorems  & P45  & \textbf{Yes} \\
 \lstinline|gorard_vacuum_ricci_flat|                 & Gravity.GorardRicciFlatVacuum& P45  & \textbf{Yes} \\
 \lstinline|omega_lambda_gte_approx|                  & Gravity.PSCEpochSelection    & P45  & \textbf{Yes} \\
