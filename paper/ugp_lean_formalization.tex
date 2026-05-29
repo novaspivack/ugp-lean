@@ -4449,6 +4449,16 @@ is forced by the MDL-minimal dimensional slice uniqueness.
 \textbf{Gauge sector identification (§55).}  Z$_7$ information-equivalence classes
 equal the SM superselection sectors: the gauge group is read off the CA symmetry.
 
+\begin{theorem}[\lstinline|sm_gauge_group_certificate|, structural (zero \texttt{sorry})]
+The SM gauge group $G_{\rm SM} = \mathrm{SU}(3)\times\mathrm{SU}(2)_L\times\mathrm{U}(1)_Y$
+is certified from three independent Z$_7$ channels: the F$_{21}\hookrightarrow\mathrm{SU}(3)$
+embedding with eight gluons (CatAL arithmetic; Burnside coset-filling CatAD),
+the SU(2)$_L$ MDL gauging (CatAD, one named axiom \lstinline|global_implies_gauge_mdl_minimal|),
+and the Z$_7$ winding hypercharge assignment (CatAL, \lstinline|gte_charge_formula|).
+Within-tape channels partition as $c_H = N_{\rm gen} + 2N_{\rm fam}$; cross-tape color
+occupies a separate $(\mathbb{Z}_7)^2$ domain.
+\end{theorem}
+
 \textbf{GUT coupling from GTE (§53).}  $\alpha_s^{\rm bare} = L_G D_G / (5^{\gamma_G})$
 with Vandermonde $D_G$, Weyl group order $L_G$, and $\gamma_G = N_c$, all structural.
 
@@ -6402,6 +6412,9 @@ Theorem & Module & Physical role \\
 \texttt{su2l\_\allowbreak weak\_\allowbreak force\_\allowbreak derivation}
   & Algebra.GaugeMDL
   & SU(2)$_L$ from PMDL gauging (1 named axiom) \\[1pt]
+\texttt{sm\_\allowbreak gauge\_\allowbreak group\_\allowbreak certificate}
+  & Algebra.SMGaugeGroup
+  & $G_{\rm SM}=\mathrm{SU}(3)\times\mathrm{SU}(2)_L\times\mathrm{U}(1)_Y$ bundle (zero \texttt{sorry}) \\[1pt]
 \texttt{gte\_\allowbreak fermionic\_\allowbreak sector\_\allowbreak no\_\allowbreak primitive\_\allowbreak root}
   & BraidAtlas.WindingToBraidRep
   & Fermionic $\{2,4,6\}$ non-primitive in $\mathbb{Z}_7^\times$ \\[1pt]
