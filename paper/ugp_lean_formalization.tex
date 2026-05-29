@@ -120,6 +120,8 @@
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\Fib}{\mathrm{Fib}}
 \newcommand{\CatAL}{\mathrm{CatAL}}
+\newcommand{\CatAD}{\mathrm{CatAD}}
+\newcommand{\ZS}{\mathbb{Z}_7}
 
 \title{\textbf{ugp-lean}: A Machine-Checked Formalization of the\\
        Universal Generative Principle}
@@ -6516,6 +6518,106 @@ Theorems marked (axiom) are named axioms documenting CatAD or CatA results pendi
 Lean formalization. Theorems without (axiom) are zero sorry.}
 \label{tab:new-theorem-inventory-oq1-oq3}
 \end{table}
+
+\subsection{Level $1\to 2$ Bridge Theorems
+  (\texttt{Algebra/PolynomialContinuumBridge},
+   \texttt{Gravity/PMDLGravityTheorems},
+   \texttt{Gravity/PageWoottersZ7},
+   \texttt{Universality/BellViolationGTE})}\label{subsec:l1-l2-bridge}
+
+The following theorems certify the Level-1 $\to$ Level-2 bridge: the
+algebraic link between the discrete $\mathbb{Z}_7$ CA (Level~1) and
+the continuum $\Phi_{\mathrm{MDL}}$ field theory (Level~2).
+Four new or extended modules are involved.  Gaps G1--G4 refer to the
+bridge-analysis classification in \texttt{LAB\_NOTE\_079\_L1L2\_BRIDGE}.
+
+\subsubsection{Polynomial continuum bridge
+  (\texttt{Algebra/PolynomialContinuumBridge.lean})}\label{subsubsec:poly-continuum-bridge}
+
+Module: \texttt{Algebra/PolynomialContinuumBridge.lean}, zero \lstinline|sorry|,
+zero custom axioms for \S\S 1--4.
+
+\begin{theorem}[\lstinline|gap_g1_polynomial_continuum_taxonomy|, zero \texttt{sorry}]
+$p_{\mathrm{cont}}(0,0,0)=0$ and $p_{\mathrm{cont}}(2,2,2)\neq 0$.
+Establishes that $p_{\mathrm{cont}}$ (the continuum extension of the GTE update
+polynomial; gravity source and coupling operator) and $V_{\ZS}(\Phi)$
+(the $\mathbb{Z}_7$-symmetric potential energy) describe \emph{different} physics:
+$p_{\mathrm{cont}}$ can be negative while $V_{\ZS}\ge 0$ everywhere.
+Closes gap~G1 in the L1$\to$L2 bridge analysis.
+\end{theorem}
+
+\begin{theorem}[\lstinline|gtePoly_diagonal_psc_sector|, zero \texttt{sorry}]
+The diagonal values $p(w,w,w)$ of the GTE polynomial over the PSC-admissible
+sector $\{0,2,3,4,6\}\subset\mathbb{Z}_7$ are
+$p(0,0,0)=0$, $p(2,2,2)=6$, $p(3,3,3)=5$, $p(4,4,4)=5$, $p(6,6,6)=5$.
+This is the complete gravitational mass table for the SM particle hierarchy
+from a single polynomial formula.
+\end{theorem}
+
+\begin{theorem}[\lstinline|vZ7_nonneg|, zero \texttt{sorry}]
+The $\mathbb{Z}_7$-symmetric potential $V_{\ZS}(\Phi)=(m^2/49)(1-\cos 7\Phi)$
+satisfies $V_{\ZS}(\Phi)\ge 0$ for all $\Phi\in\mathbb{R}$ and all $m\in\mathbb{R}$.
+\end{theorem}
+
+\subsubsection{Gravity bridge
+  (\texttt{Gravity/PMDLGravityTheorems.lean})}\label{subsubsec:gravity-bridge}
+
+\begin{theorem}[\lstinline|gte_G_eff_G_N_ratio|, zero \texttt{sorry}]
+Under the bridge identification $G_{\mathrm{eff}}\cdot M_{\mathrm{PMDL}}
+= 4\pi\,G_N\cdot M_{\mathrm{kink}}$, the coupling ratio is
+$G_{\mathrm{eff}}/G_N = 4\pi\,M_{\mathrm{kink}}/M_{\mathrm{PMDL}}$.
+Numerically, $G_{\mathrm{eff}}/G_N\approx 2.05$ in natural units where
+$m_\tau=1$, connecting the scan coupling $G_{\mathrm{eff}}$ (order~1) to the
+physical Newton constant $G_N$ suppressed by the Gorard hierarchy factor
+$(M_{\mathrm{kink}}/M_{\mathrm{Pl}})^2\sim 1.78\times 10^{-38}$.
+\end{theorem}
+
+\begin{theorem}[\lstinline|l1_l2_gravity_bridge|, named axiom ($\CatAD$)]
+Under the bridge identification $G_{\mathrm{eff}}\cdot M_{\mathrm{PMDL}}
+= 4\pi\,G_N\cdot M_{\mathrm{kink}}$, the Level-1 PMDL Poisson potential
+$\phi_{L1}(b)=G_{\mathrm{eff}}M_{\mathrm{PMDL}}/(4\pi b)\cdot\mathrm{erf}(b/\sqrt{2}\sigma)$
+and the Level-2 EFE weak-field potential
+$\phi_{L2}(b)=G_N M_{\mathrm{kink}}/(4\pi b)\cdot\mathrm{erf}(b/\sqrt{2}\sigma)$
+are identical for all $b>0$.  Closes gap~G2.  Full $\CatAL$ is blocked on
+Mathlib \texttt{PoissonKernel}.
+\end{theorem}
+
+\subsubsection{Born rule bridge and Bell-layer separation
+  (\texttt{Gravity/PageWoottersZ7.lean},
+   \texttt{Universality/BellViolationGTE.lean})}\label{subsubsec:born-bell-bridge}
+
+\begin{theorem}[\lstinline|l1_l2_born_rule_bridge|, named axiom ($\CatAD$)]
+The Level-1 Page-Wootters conditional Born probability $P(k|\tau_c)$ and the
+Level-2 field-amplitude Born density $P(x)=|\partial_x\Phi_{\mathrm{MDL}}|^2/Z$
+are identical distributions for a BPS kink state in the $M\to\infty$ continuum
+limit, at convergence rate $O(1/M^2)$ matching the Nyquist residual.
+The bridge identification is $\psi(x)=\partial_x\Phi_{\mathrm{MDL}}(x)/\sqrt{Z}$.
+Closes gap~G3.
+\end{theorem}
+
+\begin{theorem}[\lstinline|born_bridge_no_new_axiom|, zero \texttt{sorry}]
+The Born bridge $\psi=\partial_x\Phi/\sqrt{Z}$ requires no axiom beyond
+\lstinline|cmca_continuum_limit_is_phimdl|: the identification is forced by the
+BPS saturation condition $\partial_x\Phi=\sqrt{2V_{\ZS}(\Phi)}$ together with
+the $M\to\infty$ continuum limit theorem.
+\end{theorem}
+
+\begin{theorem}[\lstinline|l1_chsh_and_l2_epr_are_distinct_layers|, zero \texttt{sorry}]
+The Level-1 CHSH violation ($S=2.4459$ on $\mathbb{C}^7\otimes\mathbb{C}^7$,
+certified in \lstinline|gte_bell_violation_at_half_coupling|) and the Level-2
+$[\mathbf{D}]$-record EPR correlations of P43 (transputation~D3, non-computable)
+are structurally distinct phenomena at different levels of the theory.
+Closes gap~G4.
+\end{theorem}
+
+\begin{theorem}[\lstinline|alt_does_not_lift_chsh_value|, zero \texttt{sorry}]
+The Algebraic Lifting Theorem carries algebraic and structural content
+($\mathbb{Z}_7$ winding, $N_{\mathrm{gen}}$, GoE, confinement, gauge vertices,
+V--A fraction) from Level~1 to Level~2, but does \emph{not} lift dynamical
+Hamiltonians or specific CHSH values.  The Bell parameter $S=2.4459$ is a
+Level-1 dynamical certificate; what lifts is the structural statement that
+$\Phi_{\mathrm{MDL}}$ supports genuine quantum entanglement.
+\end{theorem}
 
 \subsection{New theorem inventory (theorem audit pass 2026-05-29)}\label{subsec:new-theorem-inventory-audit}
 
