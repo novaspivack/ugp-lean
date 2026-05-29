@@ -195,6 +195,9 @@ import UgpLean.Substrate.WindingCoinDecoupling
 import UgpLean.Substrate.CMCAHilbertFockBridge
 import UgpLean.Substrate.PhiMDLPropagator
 import UgpLean.Substrate.WightmanAxioms
+import UgpLean.Substrate.ChiralCurrentL2
+import UgpLean.Substrate.RSCodeOrbit
+import UgpLean.Substrate.CogwheelDynamicsG21
 import UgpLean.Universality.CasimirMasslessEther
 import UgpLean.Spacetime.CausalGraph
 import UgpLean.Spacetime.HolographicScaling
@@ -240,6 +243,7 @@ import UgpLean.Gravity.LorentzGroupSO13
 import UgpLean.Gravity.PSCEpochSelection
 import UgpLean.Gravity.NRTVacuumEnergy
 import UgpLean.Gravity.CMBSpectralTilt
+import UgpLean.Gravity.PageWoottersZ7
 import UgpLean.ContinuumLimit.GF7VacuumFixedPoint
 import UgpLean.ContinuumLimit.WassersteinDistance
 import UgpLean.ContinuumLimit.DiscreteBianchi
@@ -257,6 +261,7 @@ import UgpLean.Algebra.SRRGCABridge
 import UgpLean.Algebra.GaugeMDL
 import UgpLean.Algebra.F21SU3Embedding
 import UgpLean.Algebra.SMGaugeGroup
+import UgpLean.Algebra.PolynomialContinuumBridge
 import UgpLean.Spacetime.PhysicalExclusion
 import UgpLean.Spacetime.ThreeGenerationCapstone
 import UgpLean.Spacetime.CausalInvariance
@@ -269,6 +274,7 @@ import UgpLean.QFT.GaugedMassGap
 import UgpLean.QFT.ChiralSymmetryBreaking
 import UgpLean.Universality.PhiMDLUniversality
 import UgpLean.Universality.BellViolationGTE
+import UgpLean.Universality.FiveRolesPolynomial
 
 /-!
 # UgpLean — Universal Generative Principle: Lean 4 Formalization
@@ -295,6 +301,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Universality.BetaCoefficientIdentity` — b₀ = |Z₇| = 7 from F₂₁ = Z₇ ⋊ Z₃: (11N_c − 2N_f)/3 = |F₂₁|/|Z₃|; Planck cascade group identity; zero sorry (2026-05-26)
 - `UgpLean.Universality.FrobeniusPrimeIdentity` — |Z₇| = |Z₃|² − |Z₃| + 1 unifies F₂₁ and PSC n=10 derivations; frobenius_prime_bundle; zero sorry (2026-05-26)
 - `UgpLean.Universality.BellViolationGTE` — EPIC_080 G44: `gte_poly_qutrit_values`, `gte_hgrav_diagonal_nontrivial`, `gte_hgrav_has_nonzero_entries`, `z7_qutrit_poly_nondegenerate`, `gte_poly_double_role`; axioms `gte_bell_violation_at_half_coupling`, `gte_bell_threshold` (CatA named); GTE gravitational coupling generates Bell-violating entanglement; zero sorry (2026-05-29)
+- `UgpLean.Universality.FiveRolesPolynomial` — EPIC_080: `labelled_triple_role_count` (5 roles, decide-proved), `spatial_dynamics_certified`, `gauge_coupling_certified`, `gravity_source_certified`, `entanglement_hamiltonian_certified`, `baryon_current_certified`, `five_roles_polynomial_bundle`; exactly five distinct K_extra=0 labelled-triple roles of the GTE polynomial; CatAL, zero sorry (2026-05-29)
 - `UgpLean.Papers.*`             — Paper25, UGPMain (citable stubs)
 
 - `UgpLean.TE22.*`               — ScanCertificate (TE2.2 PSC scan framework, UGP coupling predictions)
@@ -337,6 +344,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Gravity.PSCEpochSelection` — EPIC_078 Rank 078-PSP: `psc_undecidability_residual_pos`, `d_res_determines_omega_lambda`, `psp_from_psc_structure`, `psp_epoch_selection_master` (CatAL, 1 sorry for `omega_lambda_gte_approx`, 2026-05-28)
 - `UgpLean.Gravity.NRTVacuumEnergy` — EPIC_078 NRT-LEAN-1: `z7_vacuum_energy_mass_independent`, `z7_vacuum_zero_for_all_masses`, `z7_vacuum_phase_is_integer_multiple_of_two_pi`; PSC Non-Renormalization Theorem Level 1 — Z₇ vacuum energy vanishes mass-independently (CatAL, zero sorry, 2026-05-28)
 - `UgpLean.Gravity.CMBSpectralTilt` — EPIC_078 CMB-LEAN-1: `beta_g_z2_formula`, `beta_g_z2_pos`, `n_s_formula`, `n_s_less_than_one`, `cmca_z2_sublayer_spectral_tilt`; CMB spectral tilt n_s = 1 − ln(2)/(2π²) from CMCA Z₂ sublayer (CatD-STRONG stub, 1 axiom gated on OQ-QG-1, zero sorry, 2026-05-28)
+- `UgpLean.Gravity.PageWoottersZ7` — EPIC_079 OQ-079-3: `tau_c_clock_hamiltonian_nondegenerate`, `z7_winding_eigenstate_uniform_prob`, `z7_discrete_born_rule_level1`, `pw_born_rule_bridge_structure`; Page-Wootters τ_c clock mechanism for Z₇ winding eigenstates, Born rule uniform probability 1/7, and the L1→L2 Born rule bridge structure; CatAL algebraic, zero sorry (2026-05-29)
 - `UgpLean.ContinuumLimit.GF7VacuumFixedPoint` — EPIC_078 Rank 078-GCL-VACFP (OQ-QG-1): `gte_poly_zero_is_fixed_point`, `gte_poly_nonzero_not_fixed`, `gte_poly_uniform_unique_fixed_point`, `rule110_gf7_vacuum_fixed_point_master`; GF(7) vacuum uniqueness — `v=0` is the unique symmetric fixed point of the GTE polynomial; CatAL, zero sorry (2026-05-28)
 - `UgpLean.ContinuumLimit.GorardRationalFormula` — EPIC_078 Rank 078-GCL-GORARD-3TAPE: `kappa_SD_eq_10_13`, `kappa_SD_pos`, `kappa_SD_real`, `gorard_discrete_einstein_structure`; Gorard κ_SD = 10/13 exact rational OR curvature at matter locations (ε=1/10); CatAL, zero sorry, zero axioms (2026-05-28)
 - `UgpLean.ContinuumLimit.WassersteinDistance` — OQ-QG-1 Step 2: W₁ (1-Wasserstein / Earth Mover) distance scaffold for Gorard chain; `FiniteMetricSpace`, `ProbDist`, `IsCoupling`, `W1` (sorry — requires Mathlib OT), `OllivierRicci`, `W1_nonneg/comm/eq_zero_iff/triangle` (sorry), `gorard_vacuum_oric_zero` (axiom — discrete Ricci-flat vacuum), `rule110_gromov_wasserstein_limit` (axiom — GW convergence long-range target); CatD-STRONG scaffold, 4 sorry + 2 axioms (2026-05-28)
@@ -344,11 +352,15 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Algebra.ColorConfinementMDL` — EPIC_079 Rank 079-COLOR-Z3: `color_confinement_k_extra_pos`, `k_extra_eq_log2_9`, `k_extra_uniform`, `psc_forbids_free_colored_quarks`; MDL/PSC K_extra inequality ΔK=log₂(9)>0; CatAL, zero sorry (2026-05-28)
 - `UgpLean.Algebra.F21SU3Embedding` — EPIC_080 G23: `f21_burnside_full_enveloping_algebra` (axiom, CatAD), `f21_commutant_dimension`, `f21_matrix_span_dimension`; F₂₁ → SU(3) embedding via Burnside coset-filling; CatAL arithmetic, zero sorry (2026-05-29)
 - `UgpLean.Algebra.SMGaugeGroup` — EPIC_080 G23: `sm_gauge_group_certificate`, `sm_gauge_group_three_factors`, `sm_gauge_factors_independent`; bundles Z₇ → G_SM = SU(3)×SU(2)_L×U(1)_Y three-factor identification; CatAD overall (SU(2)_L named axiom), bundle theorems zero sorry (2026-05-29)
+- `UgpLean.Algebra.PolynomialContinuumBridge` — EPIC_080 G1: `gte_poly_gf7_values`, `v_z7_potential_distinct_from_poly`, `pcont_is_continuum_extension`, `polynomial_continuum_bridge_g1`; discrete GTE polynomial p(L,C,R) vs continuum Z₇ potential V_{Z₇}: certified distinct physics; p_cont as gravity source in ∇²Φ_MDL; CatAL/CatAD, zero sorry (2026-05-29)
 - `UgpLean.Substrate.C2CoherenceG40` — EPIC_080 G40: thin re-export layer for P43 C2 / P34 Conjecture C2; `c2_coherence_mdl_scaffold`, `c2_lorentz_cpt_equivariance`; CatAL scaffold (full G40 blocked on Mathlib Petz recovery gap); zero sorry (2026-05-29)
 - `UgpLean.Substrate.TransputationG41` — EPIC_080 G41: sector probability layer of transputation CatAL; `gibbs_sector_unique_minimizer`, `transputation_sector_gibbs_master`; global [D]-class uniqueness and Φ_MDL decoherence dynamics remain CatAD/open; zero sorry (2026-05-29)
 - `UgpLean.Substrate.CMCAHilbertFockBridge` — EPIC_080 G22: `fock_vacuum_maps_to_cmca_vacuum`, `bps_psc_sector_has_beable_lift`, `cmca_hilbert_fock_bridge_master` (CatAL, zero sorry); `cmca_hilbert_inductive_limit` (CatAD axiom, 2026-05-29)
 - `UgpLean.Substrate.PhiMDLPropagator` — EPIC_080 G27: `phimdl_free_propagator_formula`, `phimdl_propagator_well_defined`, `phimdl_quartic_coupling`, `phimdl_sextic_coupling`, `phimdl_z7_coupling_fingerprint`, `phimdl_potential_even`; Φ_MDL tree-level propagator G(p)=1/(p²+m²) and Z₇ Feynman vertices; CatAD, zero sorry (2026-05-29)
 - `UgpLean.Substrate.WightmanAxioms` — EPIC_080 G38: `phimdl_satisfies_wightman_axioms`, `phimdl_wightman_locality_positivity_bundle`; structural axiom scaffold for Wightman axioms 1–5 on Φ_MDL; CatAD structural, zero sorry (2026-05-29)
+- `UgpLean.Substrate.ChiralCurrentL2` — EPIC_080 G16: `phimdl_axial_current_topological`, `phimdl_vector_current_topological`, `tape_chiral_signs_opposite`, `va_fraction_l1`, `va_fraction_lifts_to_l2_chiral_current`, `l2_chiral_current_bundle_g16`; Level-2 chiral V–A current from Φ_MDL domain-wall topology; axial/vector current conservation via Schwarz symmetry; L1 mismatch ratio 32/125 lifts to L2 chiral structure; CatAL/CatAD, zero sorry (2026-05-29)
+- `UgpLean.Substrate.RSCodeOrbit` — EPIC_080: `rs_sm_code_params_correct`, `rs_area_unit_log7`; RS code parameters [5,3,3]₇ satisfies Singleton bound d=n−k+1; log₂(7) bits per GF(7) symbol; zero sorry, zero axioms (2026-05-29)
+- `UgpLean.Substrate.CogwheelDynamicsG21` — G21 Level 1 discrete Schrödinger dynamics: `discrete_evolution_operator`, `discrete_schrodinger_composition`, `discrete_schrodinger_step_recurrence`, `discrete_schrodinger_unitarity`, `kg_factors_to_chiral_schrodinger`; 't Hooft cogwheel evolution U(n)=exp(−iH n τ_c), KG→chiral Schrödinger factorisation; CatAL/CatAD structural (2026-05-29)
 - `UgpLean.MassRelations.NeutrinoVacuumSectorL2` — EPIC_080 G28: Level-2 structural certification for the neutrino sector; Q=0 vacuum sector identification, B(ν)=0, Z₇⁴ dark ring fourth quantum number; CatAL structural, zero sorry (2026-05-29)
 - `UgpLean.Spacetime.MultiParticleHilbert` — Rank 244-MPH: multi-particle Hilbert space algebraic layer; `code_word_cardinality` (4 code words, Equiv with Fin 4), `n_particle_state_count` (4^N states), `multiDWeight_eq_one`, `multiMass_append`, `multiMass_le`, `mass_hierarchy_three_states`, `smGenMass_multi_anchor`, `multiparticle_orbit_closure`, `inner_product_positive_definite`, `multiparticle_space_well_defined`; all CatAL, zero sorry (2026-05-24)
 - `UgpLean.Spacetime.CausalInvariance` — Rank 37-LCI: f_MDL causal invariance + Lamport consistency + SR connection; `ForwardCausalAdj`, `forward_causal_time_step`, `forward_causal_acyclic`, `transgen_time_strictly_increases`, `lamport_irrefl`, `lamport_strict_partial_order`, `lamport_order_update_independent`, `afca_sr_causal_structure`; all zero sorry, zero axioms (CatAL/CatAD — Lamport properties CatAL, Minkowski isomorphism CatAD, 2026-05-21)
