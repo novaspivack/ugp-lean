@@ -248,6 +248,7 @@ import UgpLean.Algebra.CyclotomicZ7Galois
 import UgpLean.Algebra.RSCodeOrbit
 import UgpLean.Algebra.SU3GluonCount
 import UgpLean.Algebra.ColorConfinementMDL
+import UgpLean.Algebra.F21SU3Embedding
 import UgpLean.Algebra.BaryonNumber
 import UgpLean.Algebra.ChargeFromPolynomial
 import UgpLean.Algebra.PolynomialContinuumBridge
@@ -338,6 +339,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.ContinuumLimit.WassersteinDistance` — OQ-QG-1 Step 2: W₁ (1-Wasserstein / Earth Mover) distance scaffold for Gorard chain; `FiniteMetricSpace`, `ProbDist`, `IsCoupling`, `W1` (sorry — requires Mathlib OT), `OllivierRicci`, `W1_nonneg/comm/eq_zero_iff/triangle` (sorry), `gorard_vacuum_oric_zero` (axiom — discrete Ricci-flat vacuum), `rule110_gromov_wasserstein_limit` (axiom — GW convergence long-range target); CatD-STRONG scaffold, 4 sorry + 2 axioms (2026-05-28)
 - `UgpLean.Algebra.SU3GluonCount` — EPIC_079 Ranks 079-GLUON-SELECT, 079-BARYON-COLOR: `su3_gluon_charge_vectors` (6 gluon vectors from Δw=±1), `su3_gluon_two_z3_orbits` (2 disjoint Z₃ orbits), `su3_gluon_conjugate_pairs`, `baryon_color_z3_orbit_neutral`, `su3_cmca_master_bundle`; all CatAL, zero sorry (2026-05-28)
 - `UgpLean.Algebra.ColorConfinementMDL` — EPIC_079 Rank 079-COLOR-Z3: `color_confinement_k_extra_pos`, `k_extra_eq_log2_9`, `k_extra_uniform`, `psc_forbids_free_colored_quarks`; MDL/PSC K_extra inequality ΔK=log₂(9)>0; CatAL, zero sorry (2026-05-28)
+- `UgpLean.Algebra.F21SU3Embedding` — EPIC_080 Rank 080-SU3-CONTINUUM: F₂₁↪SU(3) faithful 3-irrep embedding (`weight_sum_zero` det=1, `z3_cycles_weights` Z₇⋊Z₃ twist, `weights_distinct`, `f21_order`), gluon branching `8=1'+1''+3+3̄` (`gluon_branching_sum`); embedding core CatAL zero sorry; Burnside coset-filling `f21_burnside_full_enveloping_algebra` named axiom CatAD (Mathlib density-theorem gap); master `f21_su3_continuum_master` (2026-05-29)
 - `UgpLean.Spacetime.MultiParticleHilbert` — Rank 244-MPH: multi-particle Hilbert space algebraic layer; `code_word_cardinality` (4 code words, Equiv with Fin 4), `n_particle_state_count` (4^N states), `multiDWeight_eq_one`, `multiMass_append`, `multiMass_le`, `mass_hierarchy_three_states`, `smGenMass_multi_anchor`, `multiparticle_orbit_closure`, `inner_product_positive_definite`, `multiparticle_space_well_defined`; all CatAL, zero sorry (2026-05-24)
 - `UgpLean.Spacetime.CausalInvariance` — Rank 37-LCI: f_MDL causal invariance + Lamport consistency + SR connection; `ForwardCausalAdj`, `forward_causal_time_step`, `forward_causal_acyclic`, `transgen_time_strictly_increases`, `lamport_irrefl`, `lamport_strict_partial_order`, `lamport_order_update_independent`, `afca_sr_causal_structure`; all zero sorry, zero axioms (CatAL/CatAD — Lamport properties CatAL, Minkowski isomorphism CatAD, 2026-05-21)
 - `UgpLean.Spacetime.DWeightSRFormula` — Rank 63-DMDL: [D]-weighted SR formula; `dmdl_dweight_positive`, `dmdl_proper_time_ratio`, `dmdl_dweight_sr_formula`, `dmdl_lorentz_factor_algebraic`, `dmdl_tau_c_ratio_structure`, `dmdl_qec_sr_bundle`; all zero sorry, zero custom axioms (CatAL, 2026-05-24)
