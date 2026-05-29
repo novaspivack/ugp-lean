@@ -236,6 +236,8 @@ import UgpLean.Gravity.LorentzGroupSO13
 import UgpLean.Gravity.PSCEpochSelection
 import UgpLean.Gravity.NRTVacuumEnergy
 import UgpLean.Gravity.CMBSpectralTilt
+import UgpLean.Gravity.PageWoottersZ7
+import UgpLean.Universality.BellViolationGTE
 import UgpLean.ContinuumLimit.GF7VacuumFixedPoint
 import UgpLean.ContinuumLimit.WassersteinDistance
 import UgpLean.ContinuumLimit.DiscreteBianchi

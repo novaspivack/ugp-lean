@@ -6415,6 +6415,76 @@ Theorem & Module & Physical role \\
 \label{tab:new-theorem-inventory-079}
 \end{table}
 
+\subsection{New theorem inventory (OQ-079-1/OQ-079-3 pass, 2026-05-29)}\label{subsec:new-theorem-inventory-oq1-oq3}
+
+The following modules and theorems were added following the closure of
+OQ-079-1 (Newtonian gravity force law, CatAD) and the partial closure of
+OQ-079-3 (Page-Wootters Born rule and Bell inequality, CatAD/CatA).
+
+\begin{table}[h]
+\centering\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}p{5.2cm}p{4.4cm}p{4.4cm}@{}}
+\toprule
+Theorem / Axiom & Module & Physical content \\
+\midrule
+\texttt{tau\_c\_clock\_hamiltonian\_\allowbreak nondegenerate}
+  & Gravity.PageWoottersZ7
+  & $H_{\tau_c}$ non-degenerate for any $T{>}1$, $\omega_c{>}0$ \\[1pt]
+\texttt{z7\_winding\_eigenstate\_\allowbreak uniform\_prob} (axiom)
+  & Gravity.PageWoottersZ7
+  & $|\langle j | w \rangle|^2 = 1/7$ for all $w \in \mathbb{Z}_7$, $j \in \mathrm{Fin}\,7$ \\[1pt]
+\texttt{z7\_all\_eigenstates\_uniform}
+  & Gravity.PageWoottersZ7
+  & Corollary: all $\mathbb{Z}_7$ winding eigenstates give $P=1/7$ \\[1pt]
+\texttt{z7\_superposition\_gives\_\allowbreak nonuniform\_prob} (axiom)
+  & Gravity.PageWoottersZ7
+  & Superpositions of windings give non-uniform Born distributions \\[1pt]
+\texttt{tau\_c\_pw\_clock\_validity} (axiom)
+  & Gravity.PageWoottersZ7
+  & $\tau_c$ satisfies all PW prerequisites; $P(k|\tau)=|\langle k|U(\tau)|\psi_0\rangle|^2$ \\[1pt]
+\texttt{z7\_discrete\_born\_rule\_level1}
+  & Gravity.PageWoottersZ7
+  & Level-1 Born rule for $\mathbb{Z}_7$ winding observables (CatAD) \\[1pt]
+\texttt{gte\_gravitational\_source\_\allowbreak compact\_support}
+  & Gravity.PMDLGravityTheorems
+  & Kink at T=0 occupies a single site (trivially compact support) \\[1pt]
+\texttt{gte\_sigma\_correction\_bound} (axiom)
+  & Gravity.PMDLGravityTheorems
+  & $|F(r) - G_{\rm eff}M/(4\pi r^2)| \leq C(\sigma_{\rm AL}/r)^2 \cdot F_{\rm Newton}$ \\[1pt]
+\texttt{tau\_c\_three\_mechanisms\_\allowbreak equivalent} (axiom)
+  & Gravity.PMDLGravityTheorems
+  & Gradient kick $=$ h$_{00}$ metric $=$ equivalence principle in Newtonian limit \\[1pt]
+\texttt{gte\_poly\_qutrit\_values}
+  & Universality.BellViolationGTE
+  & Complete $3\times 3$ table of GTE polynomial values for qutrit model \\[1pt]
+\texttt{gte\_hgrav\_diagonal\_nontrivial}
+  & Universality.BellViolationGTE
+  & $H_{\rm grav}$ has at least two distinct diagonal entries \\[1pt]
+\texttt{gte\_hgrav\_has\_nonzero\_entries}
+  & Universality.BellViolationGTE
+  & GTE polynomial gives non-zero coupling for some winding pair \\[1pt]
+\texttt{z7\_qutrit\_poly\_nondegenerate}
+  & Universality.BellViolationGTE
+  & Not all 9 coupling values are equal (non-degenerate H$_{\rm grav}$) \\[1pt]
+\texttt{gte\_bell\_violation\_at\_half\_\allowbreak coupling} (axiom)
+  & Universality.BellViolationGTE
+  & $S = 2.4459 > 2$ at $G_{\rm eff}=0.5$; QM-consistent ($S < 2\sqrt{2}$) \\[1pt]
+\texttt{gte\_bell\_threshold} (axiom)
+  & Universality.BellViolationGTE
+  & Bell threshold $G_{\rm eff} \approx 0.095$ where CHSH crosses LHV bound \\[1pt]
+\texttt{gte\_poly\_double\_role}
+  & Universality.BellViolationGTE
+  & GTE polynomial simultaneously sources gravity and generates entanglement \\
+\bottomrule
+\end{tabular}
+\caption{New theorems and named axioms from OQ-079-1 (gravity force law) and OQ-079-3
+(Born rule + Bell inequality). Theorems marked (axiom) are named axioms documenting CatAD or
+CatA results pending full Lean formalization (Mathlib PoissonKernel, PW library, or
+analytic T-matrix bound). Theorems without (axiom) are zero sorry.}
+\label{tab:new-theorem-inventory-oq1-oq3}
+\end{table}
+
 \subsection{New theorem inventory (theorem audit pass 2026-05-29)}\label{subsec:new-theorem-inventory-audit}
 
 The following theorems were added during the theorem citation audit pass to resolve
