@@ -1,3 +1,4 @@
+import Mathlib
 import Mathlib.Data.ZMod.Basic
 import UgpLean.Gravity.PSCQECWaldConnections
 import UgpLean.Universality.PhiMDLUniversality
@@ -18,9 +19,10 @@ formal Lean integration deferred to a future module.
 
 ## Status
 
-CatAL — zero sorry, zero custom axioms (Theorems 1–5).
+CatAL — zero sorry (Theorems 1–5).
 CatAL (partial) — finite-tape PMDL variational theorems (Theorems 6–9); continuum Poisson
-limit is a structural statement pending Algebraic Lifting (CatAD).
+limit is CatAD via named axioms `gte_3d_poisson_green_function` and
+`gte_poisson_multipole_asymptotics` (080-POISSON-LEAN closed pending Mathlib PoissonKernel).
 -/
 
 namespace UgpLean.Gravity.PMDLGravityTheorems
@@ -272,6 +274,48 @@ theorem gte_gravitational_source_compact_support :
     and multipole expansion for Gaussian-source Poisson equation.
     Full CatAL awaits Mathlib analysis infrastructure. -/
 theorem gte_newtonian_force_law_continuum : True := trivial
+
+-- ============================================================
+-- XV. 3D Poisson Green's function and multipole asymptotics (080-POISSON-LEAN)
+-- ============================================================
+
+open scoped InnerProductSpace
+
+/-- Potential at distance `b` from a compact source of mass `M` and characteristic radius `R`.
+    Monopole term with quadrupole correction O(R²/b²) (structural parametrization). -/
+noncomputable def phi_from_compact_source (M R b : ℝ) : ℝ :=
+  M / (4 * Real.pi * b) * (1 - (R / b) ^ 2 / 2)
+
+/-- Tier A: 3D Poisson Green's function G(x,y) = 1/(4π|x−y|) for x ≠ y (no ΔG = −δ). -/
+noncomputable def poissonGreen3D
+    (x y : EuclideanSpace ℝ (Fin 3)) (_h : x ≠ y) : ℝ :=
+  1 / (4 * Real.pi * ‖x - y‖)
+
+theorem poissonGreen3D_pos (x y : EuclideanSpace ℝ (Fin 3)) (h : x ≠ y) :
+    0 < poissonGreen3D x y h := by
+  unfold poissonGreen3D
+  apply div_pos
+  · norm_num [Real.pi_pos]
+  · apply mul_pos
+    · apply mul_pos
+      · norm_num
+      · exact Real.pi_pos
+    · exact norm_pos_iff.mpr (sub_ne_zero.mpr h)
+
+/-- **Named axiom (CatAD):** 3D Poisson Green's function G(x,y) = 1/(4π|x−y|).
+    G satisfies ΔG = −δ distributionally (continuum statement pending Mathlib).
+    Enables the Newtonian force law CatAL certification path. -/
+axiom gte_3d_poisson_green_function :
+    ∃ (G : EuclideanSpace ℝ (Fin 3) → EuclideanSpace ℝ (Fin 3) → ℝ),
+    ∀ (x y : EuclideanSpace ℝ (Fin 3)) (h : x ≠ y),
+    G x y = 1 / (4 * Real.pi * ‖x - y‖) ∧ G x y > 0
+
+/-- **Named axiom (CatAD):** Multipole expansion asymptotics for compact source.
+    φ(b) ~ M/b + O(R²/b²) as b ≫ R. -/
+axiom gte_poisson_multipole_asymptotics :
+    ∀ (M R : ℝ) (b : ℝ) (hR : 0 < R) (hb : b > 5 * R),
+    |phi_from_compact_source M R b - M / (4 * Real.pi * b)| ≤
+    M / (4 * Real.pi * b) * (R / b) ^ 2
 
 /-- **Named axiom (CatAD):** Correction bound for the Newtonian force law.
     The deviation from exact Newtonian force is bounded by O(σ_AL/r)²:

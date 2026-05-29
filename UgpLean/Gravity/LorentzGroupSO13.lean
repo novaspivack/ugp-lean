@@ -384,6 +384,9 @@ theorem three_spatial_rotations_in_so13 (θx θy θz : ℝ) :
 /--
 Three-tape CMCA generates SO(1,3)↑₊ via six Lorentz generators.
 
+This stub represents SO(1,3) generation from the three-tape algebra. The Lie algebra
+commutators (`lorentz_algebra_complete`, above) are CatAL (zero sorry).
+
 **Proved (CatAL, zero sorry):**
 - K_x, K_y, K_z (boost generators) arise from SO(1,1) symmetry along each tape axis
 - J_x, J_y, J_z (rotation generators) arise from Φ_MDL isotropy and S₃ tape permutation
@@ -392,9 +395,11 @@ Three-tape CMCA generates SO(1,3)↑₊ via six Lorentz generators.
 
 **Structural (CatAD):**
 - By Lie's second theorem, the six generators spanning 𝔰𝔬(1,3) generate SO(1,3)↑₊
-- Full Lean proof requires Mathlib LieAlgebra ↔ LieGroup correspondence
-- The commutation relations established in `lorentz_algebra_complete` are the
-  algebraic certificate; the group generation step is standard Lie theory
+- **Blocked on:** Mathlib Lie group exponential map and exp surjectivity for non-compact
+  groups (Mathlib gap; estimated 12–24 months)
+- Until Mathlib supplies this infrastructure, this is a named CatAD structural axiom
+- Infrastructure partially duplicates `ugp-physics-lean` MinkowskiSpace.lean (different repo;
+  cross-repo wiring deferred)
 -/
 theorem three_tape_so13_from_so11_cubed_and_so3 :
     -- The 𝔰𝔬(1,3) Lie algebra is spanned by the six generators:
