@@ -4335,6 +4335,22 @@ the non-palindrome count ($2N_{\rm fam}=10$), and the denominator running
 $3/8 + N_{\rm fam}/\mathrm{denom} = 3/13$, all derived from GTE arithmetic.
 \end{theorem}
 
+\begin{theorem}[\lstinline|weinberg_angle_unit_sum|, zero \texttt{sorry}]
+$\sin^2\theta_W + \cos^2\theta_W = 1$ over $\mathbb{Q}$ (from $\sin^2\theta_W = 3/13$).
+\end{theorem}
+
+\begin{theorem}[\lstinline|coupling_ratio_numeric|, zero \texttt{sorry}]
+$g^2/{g'}^2 = \cos^2\theta_W/\sin^2\theta_W = 10/3$ exactly.
+\end{theorem}
+
+\begin{theorem}[\lstinline|global_implies_gauge_mdl_minimal|, discharged to finite-G proxy ($\CatAD$)]
+The MDL principle selects gauging of a global symmetry group $G$ with $|G|>1$: \lstinline|mdlComplexityGauged < mdlComplexityGlobal| (zero sorry for finite $G$; full SU(2)$_L$ requires LC5 orbit geometry).
+\end{theorem}
+
+\begin{theorem}[\lstinline|su2l_mdl_gauge_from_doublet|, zero \texttt{sorry}]
+The $\mathrm{Fin}\,2$ doublet orbit serves as a proxy for SU(2)$_L$ MDL gauging.
+\end{theorem}
+
 No new axioms beyond the standard Lean kernel are used.  This section also contains the
 supporting parity-structure lemmas exploited by the P31 Weinberg angle paper.
 
@@ -4453,7 +4469,7 @@ equal the SM superselection sectors: the gauge group is read off the CA symmetry
 The SM gauge group $G_{\rm SM} = \mathrm{SU}(3)\times\mathrm{SU}(2)_L\times\mathrm{U}(1)_Y$
 is certified from three independent Z$_7$ channels: the F$_{21}\hookrightarrow\mathrm{SU}(3)$
 embedding with eight gluons (CatAL arithmetic; Burnside coset-filling CatAD),
-the SU(2)$_L$ MDL gauging (CatAD, one named axiom \lstinline|global_implies_gauge_mdl_minimal|),
+the SU(2)$_L$ MDL gauging ($\CatAD$; \lstinline|global_implies_gauge_mdl_minimal| discharged to finite-$G$ proxy via \lstinline|su2l_mdl_gauge_from_doublet|),
 and the Z$_7$ winding hypercharge assignment (CatAL, \lstinline|gte_charge_formula|).
 Within-tape channels partition as $c_H = N_{\rm gen} + 2N_{\rm fam}$; cross-tape color
 occupies a separate $(\mathbb{Z}_7)^2$ domain.
