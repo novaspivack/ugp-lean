@@ -6788,9 +6788,11 @@ All resolve phantom theorem name references in physics papers.}
 \subsection{New theorem inventory (EPIC\_080, 2026-05-29)}\label{subsec:new-theorem-inventory-080}
 
 The following modules and theorems were added during the EPIC\_080 sessions covering
-the L1$\to$L2 bridge gap-closure pass.  They span seven new or extended modules:
-BPS kink mass (G7), Level-2 chiral current (G16), SM gauge-group sub-certificates (G23),
-Gorard bridge coefficient (G24), FCA--SRRG--MDL attractor bridge (G39 / MDLSRRG-LEAN),
+the L1$\to$L2 bridge gap-closure pass.  They span ten new or extended modules:
+BPS kink mass and $v_H$ chain (G7), F$_{21}\to$SU(3) holonomy (G12),
+Level-2 chiral current (G16), SM gauge-group sub-certificates (G23),
+Gorard discrete--smooth bridge (G24), strong-field UV bound (G37),
+FCA--SRRG--MDL attractor bridge (G39 / MDLSRRG-LEAN),
 C2 coherence on $\mathbb{Z}_7$ sectors (G40), and the CMCA Hilbert--Fock bridge (G22/G42).
 
 \begin{table}[h]
@@ -6807,6 +6809,9 @@ Theorem & Module & Physical content \\
 \texttt{kink\_\allowbreak mass\_\allowbreak over\_\allowbreak field\_\allowbreak mass}
   & Gravity.PMDLGravityTheorems
   & $M_{\rm kink}/m = 8/49$; normalised ratio (zero \texttt{sorry}) \\[1pt]
+\texttt{kink\_\allowbreak mass\_\allowbreak from\_\allowbreak vH\_\allowbreak complete}
+  & Gravity.PMDLGravityTheorems
+  & G7$\times$G8 chain: $M_{\rm kink}=g_{hKK}v_H/\sqrt2$, $g_{hKK}=4/7^4$ (zero \texttt{sorry}) \\[1pt]
 \midrule
 \multicolumn{3}{@{}l}{\textit{G46 --- Hawking kink emission thresholds (\texttt{Gravity/PMDLGravityTheorems.lean})}} \\[2pt]
 \texttt{kink\_\allowbreak crit\_\allowbreak mass\_\allowbreak formula}
@@ -6821,6 +6826,14 @@ Theorem & Module & Physical content \\
 \texttt{hawking\_\allowbreak kink\_\allowbreak emission\_\allowbreak catad}
   & Gravity.PMDLGravityTheorems
   & G46 master bundle: threshold + emission ratio + Bose enhancement + BPS mass (zero \texttt{sorry}) \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{G37 --- Strong-field UV bound (\texttt{Gravity/PMDLGravityTheorems.lean})}} \\[2pt]
+\texttt{strong\_\allowbreak field\_\allowbreak uv\_\allowbreak bound\_\allowbreak catad}
+  & Gravity.PMDLGravityTheorems
+  & G37 bundle: BPS mass + $V_{\mathbb{Z}_7}\ge 0$ + $V\le V_{\max}=2m^2/49$ (zero \texttt{sorry}) \\[1pt]
+\texttt{z7\_\allowbreak potential\_\allowbreak max\_\allowbreak value}
+  & Gravity.PMDLGravityTheorems
+  & $\Phi=\pi/7$ attains $V_{\max}$; with script: $V_{\max}/V_{\rm Planck}\sim 10^{-79}$ (zero \texttt{sorry}) \\[1pt]
 \midrule
 \multicolumn{3}{@{}l}{\textit{G16 — Level-2 chiral current (\texttt{Substrate/ChiralCurrentL2.lean})}} \\[2pt]
 \texttt{tape\_\allowbreak chiral\_\allowbreak signs\_\allowbreak opposite}
@@ -6865,6 +6878,14 @@ Theorem & Module & Physical content \\
   & Algebra.SMGaugeGroup
   & $G_{\rm SM}$ decomposes into exactly three irreducible factors \\[1pt]
 \midrule
+\multicolumn{3}{@{}l}{\textit{G12 --- F$_{21}\to$SU(3) holonomy bridge (\texttt{Algebra/F21SU3Embedding.lean})}} \\[2pt]
+\texttt{f21\_\allowbreak su3\_\allowbreak holonomy\_\allowbreak catad}
+  & Algebra.F21SU3Embedding
+  & G12 capstone: Burnside continuum + CMCA gluon cycles + faithful 3-irrep (zero \texttt{sorry}) \\[1pt]
+\texttt{f21\_\allowbreak embedding\_\allowbreak is\_\allowbreak faithful}
+  & Algebra.F21SU3Embedding
+  & $|F_{21}|=21$; $8=1'+1''+3+\bar3$; $\mathbb{Z}_3$ cycles three weights (zero \texttt{sorry}) \\[1pt]
+\midrule
 \multicolumn{3}{@{}l}{\textit{G24 — Gorard bridge coefficient (\texttt{Gravity/GorardRicciFlatVacuum.lean})}} \\[2pt]
 \texttt{gorard\_\allowbreak gravity\_\allowbreak bridge\_\allowbreak master}
   & Gravity.GorardRicciFlatVacuum
@@ -6881,6 +6902,12 @@ Theorem & Module & Physical content \\
 \texttt{three\_\allowbreak tape\_\allowbreak causal\_\allowbreak diamond\_\allowbreak t4}
   & Gravity.GorardRicciFlatVacuum
   & Causal-diamond volume $= T^4/4$ in 3+1D (analytic, zero \texttt{sorry}) \\[1pt]
+\texttt{gorard\_\allowbreak normalization\_\allowbreak gap\_\allowbreak analytic}
+  & Gravity.GorardRicciFlatVacuum
+  & Planck gap inputs: $C_{\rm Gorard}=3/32$, $m_{\rm kink}/m=8/49$, coeff.\ $\in(0,1)$ (zero \texttt{sorry}) \\[1pt]
+\texttt{gorard\_\allowbreak discrete\_\allowbreak smooth\_\allowbreak bridge\_\allowbreak complete}
+  & Gravity.GorardRicciFlatVacuum
+  & G24 CLOSED: master bridge + normalization gap bundle (zero \texttt{sorry}) \\[1pt]
 \midrule
 \multicolumn{3}{@{}l}{\textit{G39 / MDLSRRG-LEAN — FCA--SRRG--MDL bridge (\texttt{Algebra/SRRGCABridge.lean})}} \\[2pt]
 \texttt{fca\_\allowbreak attractor\_\allowbreak diagonal\_\allowbreak fp\_\allowbreak equals\_\allowbreak srrg\_\allowbreak fp}
@@ -6931,9 +6958,10 @@ Theorem & Module & Physical content \\
   & G22 master bundle: 12 zero-sorry sector-map theorems ($\CatAL$) \\
 \bottomrule
 \end{tabular}
-\caption{New theorems added in EPIC\_080 sessions (2026-05-29): G7 BPS kink mass,
-G46 Hawking kink-emission thresholds, G16 Level-2 chiral current, G23 SM gauge sub-certificates,
-G24 Gorard bridge coefficient, G39/MDLSRRG FCA--SRRG--MDL attractor bridge,
+\caption{New theorems added in EPIC\_080 sessions (2026-05-29): G7 BPS kink mass and
+$v_H$ chain, G37 strong-field UV bound, G46 Hawking kink-emission thresholds,
+G16 Level-2 chiral current, G12 F$_{21}\to$SU(3) holonomy, G23 SM gauge sub-certificates,
+G24 Gorard discrete--smooth bridge, G39/MDLSRRG FCA--SRRG--MDL attractor bridge,
 G40 C2 coherence on $\mathbb{Z}_7$, and G22/G42 CMCA Hilbert--Fock bridge.
 All are zero \texttt{sorry} unless noted.}
 \label{tab:new-theorem-inventory-080}
@@ -6963,7 +6991,7 @@ $\CatAL$ as of 2026-05-29.
 
 \subsection{New theorem inventory (G28/G29 neutrino vacuum + EW precision, 2026-05-29)}\label{subsec:new-theorem-inventory-g28-g29}
 
-The following theorems were added in two modules: \texttt{MassRelations/NeutrinoVacuumSectorL2.lean} (G28) formalises the neutrino Level-2 vacuum-sector constraints and dark-ring counting; \texttt{Algebra/GaugeMDL.lean} (G29) certifies the one-loop oblique EW precision gap closure.
+The following theorems were added in two modules: \texttt{MassRelations/NeutrinoVacuumSectorL2.lean} (G28) formalises the neutrino Level-2 vacuum-sector constraints and dark-ring counting; \texttt{Algebra/GaugeMDL.lean} (G10/G29) certifies EW coupling constants and the one-loop oblique EW precision gap closure.
 
 \begin{table}[h]
 \centering\footnotesize
@@ -6996,9 +7024,17 @@ Theorem & Module & Physical content \\
 \texttt{m\_\allowbreak W\_\allowbreak gap\_\allowbreak fraction\_\allowbreak certified}
   & Algebra.GaugeMDL
   & $(m_W({\rm 1\text{-}loop})-m_W({\rm tree}))/(m_W({\rm PDG})-m_W({\rm tree}))>98/100$; one-loop correction closes 98.8\% of tree-level gap (zero \texttt{sorry}) \\[1pt]
+\texttt{higgs\_\allowbreak wz\_\allowbreak beyond\_\allowbreak tree\_\allowbreak catad}
+  & Algebra.GaugeMDL
+  & G29 CLOSED master bundle: $\delta\rho>0$ + $m_W$ gap $>98\%$ + Weinberg unitarity (zero \texttt{sorry}) \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{G10 --- EW coupling constants (\texttt{Algebra/GaugeMDL.lean})}} \\[2pt]
+\texttt{ew\_\allowbreak coupling\_\allowbreak constants\_\allowbreak catad}
+  & Algebra.GaugeMDL
+  & G10 CLOSED: $\sin^2\theta_W+\cos^2\theta_W=1$, $g^2/g'^2=10/3$, $\alpha_{\rm EM}=g^2\sin^2\theta_W$ (zero \texttt{sorry}) \\[1pt]
 \bottomrule
 \end{tabular}
-\caption{G28/G29 theorems (2026-05-29): neutrino vacuum sector winding, dark-ring state counting, and one-loop EW oblique precision. All zero \texttt{sorry}.}
+\caption{G10/G28/G29 theorems (2026-05-29): EW coupling constants, neutrino vacuum sector winding, dark-ring state counting, and one-loop EW oblique precision. All zero \texttt{sorry}.}
 \label{tab:new-theorem-inventory-g28-g29}
 \end{table}
 

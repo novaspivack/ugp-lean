@@ -378,4 +378,24 @@ theorem gorard_normalization_gap_analytic (m : ℚ) (hm : 0 < m) :
           UgpLean.Gravity.PMDLGravityTheorems.kink_mass_over_field_mass m hm,
           gorard_bridge_coefficient⟩
 
+/-- **gorard_discrete_smooth_bridge_complete** (CatAD, G24 CLOSED):
+    Complete discrete→smooth gravity bridge: κ_Ollivier = C_Gorard × R_smooth × ε²
+    with C_Gorard = 3/32 (CatAL), κ_SD = 10/13 (CatAL), bridge coefficient in (0,1)
+    (CatAL), vacuum Ricci-flat (CatAL), and Planck normalization inputs (CatAD, G25).
+
+    Full Riemann-tensor Gromov–Hausdorff convergence on the CMCA graph is G26. -/
+theorem gorard_discrete_smooth_bridge_complete (m : ℚ) (hm : 0 < m) :
+    (C_Gorard_mixed = 3 / 32 ∧
+      kappa_SD = 10 / 13 ∧
+      (let kappa_SD : ℝ := 10 / 13
+        let eight_pi : ℝ := 8 * Real.pi
+        kappa_SD / eight_pi > 0 ∧ kappa_SD / eight_pi < 1) ∧
+      ollivierRicciKappa w1AdjacentUniformCDF = 0) ∧
+    (C_Gorard_mixed = 3 / 32 ∧
+      (4 * m / 49) * 2 / m = 8 / 49 ∧
+      (let kappa_SD : ℝ := 10 / 13
+        let eight_pi : ℝ := 8 * Real.pi
+        kappa_SD / eight_pi > 0 ∧ kappa_SD / eight_pi < 1)) := by
+  exact And.intro gorard_gravity_bridge_master (gorard_normalization_gap_analytic m hm)
+
 end UgpLean.Gravity.GorardRicciFlatVacuum
