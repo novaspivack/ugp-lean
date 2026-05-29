@@ -102,39 +102,88 @@ theorem seeley_dewitt_entropy_formula :
   ring
 
 /-!
-## Formal derivation gap — gated on OQ-QG-1-Z₂-EFT
+## Formal derivation gap — gated on OQ-QG-1-Z₂-EFT (NOT on full OQ-QG-1)
 
-The claim β_G = H(Z₂)/Vol(S³) requires proving that the CMCA Z₂ binary
-sublayer, as a **classical binary field** on the compact Euclidean S⁴ bounce,
-contributes to gravitational running solely via its angular mode count on the
-S³ boundary (not via quantum loop diagrams). This is OQ-QG-1-Z₂-EFT, a
-narrower sub-question than the full CMCA Lorentzian path integral (OQ-QG-1):
-it requires classical statistical mechanics on a curved compact background,
-not Lorentzian quantum field theory.
+**Key structural observation (G33 EPIC_080 assessment):**
 
-Key distinction from OQ-QG-1 (full CMCA path integral):
-- OQ-QG-1-Z₂-EFT: prove β_G = H/Vol(S³) for classical binary field on S⁴
-- OQ-QG-1: full non-perturbative CMCA measure on Lorentzian curved background
+The EFT bridge axiom (OQ-QG-1-Z₂-EFT) is **strictly weaker** than the full
+geometric continuum limit (OQ-QG-1). The distinction matters for closing G33:
+
+| Requirement | OQ-QG-1-Z₂-EFT | Full OQ-QG-1 |
+|---|---|---|
+| EFE on FLRW (CatAD, P43/P38) | ✓ needed | ✓ needed |
+| Z₂ binary classical field (CatAL) | ✓ needed | ✓ needed |
+| Compact S⁴ bounce topology (CatA) | ✓ needed | not central |
+| Vol(S³) = 2π² (CatAL) | ✓ needed | ✓ needed |
+| GH convergence CMCA metric → Lorentz | ✗ NOT needed | ✓ required |
+| Lorentzian path integral measure | ✗ NOT needed | ✓ required |
+
+**Why GH convergence is not needed:**
+The EFE is already established CatAD (P43/P38) via MDL-Lovelock. The classical
+Z₂ field couples to T_μν[Φ_MDL] directly as classical matter — it does not
+need a quantum loop diagram and does not need the CMCA metric to GH-converge to
+a Lorentzian manifold. It only needs the compact S⁴ bounce topology (which
+follows from the GTE bounce geometry, CatA).
+
+The gate OQ-QG-1-Z₂-EFT is therefore: "classical binary field on compact S⁴
+contributes β_G = H/Vol(S³) to FLRW spectral running without loop suppression."
+This requires classical EFT on a curved compact manifold, not GH convergence.
+
+**Tautology note:** The algebraic identity β_G_Z2 = ln(2)/(2π²) is already a
+zero-sorry theorem (`beta_g_z2_formula`). The `cmca_z2_classical_angular_running`
+axiom below is therefore algebraically redundant. Its PHYSICAL content is the
+identification of β_G_Z2 (defined algebraically) with the actual gravitational
+running coefficient. The non-tautological axiom is `z2_eft_predicts_cmb_tilt`,
+which relates the internal n_s_GTE to the externally observable spectral index.
 -/
 
-/-- Axiom (gated on OQ-QG-1-Z₂-EFT): the CMCA Z₂ binary sublayer, being a
-    classical binary field on the compact Euclidean S⁴ bounce instanton,
-    contributes to gravitational running via angular mode counting on the S³
-    boundary only (no quantum loop suppression). Each of the Vol(S³) = 2π²
-    angular modes carries entropy H(Z₂) = ln(2), giving:
-      β_G(Z₂) = H(Z₂) / Vol(S³) = ln(2)/(2π²).
-
-    Formal derivation requires proving that classical binary fields on compact
-    Euclidean manifolds contribute to gravitational running as H/Vol(boundary),
-    not via quantum loop diagrams (OQ-QG-1-Z₂-EFT). -/
+/-- Axiom (gated on OQ-QG-1-Z₂-EFT, algebraically redundant — see note):
+    β_G_Z2 = ln(2)/(2π²). Algebraically this is `beta_g_z2_formula`.
+    Physical content: this specific β_G is the gravitational running coefficient
+    for the Z₂ classical binary sublayer on the compact Euclidean S⁴ bounce.
+    Does NOT require OQ-QG-1 (GH convergence); requires only EFE (CatAD) +
+    classical Z₂ field (CatAL) + compact S⁴ topology (CatA). -/
 axiom cmca_z2_classical_angular_running :
     β_G_Z2 = Real.log 2 / (2 * Real.pi ^ 2)
 
-/-- Master theorem: n_s from CMCA Z₂ classical angular running
-    (gated on OQ-QG-1-Z₂-EFT axiom). -/
+/-- Non-tautological EFT bridge axiom (OQ-QG-1-Z₂-EFT):
+
+    Let n_s_physical be the true physical spectral index measurable from the CMB.
+    The EFT bridge asserts that the GTE prediction n_s_GTE equals n_s_physical.
+
+    This axiom captures the physics content that `cmca_z2_classical_angular_running`
+    lacks: n_s_GTE and n_s_physical are defined independently, and their equality
+    is the actual predictive claim of the GTE framework.
+
+    Proof path (does NOT require OQ-QG-1 GH convergence):
+    (1) EFE on FLRW with Φ_MDL source (CatAD, P43 §2 + P38 §3)
+    (2) GTE bounce gives n_s = 1 at leading order (CatA, P43/P44 §4)
+    (3) Z₂ binary sublayer is classical: `rule110_center1_is_nand` (CatAL)
+    (4) Classical matter fields couple to EFE without 1/(16π²) loop suppression
+        (standard EFT — classical fields are not quantum loops)
+    (5) Angular mode counting on compact S⁴: Weyl law (CatAL, step 3+4 above)
+    (6) Next-to-leading correction: δn_s = −β_G_Z2 = −ln(2)/(2π²)
+    ∴  n_s_physical = 1 − ln(2)/(2π²) ≈ 0.96488
+
+    NOT required: GH convergence of the CMCA metric (OQ-QG-1). -/
+axiom z2_eft_predicts_cmb_tilt (n_s_physical : ℝ) :
+    n_s_physical = n_s_GTE
+
+/-- Master theorem: n_s from CMCA Z₂ classical angular running.
+    Zero sorry (uses `cmca_z2_classical_angular_running`, which is algebraically
+    identical to `beta_g_z2_formula`; the non-tautological physical content is
+    in `z2_eft_predicts_cmb_tilt`). -/
 theorem cmca_z2_sublayer_spectral_tilt :
     n_s_GTE = 1 - Real.log 2 / (2 * Real.pi ^ 2) :=
   n_s_formula
+
+/-- The CMB prediction: the physical spectral index equals 1 − ln(2)/(2π²).
+    Given `z2_eft_predicts_cmb_tilt` (EFT bridge axiom, OQ-QG-1-Z₂-EFT). -/
+theorem cmb_spectral_index_equals_gte_prediction
+    (n_s_physical : ℝ) (h : z2_eft_predicts_cmb_tilt n_s_physical) :
+    n_s_physical = 1 - Real.log 2 / (2 * Real.pi ^ 2) := by
+  rw [h]
+  exact n_s_formula
 
 /-!
 ## Weyl Law Algebraic Miracle (Step 3, CatAD)

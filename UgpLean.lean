@@ -196,6 +196,7 @@ import UgpLean.Substrate.WindingCoinDecoupling
 import UgpLean.Substrate.PhiMDLPropagator
 import UgpLean.Substrate.ChiralCurrentL2
 import UgpLean.Substrate.CMCAHilbertFockBridge
+import UgpLean.Substrate.CogwheelDynamicsG21
 import UgpLean.Substrate.WightmanAxioms
 import UgpLean.Universality.CasimirMasslessEther
 import UgpLean.Spacetime.CausalGraph
@@ -337,6 +338,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Substrate.NoetherAngularMomentum` — EPIC_080 G35: `phimdl_angular_momentum_conserved` (CatAD structural bundle; zero sorry in theorem; one PDE axiom for time conservation, 2026-05-29)
 - `UgpLean.Substrate.PhiMDLPropagator` — EPIC_080 G27: `phimdl_free_propagator_formula`, `phimdl_propagator_well_defined`, `phimdl_quartic_coupling`, `phimdl_sextic_coupling`, `phimdl_z7_coupling_fingerprint`, `phimdl_potential_even` — Φ_MDL tree-level propagator G(p)=1/(p²+m²) and Z₇ Feynman vertices (CatAD, zero sorry, 2026-05-29)
 - `UgpLean.Substrate.CMCAHilbertFockBridge` — EPIC_080 G22: `fock_vacuum_maps_to_cmca_vacuum`, `bps_psc_sector_has_beable_lift`, `cmca_hilbert_fock_bridge_master` (CatAL, zero sorry); `cmca_hilbert_inductive_limit` (CatAD axiom, 2026-05-29)
+- `UgpLean.Substrate.CogwheelDynamicsG21` — EPIC_080 G21: `discrete_evolution_operator`, `discrete_schrodinger_composition`, `discrete_schrodinger_step_recurrence`, `discrete_evolution_unitary` (CatAL, zero sorry); `f_mdl_cycle_hamiltonian_vacuum`, `f_mdl_information_loss_convergence`, `kg_factors_to_chiral_schrodinger` (CatAD); Level 1 discrete Schrödinger precursor; Level 2 gates on G42/G26 (2026-05-29)
 - `UgpLean.Substrate.WightmanAxioms` — EPIC_080 G38: `phimdl_satisfies_wightman_axioms`, `phimdl_wightman_locality_positivity_bundle` (CatAD structural axioms; constructive QFT programme, 2026-05-29)
 - `UgpLean.Gravity.RelationalTime` — EPIC_079 Rank 079-LC1: `without_shared_clock_uncoupled`, `shared_clock_gives_31d`, `tau_c_adds_temporal_dimension`, `dimensional_protocol_principle_master` (CatAL, zero sorry)
 - `UgpLean.Gravity.PMDLGravityTheorems` — EPIC_079 Ranks 079-MDL-UNIQUE, 079-FIXED-POINT, 079-UNIFIED-POLY: `vacuum_unique_fixed_point_z7`, `unique_cubic_gravity_coupling`, `gte_gravity_mass_hierarchy`, `gte_polynomial_three_roles_k_zero` (CatAL, zero sorry)
