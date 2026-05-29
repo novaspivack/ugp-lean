@@ -1,5 +1,6 @@
 import Mathlib
 import Mathlib.Data.ZMod.Basic
+import UgpLean.Algebra.PolynomialContinuumBridge
 import UgpLean.Gravity.PSCQECWaldConnections
 import UgpLean.Universality.PhiMDLUniversality
 
@@ -27,6 +28,7 @@ limit is CatAD via named axioms `gte_3d_poisson_green_function` and
 
 namespace UgpLean.Gravity.PMDLGravityTheorems
 
+open UgpLean.Algebra.PolynomialContinuumBridge
 open UgpLean.Gravity.PSCQECWaldConnections
 open UgpLean.Universality.PhiMDLUniversality
 
@@ -765,5 +767,100 @@ theorem kink_bose_enhanced_at_Mcrit :
   have hinv : (1 : ℝ) < 1 / (Real.exp (8 / 49) - 1) := by
     simpa [one_div_one] using one_div_lt_one_div_of_lt hden_pos hden_lt1
   exact hinv
+
+/--
+**hawking_kink_emission_catad** (CatAD, G46):
+
+Hawking kink emission profile fully characterized near `M_crit`:
+  1. `kink_crit_mass_formula` — threshold `M_kink_crit/M_crit = 49/8` (CatAD)
+  2. `kink_over_hawking_temp_ratio` — `m_kink/T_H(M) = (8/49)(M/M_crit)` (CatAD)
+  3. `kink_bose_enhanced_at_Mcrit` — Bose factor > 1 at `M = M_crit` (CatAD)
+  4. `kink_bps_mass_formula` — BPS mass `M_kink = 8m/49` (CatAL, G7 input)
+
+Evaporation endpoint / stable remnant is a separate CatD track.
+Script: `papers/44_quantum_gravity/scripts/hawking_kink_emission.py`
+-/
+theorem hawking_kink_emission_catad :
+    (∀ M_crit M_kink_crit m_tau m_kink : ℝ,
+      0 < M_crit → 0 < M_kink_crit → 0 < m_tau → 0 < m_kink →
+      hawkingTemperature M_kink_crit M_crit m_tau = m_kink →
+      m_kink / m_tau = 8 / 49 →
+      M_kink_crit / M_crit = 49 / 8) ∧
+    (∀ M M_crit m_tau m_kink : ℝ,
+      0 < M → 0 < M_crit → 0 < m_tau → 0 < m_kink →
+      m_kink / m_tau = 8 / 49 →
+      m_kink / hawkingTemperature M M_crit m_tau = (8 / 49) * (M / M_crit)) ∧
+    ((0 : ℝ) < (8 : ℝ) / 49 ∧
+      (8 : ℝ) / 49 < 1 ∧
+      (8 : ℝ) / 49 < Real.log 2 ∧
+      1 / (Real.exp ((8 : ℝ) / 49) - 1) > 1) ∧
+    (∀ m : ℚ, 0 < m → (4 * m / 49) * 2 = 8 * m / 49) := by
+  exact ⟨fun M_crit M_kink_crit m_tau m_kink hM_crit hM_kink hm_tau hm_kink h_threshold h_ratio =>
+           kink_crit_mass_formula M_crit M_kink_crit m_tau m_kink
+             hM_crit hM_kink hm_tau hm_kink h_threshold h_ratio,
+         fun M M_crit m_tau m_kink hM hM_crit hm_tau hm_kink h_ratio =>
+           kink_over_hawking_temp_ratio M M_crit m_tau m_kink hM hM_crit hm_tau hm_kink h_ratio,
+         kink_bose_enhanced_at_Mcrit,
+         fun m hm => kink_bps_mass_formula m hm⟩
+
+-- ============================================================
+-- XVII. Strong-field UV bound (G37) — CatAD
+-- ============================================================
+-- V_max = 2m²/49 from Z₇ potential V(Φ) = (m²/49)(1 − cos 7Φ) at Φ = π/7.
+-- With m_kink/m = 8/49 (BPS, G7), V_max = 2m_kink²/49.
+-- Script: papers/44_quantum_gravity/scripts/strong_field_uv_bound.py
+
+/-- The Z₇ potential maximum value: `V_max = 2m²/49`. -/
+noncomputable def vZ7_max (m : ℝ) : ℝ := 2 * m ^ 2 / 49
+
+/--
+**z7_potential_max_value** (CatAD):
+
+The Z₇ potential ceiling `V_max = 2m²/49` is strictly positive for `m > 0`.
+At `Φ = π/7`, `cos(7Φ) = cos π = −1`, so `V(π/7) = (m²/49)(1 − (−1)) = 2m²/49`.
+-/
+theorem z7_potential_max_value (m : ℝ) (hm : 0 < m) :
+    0 < vZ7_max m := by
+  unfold vZ7_max
+  positivity
+
+theorem vZ7_at_pi_over_seven (m : ℝ) :
+    vZ7 m (Real.pi / 7) = vZ7_max m := by
+  unfold vZ7 vZ7_max
+  have hcos : Real.cos (7 * (Real.pi / 7)) = Real.cos Real.pi := by ring_nf
+  rw [hcos, Real.cos_pi]
+  ring
+
+theorem vZ7_le_max (m : ℝ) (phi : ℝ) :
+    vZ7 m phi ≤ vZ7_max m := by
+  unfold vZ7 vZ7_max
+  have hcos : Real.cos (7 * phi) ≥ -1 := Real.neg_one_le_cos (7 * phi)
+  have hterm : 1 - Real.cos (7 * phi) ≤ 2 := by linarith
+  have hm2 : 0 ≤ m ^ 2 := sq_nonneg m
+  have h49 : (0 : ℝ) < 49 := by norm_num
+  calc
+    (m ^ 2 / 49) * (1 - Real.cos (7 * phi))
+        ≤ (m ^ 2 / 49) * 2 := by
+          gcongr
+    _ = 2 * m ^ 2 / 49 := by ring
+
+/--
+**strong_field_uv_bound_catad** (CatAD, G37):
+
+Strong-field UV bound bundle:
+  1. `kink_bps_mass_formula` — BPS kink mass `M_kink = 8m/49` (CatAL, G7)
+  2. `vZ7_nonneg` — Z₇ potential non-negative everywhere (CatAD)
+  3. `vZ7_le_max` — potential bounded by `V_max = 2m²/49` (CatAD)
+
+Together with `strong_field_uv_bound.py`: `V_max/V_Planck = 1.55×10⁻⁷⁹`,
+`a_kink/ℓ_Pl = 4.21×10¹⁹`, EFT breakdown at `ε₀ = 1` when `M = π/√3`.
+-/
+theorem strong_field_uv_bound_catad :
+    (∀ m : ℚ, 0 < m → (4 * m / 49) * 2 = 8 * m / 49) ∧
+    (∀ m phi : ℝ, vZ7 m phi ≥ 0) ∧
+    (∀ m phi : ℝ, vZ7 m phi ≤ vZ7_max m) := by
+  exact ⟨fun m hm => kink_bps_mass_formula m hm,
+         fun m phi => vZ7_nonneg m phi,
+         fun m phi => vZ7_le_max m phi⟩
 
 end UgpLean.Gravity.PMDLGravityTheorems
