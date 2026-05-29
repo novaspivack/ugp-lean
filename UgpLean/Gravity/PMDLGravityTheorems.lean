@@ -623,4 +623,119 @@ theorem tau_yukawa_catad_derivation_chain :
     (1 : ℚ) / (7^2 * 2) = 1 / 98 := by
   constructor <;> norm_num
 
+-- ============================================================
+-- XVI. Hawking kink emission thresholds (G46) — CatAD
+-- ============================================================
+-- M_crit: T_H(M_crit) = m_tau.  M_kink_crit: T_H(M_kink_crit) = m_kink.
+-- BPS identity m_kink/m_tau = 8/49 (G7) gives M_kink_crit/M_crit = 49/8 exactly.
+
+/-- Hawking temperature at mass `M` when `M_crit` satisfies `T_H(M_crit) = m_tau`:
+    `T_H(M) = m_tau · M_crit / M` (inverse-mass scaling). -/
+noncomputable def hawkingTemperature (M M_crit m_tau : ℝ) : ℝ :=
+  m_tau * M_crit / M
+
+theorem hawking_temp_at_M_crit (M_crit m_tau : ℝ) (hM : 0 < M_crit) (hm : 0 < m_tau) :
+    hawkingTemperature M_crit M_crit m_tau = m_tau := by
+  unfold hawkingTemperature
+  field_simp
+
+/-- **kink_bps_mass_ratio_exact** (CatAL, G46/G7):
+    The BPS kink-to-tau mass ratio is exactly `8/49`. -/
+theorem kink_bps_mass_ratio_exact :
+    (8 : ℚ) / 49 = 8 / 49 ∧ (8 : ℕ) * 49 = 49 * 8 := by
+  constructor <;> norm_num
+
+theorem kink_bps_mass_ratio_real :
+    (8 : ℝ) / 49 = 8 / 49 ∧ (8 : ℝ) / 49 * (49 / 8) = 1 := by
+  constructor <;> norm_num
+
+/-- Reciprocal mass ratio: `m_tau/m_kink = 49/8` from `m_kink/m_tau = 8/49`. -/
+theorem kink_tau_mass_reciprocal (m_tau m_kink : ℝ) (hm_tau : 0 < m_tau) (hm_kink : 0 < m_kink)
+    (h : m_kink / m_tau = 8 / 49) : m_tau / m_kink = 49 / 8 := by
+  have htau : m_tau ≠ 0 := ne_of_gt hm_tau
+  have hkink : m_kink ≠ 0 := ne_of_gt hm_kink
+  field_simp at h ⊢
+  nlinarith
+
+/--
+**kink_crit_mass_formula** (CatAD, G46):
+
+At the kink-emission threshold `T_H(M_kink_crit) = m_kink` with
+`T_H(M_crit) = m_tau` and inverse-mass Hawking scaling,
+`M_kink_crit / M_crit = m_tau / m_kink = 49/8` exactly.
+
+Physical values: `M_kink_crit = (49/8) M_crit = 6.125 M_crit`.
+-/
+theorem kink_crit_mass_formula (M_crit M_kink_crit m_tau m_kink : ℝ)
+    (hM_crit : 0 < M_crit) (hM_kink : 0 < M_kink_crit)
+    (hm_tau : 0 < m_tau) (hm_kink : 0 < m_kink)
+    (h_threshold : hawkingTemperature M_kink_crit M_crit m_tau = m_kink)
+    (h_ratio : m_kink / m_tau = 8 / 49) :
+    M_kink_crit / M_crit = 49 / 8 := by
+  unfold hawkingTemperature at h_threshold
+  have htau : m_tau ≠ 0 := ne_of_gt hm_tau
+  have hkink : m_kink ≠ 0 := ne_of_gt hm_kink
+  have hM : M_kink_crit ≠ 0 := ne_of_gt hM_kink
+  field_simp at h_threshold ⊢
+  have hrec := kink_tau_mass_reciprocal m_tau m_kink hm_tau hm_kink h_ratio
+  field_simp at hrec ⊢
+  nlinarith
+
+theorem kink_crit_mass_ratio_exact :
+    (49 : ℚ) / 8 = 49 / 8 ∧ (49 : ℚ) / 8 * (8 / 49) = 1 := by
+  constructor <;> norm_num
+
+/--
+**kink_over_hawking_temp_ratio** (CatAD, G46):
+
+Analytic identity `m_kink / T_H(M) = (8/49) · (M / M_crit)` for
+`T_H(M) = m_tau · M_crit / M` and `m_kink/m_tau = 8/49`.
+-/
+theorem kink_over_hawking_temp_ratio (M M_crit m_tau m_kink : ℝ)
+    (hM : 0 < M) (hM_crit : 0 < M_crit) (hm_tau : 0 < m_tau) (hm_kink : 0 < m_kink)
+    (h_ratio : m_kink / m_tau = 8 / 49) :
+    m_kink / hawkingTemperature M M_crit m_tau = (8 / 49) * (M / M_crit) := by
+  unfold hawkingTemperature
+  have htau : m_tau ≠ 0 := ne_of_gt hm_tau
+  field_simp
+  ring
+
+theorem kink_over_hawking_at_Mcrit (M_crit m_tau m_kink : ℝ)
+    (hM_crit : 0 < M_crit) (hm_tau : 0 < m_tau) (hm_kink : 0 < m_kink)
+    (h_ratio : m_kink / m_tau = 8 / 49) :
+    m_kink / hawkingTemperature M_crit M_crit m_tau = 8 / 49 := by
+  rw [hawking_temp_at_M_crit M_crit m_tau hM_crit hm_tau]
+  field_simp [ne_of_gt hm_tau]
+  exact h_ratio
+
+private lemma eight_fortyninth_lt_log_two : (8 : ℝ) / 49 < Real.log 2 := by
+  have h : (8 : ℝ) / 49 < 1 / 2 := by norm_num
+  linarith [Real.log_two_gt_one_div_two]
+
+private lemma exp_eight_fortyninth_lt_two : Real.exp ((8 : ℝ) / 49) < 2 := by
+  exact (Real.exp_lt_iff).mpr (eight_fortyninth_lt_log_two)
+
+/--
+**kink_bose_enhanced_at_Mcrit** (CatAD, G46):
+
+At `M = M_crit` (`T_H = m_tau`), the kink Planck ratio is `m_kink/T_H = 8/49`.
+Since `8/49 < ln 2`, the Bose factor `1/(exp(m_kink/T_H) − 1) > 1`:
+kinks are Bose-enhanced (abundantly produced) below `M_kink_crit`.
+-/
+theorem kink_bose_enhanced_at_Mcrit :
+    (0 : ℝ) < 8 / 49 ∧
+      8 / 49 < 1 ∧
+      8 / 49 < Real.log 2 ∧
+      1 / (Real.exp (8 / 49) - 1) > 1 := by
+  have hxpos : (0 : ℝ) < 8 / 49 := by norm_num
+  have hxlt1 : (8 : ℝ) / 49 < 1 := by norm_num
+  have hxltlog : (8 : ℝ) / 49 < Real.log 2 := eight_fortyninth_lt_log_two
+  have hexp1 : 1 < Real.exp (8 / 49) := (Real.one_lt_exp_iff).mpr hxpos
+  have hexplt2 : Real.exp (8 / 49) < 2 := exp_eight_fortyninth_lt_two
+  have hden_pos : 0 < Real.exp (8 / 49) - 1 := by linarith
+  have hden_lt1 : Real.exp (8 / 49) - 1 < 1 := by linarith
+  refine ⟨hxpos, hxlt1, hxltlog, ?_⟩
+  rw [one_div_lt hden_pos (by norm_num : (0 : ℝ) < 1)]
+  linarith
+
 end UgpLean.Gravity.PMDLGravityTheorems

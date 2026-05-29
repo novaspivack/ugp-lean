@@ -554,6 +554,45 @@ theorem freeEnergyGap_zero_iff_gibbs (H : Z7SineGordonHamiltonian) (T : ℝ) (hT
     (d2_prob_admissible_sum p hp_sum hp_d2)
     (ThermalState.sectorProb_admissible_sum H T hT)).mp hkl
 
+/-- D2-admissible sector distributions agreeing on PSC sectors are pointwise equal.
+    The forbidden sectors `{1,5}` carry zero weight under D2, so sector agreement lifts globally. -/
+theorem c2_d2_sector_agreement_implies_global (p q : Fin 7 → ℝ)
+    (hp_d2 : ∀ k, k ∉ pscAdmissibleSectors → p k = 0)
+    (hq_d2 : ∀ k, k ∉ pscAdmissibleSectors → q k = 0)
+    (h_agree : ∀ k ∈ pscAdmissibleSectors, p k = q k) :
+    ∀ k : Fin 7, p k = q k := by
+  intro k
+  by_cases hk : k ∈ pscAdmissibleSectors
+  · exact h_agree k hk
+  · rw [hp_d2 k hk, hq_d2 k hk]
+
+theorem c2_d2_sector_agreement_ext (p q : Fin 7 → ℝ)
+    (hp_d2 : ∀ k, k ∉ pscAdmissibleSectors → p k = 0)
+    (hq_d2 : ∀ k, k ∉ pscAdmissibleSectors → q k = 0)
+    (h_agree : ∀ k ∈ pscAdmissibleSectors, p k = q k) : p = q :=
+  funext (c2_d2_sector_agreement_implies_global p q hp_d2 hq_d2 h_agree)
+
+/-- **Global Gibbs uniqueness (CatAL, no Petz):** `freeEnergyGap = 0` fixes the full
+    D2-admissible sector probability vector, not merely its values on admissible sectors.
+    Proof: sector equality from KL = 0, plus D2 zero on `{1,5}`. -/
+theorem c2_free_energy_zero_global_gibbs (H : Z7SineGordonHamiltonian) (T : ℝ) (hT : 0 < T)
+    (p : Fin 7 → ℝ) (hp_nn : ∀ k, 0 ≤ p k) (hp_sum : ∑ k : Fin 7, p k = 1)
+    (hp_d2 : ∀ k : Fin 7, k ∉ pscAdmissibleSectors → p k = 0)
+    (h_zero : freeEnergyGap H T hT p = 0) :
+    ∀ k : Fin 7, p k = ThermalState.sectorProb H T hT k := by
+  intro k
+  by_cases hk : k ∈ pscAdmissibleSectors
+  · exact freeEnergyGap_zero_iff_gibbs H T hT p hp_nn hp_sum hp_d2 h_zero k hk
+  · have hforb : pscForbiddenSector k := (psc_forbidden_iff_not_admissible k).2 hk
+    rw [hp_d2 k hk, ThermalState.sectorProb_forbidden H T hT k hforb]
+
+theorem c2_free_energy_zero_global_gibbs_ext (H : Z7SineGordonHamiltonian) (T : ℝ) (hT : 0 < T)
+    (p : Fin 7 → ℝ) (hp_nn : ∀ k, 0 ≤ p k) (hp_sum : ∑ k : Fin 7, p k = 1)
+    (hp_d2 : ∀ k : Fin 7, k ∉ pscAdmissibleSectors → p k = 0)
+    (h_zero : freeEnergyGap H T hT p = 0) :
+    p = ThermalState.sectorProb H T hT :=
+  funext (c2_free_energy_zero_global_gibbs H T hT p hp_nn hp_sum hp_d2 h_zero)
+
 /-- Opaque placeholder for the physical [D] coherence evaluated at a sector distribution.
     Actual value is PhiMDLSubstrate.coherence at the quantum state whose kink-sector
     decomposition has probabilities p.  The type-theoretic bridge (quantum state ↦
