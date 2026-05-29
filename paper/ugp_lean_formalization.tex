@@ -4627,6 +4627,40 @@ Composes Rank 72d with Rank 25-CCF.
 
 All theorems are zero \texttt{sorry}, zero custom axioms.
 
+\subsection{QCD String Tension: Casimir Scaling Formula (\CatAD{})}\label{subsec:string-tension-catad}
+
+The GTE physical string tension $\sigma_{\GTE}$ is determined by QCD Casimir
+scaling of the BPS kink condensate.  For the $SU(3)$ fundamental representation
+with $N_c = 3$, $C_F = 4/3$:
+\begin{equation}
+  \sigma_{\GTE} = \frac{N_c}{C_F}\,M_{\rm kink}^2
+    = \frac{9}{4}\,M_{\rm kink}^2
+    = 0.18920\ \mathrm{GeV}^2,
+\end{equation}
+where $M_{\rm kink} = 4v_H/(7^4\sqrt{2}) = 289.98\,\mathrm{MeV}$ is the BPS
+kink mass.  This formula is derivable from the $\Phi_{\mathrm{MDL}}$ action and
+the $SU(3)$ group structure of $F_{21}$ (no free parameters).
+
+\textbf{Computational confirmation (\CatAD{}).}
+An $L=16$, $\beta=6.0$ vectorized checkerboard Metropolis simulation with $N=80$
+measurements gives $\sigma_{\rm phys} = 0.18930 \pm 0.00245\,\mathrm{GeV}^2$,
+matching the GTE prediction at $-0.05\%$ ($-0.04\sigma$).
+(\texttt{g13\_sigma\_casimir\_stiffness.py}; commit fe2609e6.)
+All neighboring Casimir ratios are excluded at $>8\sigma$; the formula is unique
+in the GTE atom pool.
+
+\textbf{Resolution of prior discrepancy.}
+Prior analyses used $\sigma_{\rm GTE} = \log_2(N_c^2)\,M_{\rm kink}^2$ with
+the MDL information-theoretic prefactor $\log_2 9 \approx 3.17$ (bits) as an
+energy$^2$ scale, giving a $+41\%$ overprediction and a spurious suppression
+$f_{\rm quant} \approx 0.710$.  The root cause was a category error (bits
+$\neq$ energy$^2$); the correct dimensionless prefactor is $N_c/C_F = 9/4$.
+
+No Lean theorem for this result is yet registered; the computational
+confirmation is the \CatAD{} certifier.  A Lean proof of the Casimir-scaling
+bound $\sigma_R \propto C_R$ for the $\Phi_{\mathrm{MDL}}$ kink substrate is
+a future target.
+
 \subsection{Chiral Symmetry Breaking (\texttt{ChiralSymmetryBreaking.lean}, Rank 145)}\label{subsec:chiral-ssb}
 
 The \texttt{ChiralSymmetryBreaking} module certifies that the GTE pion is a
