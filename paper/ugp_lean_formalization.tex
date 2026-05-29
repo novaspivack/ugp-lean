@@ -6710,6 +6710,128 @@ All resolve phantom theorem name references in physics papers.}
 \label{tab:new-theorem-inventory-audit}
 \end{table}
 
+\subsection{New theorem inventory (EPIC\_080, 2026-05-29)}\label{subsec:new-theorem-inventory-080}
+
+The following modules and theorems were added during the EPIC\_080 sessions covering
+the L1$\to$L2 bridge gap-closure pass.  They span six new or extended modules:
+BPS kink mass (G7), Level-2 chiral current (G16), SM gauge-group sub-certificates (G23),
+Gorard bridge coefficient (G24), FCA--SRRG--MDL attractor bridge (G39 / MDLSRRG-LEAN),
+and C2 coherence on $\mathbb{Z}_7$ sectors (G40).
+
+\begin{table}[h]
+\centering\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}p{5.2cm}p{4.4cm}p{4.4cm}@{}}
+\toprule
+Theorem & Module & Physical content \\
+\midrule
+\multicolumn{3}{@{}l}{\textit{G7 — BPS kink mass formula (\texttt{Gravity/PMDLGravityTheorems.lean})}} \\[2pt]
+\texttt{kink\_\allowbreak bps\_\allowbreak mass\_\allowbreak formula}
+  & Gravity.PMDLGravityTheorems
+  & $M_{\rm kink} = (4m/49)\cdot 2 = 8m/49$; analytic BPS exact (zero \texttt{sorry}) \\[1pt]
+\texttt{kink\_\allowbreak mass\_\allowbreak over\_\allowbreak field\_\allowbreak mass}
+  & Gravity.PMDLGravityTheorems
+  & $M_{\rm kink}/m = 8/49$; normalised ratio (zero \texttt{sorry}) \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{G16 — Level-2 chiral current (\texttt{Substrate/ChiralCurrentL2.lean})}} \\[2pt]
+\texttt{tape\_\allowbreak chiral\_\allowbreak signs\_\allowbreak opposite}
+  & Substrate.ChiralCurrentL2
+  & R-tape $\chi=+1$, L-tape $\chi=-1$; chiral sign assignment \\[1pt]
+\texttt{j\_\allowbreak vector\_\allowbreak tape\_\allowbreak sum\_\allowbreak zero}
+  & Substrate.ChiralCurrentL2
+  & $J_V = \chi_R + \chi_L = 0$; vector current cancels \\[1pt]
+\texttt{j\_\allowbreak axial\_\allowbreak tape\_\allowbreak diff\_\allowbreak nonzero}
+  & Substrate.ChiralCurrentL2
+  & $J_A = \chi_R - \chi_L \neq 0$; axial current survives \\[1pt]
+\texttt{va\_\allowbreak fraction\_\allowbreak l1\_\allowbreak matches\_\allowbreak chiral\_\allowbreak pair}
+  & Substrate.ChiralCurrentL2
+  & $32/125$ V--A fraction matches chiral-pair ratio (zero \texttt{sorry}) \\[1pt]
+\texttt{phimdl\_\allowbreak axial\_\allowbreak current\_\allowbreak topological}
+  & Substrate.ChiralCurrentL2
+  & $\partial_\mu J^\mu_A = 0$ topologically exact from tape winding \\[1pt]
+\texttt{va\_\allowbreak fraction\_\allowbreak lifts\_\allowbreak to\_\allowbreak l2\_\allowbreak chiral\_\allowbreak current}
+  & Substrate.ChiralCurrentL2
+  & $32/125$ V--A fraction lifts from L1 to L2 chiral current \\[1pt]
+\texttt{phimdl\_\allowbreak l2\_\allowbreak chiral\_\allowbreak current\_\allowbreak bundle}
+  & Substrate.ChiralCurrentL2
+  & G16 bundle: axial conservation + lifting + fraction (zero \texttt{sorry}) \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{G23 — SM gauge group sub-certificates (\texttt{Algebra/SMGaugeGroup.lean})}} \\[2pt]
+\texttt{sm\_\allowbreak gauge\_\allowbreak su3\_\allowbreak certificate}
+  & Algebra.SMGaugeGroup
+  & SU(3) from $\mathbb{Z}_7$ gluon winding; 8-plet certified \\[1pt]
+\texttt{sm\_\allowbreak gauge\_\allowbreak u1y\_\allowbreak certificate}
+  & Algebra.SMGaugeGroup
+  & U(1)$_Y$ from hypercharge winding (zero \texttt{sorry}) \\[1pt]
+\texttt{sm\_\allowbreak gauge\_\allowbreak su2l\_\allowbreak certificate}
+  & Algebra.SMGaugeGroup
+  & SU(2)$_L$ from PSC tape partition (zero \texttt{sorry}) \\[1pt]
+\texttt{sm\_\allowbreak gauge\_\allowbreak within\_\allowbreak tape\_\allowbreak partition}
+  & Algebra.SMGaugeGroup
+  & $N_{\rm gen} + 2N_{\rm fam} = c_H$ (EW boson count) \\[1pt]
+\texttt{sm\_\allowbreak gauge\_\allowbreak factors\_\allowbreak independent}
+  & Algebra.SMGaugeGroup
+  & Three gauge factors act on orthogonal subspaces \\[1pt]
+\texttt{sm\_\allowbreak gauge\_\allowbreak group\_\allowbreak three\_\allowbreak factors}
+  & Algebra.SMGaugeGroup
+  & $G_{\rm SM}$ decomposes into exactly three irreducible factors \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{G24 — Gorard bridge coefficient (\texttt{Gravity/GorardRicciFlatVacuum.lean})}} \\[2pt]
+\texttt{gorard\_\allowbreak chain\_\allowbreak catAL\_\allowbreak master\_\allowbreak bundle}
+  & Gravity.GorardRicciFlatVacuum
+  & Bundle: $\kappa_{\rm OR}=0$ vacuum + Bianchi + diamond $T^4/4$ (zero \texttt{sorry}) \\[1pt]
+\texttt{gorard\_\allowbreak bridge\_\allowbreak coefficient}
+  & Gravity.GorardRicciFlatVacuum
+  & $\kappa_{\rm SD}/(8\pi)\in(0,1)$ with $\kappa_{\rm SD}=10/13$ (zero \texttt{sorry}) \\[1pt]
+\texttt{three\_\allowbreak tape\_\allowbreak gorard\_\allowbreak vacuum\_\allowbreak ricci\_\allowbreak flat}
+  & Gravity.GorardRicciFlatVacuum
+  & Three-tape CA vacuum is Gorard--Ricci-flat (Ollivier $\kappa=0$) \\[1pt]
+\texttt{three\_\allowbreak tape\_\allowbreak causal\_\allowbreak diamond\_\allowbreak t4}
+  & Gravity.GorardRicciFlatVacuum
+  & Causal-diamond volume $= T^4/4$ in 3+1D (analytic, zero \texttt{sorry}) \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{G39 / MDLSRRG-LEAN — FCA--SRRG--MDL bridge (\texttt{Algebra/SRRGCABridge.lean})}} \\[2pt]
+\texttt{fca\_\allowbreak attractor\_\allowbreak diagonal\_\allowbreak fp\_\allowbreak equals\_\allowbreak srrg\_\allowbreak fp}
+  & Algebra.SRRGCABridge
+  & FCA diagonal fixed-point satisfies $x^2+x=1$; equals SRRG $g^*=1/\varphi$ \\[1pt]
+\texttt{fca\_\allowbreak srrg\_\allowbreak attractor\_\allowbreak bridge}
+  & Algebra.SRRGCABridge
+  & Bundle: $0<g^*<1$, $g^{*2}+g^*=1$, $g^*=\varphi^{-1}$ (zero \texttt{sorry}) \\[1pt]
+\texttt{srrg\_\allowbreak mdl\_\allowbreak bridge\_\allowbreak master}
+  & Algebra.SRRGCABridge
+  & $g^*=\varphi^{-1}$, $L_{\rm EW}$ log-decomposition, $L_{\rm EW}>0$; master bundle \\[1pt]
+\texttt{srrg\_\allowbreak beta\_\allowbreak zero\_\allowbreak iff\_\allowbreak kCMCA\_\allowbreak minimum}
+  & Algebra.SRRGCABridge
+  & $\beta_{\rm SRRG}(g)=0 \Leftrightarrow K_{\rm CMCA}(g)=0$ (zero \texttt{sorry}) \\[1pt]
+\texttt{srrg\_\allowbreak mdl\_\allowbreak common\_\allowbreak zero\_\allowbreak is\_\allowbreak g\_\allowbreak star}
+  & Algebra.SRRGCABridge
+  & Both $\beta_{\rm SRRG}$ and $K_{\rm CMCA}$ vanish uniquely at $g^*=\varphi^{-1}$ \\[1pt]
+\texttt{kCMCA\_\allowbreak at\_\allowbreak srrg\_\allowbreak fp}
+  & Algebra.SRRGCABridge
+  & $K_{\rm CMCA}(g^*)=0$; explicit evaluation at the fixed point \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{G40 — C2 coherence on $\mathbb{Z}_7$ sectors (\texttt{Substrate/C2CoherenceG40.lean})}} \\[2pt]
+\texttt{c2\_\allowbreak coherence\_\allowbreak distinguishability}
+  & Substrate.C2CoherenceG40
+  & C2 measure distinguishes all $\mathbb{Z}_7$ sectors; no two are equivalent \\[1pt]
+\texttt{mdl\_\allowbreak fmdl\_\allowbreak unique\_\allowbreak minimizer\_\allowbreak z7}
+  & Substrate.C2CoherenceG40
+  & $\Phi_{\rm MDL}$ and $f_{\rm MDL}$ jointly minimize free energy on $\mathbb{Z}_7$ \\[1pt]
+\texttt{gibbs\_\allowbreak sector\_\allowbreak unique\_\allowbreak minimizer}
+  & Substrate.C2CoherenceG40
+  & Gibbs state at any $T>0$ uniquely minimizes $F$ on $\mathbb{Z}_7$ sectors \\[1pt]
+\texttt{c2\_\allowbreak thermal\_\allowbreak route\_\allowbreak conditional}
+  & Substrate.C2CoherenceG40
+  & C2 thermal-route theorem conditional on Gibbs uniqueness (zero \texttt{sorry}) \\
+\bottomrule
+\end{tabular}
+\caption{New theorems added in EPIC\_080 sessions (2026-05-29): G7 BPS kink mass,
+G16 Level-2 chiral current, G23 SM gauge sub-certificates, G24 Gorard bridge coefficient,
+G39/MDLSRRG FCA--SRRG--MDL attractor bridge, and G40 C2 coherence on $\mathbb{Z}_7$.
+All are zero \texttt{sorry} unless noted.}
+\label{tab:new-theorem-inventory-080}
+\end{table}
+
 \subsection{Mass gap and hierarchy}\label{subsec:mass-gap-hierarchy}
 
 \begin{itemize}[nosep]
