@@ -250,6 +250,7 @@ import UgpLean.Algebra.SU3GluonCount
 import UgpLean.Algebra.ColorConfinementMDL
 import UgpLean.Algebra.BaryonNumber
 import UgpLean.Algebra.ChargeFromPolynomial
+import UgpLean.Algebra.PolynomialContinuumBridge
 import UgpLean.Algebra.ChiralDoublet
 import UgpLean.Algebra.SRRGCABridge
 import UgpLean.Algebra.GaugeMDL

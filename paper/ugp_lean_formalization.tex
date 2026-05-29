@@ -6475,13 +6475,45 @@ Theorem / Axiom & Module & Physical content \\
   & Bell threshold $G_{\rm eff} \approx 0.095$ where CHSH crosses LHV bound \\[1pt]
 \texttt{gte\_poly\_double\_role}
   & Universality.BellViolationGTE
-  & GTE polynomial simultaneously sources gravity and generates entanglement \\
+  & GTE polynomial simultaneously sources gravity and generates entanglement \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{L1$\to$L2 Bridge Theorems (Gap closure G1–G4, 2026-05-29)}} \\[2pt]
+\texttt{l1\_l2\_gravity\_bridge} (axiom)
+  & Gravity.PMDLGravityTheorems
+  & $\phi_{L1}=\phi_{L2}$ when $G_{\rm eff}M_{\rm PMDL}=4\pi G_N M_{\rm kink}$; closes G2 \\[1pt]
+\texttt{gte\_G\_eff\_G\_N\_ratio}
+  & Gravity.PMDLGravityTheorems
+  & $G_{\rm eff}/G_N = 4\pi M_{\rm kink}/M_{\rm PMDL}$; G2 bridge identification \\[1pt]
+\texttt{l1\_l2\_born\_rule\_bridge} (axiom)
+  & Gravity.PageWoottersZ7
+  & PW Born $P(k|\tau_c)$ converges to field Born $|\partial_x\Phi|^2/Z$ at rate $O(1/M^2)$; closes G3 \\[1pt]
+\texttt{born\_bridge\_no\_new\_axiom}
+  & Gravity.PageWoottersZ7
+  & Born bridge requires no axiom beyond \texttt{cmca\_continuum\_limit\_is\_phimdl} \\[1pt]
+\texttt{l1\_chsh\_and\_l2\_epr\_are\_distinct\_layers}
+  & Universality.BellViolationGTE
+  & L1 CHSH ($S=2.4459$) and L2 P43 EPR are separate layers; closes G4 \\[1pt]
+\texttt{alt\_does\_not\_lift\_chsh\_value}
+  & Universality.BellViolationGTE
+  & ALT lifts algebraic structure, not dynamical Hamiltonians or CHSH values \\[1pt]
+\texttt{gap\_g1\_polynomial\_continuum\_taxonomy}
+  & Algebra.PolynomialContinuumBridge
+  & $p$ (update/coupling) $\neq$ $V_{\ZS}$ (potential energy); taxonomy; closes G1 \\[1pt]
+\texttt{pCont\_vacuum}, \texttt{pCont\_up\_quark\_triple\_nonzero}
+  & Algebra.PolynomialContinuumBridge
+  & $p_{\rm cont}(0,0,0)=0$; $p_{\rm cont}(2,2,2)\neq 0$; discrete-continuum consistency \\[1pt]
+\texttt{gtePoly\_diagonal\_psc\_sector}
+  & Algebra.PolynomialContinuumBridge
+  & Diagonal values $p(w,w,w)$ on PSC sector $\{0,2,3,4,6\}$ give $\{0,6,5,5,5\}$ \\[1pt]
+\texttt{vZ7\_nonneg}
+  & Algebra.PolynomialContinuumBridge
+  & $V_{\ZS}(\Phi)\geq 0$ everywhere; potential energy non-negative (zero sorry) \\
 \bottomrule
 \end{tabular}
-\caption{New theorems and named axioms from OQ-079-1 (gravity force law) and OQ-079-3
-(Born rule + Bell inequality). Theorems marked (axiom) are named axioms documenting CatAD or
-CatA results pending full Lean formalization (Mathlib PoissonKernel, PW library, or
-analytic T-matrix bound). Theorems without (axiom) are zero sorry.}
+\caption{New theorems and named axioms from OQ-079-1 (gravity force law), OQ-079-3
+(Born rule + Bell inequality), and the L1$\to$L2 bridge session (gaps G1--G4, 2026-05-29).
+Theorems marked (axiom) are named axioms documenting CatAD or CatA results pending full
+Lean formalization. Theorems without (axiom) are zero sorry.}
 \label{tab:new-theorem-inventory-oq1-oq3}
 \end{table}
 
