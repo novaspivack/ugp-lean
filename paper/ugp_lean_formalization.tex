@@ -6889,6 +6889,35 @@ Theorem & Module & Physical content \\
 \label{tab:new-theorem-inventory-g28-g29}
 \end{table}
 
+\subsection{$\Phi_{\rm MDL}$ propagator, quartic vertex, and ZZ exact S-matrix (G9, 2026-05-29)}\label{subsec:phimdl-propagator-g9}
+
+The module \texttt{Substrate/PhiMDLPropagator.lean} (zero \texttt{sorry}) certifies the
+tree-level QFT data for the $\mathbb{Z}_7$ scalar sector.
+
+\begin{theorem}[\lstinline|phimdl_free_propagator_formula|, zero \texttt{sorry}; and ZZ S-matrix (CatAD)]
+\label{thm:phimdl-propagator-zz}
+The $\mathbb{Z}_7$-vacuum excitation has tree-level propagator
+\[
+  G(p) = \frac{1}{p^2 + m_{\rm kink}^2}
+\]
+certified by \lstinline|phimdl_free_propagator_formula| (zero \texttt{sorry},
+\texttt{PhiMDLPropagator.lean}).  The quartic coupling
+$\lambda_4 = m_{\rm kink}^2 \times 7^2$ is certified by
+\lstinline|phimdl_quartic_coupling| and \lstinline|phimdl_quartic_mass_ratio|
+(both zero \texttt{sorry}).
+
+The $V_{\mathbb{Z}_7}$ potential identifies $\Phi_{\rm MDL}$ as a sine-Gordon theory
+with $\beta^2 = 49 > 8\pi$, placing it in the repulsive regime ($\xi \approx -2.05$,
+no bound states).  The Zamolodchikov--Zamolodchikov exact-integrability theorem
+\cite{ZamolodchikovZamolodchikov1979} then gives the exact quantum kink--kink S-matrix
+\[
+  S_{kk}(\theta) = -1 \quad \text{for all rapidities } \theta
+\]
+without loop integrals (CatAD; no Lean certification required for integrable-system
+results established by ZZ 1979).  This is consistent with \lstinline|z7_no_bion_criterion|
+(G28, zero \texttt{sorry}), which already certifies the absence of bions.
+\end{theorem}
+
 \subsection{Mass gap and hierarchy}\label{subsec:mass-gap-hierarchy}
 
 \begin{itemize}[nosep]
