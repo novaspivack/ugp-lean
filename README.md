@@ -1,10 +1,23 @@
 # ugp-lean
 
+> **Development sandbox:** This repository (`ugp-lean-exp`) is the active development branch for GTE/UGP Lean formalizations. Work here graduates to [`ugp-lean`](https://github.com/novaspivack/ugp-lean), the canonical public library, at milestone points.
+
+## Separation of concerns
+
+| Repository | Role |
+|---|---|
+| **ugp-lean-exp** (this repo) → **ugp-lean** | GTE/UGP-specific formalizations: Z₇ algebra, PSC structure, CMCA dynamics, GTE particle spectrum, MDL initial state, RT formula, fermionic statistics, mass predictions |
+| [**ugp-physics-lean**](https://github.com/novaspivack/ugp-physics-lean) | Standard physics infrastructure: Lorentzian geometry, Minkowski spacetime, spinor representations, spin-statistics, general relativistic structures — physics facts independent of GTE theory |
+
+**Dependency:** ugp-lean-exp imports ugp-physics-lean for standard physics infrastructure. GTE-specific derivations live here; foundational physics infrastructure that is not GTE-specific belongs in ugp-physics-lean.
+
+---
+
 ## Research Program
 
 This repository is part of the **Reflexive Reality** research program by [Nova Spivack](https://www.novaspivack.com/).
 
-**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, and self-reference.  **229 modules, zero sorry on the core proof path** (see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).
+**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, quantum gravity completion, three-tape CMCA, and self-reference.  **263 modules, zero sorry on the core proof path** (5 sorries in WassersteinDistance scaffold for OQ-QG-1; see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).
 
 | Link | Description |
 |------|-------------|
@@ -23,11 +36,11 @@ lake build
 
 **Toolchain:** Lean 4.29.0-rc6, Mathlib v4.29.1.
 
-A clean build completes with zero `sorry` and the standard Mathlib axiom signature `[propext, Classical.choice, Quot.sound]`.  Two pre-existing `sorry` placeholders in `GTE/AnalyticArchitecture` (Tenenbaum-class equidistribution) are outside the core proof path and documented in the formalization paper §3.2.
+A clean build completes with the standard Mathlib axiom signature `[propext, Classical.choice, Quot.sound]`.  Two pre-existing `sorry` placeholders in `GTE/AnalyticArchitecture` (Tenenbaum-class equidistribution) are outside the core proof path and documented in the formalization paper §3.2.  Five `sorry` placeholders in `ContinuumLimit/WassersteinDistance` are the OQ-QG-1 Wasserstein scaffold (metric-space inequalities; documented in the formalization paper).
 
 ---
 
-## Module structure (229 modules; **17 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
+## Module structure (263 modules; **17 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
 
 | Layer | Count | Modules |
 |-------|-------|---------|
@@ -863,3 +876,33 @@ Module: `UgpLean.Universality.PhiMDLUniversality`; companion: `rule110-lean/Rule
 *Rank 13-LSD — Fourier heat-kernel scaffolding (`Spacetime/Spectral/HeatKernelFourier.lean`)*
 
 - `cayley_eigenvalue_at_zero_eq_degree` — zero sorry; 3 documented analytical sorrys in Gaussian-limit chain
+
+---
+
+## New modules (three-tape CMCA session, 2026-05-28)
+
+### Spacetime
+- `UgpLean.Spacetime.HolographicScaling` — Three-tape CMCA is holographic: \(7^{3L}\) vs \(7^{L^3}\); \(3/L^2 \to 0\) (CatAL)
+
+### Algebra
+- `UgpLean.Algebra.ChargeFromPolynomial` — \(3Q(w)=p(0,w,0)=w\); gravity/EM degree split; tape role asymmetry; non-separability (CatAL)
+- `UgpLean.Algebra.SU3GluonCount` — 8 SU(3) gluon generators from \(\Delta w=\pm1\); baryon color neutrality (CatAL)
+- `UgpLean.Algebra.ColorConfinementMDL` — \(\Delta K=\log_2(9)\) MDL cost of free colored quarks (CatAL)
+- `UgpLean.Algebra.BaryonNumber` — \(B=(1/3)\sum \chi_q(w_j)\) topological charge; \(B=1/3\) from \(N_{\mathrm{tapes}}=3\) (CatAL)
+- `UgpLean.Algebra.ChiralDoublet` — Rule124 = Rule110 with L↔R spatial reflection (CatAL)
+- `UgpLean.Algebra.SRRGCABridge` — \(1/\varphi\) = positive root of \(p(x,x,x)=x\) (CatAL)
+- `UgpLean.Algebra.GaugeMDL` — SU(2)\(_L\) from PMDL gauging; 1 named axiom (structural CatAL)
+
+### BraidAtlas
+- `UgpLean.BraidAtlas.WindingToBraidRep` — Fermionic sectors \(\{2,4,6\}\) = non-primitive roots of \(\mathbb{Z}_7^\times\); algebraic ID (CatAL)
+
+### Gravity
+- `UgpLean.Gravity.PMDLGravityTheorems` — MDL uniqueness, vacuum fixed-point, mass hierarchy (CatAL)
+- `UgpLean.Gravity.GorardRicciFlatVacuum` — Vacuum Ricci-flat; causal diamond \(V=T^4/4\) (CatAL)
+- `UgpLean.Gravity.LorentzGroupSO13` — All 12 \(\mathfrak{so}(1,3)\) commutation relations; Thomas precession (CatAL)
+- `UgpLean.Gravity.FermionicStatistics` — Fermionic statistics chain zero sorry; exchange phase formula (CatAL)
+- `UgpLean.Gravity.PSCEpochSelection` — PSP axiom L1/L2/T-PSP; \(\Omega_\Lambda = 0.690\) numerical bound (CatAL)
+
+### Lorentzian ([ugp-physics-lean](https://github.com/novaspivack/ugp-physics-lean))
+- `UgpPhysicsLean.Lorentzian.MinkowskiSpace` — Minkowski metric, LorentzGroup (CatAL)
+- `UgpPhysicsLean.Lorentzian.SpinorRep` — Spinor \(2\pi\) rotation = \(-1\); spin-statistics axiom (CatAL + 1 named axiom)

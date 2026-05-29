@@ -24,6 +24,7 @@ import UgpLean.GTE.UpdateMap
 import UgpLean.GTE.MersenneGcd
 import UgpLean.GTE.MersenneLadder
 import UgpLean.BraidAtlas.ChargeTheorem
+import UgpLean.BraidAtlas.WindingToBraidRep
 import UgpLean.BraidAtlas.CompositeTriples
 import UgpLean.BraidAtlas.ChiralitySquaring
 import UgpLean.BraidAtlas.ChargeDerivation
@@ -191,6 +192,7 @@ import UgpLean.Substrate.NoetherAngularMomentum
 import UgpLean.Substrate.WindingCoinDecoupling
 import UgpLean.Universality.CasimirMasslessEther
 import UgpLean.Spacetime.CausalGraph
+import UgpLean.Spacetime.HolographicScaling
 import UgpLean.Spacetime.SpectralDimension
 import UgpLean.Spacetime.SpectralDimensionDegree
 import UgpLean.Spacetime.Spectral.DegreeNormalized
@@ -218,6 +220,7 @@ import UgpLean.Spacetime.QuantumGravity
 import UgpLean.Spacetime.GravitonFockSpace
 import UgpLean.Spacetime.StressEnergyTensor
 import UgpLean.Gravity.MinimalCoupling
+import UgpLean.Gravity.FLRWFieldEquation
 import UgpLean.Gravity.PlanckDensityBound
 import UgpLean.Gravity.CurvedBackgroundPreconditions
 import UgpLean.Gravity.BounceAndArithmetic
@@ -225,10 +228,28 @@ import UgpLean.Gravity.PSCQECWaldConnections
 import UgpLean.Gravity.WaldChainAndInitialState
 import UgpLean.Gravity.DimensionalDecomposition
 import UgpLean.Gravity.RelationalTime
+import UgpLean.Gravity.PMDLGravityTheorems
+import UgpLean.Gravity.GorardRicciFlatVacuum
+import UgpLean.Gravity.FermionicStatistics
+import UgpLean.Gravity.LorentzGroupSO13
+import UgpLean.Gravity.PSCEpochSelection
+import UgpLean.Gravity.NRTVacuumEnergy
+import UgpLean.Gravity.CMBSpectralTilt
+import UgpLean.ContinuumLimit.GF7VacuumFixedPoint
+import UgpLean.ContinuumLimit.WassersteinDistance
+import UgpLean.ContinuumLimit.DiscreteBianchi
+import UgpLean.ContinuumLimit.GorardRationalFormula
 import UgpLean.OQ26Arithmetic
 import UgpLean.GTEDerivationChain
 import UgpLean.Algebra.CyclotomicZ7Galois
 import UgpLean.Algebra.RSCodeOrbit
+import UgpLean.Algebra.SU3GluonCount
+import UgpLean.Algebra.ColorConfinementMDL
+import UgpLean.Algebra.BaryonNumber
+import UgpLean.Algebra.ChargeFromPolynomial
+import UgpLean.Algebra.ChiralDoublet
+import UgpLean.Algebra.SRRGCABridge
+import UgpLean.Algebra.GaugeMDL
 import UgpLean.Spacetime.PhysicalExclusion
 import UgpLean.Spacetime.ThreeGenerationCapstone
 import UgpLean.Spacetime.CausalInvariance
@@ -296,10 +317,20 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Gravity.MinimalCoupling` — EPIC_078: `minimal_coupling_is_mdl_minimal`, `z7_superselection_preserved_by_flat_metric` (CatAL, zero sorry)
 - `UgpLean.Gravity.PlanckDensityBound` — EPIC_078 Rank 078-LC4: `planck_density_bound_via_lifting`, `planck_density_state_count` (CatAL, zero sorry)
 - `UgpLean.Gravity.CurvedBackgroundPreconditions` — EPIC_078 Rank 078-LC6: `phimdl_no_curvature_coupling`, `mdl_selects_flat_cosmology`, `gte_rs_code_achieves_singleton_bound`, `epic_078_functional_completeness_lean_support` (CatAL, zero sorry)
-- `UgpLean.Gravity.PSCQECWaldConnections` — EPIC_078 Rank 078-LC8: `psc_admissible_eq_rs_eval_points`, `gte_rs_code_params_from_psc`, `gte_ghet_t2_t5_certified`, `phimdl_rt_formula_wald_precondition_chain`, `epic_078_psc_qec_wald_master` (CatAL, zero sorry)
 - `UgpLean.Gravity.WaldChainAndInitialState` — EPIC_078 Rank 078-LC9: `rt_formula_key_precondition`, `z7_potential_zero_at_vacuum`, `mdl_initial_state_flat_spatial_sections`, `phimdl_xi_zero_implies_key_preconditions`, `epic_078_wald_chain_and_initial_state` (CatAL, zero sorry)
+- `UgpLean.Gravity.PSCQECWaldConnections` — EPIC_078 Rank 078-LC8: `psc_admissible_eq_rs_eval_points`, `gte_rs_code_params_from_psc`, `gte_ghet_t2_t5_certified`, `phimdl_rt_formula_wald_precondition_chain`, `epic_078_psc_qec_wald_master` (CatAL, zero sorry)
 - `UgpLean.Gravity.DimensionalDecomposition` — EPIC_078 Rank 078-LC11: `cmca_three_axes_give_31d`, `spacetime_dim_from_ngen`, `galois_symmetry_3d`, `so13_generator_count`, `cmca_tensor_product_gives_31d_minkowski` (CatAL, zero sorry)
+- `UgpLean.Gravity.LorentzGroupSO13` — EPIC_079 OQ-079-9: `lorentz_boost_x/y/z_in_group`, `three_tape_boosts_in_so13`, `lorentz_identity` (CatAL partial, zero sorry); `three_tape_so13_from_so11_cubed_and_so3` structural stub
 - `UgpLean.Gravity.RelationalTime` — EPIC_079 Rank 079-LC1: `without_shared_clock_uncoupled`, `shared_clock_gives_31d`, `tau_c_adds_temporal_dimension`, `dimensional_protocol_principle_master` (CatAL, zero sorry)
+- `UgpLean.Gravity.PMDLGravityTheorems` — EPIC_079 Ranks 079-MDL-UNIQUE, 079-FIXED-POINT, 079-UNIFIED-POLY: `vacuum_unique_fixed_point_z7`, `unique_cubic_gravity_coupling`, `gte_gravity_mass_hierarchy`, `gte_polynomial_three_roles_k_zero` (CatAL, zero sorry)
+- `UgpLean.Gravity.PSCEpochSelection` — EPIC_078 Rank 078-PSP: `psc_undecidability_residual_pos`, `d_res_determines_omega_lambda`, `psp_from_psc_structure`, `psp_epoch_selection_master` (CatAL, 1 sorry for `omega_lambda_gte_approx`, 2026-05-28)
+- `UgpLean.Gravity.NRTVacuumEnergy` — EPIC_078 NRT-LEAN-1: `z7_vacuum_energy_mass_independent`, `z7_vacuum_zero_for_all_masses`, `z7_vacuum_phase_is_integer_multiple_of_two_pi`; PSC Non-Renormalization Theorem Level 1 — Z₇ vacuum energy vanishes mass-independently (CatAL, zero sorry, 2026-05-28)
+- `UgpLean.Gravity.CMBSpectralTilt` — EPIC_078 CMB-LEAN-1: `beta_g_z2_formula`, `beta_g_z2_pos`, `n_s_formula`, `n_s_less_than_one`, `cmca_z2_sublayer_spectral_tilt`; CMB spectral tilt n_s = 1 − ln(2)/(2π²) from CMCA Z₂ sublayer (CatD-STRONG stub, 1 axiom gated on OQ-QG-1, zero sorry, 2026-05-28)
+- `UgpLean.ContinuumLimit.GF7VacuumFixedPoint` — EPIC_078 Rank 078-GCL-VACFP (OQ-QG-1): `gte_poly_zero_is_fixed_point`, `gte_poly_nonzero_not_fixed`, `gte_poly_uniform_unique_fixed_point`, `rule110_gf7_vacuum_fixed_point_master`; GF(7) vacuum uniqueness — `v=0` is the unique symmetric fixed point of the GTE polynomial; CatAL, zero sorry (2026-05-28)
+- `UgpLean.ContinuumLimit.GorardRationalFormula` — EPIC_078 Rank 078-GCL-GORARD-3TAPE: `kappa_SD_eq_10_13`, `kappa_SD_pos`, `kappa_SD_real`, `gorard_discrete_einstein_structure`; Gorard κ_SD = 10/13 exact rational OR curvature at matter locations (ε=1/10); CatAL, zero sorry, zero axioms (2026-05-28)
+- `UgpLean.ContinuumLimit.WassersteinDistance` — OQ-QG-1 Step 2: W₁ (1-Wasserstein / Earth Mover) distance scaffold for Gorard chain; `FiniteMetricSpace`, `ProbDist`, `IsCoupling`, `W1` (sorry — requires Mathlib OT), `OllivierRicci`, `W1_nonneg/comm/eq_zero_iff/triangle` (sorry), `gorard_vacuum_oric_zero` (axiom — discrete Ricci-flat vacuum), `rule110_gromov_wasserstein_limit` (axiom — GW convergence long-range target); CatD-STRONG scaffold, 4 sorry + 2 axioms (2026-05-28)
+- `UgpLean.Algebra.SU3GluonCount` — EPIC_079 Ranks 079-GLUON-SELECT, 079-BARYON-COLOR: `su3_gluon_charge_vectors` (6 gluon vectors from Δw=±1), `su3_gluon_two_z3_orbits` (2 disjoint Z₃ orbits), `su3_gluon_conjugate_pairs`, `baryon_color_z3_orbit_neutral`, `su3_cmca_master_bundle`; all CatAL, zero sorry (2026-05-28)
+- `UgpLean.Algebra.ColorConfinementMDL` — EPIC_079 Rank 079-COLOR-Z3: `color_confinement_k_extra_pos`, `k_extra_eq_log2_9`, `k_extra_uniform`, `psc_forbids_free_colored_quarks`; MDL/PSC K_extra inequality ΔK=log₂(9)>0; CatAL, zero sorry (2026-05-28)
 - `UgpLean.Spacetime.MultiParticleHilbert` — Rank 244-MPH: multi-particle Hilbert space algebraic layer; `code_word_cardinality` (4 code words, Equiv with Fin 4), `n_particle_state_count` (4^N states), `multiDWeight_eq_one`, `multiMass_append`, `multiMass_le`, `mass_hierarchy_three_states`, `smGenMass_multi_anchor`, `multiparticle_orbit_closure`, `inner_product_positive_definite`, `multiparticle_space_well_defined`; all CatAL, zero sorry (2026-05-24)
 - `UgpLean.Spacetime.CausalInvariance` — Rank 37-LCI: f_MDL causal invariance + Lamport consistency + SR connection; `ForwardCausalAdj`, `forward_causal_time_step`, `forward_causal_acyclic`, `transgen_time_strictly_increases`, `lamport_irrefl`, `lamport_strict_partial_order`, `lamport_order_update_independent`, `afca_sr_causal_structure`; all zero sorry, zero axioms (CatAL/CatAD — Lamport properties CatAL, Minkowski isomorphism CatAD, 2026-05-21)
 - `UgpLean.Spacetime.DWeightSRFormula` — Rank 63-DMDL: [D]-weighted SR formula; `dmdl_dweight_positive`, `dmdl_proper_time_ratio`, `dmdl_dweight_sr_formula`, `dmdl_lorentz_factor_algebraic`, `dmdl_tau_c_ratio_structure`, `dmdl_qec_sr_bundle`; all zero sorry, zero custom axioms (CatAL, 2026-05-24)
