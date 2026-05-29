@@ -11,9 +11,9 @@ single zero-`sorry` structural certificate for
 
 `G_SM = SU(3) × SU(2)_L × U(1)_Y`.
 
-All theorems: zero `sorry`, zero new axioms. External axioms: `GaugeMDL.global_implies_gauge_mdl_minimal`
-(CatAD SU(2)_L gauging); `F21SU3Embedding.f21_commutant_dimension` / `f21_matrix_span_dimension`
-(CatAD Burnside coset-filling).
+All theorems: zero `sorry`, zero new axioms. External axioms: `F21SU3Embedding.f21_commutant_dimension`
+/ `f21_matrix_span_dimension` (CatAD Burnside coset-filling). SU(2)_L MDL gauging is proved in
+`GaugeMDL` via finite orbit-label proxy (`global_implies_gauge_mdl_minimal`, zero axioms).
 -/
 
 namespace UgpLean.Algebra.SMGaugeGroup
