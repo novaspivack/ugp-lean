@@ -12,8 +12,8 @@ single zero-`sorry` structural certificate for
 `G_SM = SU(3) × SU(2)_L × U(1)_Y`.
 
 All theorems: zero `sorry`, zero new axioms. External axioms: `F21SU3Embedding.f21_commutant_dimension`
-/ `f21_matrix_span_dimension` (CatAD Burnside coset-filling). SU(2)_L MDL gauging is proved in
-`GaugeMDL` via finite orbit-label proxy (`global_implies_gauge_mdl_minimal`, zero axioms).
+/ `f21_matrix_span_dimension` (CatAD Burnside coset-filling). SU(2)_L MDL gauging is CatAL in
+`GaugeMDL` via `su2l_mdl_gauge_from_doublet` (finite `Fin 2` orbit-label proxy; G18 discharged).
 -/
 
 namespace UgpLean.Algebra.SMGaugeGroup
@@ -50,10 +50,12 @@ theorem sm_gauge_u1y_certificate :
       n_gen = 3) := by
   exact ⟨gte_charge_formula, weinberg_angle_from_hypercharge, rfl⟩
 
-/-- SU(2)_L weak sector (CatAL channel arithmetic + CatAD MDL gauging stub). -/
+/-- SU(2)_L weak sector (CatAL channel arithmetic + CatAL finite-G MDL gauging). -/
 theorem sm_gauge_su2l_certificate :
-    (2 * n_fam = 10 ∧ sin2ThetaW + cos2ThetaW = 1 ∧ True) := by
-  refine ⟨?_, weinberg_angle_unit_sum, trivial⟩
+    (2 * n_fam = 10 ∧
+      sin2ThetaW + cos2ThetaW = 1 ∧
+      mdlComplexityGauged WeakDoubletOrbit 0 < mdlComplexityGlobal WeakDoubletOrbit 0) := by
+  refine ⟨?_, weinberg_angle_unit_sum, su2l_mdl_gauge_from_doublet 0⟩
   simp only [n_fam]
 
 /-- Within-tape channel partition: `c_H = N_gen + 2·N_fam`. -/
@@ -87,7 +89,9 @@ theorem sm_gauge_group_three_factors :
         z3CycleOnGluons (6, 0) = (0, 1) ∧
         z3CycleOnGluons (0, 1) = (1, 6) ∧
         z3CycleOnGluons (1, 6) = (6, 0))) ∧
-    (2 * n_fam = 10 ∧ sin2ThetaW + cos2ThetaW = 1 ∧ True) ∧
+    (2 * n_fam = 10 ∧
+      sin2ThetaW + cos2ThetaW = 1 ∧
+      mdlComplexityGauged WeakDoubletOrbit 0 < mdlComplexityGlobal WeakDoubletOrbit 0) ∧
     ((centeredZ7 ⟨0, by norm_num⟩ = 0 ∧
         centeredZ7 ⟨2, by norm_num⟩ = 2 ∧
         centeredZ7 ⟨3, by norm_num⟩ = 3 ∧
@@ -114,7 +118,9 @@ theorem sm_gauge_group_certificate :
         z3CycleOnGluons (6, 0) = (0, 1) ∧
         z3CycleOnGluons (0, 1) = (1, 6) ∧
         z3CycleOnGluons (1, 6) = (6, 0))) ∧
-    (2 * n_fam = 10 ∧ sin2ThetaW + cos2ThetaW = 1 ∧ True) ∧
+    (2 * n_fam = 10 ∧
+      sin2ThetaW + cos2ThetaW = 1 ∧
+      mdlComplexityGauged WeakDoubletOrbit 0 < mdlComplexityGlobal WeakDoubletOrbit 0) ∧
     ((centeredZ7 ⟨0, by norm_num⟩ = 0 ∧
         centeredZ7 ⟨2, by norm_num⟩ = 2 ∧
         centeredZ7 ⟨3, by norm_num⟩ = 3 ∧
