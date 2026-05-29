@@ -5131,11 +5131,13 @@ occupations to the conditional Born-rule certificate.
 \subsection{Cogwheel discrete evolution (G21,
   \texttt{Substrate/CogwheelDynamicsG21.lean})}\label{subsec:cogwheel-g21}
 
-Module: \texttt{Substrate/CogwheelDynamicsG21.lean}.  Certifies the Level~1
+Module: \texttt{Substrate/CogwheelDynamicsG21.lean} (graduated to
+\texttt{ugp-lean} canonical, 2026-05-29).  Certifies the Level~1
 't~Hooft cogwheel unitary evolution $U(n)=\exp(-iH_{\rm cyc}n\tau_c)$ on
-$\mathbb{C}^{7^5}$ and its discrete Schr\"odinger algebra (four zero-sorry
-$\CatAL$ theorems; three $\CatAD$ axioms for vacuum eigenvalue and
-information-loss convergence gate the Level~1$\to$Level~2 continuum limit).
+$\mathbb{C}^{7^5}$ and its discrete Schr\"odinger algebra (three zero-sorry
+$\CatAL$ theorems; three $\CatAD$ structural commitments---two named axioms
+plus \lstinline|kg_factors_to_chiral_schrodinger|---gate the Level~1$\to$Level~2
+continuum limit).
 
 \begin{theorem}[\lstinline|discrete_schrodinger_composition|, zero \texttt{sorry}]
 The discrete CMCA unitary evolution satisfies $U(m+n) = U(m) \cdot U(n)$ (composition law, $\CatAL$).
@@ -5145,12 +5147,24 @@ The discrete CMCA unitary evolution satisfies $U(m+n) = U(m) \cdot U(n)$ (compos
 $U(n+1) = e^{-iH_{\rm cyc}\tau_c} \cdot U(n)$ (step recurrence, $\CatAL$).
 \end{theorem}
 
-\begin{theorem}[\lstinline|discrete_evolution_unitary|, zero \texttt{sorry}]
-$U(n)$ is unitary for Hermitian $H_{\rm cyc}$ ($\CatAL$).
+\begin{theorem}[\lstinline|discrete_evolution_unitary|, one \texttt{sorry}]
+$U(n)$ is unitary for Hermitian $H_{\rm cyc}$ ($\CatAD$; pending Mathlib
+\texttt{exp\_conjTranspose}/\texttt{star\_ofReal} API for skew-adjoint matrix
+exponentials).
+\end{theorem}
+
+\begin{theorem}[\lstinline|f_mdl_cycle_hamiltonian_vacuum|, axiom]
+The f\_MDL cogwheel Hamiltonian has vacuum eigenvalue $E=0$ with
+$H_{\rm cyc}|{\rm vac}\rangle=0$ ($\CatAD$, from P37 Thm.~2.1).
+\end{theorem}
+
+\begin{theorem}[\lstinline|f_mdl_information_loss_convergence|, axiom]
+Every physical sector reaches $|{\rm vac}\rangle$ under cogwheel evolution in
+$\leq 7$ clock ticks ($\CatAD$, from P37 \S3).
 \end{theorem}
 
 \begin{theorem}[\lstinline|kg_factors_to_chiral_schrodinger|, one \texttt{sorry}]
-For $\omega \neq 0$, the Klein--Gordon mode $\phi''+\omega^2\phi=0$ factors into chiral Schr\"odinger modes $(i\partial_t \pm \omega)\phi_\pm=0$ with $\phi=\phi_++\phi_-$ ($\CatAD$; chiral decomposition proof in progress in \texttt{ugp-lean-exp}).
+For $\omega \neq 0$, the Klein--Gordon mode $\phi''+\omega^2\phi=0$ factors into chiral Schr\"odinger modes $(i\partial_t \pm \omega)\phi_\pm=0$ with $\phi=\phi_++\phi_-$ ($\CatAD$; chiral decomposition pending \texttt{HasDerivAt} chain-rule API).
 \end{theorem}
 
 \subsection{Beable Z\textsubscript{7} Winding Partition Instance\linebreak
