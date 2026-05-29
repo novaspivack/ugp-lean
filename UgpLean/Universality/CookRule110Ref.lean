@@ -41,3 +41,19 @@ def cook_M (L : ℕ) : ℕ := Rule110.cook_M_for_appendant_len L
 theorem cook_M_empty : cook_M 0 = 30 := rfl
 theorem cook_M_nonempty (L : ℕ) (hL : 0 < L) : cook_M L = 30 * (2 * L + 1) :=
   Rule110.cook_M_nonempty L hL
+
+/-- **cts_eval_deterministic** (CatAL): CTS evaluation is deterministic.
+    A CTS is a deterministic computational system: given the same appendant set,
+    step count, and initial word, the output is uniquely determined.
+    The theorem states that any two equal-input evaluations produce the same result.
+
+    The proof is immediate because `Rule110.CyclicTagSystem.cts_eval` is a function
+    (deterministic by construction in Lean's type theory): functions are single-valued.
+
+    LEAN-CERTIFIED (function equality, zero sorry). -/
+theorem cts_eval_deterministic
+    (cts : Rule110.CyclicTagSystem) (n : ℕ) (w : List Bool)
+    (r1 r2 : List Bool)
+    (h1 : cts.cts_eval n w = r1) (h2 : cts.cts_eval n w = r2) :
+    r1 = r2 := by
+  rw [← h1, ← h2]

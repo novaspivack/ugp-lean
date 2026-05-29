@@ -4175,6 +4175,17 @@ The CTS overlay region matches the ether shift cone.
 \end{leanref}
 \end{theorem}
 
+\begin{theorem}[\lstinline|cts_eval_deterministic|, zero \texttt{sorry}]
+CTS evaluation is deterministic: given the same cyclic tag system, step count,
+and initial word, the output word is uniquely determined.
+The proof is immediate from Lean's type-theoretic function semantics.
+
+\begin{leanref}
+\lstinline|cts_eval_deterministic|
+\textup{(in \texttt{Universality.CookRule110Ref})}
+\end{leanref}
+\end{theorem}
+
 % ─────────────────────────────────────────────────────────────────
 \subsection{Martinez Rule~110 Phase Catalog
   (\texttt{rule110-lean})}\label{subsec:martinez-catalog}
@@ -4964,8 +4975,8 @@ orbit-resonant events, not at every CA step.
 
 \subsection{Casimir Massless Ether (\texttt{CasimirMasslessEther})}\label{subsec:casimir-massless}
 
-The \texttt{CasimirMasslessEther} module (235 lines, 15 items) certifies three results
-from the Casimir/photon-vacuum analysis:
+The \texttt{CasimirMasslessEther} module certifies results from the Casimir/photon-vacuum
+analysis:
 
 \begin{theorem}[Photon as CA ether, zero \texttt{sorry}]
 \begin{itemize}[nosep]
@@ -4976,6 +4987,18 @@ from the Casimir/photon-vacuum analysis:
 \item \lstinline|ether_z7_sum_mod7|: the Rule~110 ether period-14 state has
   Z$_7$ winding sum $= 1 \pmod{7}$ — the neutrino sector, not the electromagnetic sector.
 \end{itemize}
+\end{theorem}
+
+\begin{theorem}[\lstinline|transverse_sector_invariance|, zero \texttt{sorry}]
+The all-zero state (vacuum configuration) is preserved under iteration of the
+single-cell center-update $k \mapsto f_{\rm MDL}(0,k,0)$: starting from $k=0$,
+the vacuum is never left.
+
+\begin{leanref}
+\lstinline|transverse_sector_invariance| (fmdl-specific),
+\lstinline|transverse_sector_invariance_universal| (for any $f$ with $f(0,0,0)=0$)
+\textup{(in \texttt{Universality.CasimirMasslessEther})}
+\end{leanref}
 \end{theorem}
 
 \subsection[Lawvere Zone]{Lawvere Zone (\texttt{LawvereZone})}\label{subsec:lawvere-zone}
@@ -6390,6 +6413,56 @@ Theorem & Module & Physical role \\
 \end{tabular}
 \caption{New zero-sorry CatAL theorems from the three-tape CMCA pass (holographic scaling, charge polynomial, SU(3), baryon number, chiral doublet, SRRG bridge, Gorard vacuum, Lorentz algebra).}
 \label{tab:new-theorem-inventory-079}
+\end{table}
+
+\subsection{New theorem inventory (theorem audit pass 2026-05-29)}\label{subsec:new-theorem-inventory-audit}
+
+The following theorems were added during the theorem citation audit pass to resolve
+phantom theorem name references in physics papers. All are zero sorry.
+
+\begin{table}[h]
+\centering\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}p{5.2cm}p{4.4cm}p{4.4cm}@{}}
+\toprule
+Theorem & Module & Physical content \\
+\midrule
+\texttt{transverse\_\allowbreak sector\_\allowbreak invariance}
+  & Universality.CasimirMasslessEther
+  & $(k\!\mapsto\!f_{\rm MDL}(0,k,0))^n(0)=0$; vacuum invariant \\[1pt]
+\texttt{transverse\_\allowbreak sector\_\allowbreak invariance\_\allowbreak universal}
+  & Universality.CasimirMasslessEther
+  & Universal: any $f$ with $f(0,0,0){=}0$ preserves vacuum \\[1pt]
+\texttt{cts\_\allowbreak eval\_\allowbreak deterministic}
+  & Universality.CookRule110Ref
+  & CTS evaluation is deterministic (function = single-valued) \\[1pt]
+\texttt{frobenius\_\allowbreak f21\_\allowbreak is\_\allowbreak z7\_\allowbreak sdp\_\allowbreak z3}
+  & Universality.SylowIndexCouplingHierarchy
+  & Bundle: $|F_{21}|{=}21$; $\mathbb{Z}_3$ action order~3; non-trivial; $\det{=}1$ \\[1pt]
+\texttt{gte\_\allowbreak winding\_\allowbreak sm\_\allowbreak vertex\_\allowbreak conserved}
+  & Universality.GUTStructure
+  & $\mathbb{Z}_7$ winding conserved at 6 representative SM vertices (CatAL) \\[1pt]
+\texttt{winding\_\allowbreak class\_\allowbreak sm\_\allowbreak assignment}
+  & Universality.GUTStructure
+  & Alias for \lstinline|gte_charge_formula|: $3Q=w^*$ SM charge table \\[1pt]
+\texttt{baryon\_\allowbreak number\_\allowbreak z7\_\allowbreak conserved}
+  & Algebra.BaryonNumber
+  & Bundle: topological charge formula + 6 vertex theorems (CatAL) \\[1pt]
+\texttt{psc\_\allowbreak epoch\_\allowbreak selection\_\allowbreak l1\_\allowbreak l2}
+  & Gravity.PSCEpochSelection
+  & Bundle alias: L1 ($D_{\rm res}{>}0$) + L2 ($D_{\rm res}$ fixes $\Omega_\Lambda$) \\[1pt]
+\texttt{psp\_\allowbreak L1\_\allowbreak L2\_\allowbreak T}
+  & Gravity.PSCEpochSelection
+  & Alias for \lstinline|psp_epoch_selection_master| (L1+L2+T) \\[1pt]
+\texttt{srrg\_\allowbreak higgs\_\allowbreak vev\_\allowbreak from\_\allowbreak fixed\_\allowbreak point}
+  & srrg-lean: VEVProof.EWVacuumBridge
+  & Alias for \lstinline|ew_vacuum_bridge_grade_certificate|; grade~[A$^-$];
+    $v_{\rm PSC}=246.16$\,GeV ($-0.024\%$) \\
+\bottomrule
+\end{tabular}
+\caption{New zero-sorry theorems added in the theorem citation audit pass (2026-05-29).
+All resolve phantom theorem name references in physics papers.}
+\label{tab:new-theorem-inventory-audit}
 \end{table}
 
 \subsection{Mass gap and hierarchy}\label{subsec:mass-gap-hierarchy}

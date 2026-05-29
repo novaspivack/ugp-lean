@@ -199,4 +199,44 @@ theorem gte_baryon_invariant_under_color_permutation
   · simp [baryonNumber3]; ring
   · simp [baryonNumber3]; ring
 
+-- ============================================================
+-- BUNDLE THEOREM
+-- ============================================================
+
+/-- **baryon_number_z7_conserved** (CatAL, bundle): Z₇ winding baryon number is conserved
+    at all six representative SM vertex types, and the topological charge formula holds.
+
+    Bundles:
+    - `gte_baryon_number_topological_charge` (main formula: 3B = Σ χ_baryon(wᵢ))
+    - `gte_baryon_conserved_udW_vertex` (charged current: u→d+W⁺)
+    - `gte_baryon_conserved_duW_vertex` (charged current: d→u+W⁻)
+    - `gte_baryon_conserved_eW_vertex` (leptonic: e⁻→νe+W⁻)
+    - `gte_baryon_conserved_uphoton_vertex` (EM: u→u+γ)
+    - `gte_baryon_quark_antiquark_cancels` (pair annihilation)
+    - `gte_baryon_conserved_qg_vertex` (strong: q→q+g)
+
+    The full 33-vertex computational scan (CatA) confirms conservation; this file
+    certifies the six representative vertex types algebraically (CatAL, by decide).
+
+    Zero sorry. -/
+theorem baryon_number_z7_conserved
+    (wx wy wz : ZMod 7) :
+    -- Main formula
+    baryonNumber3 wx wy wz = chi_baryon wx + chi_baryon wy + chi_baryon wz ∧
+    -- Representative vertex conservation
+    (chi_baryon 2 = chi_baryon 6 + chi_baryon 3) ∧   -- u→d+W⁺
+    (chi_baryon 6 = chi_baryon 2 + chi_baryon 4) ∧   -- d→u+W⁻
+    (chi_baryon 4 = chi_baryon 0 + chi_baryon 4) ∧   -- e⁻→νe+W⁻
+    (chi_baryon 2 = chi_baryon 2 + chi_baryon 0) ∧   -- u→u+γ
+    (chi_baryon 2 + chi_baryon 5 = 0) ∧              -- u+ū annihilation
+    (∀ w : ZMod 7, w ∈ quarkSectors →
+      chi_baryon w = chi_baryon w + chi_baryon 0) :=  -- q→q+g
+  ⟨gte_baryon_number_topological_charge wx wy wz,
+    gte_baryon_conserved_udW_vertex,
+    gte_baryon_conserved_duW_vertex,
+    gte_baryon_conserved_eW_vertex,
+    gte_baryon_conserved_uphoton_vertex,
+    gte_baryon_quark_antiquark_cancels,
+    gte_baryon_conserved_qg_vertex⟩
+
 end GTE.BaryonNumber

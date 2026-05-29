@@ -261,4 +261,25 @@ theorem psp_epoch_selection_master :
         ∃! (omega : ℝ), omega = Omega_Lambda_GTE := by
   exact ⟨d_res_pos, rfl, ⟨_, rfl, fun y hy => hy⟩⟩
 
+-- ============================================================
+-- Bundle aliases for physics paper citations
+-- ============================================================
+
+/-- **psc_epoch_selection_l1_l2** (CatAL, bundle): PSC epoch selection lemmas L1 and L2.
+    L1 = `psc_undecidability_residual_pos`: D_res > 0 (positive undecidability residual).
+    L2 = `d_res_determines_omega_lambda`: D_res uniquely fixes Ω_Λ.
+    Zero sorry; delegates to the individual L1/L2 lemmas above. -/
+theorem psc_epoch_selection_l1_l2 :
+    (∃ (d : ℝ), d > 0 ∧ d = D_res) ∧
+    (∃! (Omega : ℝ), Omega = Real.log 2 / (3 * Real.pi) * L_PSC) :=
+  ⟨psc_undecidability_residual_pos, d_res_determines_omega_lambda⟩
+
+/-- **psp_L1_L2_T** (CatAL, bundle): Full PSC epoch selection package (L1, L2, and T-PSP).
+    Alias for `psp_epoch_selection_master`. Zero sorry. -/
+theorem psp_L1_L2_T :
+    0 < D_res ∧
+      Omega_Lambda_GTE = Real.log 2 / (3 * Real.pi) * L_PSC ∧
+        ∃! (omega : ℝ), omega = Omega_Lambda_GTE :=
+  psp_epoch_selection_master
+
 end UgpLean.Gravity.PSCEpochSelection
