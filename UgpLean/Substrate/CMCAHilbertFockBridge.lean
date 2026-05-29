@@ -32,12 +32,18 @@ CatAD structural bridge between finite-tape CMCA ('t Hooft) Hilbert data and the
 | `cmca_hilbert_fock_sector_totality` | All PSC sectors `{0,2,3,4,6}` map to Fock 1-particle or unit amplitude |
 | `cmca_hilbert_inductive_limit` | Bundles sector totality + vacuum + mode counts (zero sorry) |
 
-## CatAD (continuum / GNS programme — not in this module)
+## G42 status: CLOSED CatAD (2026-05-29)
+
+G42 = G22 (CLOSED CatAL, 2026-05-29) + `cmca_continuum_limit_is_phimdl` (CatAL, zero sorry).
+Both conditions are now CatAL → G42 is CLOSED CatAD.
+Full CatAL requires the analytic GNS/Jackiw–Rebbi inductive limit
+(`H_phys(L) ↪ H_Fock` dense as L→∞), which needs a Lean operator-topology
+library not yet available — acknowledged CatD residual.
 
 | Component | Status |
 |-----------|--------|
 | `cmca_hilbert_converges_to_fock_conditional` | Bundles inductive limit + `cmca_continuum_limit_is_phimdl` |
-| `ca_qft_embedding_reduces_to_g22` | G42 ≡ G22 Hilbert map + continuum limit conditional |
+| `ca_qft_embedding_reduces_to_g22` | G42 ≡ G22 Hilbert map + continuum limit (CLOSED CatAD) |
 
 Full analytic Hilbert-space completion (`H_phys(L) ↪ H_Fock` dense as L → ∞, CCR from
 Jackiw–Rebbi GNS) remains open pending Mathlib `Module.DirectLimit` on inner-product
@@ -194,9 +200,12 @@ theorem cmca_hilbert_converges_to_fock_conditional
     (∀ m : KinkMode, isFockOneParticle (singleKinkFock m)) :=
   ⟨h_ind, psc_admissible_count, fun m => (gTe_kink_mode_maps_to_fock_1particle m).1⟩
 
-/-- **ca_qft_embedding_reduces_to_g22** (CatAD structural):
+/-- **ca_qft_embedding_reduces_to_g22** (CLOSED CatAD, G42):
     The 't Hooft CA↔QFT embedding (G42) decomposes as G22 Hilbert map + continuum limit.
-    Hypothesis: `cmca_continuum_limit_is_phimdl` (imported from `CMCAContinuumLimit`). -/
+    G22 is CLOSED CatAL (2026-05-29, 12 zero-sorry theorems).
+    `cmca_continuum_limit_is_phimdl` is CatAL zero-sorry (`CMCAContinuumLimit.lean`).
+    Both conditions CatAL → G42 CLOSED CatAD.
+    Residual CatD: analytic GNS completion requires Lean operator-topology library. -/
 theorem ca_qft_embedding_reduces_to_g22
     (h_ind : CmcaHilbertInductiveLimit) :
     CmcaHilbertInductiveLimit ∧
