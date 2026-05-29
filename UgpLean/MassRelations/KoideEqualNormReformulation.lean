@@ -145,4 +145,58 @@ theorem koide_participation_ratio_is_half_ngen :
   exact (koide_participation_ratio_iff_amplitude (Real.sqrt 2) θ).mpr
     (Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 2))
 
+/-! ## Binary-tape unification (080-KOIDE-EQUALNORM Session 3)
+
+The GTE three-tape system has **binary tapes** (each tape ∈ {0,1}), so the tape
+alphabet size is `N_mod2 = 2`.  Two arithmetic facts follow:
+
+1. The Koide amplitude satisfies `b² = N_mod2`, i.e. `(√2)² = 2`. This is a
+   **numerical coincidence** for `N_gen = 3` binary tapes: `b² = 2` from the
+   equal-irrep-norm trig identity `Σcos² = N_gen/2` (which gives `b² = 2` for
+   every `N_gen ≥ 3`), and `N_mod2 = 2` from the binary tape architecture.
+   The three-way numerical coincidence `b² = 2 = N_mod2 = dim(standard S₃ irrep)`
+   is specific to `N_gen = 3` binary tapes.
+
+2. The tau Yukawa coupling satisfies `y_τ = c_V / N_mod2 = 1/98` where
+   `c_V = 1/49` is the canonical Z₇ potential coefficient (CatAD).  Here
+   `N_mod2` enters **structurally** as the tape-denominator normalization
+   (established in LEPTON-YUKAWA-MECHANISM, CatAD).
+
+The `1-bit` in the Session-2 `1-bit equipartition` argument also references
+`log₂(N_mod2) = log₂(2) = 1 bit`.  So `N_mod2 = 2` is embedded in the
+selection-principle formulation of the mechanism. -/
+
+/-- The GTE binary tape alphabet size: each tape carries a binary (0/1) value. -/
+def GTE_N_mod2 : ℕ := 2
+
+/-- **Binary-tape arithmetic unification.**
+(i)  `(√2)² = N_mod2` — the Koide amplitude squared equals the binary alphabet size.
+     (N.B.: `b² = 2` comes from the equal-irrep-norm trig identity, independent of
+     `N_mod2`; the equality `b² = N_mod2 = 2` is a three-way numerical coincidence at
+     `N_gen = 3`.)
+(ii) `1/49 / N_mod2 = 1/98` — tau Yukawa `y_τ = c_V / N_mod2` (structural, CatAD). -/
+theorem koide_binary_tape_unification :
+    (Real.sqrt 2) ^ 2 = (GTE_N_mod2 : ℝ) ∧
+    (1 : ℝ) / 49 / (GTE_N_mod2 : ℝ) = 1 / 98 := by
+  constructor
+  · exact Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
+  · norm_num [GTE_N_mod2]
+
+/-- **Koide cone at b = √N_mod2.**  With `b = √N_mod2 = √2` the Koide quotient
+equals `2/3` for every phase `θ`.  This is a corollary of `koide_Q_iff_amplitude`
+(which pins the cone at `b² = 2`) applied to `b = √N_mod2`. -/
+theorem koide_cone_at_sqrt_N_mod2 :
+    ∀ θ : ℝ,
+      (vAmp (Real.sqrt (GTE_N_mod2 : ℝ)) θ 0 ^ 2 +
+        vAmp (Real.sqrt (GTE_N_mod2 : ℝ)) θ 1 ^ 2 +
+        vAmp (Real.sqrt (GTE_N_mod2 : ℝ)) θ 2 ^ 2) /
+      (vAmp (Real.sqrt (GTE_N_mod2 : ℝ)) θ 0 +
+        vAmp (Real.sqrt (GTE_N_mod2 : ℝ)) θ 1 +
+        vAmp (Real.sqrt (GTE_N_mod2 : ℝ)) θ 2) ^ 2 = 2 / 3 := by
+  intro θ
+  have hN : (GTE_N_mod2 : ℝ) = 2 := by norm_num [GTE_N_mod2]
+  rw [hN]
+  exact (koide_Q_iff_amplitude (Real.sqrt 2) θ).mpr
+    (Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2))
+
 end UgpLean.MassRelations.KoideEqualNormReformulation
