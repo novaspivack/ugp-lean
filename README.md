@@ -29,6 +29,8 @@ This repository is part of the **Reflexive Reality** research program by [Nova S
 
 ## Build
 
+Build and test **locally only**. This repository is private dev storage; it does not run GitHub Actions CI. Verification runs on your machine; graduated work is checked when merged to the public [`ugp-lean`](https://github.com/novaspivack/ugp-lean) repo.
+
 ```bash
 lake update
 lake build
