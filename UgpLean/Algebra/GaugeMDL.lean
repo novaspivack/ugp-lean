@@ -111,4 +111,51 @@ orbit quotient.
 theorem su2l_weak_force_derivation :
     True := trivial
 
+-- ── Coupling constant arithmetic from CatAL inputs ─────────────────────────
+
+/-- The GTE-derived value sin²θ_W = 3/13 (CatAL, P31 orbit arithmetic). -/
+def sin2ThetaW : ℚ := 3 / 13
+
+/-- cos²θ_W = 10/13 follows from sin²θ_W = 3/13. -/
+def cos2ThetaW : ℚ := 10 / 13
+
+/-- sin²θ_W + cos²θ_W = 1 (algebraic identity). -/
+theorem weinberg_angle_unit_sum : sin2ThetaW + cos2ThetaW = 1 := by
+  unfold sin2ThetaW cos2ThetaW; norm_num
+
+/-- The ratio tan²θ_W = sin²θ_W / cos²θ_W = 3/10 (exact from GTE orbit arithmetic). -/
+theorem tan2_weinberg_angle : sin2ThetaW / cos2ThetaW = 3 / 10 := by
+  unfold sin2ThetaW cos2ThetaW; norm_num
+
+/-- g²/g'² = cos²θ_W/sin²θ_W for any common 4π·α_EM factor (coupling ratio theorem).
+    Equivalently: g'²/g² = sin²θ_W/cos²θ_W = 3/10 (exact). -/
+theorem coupling_squared_ratio (α : ℚ) (hα : α ≠ 0) :
+    let g_sq  := α / sin2ThetaW
+    let gp_sq := α / cos2ThetaW
+    g_sq / gp_sq = cos2ThetaW / sin2ThetaW := by
+  simp only [sin2ThetaW, cos2ThetaW]
+  field_simp
+
+/-- The coupling ratio g²/g'² = 10/3 (exact rational from GTE orbit arithmetic, CatAD). -/
+theorem coupling_ratio_exact :
+    (1 : ℚ) / sin2ThetaW / ((1 : ℚ) / cos2ThetaW) = cos2ThetaW / sin2ThetaW := by
+  unfold sin2ThetaW cos2ThetaW
+  norm_num
+
+/-- cos²θ_W / sin²θ_W = 10/3 as an explicit rational (CatAD). -/
+theorem coupling_ratio_numeric : cos2ThetaW / sin2ThetaW = 10 / 3 := by
+  unfold cos2ThetaW sin2ThetaW; norm_num
+
+/-- sin²θ_W / cos²θ_W = 3/10 as an explicit rational (CatAD). -/
+theorem coupling_ratio_inv_numeric : sin2ThetaW / cos2ThetaW = 3 / 10 := by
+  unfold sin2ThetaW cos2ThetaW; norm_num
+
+/-- The Weinberg constraint: α_EM = g²·sin²θ_W/(4π) holds for any coupling g² = 4π·α/sin²θ_W.
+    Proved over ℚ for the rational factor (4π absorbed in the common factor). -/
+theorem weinberg_constraint (α : ℚ) (hα : α ≠ 0) :
+    let g_sq := α / sin2ThetaW
+    g_sq * sin2ThetaW = α := by
+  simp only [sin2ThetaW]
+  field_simp
+
 end GaugeMDL
