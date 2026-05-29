@@ -181,15 +181,18 @@ import UgpLean.Substrate.Substrate
 import UgpLean.Substrate.PSCPreservingTransformation
 import UgpLean.Substrate.CoherenceMeasure
 import UgpLean.Substrate.CoherenceMeasureUniqueness
+import UgpLean.Substrate.C2CoherenceG40
 import UgpLean.Substrate.QECStabilizer
 import UgpLean.Substrate.GEQECCode
 import UgpLean.Substrate.TransputationStateSelector
+import UgpLean.Substrate.TransputationG41
 import UgpLean.Substrate.DConstraints
 import UgpLean.Substrate.LagrangianLorentzScalar
 import UgpLean.Substrate.PSCStructureLorentzPreserved
 import UgpLean.Substrate.PSCPILorentzMain
 import UgpLean.Substrate.NoetherAngularMomentum
 import UgpLean.Substrate.WindingCoinDecoupling
+import UgpLean.Substrate.CMCAHilbertFockBridge
 import UgpLean.Universality.CasimirMasslessEther
 import UgpLean.Spacetime.CausalGraph
 import UgpLean.Spacetime.HolographicScaling
@@ -337,6 +340,10 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Algebra.ColorConfinementMDL` — EPIC_079 Rank 079-COLOR-Z3: `color_confinement_k_extra_pos`, `k_extra_eq_log2_9`, `k_extra_uniform`, `psc_forbids_free_colored_quarks`; MDL/PSC K_extra inequality ΔK=log₂(9)>0; CatAL, zero sorry (2026-05-28)
 - `UgpLean.Algebra.F21SU3Embedding` — EPIC_080 G23: `f21_burnside_full_enveloping_algebra` (axiom, CatAD), `f21_commutant_dimension`, `f21_matrix_span_dimension`; F₂₁ → SU(3) embedding via Burnside coset-filling; CatAL arithmetic, zero sorry (2026-05-29)
 - `UgpLean.Algebra.SMGaugeGroup` — EPIC_080 G23: `sm_gauge_group_certificate`, `sm_gauge_group_three_factors`, `sm_gauge_factors_independent`; bundles Z₇ → G_SM = SU(3)×SU(2)_L×U(1)_Y three-factor identification; CatAD overall (SU(2)_L named axiom), bundle theorems zero sorry (2026-05-29)
+- `UgpLean.Substrate.C2CoherenceG40` — EPIC_080 G40: thin re-export layer for P43 C2 / P34 Conjecture C2; `c2_coherence_mdl_scaffold`, `c2_lorentz_cpt_equivariance`; CatAL scaffold (full G40 blocked on Mathlib Petz recovery gap); zero sorry (2026-05-29)
+- `UgpLean.Substrate.TransputationG41` — EPIC_080 G41: sector probability layer of transputation CatAL; `gibbs_sector_unique_minimizer`, `transputation_sector_gibbs_master`; global [D]-class uniqueness and Φ_MDL decoherence dynamics remain CatAD/open; zero sorry (2026-05-29)
+- `UgpLean.Substrate.CMCAHilbertFockBridge` — EPIC_080 G22: `fock_vacuum_maps_to_cmca_vacuum`, `bps_psc_sector_has_beable_lift`, `cmca_hilbert_fock_bridge_master` (CatAL, zero sorry); `cmca_hilbert_inductive_limit` (CatAD axiom, 2026-05-29)
+- `UgpLean.MassRelations.NeutrinoVacuumSectorL2` — EPIC_080 G28: Level-2 structural certification for the neutrino sector; Q=0 vacuum sector identification, B(ν)=0, Z₇⁴ dark ring fourth quantum number; CatAL structural, zero sorry (2026-05-29)
 - `UgpLean.Spacetime.MultiParticleHilbert` — Rank 244-MPH: multi-particle Hilbert space algebraic layer; `code_word_cardinality` (4 code words, Equiv with Fin 4), `n_particle_state_count` (4^N states), `multiDWeight_eq_one`, `multiMass_append`, `multiMass_le`, `mass_hierarchy_three_states`, `smGenMass_multi_anchor`, `multiparticle_orbit_closure`, `inner_product_positive_definite`, `multiparticle_space_well_defined`; all CatAL, zero sorry (2026-05-24)
 - `UgpLean.Spacetime.CausalInvariance` — Rank 37-LCI: f_MDL causal invariance + Lamport consistency + SR connection; `ForwardCausalAdj`, `forward_causal_time_step`, `forward_causal_acyclic`, `transgen_time_strictly_increases`, `lamport_irrefl`, `lamport_strict_partial_order`, `lamport_order_update_independent`, `afca_sr_causal_structure`; all zero sorry, zero axioms (CatAL/CatAD — Lamport properties CatAL, Minkowski isomorphism CatAD, 2026-05-21)
 - `UgpLean.Spacetime.DWeightSRFormula` — Rank 63-DMDL: [D]-weighted SR formula; `dmdl_dweight_positive`, `dmdl_proper_time_ratio`, `dmdl_dweight_sr_formula`, `dmdl_lorentz_factor_algebraic`, `dmdl_tau_c_ratio_structure`, `dmdl_qec_sr_bundle`; all zero sorry, zero custom axioms (CatAL, 2026-05-24)
