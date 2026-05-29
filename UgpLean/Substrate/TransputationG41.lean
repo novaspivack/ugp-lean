@@ -101,9 +101,22 @@ theorem transputation_fock_gibbs_identification :
 
 G40 closed CatAD (`c2_algebraic_global_uniqueness`, zero sorry).
 G22 closed CatAL (`cmca_hilbert_fock_sector_totality`, zero sorry).
-Together: transputation's quantum state selection is CatAD globally on the sector layer. -/
-theorem transputation_closed_catad (H : Z7SineGordonHamiltonian) (T : ℝ) (hT : 0 < T) :=
-  And.intro (c2_algebraic_global_uniqueness H T hT)
-    (And.intro cmca_hilbert_fock_sector_totality (transputation_sector_layer_closed H T hT))
+Together: transputation quantum state selection is CatAD globally on the sector layer. -/
+theorem transputation_closed_catad (H : Z7SineGordonHamiltonian) (T : ℝ) (hT : 0 < T) :
+    (freeEnergyGap H T hT (ThermalState.sectorProb H T hT) = 0 ∧
+      (∀ (p : Fin 7 → ℝ), (∀ k, 0 ≤ p k) → (∑ k : Fin 7, p k = 1) →
+        (∀ k, k ∉ pscAdmissibleSectors → p k = 0) → freeEnergyGap H T hT p = 0 →
+        p = ThermalState.sectorProb H T hT) ∧
+      pscAdmissibleSectors ∪ pscForbiddenSectors = Finset.univ ∧
+      Disjoint pscAdmissibleSectors pscForbiddenSectors) ∧
+    (∀ w ∈ pscAdmissibleSectors,
+      (∃ m : KinkMode, kinkModeWinding m = w ∧ isFockOneParticle (singleKinkFock m)) ∨
+        (singleSectorAmplitude beableWindingPartitionInstance w).sectorProb w = 1) ∧
+    (∀ (p : Fin 7 → ℝ), (∀ k, 0 ≤ p k) → (∑ k : Fin 7, p k = 1) →
+      (∀ k, k ∉ pscAdmissibleSectors → p k = 0) → freeEnergyGap H T hT p = 0 →
+      ∀ k ∈ pscAdmissibleSectors, p k = ThermalState.sectorProb H T hT k) := by
+  exact ⟨c2_algebraic_global_uniqueness H T hT,
+         cmca_hilbert_fock_sector_totality,
+         transputation_sector_layer_closed H T hT⟩
 
 end UgpLean.Substrate.TransputationG41
