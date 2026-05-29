@@ -289,4 +289,35 @@ theorem gorard_mixed_ne_sd_over_8pi :
     nlinarith [Real.pi_gt_three]
   linarith
 
+/-!
+## G24: Complete discrete→smooth gravity bridge (CatAD master bundle)
+
+Bundles the established Gorard bridge algebra (CatAL) with the Planck normalization
+structure (CatAD, G25): C_Gorard = 3/32 exactly; κ_SD = 10/13 at matter edges;
+bridge coefficient in (0,1); vacuum Ricci-flat. Full Riemann tensor convergence
+on the CMCA graph remains G26 (Gromov–Hausdorff continuum limit).
+-/
+
+/-- **gorard_gravity_bridge_master** (CatAD):
+    Complete discrete→smooth gravity bridge bundle for G24.
+
+    Combines:
+    1. `gorard_mixed_dim_formula`: C_Gorard = 3/32 (CatAL, mixed-dimension formula)
+    2. `gorard_sd_edge_kappa`: κ_SD = 10/13 (CatAL, SD-edge formula at ε = 1/10)
+    3. `gorard_bridge_coefficient`: κ_SD/(8π) ∈ (0,1) (CatAL)
+    4. `gorard_vacuum_ricci_flat`: κ = 0 on vacuum causal edges (CatAL)
+
+    Together with the Planck normalization gap (M_Pl/m_kink)⁴ × C_Gorard ≈ 10^77.46
+    (CatAD, G25), this characterizes the discrete→smooth gravity bridge. Full Riemann
+    convergence on the CMCA is deferred to G26. -/
+theorem gorard_gravity_bridge_master :
+    C_Gorard_mixed = 3 / 32 ∧
+    kappa_SD = 10 / 13 ∧
+    (let kappa_SD : ℝ := 10 / 13
+     let eight_pi : ℝ := 8 * Real.pi
+     kappa_SD / eight_pi > 0 ∧ kappa_SD / eight_pi < 1) ∧
+    ollivierRicciKappa w1AdjacentUniformCDF = 0 := by
+  exact ⟨gorard_mixed_dim_formula, gorard_sd_edge_kappa,
+         gorard_bridge_coefficient, gorard_vacuum_ricci_flat⟩
+
 end UgpLean.Gravity.GorardRicciFlatVacuum
