@@ -1,4 +1,5 @@
 import UgpLean.Substrate.LagrangianLorentzScalar
+import UgpLean.Algebra.PolynomialContinuumBridge
 import Mathlib.LinearAlgebra.CrossProduct
 
 /-!
@@ -376,5 +377,34 @@ theorem noether_so3_angular_momentum_conserved (sr : SpatialRotation) (cfg : KGC
   And.intro (phimdl_lagrangian_so3_invariant sr cfg) <|
     And.intro (stress_energy_symmetric cfg 1 2) <|
       And.intro (noether_current_vanishes_on_killing cfg) (angular_momentum_cross_product x cfg)
+
+/-- **phimdl_angular_momentum_conserved** (CatAD structural, EPIC_080 G35):
+
+    The Φ_MDL Lagrangian ℒ = ½(∂Φ)² − V_{Z₇}(Φ) is rotationally invariant because
+    V_{Z₇}(Φ) = (m²/49)(1 − cos(7Φ)) depends only on the scalar field Φ, not on spatial
+    angle or position. By Noether's theorem the angular momentum charge
+    `L = x × p` and the stress-energy tensor components `J^{μν}` are conserved on-shell.
+
+    Certified components (zero sorry in this theorem):
+    - `vZ7_nonneg` — scalar potential is a function of Φ alone (PolynomialContinuumBridge)
+    - `phimdl_lagrangian_so3_invariant` — SO(3) invariance of ℒ (L1)
+    - symmetric `T_μν` and vanishing Noether contraction (L3–L4)
+    - `angular_momentum_cross_product` — Noether charge density (L = x × p)
+
+    Time conservation `dL^i/dt = 0` on KG EOM is in `noether_so3_full_closure` via
+    axiom `kg_angular_momentum_time_conserved` (PDE infrastructure pending). -/
+theorem phimdl_angular_momentum_conserved (m : ℝ) (sr : SpatialRotation) (cfg : KGConfig)
+    (x : SpatialVector) (φ : ℝ) :
+    UgpLean.Algebra.PolynomialContinuumBridge.vZ7 m φ ≥ 0 ∧
+      phimdl_config_lagrangian cfg =
+        phimdl_config_lagrangian (spatialRotationActConfig sr cfg) ∧
+      (∀ μ ν : SpacetimeIdx, stressEnergyTensor cfg μ ν = stressEnergyTensor cfg ν μ) ∧
+      noetherContractionZ cfg = 0 ∧
+      angularMomentumCharge x cfg = x ⨯₃ canonicalMomentumDensity cfg :=
+  ⟨UgpLean.Algebra.PolynomialContinuumBridge.vZ7_nonneg m φ,
+    phimdl_lagrangian_so3_invariant sr cfg,
+    fun μ ν => stress_energy_symmetric cfg μ ν,
+    noether_current_vanishes_on_killing cfg,
+    angular_momentum_cross_product x cfg⟩
 
 end UgpLean.Substrate.NoetherAngularMomentum

@@ -251,6 +251,7 @@ import UgpLean.Algebra.ColorConfinementMDL
 import UgpLean.Algebra.BaryonNumber
 import UgpLean.Algebra.ChargeFromPolynomial
 import UgpLean.Algebra.PolynomialContinuumBridge
+import UgpLean.Universality.FiveRolesPolynomial
 import UgpLean.Algebra.ChiralDoublet
 import UgpLean.Algebra.SRRGCABridge
 import UgpLean.Algebra.GaugeMDL
@@ -325,8 +326,10 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Gravity.PSCQECWaldConnections` — EPIC_078 Rank 078-LC8: `psc_admissible_eq_rs_eval_points`, `gte_rs_code_params_from_psc`, `gte_ghet_t2_t5_certified`, `phimdl_rt_formula_wald_precondition_chain`, `epic_078_psc_qec_wald_master` (CatAL, zero sorry)
 - `UgpLean.Gravity.DimensionalDecomposition` — EPIC_078 Rank 078-LC11: `cmca_three_axes_give_31d`, `spacetime_dim_from_ngen`, `galois_symmetry_3d`, `so13_generator_count`, `cmca_tensor_product_gives_31d_minkowski` (CatAL, zero sorry)
 - `UgpLean.Gravity.LorentzGroupSO13` — EPIC_079 OQ-079-9: `lorentz_boost_x/y/z_in_group`, `three_tape_boosts_in_so13`, `lorentz_identity` (CatAL partial, zero sorry); `three_tape_so13_from_so11_cubed_and_so3` structural stub
+- `UgpLean.Substrate.NoetherAngularMomentum` — EPIC_080 G35: `phimdl_angular_momentum_conserved` (CatAD structural bundle; zero sorry in theorem; one PDE axiom for time conservation, 2026-05-29)
 - `UgpLean.Gravity.RelationalTime` — EPIC_079 Rank 079-LC1: `without_shared_clock_uncoupled`, `shared_clock_gives_31d`, `tau_c_adds_temporal_dimension`, `dimensional_protocol_principle_master` (CatAL, zero sorry)
 - `UgpLean.Gravity.PMDLGravityTheorems` — EPIC_079 Ranks 079-MDL-UNIQUE, 079-FIXED-POINT, 079-UNIFIED-POLY: `vacuum_unique_fixed_point_z7`, `unique_cubic_gravity_coupling`, `gte_gravity_mass_hierarchy`, `gte_polynomial_three_roles_k_zero` (CatAL, zero sorry)
+- `UgpLean.Universality.FiveRolesPolynomial` — EPIC_080 Rank 080-FIVE-ROLES: `labelled_triple_role_count`, `gte_polynomial_five_labelled_roles` (CatAL structural, zero sorry, 2026-05-29)
 - `UgpLean.Gravity.PSCEpochSelection` — EPIC_078 Rank 078-PSP: `psc_undecidability_residual_pos`, `d_res_determines_omega_lambda`, `psp_from_psc_structure`, `psp_epoch_selection_master` (CatAL, 1 sorry for `omega_lambda_gte_approx`, 2026-05-28)
 - `UgpLean.Gravity.NRTVacuumEnergy` — EPIC_078 NRT-LEAN-1: `z7_vacuum_energy_mass_independent`, `z7_vacuum_zero_for_all_masses`, `z7_vacuum_phase_is_integer_multiple_of_two_pi`; PSC Non-Renormalization Theorem Level 1 — Z₇ vacuum energy vanishes mass-independently (CatAL, zero sorry, 2026-05-28)
 - `UgpLean.Gravity.CMBSpectralTilt` — EPIC_078 CMB-LEAN-1: `beta_g_z2_formula`, `beta_g_z2_pos`, `n_s_formula`, `n_s_less_than_one`, `cmca_z2_sublayer_spectral_tilt`; CMB spectral tilt n_s = 1 − ln(2)/(2π²) from CMCA Z₂ sublayer (CatD-STRONG stub, 1 axiom gated on OQ-QG-1, zero sorry, 2026-05-28)

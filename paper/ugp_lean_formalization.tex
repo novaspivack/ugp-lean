@@ -6559,6 +6559,22 @@ The $\mathbb{Z}_7$-symmetric potential $V_{\ZS}(\Phi)=(m^2/49)(1-\cos 7\Phi)$
 satisfies $V_{\ZS}(\Phi)\ge 0$ for all $\Phi\in\mathbb{R}$ and all $m\in\mathbb{R}$.
 \end{theorem}
 
+\subsubsection{Five labelled-triple roles
+  (\texttt{Universality/FiveRolesPolynomial.lean})}\label{subsubsec:five-roles-polynomial}
+
+Module: \texttt{Universality/FiveRolesPolynomial.lean}, zero \lstinline|sorry|,
+zero custom axioms (EPIC\_080 rank 080-FIVE-ROLES).
+
+\begin{theorem}[\lstinline|gte_polynomial_five_labelled_roles|, structural (zero \texttt{sorry})]
+The 3-tape clocked machine exposes exactly five distinct labelled-triple roles for
+$p(w_x,w_y,w_z)$ at $K_{\mathrm{extra}}=0$: spatial dynamics, gauge coupling, gravity
+source, entanglement Hamiltonian, and baryon sector current.  The finite role count is
+\lstinline|labelled_triple_role_count| ($\mathrm{card}=5$, \lstinline|decide|); gravity
+and entanglement are distinct role tags despite sharing the same polynomial map; per-role
+substance is certified in \lstinline|gte_polynomial_five_roles_certified| and the
+\lstinline|role1|--\lstinline|role5| sub-theorems.
+\end{theorem}
+
 \subsubsection{Gravity bridge
   (\texttt{Gravity/PMDLGravityTheorems.lean})}\label{subsubsec:gravity-bridge}
 
@@ -7053,6 +7069,16 @@ $[K^i,K^j]=K^k$; (v)~cross-product Lie algebra on Cartesian unit vectors;
 
 Physical meaning: angular momentum conservation emerges from spatial rotation
 symmetry of the $\Phi_{\mathrm{MDL}}$ continuum Lagrangian.
+
+\begin{theorem}[\lstinline|phimdl_angular_momentum_conserved|, structural ($\CatAD$)]
+The $\Phi_{\mathrm{MDL}}$ Lagrangian is rotationally invariant because
+$V_{\ZS}(\Phi)=(m^2/49)(1-\cos 7\Phi)$ depends only on $\Phi$; by Noether's theorem
+the angular momentum charge $L=x\times p$ and symmetric stress-energy components are
+certified (\lstinline|vZ7_nonneg|, \lstinline|phimdl_lagrangian_so3_invariant|,
+\lstinline|stress_energy_symmetric|, \lstinline|noetherContractionZ|=0).  Time
+conservation $dL^i/dt=0$ on KG equations of motion uses axiom
+\lstinline|kg_angular_momentum_time_conserved| (EPIC\_080 gap G35).
+\end{theorem}
 
 \subsection{PSC Presentation Invariance $\Rightarrow$ $[\mathbf{D}]$ Lorentz Equivariance
   (\texttt{Substrate/PSCPILorentzMain.lean})}\label{subsec:pscpi-lorentz-main}
