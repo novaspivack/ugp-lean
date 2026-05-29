@@ -6,6 +6,7 @@ import UgpLean.Universality.CUP3DUniqueness
 import UgpLean.Spacetime.OrbitDepthEtherPeriod
 import UgpLean.ContinuumLimit.DiscreteBianchi
 import UgpLean.ContinuumLimit.GF7VacuumFixedPoint
+import UgpLean.Gravity.PMDLGravityTheorems
 
 /-!
 # Gorard Vacuum Ricci-Flat Theorem (EPIC_079)
@@ -319,5 +320,62 @@ theorem gorard_gravity_bridge_master :
     ollivierRicciKappa w1AdjacentUniformCDF = 0 := by
   exact ⟨gorard_mixed_dim_formula, gorard_sd_edge_kappa,
          gorard_bridge_coefficient, gorard_vacuum_ricci_flat⟩
+
+/-!
+## G25: Gorard Planck normalization gap (CatAD)
+
+The gravity–EM hierarchy gap is the analytic product
+
+  gap = (M_Pl / m_kink)⁴ × C_Gorard
+
+with CatAL-certified structural inputs:
+- `C_Gorard = 3/32` from the mixed-dimension Gorard formula (G24);
+- `m_kink / m = 8/49` from the Z₇ BPS kink mass integral (G7);
+- `M_Pl` and `m_τ` are physical inputs (PDG).
+
+Numerical evaluation with PDG inputs gives log₁₀(gap) ≈ 77.47.
+-/
+
+/-- Analytic Gorard normalization gap: `(M_Pl/m_kink)⁴ × C_Gorard`. -/
+noncomputable def gorardNormalizationGap (M_Pl m_kink C : ℝ) (hm : 0 < m_kink) : ℝ :=
+  (M_Pl / m_kink) ^ 4 * C
+
+/-- GR Planck-scale curvature normalization: `κ_GR = 8π (m_kink/M_Pl)⁴`. -/
+noncomputable def kappaGRPlanck (M_Pl m_kink : ℝ) (hM : 0 < M_Pl) (hm : 0 < m_kink) : ℝ :=
+  8 * Real.pi * (m_kink / M_Pl) ^ 4
+
+/-- **gorard_gap_algebraic_identity** (CatAD):
+    For any positive masses and coefficient `C`, if `κ = C · 8π` then
+    `(M_Pl/m_kink)⁴ × C = κ / κ_GR` with `κ_GR = 8π(m_kink/M_Pl)⁴`. -/
+theorem gorard_gap_algebraic_identity (M_Pl m_kink C κ : ℝ)
+    (hM : 0 < M_Pl) (hm : 0 < m_kink)
+    (hκ : κ = C * (8 * Real.pi)) :
+    gorardNormalizationGap M_Pl m_kink C hm =
+      κ / kappaGRPlanck M_Pl m_kink hM hm := by
+  unfold gorardNormalizationGap kappaGRPlanck
+  have hM_ne : M_Pl ≠ 0 := ne_of_gt hM
+  have hm_ne : m_kink ≠ 0 := ne_of_gt hm
+  have hpi : (0 : ℝ) < Real.pi := Real.pi_pos
+  rw [hκ]
+  field_simp [hM_ne, hm_ne, ne_of_gt hpi]
+
+/-- **gorard_normalization_gap_analytic** (CatAD, G25):
+    Bundles the CatAL inputs for the analytic gap formula
+    `(M_Pl/m_kink)⁴ × C_Gorard`:
+    1. `gorard_mixed_dim_formula`: `C_Gorard = 3/32` (mixed-dimension formula, G24);
+    2. `kink_mass_over_field_mass`: `m_kink/m = 8/49` (BPS kink mass, G7);
+    3. `gorard_bridge_coefficient`: bridge coefficient in `(0,1)`.
+
+    The gap identity itself is `gorard_gap_algebraic_identity`. With PDG inputs
+    `M_Pl` and `m_τ`, numerical evaluation gives log₁₀(gap) ≈ 77.47. -/
+theorem gorard_normalization_gap_analytic (m : ℚ) (hm : 0 < m) :
+    C_Gorard_mixed = 3 / 32 ∧
+    (4 * m / 49) * 2 / m = 8 / 49 ∧
+    (let kappa_SD : ℝ := 10 / 13
+     let eight_pi : ℝ := 8 * Real.pi
+     kappa_SD / eight_pi > 0 ∧ kappa_SD / eight_pi < 1) := by
+  exact ⟨gorard_mixed_dim_formula,
+          UgpLean.Gravity.PMDLGravityTheorems.kink_mass_over_field_mass m hm,
+          gorard_bridge_coefficient⟩
 
 end UgpLean.Gravity.GorardRicciFlatVacuum

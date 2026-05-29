@@ -158,7 +158,6 @@ theorem weak_charged_current_bilinear_antisymmetric (phi dPhi : WeakDoubletField
     weakChargedCurrentBilinear phi dPhi =
       -weakChargedCurrentBilinear (swapWeakDoublet phi) (swapWeakDoublet dPhi) := by
   unfold weakChargedCurrentBilinear swapWeakDoublet
-  simp only [Fin.val_zero, Fin.val_one]
   ring
 
 /-- W-boson charged current from minimal `|D_μΨ|²` gauging (structural CatAD). -/
