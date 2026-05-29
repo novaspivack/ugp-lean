@@ -193,6 +193,7 @@ import UgpLean.Substrate.PSCPILorentzMain
 import UgpLean.Substrate.NoetherAngularMomentum
 import UgpLean.Substrate.WindingCoinDecoupling
 import UgpLean.Substrate.PhiMDLPropagator
+import UgpLean.Substrate.ChiralCurrentL2
 import UgpLean.Universality.CasimirMasslessEther
 import UgpLean.Spacetime.CausalGraph
 import UgpLean.Spacetime.HolographicScaling
