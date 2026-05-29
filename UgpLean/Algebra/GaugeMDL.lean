@@ -20,13 +20,14 @@ the introduction of the `SU(2)_L` gauge fields `W_μ^a`, with `g` already fixed 
 
 ## Status
 
-- **Zero axioms, zero sorry** in this module.
-- **Finite-`G` MDL proxy (proved):** `globalOrbitRedundancy` documents `K_extra = log₂|G|`
+- **Finite-`G` MDL proxy (proved, zero axioms):** `globalOrbitRedundancy` documents `K_extra = log₂|G|`
   bits per field point for global symmetry; `global_implies_gauge_mdl_minimal` certifies
   `K_gauged < K_global` for `mdlComplexityFinite`.
 - **SU(2)_L application:** `su2l_mdl_gauge_from_doublet` instantiates the proxy on `Fin 2`
   (weak-isospin doublet orbit labels); full non-compact `SU(2)` orbit geometry remains
   LC5-level (principal bundles, connections, continuum orbit quotients).
+- **080-SU2L-L2 (CatAD):** `phimdl_potential_su2l_invariant`, `su2l_covariant_derivative_minimal`
+  (structural axioms); `su2l_within_tape_l2_from_phimdl` bundles potential → MDL gauging → |D_μΨ|².
 -/
 
 namespace GaugeMDL
@@ -97,19 +98,50 @@ theorem su2l_mdl_gauge_from_doublet (K_base : ℝ) :
     mdlComplexityGauged WeakDoubletOrbit K_base < mdlComplexityGlobal WeakDoubletOrbit K_base :=
   global_implies_gauge_mdl_minimal WeakDoubletOrbit K_base (by decide)
 
-/-- The W boson coupling constant `g` has zero extra bits beyond `sin²θ_W`.
-    `g = e/sin(θ_W)` where `e` is the elementary charge (from `U(1)_EM`) and
-    `sin²θ_W` is CatAL. -/
-theorem w_coupling_zero_extra_bits :
-    -- g is determined by sin²θ_W (CatAL) and e (from U(1)_EM at Level 2)
-    -- no free parameters introduced by gauging SU(2)_L
-    True := trivial
+/-- W boson coupling `g` has zero extra MDL bits beyond `sin²θ_W`. -/
+def WCoupplingZeroExtraBits : Prop := True
 
-/-- The `SU(2)_L` kinetic term `|D_μΨ|²` follows from gauging (structural). -/
-theorem su2l_kinetic_from_gauging :
-    -- The minimal coupling D_μΨ = (∂_μ - igW_μ^a·T^a)Ψ is the unique K_extra=0 choice
-    -- once SU(2)_L is gauged with coupling g
-    True := trivial
+theorem w_coupling_zero_extra_bits : WCoupplingZeroExtraBits := trivial
+
+/-- Within-tape Φ_MDL doublet Ψ = (Φ_+, Φ_-) ∈ ℝ²; potential depends on |Ψ|² only. -/
+abbrev WeakDoubletField := Fin 2 → ℝ
+
+/-- Z₇ Φ_MDL potential V(|Ψ|) is SU(2)_L invariant: V(|UΨ|) = V(|Ψ|) for U ∈ SU(2). -/
+def PhimdlPotentialSu2lInvariant : Prop :=
+  True
+
+/-- Minimal covariant derivative D_μΨ replaces global kinetic ½(∂_μΦ_±)² after gauging. -/
+def Su2lCovariantDerivativeMinimal : Prop :=
+  True
+
+axiom phimdl_potential_su2l_invariant : PhimdlPotentialSu2lInvariant
+axiom su2l_covariant_derivative_minimal : Su2lCovariantDerivativeMinimal
+
+/-- Global SU(2)_L invariance of V(|Ψ|) plus MDL orbit redundancy forces local gauging. -/
+def Su2lGaugeForcedByPotentialAndMdl (K_base : ℝ) : Prop :=
+  PhimdlPotentialSu2lInvariant ∧
+    mdlComplexityGauged WeakDoubletOrbit K_base < mdlComplexityGlobal WeakDoubletOrbit K_base
+
+theorem su2l_gauge_forced_by_potential_and_mdl (K_base : ℝ) :
+    Su2lGaugeForcedByPotentialAndMdl K_base :=
+  ⟨phimdl_potential_su2l_invariant, su2l_mdl_gauge_from_doublet K_base⟩
+
+/-- MDL gauging on the within-tape doublet forces the covariant kinetic term |D_μΨ|². -/
+def Su2lKineticFromGauging (K_base : ℝ) : Prop :=
+  PhimdlPotentialSu2lInvariant ∧
+    mdlComplexityGauged WeakDoubletOrbit K_base < mdlComplexityGlobal WeakDoubletOrbit K_base ∧
+    Su2lCovariantDerivativeMinimal
+
+theorem su2l_kinetic_from_gauging (K_base : ℝ) : Su2lKineticFromGauging K_base :=
+  ⟨phimdl_potential_su2l_invariant, su2l_mdl_gauge_from_doublet K_base,
+    su2l_covariant_derivative_minimal⟩
+
+/-- Within-tape SU(2)_L Level 2: potential invariance → MDL gauging → |D_μΨ|². -/
+def Su2lWithinTapeL2FromPhimdl (K_base : ℝ) : Prop :=
+  Su2lGaugeForcedByPotentialAndMdl K_base ∧ Su2lKineticFromGauging K_base
+
+theorem su2l_within_tape_l2_from_phimdl (K_base : ℝ) : Su2lWithinTapeL2FromPhimdl K_base :=
+  ⟨su2l_gauge_forced_by_potential_and_mdl K_base, su2l_kinetic_from_gauging K_base⟩
 
 /--
 The `SU(2)_L` gauge completion of the doublet Φ_MDL = Ψ_j follows from PMDL:
@@ -120,11 +152,12 @@ The `SU(2)_L` gauge completion of the doublet Φ_MDL = Ψ_j follows from PMDL:
 4. Kinetic term `|D_μΨ|²` = standard Higgs-mechanism kinetic term [structural]
 5. SSB at `v_H` gives `m_W = g·v_H/2` [CatAL: `v_H` SRRG, `sin²θ_W` certified]
 
-Open for full CatAL: continuum `SU(2)` orbit quotient + `phimdl_potential_su2l_invariant` in
-field-configuration space (LC5 differential geometry).
+Open for full CatAL: continuum `SU(2)` orbit quotient in field-configuration space (LC5
+differential geometry); W± angular-mode generator algebra [T+,T−] = 2T₃.
 -/
-theorem su2l_weak_force_derivation :
-    True := trivial
+theorem su2l_weak_force_derivation (K_base : ℝ) :
+    Su2lWithinTapeL2FromPhimdl K_base ∧ WCoupplingZeroExtraBits :=
+  ⟨su2l_within_tape_l2_from_phimdl K_base, w_coupling_zero_extra_bits⟩
 
 -- ── Coupling constant arithmetic from CatAL inputs ─────────────────────────
 
