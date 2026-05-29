@@ -3098,6 +3098,50 @@ $S_3$ equal-norm condition.
 zero \texttt{sorry}, zero hypotheses)}\end{leanref}
 \end{theorem}
 
+\subsection{Koide cone amplitude and MDL equipartition (\texttt{MassRelations.KoideYukawaAmplitude}, \texttt{KoideEqualNormReformulation}, \texttt{KoideIrrepEqualNorm})}\label{subsec:koide-amplitude}
+
+The cone amplitude in the generation Yukawa
+$v_g = 1 + b\cos(\theta + 2\pi g/3)$ is pinned to $b = \sqrt{2}$ by an exact
+equivalence and a minimum-description-length selection principle.  Decomposing
+$v$ under the $S_3$ permutation representation $\mathbb{R}^3 = \mathbf{1}\oplus\mathbf{2}$,
+the trivial-block and standard-block Hilbert--Schmidt norms are
+$|v_{\mathbf 1}|^2 = (\textstyle\sum_g v_g)^2/3$ and
+$|v_{\mathbf 2}|^2 = \sum_g v_g^2 - (\sum_g v_g)^2/3$.
+
+\begin{theorem}[Cone amplitude iff $b^2 = 2$]\label{thm:koide-amp-iff}
+For every phase $\theta$, the Koide quotient
+$Q = (\sum_g v_g^2)/(\sum_g v_g)^2$ equals $2/3$ \emph{iff} $b^2 = 2$, and the
+equal-irrep-norm condition $|v_{\mathbf 1}|^2 = |v_{\mathbf 2}|^2$ holds \emph{iff}
+$b^2 = 2$; for $b \ge 0$ both force $b = \sqrt{2}$.  Equivalently, $b^2 = 2$
+holds \emph{iff} the coefficient of variation $\mathrm{CV}(\sqrt{m}) = 1$, with
+$Q = (1 + \mathrm{CV}^2)/3$.
+
+\begin{leanref}\lstinline|koide_Q_iff_amplitude|,
+\lstinline|equal_norm_iff_amplitude|,
+\lstinline|cone_amplitude_eq_sqrt2|
+\textup{(in \texttt{MassRelations.KoideYukawaAmplitude})};
+\lstinline|koide_cv_one_iff_amplitude|,
+\lstinline|koide_Q_eq_one_third_one_plus_cv_sq|
+\textup{(in \texttt{MassRelations.KoideEqualNormReformulation}, zero \texttt{sorry})}\end{leanref}
+\end{theorem}
+
+\begin{theorem}[MDL equipartition selects $b = \sqrt{2}$]\label{thm:koide-equipartition}
+The minimum-description-length / maximum-entropy condition on the generation
+Yukawa selects equipartition of the Frobenius norm across the two $S_3$ irrep
+types (a one-bit equipartition, $\log_2 2 = 1$): $|v_{\mathbf 1}| = |v_{\mathbf 2}|$.
+This equipartition holds \emph{iff} $b^2 = d_{\mathbf 2}(S_3) = 2$, hence
+$b = \sqrt{2}$ and Koide $Q = 2/3$, for every phase $\theta$.  The mechanism is
+not specific to $N_{\rm gen} = 3$: for any $N_{\rm gen} \ge 3$ equipartition gives
+$b^2 = 2$ and $Q = 2/N_{\rm gen}$, equal to $2/3$ precisely because $N_{\rm gen} = 3$.
+The MDL equipartition is the framework's minimum-description-length axiom applied
+to flavour space; every downstream consequence is proved.
+
+\begin{leanref}\lstinline|koide_irrep_equipartition_iff_b_sq_eq_d_standard|,
+\lstinline|koide_irrep_equalnorm_master|,
+\lstinline|dim_count_s3_two_irrep_types|
+\textup{(in \texttt{MassRelations.KoideIrrepEqualNorm}, zero \texttt{sorry})}\end{leanref}
+\end{theorem}
+
 \subsection{CDM Cabibbo derivation (\texttt{MassRelations.CKMMixing})}\label{subsec:ckm-mixing}
 
 The \texttt{MassRelations.CKMMixing} module (551 lines, 29 theorems) certifies the

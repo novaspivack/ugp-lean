@@ -83,4 +83,27 @@ theorem phimdl_wightman_locality_positivity_bundle :
     PhimdlWightmanLocality ∧ PhimdlWightmanPositivity :=
   ⟨phimdl_wightman_locality, phimdl_wightman_positivity⟩
 
+
+/-- **phimdl_wightman_catad_complete** (G38 master closure, CatAD):
+    Φ_MDL satisfies all 7 Wightman axioms at the structural tier.
+    W1: Hilbert space (G22 inductive limit / GNS completion).
+    W2: Poincaré covariance (G19 Lorentz + translations).
+    W3: Field operator on H (kink-mode Fock lift).
+    W4: Vacuum sector (G22/G41).
+    W5: Spectrum / mass gap (kink quantum numbers).
+    W6: Locality / spacelike commutativity (Z₇ causal structure).
+    W7: Positivity / Born rule (GNS inner product, G22).
+    CatAD: algebraic and sector axioms certified; full analytic QFT completion is CatD. -/
+theorem phimdl_wightman_catad_complete :
+    PhimdlWightmanHilbertSpace ∧
+    PhimdlWightmanPoincare ∧
+    PhimdlWightmanFieldOperator ∧
+    PhimdlWightmanVacuum ∧
+    PhimdlWightmanSpectrum ∧
+    PhimdlWightmanLocality ∧
+    PhimdlWightmanPositivity :=
+  ⟨phimdl_wightman_hilbert_space, phimdl_wightman_poincare,
+    phimdl_wightman_field_operator, phimdl_wightman_vacuum, phimdl_wightman_spectrum,
+    phimdl_wightman_locality, phimdl_wightman_positivity⟩
+
 end UgpLean.Substrate.WightmanAxioms
