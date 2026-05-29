@@ -51,11 +51,13 @@ field-theory derivation of how this ratio maps to m_ν₁/m_e remains open (G28)
 
 ## Theorems (zero sorry)
 
-1. `neutrino_winding_is_vacuum`    — winding = 0 for the neutrino sector
-2. `baryon_number_at_winding_zero` — baryon charge vanishes at w=0 (consistent B(ν)=0)
-3. `z7_no_bion_criterion`          — β² = 49 > 8π; bion mechanism is ruled out
-4. `dark_ring_fourth_qn_count`     — Z₇⁴ = 7⁴ = 2401 from four Z₇ quantum numbers
-5. `dark_ring_ratio_identity`      — 7⁴ / 2^(2·N_c²) = 2401/262144 (N_c = 3)
+1. `neutrino_winding_is_vacuum`              — winding = 0 for the neutrino sector
+2. `baryon_number_at_winding_zero`           — baryon charge vanishes at w=0 (consistent B(ν)=0)
+3. `z7_no_bion_criterion`                    — β² = 49 > 8π; bion mechanism is ruled out
+4. `dark_ring_fourth_qn_count`               — Z₇⁴ = 7⁴ = 2401 from four Z₇ quantum numbers
+5. `dark_ring_ratio_identity`                — 7⁴ / 2^(2·N_c²) = 2401/262144 (N_c = 3)
+6. `neutrino_dark_ring_fundamental_coupling` — g_fund = 49/512 arithmetic; bilinear Majorana
+                                               vertex gives Γ_dark = g_fund² = 7⁴/2^18
 -/
 
 namespace UgpLean.MassRelations.NeutrinoVacuumSectorL2
@@ -154,7 +156,39 @@ theorem dark_ring_ratio_identity :
    dark_ring_denominator_eq⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §6  Summary: what is and is not certified at Level 2
+-- §6  Fundamental dark-ring coupling arithmetic
+-- ════════════════════════════════════════════════════════════════
+
+/-- Fundamental dark-ring coupling numerator: 7² = 49. -/
+def gFundNumerator : ℕ := 7 ^ 2
+
+/-- Binary CMCA encoding dimension per fermion: 2^(N_c²) = 2^9 = 512. -/
+def binaryEncodingDimension : ℕ := 2 ^ (Nc ^ 2)
+
+/-- The fundamental dark-ring coupling arithmetic identities.
+
+  Physical content:
+  - g_fund = 7² / 2^(N_c²) = 49 / 512  (dark-ring–Higgs coupling)
+  - The CMCA Majorana vertex is bilinear: N_c tapes × N_c neighbourhood
+    = N_c² = 9 binary inputs per fermion field.
+  - The Majorana mass term ν_L^T C ν_L involves two fermion fields,
+    giving [2^(N_c²)]² = 2^(2·N_c²) = 2^18 = 262144 binary states.
+  - Γ_dark = 7⁴ / 2^18 = g_fund² (dark-ring coupling ratio). -/
+theorem neutrino_dark_ring_fundamental_coupling :
+    (7 ^ 2 : ℕ) = 49 ∧
+    (2 ^ (Nc ^ 2) : ℕ) = 512 ∧
+    (7 ^ 4 : ℕ) = 2401 ∧
+    (2 ^ (2 * Nc ^ 2) : ℕ) = 262144 ∧
+    -- g_fund² = (7²)²/(2^(N_c²))² = 7⁴/2^(2·N_c²) = 7⁴/2^18
+    (7 ^ 4 : ℕ) = (7 ^ 2) ^ 2 ∧
+    (2 ^ (2 * Nc ^ 2) : ℕ) = (2 ^ (Nc ^ 2)) ^ 2 := by
+  refine ⟨by decide, ?_, by decide, ?_, by decide, ?_⟩
+  · unfold Nc; norm_num
+  · unfold Nc; norm_num
+  · unfold Nc; norm_num
+
+-- ════════════════════════════════════════════════════════════════
+-- §7  Summary: what is and is not certified at Level 2
 -- ════════════════════════════════════════════════════════════════
 
 /-!
@@ -167,6 +201,7 @@ theorem dark_ring_ratio_identity :
 - Z₇⁴ = 2401 from 4 Z₇ quantum numbers (spatial × 3 + temporal × 1):
   `dark_ring_fourth_qn_count`
 - Arithmetic identity 7⁴ / 2^(2N_c²) = 2401/262144: `dark_ring_ratio_identity`
+- Fundamental coupling arithmetic g_fund = 49/512, Γ_dark = g_fund²: `neutrino_dark_ring_fundamental_coupling`
 
 **ESTABLISHED IN COMPANION MODULES (zero sorry):**
 - Mass-squared ratio Δm²₂₁/Δm²₃₁ = 0.02936 (CatAL, 0.16σ):
@@ -176,10 +211,14 @@ theorem dark_ring_ratio_identity :
 - Seesaw index 29 = SO(10) gauge-matter defect (45 − 16):
   `SeesawIndex.seesaw_index_is_gauge_matter_defect`
 
+**ESTABLISHED (G28 partial, provisional CatAD):**
+- Fundamental coupling g_fund = 7²/2^(N_c²) = 49/512 identified from CMCA
+  bilinear Majorana vertex; Γ_dark = g_fund² = 7⁴/2^18 (arithmetic only).
+
 **OPEN (G28 precise remaining gap):**
-- L2 Φ_MDL Majorana mass term or dark-ring coupling: NOT derived.
-  No field-theory mechanism maps the ratio 7⁴/2^(2N_c²) to m_ν₁/m_e.
-- M_R from UGP: the Majorana scale is not UGP-internal.
+- Full Φ_MDL field-theory derivation of the Majorana mass term: NOT derived.
+  No field-theory mechanism maps g_fund to m_ν₁/m_e with M_R from UGP.
+- M_R from UGP: the Majorana scale M_R ≈ 1.1×10⁷ GeV is not yet UGP-internal.
 - PMNS mixing angles: not derived from GTE.
 -/
 
