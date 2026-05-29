@@ -697,8 +697,10 @@ theorem kink_over_hawking_temp_ratio (M M_crit m_tau m_kink : ℝ)
     m_kink / hawkingTemperature M M_crit m_tau = (8 / 49) * (M / M_crit) := by
   unfold hawkingTemperature
   have htau : m_tau ≠ 0 := ne_of_gt hm_tau
-  field_simp
-  ring
+  have hMne : M ≠ 0 := ne_of_gt hM
+  field_simp [htau, hMne]
+  field_simp at h_ratio
+  nlinarith
 
 theorem kink_over_hawking_at_Mcrit (M_crit m_tau m_kink : ℝ)
     (hM_crit : 0 < M_crit) (hm_tau : 0 < m_tau) (hm_kink : 0 < m_kink)
@@ -706,14 +708,15 @@ theorem kink_over_hawking_at_Mcrit (M_crit m_tau m_kink : ℝ)
     m_kink / hawkingTemperature M_crit M_crit m_tau = 8 / 49 := by
   rw [hawking_temp_at_M_crit M_crit m_tau hM_crit hm_tau]
   field_simp [ne_of_gt hm_tau]
-  exact h_ratio
+  field_simp at h_ratio
+  nlinarith
 
 private lemma eight_fortyninth_lt_log_two : (8 : ℝ) / 49 < Real.log 2 := by
-  have h : (8 : ℝ) / 49 < 1 / 2 := by norm_num
-  linarith [Real.log_two_gt_one_div_two]
+  linarith [Real.log_two_gt_d9]
 
 private lemma exp_eight_fortyninth_lt_two : Real.exp ((8 : ℝ) / 49) < 2 := by
-  exact (Real.exp_lt_iff).mpr (eight_fortyninth_lt_log_two)
+  rw [← Real.exp_log (by norm_num : (0 : ℝ) < 2)]
+  exact Real.exp_lt_exp.mpr eight_fortyninth_lt_log_two
 
 /--
 **kink_bose_enhanced_at_Mcrit** (CatAD, G46):
@@ -723,10 +726,10 @@ Since `8/49 < ln 2`, the Bose factor `1/(exp(m_kink/T_H) − 1) > 1`:
 kinks are Bose-enhanced (abundantly produced) below `M_kink_crit`.
 -/
 theorem kink_bose_enhanced_at_Mcrit :
-    (0 : ℝ) < 8 / 49 ∧
-      8 / 49 < 1 ∧
-      8 / 49 < Real.log 2 ∧
-      1 / (Real.exp (8 / 49) - 1) > 1 := by
+    (0 : ℝ) < (8 : ℝ) / 49 ∧
+      (8 : ℝ) / 49 < 1 ∧
+      (8 : ℝ) / 49 < Real.log 2 ∧
+      1 / (Real.exp ((8 : ℝ) / 49) - 1) > 1 := by
   have hxpos : (0 : ℝ) < 8 / 49 := by norm_num
   have hxlt1 : (8 : ℝ) / 49 < 1 := by norm_num
   have hxltlog : (8 : ℝ) / 49 < Real.log 2 := eight_fortyninth_lt_log_two
@@ -735,7 +738,8 @@ theorem kink_bose_enhanced_at_Mcrit :
   have hden_pos : 0 < Real.exp (8 / 49) - 1 := by linarith
   have hden_lt1 : Real.exp (8 / 49) - 1 < 1 := by linarith
   refine ⟨hxpos, hxlt1, hxltlog, ?_⟩
-  rw [one_div_lt hden_pos (by norm_num : (0 : ℝ) < 1)]
-  linarith
+  have hinv : (1 : ℝ) < 1 / (Real.exp (8 / 49) - 1) := by
+    simpa [one_div_one] using one_div_lt_one_div_of_lt hden_pos hden_lt1
+  exact hinv
 
 end UgpLean.Gravity.PMDLGravityTheorems

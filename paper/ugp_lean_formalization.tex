@@ -6794,6 +6794,17 @@ Theorem & Module & Physical content \\
   & Gravity.PMDLGravityTheorems
   & $M_{\rm kink}/m = 8/49$; normalised ratio (zero \texttt{sorry}) \\[1pt]
 \midrule
+\multicolumn{3}{@{}l}{\textit{G46 --- Hawking kink emission thresholds (\texttt{Gravity/PMDLGravityTheorems.lean})}} \\[2pt]
+\texttt{kink\_\allowbreak crit\_\allowbreak mass\_\allowbreak formula}
+  & Gravity.PMDLGravityTheorems
+  & $M_{\rm kink\_crit}/M_{\rm crit} = 49/8$ at $T_H(M_{\rm kink\_crit})=m_{\rm kink}$ (zero \texttt{sorry}) \\[1pt]
+\texttt{kink\_\allowbreak over\_\allowbreak hawking\_\allowbreak temp\_\allowbreak ratio}
+  & Gravity.PMDLGravityTheorems
+  & $m_{\rm kink}/T_H(M) = (8/49)(M/M_{\rm crit})$; analytic emission identity \\[1pt]
+\texttt{kink\_\allowbreak bose\_\allowbreak enhanced\_\allowbreak at\_\allowbreak Mcrit}
+  & Gravity.PMDLGravityTheorems
+  & At $M_{\rm crit}$: $m_{\rm kink}/T_H=8/49$, Bose factor $>1$ (zero \texttt{sorry}) \\[1pt]
+\midrule
 \multicolumn{3}{@{}l}{\textit{G16 — Level-2 chiral current (\texttt{Substrate/ChiralCurrentL2.lean})}} \\[2pt]
 \texttt{tape\_\allowbreak chiral\_\allowbreak signs\_\allowbreak opposite}
   & Substrate.ChiralCurrentL2
@@ -6901,12 +6912,22 @@ Theorem & Module & Physical content \\
 \bottomrule
 \end{tabular}
 \caption{New theorems added in EPIC\_080 sessions (2026-05-29): G7 BPS kink mass,
-G16 Level-2 chiral current, G23 SM gauge sub-certificates, G24 Gorard bridge coefficient,
-G39/MDLSRRG FCA--SRRG--MDL attractor bridge, G40 C2 coherence on $\mathbb{Z}_7$,
-and G22/G42 CMCA Hilbert--Fock bridge.
+G46 Hawking kink-emission thresholds, G16 Level-2 chiral current, G23 SM gauge sub-certificates,
+G24 Gorard bridge coefficient, G39/MDLSRRG FCA--SRRG--MDL attractor bridge,
+G40 C2 coherence on $\mathbb{Z}_7$, and G22/G42 CMCA Hilbert--Fock bridge.
 All are zero \texttt{sorry} unless noted.}
 \label{tab:new-theorem-inventory-080}
 \end{table}
+
+\begin{theorem}[\lstinline|kink_crit_mass_formula|, zero \texttt{sorry} (CatAD)]
+At the kink-emission threshold $T_H(M_{\rm kink\_crit})=m_{\rm kink}$ with
+$T_H(M_{\rm crit})=m_\tau$ and inverse-mass Hawking scaling,
+$M_{\rm kink\_crit}/M_{\rm crit}=m_\tau/m_{\rm kink}=49/8$ exactly.
+The analytic ratio $m_{\rm kink}/T_H(M)=(8/49)(M/M_{\rm crit})$
+(\lstinline|kink_over_hawking_temp_ratio|) gives Bose enhancement
+$1/(e^{m_{\rm kink}/T_H}-1)>1$ at $M=M_{\rm crit}$
+(\lstinline|kink_bose_enhanced_at_Mcrit|).
+\end{theorem}
 
 \begin{theorem}[\lstinline|cmca_hilbert_fock_sector_totality|, zero \texttt{sorry}]
 All five PSC winding sectors $\{0,2,3,4,6\}$ map to kink Fock states; the CMCA Hilbert
