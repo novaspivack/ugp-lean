@@ -876,3 +876,33 @@ Module: `UgpLean.Universality.PhiMDLUniversality`; companion: `rule110-lean/Rule
 *Rank 13-LSD — Fourier heat-kernel scaffolding (`Spacetime/Spectral/HeatKernelFourier.lean`)*
 
 - `cayley_eigenvalue_at_zero_eq_degree` — zero sorry; 3 documented analytical sorrys in Gaussian-limit chain
+
+---
+
+## New modules (three-tape CMCA session, 2026-05-28)
+
+### Spacetime
+- `UgpLean.Spacetime.HolographicScaling` — Three-tape CMCA is holographic: \(7^{3L}\) vs \(7^{L^3}\); \(3/L^2 \to 0\) (CatAL)
+
+### Algebra
+- `UgpLean.Algebra.ChargeFromPolynomial` — \(3Q(w)=p(0,w,0)=w\); gravity/EM degree split; tape role asymmetry; non-separability (CatAL)
+- `UgpLean.Algebra.SU3GluonCount` — 8 SU(3) gluon generators from \(\Delta w=\pm1\); baryon color neutrality (CatAL)
+- `UgpLean.Algebra.ColorConfinementMDL` — \(\Delta K=\log_2(9)\) MDL cost of free colored quarks (CatAL)
+- `UgpLean.Algebra.BaryonNumber` — \(B=(1/3)\sum \chi_q(w_j)\) topological charge; \(B=1/3\) from \(N_{\mathrm{tapes}}=3\) (CatAL)
+- `UgpLean.Algebra.ChiralDoublet` — Rule124 = Rule110 with L↔R spatial reflection (CatAL)
+- `UgpLean.Algebra.SRRGCABridge` — \(1/\varphi\) = positive root of \(p(x,x,x)=x\) (CatAL)
+- `UgpLean.Algebra.GaugeMDL` — SU(2)\(_L\) from PMDL gauging; 1 named axiom (structural CatAL)
+
+### BraidAtlas
+- `UgpLean.BraidAtlas.WindingToBraidRep` — Fermionic sectors \(\{2,4,6\}\) = non-primitive roots of \(\mathbb{Z}_7^\times\); algebraic ID (CatAL)
+
+### Gravity
+- `UgpLean.Gravity.PMDLGravityTheorems` — MDL uniqueness, vacuum fixed-point, mass hierarchy (CatAL)
+- `UgpLean.Gravity.GorardRicciFlatVacuum` — Vacuum Ricci-flat; causal diamond \(V=T^4/4\) (CatAL)
+- `UgpLean.Gravity.LorentzGroupSO13` — All 12 \(\mathfrak{so}(1,3)\) commutation relations; Thomas precession (CatAL)
+- `UgpLean.Gravity.FermionicStatistics` — Fermionic statistics chain zero sorry; exchange phase formula (CatAL)
+- `UgpLean.Gravity.PSCEpochSelection` — PSP axiom L1/L2/T-PSP; \(\Omega_\Lambda = 0.690\) numerical bound (CatAL)
+
+### Lorentzian ([ugp-physics-lean](https://github.com/novaspivack/ugp-physics-lean))
+- `UgpPhysicsLean.Lorentzian.MinkowskiSpace` — Minkowski metric, LorentzGroup (CatAL)
+- `UgpPhysicsLean.Lorentzian.SpinorRep` — Spinor \(2\pi\) rotation = \(-1\); spin-statistics axiom (CatAL + 1 named axiom)
