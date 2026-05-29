@@ -191,6 +191,7 @@ import UgpLean.Substrate.PSCStructureLorentzPreserved
 import UgpLean.Substrate.PSCPILorentzMain
 import UgpLean.Substrate.NoetherAngularMomentum
 import UgpLean.Substrate.WindingCoinDecoupling
+import UgpLean.Substrate.PhiMDLPropagator
 import UgpLean.Universality.CasimirMasslessEther
 import UgpLean.Spacetime.CausalGraph
 import UgpLean.Spacetime.HolographicScaling
@@ -328,6 +329,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Gravity.DimensionalDecomposition` — EPIC_078 Rank 078-LC11: `cmca_three_axes_give_31d`, `spacetime_dim_from_ngen`, `galois_symmetry_3d`, `so13_generator_count`, `cmca_tensor_product_gives_31d_minkowski` (CatAL, zero sorry)
 - `UgpLean.Gravity.LorentzGroupSO13` — EPIC_079 OQ-079-9: `lorentz_boost_x/y/z_in_group`, `three_tape_boosts_in_so13`, `lorentz_identity` (CatAL partial, zero sorry); `three_tape_so13_from_so11_cubed_and_so3` structural stub
 - `UgpLean.Substrate.NoetherAngularMomentum` — EPIC_080 G35: `phimdl_angular_momentum_conserved` (CatAD structural bundle; zero sorry in theorem; one PDE axiom for time conservation, 2026-05-29)
+- `UgpLean.Substrate.PhiMDLPropagator` — EPIC_080 G27: `phimdl_free_propagator_formula`, `phimdl_propagator_well_defined`, `phimdl_quartic_coupling`, `phimdl_sextic_coupling`, `phimdl_z7_coupling_fingerprint`, `phimdl_potential_even` — Φ_MDL tree-level propagator G(p)=1/(p²+m²) and Z₇ Feynman vertices (CatAD, zero sorry, 2026-05-29)
 - `UgpLean.Gravity.RelationalTime` — EPIC_079 Rank 079-LC1: `without_shared_clock_uncoupled`, `shared_clock_gives_31d`, `tau_c_adds_temporal_dimension`, `dimensional_protocol_principle_master` (CatAL, zero sorry)
 - `UgpLean.Gravity.PMDLGravityTheorems` — EPIC_079 Ranks 079-MDL-UNIQUE, 079-FIXED-POINT, 079-UNIFIED-POLY: `vacuum_unique_fixed_point_z7`, `unique_cubic_gravity_coupling`, `gte_gravity_mass_hierarchy`, `gte_polynomial_three_roles_k_zero` (CatAL, zero sorry)
 - `UgpLean.Universality.FiveRolesPolynomial` — EPIC_080 Rank 080-FIVE-ROLES: `labelled_triple_role_count`, `gte_polynomial_five_labelled_roles` (CatAL structural, zero sorry, 2026-05-29)
