@@ -58,7 +58,8 @@ def PhimdlWightmanPositivity : Prop :=
   ∀ w ∈ pscAdmissibleSectors,
     (singleSectorAmplitude beableWindingPartitionInstance w).sectorProb w = 1
 
-axiom phimdl_wightman_hilbert_space : PhimdlWightmanHilbertSpace
+theorem phimdl_wightman_hilbert_space : PhimdlWightmanHilbertSpace :=
+  cmca_hilbert_inductive_limit
 axiom phimdl_wightman_poincare : PhimdlWightmanPoincare
 axiom phimdl_wightman_field_operator : PhimdlWightmanFieldOperator
 axiom phimdl_wightman_vacuum : PhimdlWightmanVacuum

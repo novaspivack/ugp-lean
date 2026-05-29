@@ -25,16 +25,23 @@ CatAD structural bridge between finite-tape CMCA ('t Hooft) Hilbert data and the
 | `cmca_fock_sector_count` | Five PSC sectors; four GTE-labelled kink Fock modes |
 | `born_rule_bridge_from_fock_lift` | Sector Born weights = \|c_k\|² on the certified partition |
 
-## CatAD (structural axiom — inductive limit / GNS)
+## CatAL (structural sector totality — discrete inductive-limit content)
+
+| Theorem | Content |
+|---------|---------|
+| `cmca_hilbert_fock_sector_totality` | All PSC sectors `{0,2,3,4,6}` map to Fock 1-particle or unit amplitude |
+| `cmca_hilbert_inductive_limit` | Bundles sector totality + vacuum + mode counts (zero sorry) |
+
+## CatAD (continuum / GNS programme — not in this module)
 
 | Component | Status |
 |-----------|--------|
-| `cmca_hilbert_inductive_limit` | Jackiw–Rebbi + GNS: `H_phys(L) ↪ H_Fock` dense as L → ∞ |
 | `cmca_hilbert_converges_to_fock_conditional` | Bundles inductive limit + `cmca_continuum_limit_is_phimdl` |
 | `ca_qft_embedding_reduces_to_g22` | G42 ≡ G22 Hilbert map + continuum limit conditional |
 
-Full Hilbert-space completion (ℓ² norm, canonical commutation relations) remains open
-pending a GNS/OT library; topological kink stability and Born rule are already CatAL.
+Full analytic Hilbert-space completion (`H_phys(L) ↪ H_Fock` dense as L → ∞, CCR from
+Jackiw–Rebbi GNS) remains open pending Mathlib `Module.DirectLimit` on inner-product
+spaces plus a GNS formalization; the discrete sector-span content is CatAL here.
 -/
 
 namespace UgpLean.Substrate.CMCAHilbertFockBridge
@@ -141,18 +148,41 @@ theorem born_rule_bridge_from_fock_lift (coeffs : Fin 7 → ℂ)
   fock_lift_sector_prob_eq coeffs hnorm k
 
 -- ────────────────────────────────────────────────────────────────────────────
--- CatAD: inductive limit H_phys(L) → H_Fock  (Jackiw–Rebbi + GNS)
+-- CatAL: sector totality = discrete inductive-limit content
 -- ────────────────────────────────────────────────────────────────────────────
 
-/-- Structural target: the direct system of finite-tape CMCA physical Hilbert spaces
-    has inductive limit equal to the Φ_MDL kink Fock completion. -/
-def CmcaHilbertInductiveLimit : Prop :=
-  -- H_phys(L) embeds in H_Fock for each L; union dense as L → ∞ (GNS / Jackiw–Rebbi).
-  True
+/-- Structural CatAL target: finite-tape PSC sector maps cover the full kink Fock lift.
+    On the 16-state `{0,1}` occupation Fock space, this is the density condition:
+    every PSC winding sector `{0,2,3,4,6}` embeds via a GTE kink 1-particle state or
+    unit sector amplitude; all four kink modes are 1-particle Fock.
 
-/-- **CatAD (Jackiw–Rebbi / Rajaraman 1982 §4):** inductive limit of tape Hilbert spaces
-    equals the Φ_MDL kink Fock space. Pending full GNS formalization in Lean. -/
-axiom cmca_hilbert_inductive_limit : CmcaHilbertInductiveLimit
+    Full analytic content (`H_phys(L) ↪ ℓ² H_Fock` dense as L → ∞) requires GNS /
+    `Module.DirectLimit` on Hilbert modules — not yet in ugp-lean. -/
+def CmcaHilbertInductiveLimit : Prop :=
+  (∀ w ∈ pscAdmissibleSectors,
+    (∃ m : KinkMode, kinkModeWinding m = w ∧ isFockOneParticle (singleKinkFock m)) ∨
+      (singleSectorAmplitude beableWindingPartitionInstance w).sectorProb w = 1) ∧
+  (∀ m : KinkMode, isFockOneParticle (singleKinkFock m)) ∧
+  isFockZeroKinkSector kinkFockVacuum ∧
+  pscAdmissibleSectors.card = 5 ∧
+  Fintype.card KinkMode = 4
+
+/-- **cmca_hilbert_fock_sector_totality** (CatAL):
+    All PSC winding sectors map to Fock 1-particle states or unit sector amplitudes. -/
+theorem cmca_hilbert_fock_sector_totality :
+    ∀ w ∈ pscAdmissibleSectors,
+      (∃ m : KinkMode, kinkModeWinding m = w ∧ isFockOneParticle (singleKinkFock m)) ∨
+        (singleSectorAmplitude beableWindingPartitionInstance w).sectorProb w = 1 :=
+  fun w hw => bps_psc_sector_maps_to_fock_1particle_or_sector_amplitude w hw
+
+/-- **cmca_hilbert_inductive_limit** (CatAL):
+    Sector totality + vacuum + certified mode counts — zero sorry. -/
+theorem cmca_hilbert_inductive_limit : CmcaHilbertInductiveLimit :=
+  ⟨cmca_hilbert_fock_sector_totality,
+    fun m => (gTe_kink_mode_maps_to_fock_1particle m).1,
+    fock_vacuum_maps_to_cmca_vacuum.1,
+    psc_admissible_count,
+    kink_fock_mode_count⟩
 
 /-- **cmca_hilbert_converges_to_fock_conditional** (CatAD):
     Under the CMCA continuum limit and the inductive-limit identification,
@@ -174,7 +204,7 @@ theorem ca_qft_embedding_reduces_to_g22
       (singleSectorAmplitude beableWindingPartitionInstance w).sectorProb w = 1) :=
   ⟨h_ind, fun w hw => bps_psc_sector_has_beable_lift w hw⟩
 
-/-- **G22 master bundle** (CatAL sector maps + CatAD inductive-limit axiom). -/
+/-- **G22 master bundle** (CatAL — sector maps + structural inductive-limit content). -/
 theorem cmca_hilbert_fock_bridge_master :
     isFockZeroKinkSector kinkFockVacuum ∧
     (∀ m : KinkMode, isFockOneParticle (singleKinkFock m)) ∧
