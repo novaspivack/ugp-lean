@@ -4469,7 +4469,8 @@ equal the SM superselection sectors: the gauge group is read off the CA symmetry
 The SM gauge group $G_{\rm SM} = \mathrm{SU}(3)\times\mathrm{SU}(2)_L\times\mathrm{U}(1)_Y$
 is certified from three independent Z$_7$ channels: the F$_{21}\hookrightarrow\mathrm{SU}(3)$
 embedding with eight gluons (CatAL arithmetic; Burnside coset-filling CatAD),
-the SU(2)$_L$ MDL gauging ($\CatAD$; \lstinline|global_implies_gauge_mdl_minimal| discharged to finite-$G$ proxy via \lstinline|su2l_mdl_gauge_from_doublet|),
+SU(2)$_L$ explicitly wired via \lstinline|su2l_mdl_gauge_from_doublet| (zero axioms in
+\texttt{SMGaugeGroup.lean}, $\CatAD$ --- Burnside external axioms only),
 and the Z$_7$ winding hypercharge assignment (CatAL, \lstinline|gte_charge_formula|).
 Within-tape channels partition as $c_H = N_{\rm gen} + 2N_{\rm fam}$; cross-tape color
 occupies a separate $(\mathbb{Z}_7)^2$ domain.
@@ -6769,10 +6770,10 @@ All resolve phantom theorem name references in physics papers.}
 \subsection{New theorem inventory (EPIC\_080, 2026-05-29)}\label{subsec:new-theorem-inventory-080}
 
 The following modules and theorems were added during the EPIC\_080 sessions covering
-the L1$\to$L2 bridge gap-closure pass.  They span six new or extended modules:
+the L1$\to$L2 bridge gap-closure pass.  They span seven new or extended modules:
 BPS kink mass (G7), Level-2 chiral current (G16), SM gauge-group sub-certificates (G23),
 Gorard bridge coefficient (G24), FCA--SRRG--MDL attractor bridge (G39 / MDLSRRG-LEAN),
-and C2 coherence on $\mathbb{Z}_7$ sectors (G40).
+C2 coherence on $\mathbb{Z}_7$ sectors (G40), and the CMCA Hilbert--Fock bridge (G22/G42).
 
 \begin{table}[h]
 \centering\footnotesize
@@ -6821,7 +6822,7 @@ Theorem & Module & Physical content \\
   & U(1)$_Y$ from hypercharge winding (zero \texttt{sorry}) \\[1pt]
 \texttt{sm\_\allowbreak gauge\_\allowbreak su2l\_\allowbreak certificate}
   & Algebra.SMGaugeGroup
-  & SU(2)$_L$ from PSC tape partition (zero \texttt{sorry}) \\[1pt]
+  & SU(2)$_L$ via \lstinline|su2l_mdl_gauge_from_doublet| (zero axioms; $\CatAD$) \\[1pt]
 \texttt{sm\_\allowbreak gauge\_\allowbreak within\_\allowbreak tape\_\allowbreak partition}
   & Algebra.SMGaugeGroup
   & $N_{\rm gen} + 2N_{\rm fam} = c_H$ (EW boson count) \\[1pt]
@@ -6878,15 +6879,42 @@ Theorem & Module & Physical content \\
   & Gibbs state at any $T>0$ uniquely minimizes $F$ on $\mathbb{Z}_7$ sectors \\[1pt]
 \texttt{c2\_\allowbreak thermal\_\allowbreak route\_\allowbreak conditional}
   & Substrate.C2CoherenceG40
-  & C2 thermal-route theorem conditional on Gibbs uniqueness (zero \texttt{sorry}) \\
+  & C2 thermal-route theorem conditional on Gibbs uniqueness (zero \texttt{sorry}) \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{G22/G42 --- CMCA Hilbert--Fock bridge (\texttt{Substrate/CMCAHilbertFockBridge.lean})}} \\[2pt]
+\texttt{cmca\_\allowbreak hilbert\_\allowbreak fock\_\allowbreak sector\_\allowbreak totality}
+  & Substrate.CMCAHilbertFockBridge
+  & All five PSC sectors $\{0,2,3,4,6\}$ map to kink Fock states (zero \texttt{sorry}) \\[1pt]
+\texttt{cmca\_\allowbreak hilbert\_\allowbreak inductive\_\allowbreak limit}
+  & Substrate.CMCAHilbertFockBridge
+  & Sector totality + vacuum + mode counts bundled ($\CatAL$; CatD analytic residual) \\[1pt]
+\texttt{ca\_\allowbreak qft\_\allowbreak embedding\_\allowbreak reduces\_\allowbreak to\_\allowbreak g22}
+  & Substrate.CMCAHilbertFockBridge
+  & G42 $\equiv$ G22 Hilbert map + continuum limit (CLOSED $\CatAD$) \\[1pt]
+\texttt{cmca\_\allowbreak hilbert\_\allowbreak fock\_\allowbreak bridge\_\allowbreak master}
+  & Substrate.CMCAHilbertFockBridge
+  & G22 master bundle: 12 zero-sorry sector-map theorems ($\CatAL$) \\
 \bottomrule
 \end{tabular}
 \caption{New theorems added in EPIC\_080 sessions (2026-05-29): G7 BPS kink mass,
 G16 Level-2 chiral current, G23 SM gauge sub-certificates, G24 Gorard bridge coefficient,
-G39/MDLSRRG FCA--SRRG--MDL attractor bridge, and G40 C2 coherence on $\mathbb{Z}_7$.
+G39/MDLSRRG FCA--SRRG--MDL attractor bridge, G40 C2 coherence on $\mathbb{Z}_7$,
+and G22/G42 CMCA Hilbert--Fock bridge.
 All are zero \texttt{sorry} unless noted.}
 \label{tab:new-theorem-inventory-080}
 \end{table}
+
+\begin{theorem}[\lstinline|cmca_hilbert_fock_sector_totality|, zero \texttt{sorry}]
+All five PSC winding sectors $\{0,2,3,4,6\}$ map to kink Fock states; the CMCA Hilbert
+space sector maps are total ($\CatAL$, 12 zero-sorry theorems; inductive limit CatD
+residual documented).
+\end{theorem}
+
+\begin{theorem}[\lstinline|ca_qft_embedding_reduces_to_g22|, zero \texttt{sorry} ($\CatAD$)]
+G42 is CLOSED $\CatAD$: under \lstinline|cmca_continuum_limit_is_phimdl| ($\CatAL$ conditional),
+the CMCA embeds unitarily into the $\Phi_{\rm MDL}$ Fock space.  Both conditions are now
+$\CatAL$ as of 2026-05-29.
+\end{theorem}
 
 \subsection{New theorem inventory (G28/G29 neutrino vacuum + EW precision, 2026-05-29)}\label{subsec:new-theorem-inventory-g28-g29}
 
@@ -6980,10 +7008,11 @@ results established by ZZ 1979).  This is consistent with \lstinline|z7_no_bion_
 (G28, zero \texttt{sorry}), which already certifies the absence of bions.
 \end{theorem}
 
-\begin{remark}[G9 --- Exact S-matrix ($\CatAD$, Zamolodchikov 1979)]
-The $\mathbb{Z}_7$ sine-Gordon is exactly integrable ($\beta^2=49>8\pi$, repulsive
-regime).  The exact kink--kink S-matrix $S_{kk}=-1$ follows from ZZ~1979 (no Lean
-certification required for integrable systems; $\CatAD$ from physical derivation).
+\begin{remark}[G9 --- ZZ all-loop S-matrix ($\CatAD$)]
+For $\mathbb{Z}_7$ sine-Gordon ($\beta^2=49$, repulsive), the kink--kink S-matrix
+$S_{kk}(\theta)=-1$ is the all-loop resummed exact answer (CDD-minimal, unique via
+unitarity+crossing+Yang-Baxter; no loop integrals needed).  This closes the G9 kink
+sector at $\CatAD$.
 \end{remark}
 
 \subsection{Mass gap and hierarchy}\label{subsec:mass-gap-hierarchy}
