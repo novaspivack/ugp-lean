@@ -346,4 +346,18 @@ theorem su2l_full_gauging_catad :
   exact ⟨su2l_weak_force_derivation 1.0, phimdl_potential_su2l_invariant,
          su2l_wpm_generator_algebra⟩
 
+
+/-- **su2l_l2_from_phimdl_potential_catad** (SU2L-L2 master bundle, CatAD):
+    SU(2)_L from Φ_MDL potential V(|Φ_+|²+|Φ_-|²) at Level 2.
+    Packages:
+    1. `su2l_within_tape_l2_from_phimdl` — within-tape L2 derivation (potential + MDL gauging + kinetic).
+    2. `su2l_full_gauging_catad` (G18) — W± algebra, covariant derivative, J^μ_W charged current.
+    CatAD: Φ_MDL potential is manifestly SU(2)_L invariant (V depends on |Ψ|² only);
+    MDL minimal coupling forces the SU(2) gauge connection. Full analytic closure is CatD. -/
+theorem su2l_l2_from_phimdl_potential_catad (K_base : ℝ) :
+    Su2lWithinTapeL2FromPhimdl K_base ∧
+    ((PhimdlWeakChargedCurrentCert 1.0 ∧ WCoupplingZeroExtraBits) ∧
+     PhimdlPotentialSu2lInvariant ∧ True) :=
+  ⟨su2l_within_tape_l2_from_phimdl K_base, su2l_full_gauging_catad⟩
+
 end GaugeMDL
