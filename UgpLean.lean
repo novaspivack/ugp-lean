@@ -192,6 +192,7 @@ import UgpLean.Substrate.NoetherAngularMomentum
 import UgpLean.Substrate.WindingCoinDecoupling
 import UgpLean.Universality.CasimirMasslessEther
 import UgpLean.Spacetime.CausalGraph
+import UgpLean.Spacetime.HolographicScaling
 import UgpLean.Spacetime.SpectralDimension
 import UgpLean.Spacetime.SpectralDimensionDegree
 import UgpLean.Spacetime.Spectral.DegreeNormalized
