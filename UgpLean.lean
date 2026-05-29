@@ -193,6 +193,8 @@ import UgpLean.Substrate.PSCPILorentzMain
 import UgpLean.Substrate.NoetherAngularMomentum
 import UgpLean.Substrate.WindingCoinDecoupling
 import UgpLean.Substrate.CMCAHilbertFockBridge
+import UgpLean.Substrate.PhiMDLPropagator
+import UgpLean.Substrate.WightmanAxioms
 import UgpLean.Universality.CasimirMasslessEther
 import UgpLean.Spacetime.CausalGraph
 import UgpLean.Spacetime.HolographicScaling
@@ -266,6 +268,7 @@ import UgpLean.Spacetime.AsyncLiftingTheorem
 import UgpLean.QFT.GaugedMassGap
 import UgpLean.QFT.ChiralSymmetryBreaking
 import UgpLean.Universality.PhiMDLUniversality
+import UgpLean.Universality.BellViolationGTE
 
 /-!
 # UgpLean — Universal Generative Principle: Lean 4 Formalization
@@ -291,6 +294,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Universality.AlgebraicNecessityTheorem` — Rank 075-ALGEC-NECESSITY: Algebraic Necessity Theorem; F₂₁ = Z₇ ⋊ Z₃ is the unique non-abelian group of order 21 (Burnside pq certificates, zero sorry); N_gen=3 uniquely forced; no-CA-replica as corollary; all CatAL zero sorry (2026-05-26)
 - `UgpLean.Universality.BetaCoefficientIdentity` — b₀ = |Z₇| = 7 from F₂₁ = Z₇ ⋊ Z₃: (11N_c − 2N_f)/3 = |F₂₁|/|Z₃|; Planck cascade group identity; zero sorry (2026-05-26)
 - `UgpLean.Universality.FrobeniusPrimeIdentity` — |Z₇| = |Z₃|² − |Z₃| + 1 unifies F₂₁ and PSC n=10 derivations; frobenius_prime_bundle; zero sorry (2026-05-26)
+- `UgpLean.Universality.BellViolationGTE` — EPIC_080 G44: `gte_poly_qutrit_values`, `gte_hgrav_diagonal_nontrivial`, `gte_hgrav_has_nonzero_entries`, `z7_qutrit_poly_nondegenerate`, `gte_poly_double_role`; axioms `gte_bell_violation_at_half_coupling`, `gte_bell_threshold` (CatA named); GTE gravitational coupling generates Bell-violating entanglement; zero sorry (2026-05-29)
 - `UgpLean.Papers.*`             — Paper25, UGPMain (citable stubs)
 
 - `UgpLean.TE22.*`               — ScanCertificate (TE2.2 PSC scan framework, UGP coupling predictions)
@@ -343,6 +347,8 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Substrate.C2CoherenceG40` — EPIC_080 G40: thin re-export layer for P43 C2 / P34 Conjecture C2; `c2_coherence_mdl_scaffold`, `c2_lorentz_cpt_equivariance`; CatAL scaffold (full G40 blocked on Mathlib Petz recovery gap); zero sorry (2026-05-29)
 - `UgpLean.Substrate.TransputationG41` — EPIC_080 G41: sector probability layer of transputation CatAL; `gibbs_sector_unique_minimizer`, `transputation_sector_gibbs_master`; global [D]-class uniqueness and Φ_MDL decoherence dynamics remain CatAD/open; zero sorry (2026-05-29)
 - `UgpLean.Substrate.CMCAHilbertFockBridge` — EPIC_080 G22: `fock_vacuum_maps_to_cmca_vacuum`, `bps_psc_sector_has_beable_lift`, `cmca_hilbert_fock_bridge_master` (CatAL, zero sorry); `cmca_hilbert_inductive_limit` (CatAD axiom, 2026-05-29)
+- `UgpLean.Substrate.PhiMDLPropagator` — EPIC_080 G27: `phimdl_free_propagator_formula`, `phimdl_propagator_well_defined`, `phimdl_quartic_coupling`, `phimdl_sextic_coupling`, `phimdl_z7_coupling_fingerprint`, `phimdl_potential_even`; Φ_MDL tree-level propagator G(p)=1/(p²+m²) and Z₇ Feynman vertices; CatAD, zero sorry (2026-05-29)
+- `UgpLean.Substrate.WightmanAxioms` — EPIC_080 G38: `phimdl_satisfies_wightman_axioms`, `phimdl_wightman_locality_positivity_bundle`; structural axiom scaffold for Wightman axioms 1–5 on Φ_MDL; CatAD structural, zero sorry (2026-05-29)
 - `UgpLean.MassRelations.NeutrinoVacuumSectorL2` — EPIC_080 G28: Level-2 structural certification for the neutrino sector; Q=0 vacuum sector identification, B(ν)=0, Z₇⁴ dark ring fourth quantum number; CatAL structural, zero sorry (2026-05-29)
 - `UgpLean.Spacetime.MultiParticleHilbert` — Rank 244-MPH: multi-particle Hilbert space algebraic layer; `code_word_cardinality` (4 code words, Equiv with Fin 4), `n_particle_state_count` (4^N states), `multiDWeight_eq_one`, `multiMass_append`, `multiMass_le`, `mass_hierarchy_three_states`, `smGenMass_multi_anchor`, `multiparticle_orbit_closure`, `inner_product_positive_definite`, `multiparticle_space_well_defined`; all CatAL, zero sorry (2026-05-24)
 - `UgpLean.Spacetime.CausalInvariance` — Rank 37-LCI: f_MDL causal invariance + Lamport consistency + SR connection; `ForwardCausalAdj`, `forward_causal_time_step`, `forward_causal_acyclic`, `transgen_time_strictly_increases`, `lamport_irrefl`, `lamport_strict_partial_order`, `lamport_order_update_independent`, `afca_sr_causal_structure`; all zero sorry, zero axioms (CatAL/CatAD — Lamport properties CatAL, Minkowski isomorphism CatAD, 2026-05-21)
