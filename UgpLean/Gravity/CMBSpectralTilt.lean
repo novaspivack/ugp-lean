@@ -180,7 +180,7 @@ theorem cmca_z2_sublayer_spectral_tilt :
 /-- The CMB prediction: the physical spectral index equals 1 − ln(2)/(2π²).
     Given `z2_eft_predicts_cmb_tilt` (EFT bridge axiom, OQ-QG-1-Z₂-EFT). -/
 theorem cmb_spectral_index_equals_gte_prediction
-    (n_s_physical : ℝ) (h : z2_eft_predicts_cmb_tilt n_s_physical) :
+    (n_s_physical : ℝ) (h : n_s_physical = n_s_GTE) :
     n_s_physical = 1 - Real.log 2 / (2 * Real.pi ^ 2) := by
   rw [h]
   exact n_s_formula

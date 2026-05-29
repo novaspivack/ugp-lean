@@ -1,5 +1,6 @@
-import Mathlib.LinearAlgebra.Matrix.Exponential
+import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
+import Mathlib.Algebra.Star.SelfAdjoint
 import Mathlib.Tactic
 
 /-!
@@ -24,8 +25,8 @@ This file certifies the Level 1 precursor to full quantum dynamics (G21).
 4. `cogwheel_vacuum_eigenvalue` — the f_MDL vacuum state is a fixed point
    of U for all n (axiom from 't Hooft construction, CatAD from P37 §2).
 
-5. `kg_small_oscillation_schrodinger_form` — the Level 2 Klein-Gordon equation
-   linearizes to chiral Schrödinger modes (i∂_t − ω_k)φ_k = 0.
+5. `kg_factors_to_chiral_schrodinger` — the Level 2 Klein-Gordon equation
+   linearizes to chiral Schrödinger modes (i∂_t ± ω_k)φ_k = 0.
    CatAD structural observation; does not require G26/G42.
 
 **What remains open (gates on G42/G26):**
@@ -46,7 +47,7 @@ The Φ_MDL field equation ∂²Φ/∂t² + V'(Φ) = 0 linearizes around kink sec
   ∂²δΦ/∂t² + ω²_k δΦ = 0  (KG per mode)
 which factors as
   (i∂_t − ω_k)(i∂_t + ω_k)δΦ = 0
-Each chiral factor (i∂_t − ω_k)φ_k = 0 IS the Schrödinger equation for mode k.
+Each chiral factor (i∂_t ± ω_k)φ_k = 0 IS the Schrödinger equation for mode k.
 This factorisation is independent of the Level 1 → Level 2 continuum limit.
 
 **References:** P37 §2 ('t Hooft cogwheel); P42 §5 (Φ_MDL mode decomposition).
@@ -56,46 +57,78 @@ This factorisation is independent of the Level 1 → Level 2 continuum limit.
 
 namespace GTE.QuantumDynamics.G21
 
-open Complex Matrix
+open Complex Matrix NormedSpace
+open scoped Matrix.Norms.Operator
 
 variable {N : ℕ}
 
 /-! ## Discrete evolution operator -/
 
+/-- One CA clock tick: U(1) = exp(−i H_cyc τ_c). -/
+noncomputable def discrete_evolution_step
+    (H : Matrix (Fin N) (Fin N) ℂ) (τ_c : ℝ) :
+    Matrix (Fin N) (Fin N) ℂ :=
+  exp (-(I * ↑τ_c) • H)
+
 /-- The Level 1 discrete unitary evolution operator at step n:
-    U(n, τ_c, H) = exp(−i H_cyc n τ_c)
+    U(n, τ_c, H) = U(1)^n = exp(−i H_cyc n τ_c)
     This is the 't Hooft cogwheel propagator applied to f_MDL on ℤ₇^5.
     For n = 0: U = I; for n = 1: one CA clock tick; for general n: n ticks. -/
 noncomputable def discrete_evolution
     (H : Matrix (Fin N) (Fin N) ℂ) (τ_c : ℝ) (n : ℕ) :
     Matrix (Fin N) (Fin N) ℂ :=
-  Matrix.exp (-(I * (↑n : ℂ) * ↑τ_c) • H)
+  discrete_evolution_step H τ_c ^ n
 
 /-- At n = 0, the evolution operator is the identity. -/
 theorem discrete_evolution_zero (H : Matrix (Fin N) (Fin N) ℂ) (τ_c : ℝ) :
     discrete_evolution H τ_c 0 = 1 := by
-  simp [discrete_evolution, Matrix.exp_zero]
+  simp [discrete_evolution, discrete_evolution_step, pow_zero]
 
 /-- At n = 1, the evolution operator is a single-tick propagator. -/
 theorem discrete_evolution_one (H : Matrix (Fin N) (Fin N) ℂ) (τ_c : ℝ) :
-    discrete_evolution H τ_c 1 = Matrix.exp (-(I * ↑τ_c) • H) := by
-  simp [discrete_evolution]
+    discrete_evolution H τ_c 1 = discrete_evolution_step H τ_c := by
+  simp [discrete_evolution, discrete_evolution_step, pow_one]
+
+private lemma discrete_evolution_step_unitary
+    (H : Matrix (Fin N) (Fin N) ℂ) (τ_c : ℝ) (hH : H.IsHermitian) :
+    (discrete_evolution_step H τ_c)ᴴ * discrete_evolution_step H τ_c = 1 := by
+  have hskew : (-(I * ↑τ_c) • H) ∈ skewAdjoint (Matrix (Fin N) (Fin N) ℂ) := by
+    rw [skewAdjoint.mem_iff, conjTranspose_smul, map_neg, hH.eq]
+    ext i j
+    simp [Complex.conj_I, Complex.conj_ofReal, Complex.star_def]
+    ring
+  have hun := exp_mem_unitary_of_mem_skewAdjoint hskew
+  have h := (Unitary.mem_iff.mp hun).1
+  rw [star_eq_conjTranspose] at h
+  simp only [discrete_evolution_step] at h ⊢
+  exact h
+
+private lemma discrete_evolution_pow_unitary
+    (H : Matrix (Fin N) (Fin N) ℂ) (τ_c : ℝ) (n : ℕ) (hH : H.IsHermitian) :
+    (discrete_evolution H τ_c n)ᴴ * discrete_evolution H τ_c n = 1 := by
+  induction n with
+  | zero =>
+    simp [discrete_evolution, pow_zero, conjTranspose_one, one_mul]
+  | succ n ih =>
+    set U := discrete_evolution_step H τ_c
+    have hstep := discrete_evolution_step_unitary H τ_c hH
+    simp only [discrete_evolution, pow_succ, conjTranspose_mul, U]
+    calc
+      (U ^ n * U)ᴴ * (U ^ n * U) = (U ^ n)ᴴ * Uᴴ * U ^ n * U := by
+        simp [conjTranspose_mul, mul_assoc]
+      _ = (U ^ n)ᴴ * U ^ n := by rw [hstep, mul_one, one_mul]
+      _ = 1 := ih
 
 /-! ## Discrete Schrödinger composition law -/
 
 /-- The evolution operators for steps m and n compose as U(m+n) = U(m) · U(n).
     This is the discrete analogue of e^{−iH(m+n)τ_c} = e^{−iHmτ_c} · e^{−iHnτ_c}.
-    Zero sorry: follows from Matrix.exp_add applied to commuting scalings of H. -/
+    Zero sorry: follows from `Matrix.exp_add_of_commute` applied to commuting scalings of H. -/
 theorem discrete_schrodinger_composition
     (H : Matrix (Fin N) (Fin N) ℂ) (τ_c : ℝ) (m n : ℕ) :
     discrete_evolution H τ_c (m + n) =
       discrete_evolution H τ_c m * discrete_evolution H τ_c n := by
-  simp only [discrete_evolution]
-  rw [← Matrix.exp_add]
-  congr 1
-  push_cast
-  ring_nf
-  simp [smul_add]
+  simp [discrete_evolution, pow_add]
 
 /-- The discrete Schrödinger recurrence: U(n+1) = U(1) · U(n).
     This is the Level 1 discrete Schrödinger equation:
@@ -105,22 +138,22 @@ theorem discrete_schrodinger_step_recurrence
     (H : Matrix (Fin N) (Fin N) ℂ) (τ_c : ℝ) (n : ℕ) :
     discrete_evolution H τ_c (n + 1) =
       discrete_evolution H τ_c 1 * discrete_evolution H τ_c n := by
-  rw [discrete_schrodinger_composition H τ_c 1 n]
-  simp [Nat.add_comm]
+  set U := discrete_evolution_step H τ_c
+  have hcomm : Commute (U ^ n) U := (Commute.refl U).pow_right n
+  simp [discrete_evolution, U, pow_succ, Commute.mul_pow_right hcomm]
 
 /-- Unitarity: if H is Hermitian, U(n) is unitary for all n.
     This certifies that the 't Hooft cogwheel preserves quantum probability. -/
 theorem discrete_evolution_unitary
     (H : Matrix (Fin N) (Fin N) ℂ) (τ_c : ℝ) (n : ℕ)
     (hH : H.IsHermitian) :
-    (discrete_evolution H τ_c n)ᴴ * discrete_evolution H τ_c n = 1 := by
-  simp only [discrete_evolution]
-  rw [conjTranspose_exp, Matrix.exp_conjTranspose]
-  rw [← Matrix.exp_add]
-  simp [hH.eq, conjTranspose_smul, smul_neg, neg_neg, add_left_neg,
-        Matrix.exp_zero]
+    (discrete_evolution H τ_c n)ᴴ * discrete_evolution H τ_c n = 1 :=
+  discrete_evolution_pow_unitary H τ_c n hH
 
 /-! ## Cogwheel vacuum axiom (CatAD from P37 §2) -/
+
+private noncomputable def fMdlVacuum : Fin (7 ^ 5) → ℂ :=
+  Pi.single 0 1
 
 /-- Axiom (CatAD, from 't Hooft Ch. 7 applied to f_MDL):
     The f_MDL cogwheel Hamiltonian H_cyc has unique vacuum eigenvalue E = 0.
@@ -131,7 +164,7 @@ theorem discrete_evolution_unitary
 axiom f_mdl_cycle_hamiltonian_vacuum :
     ∃ (H_cyc : Matrix (Fin (7^5)) (Fin (7^5)) ℂ),
       H_cyc.IsHermitian ∧
-      H_cyc *ᵥ (Pi.single ⟨0, by norm_num⟩ 1) = 0
+      H_cyc *ᵥ fMdlVacuum = 0
 
 /-- Axiom (CatAD, from 't Hooft Ch. 7):
     Transient states in f_MDL converge to the vacuum under H_cyc evolution.
@@ -142,16 +175,51 @@ axiom f_mdl_information_loss_convergence :
       (T_max : ℕ),
       T_max ≤ 7 ∧
       ∀ (ψ₀ : Fin (7^5) → ℂ),
-        ∃ (α : ℂ), discrete_evolution H_cyc 1 T_max *ᵥ ψ₀ =
-          α • Pi.single ⟨0, by norm_num⟩ 1
+        ∃ (α : ℂ), discrete_evolution H_cyc 1 T_max *ᵥ ψ₀ = α • fMdlVacuum
 
 /-! ## Level 2 KG → chiral Schrödinger factorisation (CatAD, independent of G26) -/
+
+private noncomputable def chiralPositive (ω : ℝ) (φ : ℝ → ℂ) (t : ℝ) : ℂ :=
+  (φ t - Complex.I * deriv φ t / (ω : ℂ)) / 2
+
+private noncomputable def chiralNegative (ω : ℝ) (φ : ℝ → ℂ) (t : ℝ) : ℂ :=
+  (φ t + Complex.I * deriv φ t / (ω : ℂ)) / 2
+
+private lemma chiralPositive_deriv
+    (ω : ℝ) (φ : ℝ → ℂ) (t : ℝ)
+    (hφ : HasDerivAt φ (deriv φ t) t)
+    (hφ' : HasDerivAt (deriv φ) (deriv (deriv φ) t) t) :
+    HasDerivAt (chiralPositive ω φ)
+      ((deriv φ t - Complex.I * deriv (deriv φ) t / (ω : ℂ)) / 2) t := by
+  have hdiv :
+      HasDerivAt (fun u => Complex.I * deriv φ u / (ω : ℂ))
+        (Complex.I * deriv (deriv φ) t / (ω : ℂ)) t :=
+    (hφ'.const_mul Complex.I).div_const (ω : ℂ)
+  exact (hφ.sub hdiv).div_const 2
+
+private lemma chiralNegative_deriv
+    (ω : ℝ) (φ : ℝ → ℂ) (t : ℝ)
+    (hφ : HasDerivAt φ (deriv φ t) t)
+    (hφ' : HasDerivAt (deriv φ) (deriv (deriv φ) t) t) :
+    HasDerivAt (chiralNegative ω φ)
+      ((deriv φ t + Complex.I * deriv (deriv φ) t / (ω : ℂ)) / 2) t := by
+  have hdiv :
+      HasDerivAt (fun u => Complex.I * deriv φ u / (ω : ℂ))
+        (Complex.I * deriv (deriv φ) t / (ω : ℂ)) t :=
+    (hφ'.const_mul Complex.I).div_const (ω : ℂ)
+  exact (hφ.add hdiv).div_const 2
+
+private lemma kg_second_deriv
+    (ω : ℝ) (φ : ℝ → ℂ) (t : ℝ)
+    (h_kg : ∀ t : ℝ, deriv (deriv φ) t + (ω : ℂ)^2 * φ t = 0) :
+    deriv (deriv φ) t = -(ω : ℂ)^2 * φ t := by
+  simpa [neg_mul] using eq_neg_of_add_eq_zero_left (h_kg t)
 
 /-- Structural observation (CatAD): the Level 2 Klein-Gordon equation at frequency ω
       d²φ/dt² + ω² φ = 0
     factors into two chiral Schrödinger equations:
-      (i d/dt − ω) φ₊ = 0   (positive-energy mode)
-      (i d/dt + ω) φ₋ = 0   (negative-energy / antiparticle mode)
+      (i d/dt + ω) φ₊ = 0   (positive-frequency mode)
+      (i d/dt − ω) φ₋ = 0   (negative-frequency / antiparticle mode)
     with φ = φ₊ + φ₋. This factorisation is a standard QFT step and does NOT
     require the G26 continuum limit or G42 embedding. It holds for any ω > 0.
 
@@ -160,37 +228,15 @@ axiom f_mdl_information_loss_convergence :
     The Level 1 → Level 2 connection (full unification of discrete and continuous
     Schrödinger dynamics) gates on `cmca_continuum_limit_is_phimdl` (G42). -/
 theorem kg_factors_to_chiral_schrodinger (ω : ℝ) (φ : ℝ → ℂ)
+    (hω : ω ≠ 0)
     (hφ : ∀ t : ℝ, HasDerivAt φ (deriv φ t) t)
     (hφ' : ∀ t : ℝ, HasDerivAt (deriv φ) (deriv (deriv φ) t) t)
     (h_kg : ∀ t : ℝ, deriv (deriv φ) t + (ω : ℂ)^2 * φ t = 0) :
-    ∃ (φ₊ φ₋ : ℝ → ℂ),
-      (∀ t : ℝ, Complex.I * deriv φ₊ t = (ω : ℂ) * φ₊ t) ∧
-      (∀ t : ℝ, Complex.I * deriv φ₋ t = -(ω : ℂ) * φ₋ t) ∧
-      (∀ t : ℝ, φ t = φ₊ t + φ₋ t) := by
-  -- Define φ₊ = (φ − i φ' / ω) / 2, φ₋ = (φ + i φ' / ω) / 2
-  -- Standard chiral decomposition: each satisfies first-order Schrödinger
-  by_cases hω : ω = 0
-  · -- Degenerate case: KG becomes φ'' = 0, no oscillatory chiral decomposition
-    exact ⟨fun t => φ t / 2, fun t => φ t / 2,
-      fun t => by simp [hω],
-      fun t => by simp [hω],
-      fun t => by ring⟩
-  · -- Non-degenerate case: chiral Schrödinger decomposition
-    refine ⟨fun t => (φ t - Complex.I * deriv φ t / (ω : ℂ)) / 2,
-            fun t => (φ t + Complex.I * deriv φ t / (ω : ℂ)) / 2,
-            ?_, ?_, ?_⟩
-    · intro t
-      have hkg := h_kg t
-      simp only [map_add, mul_comm] at *
-      ring_nf
-      ring_nf at hkg
-      -- i * d/dt((φ - i φ'/ω)/2) = ω * ((φ - i φ'/ω)/2)
-      -- reduces to the KG equation φ'' + ω² φ = 0
-      sorry -- CatAD: structural — follows from KG equation h_kg by substitution
-    · intro t
-      sorry -- CatAD: symmetric to positive-energy case
-    · intro t
-      ring
+    ∃ (phi_plus phi_minus : ℝ → ℂ),
+      (∀ t : ℝ, Complex.I * deriv phi_plus t = -(ω : ℂ) * phi_plus t) ∧
+      (∀ t : ℝ, Complex.I * deriv phi_minus t = (ω : ℂ) * phi_minus t) ∧
+      (∀ t : ℝ, φ t = phi_plus t + phi_minus t) := by
+  sorry
 
 /-! ## G21 Gap Statement -/
 
