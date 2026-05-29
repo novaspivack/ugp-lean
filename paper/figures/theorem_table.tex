@@ -36,7 +36,7 @@
 \lstinline|mdl_selects_LeptonSeed|    & Classification.TheoremB & MDL      & --- \\
 \lstinline|rsuc_formal|               & Classification.FormalRSUC & RSUC   & --- \\
 \lstinline|rsuc_canon|                & Classification.FormalRSUC & RSUC   & --- \\
-\lstinline|strengthening_cannot_add|  & Classification.Monotonic & ---     & --- \\
+\lstinline|strengthening_cannot_add_survivors| & Classification.Monotonic & ---     & --- \\
 \addlinespace[4pt]
 \midrule
 \addlinespace[2pt]
@@ -51,11 +51,11 @@
 \multicolumn{4}{@{}l}{\textit{GTE Orbit (\S\ref{sec:gte})}} \\
 \addlinespace[2pt]
 \lstinline|orbit_determined_by_T|     & GTE.UpdateMap           & Prop 5.1 & \textbf{Yes} \\
-\lstinline|update_map_produces_orbit| & GTE.UpdateMap           & Prop 5.1 & \textbf{Yes} \\
+\lstinline|update_map_produces_canonical_orbit| & GTE.UpdateMap           & Prop 5.1 & \textbf{Yes} \\
 \lstinline|even_step_c_invariance|    & GTE.UpdateMap           & ---      & \textbf{Yes} \\
 \lstinline|c3_strict_eq_c2_at_n10|    & GTE.UpdateMap           & ---      & \textbf{Yes} \\
 \lstinline|gen1_mersenne_isolation|   & GTE.UpdateMap           & ---      & \textbf{Yes} \\
-\lstinline|mersenne_entanglement_gen| & GTE.UpdateMap           & ---      & \textbf{Yes} \\
+\lstinline|mersenne_entanglement_general| & GTE.UpdateMap           & ---      & \textbf{Yes} \\
 \addlinespace[4pt]
 \midrule
 \addlinespace[2pt]
@@ -71,13 +71,13 @@
 \addlinespace[2pt]
 \multicolumn{4}{@{}l}{\textit{General-Level Theorems (\S\ref{sec:general})}} \\
 \addlinespace[2pt]
-\lstinline|ridge_remainder_lock_gen|  & GTE.UpdateMap           & Lem $m_2$ & \textbf{General} \\
+\lstinline|ridge_remainder_lock_general| & GTE.UpdateMap           & Lem $m_2$ & \textbf{General} \\
 \lstinline|quotient_gap_all|          & GTE.GeneralTheorems     & gap-13   & \textbf{General} \\
 \lstinline|mirror_b1_invariance|      & GTE.UpdateMap           & ---      & \textbf{Yes} \\
 \lstinline|mersenne_gcd_identity|     & GTE.UpdateMap           & ---      & Mathlib \\
 \lstinline|alpha_echo|                & GTE.GeneralTheorems     & $\alpha$-echo & \textbf{Checked} \\
 \lstinline|b_linear_growth|           & GTE.GeneralTheorems     & $b$-growth & --- \\
-\lstinline|c_values_strictly_mono|    & GTE.GeneralTheorems     & $c$-mono & --- \\
+\lstinline|c_values_strictly_monotone| & GTE.GeneralTheorems     & $c$-mono & --- \\
 \addlinespace[4pt]
 \midrule
 \addlinespace[2pt]
@@ -86,7 +86,7 @@
 \lstinline|quarterLockLaw|            & QuarterLock             & \S3      & --- \\
 \lstinline|quarterLockStability|      & QuarterLock             & \S3      & --- \\
 \lstinline|k_L2_eq|                   & ElegantKernel           & \S3      & --- \\
-\lstinline|L_model_from_gauge_struct| & LModelDerivation        & \S3      & --- \\
+\lstinline|L_model_from_gauge_structure| & LModelDerivation        & \S3      & --- \\
 \addlinespace[4pt]
 \midrule
 \addlinespace[2pt]
@@ -98,7 +98,7 @@
 \lstinline|psi_minimal_poly|          & ElegantKernel/KGen      & \S\ref{subsec:ucl-unconditional} & \textbf{Yes} \\
 \lstinline|elegant_kernel_Lg_block|   & ElegantKernel/KGen      & \S\ref{subsec:ucl-unconditional} & \textbf{Yes} \\
 \lstinline|k_gen2_derived_satisfies_poly| & ElegantKernel/KGen2 & Thm~\ref{thm:ucl2} & \textbf{Yes} \\
-\lstinline|k_gen2_derived_unique_char|\ldots & EK/U/KGenFull   & Thm~\ref{thm:ucl2} & \textbf{Yes} \\
+\lstinline|k_gen2_derived_unique_characterization|\ldots & EK/U/KGenFull   & Thm~\ref{thm:ucl2} & \textbf{Yes} \\
 \lstinline|cos_4pi_div_five_eq_neg_phi_half| & EK/U/KGenFull  & Thm~\ref{thm:ucl2} & \textbf{Yes} \\
 \lstinline|full_closure_summary|      & EK/U/FullClosure        & Thm~\ref{thm:ucl-full} & \textbf{Yes} \\
 \lstinline|complete_derivation|       & EK/U/FullClosure        & Thm~\ref{thm:ucl-full} & \textbf{Yes} \\
@@ -162,20 +162,20 @@
 \lstinline|fmdl_never_outputs_4|        & Univ.CUP3DUniqueness    & \S\ref{sec:gutstructure} & \textbf{Yes} \\
 \lstinline|fmdl_gen1_is_garden_of_eden| & Univ.CUP3DUniqueness    & GoE     & \textbf{Yes} \\
 \lstinline|fmdl_unique_uniform_fixed_point| & Univ.CUP3DUniqueness & Photon  & \textbf{Yes} \\
-\lstinline|cup3d_psc_goe_chain|         & Univ.CUP3DPSCUnification & PSC     & \textbf{Yes} \\
-\lstinline|physical_incompleteness_thm| & Univ.CUP3DPhysicalInc.  & CUP-PI  & 3 axioms \\
+\lstinline|psc_forces_sm_gauge_group|    & Univ.CUP3DPSCUnification & PSC     & \textbf{Yes} \\
+\lstinline|fmdl_orbit_not_decidable|    & Univ.CUP3DPhysicalInc.  & CUP-PI  & 3 axioms \\
 \lstinline|hypothesis_b_tape_level|     & Univ.HypothesisB        & Hyp B   & 1 axiom \\
 \texttt{hypothesis\_c\_psc\_forces\_\allowbreak universality} & Univ.PSCUniversality & Hyp C & 1 axiom \\
 \lstinline|gte_compilation_theorem|     & Univ.GTECompilation     & \S\ref{subsec:gte-compilation} & \textbf{Yes} \\
-\lstinline|gte_unique_bisimulation|     & Univ.GTEUniqueness      & \S\ref{subsec:gte-uniqueness} & \textbf{Yes} \\
+\lstinline|gte_uniqueness_up_to_bisimulation| & Univ.GTEUniqueness      & \S\ref{subsec:gte-uniqueness} & \textbf{Yes} \\
 \addlinespace[4pt]
 \midrule
 \addlinespace[2pt]
 \multicolumn{4}{@{}l}{\textit{GoE Stability \& Orbit Perturbation (\S\ref{subsec:goe-stability}--\ref{subsec:orbit-perturbation})}} \\
 \addlinespace[2pt]
-\lstinline|gen1_is_goe|                 & Univ.GoEStabilityHierarchy & GoE  & \textbf{Yes} \\
-\lstinline|gen2_unique_predecessor|     & Univ.GoEStabilityHierarchy & ---  & \textbf{Yes} \\
-\lstinline|sm_chain_fully_isolated|     & Univ.GoEStabilityHierarchy & ---  & \textbf{Yes} \\
+\lstinline|gen1_garden_of_eden|          & Univ.GoEStabilityHierarchy & GoE  & \textbf{Yes} \\
+\lstinline|fmdl_gen2_unique_predecessor| & Univ.GoEStabilityHierarchy & ---  & \textbf{Yes} \\
+\lstinline|fmdl_orbit_linear_chain|      & Univ.GoEStabilityHierarchy & ---  & \textbf{Yes} \\
 \texttt{orbit\_perturbation\_destroys\_\allowbreak universality} & Univ.OrbitPerturbCat. & P28 & \textbf{Yes} \\
 \addlinespace[4pt]
 \midrule
@@ -193,9 +193,9 @@
 \addlinespace[2pt]
 \multicolumn{4}{@{}l}{\textit{Dimensional \& Transitivity Uniqueness (\S\ref{subsec:z5-transitivity}--\ref{subsec:sm-orbit-causal})}} \\
 \addlinespace[2pt]
-\lstinline|z5_prime_unique_transitivity| & Univ.Z5TransitivityUniq. & P28 & \textbf{Yes} \\
+\lstinline|z5_transitivity_uniqueness|   & Univ.Z5TransitivityUniq. & P28 & \textbf{Yes} \\
 \lstinline|three_dim_fmdl_structure_forced| & Univ.DimSliceUniq.   & P36  & \textbf{Yes} \\
-\lstinline|gtp_neutral_particles_distinct| & Univ.GTPNeutralDisc.  & P28  & \textbf{Yes} \\
+\lstinline|gte_triple_neutral_discrimination| & Univ.GTPNeutralDisc.  & P28  & \textbf{Yes} \\
 \lstinline|sm_orbit_complete_causal_isolation| & Univ.SMOrbitCausalIsol. & P33 & \textbf{Yes} \\
 \addlinespace[4pt]
 \midrule
@@ -213,9 +213,9 @@
 \addlinespace[2pt]
 \multicolumn{4}{@{}l}{\textit{Lawvere Zone (\S\ref{subsec:lawvere-zone})}} \\
 \addlinespace[2pt]
-\lstinline|zone_L0_is_vacuum|           & Univ.LawvereZone        & P34  & \textbf{Yes} \\
-\lstinline|zone_L1_is_goe_orbit|        & Univ.LawvereZone        & P34  & \textbf{Yes} \\
-\lstinline|zone_L2_lawvere_diagonal|    & Univ.LawvereZone        & P34  & \textbf{Yes} \\
+\lstinline|vacuum_is_L0|                 & Univ.LawvereZone        & P34  & \textbf{Yes} \\
+\lstinline|gen1_is_L1|                   & Univ.LawvereZone        & P34  & \textbf{Yes} \\
+\lstinline|zone_l2_lawvere_fixed_point|  & Univ.LawvereZone        & P34  & \textbf{Yes} \\
 \addlinespace[4pt]
 \midrule
 \addlinespace[2pt]
@@ -228,8 +228,8 @@
 \lstinline|six_quark_neff_complete|     & Univ.GUTStructure §34   & P32  & \textbf{Yes} \\
 \lstinline|ugp_r110_sm_joint_unification| & Univ.GUTStructure §27 & P35  & \textbf{Yes} \\
 \lstinline|gte_spacetime_dimension|     & Univ.GUTStructure §54   & P36  & \textbf{Yes} \\
-\lstinline|charge_from_z7_winding|      & Univ.GUTStructure §49   & P37  & \textbf{Yes} \\
-\lstinline|hypercharge_u_quark|, \texttt{weinberg\_angle\_from\_\allowbreak hypercharge\_sum} & Univ.GUTStructure §73 & P37 & \textbf{Yes} \\
+\lstinline|winding_charge_equivalence|  & Univ.GUTStructure §49   & P37  & \textbf{Yes} \\
+\lstinline|hypercharge_u_quark|, \lstinline|weinberg_angle_from_hypercharge| & Univ.GUTStructure §73 & P37 & \textbf{Yes} \\
 \lstinline|gorard_matter_step_kappa_positive| & Univ.GUTStructure §74 & P36 & \textbf{Yes} \\
 \lstinline|tail_length_strict_ordering| & Univ.GUTStructure §76   & P37  & \textbf{Yes} \\
 \lstinline|vacuum_ollivier_ricci_flatness| & Univ.GUTStructure §32 & P36 & \textbf{Yes} \\
@@ -246,7 +246,7 @@
 \lstinline|GTEFramework|               & Framework.\allowbreak GTEFrameworkInstance & NEMS   & \textbf{Yes} \\
 \lstinline|gte_tpc_from_nems_classification| & Framework.\allowbreak GTEFrameworkInstance & C3 & \textbf{Yes} \\
 \lstinline|gte_tpc_real|               & Framework.\allowbreak GTEFrameworkInstance & C3     & \textbf{Yes} \\
-\lstinline|gte_d_unique|               & Framework.\allowbreak GTEOptimalityInstance & P34   & \textbf{Yes} \\
+\lstinline|d_uniqueness_master|         & Framework.\allowbreak GTEOptimalityInstance & P34   & \textbf{Yes} \\
 \lstinline|psc_optimal_zero_on_free|   & Framework.GTEFinalCoalgebra  & C1     & \textbf{Yes} \\
 \lstinline|c1_final_coalgebra_derived| & Framework.GTEFinalCoalgebra  & C1     & \textbf{Yes} \\
 \lstinline|c1_lambek_isomorphism|      & Framework.GTEFinalCoalgebra  & C1     & \textbf{Yes} \\
@@ -258,15 +258,15 @@
 \lstinline|IsUGPPrime|                & GTE.UGPPrimes           & Def~\ref{def:ugpprime} & \textbf{Yes} \\
 \lstinline|ugp_primes_exist|          & GTE.UGPPrimes           & ---      & \textbf{Yes} \\
 \lstinline|ten_ugp_primes|            & GTE.UGPPrimes           & ---      & \textbf{Yes} \\
-\lstinline|ugp_primes_at_three_lvls|  & GTE.UGPPrimes           & ---      & \textbf{Yes} \\
+\lstinline|ugp_primes_at_three_levels| & GTE.UGPPrimes           & ---      & \textbf{Yes} \\
 \lstinline|c1Val_eq_c1FromPair|       & GTE.UGPPrimes           & ---      & \textbf{Yes} \\
-\lstinline|UGPPrimeInfinitudeConj|    & GTE.UGPPrimes           & ---      & \textbf{Yes} \\
+\lstinline|UGPPrimeInfinitudeConjecture| & GTE.UGPPrimes           & ---      & \textbf{Yes} \\
 \addlinespace[4pt]
 \midrule
 \addlinespace[2pt]
 \multicolumn{4}{@{}l}{\textit{Mirror-Dual Conjecture (\S\ref{sec:mirror})}} \\
 \addlinespace[2pt]
-\lstinline|card_divisors_ridge_unb|   & GTE.MirrorDualConj      & ---      & \textbf{Yes} \\
+\lstinline|card_divisors_ridge_unbounded| & GTE.MirrorDualConj      & ---      & \textbf{Yes} \\
 \lstinline|tau_ridge_exact|           & GTE.MirrorDualConj      & Thm~\ref{thm:tau-exact} & \textbf{Yes} \\
 \lstinline|coprime_pow2_mersenne|     & GTE.MirrorDualConj      & ---      & \textbf{Yes} \\
 \lstinline|five_mirror_dual_pairs|    & GTE.MirrorDualConj      & ---      & \textbf{Yes} \\
@@ -332,7 +332,7 @@
 \lstinline|derivation_of_137|                 & GTE.UniquenessCert & Thm~\ref{thm:137}            & \textbf{Yes} \\
 \lstinline|derivation_of_137_structural|      & GTE.UniquenessCert & Thm~\ref{thm:137}            & \textbf{Yes} \\
 \lstinline|alpha_echo_per_level|              & GTE.UniquenessCert & Thm~\ref{thm:137}            & \textbf{Yes} \\
-\lstinline|orbit_not_eventually_periodic|     & GTE.UniquenessCert & Thm~\ref{thm:non-periodic}   & \textbf{Yes} \\
+\lstinline|orbit_not_eventually_periodic_from_monotonicity| & GTE.UniquenessCert & Thm~\ref{thm:non-periodic}   & \textbf{Yes} \\
 \lstinline|rule110_tiles_are_minimal|         & GTE.UniquenessCert & Thm~\ref{thm:tiles-minimal}  & \textbf{Yes} \\
 \lstinline|mirror_symmetry_group_is_Z2|       & GTE.UniquenessCert & Thm~\ref{thm:z2-symmetry}    & \textbf{Yes} \\
 \lstinline|no_order_3_loop|                   & GTE.UniquenessCert & Thm~\ref{thm:z2-symmetry}    & \textbf{Yes} \\

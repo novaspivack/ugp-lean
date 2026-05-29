@@ -3675,12 +3675,12 @@ content; \lstinline|gte_tpc_from_nems_classification| is the substrate-specific 
 The \texttt{Framework.GTEOptimalityInstance} module derives GTE's optimality properties
 from the substrate definition, complementing \texttt{GTEFrameworkInstance}.
 
-\textbf{Key theorem:} \lstinline|gte_d_unique| (zero \texttt{sorry}) proves that
+\textbf{Key theorem:} \lstinline|d_uniqueness_master| (zero \texttt{sorry}) proves that
 the GTE substrate is the unique $D$-dimensional theory satisfying the PSC optimality
 constraints at the GTE orbit, formalizing the dimensional-uniqueness claim of P34.
 
 \begin{leanref}
-\lstinline|GTEOptimalityInstance|, \lstinline|gte_d_unique|
+\lstinline|GTEOptimalityInstance|, \lstinline|d_uniqueness_master|
 \textup{(in \texttt{Framework.GTEOptimalityInstance}, zero \texttt{sorry})}
 \end{leanref}
 
@@ -4414,7 +4414,7 @@ a closed multiplicative subgroup.
 \lstinline|su2l_charge_assignment_z7_discriminator|: the SU(2)$_L$ doublet $(w=3,4)$
 is arithmetically forced by the Z$_7$ color structure.
 
-\textbf{Charge formula (§49).}  \lstinline|charge_from_z7_winding|:
+\textbf{Charge formula (§49).}  \lstinline|winding_charge_equivalence|:
 $Q = w^*/3$ for all SM particles, derived from the Z$_7$ centered-winding map.
 
 \textbf{Z$_7$ charge--winding equivalence (§50).}  The winding-charge map is an
@@ -4444,7 +4444,7 @@ with Vandermonde $D_G$, Weyl group order $L_G$, and $\gamma_G = N_c$, all struct
 \textbf{Hypercharge consistency (§73).}
 \lstinline|HyperchargeConsistency|: $U(1)_Y$ assignments from $Y = 2(Q - T_3)$ are
 consistent for all SM fields, and $\sin^2\theta_W = 3/13$ follows
-(\lstinline|weinberg_angle_from_hypercharge_sum|).
+(\lstinline|weinberg_angle_from_hypercharge|).
 
 \textbf{Gorard matter step (§74).}
 \lstinline|gorard_matter_step_kappa_positive|: $\kappa_{\rm SD} > 0$ at all SM
@@ -4601,10 +4601,10 @@ $7^5 = 16{,}807$-state space $\mathbb{Z}_7^5$.
 
 \begin{theorem}[Orbital chain isolation, zero \texttt{sorry}]
 \begin{itemize}[nosep]
-\item \lstinline|gen1_is_goe|: gen$_1$ has zero predecessors (Garden of Eden).
-\item \lstinline|gen2_unique_predecessor|: gen$_2$'s unique predecessor is gen$_1$.
+\item \lstinline|gen1_garden_of_eden|: gen$_1$ has zero predecessors (Garden of Eden).
+\item \lstinline|fmdl_gen2_unique_predecessor|: gen$_2$'s unique predecessor is gen$_1$.
 \item \lstinline|gen3_unique_predecessor|: gen$_3$'s unique predecessor is gen$_2$.
-\item \lstinline|sm_chain_fully_isolated|: no other state in $\mathbb{Z}_7^5$ maps
+\item \lstinline|fmdl_orbit_linear_chain|: no other state in $\mathbb{Z}_7^5$ maps
   to any SM generation vector.
 \end{itemize}
 \end{theorem}
@@ -4686,7 +4686,7 @@ $p=5$ is the \emph{unique} prime (among all primes $\leq 23$) such that there ex
 Hamming-weight-3 binary vector of length $p$ whose \emph{all} $p$ cyclic rotations
 terminate at the all-ones vector in exactly 2 Rule~110 steps.
 
-\begin{theorem}[\lstinline|z5_prime_unique_transitivity|, zero \texttt{sorry}]
+\begin{theorem}[\lstinline|z5_transitivity_uniqueness|, zero \texttt{sorry}]
 For all primes $p \leq 23$ with $p \neq 5$: no Hamming-weight-3 binary vector of
 length $p$ has all $p$ cyclic rotations terminating at $\mathbf{1}$ in exactly 2 steps.
 For $p = 5$: the SM orbit vector $g_1 = [1,1,0,0,1]$ and its cyclic shifts all do.
@@ -4836,7 +4836,7 @@ neutrinos, and neutral components) are pairwise distinct, partially resolving th
 neutral-sector discrimination problem.
 
 \begin{leanref}
-\lstinline|gtp_neutral_particles_distinct|
+\lstinline|gte_triple_neutral_discrimination|
 \textup{(in \texttt{GTPNeutralDiscrimination}, zero \texttt{sorry})}
 \end{leanref}
 
