@@ -186,6 +186,7 @@ import UgpLean.Substrate.QECStabilizer
 import UgpLean.Substrate.GEQECCode
 import UgpLean.Substrate.RSCodeOrbit
 import UgpLean.Substrate.TransputationStateSelector
+import UgpLean.Substrate.TransputationG41
 import UgpLean.Substrate.DConstraints
 import UgpLean.Substrate.LagrangianLorentzScalar
 import UgpLean.Substrate.PSCStructureLorentzPreserved
