@@ -6832,6 +6832,47 @@ All are zero \texttt{sorry} unless noted.}
 \label{tab:new-theorem-inventory-080}
 \end{table}
 
+\subsection{New theorem inventory (G28/G29 neutrino vacuum + EW precision, 2026-05-29)}\label{subsec:new-theorem-inventory-g28-g29}
+
+The following theorems were added in two modules: \texttt{MassRelations/NeutrinoVacuumSectorL2.lean} (G28) formalises the neutrino Level-2 vacuum-sector constraints and dark-ring counting; \texttt{Algebra/GaugeMDL.lean} (G29) certifies the one-loop oblique EW precision gap closure.
+
+\begin{table}[h]
+\centering\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}p{5.2cm}p{4.4cm}p{4.4cm}@{}}
+\toprule
+Theorem & Module & Physical content \\
+\midrule
+\multicolumn{3}{@{}l}{\textit{G28 --- Neutrino vacuum sector L2 (\texttt{MassRelations/NeutrinoVacuumSectorL2.lean})}} \\[2pt]
+\texttt{neutrino\_\allowbreak winding\_\allowbreak is\_\allowbreak vacuum}
+  & MassRelations.NeutrinoVacuumSectorL2
+  & Neutrino occupies the $w=0$ vacuum winding sector at Level~2 (zero \texttt{sorry}) \\[1pt]
+\texttt{z7\_\allowbreak no\_\allowbreak bion\_\allowbreak criterion}
+  & MassRelations.NeutrinoVacuumSectorL2
+  & $\beta^2=49>8\pi$; bion mechanism for neutrino masses ruled out (zero \texttt{sorry}) \\[1pt]
+\texttt{dark\_\allowbreak ring\_\allowbreak fourth\_\allowbreak qn\_\allowbreak count}
+  & MassRelations.NeutrinoVacuumSectorL2
+  & $\mathbb{Z}_7^4$ dark ring has $7^4=2401$ states from four quantum numbers $(w_x,w_y,w_z,w_\tau)$ (zero \texttt{sorry}) \\[1pt]
+\texttt{dark\_\allowbreak ring\_\allowbreak ratio\_\allowbreak identity}
+  & MassRelations.NeutrinoVacuumSectorL2
+  & $7^4/2^{2N_c^2}=2401/262144$ ($N_c=3$) (zero \texttt{sorry}) \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{G29 --- EW precision oblique corrections (\texttt{Algebra/GaugeMDL.lean})}} \\[2pt]
+\texttt{delta\_\allowbreak rho\_\allowbreak positive}
+  & Algebra.GaugeMDL
+  & $\delta\rho = 3G_F m_{\rm top}^2/(8\pi^2\sqrt{2})>0$ for $G_F,m_{\rm top}>0$ (zero \texttt{sorry}) \\[1pt]
+\texttt{m\_\allowbreak W\_\allowbreak one\_\allowbreak loop\_\allowbreak larger}
+  & Algebra.GaugeMDL
+  & $m_W({\rm 1\text{-}loop})>m_W({\rm tree})$; one-loop oblique correction raises $m_W$ (zero \texttt{sorry}) \\[1pt]
+\texttt{m\_\allowbreak W\_\allowbreak gap\_\allowbreak fraction\_\allowbreak certified}
+  & Algebra.GaugeMDL
+  & $(m_W({\rm 1\text{-}loop})-m_W({\rm tree}))/(m_W({\rm PDG})-m_W({\rm tree}))>98/100$; one-loop correction closes 98.8\% of tree-level gap (zero \texttt{sorry}) \\[1pt]
+\bottomrule
+\end{tabular}
+\caption{G28/G29 theorems (2026-05-29): neutrino vacuum sector winding, dark-ring state counting, and one-loop EW oblique precision. All zero \texttt{sorry}.}
+\label{tab:new-theorem-inventory-g28-g29}
+\end{table}
+
 \subsection{Mass gap and hierarchy}\label{subsec:mass-gap-hierarchy}
 
 \begin{itemize}[nosep]
