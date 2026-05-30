@@ -7276,6 +7276,46 @@ $[T_0,T_\pm]=\pm T_\pm$). All components $\CatAD$; W$^\pm$ algebra is a
 structural consequence of the G23 gauge group bundle.
 \end{theorem}
 
+\subsection{Proper-time rate from Rule~110 ether (\texttt{Gravity/EtherProperTimeRate.lean})}\label{subsec:ether-proper-time-rate}
+
+Module: \texttt{Gravity/EtherProperTimeRate.lean}.  Derives $\tau = 3/7$ — the
+ratio of proper time to coordinate time for an odd-parity cell in the Rule~110
+vacuum background (ether) — without any axioms or sorry.  The derivation proceeds
+directly from the Rule~110 update rule and the canonical period-14 ether pattern.
+
+\begin{theorem}[\lstinline|ether_is_rule110_orbit|, zero \texttt{sorry}, zero axioms ($\CatAL$)]
+The canonical period-14 ether pattern \texttt{[1,1,1,1,1,0,0,0,1,0,0,1,1,0]} is a
+genuine Rule~110 orbit: one update equals a left-shift by exactly 4 cells.
+Proved by \texttt{decide} over the explicit 14-cell Boolean state.
+\end{theorem}
+
+\begin{theorem}[\lstinline|ether_period_seven|, \lstinline|ether_period_minimal|, zero \texttt{sorry} ($\CatAL$)]
+The intrinsic temporal period at any fixed ether cell is exactly~7: seven applications
+of the Rule~110 update return the pattern to itself ($4 \times 7 = 28 \equiv 0 \pmod{14}$),
+and no smaller positive $k$ does so.  The period formula $7 = 14/\gcd(4,14)$ is
+machine-certified (\lstinline|ether_period_formula|, zero \texttt{sorry}).
+\end{theorem}
+
+\begin{theorem}[\lstinline|tau_proper_rate|, \lstinline|tau_three_sevenths_from_ether|, zero \texttt{sorry}, zero axioms ($\CatAL$)]
+\label{thm:tau-three-sevenths}
+The proper-time rate of an odd-parity ether cell equals $\tau = 3/7$.
+Of the seven odd-index positions in the period-14 ether, exactly three carry state~1
+(\lstinline|ether_odd_fire_count|).  Since the gate (proper-time tick) fires iff the
+ether cell is in state~1, the fractional fire rate over one full period is $3/7$.
+The denominator~7 is forced by ether drift~4 and spatial period~14; the numerator~3 is
+the odd-parity 1-count, both forced by the ether pattern with no free parameters.
+The master bundle \lstinline|tau_three_sevenths_from_ether| packages all steps (zero
+axioms, zero \texttt{sorry}).
+\end{theorem}
+
+\begin{remark}[Relation to $\tau_{\rm proper}/\tau_{\rm lab}$ in P45 and P47]
+The result $\tau = 3/7$ certified here is the \emph{derivation} of the structural
+input used in \texttt{TemporalVoxelCC.lean}.  The temporal voxel CC formula
+$\Omega_\Lambda = 3\pi/14$ takes $\tau = 3/7$ as input; the present module proves
+it from first principles, closing the derivation chain without any assumption about
+$N_{\rm spatial}/|\mathbb{Z}_7|$.
+\end{remark}
+
 \subsection{CMB spectral tilt (G33,
   \texttt{Gravity/CMBSpectralTilt.lean})}\label{subsec:cmb-spectral-tilt-g33}
 
