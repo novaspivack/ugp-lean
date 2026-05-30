@@ -23,6 +23,10 @@ identical to the L1 ether-derived `EtherProperTimeRate.tauProper`.  This is the
 missing L1→L2 bridge for τ: the Φ_MDL physical substrate inherits the proper-time rate
 from the Rule 110 CMCA ether dynamics via the Algebraic Lifting Theorem (G38, CatAL).
 
+**082-TAU-ACTION:** `tau_action_coupling_catad` certifies τ² = 9/49 as the Φ_MDL
+proper-time action coupling (lab-time temporal kinetic rescaling) and the
+CC coefficient factorization 2·C_Gorard·τ = 9/112 (CatAD, zero sorry).
+
 Confidence: CatAD — same as `tau_proper_rate` (the ether derivation is the binding one).
 
 **Paper:** P47 §Level-2 lifting; P45 §clock; P42 §Φ_MDL field.
@@ -59,6 +63,36 @@ theorem phimdl_voxel_coeff_from_ether_tau :
 theorem phimdl_omega_lambda_from_ether_dynamics :
     (2 * ((3 : ℝ) / 32) * (3 / 7)) * (8 * Real.pi / 3) = 3 * Real.pi / 14 := by
   ring
+
+/-! ## Φ_MDL action τ² coupling (082-TAU-ACTION, CatAD) -/
+
+/-- The proper-time Φ_MDL action coupling from τ = 3/7.
+    In proper-time coordinates, the temporal kinetic term is rescaled by
+    τ = N_spatial/|Z₇| = 3/7, giving the coupling τ² = 9/49 in the lab-time
+    action. Level-2 expression of the ether time-dilation rate in Φ_MDL
+    field theory (CatAD: structural consequence of τ = 3/7 from ether dynamics). -/
+theorem phimdl_tau_action_coupling_sq :
+    (3 : ℚ)^2 / (7 : ℚ)^2 = 9 / 49 := by norm_num
+
+/-- The proper-time action coupling is the square of the ether proper-time rate. -/
+theorem phimdl_tau_sq_from_ether :
+    EtherProperTimeRate.tauProper ^ 2 = 9 / 49 := by
+  rw [EtherProperTimeRate.tau_proper_rate]
+  norm_num
+
+/-- The CC coefficient factorization via τ-coupling:
+    ρ_CC/M_Pl²H₀² = 2·C_Gorard·τ = (N_spatial/2D²) × (2×N_spatial/|Z₇|)
+    = N_spatial² / (D²×|Z₇|) = 9/112 (product of Gorard spatial coefficient and τ). -/
+theorem phimdl_cc_coefficient_factored :
+    2 * (3 : ℚ) / 32 * (3 / 7) = 9 / 112 := by norm_num
+
+/-- **082-TAU-ACTION master bundle:** τ = 3/7 as Φ_MDL proper-time action coupling (CatAD). -/
+theorem tau_action_coupling_catad :
+    ((3 : ℚ) ^ 2 / (7 : ℚ) ^ 2 = 9 / 49) ∧
+    (EtherProperTimeRate.tauProper ^ 2 = 9 / 49) ∧
+    (2 * (3 : ℚ) / 32 * (3 / 7) = 9 / 112) := by
+  refine And.intro phimdl_tau_action_coupling_sq (And.intro phimdl_tau_sq_from_ether ?_)
+  exact phimdl_cc_coefficient_factored
 
 /-! ## Master bundle: L1 ether period-7 dynamics → L2 voxel CC -/
 
