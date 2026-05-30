@@ -22,6 +22,7 @@ import UgpLean.MassRelations.PhysicalMasses
 import UgpLean.MassRelations.SeesawIndex
 import UgpLean.MassRelations.CKMTheta23
 import UgpLean.MassRelations.CKMMixing
+import UgpLean.MassRelations.CKMCPPhase
 import UgpLean.MassRelations.NeutrinoMassRatio
 import UgpLean.MassRelations.NeutrinoVacuumSectorL2
 
