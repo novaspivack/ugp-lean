@@ -67,7 +67,6 @@ import UgpLean.ElegantKernel.KGen2
 import UgpLean.ElegantKernel.D5StructuralAxiom
 import UgpLean.ElegantKernel.FibonacciHessian
 import UgpLean.ElegantKernel.PentagonalUniqueness
-import UgpLean.ElegantKernel.KGen
 import UgpLean.ElegantKernel.Unconditional.D5Renormalization
 import UgpLean.ElegantKernel.Unconditional.FibonacciPentagonBridge
 import UgpLean.ElegantKernel.Unconditional.RiccatiFixedPoint

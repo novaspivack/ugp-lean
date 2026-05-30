@@ -212,7 +212,7 @@ Module: `ElegantKernel.Unconditional.KGenFullClosure` (§§1–9).
 | **k_gen_pentagon_hexagon_bridge** | ElegantKernel.Unconditional.KGenFullClosure | k_gen_derived + k_gen2 = φ·(cos(π/10) − cos(π/3)); bridges D₅ pentagonal (Fibonacci/Quarter-Lock) and D₆ hexagonal (SU(3) Weyl/TT formula α=π/6) symmetries |
 | **k_gen_pentagon_hexagon_bridge_half** | ElegantKernel.Unconditional.KGenFullClosure | k_gen_derived + k_gen2 = φ·(cos(π/10) − ½) (equivalent half-angle form) |
 
-> **Note on k_gen = π/2 (KGen.lean):** The file `ElegantKernel.KGen` defines `k_gen := π/2` under a conditional "FibonacciPhaseAxiom" that is tautological. This older path is superseded by `thm_ucl2_fully_unconditional` in `KGenFullClosure`. The value π/2 was also corrected in the SM paper (commit 3762f9e4, ugp-physics) and in `theoretical_coefficients.json`. The canonical value is **φ·cos(π/10) ≈ 1.5388**, not π/2 ≈ 1.5708.
+> **Deprecated `KGen.lean`:** The module is **not imported** from `UgpLean.lean` (doc-only stub). The former conditional route (`k_gen := π/2` via tautological `FibonacciPhaseAxiom`) is superseded by `thm_ucl2_fully_unconditional` in `KGenFullClosure`. Canonical value: **φ·cos(π/10) ≈ 1.5388** (P01, SM verifier, `theoretical_coefficients.json`).
 
 ## Exclusion Filters
 

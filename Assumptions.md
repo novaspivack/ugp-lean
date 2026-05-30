@@ -50,7 +50,7 @@ This ledger covers the **full library** as of 2026-05-12 (117 modules). The RSUC
 |----|-----------|--------|-----|
 | L20 | `quarterLockLaw` — k_M = k_gen2 + ¼k_L² | QuarterLock | lemma |
 | L21 | `k_L2_eq` — k_L² = 7/512 | ElegantKernel | lemma |
-| L22 | `thm_ucl2_fully_unconditional` — k_gen = φ·cos(π/10) | ElegantKernel.KGen | lemma |
+| L22 | `thm_ucl2_fully_unconditional` — k_gen = φ·cos(π/10) | ElegantKernel.Unconditional.KGenFullClosure | lemma |
 | L23 | `k_gen2_eq_neg_phi_half` — k_gen2 = −φ/2 | ElegantKernel.KGen2 | lemma |
 | L24 | `L_model_from_gauge_structure` — L_model = log₂((D₁·5³)/3) | LModelDerivation | lemma |
 
