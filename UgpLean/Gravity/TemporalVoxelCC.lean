@@ -187,4 +187,58 @@ theorem holographic_identification_voxel_cc (MPl H0 : ℝ) (hH : H0 ≠ 0) (hM :
           holographic_mode_count_ratio (MPl / H0) ?_⟩
   exact div_ne_zero hM hH
 
+/-!
+## Metric-free core of the holographic non-renormalization theorem (G22+G42)
+
+The holographic mode count `3L` (not `L³`) is supplied by the algebraic lifting
+chain `three_tape_state_card` (CatAL) ∘ `cmca_continuum_limit_is_phimdl`
+(CatAD, G42) ∘ `algebraic_lifting_theorem` (CatAL), with the Hilbert/Fock sector
+structure from G22 (`CMCAHilbertFockBridge.lean`). This chain is purely
+combinatorial/algebraic — it requires only the *dimensionless* cell count `L`,
+not a proper length — so it does **not** invoke the Gromov–Hausdorff
+metric-convergence gate OQ-QG-1.
+
+The physical content of this metric-free core is the dimensionless statement that
+the one-loop correction to the cosmological constant, expressed as a fraction of
+the tree-level holographic CC, is **independent of the cosmological scale `H₀`**.
+With the holographic-reduced one-loop density `δρ = (g²/16π²) m_kink² · 3 H₀²`
+and the tree CC `ρ_tree = (9/112) M_Pl² H₀²`, the Hubble scale cancels exactly:
+
+    δρ / ρ_tree = (g²/16π²) · (112/3) · (m_kink/M_Pl)².
+
+The suppression is therefore parametric in the GTE mass ratio `(m_kink/M_Pl)²`
+and the combinatorial factor `112/3`, with no dependence on any cosmological
+(metric) input. What this core does NOT supply — and what still requires
+OQ-QG-1 — is the *absolute* scale: the naive UV density `M_Pl⁴` (relativistic
+dispersion `ω_k ~ |k|`) and the identification `L = M_Pl/H₀` (proper lattice
+spacing `1/M_Pl`). Hence the holographic NRT remains CatAD-partial: mechanism and
+suppression ratio CatAD (metric-free), absolute magnitude gated on OQ-QG-1.
+-/
+
+/-- **holographic_nrt_loop_tree_ratio_h0_independent** (CatAD, metric-free core):
+    the holographic one-loop CC correction, as a fraction of the tree-level CC,
+    is independent of the Hubble scale `H₀`. With the holographic mode-count
+    reduction (one power of `L² → 3`, supplied by G22+G42 with no metric input),
+    `δρ/ρ_tree = (g²/16π²)·(112/3)·(m_kink/M_Pl)²`. The `H₀²` cancels exactly. -/
+theorem holographic_nrt_loop_tree_ratio_h0_independent
+    (g mkink MPl H0 : ℝ) (hH : H0 ≠ 0) (hM : MPl ≠ 0) :
+    (g ^ 2 / (16 * Real.pi ^ 2) * mkink ^ 2 * (3 * H0 ^ 2)) /
+        ((9 / 112) * MPl ^ 2 * H0 ^ 2)
+      = g ^ 2 / (16 * Real.pi ^ 2) * (112 / 3) * (mkink ^ 2 / MPl ^ 2) := by
+  have hpi : Real.pi ≠ 0 := Real.pi_ne_zero
+  field_simp
+  ring
+
+/-- The metric-free suppression ratio is parametric in `(m_kink/M_Pl)²`: doubling
+    the cosmological scale `H₀` leaves the loop/tree ratio unchanged (the same
+    statement, exhibited as `H₀`-invariance between two Hubble scales `H0` and `H0'`). -/
+theorem holographic_nrt_ratio_scale_invariant
+    (g mkink MPl H0 H0' : ℝ) (hH : H0 ≠ 0) (hH' : H0' ≠ 0) (hM : MPl ≠ 0) :
+    (g ^ 2 / (16 * Real.pi ^ 2) * mkink ^ 2 * (3 * H0 ^ 2)) /
+        ((9 / 112) * MPl ^ 2 * H0 ^ 2)
+      = (g ^ 2 / (16 * Real.pi ^ 2) * mkink ^ 2 * (3 * H0' ^ 2)) /
+        ((9 / 112) * MPl ^ 2 * H0' ^ 2) := by
+  rw [holographic_nrt_loop_tree_ratio_h0_independent g mkink MPl H0 hH hM,
+      holographic_nrt_loop_tree_ratio_h0_independent g mkink MPl H0' hH' hM]
+
 end UgpLean.Gravity.TemporalVoxelCC
