@@ -97,6 +97,7 @@ import UgpLean.MassRelations.VVAllCoefficientsFromNc
 import UgpLean.MassRelations.NeutrinoFroggattNielsen
 import UgpLean.MassRelations.CKMTheta23
 import UgpLean.MassRelations.CKMMixing
+import UgpLean.MassRelations.CKMCPPhase
 import UgpLean.MassRelations.NeutrinoMassRatio
 import UgpLean.MassRelations
 import UgpLean.Phase4.GaloisProtection
@@ -238,6 +239,7 @@ import UgpLean.Gravity.DimensionalDecomposition
 import UgpLean.Gravity.RelationalTime
 import UgpLean.Gravity.PMDLGravityTheorems
 import UgpLean.Gravity.CCImpossibilityBundle
+import UgpLean.Gravity.TemporalVoxelCC
 import UgpLean.Gravity.GorardRicciFlatVacuum
 import UgpLean.Gravity.FermionicStatistics
 import UgpLean.Gravity.LorentzGroupSO13
@@ -309,6 +311,8 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Phase4.GaloisProtection` — Galois-protection non-renormalization theorem; one-loop cancellation from T/T† pairing
 - `UgpLean.Phase4.TwoLoopCoefficient` — two-loop color coefficient (Nc²-1)/Nc² = 8/9; O3 structural identification
 - `UgpLean.MassRelations.CKMMixing` — CDM mechanism (2026-05-11): effective Cabibbo FN charge Δa_eff = α_d = 13/9 from GUT group theory; |V_us|_CDM = ε₁^(α_d) = exp(−13π/27) ≈ 0.2203 (zero sorry)
+- `UgpLean.MassRelations.CKMCPPhase` — CKM CP phase δ_CP = π/2 − 3/8 and A = sin(π/3) from S₃ subgroup orders {6,3,2}; `ckm_cp_phase_formula`, `ckm_A_parameter_squared` (CatAL, zero sorry, 2026-05-30)
+- `UgpLean.Gravity.TemporalVoxelCC` — temporal voxel CC: Ω_Λ = 3π/14 from three-tape CMCA (N_spatial=3, τ_proper/τ_lab=3/7, D=4); `voxel_cc_coefficient`, `omega_lambda_from_temporal_voxel` (CatB structural, zero sorry, 2026-05-30)
 - `UgpLean.MassRelations.NeutrinoMassRatio` — Seesaw mass-squared ratio R ≈ 0.02936 from FN texture (q₁,q₂)=(3,2) and b-values {5,11,19}; coarse bound 0.029 < R < 0.030 certified zero sorry (2026-05-16)
 - `UgpLean.Spacetime.CausalGraph` — Rank 12-LCG: causal graph of 3D f_MDL spacetime; `CausalNode`, `CausalAdj`, `CausalGraph`; rule-independence theorem zero sorry (2026-05-21)
 - `UgpLean.Spacetime.SpectralDimension` — heat-kernel defs + `spectralDimension` limit (CatAL); 1 documented honest sorry on `spectral_dim_cayley_Z4_eq_4` retained as historical statement mathematically false at fixed `(L, T)`; the active "spectral dimension = 4" claim is the thermodynamic-limit theorem `Spectral.causal_graph_spectral_dim_thermodynamic_limit`
