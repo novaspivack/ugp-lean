@@ -3214,6 +3214,37 @@ coefficient shifts the bare FN charge additively.
 \textup{(in \texttt{MassRelations.CKMMixing}, 29 theorems, zero \texttt{sorry})}
 \end{leanref}
 
+\subsection{CKM CP phase and Wolfenstein \texorpdfstring{$A$}{A} parameter (\texttt{MassRelations.CKMCPPhase})}\label{subsec:ckm-cp-phase}
+
+The module \texttt{MassRelations.CKMCPPhase} certifies the GTE subgroup-order
+reduction for the CKM CP-violating phase and the down-sector Wolfenstein parameter
+from the certified orders $|H_{\rm lep}|=6$, $|H_{\rm down}|=3$, $|H_{\rm up}|=2$:
+\[
+\delta_{\rm CP} = \frac{\pi}{2} - \frac{|H_{\rm down}|}{|H_{\rm lep}|+|H_{\rm up}|}
+= \frac{\pi}{2} - \frac{3}{8},
+\qquad
+A = \sin\!\left(\frac{\pi}{|H_{\rm down}|}\right) = \sin(\pi/3) = \frac{\sqrt{3}}{2}.
+\]
+The rational structure $\sin^2(\pi/3)=3/4$ is certified; the phase reduction ratio
+$3/8$ is distinct from all neighbouring subgroup-order null variants.
+
+\begin{theorem}[CKM CP phase formula, zero \texttt{sorry}]\label{thm:ckm-cp-phase-formula}
+The CP-phase reduction ratio is $|H_{\rm down}|/(|H_{\rm lep}|+|H_{\rm up}|)=3/8$.
+
+\begin{leanref}\lstinline|ckm_cp_phase_formula|,
+\lstinline|cp_phase_reduction_ratio|,
+\lstinline|cp_phase_ratio_distinct_from_nulls|
+\textup{(in \texttt{MassRelations.CKMCPPhase}, zero \texttt{sorry})}\end{leanref}
+\end{theorem}
+
+\begin{theorem}[CKM Wolfenstein $A$ parameter, zero \texttt{sorry}]\label{thm:ckm-a-parameter}
+The down-sector Wolfenstein parameter satisfies $A^2=\sin^2(\pi/3)=3/4$.
+
+\begin{leanref}\lstinline|ckm_A_parameter_squared|,
+\lstinline|ckm_A_parameter_sin2|
+\textup{(in \texttt{MassRelations.CKMCPPhase}, zero \texttt{sorry})}\end{leanref}
+\end{theorem}
+
 \subsection{Neutrino mass-squared ratio (\texttt{MassRelations.NeutrinoMassRatio})}\label{subsec:neutrino-mass-ratio}
 
 The \texttt{MassRelations.NeutrinoMassRatio} module (350 lines, 5 theorems) certifies
@@ -7181,6 +7212,12 @@ Theorem & Module & Physical content \\
 \texttt{cc\_\allowbreak cancellation\_\allowbreak impossible\_\allowbreak in\_\allowbreak gte}
   & Gravity.CCImpossibilityBundle
   & No SUSY-degenerate fermion sector; no antigravitating $T_{00}<0$ sector (structural axioms) \\[1pt]
+\texttt{voxel\_\allowbreak cc\_\allowbreak coefficient}
+  & Gravity.TemporalVoxelCC
+  & GTE voxel CC coefficient $9/112 = 9/(7{\times}16)$ (zero \texttt{sorry}) \\[1pt]
+\texttt{omega\_\allowbreak lambda\_\allowbreak from\_\allowbreak temporal\_\allowbreak voxel}
+  & Gravity.TemporalVoxelCC
+  & $\Omega_\Lambda = 3\pi/14$ from three-tape temporal voxel (structural, zero \texttt{sorry}) \\[1pt]
 \midrule
 \multicolumn{3}{@{}l}{\textit{G15 --- Proton mass structural (\texttt{Gravity/PMDLGravityTheorems.lean})}} \\[2pt]
 \texttt{proton\_\allowbreak winding\_\allowbreak norm}
@@ -7194,6 +7231,27 @@ Theorem & Module & Physical content \\
 \caption{G10/G28/G29 theorems (2026-05-29): EW coupling constants, neutrino vacuum sector winding, dark-ring state counting, and one-loop EW oblique precision. All zero \texttt{sorry}.}
 \label{tab:new-theorem-inventory-g28-g29}
 \end{table}
+
+\subsection{Temporal voxel cosmological constant (G30,
+  \texttt{Gravity/TemporalVoxelCC.lean})}\label{subsec:temporal-voxel-cc}
+
+Module: \texttt{Gravity/TemporalVoxelCC.lean}.  Certifies the three-tape CMCA
+temporal-voxel derivation of the dark-energy fraction from GTE inputs
+$N_{\rm spatial}=3$, $\tau_{\rm proper}/\tau_{\rm lab}=3/7$, and $D=4$:
+\[
+\rho_{\rm CC} = \frac{9\,M_{\rm Pl}^2 H_0^2}{112},
+\qquad
+\Omega_\Lambda = \frac{3\pi}{14} \approx 0.6732
+\]
+(within $2.4\%$ of $D_{\rm res}$ and $2.3\%$ of Planck 2018).
+
+\begin{theorem}[\lstinline|voxel_cc_coefficient|, zero \texttt{sorry} ($\CatB$ structural)]
+The GTE voxel CC coefficient is $9/112 = 9/(7{\times}16)$.
+\end{theorem}
+
+\begin{theorem}[\lstinline|omega_lambda_from_temporal_voxel|, zero \texttt{sorry} ($\CatB$ structural)]
+The implied dark-energy fraction is $\Omega_\Lambda = 3\pi/14$.
+\end{theorem}
 
 \begin{theorem}[\lstinline|su2l_within_tape_l2_from_phimdl|, structural ($\CatAD$)]
 The within-tape doublet $(\Phi_+,\Phi_-)$ gains SU(2)$_L$ covariant kinetic term
