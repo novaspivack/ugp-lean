@@ -470,7 +470,7 @@ The artifact is organized into 297~\lean{} modules across seventeen layers
    UpLeptonCyclotomic, Z2OrbifoldDepth,
    KoideAngle, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex,
    NeutrinoFroggattNielsen, VVMechanism, VVAllCoefficientsFromNc,
-   CKMTheta23, KoideS3DiscreteIdentities, KoideGenerationCyclicSymmetry};
+   CKMTheta23, KoideS3DiscreteIdentities, KoideGenerationCyclicSymmetry, KoideSectorAngle};
 \node[layer, fill=cyan!6,   below=of mass]  (braid)
   {\textbf{BraidAtlas}~(12)\quad ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation,
    CoxeterConductor, CoxeterConductorTowerLaw, EWBosons,
@@ -3170,6 +3170,25 @@ $\mathbb{Z}_3$ cyclicity).
 \textup{(in \texttt{MassRelations.KoideGenerationCyclicSymmetry}, zero \texttt{sorry})}\end{leanref}
 \end{theorem}
 
+\subsection{Quark-sector Koide angles from $S_3$ subgroup orders (\texttt{MassRelations.KoideSectorAngle})}\label{subsec:koide-sector-angle}
+
+The module \texttt{MassRelations.KoideSectorAngle} certifies the group-theoretic
+assignment $\theta_{\rm sector} = |H_{\rm sector}|/N_c^3$ with
+$H_{\rm sector} \in \{S_3, A_3, \mathbb{Z}_2\}$ for (lepton, down-quark, up-quark)
+sectors and $N_c^3 = 27$.
+
+\begin{theorem}[$S_3$ subgroup chain and sector angles]\label{thm:koide-sector-angle}
+$S_3$ has proper normal subgroup $A_3$ of index $2$ ($|S_3|=6$, $|A_3|=3$).
+The divisors $\{1,2,3,6\}$ match the GTE sector orders.  The Lean-certified
+rational angles are $\theta_{\rm lep}=6/27=2/9$, $\theta_{\rm down}=3/27=1/9$,
+$\theta_{\rm up}=2/27$.
+
+\begin{leanref}\lstinline|s3_unique_proper_normal_subgroup|,
+\lstinline|s3_subgroup_orders|,
+\lstinline|koide_sector_angle_subgroup_formula|
+\textup{(in \texttt{MassRelations.KoideSectorAngle}, zero \texttt{sorry})}\end{leanref}
+\end{theorem}
+
 \subsection{CDM Cabibbo derivation (\texttt{MassRelations.CKMMixing})}\label{subsec:ckm-mixing}
 
 The \texttt{MassRelations.CKMMixing} module (551 lines, 29 theorems) certifies the
@@ -5253,6 +5272,11 @@ The discrete CMCA unitary evolution satisfies $U(m+n) = U(m) \cdot U(n)$ (compos
 $U(n+1) = e^{-iH_{\rm cyc}\tau_c} \cdot U(n)$ (step recurrence, $\CatAL$).
 \end{theorem}
 
+\begin{theorem}[\lstinline|g21_quantum_dynamics_catad|, zero \texttt{sorry}]
+G21 master bundle: discrete Schr\"odinger composition ($\CatAL$) plus Level~2
+continuum-limit structural gate ($\CatAD$).
+\end{theorem}
+
 \begin{theorem}[\lstinline|discrete_evolution_unitary|, one \texttt{sorry}]
 $U(n)$ is unitary for Hermitian $H_{\rm cyc}$ ($\CatAD$; pending Mathlib
 \texttt{exp\_conjTranspose}/\texttt{star\_ofReal} API for skew-adjoint matrix
@@ -6941,6 +6965,14 @@ Theorem & Module & Physical content \\
   & Gravity.PMDLGravityTheorems
   & $\Phi=\pi/7$ attains $V_{\max}$; with script: $V_{\max}/V_{\rm Planck}\sim 10^{-79}$ (zero \texttt{sorry}) \\[1pt]
 \midrule
+\multicolumn{3}{@{}l}{\textit{G15 --- Proton mass structural (\texttt{Gravity/PMDLGravityTheorems.lean})}} \\[2pt]
+\texttt{proton\_\allowbreak winding\_\allowbreak norm}
+  & Gravity.PMDLGravityTheorems
+  & $|p(2,2,6)|=28$; uud GTE polynomial norm (zero \texttt{sorry}) \\[1pt]
+\texttt{g\_\allowbreak inter\_\allowbreak structural\_\allowbreak catA}
+  & Gravity.PMDLGravityTheorems
+  & $G_{\rm inter}\approx m_{\rm kink}/21$; $M_p\approx 934.4$ MeV (structural axiom) \\[1pt]
+\midrule
 \multicolumn{3}{@{}l}{\textit{G16 — Level-2 chiral current (\texttt{Substrate/ChiralCurrentL2.lean})}} \\[2pt]
 \texttt{tape\_\allowbreak chiral\_\allowbreak signs\_\allowbreak opposite}
   & Substrate.ChiralCurrentL2
@@ -7138,6 +7170,25 @@ Theorem & Module & Physical content \\
 \texttt{ew\_\allowbreak coupling\_\allowbreak constants\_\allowbreak catad}
   & Algebra.GaugeMDL
   & G10 CLOSED: $\sin^2\theta_W+\cos^2\theta_W=1$, $g^2/g'^2=10/3$, $\alpha_{\rm EM}=g^2\sin^2\theta_W$ (zero \texttt{sorry}) \\[1pt]
+\texttt{g\_\allowbreak s\_\allowbreak from\_\allowbreak sigma\_\allowbreak gte\_\allowbreak 2loop\_\allowbreak rge}
+  & Algebra.GaugeMDL
+  & $\alpha_s(M_Z)=0.12001$ (+1.8\% vs PDG) from $\sigma_{\rm GTE}$ + 2-loop QCD RGE (structural axiom) \\[1pt]
+\texttt{g10\_\allowbreak full\_\allowbreak ew\_\allowbreak strong\_\allowbreak catad}
+  & Algebra.GaugeMDL
+  & G10 master: EW couplings + $\alpha_s$ structural bundle (zero \texttt{sorry}) \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{G30 --- CC cancellation impossibility (\texttt{Gravity/CCImpossibilityBundle.lean})}} \\[2pt]
+\texttt{cc\_\allowbreak cancellation\_\allowbreak impossible\_\allowbreak in\_\allowbreak gte}
+  & Gravity.CCImpossibilityBundle
+  & No SUSY-degenerate fermion sector; no antigravitating $T_{00}<0$ sector (structural axioms) \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{G15 --- Proton mass structural (\texttt{Gravity/PMDLGravityTheorems.lean})}} \\[2pt]
+\texttt{proton\_\allowbreak winding\_\allowbreak norm}
+  & Gravity.PMDLGravityTheorems
+  & $|p(2,2,6)|=28$ for uud winding norm (zero \texttt{sorry}) \\[1pt]
+\texttt{g\_\allowbreak inter\_\allowbreak structural\_\allowbreak catA}
+  & Gravity.PMDLGravityTheorems
+  & $M_p=3M_{\rm kink}+G_{\rm inter}\cdot 28/6\approx 934.4$ MeV ($-0.41\%$ vs PDG; structural axiom) \\[1pt]
 \bottomrule
 \end{tabular}
 \caption{G10/G28/G29 theorems (2026-05-29): EW coupling constants, neutrino vacuum sector winding, dark-ring state counting, and one-loop EW oblique precision. All zero \texttt{sorry}.}
