@@ -95,4 +95,108 @@ theorem lepton_a_values_mode_energies :
       (225 : ℤ) ≠ 96 := by
   refine ⟨by norm_num, by norm_num, by norm_num⟩
 
+/-! ## Participation-ratio reformulation (080-KOIDE-EQUALNORM Session 2)
+
+A third, complementary, exact face of the same `b = √2`.  Normalise the √-mass
+vector to a probability vector `p_g = v_g / Σv`.  Its inverse participation ratio
+(Simpson / Rényi-2 index) `Σ p_g²` equals the Koide quotient `Q`, and the
+participation ratio `PR = 1/Q = (Σv)² / Σv²` is the "effective number of
+participating generations".  The Koide condition is exactly `PR = 3/2 = N_gen/2`:
+half the three generations participate.  This is *equivalent* to `CV(√m)=1`
+(`PR = 3/(1+CV²)`), not an independent derivation. -/
+
+/-- **Participation ratio is a function of `b` alone.**  The participation ratio
+`(Σv)² / Σv²` equals `6/(2+b²)` for every phase `θ`. -/
+theorem koide_participation_ratio_eq (b θ : ℝ) :
+    (vAmp b θ 0 + vAmp b θ 1 + vAmp b θ 2) ^ 2 /
+        (vAmp b θ 0 ^ 2 + vAmp b θ 1 ^ 2 + vAmp b θ 2 ^ 2)
+      = 6 / (2 + b ^ 2) := by
+  rw [vAmp_sum, vAmp_sq_sum]
+  have hpos : (0 : ℝ) < 3 + 3 / 2 * b ^ 2 := by positivity
+  have hpos2 : (0 : ℝ) < 2 + b ^ 2 := by positivity
+  field_simp
+  ring
+
+/-- **Koide participation ratio theorem.**  The participation ratio
+`PR = (Σv)² / Σv²` equals `3/2 = N_gen/2` **iff** `b² = 2`, for every phase `θ`.
+Equivalently: the Koide relation says exactly that the effective number of
+participating generations in the √-mass spectrum is half of `N_gen = 3`. -/
+theorem koide_participation_ratio_iff_amplitude (b θ : ℝ) :
+    (vAmp b θ 0 + vAmp b θ 1 + vAmp b θ 2) ^ 2 /
+        (vAmp b θ 0 ^ 2 + vAmp b θ 1 ^ 2 + vAmp b θ 2 ^ 2) = 3 / 2 ↔ b ^ 2 = 2 := by
+  rw [koide_participation_ratio_eq]
+  have hpos2 : (0 : ℝ) < 2 + b ^ 2 := by positivity
+  constructor
+  · intro h
+    field_simp at h
+    linarith
+  · intro h; rw [h]; norm_num
+
+/-- **Master reformulation bundle.**  At the Koide cone amplitude `b = √2` (and for
+every phase `θ`): the Koide quotient is `2/3`, the inverse participation ratio
+`Σ p_g²` is `2/3`, and the participation ratio `(Σv)²/Σv²` is `3/2 = N_gen/2`.
+The three statements `Q = 2/3`, `CV(√m) = 1`, and `PR = N_gen/2` are one condition. -/
+theorem koide_participation_ratio_is_half_ngen :
+    ∀ θ : ℝ,
+      (vAmp (Real.sqrt 2) θ 0 + vAmp (Real.sqrt 2) θ 1 + vAmp (Real.sqrt 2) θ 2) ^ 2 /
+          (vAmp (Real.sqrt 2) θ 0 ^ 2 + vAmp (Real.sqrt 2) θ 1 ^ 2 +
+            vAmp (Real.sqrt 2) θ 2 ^ 2) = 3 / 2 := by
+  intro θ
+  exact (koide_participation_ratio_iff_amplitude (Real.sqrt 2) θ).mpr
+    (Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 2))
+
+/-! ## Binary-tape unification (080-KOIDE-EQUALNORM Session 3)
+
+The GTE three-tape system has **binary tapes** (each tape ∈ {0,1}), so the tape
+alphabet size is `N_mod2 = 2`.  Two arithmetic facts follow:
+
+1. The Koide amplitude satisfies `b² = N_mod2`, i.e. `(√2)² = 2`. This is a
+   **numerical coincidence** for `N_gen = 3` binary tapes: `b² = 2` from the
+   equal-irrep-norm trig identity `Σcos² = N_gen/2` (which gives `b² = 2` for
+   every `N_gen ≥ 3`), and `N_mod2 = 2` from the binary tape architecture.
+   The three-way numerical coincidence `b² = 2 = N_mod2 = dim(standard S₃ irrep)`
+   is specific to `N_gen = 3` binary tapes.
+
+2. The tau Yukawa coupling satisfies `y_τ = c_V / N_mod2 = 1/98` where
+   `c_V = 1/49` is the canonical Z₇ potential coefficient (CatAD).  Here
+   `N_mod2` enters **structurally** as the tape-denominator normalization
+   (established in LEPTON-YUKAWA-MECHANISM, CatAD).
+
+The `1-bit` in the Session-2 `1-bit equipartition` argument also references
+`log₂(N_mod2) = log₂(2) = 1 bit`.  So `N_mod2 = 2` is embedded in the
+selection-principle formulation of the mechanism. -/
+
+/-- The GTE binary tape alphabet size: each tape carries a binary (0/1) value. -/
+def GTE_N_mod2 : ℕ := 2
+
+/-- **Binary-tape arithmetic unification.**
+(i)  `(√2)² = N_mod2` — the Koide amplitude squared equals the binary alphabet size.
+     (N.B.: `b² = 2` comes from the equal-irrep-norm trig identity, independent of
+     `N_mod2`; the equality `b² = N_mod2 = 2` is a three-way numerical coincidence at
+     `N_gen = 3`.)
+(ii) `1/49 / N_mod2 = 1/98` — tau Yukawa `y_τ = c_V / N_mod2` (structural, CatAD). -/
+theorem koide_binary_tape_unification :
+    (Real.sqrt 2) ^ 2 = (GTE_N_mod2 : ℝ) ∧
+    (1 : ℝ) / 49 / (GTE_N_mod2 : ℝ) = 1 / 98 := by
+  constructor
+  · exact Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)
+  · norm_num [GTE_N_mod2]
+
+/-- **Koide cone at b = √N_mod2.**  With `b = √N_mod2 = √2` the Koide quotient
+equals `2/3` for every phase `θ`.  This is a corollary of `koide_Q_iff_amplitude`
+(which pins the cone at `b² = 2`) applied to `b = √N_mod2`. -/
+theorem koide_cone_at_sqrt_N_mod2 :
+    ∀ θ : ℝ,
+      (vAmp (Real.sqrt (GTE_N_mod2 : ℝ)) θ 0 ^ 2 +
+        vAmp (Real.sqrt (GTE_N_mod2 : ℝ)) θ 1 ^ 2 +
+        vAmp (Real.sqrt (GTE_N_mod2 : ℝ)) θ 2 ^ 2) /
+      (vAmp (Real.sqrt (GTE_N_mod2 : ℝ)) θ 0 +
+        vAmp (Real.sqrt (GTE_N_mod2 : ℝ)) θ 1 +
+        vAmp (Real.sqrt (GTE_N_mod2 : ℝ)) θ 2) ^ 2 = 2 / 3 := by
+  intro θ
+  have hN : (GTE_N_mod2 : ℝ) = 2 := by norm_num [GTE_N_mod2]
+  rw [hN]
+  exact (koide_Q_iff_amplitude (Real.sqrt 2) θ).mpr
+    (Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2))
+
 end UgpLean.MassRelations.KoideEqualNormReformulation

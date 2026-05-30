@@ -225,4 +225,56 @@ theorem texture_charges_are_Nc_atoms :
 theorem texture_reproduces_Nc_plus_theta :
     9 * 3 + 2 = 29 := by decide
 
+-- ─────────────────────────────────────────────────────────────────────
+-- §  Three-generation descending texture (leptogenesis CP-asymmetry input)
+-- ─────────────────────────────────────────────────────────────────────
+
+/-!
+The leptogenesis CP-asymmetry computation (rank 080-CKM-LEPTOGEN, script
+`papers/21_neutrino_masses/scripts/gte_leptogenesis_fn.py`) evaluates the
+Covi–Roulet–Vissani asymmetry on the 3×3 Dirac Yukawa with the descending FN
+charge vectors
+
+    q_L = (N_c, strand, N_c − strand) = (3, 2, 1),
+    q_N = (strand, N_c − strand, 0)   = (2, 1, 0),
+
+i.e.\ both vectors are built solely from the singleton-atomic UGP primitives
+`{N_c, strand, N_c − strand} = {3, 2, 1}` proven elementary above.  The theorems
+in this section certify only that ARITHMETIC structure: the charges are atomic
+and the diagonal FN exponents are (5, 3, 1).
+
+They make **no** claim that the resulting CP asymmetry is a parameter-free
+derivation.  The computation shows leptogenesis is feasible and that the needed
+asymmetry is generic across O(1) textures (CatB naturalness), but the specific
+ε₁ value is texture-dependent (it fails the neighbour-charge, wrong-target and
+phase-placement nulls).  The CatAD gate is the Φ_MDL Yukawa action — the same
+gate as the Koide/CKM CP-phase ranks. -/
+
+/-- The descending left-charge vector built from UGP-N_c atoms. -/
+def qLDescending : List ℕ := [3, 2, 1]
+
+/-- The descending right-handed-neutrino charge vector built from UGP-N_c atoms. -/
+def qNDescending : List ℕ := [2, 1, 0]
+
+/-- `qLDescending` is exactly `(N_c, strand, N_c − strand)` at N_c = 3
+    (strand = (N_c² − 1)/4 = 2, N_c − strand = 1). -/
+theorem qL_descending_atoms :
+    qLDescending = [3, (3 * 3 - 1) / 4, 3 - (3 * 3 - 1) / 4] := by decide
+
+/-- `qNDescending` is exactly `(strand, N_c − strand, 0)` at N_c = 3. -/
+theorem qN_descending_atoms :
+    qNDescending = [(3 * 3 - 1) / 4, 3 - (3 * 3 - 1) / 4, 0] := by decide
+
+/-- The diagonal FN exponents `q_Li + q_Ni` of the descending texture are the
+    odd descending sequence (5, 3, 1). -/
+theorem fn_diagonal_exponents_descending :
+    List.zipWith (· + ·) qLDescending qNDescending = [5, 3, 1] := by decide
+
+/-- The heaviest-generation diagonal FN exponent `q_L0 + q_N0 = N_c + strand = 5`
+    coincides with the integer part of the seesaw exponent 29/9 = N_c + 2/9,
+    i.e.\ `N_c + strand` shares the N_c-atomic structure of the seesaw anchor.
+    (Structural arithmetic only — not a physical CP-asymmetry claim.) -/
+theorem fn_anchor_exponent :
+    qLDescending.headI + qNDescending.headI = 3 + (3 * 3 - 1) / 4 := by decide
+
 end UgpLean.MassRelations.NeutrinoFroggattNielsen

@@ -1,5 +1,6 @@
 import UgpLean.Universality.CUP3DUniqueness
 import Mathlib.Data.List.Basic
+import Mathlib.Data.Nat.Basic
 
 /-!
 # UgpLean.Universality.CasimirMasslessEther
@@ -231,5 +232,54 @@ theorem casimir_sector_structure :
     -- (iii) Ether Z₇ winding
     ((ether_period.map (·.val)).sum % 7 = 1) := by
   exact ⟨fmdl_massless_criterion, u_photon_u_to_W_vertex, ether_z7_sum_mod7⟩
+
+-- ════════════════════════════════════════════════════════════════
+-- §6  Transverse Sector Invariance (CatAL)
+-- ════════════════════════════════════════════════════════════════
+
+/-!
+### §6  Transverse Sector Invariance
+
+The all-zero state (vacuum configuration) is an exact fixed point under any
+CA rule satisfying f(0,0,0)=0. This is the transverse-sector invariance:
+starting from the vacuum, no CA dynamics can populate non-vacuum sectors.
+
+Two formulations are provided:
+- **Universal**: holds for any CA rule f : Fin 7 → Fin 7 → Fin 7 → Fin 7
+  with f(0,0,0) = 0.
+- **fmdl-specific**: the MDL CA rule satisfies this by native_decide.
+
+Both zero sorry.
+-/
+
+/-- **transverse_sector_invariance_universal** (CatAL): For any CA rule f on Z₇
+    satisfying f(0,0,0) = 0 (vacuum fixed point condition), the vacuum state k=0
+    is preserved under all iterations of the single-cell center-update f(0,⋅,0).
+
+    That is, iterating n times the map k ↦ f(0, k, 0) from k=0 always returns 0.
+
+    Physical meaning: the transverse (off-axis) Z₂ degree of freedom remains in
+    its ground state once initialized to zero — no CA dynamics in a vacuum
+    neighborhood can excite it.
+
+    LEAN-CERTIFIED (induction + rfl + simp, zero sorry). -/
+theorem transverse_sector_invariance_universal
+    (f : Fin 7 → Fin 7 → Fin 7 → Fin 7) (hf : f 0 0 0 = 0) (n : ℕ) :
+    (fun k => f 0 k 0)^[n] 0 = 0 := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    simp only [Function.iterate_succ', Function.comp, ih, hf]
+
+/-- **transverse_sector_invariance** (CatAL): The f_MDL rule satisfies vacuum
+    fixed-point invariance: iterating k ↦ fmdl(0, k, 0) from k=0 always returns 0.
+
+    Follows from transverse_sector_invariance_universal and fmdl(0,0,0)=0
+    (proved by native_decide).
+
+    LEAN-CERTIFIED (zero sorry). -/
+theorem transverse_sector_invariance (n : ℕ) :
+    (fun k => fmdl 0 k 0)^[n] 0 = 0 :=
+  transverse_sector_invariance_universal fmdl (by native_decide) n
 
 end CasimirMasslessEther

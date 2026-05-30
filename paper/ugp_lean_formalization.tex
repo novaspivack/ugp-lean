@@ -7254,6 +7254,12 @@ The GTE voxel CC coefficient is $9/112 = 9/(7{\times}16)$.
 The implied dark-energy fraction is $\Omega_\Lambda = 3\pi/14$.
 \end{theorem}
 
+The proper time rate $\tau = N_{\rm spatial}/|\mathbb{Z}_7| = 3/7$ is certified as a
+GTE structural identity via \lstinline|tau_structural_identity| (zero \texttt{sorry}).
+The complete counting formula \lstinline|gte_cc_counting_formula| expresses
+$\rho_{\rm CC} = N_{\rm spatial}^2/(D^2 \cdot |\mathbb{Z}_7|) \times M_{\rm Pl}^2 H_0^2$
+(zero \texttt{sorry}).
+
 \begin{theorem}[\lstinline|su2l_within_tape_l2_from_phimdl|, structural ($\CatAD$)]
 The within-tape doublet $(\Phi_+,\Phi_-)$ gains SU(2)$_L$ covariant kinetic term
 $|D_\mu\Psi|^2$ via the MDL principle (structural $\CatAD$; LC5 orbit geometry
@@ -7269,6 +7275,129 @@ Packages the MDL covariant derivative and $J^\mu_W$ structural result
 structural axiom (\lstinline|su2l_wpm_generator_algebra|: $[T_+,T_-]=2T_0$,
 $[T_0,T_\pm]=\pm T_\pm$). All components $\CatAD$; W$^\pm$ algebra is a
 structural consequence of the G23 gauge group bundle.
+\end{theorem}
+
+\subsection{Holographic mode-count identification (\texttt{Gravity/TemporalVoxelCC.lean}, G30 closure)}\label{subsec:holographic-mode-count}
+
+The following theorems, added in the G30 closure, certify the holographic
+identification that converts the Planck-scale vacuum-energy catastrophe into the
+observed $H_0^2 M_{\rm Pl}^2$ scale without any metric input.
+
+\begin{theorem}[\lstinline|holographic_mode_count_ratio|, zero \texttt{sorry} ($\CatAD$)]
+The three-tape mode count $3L$ divided by the naive 3D count $L^3$ is exactly $3/L^2$:
+\[ (3L)/L^3 = 3/L^2. \]
+\end{theorem}
+
+\begin{theorem}[\lstinline|holographic_voxel_scaling|, zero \texttt{sorry} ($\CatAD$)]
+With the Hubble radius in Planck units $L = M_{\rm Pl}/H_0$, the naive
+vacuum-energy density $M_{\rm Pl}^4$ reduced by the $3/L^2$ holographic factor
+gives the temporal voxel scale:
+\[ (3/L^2) \cdot M_{\rm Pl}^4 = 3\,H_0^2 M_{\rm Pl}^2. \]
+\end{theorem}
+
+\begin{theorem}[\lstinline|holographic_identification_voxel_cc|, zero \texttt{sorry} ($\CatAD$)]
+Full holographic identification assembled from certified components: the
+$3/L^2$ mode-count suppression (\lstinline|holographic_mode_count_ratio|) gives the
+$H_0^2 M_{\rm Pl}^2$ scale (\lstinline|holographic_voxel_scaling|); multiplied by the
+structural coefficient $9/112$ (\lstinline|gte_cc_counting_formula|) this yields the
+temporal voxel CC $\rho_{\rm CC} = (9/112)\,M_{\rm Pl}^2 H_0^2$,
+$\Omega_\Lambda = 3\pi/14$.  Zero axioms; the $3L$ mode count is $\CatAD$ via
+\lstinline|cmca_continuum_limit_is_phimdl| $\circ$ \lstinline|three_tape_state_card| $\circ$
+\lstinline|algebraic_lifting_theorem|.
+\end{theorem}
+
+\begin{theorem}[\lstinline|holographic_nrt_loop_tree_ratio_h0_independent|, zero \texttt{sorry} ($\CatAD$, metric-free)]
+The holographic one-loop CC correction as a fraction of the tree-level CC is
+independent of the Hubble scale $H_0$:
+\[ \frac{\delta\rho}{\rho_{\rm tree}}
+   = \frac{g^2}{16\pi^2}\cdot\frac{112}{3}\cdot\left(\frac{m_{\rm kink}}{M_{\rm Pl}}\right)^2. \]
+The $H_0^2$ factors cancel exactly.  This is the metric-free core of the
+holographic non-renormalization theorem (G22+G42); the absolute-magnitude
+identification $L = M_{\rm Pl}/H_0$ remains gated on OQ-QG-1.
+\end{theorem}
+
+\subsection{Proper-time rate from Rule~110 ether (\texttt{Gravity/EtherProperTimeRate.lean})}\label{subsec:ether-proper-time-rate}
+
+Module: \texttt{Gravity/EtherProperTimeRate.lean}.  Derives $\tau = 3/7$ — the
+ratio of proper time to coordinate time for an odd-parity cell in the Rule~110
+vacuum background (ether) — without any axioms or sorry.  The derivation proceeds
+directly from the Rule~110 update rule and the canonical period-14 ether pattern.
+
+\begin{theorem}[\lstinline|ether_is_rule110_orbit|, zero \texttt{sorry}, zero axioms ($\CatAL$)]
+The canonical period-14 ether pattern \texttt{[1,1,1,1,1,0,0,0,1,0,0,1,1,0]} is a
+genuine Rule~110 orbit: one update equals a left-shift by exactly 4 cells.
+Proved by \texttt{decide} over the explicit 14-cell Boolean state.
+\end{theorem}
+
+\begin{theorem}[\lstinline|ether_period_seven|, \lstinline|ether_period_minimal|, zero \texttt{sorry} ($\CatAL$)]
+The intrinsic temporal period at any fixed ether cell is exactly~7: seven applications
+of the Rule~110 update return the pattern to itself ($4 \times 7 = 28 \equiv 0 \pmod{14}$),
+and no smaller positive $k$ does so.  The period formula $7 = 14/\gcd(4,14)$ is
+machine-certified (\lstinline|ether_period_formula|, zero \texttt{sorry}).
+\end{theorem}
+
+\begin{theorem}[\lstinline|tau_proper_rate|, \lstinline|tau_three_sevenths_from_ether|, zero \texttt{sorry}, zero axioms ($\CatAL$)]
+\label{thm:tau-three-sevenths}
+The proper-time rate of an odd-parity ether cell equals $\tau = 3/7$.
+Of the seven odd-index positions in the period-14 ether, exactly three carry state~1
+(\lstinline|ether_odd_fire_count|).  Since the gate (proper-time tick) fires iff the
+ether cell is in state~1, the fractional fire rate over one full period is $3/7$.
+The denominator~7 is forced by ether drift~4 and spatial period~14; the numerator~3 is
+the odd-parity 1-count, both forced by the ether pattern with no free parameters.
+The master bundle \lstinline|tau_three_sevenths_from_ether| packages all steps (zero
+axioms, zero \texttt{sorry}).
+\end{theorem}
+
+\begin{remark}[Relation to $\tau_{\rm proper}/\tau_{\rm lab}$ in P45 and P47]
+The result $\tau = 3/7$ certified here is the \emph{derivation} of the structural
+input used in \texttt{TemporalVoxelCC.lean}.  The temporal voxel CC formula
+$\Omega_\Lambda = 3\pi/14$ takes $\tau = 3/7$ as input; the present module proves
+it from first principles, closing the derivation chain without any assumption about
+$N_{\rm spatial}/|\mathbb{Z}_7|$.
+\end{remark}
+
+\subsection{L1\,\textrightarrow\,L2 proper-time bridge (\texttt{Gravity/PhiMDLProperTimeBridge.lean})}\label{subsec:phimdl-proper-time-bridge}
+
+Module: \texttt{Gravity/PhiMDLProperTimeBridge.lean}.  Closes the explicit
+Level-1 $\to$ Level-2 connection for the proper-time rate $\tau = 3/7$: the
+ether-derived $\tau$ of \texttt{EtherProperTimeRate.lean} is formally identified
+with the $\tau$ parameter entering the temporal voxel CC formula in
+\texttt{TemporalVoxelCC.lean}.  Zero \texttt{sorry}, zero axioms (\CatAD).
+
+\begin{theorem}[\lstinline|phimdl_tau_from_ether|, zero \texttt{sorry}, zero axioms ($\CatAD$)]
+The $\Phi_{\rm MDL}$ proper-time rate equals the Rule~110 ether-derived value:
+$\tau_{\Phi{\rm MDL}} = \texttt{EtherProperTimeRate.tauProper} = 3/7$.
+Proved by unfolding \lstinline|EtherProperTimeRate.tau_proper_rate|.
+\end{theorem}
+
+\begin{theorem}[\lstinline|phimdl_voxel_coeff_from_ether_tau|, zero \texttt{sorry}, zero axioms ($\CatAD$)]
+The temporal voxel CC coefficient satisfies
+$2 \times C_{\rm Gorard} \times \tau_{\rm ether} = 2 \times (3/32) \times (3/7) = 9/112$,
+where $\tau_{\rm ether} = \texttt{EtherProperTimeRate.tauProper}$ (L1, \CatAD) and
+$C_{\rm Gorard} = 3/32$ (\CatAL).  Proved by \lstinline|norm_num| after rewriting
+with \lstinline|tau_proper_rate|.
+\end{theorem}
+
+\begin{theorem}[\lstinline|l1_to_l2_tau_bridge|, zero \texttt{sorry}, zero axioms ($\CatAD$)]
+\label{thm:l1-l2-tau-bridge}
+\textbf{Master L1\,\textrightarrow\,L2 $\tau$ bundle.}  The full derivation chain is certified:
+\begin{enumerate}
+  \item Ether-derived $\tau = 3/7$ (\lstinline|phimdl_tau_from_ether|, \CatAD)
+  \item Voxel coefficient $9/112 = 2C_{\rm Gorard}\tau_{\rm ether}$ (\lstinline|phimdl_voxel_coeff_from_ether_tau|, \CatAD)
+  \item $\Omega_\Lambda = (9/112)\times(8\pi/3) = 3\pi/14$ from \lstinline|TemporalVoxelCC.omega_lambda_from_temporal_voxel|
+\end{enumerate}
+The $\Phi_{\rm MDL}$ vacuum energy density inherits its proper-time suppression factor from
+Rule~110 CMCA ether dynamics via the Algebraic Lifting Theorem.
+\end{theorem}
+
+\begin{theorem}[\lstinline|tau_action_coupling_catad|, zero \texttt{sorry}, zero axioms ($\CatAD$)]
+\label{thm:tau-action-coupling-catad}
+$\tau=3/7$ as $\Phi_{\rm MDL}$ proper-time action coupling: in lab-time coordinates the
+temporal kinetic term acquires $\tau^2 = (3/7)^2 = 9/49$
+(\lstinline|phimdl_tau_action_coupling_sq|,
+\lstinline|phimdl_tau_sq_from_ether|); the CC coefficient factorizes as
+$2\,C_{\rm Gorard}\,\tau = 9/112$
+(\lstinline|phimdl_cc_coefficient_factored|).  \CatAD\ structural consequence of ether dynamics.
 \end{theorem}
 
 \subsection{CMB spectral tilt (G33,

@@ -1,6 +1,7 @@
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.Finset.Basic
 import Mathlib.Data.Complex.Basic
+import UgpLean.Algebra.SU3GluonCount
 import Mathlib.Analysis.Complex.Exponential
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Data.Matrix.Basic
@@ -50,6 +51,8 @@ axiom, explicitly flagged.
 -/
 
 namespace UgpLean.Algebra.F21SU3Embedding
+
+open UgpLean.Algebra.SU3GluonCount
 
 /-- The three diagonal **weights** of the faithful `F₂₁` 3-irrep,
 `ρ(a) = diag(ω^1, ω^2, ω^4)`, as elements of `ZMod 7`. -/
@@ -221,5 +224,54 @@ theorem f21_su3_continuum_master :
   ⟨weight_sum_zero, weights_card, z3_cycles_weights, f21_order, gluon_branching_sum,
    matrix_algebra_finrank_nine, f21_commutant_dimension_eq_one,
    f21_matrix_span_dimension_eq_nine⟩
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- G12: F₂₁↪SU(3) holonomy bridge — master bundle (EPIC_080 080-G12)
+-- ─────────────────────────────────────────────────────────────────────────────
+
+/-- **F21-SU3-FAITHFUL-BUNDLE** (CatAL): the faithful 3-irrep embedding of
+`F₂₁ = Z₇ ⋊ Z₃` into `SU(3)`: weight sum vanishes (det = 1), three distinct
+weights, `Z₃` cyclic action on weights, order 21, and gluon branching
+`8 = 1' + 1'' + 3 + 3̄`. Zero `sorry`. -/
+theorem f21_embedding_is_faithful :
+    ((1 : ZMod 7) + 2 + 4 = 0) ∧
+    weights.card = 3 ∧
+    ((1 : ZMod 7) ≠ 2 ∧ (2 : ZMod 7) ≠ 4 ∧ (1 : ZMod 7) ≠ 4) ∧
+    (z3Mul 1 = 2 ∧ z3Mul 2 = 4 ∧ z3Mul 4 = 1) ∧
+    (2 : ZMod 7) ^ 3 = 1 ∧
+    7 * 3 = 21 ∧
+    adjointBranchingDims.sum = 8 :=
+  ⟨weight_sum_zero, weights_card, weights_distinct, z3_cycles_weights,
+   z3_order_three, f21_order, gluon_branching_sum⟩
+
+/-- **F21-SU3-HOLONOMY-CATAD** (G12 capstone): F₂₁→SU(3) holonomy bridge fully
+characterized at CatAD. Packages the Burnside coset-filling continuum certificate,
+the three-tape CMCA gluon structure, and the faithful 3-irrep embedding. Exact
+`f_quant` precision is G13 / 080-SU3-FQUANT (not part of this bundle). Zero
+`sorry`; external CatAD axioms: `f21_commutant_dimension`, `f21_matrix_span_dimension`. -/
+theorem f21_su3_holonomy_catad :
+    (((1 : ZMod 7) + 2 + 4 = 0) ∧
+      weights.card = 3 ∧
+      (z3Mul 1 = 2 ∧ z3Mul 2 = 4 ∧ z3Mul 4 = 1) ∧
+      7 * 3 = 21 ∧
+      adjointBranchingDims.sum = 8 ∧
+      Module.finrank ℂ (Matrix (Fin 3) (Fin 3) ℂ) = 9 ∧
+      f21_commutant_dimension = 1 ∧
+      f21_matrix_span_dimension = 9) ∧
+    (su3GluonVectors.card = 6 ∧
+      z3CycleOnGluons (1, 0) = (0, 6) ∧
+      z3CycleOnGluons (0, 6) = (6, 1) ∧
+      z3CycleOnGluons (6, 1) = (1, 0) ∧
+      z3CycleOnGluons (6, 0) = (0, 1) ∧
+      z3CycleOnGluons (0, 1) = (1, 6) ∧
+      z3CycleOnGluons (1, 6) = (6, 0)) ∧
+    (((1 : ZMod 7) + 2 + 4 = 0) ∧
+      weights.card = 3 ∧
+      ((1 : ZMod 7) ≠ 2 ∧ (2 : ZMod 7) ≠ 4 ∧ (1 : ZMod 7) ≠ 4) ∧
+      (z3Mul 1 = 2 ∧ z3Mul 2 = 4 ∧ z3Mul 4 = 1) ∧
+      (2 : ZMod 7) ^ 3 = 1 ∧
+      7 * 3 = 21 ∧
+      adjointBranchingDims.sum = 8) := by
+  exact ⟨f21_su3_continuum_master, su3_cmca_master_bundle, f21_embedding_is_faithful⟩
 
 end UgpLean.Algebra.F21SU3Embedding

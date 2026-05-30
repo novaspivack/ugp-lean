@@ -1,4 +1,6 @@
+import UgpLean.Algebra.GaugeMDL
 import UgpLean.Universality.ChiralPairVA
+import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Tactic
 
 /-!
@@ -39,6 +41,44 @@ non-trivial chiral structure in the Level 2 Φ_MDL field.
 namespace GTE.ChiralCurrentL2
 
 open ChiralPairVA
+open GaugeMDL
+open BigOperators
+
+/-! ### 2D Levi-Civita contraction (Schwarz + antisymmetry) -/
+
+/-- 2D Levi-Civita symbol `ε^{μν}` with `ε^{01} = +1`. -/
+def epsilon2 (μ ν : Fin 2) : ℤ :=
+  match μ, ν with
+  | 0, 1 => 1
+  | 1, 0 => -1
+  | _, _ => 0
+
+theorem epsilon2_antisymmetric (μ ν : Fin 2) : epsilon2 μ ν = -epsilon2 ν μ := by
+  fin_cases μ <;> fin_cases ν <;> rfl
+
+/-- Contraction `ε^{μν} H_{μν}` for a `2 × 2` tensor `H`. -/
+def epsilon2Contract (H : Fin 2 → Fin 2 → ℤ) : ℤ :=
+  ∑ μ : Fin 2, ∑ ν : Fin 2, epsilon2 μ ν * H μ ν
+
+/-- **Schwarz + antisymmetry:** if `H_{μν} = H_{νμ}` then `ε^{μν} H_{μν} = 0`.
+
+On `Fin 2` this is pure algebra: the contraction reduces to `H_{01} − H_{10}`. -/
+theorem epsilon2_contract_symmetric (H : Fin 2 → Fin 2 → ℤ) (hH : ∀ μ ν, H μ ν = H ν μ) :
+    epsilon2Contract H = 0 := by
+  dsimp [epsilon2Contract, epsilon2]
+  simp only [Fin.sum_univ_two, mul_zero]
+  rw [hH 0 1]
+  ring
+
+/-- Divergence of the axial topological current:
+    `∂_μ J^μ_A = ε^{μν} ∂_μ∂_ν (Φ_R − Φ_L)`. -/
+def axialCurrentDivergence (d2PhiDiff : Fin 2 → Fin 2 → ℤ) : ℤ :=
+  epsilon2Contract d2PhiDiff
+
+/-- Divergence of the vector topological current:
+    `∂_μ J^μ_V = ε^{μν} ∂_μ∂_ν (Φ_R + Φ_L)`. -/
+def vectorCurrentDivergence (d2PhiSum : Fin 2 → Fin 2 → ℤ) : ℤ :=
+  epsilon2Contract d2PhiSum
 
 /-- Winding sign for the Rule 110 (right-chiral) tape: kink Φ : 0 → +2π/7. -/
 def windingSignR : ℤ := 1
@@ -95,14 +135,29 @@ theorem va_fraction_l1_matches_chiral_pair :
 
 /-- **Topological conservation of the Level 2 axial current** (CatAD).
 
-`∂_μ J^μ_A = ε^{μν} ∂_μ ∂_ν (Φ_R − Φ_L) = 0` because ε^{μν} is antisymmetric and
-∂_μ ∂_ν is symmetric for smooth Φ (Schwarz). No Φ_MDL equation of motion is required. -/
-theorem phimdl_axial_current_topological : True := trivial
+`∂_μ J^μ_A = ε^{μν} ∂_μ ∂_ν (Φ_R − Φ_L) = 0` because `ε^{μν}` is antisymmetric and
+`∂_μ ∂_ν` is symmetric for smooth `Φ` (Schwarz). No `Φ_MDL` equation of motion is required. -/
+theorem phimdl_axial_current_topological (d2PhiDiff : Fin 2 → Fin 2 → ℤ)
+    (hSchwarz : ∀ μ ν, d2PhiDiff μ ν = d2PhiDiff ν μ) :
+    axialCurrentDivergence d2PhiDiff = 0 :=
+  epsilon2_contract_symmetric d2PhiDiff hSchwarz
 
 /-- **Topological conservation of the Level 2 vector current** (CatAD).
 
 `∂_μ J^μ_V = ε^{μν} ∂_μ ∂_ν (Φ_R + Φ_L) = 0` by the same antisymmetry argument. -/
-theorem phimdl_vector_current_topological : True := trivial
+theorem phimdl_vector_current_topological (d2PhiSum : Fin 2 → Fin 2 → ℤ)
+    (hSchwarz : ∀ μ ν, d2PhiSum μ ν = d2PhiSum ν μ) :
+    vectorCurrentDivergence d2PhiSum = 0 :=
+  epsilon2_contract_symmetric d2PhiSum hSchwarz
+
+/-- Discrete tape-level vector-current conservation: opposite chiral winding signs cancel. -/
+theorem phimdl_vector_current_discrete_conserved : jVectorTapeSum = 0 :=
+  j_vector_tape_sum_zero
+
+/-- Discrete axial winding difference is a nonzero constant between kink crossings. -/
+theorem phimdl_axial_current_discrete_constant : jAxialTapeDiff = 2 := by
+  unfold jAxialTapeDiff windingSignR windingSignL
+  decide
 
 /-- Algebraic Lifting applies: Level 1 CA chirality certificate lifts to Level 2
     Φ_MDL chiral current structure (structural; full continuum proof in
@@ -117,19 +172,33 @@ tape winding signs and nonzero axial tape difference certify the Level 2 chiral 
 theorem va_fraction_lifts_to_l2_chiral_current :
     ((va_fraction_l1 = (32 : ℚ) / 125) ∧ (va_fraction_l1 ≠ 1)) ∧
     (jAxialTapeDiff ≠ 0) ∧
-    True ∧
-    True :=
-  ⟨va_fraction_l1_matches_chiral_pair, j_axial_tape_diff_nonzero, trivial, trivial⟩
+    (∀ d2, (∀ μ ν, d2 μ ν = d2 ν μ) → axialCurrentDivergence d2 = 0) ∧
+    (∀ d2, (∀ μ ν, d2 μ ν = d2 ν μ) → vectorCurrentDivergence d2 = 0) := by
+  refine ⟨va_fraction_l1_matches_chiral_pair, j_axial_tape_diff_nonzero, ?_, ?_⟩
+  · intro d2 hSchwarz; exact phimdl_axial_current_topological d2 hSchwarz
+  · intro d2 hSchwarz; exact phimdl_vector_current_topological d2 hSchwarz
 
 /-- Combined G16 certification bundle (zero sorry). -/
-theorem phimdl_l2_chiral_current_bundle :
-    ((va_fraction_l1 = (32 : ℚ) / 125) ∧ (va_fraction_l1 ≠ 1)) ∧
+def PhimdlL2ChiralCurrentBundle : Prop :=
+  ((va_fraction_l1 = (32 : ℚ) / 125) ∧ (va_fraction_l1 ≠ 1)) ∧
     ((windingSignR = -windingSignL) ∧ (windingSignR ≠ windingSignL)) ∧
-    (jVectorTapeSum = 0) ∧
-    True ∧
-    (((va_fraction_l1 = (32 : ℚ) / 125) ∧ (va_fraction_l1 ≠ 1)) ∧
-      (jAxialTapeDiff ≠ 0) ∧ True ∧ True) :=
-  ⟨va_fraction_l1_matches_chiral_pair, tape_chiral_signs_opposite,
-    j_vector_tape_sum_zero, trivial, va_fraction_lifts_to_l2_chiral_current⟩
+      (jVectorTapeSum = 0) ∧
+        (∀ d2, (∀ μ ν, d2 μ ν = d2 ν μ) → axialCurrentDivergence d2 = 0) ∧
+          (((va_fraction_l1 = (32 : ℚ) / 125) ∧ (va_fraction_l1 ≠ 1)) ∧
+            (jAxialTapeDiff ≠ 0) ∧
+              (∀ d2, (∀ μ ν, d2 μ ν = d2 ν μ) → axialCurrentDivergence d2 = 0) ∧
+                (∀ d2, (∀ μ ν, d2 μ ν = d2 ν μ) → vectorCurrentDivergence d2 = 0))
+
+theorem phimdl_l2_chiral_current_bundle : PhimdlL2ChiralCurrentBundle := by
+  refine ⟨va_fraction_l1_matches_chiral_pair, tape_chiral_signs_opposite,
+    j_vector_tape_sum_zero, ?_, va_fraction_lifts_to_l2_chiral_current⟩
+  intro d2 hSchwarz
+  exact phimdl_axial_current_topological d2 hSchwarz
+
+/-- **G16 + G18 bundle** (CatAD): topological V–A currents plus weak charged current
+    from within-tape `|D_μΨ|²` MDL gauging. -/
+theorem phimdl_l2_chiral_and_weak_current_bundle (K_base : ℝ) :
+    PhimdlL2ChiralCurrentBundle ∧ PhimdlWeakChargedCurrentCert K_base :=
+  ⟨phimdl_l2_chiral_current_bundle, phimdl_weak_charged_current K_base⟩
 
 end GTE.ChiralCurrentL2
