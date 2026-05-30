@@ -240,6 +240,8 @@ import UgpLean.Gravity.RelationalTime
 import UgpLean.Gravity.PMDLGravityTheorems
 import UgpLean.Gravity.CCImpossibilityBundle
 import UgpLean.Gravity.TemporalVoxelCC
+import UgpLean.Gravity.EtherProperTimeRate
+import UgpLean.Gravity.PhiMDLProperTimeBridge
 import UgpLean.Gravity.GorardRicciFlatVacuum
 import UgpLean.Gravity.FermionicStatistics
 import UgpLean.Gravity.LorentzGroupSO13
@@ -315,6 +317,8 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.MassRelations.CKMMixing` — CDM mechanism (2026-05-11): effective Cabibbo FN charge Δa_eff = α_d = 13/9 from GUT group theory; |V_us|_CDM = ε₁^(α_d) = exp(−13π/27) ≈ 0.2203 (zero sorry)
 - `UgpLean.MassRelations.CKMCPPhase` — CKM CP phase δ_CP = π/2 − 3/8 and A = sin(π/3) from S₃ subgroup orders {6,3,2}; `ckm_cp_phase_formula`, `ckm_A_parameter_squared` (CatAL, zero sorry, 2026-05-30)
 - `UgpLean.Gravity.TemporalVoxelCC` — temporal voxel CC: Ω_Λ = 3π/14 from three-tape CMCA (N_spatial=3, τ_proper/τ_lab=3/7, D=4); `voxel_cc_coefficient`, `omega_lambda_from_temporal_voxel` (CatB structural, zero sorry, 2026-05-30)
+- `UgpLean.Gravity.EtherProperTimeRate` — τ = 3/7 from Rule 110 ether dynamics; `tau_proper_rate`, `tau_three_sevenths_from_ether` (CatAD, zero axioms, zero sorry, 2026-05-30)
+- `UgpLean.Gravity.PhiMDLProperTimeBridge` — L1→L2 τ bridge and Φ_MDL action coupling; `l1_to_l2_tau_bridge`, `tau_action_coupling_catad` (τ²=9/49, CatAD, zero sorry, 2026-05-30)
 - `UgpLean.MassRelations.NeutrinoMassRatio` — Seesaw mass-squared ratio R ≈ 0.02936 from FN texture (q₁,q₂)=(3,2) and b-values {5,11,19}; coarse bound 0.029 < R < 0.030 certified zero sorry (2026-05-16)
 - `UgpLean.MassRelations.KoideYukawaAmplitude` — EPIC_080 G8: `vAmp_sum`, `vAmp_sq_sum`, `koide_Q_iff_amplitude`, `equal_norm_iff_amplitude`, `cone_amplitude_eq_sqrt2`, `koide_cone_pinned`; Koide cone amplitude b = √2 iff Q = 2/3 iff equal S₃-irrep norm; zero sorry, zero axioms (2026-05-29)
 - `UgpLean.MassRelations.KoideEqualNormReformulation` — EPIC_080 KOIDE-EQUALNORM: `koide_variance_eq_half_b_sq`, `koide_cv_one_iff_amplitude`, `koide_Q_eq_one_third_one_plus_cv_sq`, `lepton_a_values_not_equal_modes`; CV(√m)=1 ⟺ Koide Q=2/3; raw Z₇ orbit mechanism ruled out; zero sorry (2026-05-29)
