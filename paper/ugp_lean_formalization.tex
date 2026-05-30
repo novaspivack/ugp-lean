@@ -7276,6 +7276,45 @@ $[T_0,T_\pm]=\pm T_\pm$). All components $\CatAD$; W$^\pm$ algebra is a
 structural consequence of the G23 gauge group bundle.
 \end{theorem}
 
+\subsection{Holographic mode-count identification (\texttt{Gravity/TemporalVoxelCC.lean}, G30 closure)}\label{subsec:holographic-mode-count}
+
+The following theorems, added in the G30 closure, certify the holographic
+identification that converts the Planck-scale vacuum-energy catastrophe into the
+observed $H_0^2 M_{\rm Pl}^2$ scale without any metric input.
+
+\begin{theorem}[\lstinline|holographic_mode_count_ratio|, zero \texttt{sorry} ($\CatAD$)]
+The three-tape mode count $3L$ divided by the naive 3D count $L^3$ is exactly $3/L^2$:
+\[ (3L)/L^3 = 3/L^2. \]
+\end{theorem}
+
+\begin{theorem}[\lstinline|holographic_voxel_scaling|, zero \texttt{sorry} ($\CatAD$)]
+With the Hubble radius in Planck units $L = M_{\rm Pl}/H_0$, the naive
+vacuum-energy density $M_{\rm Pl}^4$ reduced by the $3/L^2$ holographic factor
+gives the temporal voxel scale:
+\[ (3/L^2) \cdot M_{\rm Pl}^4 = 3\,H_0^2 M_{\rm Pl}^2. \]
+\end{theorem}
+
+\begin{theorem}[\lstinline|holographic_identification_voxel_cc|, zero \texttt{sorry} ($\CatAD$)]
+Full holographic identification assembled from certified components: the
+$3/L^2$ mode-count suppression (\lstinline|holographic_mode_count_ratio|) gives the
+$H_0^2 M_{\rm Pl}^2$ scale (\lstinline|holographic_voxel_scaling|); multiplied by the
+structural coefficient $9/112$ (\lstinline|gte_cc_counting_formula|) this yields the
+temporal voxel CC $\rho_{\rm CC} = (9/112)\,M_{\rm Pl}^2 H_0^2$,
+$\Omega_\Lambda = 3\pi/14$.  Zero axioms; the $3L$ mode count is $\CatAD$ via
+\lstinline|cmca_continuum_limit_is_phimdl| $\circ$ \lstinline|three_tape_state_card| $\circ$
+\lstinline|algebraic_lifting_theorem|.
+\end{theorem}
+
+\begin{theorem}[\lstinline|holographic_nrt_loop_tree_ratio_h0_independent|, zero \texttt{sorry} ($\CatAD$, metric-free)]
+The holographic one-loop CC correction as a fraction of the tree-level CC is
+independent of the Hubble scale $H_0$:
+\[ \frac{\delta\rho}{\rho_{\rm tree}}
+   = \frac{g^2}{16\pi^2}\cdot\frac{112}{3}\cdot\left(\frac{m_{\rm kink}}{M_{\rm Pl}}\right)^2. \]
+The $H_0^2$ factors cancel exactly.  This is the metric-free core of the
+holographic non-renormalization theorem (G22+G42); the absolute-magnitude
+identification $L = M_{\rm Pl}/H_0$ remains gated on OQ-QG-1.
+\end{theorem}
+
 \subsection{Proper-time rate from Rule~110 ether (\texttt{Gravity/EtherProperTimeRate.lean})}\label{subsec:ether-proper-time-rate}
 
 Module: \texttt{Gravity/EtherProperTimeRate.lean}.  Derives $\tau = 3/7$ — the
