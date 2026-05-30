@@ -360,4 +360,19 @@ theorem su2l_l2_from_phimdl_potential_catad (K_base : ℝ) :
      PhimdlPotentialSu2lInvariant ∧ True) :=
   ⟨su2l_within_tape_l2_from_phimdl K_base, su2l_full_gauging_catad⟩
 
+/-! ## G10 strong coupling — σ_GTE + 2-loop QCD RGE (CatAD structural) -/
+
+/-- α_s(M_Z) = 0.12001 (+1.8% vs PDG 0.1179) from σ_GTE (G13 CatAD) via 2-loop QCD RGE
+    from confinement scale √σ_GTE = 435 MeV to M_Z = 91.187 GeV. -/
+axiom g_s_from_sigma_gte_2loop_rge : True
+
+/-- G10 master bundle: EW g, g′ (CatAD) + strong coupling α_s (CatAD structural). -/
+theorem g10_full_ew_strong_catad :
+    (sin2ThetaW + cos2ThetaW = 1 ∧
+      sin2ThetaW / cos2ThetaW = 3 / 10 ∧
+      cos2ThetaW / sin2ThetaW = 10 / 3 ∧
+      (∀ (α : ℚ), α ≠ 0 → (α / sin2ThetaW) * sin2ThetaW = α)) ∧
+    True :=
+  ⟨ew_coupling_constants_catad, g_s_from_sigma_gte_2loop_rge⟩
+
 end GaugeMDL

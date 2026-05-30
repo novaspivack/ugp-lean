@@ -237,6 +237,7 @@ import UgpLean.Gravity.WaldChainAndInitialState
 import UgpLean.Gravity.DimensionalDecomposition
 import UgpLean.Gravity.RelationalTime
 import UgpLean.Gravity.PMDLGravityTheorems
+import UgpLean.Gravity.CCImpossibilityBundle
 import UgpLean.Gravity.GorardRicciFlatVacuum
 import UgpLean.Gravity.FermionicStatistics
 import UgpLean.Gravity.LorentzGroupSO13
@@ -313,6 +314,10 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.MassRelations.NeutrinoMassRatio` — Seesaw mass-squared ratio R ≈ 0.02936 from FN texture (q₁,q₂)=(3,2) and b-values {5,11,19}; coarse bound 0.029 < R < 0.030 certified zero sorry (2026-05-16)
 - `UgpLean.MassRelations.KoideYukawaAmplitude` — EPIC_080 G8: `vAmp_sum`, `vAmp_sq_sum`, `koide_Q_iff_amplitude`, `equal_norm_iff_amplitude`, `cone_amplitude_eq_sqrt2`, `koide_cone_pinned`; Koide cone amplitude b = √2 iff Q = 2/3 iff equal S₃-irrep norm; zero sorry, zero axioms (2026-05-29)
 - `UgpLean.MassRelations.KoideEqualNormReformulation` — EPIC_080 KOIDE-EQUALNORM: `koide_variance_eq_half_b_sq`, `koide_cv_one_iff_amplitude`, `koide_Q_eq_one_third_one_plus_cv_sq`, `lepton_a_values_not_equal_modes`; CV(√m)=1 ⟺ Koide Q=2/3; raw Z₇ orbit mechanism ruled out; zero sorry (2026-05-29)
+- `UgpLean.MassRelations.KoideIrrepEqualNorm` — MDL equipartition on S₃ irrep types fixes b²=2; `koide_irrep_equalnorm_master`; zero sorry (2026-05-29)
+- `UgpLean.MassRelations.KoideGenerationCyclicSymmetry` — cyclic Z₃ origin of Koide flavour symmetry; `koide_amplitude_from_cyclic_generation_symmetry`; zero sorry (2026-05-29)
+- `UgpLean.MassRelations.KoideSectorAngle` — S₃ subgroup chain for quark-sector Koide angles; `koide_sector_angle_subgroup_formula`; zero sorry (2026-05-29)
+- `UgpLean.Gravity.CCImpossibilityBundle` — G30 CC cancellation impossible in GTE Level 2; structural axioms `phimdl_no_susy_degenerate_spectrum`, `phimdl_no_antigravitating_sector`; `cc_cancellation_impossible_in_gte` (2026-05-29)
 - `UgpLean.Spacetime.CausalGraph` — Rank 12-LCG: causal graph of 3D f_MDL spacetime; `CausalNode`, `CausalAdj`, `CausalGraph`; rule-independence theorem zero sorry (2026-05-21)
 - `UgpLean.Spacetime.SpectralDimension` — heat-kernel defs + `spectralDimension` limit (CatAL); 1 documented honest sorry on `spectral_dim_cayley_Z4_eq_4` retained as historical statement mathematically false at fixed `(L, T)`; the active "spectral dimension = 4" claim is the thermodynamic-limit theorem `Spectral.causal_graph_spectral_dim_thermodynamic_limit`
 - `UgpLean.Spacetime.SpectralDimensionDegree` — `periodic_causal_node_degree` CatAL (0 sorry)

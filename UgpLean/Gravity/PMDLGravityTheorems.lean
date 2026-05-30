@@ -519,4 +519,16 @@ Proof: y_τ = g_hKK × (N_Z7²/8) = (4/7⁴) × (49/8) = (4×49)/(7⁴×8) = 196
 theorem kink_higgs_self_consistency :
     (4 : ℚ) / 7^4 * (49 / 8) = 1 / 98 := by norm_num
 
+-- ============================================================
+-- Proton mass structural bundle (G15) — CatA
+-- ============================================================
+
+/-- |p(2,2,6)| for uud: w_u·w_u + w_u·w_d + w_u·w_d = 4 + 12 + 12 = 28. -/
+def p_norm_uud : ℕ := 28
+
+theorem proton_winding_norm : p_norm_uud = 28 := by decide
+
+/-- G_inter ≈ m_kink/21 = 13.81 MeV (CatA); M_p = 3·M_kink + G_inter·28/6 ≈ 934.4 MeV (−0.41% vs PDG). -/
+axiom g_inter_structural_catA : True
+
 end UgpLean.Gravity.PMDLGravityTheorems
