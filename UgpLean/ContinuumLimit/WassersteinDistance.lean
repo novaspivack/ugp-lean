@@ -30,8 +30,9 @@ Step 4 (FUTURE): Gromov-Wasserstein limit → smooth Lorentzian metric
 ## Status
 - `W1`: noncomputable, defined as `sInf` of coupling transport costs
 - `W1_le_couplingCost`: CatAL upper bound for any admissible coupling
+- `W1_nonneg`, `W1_comm`: CatAL basic properties
 - `OllivierRicci`: noncomputable, defined in terms of `W1`
-- `gorard_vacuum_oric_zero`: **axiom** (overly general; see `GorardVacuumW1Bridge` for scoped path)
+- `gorard_vacuum_oric_zero`: **axiom** (overly general; use `GorardVacuumW1Bridge.gorard_vacuum_oric_zero_scoped`)
 - `rule110_gromov_wasserstein_limit`: **axiom** — GW convergence (long-range, gated on OQ-QG-1)
 
 ## Key references
@@ -231,15 +232,109 @@ theorem W1_ge_of_lipschitz (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices)
 ## Basic properties of W₁
 -/
 
+/-- Independent (product) coupling of `μ` and `ν`. -/
+def productCoupling (S : Finset ℕ) (μ ν : ProbDist S) (x y : ℕ) : ℝ :=
+  μ.val x * ν.val y
+
+theorem productCoupling_nonneg (S : Finset ℕ) (μ ν : ProbDist S) :
+    ∀ x y, 0 ≤ productCoupling S μ ν x y := by
+  intro x y
+  unfold productCoupling
+  by_cases hx : x ∈ S
+  · by_cases hy : y ∈ S
+    · exact mul_nonneg (μ.2.1 x hx) (ν.2.1 y hy)
+    · simp [productCoupling, hx, hy, ν.2.2.1 y hy]
+  · simp [productCoupling, hx, μ.2.2.1 x hx]
+
+theorem productCoupling_left_outside (S : Finset ℕ) (μ ν : ProbDist S)
+    (x : ℕ) (hx : x ∉ S) (y : ℕ) :
+    productCoupling S μ ν x y = 0 := by
+  unfold productCoupling
+  simp [hx, μ.2.2.1 x hx]
+
+theorem productCoupling_right_outside (S : Finset ℕ) (μ ν : ProbDist S)
+    (y : ℕ) (hy : y ∉ S) (x : ℕ) :
+    productCoupling S μ ν x y = 0 := by
+  unfold productCoupling
+  simp [hy, ν.2.2.1 y hy]
+
+theorem productCoupling_row_sum (S : Finset ℕ) (μ ν : ProbDist S)
+    (x : ℕ) (hx : x ∈ S) :
+    S.sum (productCoupling S μ ν x) = μ.val x := by
+  unfold productCoupling
+  rw [← Finset.mul_sum, ν.2.2.2, mul_one]
+
+theorem productCoupling_col_sum (S : Finset ℕ) (μ ν : ProbDist S)
+    (y : ℕ) (hy : y ∈ S) :
+    S.sum (fun x => productCoupling S μ ν x y) = ν.val y := by
+  unfold productCoupling
+  rw [← Finset.sum_mul, μ.2.2.2, one_mul]
+
+theorem productCoupling_is_coupling (S : Finset ℕ) (μ ν : ProbDist S) :
+    IsCoupling S μ ν (productCoupling S μ ν) := by
+  refine ⟨productCoupling_nonneg S μ ν, ?_, ?_, ?_, ?_⟩
+  · exact productCoupling_left_outside S μ ν
+  · intro y hy x; exact productCoupling_right_outside S μ ν y hy x
+  · exact productCoupling_row_sum S μ ν
+  · exact productCoupling_col_sum S μ ν
+
+theorem couplingCostSet_nonempty (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) :
+    (couplingCostSet M μ ν).Nonempty :=
+  ⟨couplingTransportCost M (productCoupling M.vertices μ ν),
+    productCoupling M.vertices μ ν,
+    productCoupling_is_coupling M.vertices μ ν, rfl⟩
+
 /-- W₁ is non-negative. -/
 theorem W1_nonneg (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) :
     0 ≤ W1 M μ ν := by
-  sorry  -- follows from dist_nonneg and γ ≥ 0
+  unfold W1
+  apply le_csInf (couplingCostSet_nonempty M μ ν)
+  intro c hc
+  obtain ⟨γ, hγ, hc'⟩ := hc
+  rw [hc']
+  exact couplingTransportCost_nonneg M γ hγ.1
+
+/-- Transpose of a coupling, swapping marginals. -/
+def transposeCoupling (S : Finset ℕ) (γ : ℕ → ℕ → ℝ) (x y : ℕ) : ℝ :=
+  γ y x
+
+theorem transposeCoupling_is_coupling (S : Finset ℕ) (μ ν : ProbDist S) (γ : ℕ → ℕ → ℝ)
+    (hγ : IsCoupling S μ ν γ) :
+    IsCoupling S ν μ (transposeCoupling S γ) := by
+  refine ⟨fun x y => hγ.1 y x, ?_, ?_, ?_, ?_⟩
+  · intro x hx y; exact hγ.2.2.1 x hx y
+  · intro y hy x; exact hγ.2.1 y hy x
+  · intro x hx; simpa [transposeCoupling] using hγ.2.2.2.2 x hx
+  · intro y hy; simpa [transposeCoupling] using hγ.2.2.2.1 y hy
+
+theorem couplingTransportCost_transpose (M : FiniteMetricSpace) (γ : ℕ → ℕ → ℝ) :
+    couplingTransportCost M (transposeCoupling M.vertices γ) =
+      couplingTransportCost M γ := by
+  unfold couplingTransportCost transposeCoupling
+  rw [Finset.sum_comm]
+  congr 1; ext y
+  apply Finset.sum_congr rfl
+  intro x _
+  rw [M.dist_comm y x]
+
+theorem couplingCostSet_comm (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) :
+    couplingCostSet M μ ν = couplingCostSet M ν μ := by
+  ext c
+  constructor
+  · intro hc
+    obtain ⟨γ, hγ, hc'⟩ := hc
+    refine ⟨transposeCoupling M.vertices γ, transposeCoupling_is_coupling M.vertices μ ν γ hγ, ?_⟩
+    rw [couplingTransportCost_transpose M γ, hc']
+  · intro hc
+    obtain ⟨γ, hγ, hc'⟩ := hc
+    refine ⟨transposeCoupling M.vertices γ, transposeCoupling_is_coupling M.vertices ν μ γ hγ, ?_⟩
+    rw [couplingTransportCost_transpose M γ, hc']
 
 /-- W₁ is symmetric. -/
 theorem W1_comm (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) :
     W1 M μ ν = W1 M ν μ := by
-  sorry  -- symmetric: swap coupling γ(x,y) ↦ γ(y,x); dist is symmetric
+  unfold W1
+  rw [couplingCostSet_comm M μ ν]
 
 /-- W₁ vanishes iff the distributions are identical. -/
 theorem W1_eq_zero_iff (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) :
@@ -293,11 +388,11 @@ This is the discrete Ricci-flat condition: the ether background is
 geometrically flat at the level of Ollivier curvature.
 
 **Axiom (overly general)** — quantifies over all `ProbDist` values, not only
-the vacuum 1-step random walk. The scoped CatAL path is
-`GorardVacuumW1Bridge.gorard_vacuum_oric_zero_adjacent`, which reduces to
-`vacuum_w1_eq_one` once the CDF ↔ OT bridge is closed.
+the vacuum 1-step random walk. The scoped CatAL replacement is
+`GorardVacuumW1Bridge.gorard_vacuum_oric_zero_scoped`, proved for every
+adjacent edge `(n, n+1)` via translation invariance of the uniform walk.
 
-Pending: replace with a theorem over `vacuumWalkMeasureLeft/Right` only.
+Pending: remove this axiom once all downstream references migrate to the scoped theorem.
 -/
 axiom gorard_vacuum_oric_zero
     (M : FiniteMetricSpace) (x y : ℕ)

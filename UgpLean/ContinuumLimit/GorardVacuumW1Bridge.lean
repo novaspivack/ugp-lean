@@ -185,6 +185,249 @@ theorem gorard_vacuum_oric_zero_adjacent :
 theorem vacuum_cdf_w1_eq_one : (w1AdjacentUniformCDF : ℝ) = 1 := by
   exact_mod_cast w1_adjacent_uniform_eq_one
 
+/-!
+## Translation-invariant vacuum tape windows
+
+The adjacent-patch computation at `(0,1)` applies to every edge `(n, n+1)` on the
+Rule 110 vacuum tape by translation invariance: the ether pattern and uniform
+1-step walk measures are identical at every position.
+-/
+
+/-- Four-cell vacuum window `{n, n+1, n+2, n+3}` centered at adjacent edge `(n, n+1)`. -/
+def vacuumAdjacentVerticesAt (n : ℕ) : Finset ℕ := {n, n + 1, n + 2, n + 3}
+
+def vacuumAdjacentDistAt (n : ℕ) (x y : ℕ) : ℝ := |((x : ℤ) - (y : ℤ))|
+
+theorem vacuumAdjacentDistAt_nonneg (n : ℕ) (x y : ℕ) : 0 ≤ vacuumAdjacentDistAt n x y := by
+  unfold vacuumAdjacentDistAt; exact abs_nonneg _
+
+theorem vacuumAdjacentDistAt_self (n : ℕ) (x : ℕ) : vacuumAdjacentDistAt n x x = 0 := by
+  unfold vacuumAdjacentDistAt; simp
+
+theorem vacuumAdjacentDistAt_comm (n : ℕ) (x y : ℕ) :
+    vacuumAdjacentDistAt n x y = vacuumAdjacentDistAt n y x := by
+  unfold vacuumAdjacentDistAt; rw [abs_sub_comm]
+
+theorem vacuumAdjacentDistAt_triangle (n : ℕ) (x y z : ℕ) :
+    vacuumAdjacentDistAt n x z ≤ vacuumAdjacentDistAt n x y + vacuumAdjacentDistAt n y z := by
+  unfold vacuumAdjacentDistAt
+  exact_mod_cast abs_sub_le (x : ℤ) (y : ℤ) (z : ℤ)
+
+def vacuumAdjacentGraphAt (n : ℕ) : FiniteMetricSpace where
+  vertices := vacuumAdjacentVerticesAt n
+  dist := vacuumAdjacentDistAt n
+  dist_nonneg := vacuumAdjacentDistAt_nonneg n
+  dist_self := vacuumAdjacentDistAt_self n
+  dist_comm := vacuumAdjacentDistAt_comm n
+  triangle := vacuumAdjacentDistAt_triangle n
+
+/-- The vacuum tape window predicate: a four-cell patch with integer-line metric. -/
+def IsVacuumTapeWindow (M : FiniteMetricSpace) (n : ℕ) : Prop :=
+  M.vertices = vacuumAdjacentVerticesAt n ∧
+  ∀ x y, x ∈ M.vertices → y ∈ M.vertices → M.dist x y = vacuumAdjacentDistAt n x y
+
+theorem isVacuumTapeWindow_at (n : ℕ) : IsVacuumTapeWindow (vacuumAdjacentGraphAt n) n := by
+  refine ⟨rfl, fun x y hx hy => ?_⟩
+  rfl
+
+def vacuumWalkMeasureLeftValAt (n : ℕ) (x : ℕ) : ℝ :=
+  if x = n then (1 : ℝ) / 3
+  else if x = n + 1 then (1 : ℝ) / 3
+  else if x = n + 2 then (1 : ℝ) / 3
+  else 0
+
+def vacuumWalkMeasureRightValAt (n : ℕ) (x : ℕ) : ℝ :=
+  if x = n + 1 then (1 : ℝ) / 3
+  else if x = n + 2 then (1 : ℝ) / 3
+  else if x = n + 3 then (1 : ℝ) / 3
+  else 0
+
+theorem not_mem_vacuumAdjacentVerticesAt (n x : ℕ) (hx : x ∉ vacuumAdjacentVerticesAt n) :
+    x ≠ n ∧ x ≠ n + 1 ∧ x ≠ n + 2 ∧ x ≠ n + 3 := by
+  simp [vacuumAdjacentVerticesAt, Finset.mem_insert, Finset.mem_singleton] at hx
+  tauto
+
+theorem vacuumWalkMeasureLeftValAt_nonneg (n x : ℕ) (hx : x ∈ vacuumAdjacentVerticesAt n) :
+    0 ≤ vacuumWalkMeasureLeftValAt n x := by
+  simp only [vacuumAdjacentVerticesAt, vacuumWalkMeasureLeftValAt,
+    Finset.mem_insert, Finset.mem_singleton] at hx ⊢
+  rcases hx with hx | hx | hx | hx <;> subst hx <;> norm_num
+
+theorem vacuumWalkMeasureLeftValAt_outside (n x : ℕ) (hx : x ∉ vacuumAdjacentVerticesAt n) :
+    vacuumWalkMeasureLeftValAt n x = 0 := by
+  obtain ⟨hn, hn1, hn2, _⟩ := not_mem_vacuumAdjacentVerticesAt n x hx
+  simp [vacuumWalkMeasureLeftValAt, hn, hn1, hn2]
+
+theorem vacuumWalkMeasureLeftValAt_sum (n : ℕ) :
+    (vacuumAdjacentVerticesAt n).sum (vacuumWalkMeasureLeftValAt n) = 1 := by
+  simp [vacuumAdjacentVerticesAt, vacuumWalkMeasureLeftValAt]; norm_num
+
+theorem vacuumWalkMeasureRightValAt_nonneg (n x : ℕ) (hx : x ∈ vacuumAdjacentVerticesAt n) :
+    0 ≤ vacuumWalkMeasureRightValAt n x := by
+  simp only [vacuumAdjacentVerticesAt, vacuumWalkMeasureRightValAt,
+    Finset.mem_insert, Finset.mem_singleton] at hx ⊢
+  rcases hx with hx | hx | hx | hx <;> subst hx <;> norm_num
+
+theorem vacuumWalkMeasureRightValAt_outside (n x : ℕ) (hx : x ∉ vacuumAdjacentVerticesAt n) :
+    vacuumWalkMeasureRightValAt n x = 0 := by
+  obtain ⟨_, hn1, hn2, hn3⟩ := not_mem_vacuumAdjacentVerticesAt n x hx
+  simp [vacuumWalkMeasureRightValAt, hn1, hn2, hn3]
+
+theorem vacuumWalkMeasureRightValAt_sum (n : ℕ) :
+    (vacuumAdjacentVerticesAt n).sum (vacuumWalkMeasureRightValAt n) = 1 := by
+  simp [vacuumAdjacentVerticesAt, vacuumWalkMeasureRightValAt]; norm_num
+
+def vacuumWalkMeasureLeftAt (n : ℕ) : ProbDist (vacuumAdjacentVerticesAt n) :=
+  ⟨vacuumWalkMeasureLeftValAt n,
+    ⟨vacuumWalkMeasureLeftValAt_nonneg n,
+      vacuumWalkMeasureLeftValAt_outside n,
+      vacuumWalkMeasureLeftValAt_sum n⟩⟩
+
+def vacuumWalkMeasureRightAt (n : ℕ) : ProbDist (vacuumAdjacentVerticesAt n) :=
+  ⟨vacuumWalkMeasureRightValAt n,
+    ⟨vacuumWalkMeasureRightValAt_nonneg n,
+      vacuumWalkMeasureRightValAt_outside n,
+      vacuumWalkMeasureRightValAt_sum n⟩⟩
+
+/-- Uniform 1-step random walk measure at tape position `n` (left endpoint). -/
+def IsVacuumWalkMeasureLeftAt (n : ℕ) (μ : ProbDist (vacuumAdjacentVerticesAt n)) : Prop :=
+  μ = vacuumWalkMeasureLeftAt n
+
+/-- Uniform 1-step random walk measure at tape position `n + 1` (right endpoint). -/
+def IsVacuumWalkMeasureRightAt (n : ℕ) (μ : ProbDist (vacuumAdjacentVerticesAt n)) : Prop :=
+  μ = vacuumWalkMeasureRightAt n
+
+def vacuumShiftCouplingAt (n : ℕ) (x y : ℕ) : ℝ :=
+  if x = n ∧ y = n + 1 then (1 : ℝ) / 3
+  else if x = n + 1 ∧ y = n + 2 then (1 : ℝ) / 3
+  else if x = n + 2 ∧ y = n + 3 then (1 : ℝ) / 3
+  else 0
+
+theorem vacuumShiftCouplingAt_nonneg (n x y : ℕ) : 0 ≤ vacuumShiftCouplingAt n x y := by
+  unfold vacuumShiftCouplingAt; split_ifs <;> norm_num
+
+theorem vacuumShiftCouplingAt_left_outside (n x : ℕ) (hx : x ∉ vacuumAdjacentVerticesAt n)
+    (y : ℕ) : vacuumShiftCouplingAt n x y = 0 := by
+  obtain ⟨hn, hn1, hn2, _⟩ := not_mem_vacuumAdjacentVerticesAt n x hx
+  unfold vacuumShiftCouplingAt; simp [hn, hn1, hn2]
+
+theorem vacuumShiftCouplingAt_right_outside (n y : ℕ) (hy : y ∉ vacuumAdjacentVerticesAt n)
+    (x : ℕ) : vacuumShiftCouplingAt n x y = 0 := by
+  obtain ⟨_, hn1, hn2, hn3⟩ := not_mem_vacuumAdjacentVerticesAt n y hy
+  unfold vacuumShiftCouplingAt; simp [hn1, hn2, hn3]
+
+theorem vacuumShiftCouplingAt_row_sum (n x : ℕ) (hx : x ∈ vacuumAdjacentVerticesAt n) :
+    (vacuumAdjacentVerticesAt n).sum (vacuumShiftCouplingAt n x) =
+      vacuumWalkMeasureLeftValAt n x := by
+  simp only [vacuumAdjacentVerticesAt, Finset.mem_insert, Finset.mem_singleton] at hx
+  rcases hx with hx | hx | hx | hx <;>
+    subst hx <;>
+    simp [vacuumShiftCouplingAt, vacuumWalkMeasureLeftValAt, vacuumAdjacentVerticesAt,
+      Finset.sum_insert, Finset.sum_singleton]
+
+theorem vacuumShiftCouplingAt_col_sum (n y : ℕ) (hy : y ∈ vacuumAdjacentVerticesAt n) :
+    (vacuumAdjacentVerticesAt n).sum (fun x => vacuumShiftCouplingAt n x y) =
+      vacuumWalkMeasureRightValAt n y := by
+  simp only [vacuumAdjacentVerticesAt, Finset.mem_insert, Finset.mem_singleton] at hy
+  rcases hy with hy | hy | hy | hy <;>
+    subst hy <;>
+    simp [vacuumShiftCouplingAt, vacuumWalkMeasureRightValAt, vacuumAdjacentVerticesAt,
+      Finset.sum_insert, Finset.sum_singleton]
+
+theorem vacuum_coupling_is_coupling_at (n : ℕ) :
+    IsCoupling (vacuumAdjacentVerticesAt n) (vacuumWalkMeasureLeftAt n)
+      (vacuumWalkMeasureRightAt n) (vacuumShiftCouplingAt n) := by
+  refine ⟨vacuumShiftCouplingAt_nonneg n, ?_, ?_, ?_, ?_⟩
+  · exact vacuumShiftCouplingAt_left_outside n
+  · intro y hy x; exact vacuumShiftCouplingAt_right_outside n y hy x
+  · exact vacuumShiftCouplingAt_row_sum n
+  · exact vacuumShiftCouplingAt_col_sum n
+
+theorem vacuum_coupling_cost_eq_one_at (n : ℕ) :
+    couplingTransportCost (vacuumAdjacentGraphAt n) (vacuumShiftCouplingAt n) = 1 := by
+  unfold couplingTransportCost vacuumAdjacentGraphAt vacuumAdjacentDistAt vacuumShiftCouplingAt
+    vacuumAdjacentVerticesAt
+  norm_num [Finset.sum_insert, Finset.sum_singleton]
+
+theorem vacuum_w1_le_one_at (n : ℕ) :
+    W1 (vacuumAdjacentGraphAt n) (vacuumWalkMeasureLeftAt n) (vacuumWalkMeasureRightAt n) ≤ 1 := by
+  have h := W1_le_couplingCost (vacuumAdjacentGraphAt n) (vacuumWalkMeasureLeftAt n)
+    (vacuumWalkMeasureRightAt n) (vacuumShiftCouplingAt n) (vacuum_coupling_is_coupling_at n)
+  rw [vacuum_coupling_cost_eq_one_at n] at h
+  exact h
+
+theorem vacuum_couplingCostSet_nonempty_at (n : ℕ) :
+    (couplingCostSet (vacuumAdjacentGraphAt n) (vacuumWalkMeasureLeftAt n)
+      (vacuumWalkMeasureRightAt n)).Nonempty :=
+  ⟨couplingTransportCost (vacuumAdjacentGraphAt n) (vacuumShiftCouplingAt n),
+    vacuumShiftCouplingAt n, vacuum_coupling_is_coupling_at n, rfl⟩
+
+theorem vacuum_position_one_lipschitz_at (n : ℕ) (x y : ℕ) :
+    |(x : ℝ) - (y : ℝ)| ≤ (vacuumAdjacentGraphAt n).dist x y := by
+  unfold vacuumAdjacentGraphAt vacuumAdjacentDistAt
+  simp
+
+theorem vacuum_left_expectation_position_at (n : ℕ) :
+    probExpectation (vacuumAdjacentGraphAt n) (vacuumWalkMeasureLeftAt n) (fun x => (x : ℝ)) =
+      (n : ℝ) + 1 := by
+  unfold probExpectation vacuumAdjacentGraphAt vacuumAdjacentVerticesAt vacuumWalkMeasureLeftAt
+    vacuumWalkMeasureLeftValAt
+  simp [Finset.sum_insert, Finset.sum_singleton]
+  ring
+
+theorem vacuum_right_expectation_position_at (n : ℕ) :
+    probExpectation (vacuumAdjacentGraphAt n) (vacuumWalkMeasureRightAt n) (fun x => (x : ℝ)) =
+      (n : ℝ) + 2 := by
+  unfold probExpectation vacuumAdjacentGraphAt vacuumAdjacentVerticesAt vacuumWalkMeasureRightAt
+    vacuumWalkMeasureRightValAt
+  simp [Finset.sum_insert, Finset.sum_singleton]
+  ring
+
+theorem vacuum_w1_ge_one_at (n : ℕ) :
+    1 ≤ W1 (vacuumAdjacentGraphAt n) (vacuumWalkMeasureLeftAt n) (vacuumWalkMeasureRightAt n) := by
+  have h := W1_ge_of_lipschitz (vacuumAdjacentGraphAt n) (vacuumWalkMeasureLeftAt n)
+    (vacuumWalkMeasureRightAt n) (fun x => (x : ℝ)) (vacuum_position_one_lipschitz_at n)
+    (vacuum_couplingCostSet_nonempty_at n)
+  rw [vacuum_left_expectation_position_at n, vacuum_right_expectation_position_at n] at h
+  have habs : |((n : ℝ) + 1) - ((n : ℝ) + 2)| = 1 := by ring_nf; norm_num
+  rw [habs] at h
+  exact h
+
+theorem vacuum_w1_eq_one_at (n : ℕ) :
+    W1 (vacuumAdjacentGraphAt n) (vacuumWalkMeasureLeftAt n) (vacuumWalkMeasureRightAt n) = 1 :=
+  le_antisymm (vacuum_w1_le_one_at n) (vacuum_w1_ge_one_at n)
+
+theorem vacuum_adjacent_dist_eq_one_at (n : ℕ) :
+    (vacuumAdjacentGraphAt n).dist n (n + 1) = 1 := by
+  unfold vacuumAdjacentGraphAt vacuumAdjacentDistAt; norm_num
+
+/-- Translation invariance: Ollivier-Ricci curvature vanishes at every adjacent vacuum edge. -/
+theorem gorard_vacuum_oric_zero_at (n : ℕ) :
+    OllivierRicci (vacuumAdjacentGraphAt n) n (n + 1) (vacuumWalkMeasureLeftAt n)
+      (vacuumWalkMeasureRightAt n) = 0 :=
+  gorard_vacuum_oric_zero_of_w1 (vacuumAdjacentGraphAt n) n (n + 1)
+    (vacuumWalkMeasureLeftAt n) (vacuumWalkMeasureRightAt n)
+    (vacuum_adjacent_dist_eq_one_at n) (vacuum_w1_eq_one_at n)
+
+/--
+Scoped replacement for the overly general `gorard_vacuum_oric_zero` axiom:
+Ollivier-Ricci curvature vanishes on adjacent vacuum cells with 1-step uniform walk measures.
+-/
+theorem gorard_vacuum_oric_zero_scoped (n : ℕ) :
+    OllivierRicci (vacuumAdjacentGraphAt n) n (n + 1) (vacuumWalkMeasureLeftAt n)
+      (vacuumWalkMeasureRightAt n) = 0 :=
+  gorard_vacuum_oric_zero_at n
+
+/-- Vacuum walk-measure predicates imply κ_OR = 0 on the canonical window graph. -/
+theorem gorard_vacuum_oric_zero_scoped_pred (n : ℕ)
+    (μ_n : ProbDist (vacuumAdjacentVerticesAt n))
+    (μ_np1 : ProbDist (vacuumAdjacentVerticesAt n))
+    (hμ_n : IsVacuumWalkMeasureLeftAt n μ_n)
+    (hμ_np1 : IsVacuumWalkMeasureRightAt n μ_np1) :
+    OllivierRicci (vacuumAdjacentGraphAt n) n (n + 1) μ_n μ_np1 = 0 := by
+  rw [hμ_n, hμ_np1]
+  exact gorard_vacuum_oric_zero_scoped n
+
 end
 
 end GTE.ContinuumLimit.GorardVacuumW1Bridge
