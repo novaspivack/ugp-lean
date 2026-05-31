@@ -136,9 +136,42 @@ theorem vacuum_w1_le_one :
   rw [vacuum_coupling_cost_eq_one] at h
   exact h
 
+theorem vacuum_couplingCostSet_nonempty :
+    (couplingCostSet vacuumAdjacentGraph vacuumWalkMeasureLeft vacuumWalkMeasureRight).Nonempty :=
+  ⟨couplingTransportCost vacuumAdjacentGraph vacuumShiftCoupling, vacuumShiftCoupling,
+    vacuum_coupling_is_coupling, rfl⟩
+
+theorem vacuum_position_one_lipschitz (x y : ℕ) :
+    |(x : ℝ) - (y : ℝ)| ≤ vacuumAdjacentGraph.dist x y := by
+  unfold vacuumAdjacentGraph vacuumAdjacentDist
+  simp
+
+theorem vacuum_left_expectation_position :
+    probExpectation vacuumAdjacentGraph vacuumWalkMeasureLeft (fun x => (x : ℝ)) = 1 := by
+  unfold probExpectation vacuumAdjacentGraph vacuumAdjacentVertices vacuumWalkMeasureLeft
+    vacuumWalkMeasureLeftVal
+  simp [Finset.sum_insert, Finset.sum_singleton]
+  norm_num
+
+theorem vacuum_right_expectation_position :
+    probExpectation vacuumAdjacentGraph vacuumWalkMeasureRight (fun x => (x : ℝ)) = 2 := by
+  unfold probExpectation vacuumAdjacentGraph vacuumAdjacentVertices vacuumWalkMeasureRight
+    vacuumWalkMeasureRightVal
+  simp [Finset.sum_insert, Finset.sum_singleton]
+  norm_num
+
+theorem vacuum_w1_ge_one :
+    1 ≤ W1 vacuumAdjacentGraph vacuumWalkMeasureLeft vacuumWalkMeasureRight := by
+  have h := W1_ge_of_lipschitz vacuumAdjacentGraph vacuumWalkMeasureLeft vacuumWalkMeasureRight
+    (fun x => (x : ℝ)) vacuum_position_one_lipschitz vacuum_couplingCostSet_nonempty
+  rw [vacuum_left_expectation_position, vacuum_right_expectation_position] at h
+  have habs : |(1 : ℝ) - 2| = 1 := by norm_num
+  rw [habs] at h
+  exact h
+
 theorem vacuum_w1_eq_one :
-    W1 vacuumAdjacentGraph vacuumWalkMeasureLeft vacuumWalkMeasureRight = 1 := by
-  sorry
+    W1 vacuumAdjacentGraph vacuumWalkMeasureLeft vacuumWalkMeasureRight = 1 :=
+  le_antisymm vacuum_w1_le_one vacuum_w1_ge_one
 
 theorem vacuum_adjacent_dist_eq_one :
     vacuumAdjacentGraph.dist 0 1 = 1 := by

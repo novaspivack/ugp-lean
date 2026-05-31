@@ -3,7 +3,7 @@ import Mathlib.Data.Real.Basic
 import Mathlib.Topology.MetricSpace.Basic
 import Mathlib.MeasureTheory.Measure.MeasureSpace
 import Mathlib.Order.ConditionallyCompleteLattice.Basic
-import UgpLean.ContinuumLimit.GF7VacuumFixedPoint
+import Mathlib.Algebra.Order.BigOperators.Group.Finset
 
 /-!
 # W₁ Wasserstein Distance for OQ-QG-1
@@ -132,6 +132,100 @@ theorem W1_le_couplingCost (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices)
     rw [hc']
     exact couplingTransportCost_nonneg M γ' hγ'.1
   · exact ⟨γ, hγ, rfl⟩
+
+/-- Expectation of `f` under a probability distribution on `M.vertices`. -/
+def probExpectation (M : FiniteMetricSpace) (μ : ProbDist M.vertices) (f : ℕ → ℝ) : ℝ :=
+  M.vertices.sum fun x => f x * μ.val x
+
+private theorem probExpectation_diff_eq_coupling_sum
+    (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) (γ : ℕ → ℕ → ℝ)
+    (hγ : IsCoupling M.vertices μ ν γ) (f : ℕ → ℝ) :
+    probExpectation M μ f - probExpectation M ν f =
+      M.vertices.sum fun x =>
+        M.vertices.sum fun y => γ x y * (f x - f y) := by
+  unfold probExpectation
+  have hμ :
+      M.vertices.sum (fun x => f x * μ.val x) =
+        M.vertices.sum fun x =>
+          M.vertices.sum fun y => f x * γ x y := by
+    apply Finset.sum_congr rfl
+    intro x hx
+    rw [← hγ.2.2.2.1 x hx, Finset.mul_sum]
+  have hν :
+      M.vertices.sum (fun y => f y * ν.val y) =
+        M.vertices.sum fun y =>
+          M.vertices.sum fun x => f y * γ x y := by
+    apply Finset.sum_congr rfl
+    intro y hy
+    rw [← hγ.2.2.2.2 y hy, Finset.mul_sum]
+  rw [hμ, hν]
+  rw [show M.vertices.sum (fun y => M.vertices.sum (fun x => f y * γ x y)) =
+      M.vertices.sum (fun x => M.vertices.sum (fun y => f y * γ x y)) from Finset.sum_comm]
+  rw [← Finset.sum_sub_distrib]
+  congr 1
+  ext x
+  rw [← Finset.sum_sub_distrib]
+  refine Finset.sum_congr rfl ?_
+  intro y _
+  ring
+
+private theorem abs_probExpectation_diff_le_couplingTransportCost
+    (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) (γ : ℕ → ℕ → ℝ)
+    (hγ : IsCoupling M.vertices μ ν γ) (f : ℕ → ℝ)
+    (hf : ∀ x y, |f x - f y| ≤ M.dist x y) :
+    |probExpectation M μ f - probExpectation M ν f| ≤ couplingTransportCost M γ := by
+  rw [probExpectation_diff_eq_coupling_sum M μ ν γ hγ f]
+  have habs_inner :
+      ∀ x ∈ M.vertices,
+        |M.vertices.sum fun y => γ x y * (f x - f y)| ≤
+          M.vertices.sum fun y => |γ x y * (f x - f y)| :=
+    fun x _ => Finset.abs_sum_le_sum_abs (s := M.vertices) (f := fun y => γ x y * (f x - f y))
+  have habs :
+      |M.vertices.sum fun x =>
+          M.vertices.sum fun y => γ x y * (f x - f y)| ≤
+        M.vertices.sum fun x =>
+          M.vertices.sum fun y => |γ x y * (f x - f y)| := by
+    calc
+      |M.vertices.sum fun x =>
+          M.vertices.sum fun y => γ x y * (f x - f y)| ≤
+        M.vertices.sum fun x =>
+          |M.vertices.sum fun y => γ x y * (f x - f y)| :=
+        Finset.abs_sum_le_sum_abs (s := M.vertices)
+          (f := fun x => M.vertices.sum fun y => γ x y * (f x - f y))
+      _ ≤ M.vertices.sum fun x =>
+            M.vertices.sum fun y => |γ x y * (f x - f y)| :=
+        Finset.sum_le_sum habs_inner
+  have hterm :
+      ∀ x y,
+        |γ x y * (f x - f y)| ≤ γ x y * M.dist x y := by
+    intro x y
+    have hγnn := hγ.1 x y
+    rw [abs_mul, abs_of_nonneg hγnn]
+    exact mul_le_mul_of_nonneg_left (hf x y) hγnn
+  have hinner :
+      M.vertices.sum (fun x => M.vertices.sum (fun y => |γ x y * (f x - f y)|)) ≤
+        couplingTransportCost M γ := by
+    unfold couplingTransportCost
+    refine Finset.sum_le_sum fun x _ => ?_
+    exact Finset.sum_le_sum fun y _ => hterm x y
+  exact habs.trans hinner
+
+/--
+Kantorovich–Rubinstein weak duality: any 1-Lipschitz test function gives a lower
+bound on W₁ via the expectation gap.
+-/
+theorem W1_ge_of_lipschitz (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices)
+    (f : ℕ → ℝ) (hf : ∀ x y, |f x - f y| ≤ M.dist x y)
+    (hne : (couplingCostSet M μ ν).Nonempty) :
+    |probExpectation M μ f - probExpectation M ν f| ≤ W1 M μ ν := by
+  have hle : ∀ c ∈ couplingCostSet M μ ν,
+      |probExpectation M μ f - probExpectation M ν f| ≤ c := by
+    intro c hc
+    obtain ⟨γ, hγ, hc'⟩ := hc
+    rw [hc']
+    exact abs_probExpectation_diff_le_couplingTransportCost M μ ν γ hγ f hf
+  unfold W1
+  exact le_csInf hne hle
 
 /-!
 ## Basic properties of W₁
