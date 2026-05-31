@@ -248,6 +248,7 @@ import UgpLean.Gravity.PSCEpochSelection
 import UgpLean.Gravity.NRTVacuumEnergy
 import UgpLean.Gravity.CMBSpectralTilt
 import UgpLean.Gravity.PageWoottersZ7
+import UgpLean.Gravity.Z7AnomalyFree
 import UgpLean.ContinuumLimit.GF7VacuumFixedPoint
 import UgpLean.ContinuumLimit.WassersteinDistance
 import UgpLean.ContinuumLimit.GorardVacuumW1Bridge
