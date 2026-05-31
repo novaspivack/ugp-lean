@@ -4,6 +4,9 @@ import Mathlib.Topology.MetricSpace.Basic
 import Mathlib.MeasureTheory.Measure.MeasureSpace
 import Mathlib.Order.ConditionallyCompleteLattice.Basic
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Data.Real.Archimedean
+import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.Algebra.BigOperators.Field
 
 /-!
 # W₁ Wasserstein Distance for OQ-QG-1
@@ -62,6 +65,7 @@ structure FiniteMetricSpace where
   dist_self   : ∀ x, dist x x = 0
   dist_comm   : ∀ x y, dist x y = dist y x
   triangle    : ∀ x y z, dist x z ≤ dist x y + dist y z
+  dist_eq_zero_iff : ∀ x y, dist x y = 0 ↔ x = y
 
 /-!
 ## Probability distributions on finite sets
@@ -73,6 +77,11 @@ a non-negative function supported on `S` that sums to 1.
 -/
 def ProbDist (S : Finset ℕ) : Type :=
   { f : ℕ → ℝ // (∀ x ∈ S, 0 ≤ f x) ∧ (∀ x ∉ S, f x = 0) ∧ S.sum f = 1 }
+
+
+private theorem probDist_vertex_mass_balance (S : Finset ℕ) (μ ν : ProbDist S) :
+    S.sum (fun x => μ.val x - ν.val x) = 0 := by
+  rw [Finset.sum_sub_distrib, μ.2.2.2, ν.2.2.2, sub_self]
 
 /--
 A coupling of two distributions `μ` and `ν` on `S`:
@@ -336,16 +345,457 @@ theorem W1_comm (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) :
   unfold W1
   rw [couplingCostSet_comm M μ ν]
 
-/-- W₁ vanishes iff the distributions are identical. -/
+theorem dist_pos_of_ne (M : FiniteMetricSpace) {x y : ℕ} (hne : x ≠ y) : 0 < M.dist x y := by
+  by_contra h
+  push_neg at h
+  exact hne ((M.dist_eq_zero_iff x y).mp (le_antisymm h (M.dist_nonneg x y)))
+
+theorem dist_lipschitz (M : FiniteMetricSpace) (xAnchor : ℕ) :
+    ∀ x y, |M.dist x xAnchor - M.dist y xAnchor| ≤ M.dist x y := by
+  intro x y
+  have h1 : M.dist x xAnchor ≤ M.dist x y + M.dist y xAnchor := M.triangle x y xAnchor
+  have h2 : M.dist y xAnchor ≤ M.dist x y + M.dist x xAnchor := by
+    rw [M.dist_comm x y]; exact M.triangle y x xAnchor
+  rw [abs_le]; constructor <;> linarith
+
+def diagonalCoupling (S : Finset ℕ) (μ : ProbDist S) (x y : ℕ) : ℝ :=
+  if x = y then μ.val x else 0
+
+theorem diagonalCoupling_nonneg (S : Finset ℕ) (μ : ProbDist S) :
+    ∀ x y, 0 ≤ diagonalCoupling S μ x y := by
+  intro x y; unfold diagonalCoupling; split_ifs with h
+  · subst h; by_cases hx : x ∈ S
+    · exact μ.2.1 x hx
+    · simp [μ.2.2.1 x hx]
+  · simp
+
+theorem diagonalCoupling_left_outside (S : Finset ℕ) (μ : ProbDist S)
+    (x : ℕ) (hx : x ∉ S) (y : ℕ) :
+    diagonalCoupling S μ x y = 0 := by
+  unfold diagonalCoupling; split_ifs with h
+  · subst h; simp [μ.2.2.1 x hx]
+  · simp
+
+theorem diagonalCoupling_right_outside (S : Finset ℕ) (μ : ProbDist S)
+    (y : ℕ) (hy : y ∉ S) (x : ℕ) :
+    diagonalCoupling S μ x y = 0 := by
+  unfold diagonalCoupling; split_ifs with h
+  · rw [if_pos h]; exact μ.2.2.1 y hy
+  · simp
+
+theorem diagonalCoupling_row_sum (S : Finset ℕ) (μ : ProbDist S)
+    (x : ℕ) (hx : x ∈ S) :
+    S.sum (diagonalCoupling S μ x) = μ.val x := by
+  classical
+  simp [diagonalCoupling, Finset.sum_ite_eq', hx]
+
+theorem diagonalCoupling_col_sum (S : Finset ℕ) (μ : ProbDist S)
+    (y : ℕ) (hy : y ∈ S) :
+    S.sum (fun x => diagonalCoupling S μ x y) = μ.val y := by
+  classical
+  simp [diagonalCoupling, Finset.sum_ite_eq', hy]
+
+theorem diagonalCoupling_is_coupling (S : Finset ℕ) (μ : ProbDist S) :
+    IsCoupling S μ μ (diagonalCoupling S μ) := by
+  refine ⟨diagonalCoupling_nonneg S μ, ?_, ?_, ?_, ?_⟩
+  · exact diagonalCoupling_left_outside S μ
+  · intro y hy x; exact diagonalCoupling_right_outside S μ y hy x
+  · exact diagonalCoupling_row_sum S μ
+  · exact diagonalCoupling_col_sum S μ
+
+theorem diagonalCoupling_cost_zero (M : FiniteMetricSpace) (μ : ProbDist M.vertices) :
+    couplingTransportCost M (diagonalCoupling M.vertices μ) = 0 := by
+  unfold couplingTransportCost diagonalCoupling
+  apply Finset.sum_eq_zero; intro x _
+  apply Finset.sum_eq_zero; intro y _
+  split_ifs with h <;> simp [M.dist_self, h]
+
+theorem probDist_eq_of_vertex_weights_eq {S : Finset ℕ} {μ ν : ProbDist S}
+    (h : ∀ x ∈ S, μ.val x = ν.val x) : μ = ν := by
+  apply Subtype.ext; funext x
+  by_cases hx : x ∈ S
+  · exact h x hx
+  · rw [μ.2.2.1 x hx, ν.2.2.1 x hx]
+
+private theorem exists_mass_imbalance_neg (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices)
+    (x : ℕ) (hgt : μ.val x > ν.val x) (hx : x ∈ M.vertices) :
+    ∃ y ∈ M.vertices, μ.val y < ν.val y := by
+  by_contra hall; push_neg at hall
+  have hall' : ∀ t ∈ M.vertices, ν.val t ≤ μ.val t := fun t ht => hall t ht
+  have hsum : M.vertices.sum (fun t => μ.val t - ν.val t) = 0 :=
+    probDist_vertex_mass_balance M.vertices μ ν
+  have hnonneg : ∀ t ∈ M.vertices, 0 ≤ μ.val t - ν.val t :=
+    fun t ht => sub_nonneg.mpr (hall' t ht)
+  have hpos : 0 < μ.val x - ν.val x := sub_pos.mpr hgt
+  have hsumpos : 0 < M.vertices.sum (fun t => μ.val t - ν.val t) :=
+    lt_of_lt_of_le hpos (Finset.single_le_sum hnonneg hx)
+  linarith
+
+private theorem exists_mass_imbalance_pos (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices)
+    (x : ℕ) (hlt : μ.val x < ν.val x) (hx : x ∈ M.vertices) :
+    ∃ y ∈ M.vertices, μ.val y > ν.val y := by
+  by_contra hall; push_neg at hall
+  have hall' : ∀ t ∈ M.vertices, μ.val t ≤ ν.val t := fun t ht => hall t ht
+  have hsum : M.vertices.sum (fun t => ν.val t - μ.val t) = 0 := by
+    simpa using probDist_vertex_mass_balance M.vertices ν μ
+  have hnonneg : ∀ t ∈ M.vertices, 0 ≤ ν.val t - μ.val t :=
+    fun t ht => sub_nonneg.mpr (hall' t ht)
+  have hpos : 0 < ν.val x - μ.val x := sub_pos.mpr hlt
+  have hsumpos : 0 < M.vertices.sum (fun t => ν.val t - μ.val t) :=
+    lt_of_lt_of_le hpos (Finset.single_le_sum hnonneg hx)
+  linarith
+
+theorem exists_mass_imbalance_pair (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices)
+    (hne : ∃ x ∈ M.vertices, μ.val x ≠ ν.val x) :
+    ∃ xPlus ∈ M.vertices, ∃ xMinus ∈ M.vertices,
+      μ.val xPlus > ν.val xPlus ∧ μ.val xMinus < ν.val xMinus := by
+  obtain ⟨x, hx, hdiff⟩ := hne
+  by_cases hgt : μ.val x > ν.val x
+  · obtain ⟨xMinus, hxMinus, hlt⟩ := exists_mass_imbalance_neg M μ ν x hgt hx
+    exact ⟨x, hx, xMinus, hxMinus, hgt, hlt⟩
+  · push_neg at hgt
+    have hlt : μ.val x < ν.val x := lt_of_le_of_ne hgt hdiff
+    obtain ⟨xPlus, hxPlus, hgt'⟩ := exists_mass_imbalance_pos M μ ν x hlt hx
+    exact ⟨xPlus, hxPlus, x, hx, hgt', hlt⟩
+
+theorem productCoupling_cost_pos (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices)
+    {x y : ℕ} (hx : x ∈ M.vertices) (hy : y ∈ M.vertices) (hne : x ≠ y)
+    (hμ : 0 < μ.val x) (hν : 0 < ν.val y) :
+    0 < couplingTransportCost M (productCoupling M.vertices μ ν) := by
+  unfold couplingTransportCost productCoupling
+  have hwitness : 0 < productCoupling M.vertices μ ν x y * M.dist x y := by
+    simp [productCoupling, hx, hy]
+    exact mul_pos (mul_pos hμ hν) (dist_pos_of_ne M hne)
+  have hnn : ∀ a ∈ M.vertices, ∀ b ∈ M.vertices,
+      0 ≤ productCoupling M.vertices μ ν a b * M.dist a b := by
+    intro a ha b hb
+    simp [productCoupling, ha, hb]
+    exact mul_nonneg (mul_nonneg (μ.2.1 a ha) (ν.2.1 b hb)) (M.dist_nonneg a b)
+  refine lt_of_lt_of_le hwitness ?_
+  calc productCoupling M.vertices μ ν x y * M.dist x y
+      ≤ M.vertices.sum (fun b => productCoupling M.vertices μ ν x b * M.dist x b) :=
+        Finset.single_le_sum (fun b hb => hnn x hx b hb) hy
+    _ ≤ M.vertices.sum (fun a => M.vertices.sum (fun b =>
+          productCoupling M.vertices μ ν a b * M.dist a b)) :=
+        Finset.single_le_sum (fun a ha => Finset.sum_nonneg (fun b hb => hnn a ha b hb)) hx
+
+private theorem couplingTransportCost_eq_zero_of_eq
+    (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) (γ : ℕ → ℕ → ℝ)
+    (hγ : IsCoupling M.vertices μ ν γ) (hc : couplingTransportCost M γ = 0) :
+    ∀ x ∈ M.vertices, μ.val x = ν.val x := by
+  intro x hx
+  have hrow_zero (a : ℕ) (ha : a ∈ M.vertices) :
+      M.vertices.sum (fun b => γ a b * M.dist a b) = 0 := by
+    unfold couplingTransportCost at hc
+    have houter :
+        ∀ t ∈ M.vertices, 0 ≤ M.vertices.sum (fun b => γ t b * M.dist t b) := by
+      intro t _; apply Finset.sum_nonneg; intro b _; exact mul_nonneg (hγ.1 t b) (M.dist_nonneg t b)
+    exact (Finset.sum_eq_zero_iff_of_nonneg houter).1 hc a ha
+  have hoff (a b : ℕ) (ha : a ∈ M.vertices) (hb : b ∈ M.vertices) (hne : a ≠ b) :
+      γ a b = 0 := by
+    have hnn : 0 ≤ γ a b * M.dist a b := mul_nonneg (hγ.1 a b) (M.dist_nonneg a b)
+    have hterm := (Finset.sum_eq_zero_iff_of_nonneg (fun c _ => hnn)).1 (hrow_zero a ha) b hb
+    exact (mul_eq_zero.mp hterm).resolve_right (ne_of_gt (dist_pos_of_ne M hne))
+  calc
+    μ.val x = M.vertices.sum (γ x) := hγ.2.2.2.1 x hx
+    _ = γ x x := by
+      rw [Finset.sum_eq_single x (fun y hy hne => hoff x y hx hy hne) (fun hne => absurd hx hne)]
+      simp
+    _ = M.vertices.sum (fun z => γ z x) := by
+      rw [Finset.sum_eq_single x]
+      · simp
+      · intro z hz hne; exact hoff z x hz hx hne
+      · intro hne; exact absurd hx hne
+    _ = ν.val x := hγ.2.2.2.2 x hx
+
+theorem couplingTransportCost_eq_zero_implies_vertex_eq (M : FiniteMetricSpace)
+    (μ ν : ProbDist M.vertices) (γ : ℕ → ℕ → ℝ) (hγ : IsCoupling M.vertices μ ν γ)
+    (hc : couplingTransportCost M γ = 0) :
+    ∀ x ∈ M.vertices, μ.val x = ν.val x :=
+  couplingTransportCost_eq_zero_of_eq M μ ν γ hγ hc
+
+theorem couplingTransportCost_pos_of_vertex_ne (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices)
+    (hne : ∃ x ∈ M.vertices, μ.val x ≠ ν.val x) :
+    0 < couplingTransportCost M (productCoupling M.vertices μ ν) := by
+  obtain ⟨x, hx, hdiff⟩ := hne
+  by_cases hgt : μ.val x > ν.val x
+  · obtain ⟨y, hy, hlt⟩ := exists_mass_imbalance_neg M μ ν x hgt hx
+    refine productCoupling_cost_pos M μ ν hx hy (by intro heq; subst heq; linarith) hgt ?_
+    exact lt_of_le_of_ne (ν.2.1 y hy) (Ne.symm (sub_ne_zero.mpr hlt))
+  · push Not at hgt
+    have hlt : μ.val x < ν.val x := lt_of_le_of_ne hgt (Ne.symm hdiff)
+    obtain ⟨y, hy, hgt'⟩ := exists_mass_imbalance_pos M μ ν x hlt hx
+    refine productCoupling_cost_pos M μ ν hy hx (by intro heq; subst heq; linarith) hgt' ?_
+    exact lt_of_le_of_ne (μ.2.1 x hx) (Ne.symm (sub_ne_zero.mpr hdiff))
+
+private theorem couplingTransportCost_eq_zero_of_eq
+    (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) (γ : ℕ → ℕ → ℝ)
+    (hγ : IsCoupling M.vertices μ ν γ) (hc : couplingTransportCost M γ = 0) :
+    ∀ x ∈ M.vertices, μ.val x = ν.val x := by
+  intro x hx
+  have hrow_nonneg (a : ℕ) :
+      0 ≤ M.vertices.sum (fun b => γ a b * M.dist a b) := by
+    apply Finset.sum_nonneg; intro b _; exact mul_nonneg (hγ.1 a b) (M.dist_nonneg a b)
+  have hrow_zero (a : ℕ) (ha : a ∈ M.vertices) :
+      M.vertices.sum (fun b => γ a b * M.dist a b) = 0 := by
+    unfold couplingTransportCost at hc
+    have hle : M.vertices.sum (fun b => γ a b * M.dist a b) ≤ 0 := by
+      have hle_total :
+          M.vertices.sum (fun b => γ a b * M.dist a b) ≤
+            M.vertices.sum (fun a' => M.vertices.sum (fun b => γ a' b * M.dist a' b)) :=
+        Finset.single_le_sum (fun a' _ => hrow_nonneg a') ha
+      linarith [hle_total, hc]
+    exact le_antisymm hle (hrow_nonneg a)
+  have hoff (a b : ℕ) (ha : a ∈ M.vertices) (hb : b ∈ M.vertices) (hne : a ≠ b) :
+      γ a b = 0 := by
+    have hnn : 0 ≤ γ a b * M.dist a b := mul_nonneg (hγ.1 a b) (M.dist_nonneg a b)
+    have hzero : γ a b * M.dist a b = 0 :=
+      (Finset.sum_eq_zero_iff_of_nonneg (fun c _ => mul_nonneg (hγ.1 a c) (M.dist_nonneg a c))).1
+        (hrow_zero a ha) b hb
+    exact (mul_eq_zero.mp hzero).resolve_right (ne_of_gt (dist_pos_of_ne M hne))
+  have hdiag : γ x x = μ.val x := by
+    rw [← hγ.2.2.2.1 x hx]
+    apply Finset.sum_eq_single x
+    · intro y hy hne; exact hoff x y hx hy hne
+    · intro h; exact absurd hx h
+  have hcol : M.vertices.sum (fun z => γ z x) = γ x x := by
+    apply Finset.sum_eq_single x
+    · intro z hz hne; exact hoff z x hz hx hne
+    · intro h; exact absurd hx h
+  have hnu : ν.val x = γ x x := by rw [← hcol, hγ.2.2.2.2 x hx]
+  linarith [hdiag, hnu]
+
+theorem couplingTransportCost_eq_zero_implies_vertex_eq (M : FiniteMetricSpace)
+    (μ ν : ProbDist M.vertices) (γ : ℕ → ℕ → ℝ) (hγ : IsCoupling M.vertices μ ν γ)
+    (hc : couplingTransportCost M γ = 0) :
+    ∀ x ∈ M.vertices, μ.val x = ν.val x :=
+  couplingTransportCost_eq_zero_of_eq M μ ν γ hγ hc
+
+theorem couplingTransportCost_pos_of_vertex_ne (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices)
+    (hne : ∃ x ∈ M.vertices, μ.val x ≠ ν.val x) :
+    0 < couplingTransportCost M (productCoupling M.vertices μ ν) := by
+  obtain ⟨x, hx, hdiff⟩ := hne
+  by_cases hgt : μ.val x > ν.val x
+  · obtain ⟨y, hy, hlt⟩ := exists_mass_imbalance_neg M μ ν x hgt hx
+    refine productCoupling_cost_pos M μ ν hx hy (by intro heq; subst heq; linarith) hgt ?_
+    exact lt_of_le_of_ne (ν.2.1 y hy) (Ne.symm (sub_ne_zero.mpr hlt))
+  · push_neg at hgt
+    have hlt : μ.val x < ν.val x := lt_of_le_of_ne hgt hdiff
+    obtain ⟨y, hy, hgt'⟩ := exists_mass_imbalance_pos M μ ν x hlt hx
+    refine productCoupling_cost_pos M μ ν hy hx (by intro heq; subst heq; linarith) hgt' ?_
+    exact lt_of_le_of_ne (μ.2.1 x hx) (Ne.symm hdiff)
+
+private theorem W1_pos_of_vertex_ne (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices)
+    (hne : ∃ x ∈ M.vertices, μ.val x ≠ ν.val x) : 0 < W1 M μ ν := by
+  have hcost := couplingTransportCost_pos_of_vertex_ne M μ ν hne
+  have hle := W1_le_couplingCost M μ ν (productCoupling M.vertices μ ν)
+    (productCoupling_is_coupling M.vertices μ ν)
+  exact hcost.trans_le hle
+
+/-- Glued coupling of `γ₁ : μ ↝ ν` and `γ₂ : ν ↝ ρ` via disintegration at `ν`. -/
+noncomputable def gluedCoupling (S : Finset ℕ) (ν : ProbDist S) (γ₁ γ₂ : ℕ → ℕ → ℝ) (x z : ℕ) : ℝ :=
+  S.sum fun y =>
+    if ν.val y = 0 then 0 else γ₁ x y * γ₂ y z / ν.val y
+
+private theorem gluedCoupling_nonneg (S : Finset ℕ) (ν : ProbDist S) (γ₁ γ₂ : ℕ → ℕ → ℝ)
+    (hγ₁ : ∀ x y, 0 ≤ γ₁ x y) (hγ₂ : ∀ x y, 0 ≤ γ₂ x y) :
+    ∀ x z, 0 ≤ gluedCoupling S ν γ₁ γ₂ x z := by
+  intro x z
+  unfold gluedCoupling
+  apply Finset.sum_nonneg
+  intro y hy
+  split_ifs with h
+  · simp
+  · exact div_nonneg (mul_nonneg (hγ₁ x y) (hγ₂ y z)) (le_of_lt (lt_of_le_of_ne (ν.2.1 y hy) (Ne.symm h)))
+
+private theorem gluedCoupling_left_outside (S : Finset ℕ) (ν : ProbDist S) (γ₁ γ₂ : ℕ → ℕ → ℝ)
+    (hγ₁ : ∀ x y, x ∉ S → γ₁ x y = 0) (x : ℕ) (hx : x ∉ S) (z : ℕ) :
+    gluedCoupling S ν γ₁ γ₂ x z = 0 := by
+  unfold gluedCoupling
+  apply Finset.sum_eq_zero
+  intro y _
+  split_ifs <;> simp [hγ₁ x _ hx]
+
+private theorem gluedCoupling_right_outside (S : Finset ℕ) (ν : ProbDist S) (γ₁ γ₂ : ℕ → ℕ → ℝ)
+    (hγ₂ : ∀ w x, w ∉ S → γ₂ x w = 0) (z : ℕ) (hz : z ∉ S) (x : ℕ) :
+    gluedCoupling S ν γ₁ γ₂ x z = 0 := by
+  unfold gluedCoupling
+  apply Finset.sum_eq_zero
+  intro y _
+  split_ifs <;> simp [hγ₂ y hz]
+
+private theorem coupling_col_zero_of_mass_zero {S : Finset ℕ} {μ ν : ProbDist S} {γ : ℕ → ℕ → ℝ}
+    (hγ : IsCoupling S μ ν γ) (w : ℕ) (hw : w ∈ S) (hν : ν.val w = 0) :
+    ∀ x, γ x w = 0 := by
+  intro x
+  have hcol := hγ.2.2.2.2 w hw; rw [hν] at hcol
+  by_cases hx : x ∈ S
+  · exact (Finset.sum_eq_zero_iff_of_nonneg (fun z _ => hγ.1 z w)).mp hcol x hx
+  · exact hγ.2.1 x hx w
+
+private theorem gluedCoupling_row_sum (S : Finset ℕ) (μ ν ρ : ProbDist S) (γ₁ γ₂ : ℕ → ℕ → ℝ)
+    (hγ₁ : IsCoupling S μ ν γ₁) (hγ₂ : IsCoupling S ν ρ γ₂) (x : ℕ) (hx : x ∈ S) :
+    S.sum (gluedCoupling S ν γ₁ γ₂ x) = μ.val x := by
+  classical
+  unfold gluedCoupling
+  rw [Finset.sum_comm]
+  trans S.sum fun w => γ₁ x w
+  · apply Finset.sum_congr rfl
+    intro w hw
+    by_cases hν : ν.val w = 0
+    · simp [hν, coupling_col_zero_of_mass_zero hγ₁ w hw hν x]
+    · have hinner : S.sum (fun z => γ₁ x w * γ₂ w z / ν.val w) = γ₁ x w := by
+        rw [← Finset.mul_sum, hγ₂.2.2.2.1 w hw, mul_div_cancel₀ _ (Ne.symm hν)]
+      simpa [hν] using hinner
+  · exact hγ₁.2.2.2.1 x hx
+
+private theorem gluedCoupling_col_sum (S : Finset ℕ) (μ ν ρ : ProbDist S) (γ₁ γ₂ : ℕ → ℕ → ℝ)
+    (hγ₁ : IsCoupling S μ ν γ₁) (hγ₂ : IsCoupling S ν ρ γ₂) (z : ℕ) (hz : z ∈ S) :
+    S.sum (fun x => gluedCoupling S ν γ₁ γ₂ x z) = ρ.val z := by
+  classical
+  unfold gluedCoupling
+  trans S.sum fun w => γ₂ w z
+  · apply Finset.sum_congr rfl
+    intro w hw
+    by_cases hν : ν.val w = 0
+    · have hcol : ∀ x', γ₁ x' w = 0 := fun x' => coupling_col_zero_of_mass_zero hγ₁ w hw hν x'
+      simp [hν, Finset.sum_eq_zero fun x' _ => by simp [hcol x']]
+    · have hinner : S.sum (fun x' => γ₁ x' w * γ₂ w z / ν.val w) = γ₂ w z := by
+        rw [← Finset.sum_mul, hγ₁.2.2.2.2 w hw, one_mul, mul_div_cancel₀ _ (Ne.symm hν)]
+      simpa [hν] using hinner
+  · exact hγ₂.2.2.2.2 z hz
+
+theorem gluedCoupling_is_coupling (M : FiniteMetricSpace) (μ ν ρ : ProbDist M.vertices)
+    (γ₁ γ₂ : ℕ → ℕ → ℝ) (hγ₁ : IsCoupling M.vertices μ ν γ₁)
+    (hγ₂ : IsCoupling M.vertices ν ρ γ₂) :
+    IsCoupling M.vertices μ ρ (gluedCoupling M.vertices ν γ₁ γ₂) := by
+  refine ⟨gluedCoupling_nonneg M.vertices ν γ₁ γ₂ hγ₁.1 hγ₂.1, ?_, ?_, ?_, ?_⟩
+  · intro x hx y; exact gluedCoupling_left_outside M.vertices ν γ₁ γ₂ (fun a ha b => hγ₁.2.1 ha b) x hx y
+  · intro y hy x; exact gluedCoupling_right_outside M.vertices ν γ₁ γ₂ (fun w z hz => hγ₂.2.2.1 hz w) y hy x
+  · intro x hx; exact gluedCoupling_row_sum M.vertices μ ν ρ γ₁ γ₂ hγ₁ hγ₂ x hx
+  · intro y hy; exact gluedCoupling_col_sum M.vertices μ ν ρ γ₁ γ₂ hγ₁ hγ₂ y hy
+
+theorem gluedCoupling_cost_le (M : FiniteMetricSpace) (μ ν ρ : ProbDist M.vertices)
+    (γ₁ γ₂ : ℕ → ℕ → ℝ) (hγ₁ : IsCoupling M.vertices μ ν γ₁)
+    (hγ₂ : IsCoupling M.vertices ν ρ γ₂) :
+    couplingTransportCost M (gluedCoupling M.vertices ν γ₁ γ₂) ≤
+      couplingTransportCost M γ₁ + couplingTransportCost M γ₂ := by
+  classical
+  set γ₃ := gluedCoupling M.vertices ν γ₁ γ₂
+  unfold couplingTransportCost at *
+  have hterm :
+      ∀ x z,
+        M.dist x z * γ₃ x z ≤
+          M.vertices.sum fun w =>
+            if ν.val w = (0 : ℝ) then (0 : ℝ) else γ₁ x w * γ₂ w z / ν.val w * (M.dist x w + M.dist w z) := by
+    intro x z; unfold γ₃ gluedCoupling; rw [Finset.mul_sum]
+    refine Finset.sum_le_sum fun w hw => ?_
+    split_ifs with hν
+    · simp
+    · have hpos : 0 < ν.val w := lt_of_le_of_ne (ν.2.1 w (by simpa using hw)) (Ne.symm hν)
+      have hdiv : 0 ≤ γ₁ x w * γ₂ w z / ν.val w :=
+        div_nonneg (mul_nonneg (hγ₁.1 x w) (hγ₂.1 w z)) hpos.le
+      exact mul_le_mul_of_nonneg_left (M.triangle x w z) hdiv
+  have hsplit :
+      M.vertices.sum fun x =>
+          M.vertices.sum fun z =>
+            M.vertices.sum fun w =>
+              if ν.val w = 0 then 0 else γ₁ x w * γ₂ w z / ν.val w * (M.dist x w + M.dist w z) =
+        M.vertices.sum fun x => M.vertices.sum fun w => γ₁ x w * M.dist x w +
+          M.vertices.sum fun w =>
+            if ν.val w = 0 then 0 else
+              γ₁ x w / ν.val w * M.vertices.sum fun z => γ₂ w z * M.dist w z := by
+    rw [Finset.sum_comm (s := M.vertices) (t := M.vertices)]
+    refine Finset.sum_congr rfl fun x _ => ?_
+    rw [← Finset.sum_add_distrib, Finset.sum_comm (s := M.vertices) (t := M.vertices)]
+    refine Finset.sum_congr rfl fun w hw => ?_
+    by_cases hν : ν.val w = 0
+    · have hγxw := coupling_col_zero_of_mass_zero hγ₁ w hw hν x
+      simp [hν, hγxw, zero_mul, mul_zero, add_zero]
+    · have hν' : ν.val w ≠ 0 := hν
+      have hcol : M.vertices.sum (fun z => γ₂ w z) = ν.val w := hγ₂.2.2.2.1 w hw
+      calc
+        M.vertices.sum fun z => γ₁ x w * γ₂ w z / ν.val w * (M.dist x w + M.dist w z) =
+            γ₁ x w / ν.val w *
+              M.vertices.sum fun z => γ₂ w z * (M.dist x w + M.dist w z) := by
+          rw [Finset.mul_sum, mul_div_assoc, mul_assoc]
+        _ = γ₁ x w / ν.val w * (M.vertices.sum fun z => γ₂ w z * M.dist x w +
+              M.vertices.sum fun z => γ₂ w z * M.dist w z) := by
+          rw [Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_mul, mul_comm (M.dist x w)]
+        _ = γ₁ x w * M.dist x w +
+              γ₁ x w / ν.val w * M.vertices.sum fun z => γ₂ w z * M.dist w z := by
+          rw [hcol, mul_div_cancel₀ _ hν']; ring
+  have hbound :
+      M.vertices.sum fun w =>
+          if ν.val w = 0 then 0 else
+            M.vertices.sum fun x => γ₁ x w / ν.val w * M.vertices.sum fun z => γ₂ w z * M.dist w z ≤
+        M.vertices.sum fun w => M.vertices.sum fun z => γ₂ w z * M.dist w z := by
+    refine Finset.sum_le_sum fun w hw => ?_
+    split_ifs with hν
+    · simp
+    · rw [Finset.sum_mul, hγ₁.2.2.2.2 w hw, one_mul, mul_comm, mul_div_cancel₀ _ (Ne.symm hν)]
+  calc
+    M.vertices.sum fun x => M.vertices.sum fun z => M.dist x z * γ₃ x z ≤
+        M.vertices.sum fun x =>
+          M.vertices.sum fun z =>
+            M.vertices.sum fun w =>
+              if ν.val w = (0 : ℝ) then (0 : ℝ) else γ₁ x w * γ₂ w z / ν.val w * (M.dist x w + M.dist w z) := by
+      refine Finset.sum_le_sum fun x _ => Finset.sum_le_sum fun z _ => hterm x z
+    _ = M.vertices.sum fun x => M.vertices.sum fun w => γ₁ x w * M.dist x w +
+          M.vertices.sum fun w =>
+            if ν.val w = 0 then 0 else
+              γ₁ x w / ν.val w * M.vertices.sum fun z => γ₂ w z * M.dist w z := hsplit
+    _ ≤ couplingTransportCost M γ₁ + couplingTransportCost M γ₂ := by
+      unfold couplingTransportCost
+      rw [← Finset.sum_add_distrib]
+      apply add_le_add le_rfl
+      rw [Finset.sum_comm (s := M.vertices) (t := M.vertices)]
+      exact hbound
+
+/-- W₁ vanishes iff the distributions are identical on vertices. -/
 theorem W1_eq_zero_iff (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) :
     W1 M μ ν = 0 ↔ ∀ x ∈ M.vertices, μ.val x = ν.val x := by
-  sorry  -- follows from: W₁ = 0 ↔ diagonal coupling is optimal ↔ μ = ν
+  constructor
+  · intro hW1
+    by_contra hne
+    push_neg at hne
+    have hpos := W1_pos_of_vertex_ne M μ ν hne
+    linarith [W1_nonneg M μ ν, hW1]
+  · intro h
+    have hμν : μ = ν := probDist_eq_of_vertex_weights_eq h
+    subst hμν
+    apply le_antisymm
+    · have := W1_le_couplingCost M μ μ (diagonalCoupling M.vertices μ)
+        (diagonalCoupling_is_coupling M.vertices μ)
+      rw [diagonalCoupling_cost_zero M μ] at this
+      exact this
+    · exact W1_nonneg M μ μ
 
 /-- Triangle inequality for W₁. -/
 theorem W1_triangle (M : FiniteMetricSpace)
     (μ ν ρ : ProbDist M.vertices) :
     W1 M μ ρ ≤ W1 M μ ν + W1 M ν ρ := by
-  sorry  -- gluing lemma for couplings
+  rw [le_iff_forall_pos_lt_add]
+  intro ε hε
+  obtain ⟨c₁, hc₁mem, hc₁lt⟩ :=
+    Real.lt_sInf_add_pos (couplingCostSet_nonempty M μ ν) (half_pos hε)
+  obtain ⟨c₂, hc₂mem, hc₂lt⟩ :=
+    Real.lt_sInf_add_pos (couplingCostSet_nonempty M ν ρ) (half_pos hε)
+  obtain ⟨γ₁, hγ₁, hc₁eq⟩ := hc₁mem
+  obtain ⟨γ₂, hγ₂, hc₂eq⟩ := hc₂mem
+  have hglued := gluedCoupling_is_coupling M μ ν ρ γ₁ γ₂ hγ₁ hγ₂
+  have hcost := gluedCoupling_cost_le M μ ν ρ γ₁ γ₂ hγ₁ hγ₂
+  have hle := W1_le_couplingCost M μ ρ (gluedCoupling M.vertices ν γ₁ γ₂) hglued
+  have hW1μν : W1 M μ ν ≤ c₁ := by
+    unfold W1; apply csInf_le
+    · refine ⟨0, ?_⟩; intro c hc; obtain ⟨γ', hγ', hc'⟩ := hc; rw [hc']; exact couplingTransportCost_nonneg M γ' hγ'.1
+    · exact ⟨γ₁, hγ₁, hc₁eq⟩
+  have hW1νρ : W1 M ν ρ ≤ c₂ := by
+    unfold W1; apply csInf_le
+    · refine ⟨0, ?_⟩; intro c hc; obtain ⟨γ', hγ', hc'⟩ := hc; rw [hc']; exact couplingTransportCost_nonneg M γ' hγ'.1
+    · exact ⟨γ₂, hγ₂, hc₂eq⟩
+  unfold W1 at hle hW1μν hW1νρ ⊢
+  linarith [hle, hcost, hc₁lt, hc₂lt, hW1μν, hW1νρ]
 
 /-!
 ## Ollivier-Ricci curvature
@@ -394,6 +844,7 @@ adjacent edge `(n, n+1)` via translation invariance of the uniform walk.
 
 Pending: remove this axiom once all downstream references migrate to the scoped theorem.
 -/
+@[deprecated "Use GorardVacuumW1Bridge.gorard_vacuum_oric_zero_scoped" (since := "2026-05-31")]
 axiom gorard_vacuum_oric_zero
     (M : FiniteMetricSpace) (x y : ℕ)
     (hx : x ∈ M.vertices) (hy : y ∈ M.vertices)
