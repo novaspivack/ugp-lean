@@ -2,6 +2,7 @@ import Mathlib.Data.Finset.Basic
 import Mathlib.Data.Real.Basic
 import Mathlib.Topology.MetricSpace.Basic
 import Mathlib.MeasureTheory.Measure.MeasureSpace
+import Mathlib.Order.ConditionallyCompleteLattice.Basic
 import UgpLean.ContinuumLimit.GF7VacuumFixedPoint
 
 /-!
@@ -27,9 +28,10 @@ Step 3 (FUTURE): Gorard chain — discrete Ricci flatness of vacuum causal graph
 Step 4 (FUTURE): Gromov-Wasserstein limit → smooth Lorentzian metric
 
 ## Status
-- `W1`: noncomputable, `sorry` (requires Mathlib optimal transport)
+- `W1`: noncomputable, defined as `sInf` of coupling transport costs
+- `W1_le_couplingCost`: CatAL upper bound for any admissible coupling
 - `OllivierRicci`: noncomputable, defined in terms of `W1`
-- `gorard_vacuum_oric_zero`: **axiom** — discrete Ricci-flat vacuum (CatD-STRONG)
+- `gorard_vacuum_oric_zero`: **axiom** (overly general; see `GorardVacuumW1Bridge` for scoped path)
 - `rule110_gromov_wasserstein_limit`: **axiom** — GW convergence (long-range, gated on OQ-QG-1)
 
 ## Key references
@@ -82,25 +84,54 @@ def IsCoupling (S : Finset ℕ) (μ ν : ProbDist S) (γ : ℕ → ℕ → ℝ) 
   (∀ x ∈ S, S.sum (γ x) = μ.val x) ∧
   (∀ y ∈ S, S.sum (fun x => γ x y) = ν.val y)
 
+/-- Transport cost of a coupling on a finite metric space. -/
+def couplingTransportCost (M : FiniteMetricSpace) (γ : ℕ → ℕ → ℝ) : ℝ :=
+  M.vertices.sum fun x => M.vertices.sum fun y => γ x y * M.dist x y
+
+/-- Set of transport costs over all admissible couplings. -/
+def couplingCostSet (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) : Set ℝ :=
+  { c | ∃ γ, IsCoupling M.vertices μ ν γ ∧ c = couplingTransportCost M γ }
+
 /-!
 ## W₁ Wasserstein distance
 
 W₁ is the infimum of the transport cost over all couplings:
   W₁(μ, ν) = inf_{γ ∈ Γ(μ,ν)} ∑_{x,y} γ(x,y) · d(x,y)
 
-On finite spaces this infimum is attained (LP duality), but the Lean proof
-requires a Mathlib optimal transport library that is not yet available.
+On finite spaces this infimum is attained (LP duality). The Lean proof of
+general properties (symmetry, triangle inequality, CDF identification) remains
+open pending a dedicated optimal transport library in Mathlib (2026).
 -/
 
 /--
 W₁ (1-Wasserstein / Earth Mover's Distance) between two probability
 distributions on a finite metric space.
-
-`sorry`: the infimum over couplings requires LP duality or a dedicated
-optimal transport library, not yet available in Mathlib (2026).
 -/
 noncomputable def W1 (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) : ℝ :=
-  sorry  -- Inf_{γ ∈ Γ(μ,ν)} ∑_{x,y ∈ M.vertices} γ(x,y) · M.dist x y
+  sInf (couplingCostSet M μ ν)
+
+theorem couplingTransportCost_nonneg (M : FiniteMetricSpace) (γ : ℕ → ℕ → ℝ)
+    (hγ : ∀ x y, 0 ≤ γ x y) :
+    0 ≤ couplingTransportCost M γ := by
+  unfold couplingTransportCost
+  apply Finset.sum_nonneg
+  intro x _
+  apply Finset.sum_nonneg
+  intro y _
+  exact mul_nonneg (hγ x y) (M.dist_nonneg x y)
+
+/-- Any admissible coupling gives an upper bound on W₁. -/
+theorem W1_le_couplingCost (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices)
+    (γ : ℕ → ℕ → ℝ) (hγ : IsCoupling M.vertices μ ν γ) :
+    W1 M μ ν ≤ couplingTransportCost M γ := by
+  unfold W1 couplingCostSet
+  apply csInf_le
+  · refine ⟨0, ?_⟩
+    intro c hc
+    obtain ⟨γ', hγ', hc'⟩ := hc
+    rw [hc']
+    exact couplingTransportCost_nonneg M γ' hγ'.1
+  · exact ⟨γ, hγ, rfl⟩
 
 /-!
 ## Basic properties of W₁
@@ -167,8 +198,12 @@ For the vacuum Rule 110 causal graph, the Ollivier-Ricci curvature
 This is the discrete Ricci-flat condition: the ether background is
 geometrically flat at the level of Ollivier curvature.
 
-**Axiom** — pending formal construction of the Rule 110 random walk measures
-and numerical verification translated to Lean.
+**Axiom (overly general)** — quantifies over all `ProbDist` values, not only
+the vacuum 1-step random walk. The scoped CatAL path is
+`GorardVacuumW1Bridge.gorard_vacuum_oric_zero_adjacent`, which reduces to
+`vacuum_w1_eq_one` once the CDF ↔ OT bridge is closed.
+
+Pending: replace with a theorem over `vacuumWalkMeasureLeft/Right` only.
 -/
 axiom gorard_vacuum_oric_zero
     (M : FiniteMetricSpace) (x y : ℕ)
@@ -176,6 +211,20 @@ axiom gorard_vacuum_oric_zero
     (hxy : M.dist x y > 0)
     (μ_vac_x μ_vac_y : ProbDist M.vertices) :
     OllivierRicci M x y μ_vac_x μ_vac_y = 0
+
+/--
+If W₁ equals the graph distance on a unit causal edge, Ollivier-Ricci
+curvature vanishes. This is the abstract form of the CatAL CDF argument.
+-/
+theorem gorard_vacuum_oric_zero_of_w1
+    (M : FiniteMetricSpace) (x y : ℕ)
+    (μ_x μ_y : ProbDist M.vertices)
+    (hd : M.dist x y = 1)
+    (hw : W1 M μ_x μ_y = 1) :
+    OllivierRicci M x y μ_x μ_y = 0 := by
+  unfold OllivierRicci
+  rw [hw, hd]
+  norm_num
 
 /-!
 ## OQ-QG-1 Step 2: Gromov-Wasserstein convergence (long-range target)
