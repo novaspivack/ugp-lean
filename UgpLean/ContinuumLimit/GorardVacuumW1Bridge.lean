@@ -36,8 +36,8 @@ theorem vacuumAdjacentDist_eq_zero_iff (x y : ℕ) :
   unfold vacuumAdjacentDist
   constructor
   · intro h
-    have habs : |(x : ℤ) - (y : ℤ)| = 0 := h
-    have heq : (x : ℤ) = (y : ℤ) := abs_eq_zero.mp habs
+    have habs : |(x : ℤ) - (y : ℤ)| = 0 := by exact_mod_cast h
+    have heq : (x : ℤ) = (y : ℤ) := sub_eq_zero.mp (abs_eq_zero.mp habs)
     exact_mod_cast heq
   · intro h; subst h; simp
 
@@ -229,8 +229,8 @@ theorem vacuumAdjacentDistAt_eq_zero_iff (n : ℕ) (x y : ℕ) :
   unfold vacuumAdjacentDistAt
   constructor
   · intro h
-    have habs : |(x : ℤ) - (y : ℤ)| = 0 := h
-    have heq : (x : ℤ) = (y : ℤ) := abs_eq_zero.mp habs
+    have habs : |(x : ℤ) - (y : ℤ)| = 0 := by exact_mod_cast h
+    have heq : (x : ℤ) = (y : ℤ) := sub_eq_zero.mp (abs_eq_zero.mp habs)
     exact_mod_cast heq
   · intro h; subst h; simp
 
