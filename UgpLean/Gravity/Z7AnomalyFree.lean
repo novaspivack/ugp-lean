@@ -2,6 +2,9 @@ import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 import Mathlib.MeasureTheory.Measure.MeasureSpace
 import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.MeasureTheory.Integral.Bochner.Set
+import Mathlib.Dynamics.Ergodic.MeasurePreserving
+import Mathlib.Algebra.Order.Interval.Set.Monoid
 
 /-!
 # Z₇ Global Scalar Symmetry is Anomaly-Free
@@ -56,7 +59,35 @@ theorem z7_vacuum_sectors_equiprobable
       ∫ x in Set.Ioo (2 * Real.pi * k / 7) (2 * Real.pi * (k + 1) / 7), f x ∂volume =
         ∫ x in Set.Ioo 0 (2 * Real.pi / 7), f x ∂volume := by
   intro k
-  sorry
+  -- Iterated periodicity: f(x + n * 2π/7) = f(x) for all n : ℕ
+  have hfk : ∀ (n : ℕ) (x : ℝ), f (x + ↑n * (2 * Real.pi / 7)) = f x := by
+    intro n x
+    induction n with
+    | zero => simp
+    | succ n ih =>
+      rw [show x + ↑(n + 1) * (2 * Real.pi / 7) =
+               (x + ↑n * (2 * Real.pi / 7)) + 2 * Real.pi / 7 by push_cast; ring,
+          hf, ih]
+  -- (· + 2πk/7) is a MeasurableEmbedding
+  have hEmb : MeasurableEmbedding (· + 2 * Real.pi * (k : ℝ) / 7) :=
+    (Homeomorph.addRight (2 * Real.pi * (k : ℝ) / 7)).isClosedEmbedding.measurableEmbedding
+  -- (· + 2πk/7) is measure-preserving on Lebesgue measure
+  have hMP : MeasurePreserving (· + 2 * Real.pi * (k : ℝ) / 7) volume volume :=
+    ⟨hEmb.measurable, map_add_right_eq_self volume _⟩
+  -- The k-th sector is the image of [0, 2π/7) under the shift
+  have hImg : (· + 2 * Real.pi * (k : ℝ) / 7) '' Set.Ioo 0 (2 * Real.pi / 7) =
+      Set.Ioo (2 * Real.pi * (k : ℝ) / 7) (2 * Real.pi * ((k : ℝ) + 1) / 7) := by
+    rw [Set.image_add_const_Ioo]
+    congr 1 <;> ring
+  -- Rewrite the k-th sector integral as an integral over [0, 2π/7)
+  rw [show Set.Ioo (2 * Real.pi * (k : ℝ) / 7) (2 * Real.pi * ((k : ℝ) + 1) / 7) =
+      (· + 2 * Real.pi * (k : ℝ) / 7) '' Set.Ioo 0 (2 * Real.pi / 7) from hImg.symm,
+      hMP.setIntegral_image_emb hEmb]
+  -- f(x + 2πk/7) = f(x) pointwise by periodicity
+  apply setIntegral_congr_fun measurableSet_Ioo
+  intro x _
+  rw [show 2 * Real.pi * (k : ℝ) / 7 = ↑k.val * (2 * Real.pi / 7) by ring]
+  exact hfk k.val x
 
 /-- Z₇ anomaly-free theorem: the global scalar shift symmetry φ → φ + 2π/7 does not acquire
     a quantum anomaly. The path-integral measure is Lebesgue measure, which is shift-invariant. -/
