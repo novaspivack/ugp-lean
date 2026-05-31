@@ -380,7 +380,7 @@ theorem diagonalCoupling_right_outside (S : Finset ℕ) (μ : ProbDist S)
     (y : ℕ) (hy : y ∉ S) (x : ℕ) :
     diagonalCoupling S μ x y = 0 := by
   unfold diagonalCoupling; split_ifs with h
-  · rw [if_pos h]; exact μ.2.2.1 y hy
+  · simp [h, μ.2.2.1 y hy]
   · simp
 
 theorem diagonalCoupling_row_sum (S : Finset ℕ) (μ : ProbDist S)
@@ -484,84 +484,28 @@ private theorem couplingTransportCost_eq_zero_of_eq
     (hγ : IsCoupling M.vertices μ ν γ) (hc : couplingTransportCost M γ = 0) :
     ∀ x ∈ M.vertices, μ.val x = ν.val x := by
   intro x hx
-  have hrow_zero (a : ℕ) (ha : a ∈ M.vertices) :
-      M.vertices.sum (fun b => γ a b * M.dist a b) = 0 := by
-    unfold couplingTransportCost at hc
-    have houter :
-        ∀ t ∈ M.vertices, 0 ≤ M.vertices.sum (fun b => γ t b * M.dist t b) := by
-      intro t _; apply Finset.sum_nonneg; intro b _; exact mul_nonneg (hγ.1 t b) (M.dist_nonneg t b)
-    exact (Finset.sum_eq_zero_iff_of_nonneg houter).1 hc a ha
-  have hoff (a b : ℕ) (ha : a ∈ M.vertices) (hb : b ∈ M.vertices) (hne : a ≠ b) :
-      γ a b = 0 := by
-    have hnn : 0 ≤ γ a b * M.dist a b := mul_nonneg (hγ.1 a b) (M.dist_nonneg a b)
-    have hterm := (Finset.sum_eq_zero_iff_of_nonneg (fun c _ => hnn)).1 (hrow_zero a ha) b hb
-    exact (mul_eq_zero.mp hterm).resolve_right (ne_of_gt (dist_pos_of_ne M hne))
-  calc
-    μ.val x = M.vertices.sum (γ x) := hγ.2.2.2.1 x hx
-    _ = γ x x := by
-      rw [Finset.sum_eq_single x (fun y hy hne => hoff x y hx hy hne) (fun hne => absurd hx hne)]
-      simp
-    _ = M.vertices.sum (fun z => γ z x) := by
-      rw [Finset.sum_eq_single x]
-      · simp
-      · intro z hz hne; exact hoff z x hz hx hne
-      · intro hne; exact absurd hx hne
-    _ = ν.val x := hγ.2.2.2.2 x hx
-
-theorem couplingTransportCost_eq_zero_implies_vertex_eq (M : FiniteMetricSpace)
-    (μ ν : ProbDist M.vertices) (γ : ℕ → ℕ → ℝ) (hγ : IsCoupling M.vertices μ ν γ)
-    (hc : couplingTransportCost M γ = 0) :
-    ∀ x ∈ M.vertices, μ.val x = ν.val x :=
-  couplingTransportCost_eq_zero_of_eq M μ ν γ hγ hc
-
-theorem couplingTransportCost_pos_of_vertex_ne (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices)
-    (hne : ∃ x ∈ M.vertices, μ.val x ≠ ν.val x) :
-    0 < couplingTransportCost M (productCoupling M.vertices μ ν) := by
-  obtain ⟨x, hx, hdiff⟩ := hne
-  by_cases hgt : μ.val x > ν.val x
-  · obtain ⟨y, hy, hlt⟩ := exists_mass_imbalance_neg M μ ν x hgt hx
-    refine productCoupling_cost_pos M μ ν hx hy (by intro heq; subst heq; linarith) hgt ?_
-    exact lt_of_le_of_ne (ν.2.1 y hy) (Ne.symm (sub_ne_zero.mpr hlt))
-  · push Not at hgt
-    have hlt : μ.val x < ν.val x := lt_of_le_of_ne hgt (Ne.symm hdiff)
-    obtain ⟨y, hy, hgt'⟩ := exists_mass_imbalance_pos M μ ν x hlt hx
-    refine productCoupling_cost_pos M μ ν hy hx (by intro heq; subst heq; linarith) hgt' ?_
-    exact lt_of_le_of_ne (μ.2.1 x hx) (Ne.symm (sub_ne_zero.mpr hdiff))
-
-private theorem couplingTransportCost_eq_zero_of_eq
-    (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) (γ : ℕ → ℕ → ℝ)
-    (hγ : IsCoupling M.vertices μ ν γ) (hc : couplingTransportCost M γ = 0) :
-    ∀ x ∈ M.vertices, μ.val x = ν.val x := by
-  intro x hx
   have hrow_nonneg (a : ℕ) :
       0 ≤ M.vertices.sum (fun b => γ a b * M.dist a b) := by
     apply Finset.sum_nonneg; intro b _; exact mul_nonneg (hγ.1 a b) (M.dist_nonneg a b)
   have hrow_zero (a : ℕ) (ha : a ∈ M.vertices) :
       M.vertices.sum (fun b => γ a b * M.dist a b) = 0 := by
     unfold couplingTransportCost at hc
-    have hle : M.vertices.sum (fun b => γ a b * M.dist a b) ≤ 0 := by
-      have hle_total :
-          M.vertices.sum (fun b => γ a b * M.dist a b) ≤
-            M.vertices.sum (fun a' => M.vertices.sum (fun b => γ a' b * M.dist a' b)) :=
-        Finset.single_le_sum (fun a' _ => hrow_nonneg a') ha
-      linarith [hle_total, hc]
-    exact le_antisymm hle (hrow_nonneg a)
+    exact (Finset.sum_eq_zero_iff_of_nonneg (fun t ht => hrow_nonneg t)).mp hc a ha
   have hoff (a b : ℕ) (ha : a ∈ M.vertices) (hb : b ∈ M.vertices) (hne : a ≠ b) :
       γ a b = 0 := by
     have hnn : 0 ≤ γ a b * M.dist a b := mul_nonneg (hγ.1 a b) (M.dist_nonneg a b)
     have hzero : γ a b * M.dist a b = 0 :=
-      (Finset.sum_eq_zero_iff_of_nonneg (fun c _ => mul_nonneg (hγ.1 a c) (M.dist_nonneg a c))).1
-        (hrow_zero a ha) b hb
+      (Finset.sum_eq_zero_iff_of_nonneg (fun c _ => hnn)).mp (hrow_zero a ha) b hb
     exact (mul_eq_zero.mp hzero).resolve_right (ne_of_gt (dist_pos_of_ne M hne))
   have hdiag : γ x x = μ.val x := by
-    rw [← hγ.2.2.2.1 x hx]
-    apply Finset.sum_eq_single x
-    · intro y hy hne; exact hoff x y hx hy hne
-    · intro h; exact absurd hx h
+    calc γ x x = M.vertices.sum (γ x) := by
+        rw [Finset.sum_eq_single x (fun y hy hne => hoff x y hx hy hne) (fun hne => absurd hx hne)]
+        simp
+      _ = μ.val x := hγ.2.2.2.1 x hx
   have hcol : M.vertices.sum (fun z => γ z x) = γ x x := by
-    apply Finset.sum_eq_single x
-    · intro z hz hne; exact hoff z x hz hx hne
-    · intro h; exact absurd hx h
+    calc M.vertices.sum (fun z => γ z x) = γ x x := by
+      rw [Finset.sum_eq_single x (fun z hz hne => hoff z x hz hx hne) (fun hne => absurd hx hne)]
+      simp
   have hnu : ν.val x = γ x x := by rw [← hcol, hγ.2.2.2.2 x hx]
   linarith [hdiag, hnu]
 
@@ -577,20 +521,257 @@ theorem couplingTransportCost_pos_of_vertex_ne (M : FiniteMetricSpace) (μ ν : 
   obtain ⟨x, hx, hdiff⟩ := hne
   by_cases hgt : μ.val x > ν.val x
   · obtain ⟨y, hy, hlt⟩ := exists_mass_imbalance_neg M μ ν x hgt hx
-    refine productCoupling_cost_pos M μ ν hx hy (by intro heq; subst heq; linarith) hgt ?_
-    exact lt_of_le_of_ne (ν.2.1 y hy) (Ne.symm (sub_ne_zero.mpr hlt))
+    have hμpos : 0 < μ.val x := lt_of_le_of_ne (μ.2.1 x hx) (Ne.symm (sub_ne_zero.mpr hgt))
+    have hνpos : 0 < ν.val y := lt_of_le_of_ne (ν.2.1 y hy) (Ne.symm (sub_ne_zero.mpr hlt))
+    exact productCoupling_cost_pos M μ ν hx hy (by intro heq; subst heq; linarith) hμpos hνpos
   · push_neg at hgt
     have hlt : μ.val x < ν.val x := lt_of_le_of_ne hgt hdiff
     obtain ⟨y, hy, hgt'⟩ := exists_mass_imbalance_pos M μ ν x hlt hx
-    refine productCoupling_cost_pos M μ ν hy hx (by intro heq; subst heq; linarith) hgt' ?_
-    exact lt_of_le_of_ne (μ.2.1 x hx) (Ne.symm hdiff)
+    have hμpos : 0 < μ.val y := lt_of_le_of_ne (μ.2.1 y hy) (Ne.symm (sub_ne_zero.mpr hgt'))
+    have hνpos : 0 < ν.val x := lt_of_le_of_ne (ν.2.1 x hx) (Ne.symm hdiff)
+    exact productCoupling_cost_pos M μ ν hy hx (by intro heq; subst heq; linarith) hμpos hνpos
+
+private theorem probExpectation_dist_sub (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices)
+    (xAnchor : ℕ) :
+    probExpectation M μ (M.dist · xAnchor) - probExpectation M ν (M.dist · xAnchor) =
+      M.vertices.sum fun t => (μ.val t - ν.val t) * M.dist t xAnchor := by
+  unfold probExpectation; rw [← Finset.sum_sub_distrib]; congr 1; funext t; ring
+
+private theorem exists_delta_neg_of_sum_zero (S : Finset ℕ) (δ : ℕ → ℝ)
+    (hsum : S.sum δ = 0) {tPlus : ℕ} (htPlus : tPlus ∈ S.filter (fun t => 0 < δ t)) (htPluspos : 0 < δ tPlus) :
+    ∃ tMinus ∈ S, δ tMinus < 0 := by
+  by_contra hall; push_neg at hall
+  have hnonneg : ∀ t ∈ S, 0 ≤ δ t := hall
+  have hsumpos : 0 < S.sum δ :=
+    lt_of_lt_of_le htPluspos (Finset.single_le_sum hnonneg (Finset.mem_filter.mp htPlus).1)
+  linarith [hsum, hsumpos]
+
+private theorem exists_delta_pos_of_sum_zero (S : Finset ℕ) (δ : ℕ → ℝ)
+    (hsum : S.sum δ = 0) {tMinus : ℕ} (htMinus : tMinus ∈ S.filter (fun t => δ t < 0))
+    (htMinusNeg : δ tMinus < 0) :
+    ∃ tPlus ∈ S, 0 < δ tPlus := by
+  by_contra hall; push_neg at hall
+  have hnonpos : ∀ t ∈ S, δ t ≤ 0 := hall
+  have hall0 : ∀ t ∈ S, δ t = 0 := (Finset.sum_eq_zero_iff_of_nonpos hnonpos).mp hsum
+  linarith [htMinusNeg, hall0 tMinus (Finset.mem_filter.mp htMinus).1]
+
+set_option maxHeartbeats 800000 in
+private theorem delta_three_anchor_contradiction
+    (d01 d0u d1u : ℝ) (h01 : 0 < d01) (h0u : 0 < d0u) (h1u : 0 < d1u)
+    (δ0 δ1 δu : ℝ) (h0 : 0 < δ0) (h1 : δ1 < 0) (hu : δu ≠ 0)
+    (hsum3 : δ0 + δ1 + δu = 0)
+    (e0 : δ1 * d01 + δu * d0u = 0)
+    (e1 : δ0 * d01 + δu * d1u = 0)
+    (e2 : δ0 * d0u + δ1 * d1u = 0) : False := by
+  nlinarith [sq_nonneg (δ0 * d01 - δu * d1u), sq_nonneg (δ1 * d01 - δu * d0u),
+    sq_nonneg (δ0 * d0u - δ1 * d1u), h0, h1, hu, hsum3, e0, e1, e2, h01, h0u, h1u]
+
+/-- If all distance expectations agree, vertex masses agree. -/
+private theorem probExpectation_dist_eq_all_imp_vertex_eq (M : FiniteMetricSpace)
+    (μ ν : ProbDist M.vertices)
+    (h : ∀ a ∈ M.vertices, probExpectation M μ (M.dist · a) = probExpectation M ν (M.dist · a)) :
+    ∀ x ∈ M.vertices, μ.val x = ν.val x := by
+  intro x hx
+  set δ : ℕ → ℝ := fun t => μ.val t - ν.val t
+  have hsum : M.vertices.sum δ = 0 := by
+    simpa [δ] using probDist_vertex_mass_balance M.vertices μ ν
+  have hdist (a : ℕ) (ha : a ∈ M.vertices) :
+      M.vertices.sum (fun t => δ t * M.dist t a) = 0 := by
+    rw [← probExpectation_dist_sub M μ ν a, h a ha, sub_self]
+  by_contra hne
+  have ht0ne : μ.val x ≠ ν.val x := hne
+  set t0 := x
+  have ht0 : t0 ∈ M.vertices := hx
+  by_cases ht0pos : 0 < δ t0
+  · have htPlus : t0 ∈ M.vertices.filter (fun t => 0 < δ t) :=
+      Finset.mem_filter.mpr ⟨ht0, ht0pos⟩
+    obtain ⟨tMinus, htMinusMem, htMinusNeg⟩ :=
+      exists_delta_neg_of_sum_zero M.vertices δ hsum htPlus ht0pos
+    have hnePM : t0 ≠ tMinus := by intro heq; subst heq; linarith [ht0pos, htMinusNeg]
+    have hdistPM : 0 < M.dist t0 tMinus := dist_pos_of_ne M hnePM
+    have htMinusInErase : tMinus ∈ M.vertices.erase t0 :=
+      Finset.mem_erase.mpr ⟨hnePM.symm, htMinusMem⟩
+    have hdist0 := hdist t0 ht0
+    have hdistM := hdist tMinus htMinusMem
+    have hdistM0 : 0 < M.dist tMinus t0 := by rwa [M.dist_comm]
+    have hheadPlus : δ tMinus * M.dist tMinus t0 < 0 :=
+      mul_neg_of_neg_of_pos htMinusNeg hdistM0
+    by_cases hthird : ∃ u ∈ M.vertices, u ≠ t0 ∧ u ≠ tMinus ∧ δ u ≠ 0
+    · have hthirdEx := hthird
+      obtain ⟨u, hu, hut0, hutM, hudne⟩ := hthirdEx
+      have hut0ne : u ≠ t0 := hut0
+      have hutMne : u ≠ tMinus := hutM
+      have hδ0 (t : ℕ) (ht : t ∈ M.vertices) (ht0' : t ≠ t0) (htM' : t ≠ tMinus) (hu' : t ≠ u) :
+          δ t = 0 := by
+        by_cases htu : t = u
+        · subst htu; exfalso; exact hudne rfl
+        · by_contra hδ
+          exact hthirdEx ⟨t, ht, ht0', htM', hδ⟩
+      have hsum3 : δ t0 + δ tMinus + δ u = 0 := by
+        have hrest : (((M.vertices.erase t0).erase tMinus).erase u).sum δ = 0 :=
+          Finset.sum_eq_zero fun t ht => hδ0 t (Finset.mem_of_mem_erase (Finset.mem_of_mem_erase ht))
+            (Finset.ne_of_mem_erase (Finset.mem_of_mem_erase ht))
+            (Finset.ne_of_mem_erase ht) (Finset.ne_of_mem_erase ht)
+        have hdecomp : M.vertices.sum δ =
+            δ t0 + δ tMinus + δ u + (((M.vertices.erase t0).erase tMinus).erase u).sum δ := by
+          rw [← Finset.sum_eq_add_sum_diff_singleton_of_mem ht0,
+            ← Finset.sum_eq_add_sum_diff_singleton_of_mem htMinusInErase,
+            ← Finset.sum_eq_add_sum_diff_singleton_of_mem (Finset.mem_erase.mpr ⟨hut0ne, hu⟩)]
+        linarith [hsum, hrest, hdecomp]
+      have hdist0' := hdist0
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem ht0] at hdist0'
+      simp only [M.dist_self t0, mul_zero, add_zero] at hdist0'
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem htMinusInErase] at hdist0'
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem (Finset.mem_erase.mpr ⟨hut0ne, hu⟩)] at hdist0'
+      simp only [Finset.sdiff_singleton_eq_erase] at hdist0'
+      have hdistM' := hdistM
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem htMinusMem] at hdistM'
+      simp only [M.dist_self tMinus, mul_zero, add_zero] at hdistM'
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem (Finset.mem_erase.mpr ⟨hutMne.symm, ht0⟩)] at hdistM'
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem (Finset.mem_erase.mpr ⟨hutMne, hu⟩)] at hdistM'
+      simp only [Finset.sdiff_singleton_eq_erase] at hdistM'
+      have hdistU' := hdist u hu
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem hu] at hdistU'
+      simp only [M.dist_self u, mul_zero, add_zero] at hdistU'
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem (Finset.mem_erase.mpr ⟨hut0ne.symm, ht0⟩)] at hdistU'
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem (Finset.mem_erase.mpr ⟨hutMne.symm, htMinusMem⟩)] at hdistU'
+      simp only [Finset.sdiff_singleton_eq_erase] at hdistU'
+      exact delta_three_anchor_contradiction
+        (M.dist t0 tMinus) (M.dist t0 u) (M.dist tMinus u)
+        hdistPM (dist_pos_of_ne M hut0ne) (dist_pos_of_ne M hutMne)
+        (δ t0) (δ tMinus) (δ u) ht0pos htMinusNeg hudne hsum3 hdist0' hdistM' hdistU'
+    · push_neg at hthird
+      have hδ0 (t : ℕ) (ht : t ∈ M.vertices) (ht0' : t ≠ t0) (htM' : t ≠ tMinus) : δ t = 0 :=
+        hthird t ht ht0' htM'
+      have hdistPlus := hdist0
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem ht0] at hdistPlus
+      simp only [M.dist_self t0, mul_zero, add_zero] at hdistPlus
+      simp only [Finset.sdiff_singleton_eq_erase] at hdistPlus
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem htMinusInErase] at hdistPlus
+      have hrest0 :
+          ((M.vertices.erase t0).erase tMinus).sum (fun t => δ t * M.dist t t0) = 0 :=
+        Finset.sum_eq_zero fun t ht => by
+          have htErase0 : t ∈ M.vertices.erase t0 := Finset.mem_of_mem_erase ht
+          have htVert : t ∈ M.vertices := Finset.mem_of_mem_erase htErase0
+          simp [hδ0 t htVert (Finset.ne_of_mem_erase htErase0) (Finset.ne_of_mem_erase ht), zero_mul]
+      have hsplit :
+          (M.vertices.erase t0).sum (fun t => δ t * M.dist t t0) =
+            δ tMinus * M.dist tMinus t0 +
+              ((M.vertices.erase t0).erase tMinus).sum (fun t => δ t * M.dist t t0) := by
+        rw [← Finset.add_sum_erase (M.vertices.erase t0) (fun t => δ t * M.dist t t0) tMinus htMinusInErase]
+      have hplus0 : δ tMinus * M.dist tMinus t0 = 0 := by
+        linarith [hdistPlus, hsplit, hrest0]
+      linarith [hheadPlus, hplus0]
+  · push_neg at ht0pos
+    have ht0δne : δ t0 ≠ 0 := sub_ne_zero.mpr ht0ne
+    have ht0neg : δ t0 < 0 := lt_of_le_of_ne ht0pos ht0δne
+    have htMinus : t0 ∈ M.vertices.filter (fun t => δ t < 0) :=
+      Finset.mem_filter.mpr ⟨ht0, ht0neg⟩
+    obtain ⟨tPlus, htPlusMem, htPlusPos⟩ :=
+      exists_delta_pos_of_sum_zero M.vertices δ hsum htMinus ht0neg
+    have hnePM : tPlus ≠ t0 := by intro heq; subst heq; linarith [htPlusPos, ht0neg]
+    have hdistPM : 0 < M.dist tPlus t0 := dist_pos_of_ne M hnePM
+    have ht0InErase : t0 ∈ M.vertices.erase tPlus :=
+      Finset.mem_erase.mpr ⟨hnePM.symm, ht0⟩
+    have hdistP := hdist tPlus htPlusMem
+    have hdist0 := hdist t0 ht0
+    have hdistP0 : 0 < M.dist t0 tPlus := by rwa [M.dist_comm]
+    have hheadPlus : δ t0 * M.dist t0 tPlus < 0 :=
+      mul_neg_of_neg_of_pos ht0neg hdistP0
+    by_cases hthird : ∃ u ∈ M.vertices, u ≠ tPlus ∧ u ≠ t0 ∧ δ u ≠ 0
+    · have hthirdEx := hthird
+      obtain ⟨u, hu, hutP, hut0, hudne⟩ := hthirdEx
+      have hutPne : u ≠ tPlus := hutP
+      have hut0ne : u ≠ t0 := hut0
+      have hδ0 (t : ℕ) (ht : t ∈ M.vertices) (htP' : t ≠ tPlus) (ht0' : t ≠ t0) (hu' : t ≠ u) :
+          δ t = 0 := by
+        by_cases htu : t = u
+        · subst htu; exfalso; exact hudne rfl
+        · by_contra hδ
+          exact hthirdEx ⟨t, ht, htP', ht0', hδ⟩
+      have hsum3 : δ tPlus + δ t0 + δ u = 0 := by
+        have hrest : (((M.vertices.erase tPlus).erase t0).erase u).sum δ = 0 :=
+          Finset.sum_eq_zero fun t ht => hδ0 t (Finset.mem_of_mem_erase (Finset.mem_of_mem_erase ht))
+            (Finset.ne_of_mem_erase (Finset.mem_of_mem_erase ht))
+            (Finset.ne_of_mem_erase ht) (Finset.ne_of_mem_erase ht)
+        have hdecomp : M.vertices.sum δ =
+            δ tPlus + δ t0 + δ u + (((M.vertices.erase tPlus).erase t0).erase u).sum δ := by
+          rw [← Finset.sum_eq_add_sum_diff_singleton_of_mem htPlusMem,
+            ← Finset.sum_eq_add_sum_diff_singleton_of_mem ht0InErase,
+            ← Finset.sum_eq_add_sum_diff_singleton_of_mem (Finset.mem_erase.mpr ⟨hut0ne, hu⟩)]
+        linarith [hsum, hrest, hdecomp]
+      have hdistP' := hdistP
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem htPlusMem] at hdistP'
+      simp only [M.dist_self tPlus, mul_zero, add_zero] at hdistP'
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem ht0InErase] at hdistP'
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem (Finset.mem_erase.mpr ⟨hut0ne, hu⟩)] at hdistP'
+      simp only [Finset.sdiff_singleton_eq_erase] at hdistP'
+      have hdist0' := hdist0
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem ht0] at hdist0'
+      simp only [M.dist_self t0, mul_zero, add_zero] at hdist0'
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem (Finset.mem_erase.mpr ⟨hutPne, ht0⟩)] at hdist0'
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem (Finset.mem_erase.mpr ⟨hutPne.symm, hu⟩)] at hdist0'
+      simp only [Finset.sdiff_singleton_eq_erase] at hdist0'
+      have hdistU' := hdist u hu
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem hu] at hdistU'
+      simp only [M.dist_self u, mul_zero, add_zero] at hdistU'
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem (Finset.mem_erase.mpr ⟨hutPne.symm, htPlusMem⟩)] at hdistU'
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem (Finset.mem_erase.mpr ⟨hut0ne.symm, ht0⟩)] at hdistU'
+      simp only [Finset.sdiff_singleton_eq_erase] at hdistU'
+      exact delta_three_anchor_contradiction
+        (M.dist tPlus t0) (M.dist tPlus u) (M.dist t0 u)
+        hdistPM (dist_pos_of_ne M hutPne) (dist_pos_of_ne M hut0ne)
+        (δ tPlus) (δ t0) (δ u) htPlusPos ht0neg hudne hsum3 hdistP' hdist0' hdistU'
+    · push_neg at hthird
+      have hδ0 (t : ℕ) (ht : t ∈ M.vertices) (htP' : t ≠ tPlus) (ht0' : t ≠ t0) : δ t = 0 :=
+        hthird t ht htP' ht0'
+      have hdistPlus := hdistP
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem htPlusMem] at hdistPlus
+      simp only [M.dist_self tPlus, mul_zero, add_zero] at hdistPlus
+      simp only [Finset.sdiff_singleton_eq_erase] at hdistPlus
+      rw [Finset.sum_eq_add_sum_diff_singleton_of_mem ht0InErase] at hdistPlus
+      have hrest0 :
+          ((M.vertices.erase tPlus).erase t0).sum (fun t => δ t * M.dist t tPlus) = 0 :=
+        Finset.sum_eq_zero fun t ht => by
+          have htErasePlus : t ∈ M.vertices.erase tPlus := Finset.mem_of_mem_erase ht
+          have htVert : t ∈ M.vertices := Finset.mem_of_mem_erase htErasePlus
+          simp [hδ0 t htVert (Finset.ne_of_mem_erase htErasePlus) (Finset.ne_of_mem_erase ht), zero_mul]
+      have hsplit :
+          (M.vertices.erase tPlus).sum (fun t => δ t * M.dist t tPlus) =
+            δ t0 * M.dist t0 tPlus +
+              ((M.vertices.erase tPlus).erase t0).sum (fun t => δ t * M.dist t tPlus) := by
+        rw [← Finset.add_sum_erase (M.vertices.erase tPlus) (fun t => δ t * M.dist t tPlus) t0 ht0InErase]
+      have hplus0 : δ t0 * M.dist t0 tPlus = 0 := by
+        linarith [hdistPlus, hsplit, hrest0]
+      linarith [hheadPlus, hplus0]
+
+private theorem exists_probExpectation_dist_gap (M : FiniteMetricSpace)
+    (μ ν : ProbDist M.vertices) (hne : ∃ x ∈ M.vertices, μ.val x ≠ ν.val x) :
+    ((∃ a ∈ M.vertices, 0 < probExpectation M μ (M.dist · a) - probExpectation M ν (M.dist · a)) ∨
+      ∃ a ∈ M.vertices, 0 < probExpectation M ν (M.dist · a) - probExpectation M μ (M.dist · a)) := by
+  by_contra hnot; push_neg at hnot
+  rcases hnot with ⟨hμ, hν⟩
+  have heq : ∀ a ∈ M.vertices, probExpectation M μ (M.dist · a) = probExpectation M ν (M.dist · a) := by
+    intro a ha; have hleμ := hμ a ha; have hleν := sub_nonpos.mp (hν a ha); linarith
+  rcases hne with ⟨x, hx, hdiff⟩
+  exact hdiff (probExpectation_dist_eq_all_imp_vertex_eq M μ ν heq x hx)
 
 private theorem W1_pos_of_vertex_ne (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices)
     (hne : ∃ x ∈ M.vertices, μ.val x ≠ ν.val x) : 0 < W1 M μ ν := by
-  have hcost := couplingTransportCost_pos_of_vertex_ne M μ ν hne
-  have hle := W1_le_couplingCost M μ ν (productCoupling M.vertices μ ν)
-    (productCoupling_is_coupling M.vertices μ ν)
-  exact hcost.trans_le hle
+  rcases exists_probExpectation_dist_gap M μ ν hne with h | h
+  · rcases h with ⟨a, _, hpos⟩
+    have hW1ge := W1_ge_of_lipschitz M μ ν (M.dist · a) (dist_lipschitz M a)
+      (couplingCostSet_nonempty M μ ν)
+    exact hpos.trans_le (le_trans (le_abs_self _) hW1ge)
+  · rcases h with ⟨a, _, hpos⟩
+    have hW1ge := W1_ge_of_lipschitz M μ ν (M.dist · a) (dist_lipschitz M a)
+      (couplingCostSet_nonempty M μ ν)
+    have hge : probExpectation M ν (M.dist · a) - probExpectation M μ (M.dist · a) ≤ W1 M μ ν := by
+      calc probExpectation M ν (M.dist · a) - probExpectation M μ (M.dist · a) ≤
+          |probExpectation M μ (M.dist · a) - probExpectation M ν (M.dist · a)| := by
+            rw [abs_sub_comm]; exact le_abs_self _
+        _ ≤ W1 M μ ν := hW1ge
+    exact hpos.trans_le hge
 
 /-- Glued coupling of `γ₁ : μ ↝ ν` and `γ₂ : ν ↝ ρ` via disintegration at `ν`. -/
 noncomputable def gluedCoupling (S : Finset ℕ) (ν : ProbDist S) (γ₁ γ₂ : ℕ → ℕ → ℝ) (x z : ℕ) : ℝ :=

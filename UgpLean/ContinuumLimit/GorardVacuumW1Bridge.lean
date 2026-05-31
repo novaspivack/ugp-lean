@@ -31,6 +31,16 @@ theorem vacuumAdjacentDist_triangle (x y z : ℕ) :
   unfold vacuumAdjacentDist
   exact_mod_cast abs_sub_le (x : ℤ) (y : ℤ) (z : ℤ)
 
+theorem vacuumAdjacentDist_eq_zero_iff (x y : ℕ) :
+    vacuumAdjacentDist x y = 0 ↔ x = y := by
+  unfold vacuumAdjacentDist
+  constructor
+  · intro h
+    have habs : |(x : ℤ) - (y : ℤ)| = 0 := h
+    have heq : (x : ℤ) = (y : ℤ) := abs_eq_zero.mp habs
+    exact_mod_cast heq
+  · intro h; subst h; simp
+
 def vacuumAdjacentGraph : FiniteMetricSpace where
   vertices := vacuumAdjacentVertices
   dist := vacuumAdjacentDist
@@ -38,6 +48,7 @@ def vacuumAdjacentGraph : FiniteMetricSpace where
   dist_self := vacuumAdjacentDist_self
   dist_comm := vacuumAdjacentDist_comm
   triangle := vacuumAdjacentDist_triangle
+  dist_eq_zero_iff := vacuumAdjacentDist_eq_zero_iff
 
 noncomputable section
 
@@ -213,6 +224,16 @@ theorem vacuumAdjacentDistAt_triangle (n : ℕ) (x y z : ℕ) :
   unfold vacuumAdjacentDistAt
   exact_mod_cast abs_sub_le (x : ℤ) (y : ℤ) (z : ℤ)
 
+theorem vacuumAdjacentDistAt_eq_zero_iff (n : ℕ) (x y : ℕ) :
+    vacuumAdjacentDistAt n x y = 0 ↔ x = y := by
+  unfold vacuumAdjacentDistAt
+  constructor
+  · intro h
+    have habs : |(x : ℤ) - (y : ℤ)| = 0 := h
+    have heq : (x : ℤ) = (y : ℤ) := abs_eq_zero.mp habs
+    exact_mod_cast heq
+  · intro h; subst h; simp
+
 def vacuumAdjacentGraphAt (n : ℕ) : FiniteMetricSpace where
   vertices := vacuumAdjacentVerticesAt n
   dist := vacuumAdjacentDistAt n
@@ -220,6 +241,7 @@ def vacuumAdjacentGraphAt (n : ℕ) : FiniteMetricSpace where
   dist_self := vacuumAdjacentDistAt_self n
   dist_comm := vacuumAdjacentDistAt_comm n
   triangle := vacuumAdjacentDistAt_triangle n
+  dist_eq_zero_iff := vacuumAdjacentDistAt_eq_zero_iff n
 
 /-- The vacuum tape window predicate: a four-cell patch with integer-line metric. -/
 def IsVacuumTapeWindow (M : FiniteMetricSpace) (n : ℕ) : Prop :=
