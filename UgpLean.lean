@@ -144,6 +144,7 @@ import UgpLean.Framework.GTEOptimalityInstance
 import UgpLean.Framework.GTEFinalCoalgebra
 import UgpLean.Framework.PhiMDLBridge
 import UgpLean.Framework.MDLTower
+import UgpLean.Universality.NgenUniversalityPartial
 import UgpLean.Framework.GTECategoryStructure
 import UgpLean.Framework.CMCAContinuumLimit
 import UgpLean.Framework.CMCAMDLMinimality
@@ -282,6 +283,7 @@ import UgpLean.QFT.ChiralSymmetryBreaking
 import UgpLean.Universality.PhiMDLUniversality
 import UgpLean.Universality.BellViolationGTE
 import UgpLean.Universality.FiveRolesPolynomial
+import UgpLean.Universality.ParticlesComputationSpacetimeTrinity
 
 /-!
 # UgpLean — Universal Generative Principle: Lean 4 Formalization
@@ -309,6 +311,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Universality.FrobeniusPrimeIdentity` — |Z₇| = |Z₃|² − |Z₃| + 1 unifies F₂₁ and PSC n=10 derivations; frobenius_prime_bundle; zero sorry (2026-05-26)
 - `UgpLean.Universality.BellViolationGTE` — EPIC_080 G44: `gte_poly_qutrit_values`, `gte_hgrav_diagonal_nontrivial`, `gte_hgrav_has_nonzero_entries`, `z7_qutrit_poly_nondegenerate`, `gte_poly_double_role`; axioms `gte_bell_violation_at_half_coupling`, `gte_bell_threshold` (CatA named); GTE gravitational coupling generates Bell-violating entanglement; zero sorry (2026-05-29)
 - `UgpLean.Universality.FiveRolesPolynomial` — EPIC_080: `labelled_triple_role_count` (5 roles, decide-proved), `spatial_dynamics_certified`, `gauge_coupling_certified`, `gravity_source_certified`, `entanglement_hamiltonian_certified`, `baryon_current_certified`, `five_roles_polynomial_bundle`; exactly five distinct K_extra=0 labelled-triple roles of the GTE polynomial; CatAL, zero sorry (2026-05-29)
+- `UgpLean.Universality.ParticlesComputationSpacetimeTrinity` — 083B-PCT: `particles_computation_spacetime_trinity`, `particles_computation_spacetime_trinity_certified`; one Φ_MDL kink bundles particle identity, Rule 110 computation, and spacetime geodesic (Role 3 cross-ref `psc_orbit_is_curvature_geodesic`); CatAL, zero sorry (2026-06-01)
 - `UgpLean.Papers.*`             — Paper25, UGPMain (citable stubs)
 
 - `UgpLean.TE22.*`               — ScanCertificate (TE2.2 PSC scan framework, UGP coupling predictions)
