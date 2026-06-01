@@ -94,6 +94,8 @@ import UgpLean.CyclotomicCompleteness.CyclotomicContainment
 import UgpLean.MassRelations.VVMechanism
 import UgpLean.MassRelations.VVAllCoefficientsFromNc
 import UgpLean.MassRelations.NeutrinoFroggattNielsen
+import UgpLean.MassRelations.NeutrinoSector
+import UgpLean.MassRelations.HiggsQuartic
 import UgpLean.MassRelations.CKMTheta23
 import UgpLean.MassRelations.CKMMixing
 import UgpLean.MassRelations.CKMCPPhase
@@ -382,6 +384,8 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Substrate.RSCodeOrbit` — EPIC_080: `rs_sm_code_params_correct`, `rs_area_unit_log7`; RS code parameters [5,3,3]₇ satisfies Singleton bound d=n−k+1; log₂(7) bits per GF(7) symbol; zero sorry, zero axioms (2026-05-29)
 - `UgpLean.Substrate.CogwheelDynamicsG21` — G21 Level 1 discrete Schrödinger dynamics: `discrete_evolution_operator`, `discrete_schrodinger_composition`, `discrete_schrodinger_step_recurrence`, `discrete_schrodinger_unitarity`, `kg_factors_to_chiral_schrodinger`; 't Hooft cogwheel evolution U(n)=exp(−iH n τ_c), KG→chiral Schrödinger factorisation; CatAL/CatAD structural (2026-05-29)
 - `UgpLean.MassRelations.NeutrinoVacuumSectorL2` — EPIC_080 G28: Level-2 structural certification for the neutrino sector; Q=0 vacuum sector identification, B(ν)=0, Z₇⁴ dark ring fourth quantum number; CatAL structural, zero sorry (2026-05-29)
+- `UgpLean.MassRelations.NeutrinoSector` — EPIC_083C: PMNS structural certificates; LH b_L=1, FN charge differential zero, ν-H-ν vertex winding, Type-I seesaw algebra (CatAL zero sorry); democratic TBM θ₂₃ (CatAD, 2 sorry) (2026-06-01)
+- `UgpLean.MassRelations.HiggsQuartic` — EPIC_083C: SRRG Higgs quartic `higgs_quartic_gte` with IPT correction; `2·c_H+1 = N_gen³` CatAL zero sorry (2026-06-01)
 - `UgpLean.Spacetime.MultiParticleHilbert` — Rank 244-MPH: multi-particle Hilbert space algebraic layer; `code_word_cardinality` (4 code words, Equiv with Fin 4), `n_particle_state_count` (4^N states), `multiDWeight_eq_one`, `multiMass_append`, `multiMass_le`, `mass_hierarchy_three_states`, `smGenMass_multi_anchor`, `multiparticle_orbit_closure`, `inner_product_positive_definite`, `multiparticle_space_well_defined`; all CatAL, zero sorry (2026-05-24)
 - `UgpLean.Spacetime.CausalInvariance` — Rank 37-LCI: f_MDL causal invariance + Lamport consistency + SR connection; `ForwardCausalAdj`, `forward_causal_time_step`, `forward_causal_acyclic`, `transgen_time_strictly_increases`, `lamport_irrefl`, `lamport_strict_partial_order`, `lamport_order_update_independent`, `afca_sr_causal_structure`; all zero sorry, zero axioms (CatAL/CatAD — Lamport properties CatAL, Minkowski isomorphism CatAD, 2026-05-21)
 - `UgpLean.Spacetime.DWeightSRFormula` — Rank 63-DMDL: [D]-weighted SR formula; `dmdl_dweight_positive`, `dmdl_proper_time_ratio`, `dmdl_dweight_sr_formula`, `dmdl_lorentz_factor_algebraic`, `dmdl_tau_c_ratio_structure`, `dmdl_qec_sr_bundle`; all zero sorry, zero custom axioms (CatAL, 2026-05-24)

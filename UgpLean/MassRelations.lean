@@ -25,6 +25,8 @@ import UgpLean.MassRelations.CKMMixing
 import UgpLean.MassRelations.CKMCPPhase
 import UgpLean.MassRelations.NeutrinoMassRatio
 import UgpLean.MassRelations.NeutrinoVacuumSectorL2
+import UgpLean.MassRelations.NeutrinoSector
+import UgpLean.MassRelations.HiggsQuartic
 
 /-!
 # UgpLean.MassRelations — Charged-Fermion Mass Structural Relations
