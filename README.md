@@ -916,7 +916,8 @@ The same 19-bit polynomial `p(L,C,R) = C+R−CR−LCR` serves five physical role
 ### Gravity
 - `UgpLean.Gravity.PMDLGravityTheorems` — MDL uniqueness, vacuum fixed-point, mass hierarchy (CatAL)
 - `UgpLean.Framework.MDLTower` (2026-06-01) — **083B-MDL-TOWER CatAL**: `mdl_tower_bundle` unifies three nested MDL roles (theory selection via `mdl_ca_rule_coding_closed`, PMDL gravity via `unique_cubic_gravity_coupling`, Born rule via `born_rule_unconditional`); `mdl_tower_three_levels_non_circular`; zero sorry, zero axioms
-- `UgpLean.Universality.NgenUniversalityPartial` (2026-06-01) — **083B-NGEN partial CatAL**: `ngen_partial_universality_catal` bundles four independent CatAL constraints forcing N_gen = 3 (DPP, CMCA three generations, TPC depth, Gorard D²=16); full seven-constraint theorem open; zero sorry, zero axioms
+- `UgpLean.Universality.NgenUniversalityPartial` (2026-06-01) — **083B-NGEN partial CatAL**: `ngen_partial_universality_catal` bundles five independent CatAL constraints forcing N_gen = 3 (PSC PI Layer I 34,560 enumeration, DPP, CMCA, TPC, Gorard D²=16); full seven-constraint theorem open; zero sorry, zero axioms
+- `UgpLean.TE22.ScanCertificate` (2026-06-01) — **083B-PSC-PI-NGEN CatAL**: `psc_enumeration_forces_ngen_3` via native_decide over 34,560 universe descriptions (12 Layer I survivors, all N_gen=3); zero sorry
 - `UgpLean.Gravity.GorardRicciFlatVacuum` — Vacuum Ricci-flat; causal diamond \(V=T^4/4\) (CatAL)
 - `UgpLean.Gravity.LorentzGroupSO13` — All 12 \(\mathfrak{so}(1,3)\) commutation relations; Thomas precession (CatAL)
 - `UgpLean.Gravity.FermionicStatistics` — Fermionic statistics chain zero sorry; exchange phase formula (CatAL)
