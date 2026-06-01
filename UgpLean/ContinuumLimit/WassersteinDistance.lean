@@ -673,7 +673,7 @@ theorem gluedCoupling_marginal_left (V : Finset ℕ) (μ ν ρ : ProbDist V)
       by_cases hν : ν.weights y = 0
       · have hzero := IsCoupling_col_zero_of_weight_zero V μ ν γ₁ hγ₁ hy hν x
         simp [hν, hzero]
-      · simp [dif_neg hν]
+      · simp [dif_neg hν, mul_comm]
     _ = μ.weights x := hγ₁.marginal_left x hx
 
 theorem gluedCoupling_marginal_right (V : Finset ℕ) (μ ν ρ : ProbDist V)
@@ -724,7 +724,7 @@ theorem gluedCoupling_marginal_right (V : Finset ℕ) (μ ν ρ : ProbDist V)
       by_cases hν : ν.weights y = 0
       · have hzero := IsCoupling_row_zero_of_weight_zero V ν ρ γ₂ hγ₂ hy hν z
         simp [hν, hzero]
-      · simp [dif_neg hν]
+      · simp [dif_neg hν, mul_comm]
     _ = ρ.weights z := hγ₂.marginal_right z hz
 
 theorem gluedCoupling_isCoupling (V : Finset ℕ) (μ ν ρ : ProbDist V)
@@ -737,12 +737,200 @@ theorem gluedCoupling_isCoupling (V : Finset ℕ) (μ ν ρ : ProbDist V)
     gluedCoupling_marginal_left V μ ν ρ γ₁ γ₂ hγ₁ hγ₂,
     gluedCoupling_marginal_right V μ ν ρ γ₁ γ₂ hγ₁ hγ₂⟩
 
+theorem gluedCouplingTerm_triangle
+    (M : FiniteMetricSpace) (μ ν ρ : ProbDist M.vertices)
+    (γ₁ γ₂ : ℕ → ℕ → ℝ) (hγ₁ : IsCoupling M.vertices μ ν γ₁)
+    (hγ₂ : IsCoupling M.vertices ν ρ γ₂) (x y z : ℕ) :
+    gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z * M.dist x z ≤
+      gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z * (M.dist x y + M.dist y z) := by
+  exact mul_le_mul_of_nonneg_left (M.triangle x y z)
+    (gluedCouplingTerm_nonneg M.vertices μ ν ρ γ₁ γ₂ hγ₁ hγ₂ x y z)
+
+theorem gluedCoupling_cost_first_sum
+    (M : FiniteMetricSpace) (μ ν ρ : ProbDist M.vertices)
+    (γ₁ γ₂ : ℕ → ℕ → ℝ) (hγ₁ : IsCoupling M.vertices μ ν γ₁)
+    (hγ₂ : IsCoupling M.vertices ν ρ γ₂) :
+    M.vertices.sum (fun x => M.vertices.sum (fun y => M.vertices.sum (fun z =>
+          gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z * M.dist x y))) =
+      couplingTransportCost M γ₁ := by
+  unfold couplingTransportCost
+  calc
+    M.vertices.sum (fun x => M.vertices.sum (fun y => M.vertices.sum (fun z =>
+            gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z * M.dist x y))) =
+        M.vertices.sum (fun x => M.vertices.sum (fun y =>
+          M.dist x y * M.vertices.sum (fun z =>
+            gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z))) := by
+      apply Finset.sum_congr rfl
+      intro x _
+      apply Finset.sum_congr rfl
+      intro y _
+      calc
+        M.vertices.sum (fun z => gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z * M.dist x y) =
+            M.vertices.sum (fun z => M.dist x y * gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z) := by
+          apply Finset.sum_congr rfl
+          intro z _
+          ring
+        _ = M.dist x y * M.vertices.sum (fun z => gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z) := by
+          rw [← Finset.mul_sum]
+    _ = M.vertices.sum (fun x => M.vertices.sum (fun y =>
+          M.dist x y * if h : ν.weights y = 0 then 0 else γ₁ x y)) := by
+      apply Finset.sum_congr rfl
+      intro x _
+      apply Finset.sum_congr rfl
+      intro y hy
+      by_cases hν : ν.weights y = 0
+      · simp [gluedCouplingTerm, hν]
+      · have hne : ν.weights y ≠ 0 := fun h => hν h
+        calc
+          M.dist x y * M.vertices.sum (fun z => gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z) =
+              M.dist x y * (γ₁ x y * M.vertices.sum (γ₂ y) / ν.weights y) := by
+            congr 1
+            calc
+              M.vertices.sum (fun z => gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z) =
+                  M.vertices.sum (fun z => γ₁ x y * γ₂ y z / ν.weights y) := by
+                apply Finset.sum_congr rfl
+                intro z _
+                simp [gluedCouplingTerm, dif_neg hν]
+              _ = γ₁ x y * M.vertices.sum (γ₂ y) / ν.weights y := by
+                calc
+                  _ = M.vertices.sum (fun z => (γ₁ x y / ν.weights y) * γ₂ y z) := by
+                    apply Finset.sum_congr rfl
+                    intro z _
+                    ring
+                  _ = (γ₁ x y / ν.weights y) * M.vertices.sum (γ₂ y) := by
+                    rw [← Finset.mul_sum]
+                  _ = γ₁ x y * M.vertices.sum (γ₂ y) / ν.weights y := by ring
+          _ = M.dist x y * if h : ν.weights y = 0 then 0 else γ₁ x y := by
+            rw [hγ₂.marginal_left y hy]
+            field_simp [hne]
+            simp [dif_neg hν]
+    _ = M.vertices.sum (fun x => M.vertices.sum (fun y => γ₁ x y * M.dist x y)) := by
+      apply Finset.sum_congr rfl
+      intro x _
+      apply Finset.sum_congr rfl
+      intro y hy
+      by_cases hν : ν.weights y = 0
+      · have hzero := IsCoupling_col_zero_of_weight_zero M.vertices μ ν γ₁ hγ₁ hy hν x
+        simp [hν, hzero, mul_zero, zero_mul]
+      · simp [dif_neg hν, mul_comm]
+
+theorem gluedCoupling_cost_second_sum
+    (M : FiniteMetricSpace) (μ ν ρ : ProbDist M.vertices)
+    (γ₁ γ₂ : ℕ → ℕ → ℝ) (hγ₁ : IsCoupling M.vertices μ ν γ₁)
+    (hγ₂ : IsCoupling M.vertices ν ρ γ₂) :
+    M.vertices.sum (fun x => M.vertices.sum (fun y => M.vertices.sum (fun z =>
+          gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z * M.dist y z))) =
+      couplingTransportCost M γ₂ := by
+  unfold couplingTransportCost
+  calc
+    M.vertices.sum (fun x => M.vertices.sum (fun y => M.vertices.sum (fun z =>
+            gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z * M.dist y z))) =
+        M.vertices.sum (fun y => M.vertices.sum (fun z =>
+          M.dist y z * M.vertices.sum (fun x =>
+            gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z))) := by
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro y _
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro z _
+      calc
+        M.vertices.sum (fun x => gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z * M.dist y z) =
+            M.vertices.sum (fun x => M.dist y z * gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z) := by
+          apply Finset.sum_congr rfl
+          intro x _
+          ring
+        _ = M.dist y z * M.vertices.sum (fun x => gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z) := by
+          rw [← Finset.mul_sum]
+    _ = M.vertices.sum (fun y => M.vertices.sum (fun z =>
+          M.dist y z * if h : ν.weights y = 0 then 0 else γ₂ y z)) := by
+      apply Finset.sum_congr rfl
+      intro y hy
+      apply Finset.sum_congr rfl
+      intro z _
+      by_cases hν : ν.weights y = 0
+      · simp [gluedCouplingTerm, hν]
+      · have hne : ν.weights y ≠ 0 := fun h => hν h
+        calc
+          M.dist y z * M.vertices.sum (fun x => gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z) =
+              M.dist y z * (M.vertices.sum (γ₁ · y) * γ₂ y z / ν.weights y) := by
+            congr 1
+            calc
+              M.vertices.sum (fun x => gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z) =
+                  M.vertices.sum (fun x => γ₁ x y * γ₂ y z / ν.weights y) := by
+                apply Finset.sum_congr rfl
+                intro x _
+                simp [gluedCouplingTerm, dif_neg hν]
+              _ = M.vertices.sum (γ₁ · y) * γ₂ y z / ν.weights y := by
+                calc
+                  _ = M.vertices.sum (fun x => (γ₂ y z / ν.weights y) * γ₁ x y) := by
+                    apply Finset.sum_congr rfl
+                    intro x _
+                    ring
+                  _ = (γ₂ y z / ν.weights y) * M.vertices.sum (γ₁ · y) := by
+                    rw [← Finset.mul_sum]
+                  _ = M.vertices.sum (γ₁ · y) * γ₂ y z / ν.weights y := by ring
+          _ = M.dist y z * if h : ν.weights y = 0 then 0 else γ₂ y z := by
+            rw [hγ₁.marginal_right y hy]
+            field_simp [hne]
+            simp [dif_neg hν]
+    _ = M.vertices.sum (fun y => M.vertices.sum (fun z => γ₂ y z * M.dist y z)) := by
+      apply Finset.sum_congr rfl
+      intro y hy
+      apply Finset.sum_congr rfl
+      intro z _
+      by_cases hν : ν.weights y = 0
+      · have hzero := IsCoupling_row_zero_of_weight_zero M.vertices ν ρ γ₂ hγ₂ hy hν z
+        simp [hν, hzero, mul_zero, zero_mul]
+      · simp [dif_neg hν, mul_comm]
+
 theorem gluedCoupling_cost_le (M : FiniteMetricSpace) (μ ν ρ : ProbDist M.vertices)
     (γ₁ γ₂ : ℕ → ℕ → ℝ) (hγ₁ : IsCoupling M.vertices μ ν γ₁)
     (hγ₂ : IsCoupling M.vertices ν ρ γ₂) :
     couplingTransportCost M (gluedCoupling M.vertices ν γ₁ γ₂) ≤
       couplingTransportCost M γ₁ + couplingTransportCost M γ₂ := by
-  sorry  -- Gluing cost ≤ sum of costs: triangle on `M.dist`, marginals of `gluedCoupling` proved above
+  unfold couplingTransportCost gluedCoupling
+  calc
+    M.vertices.sum (fun x => M.vertices.sum (fun z =>
+          (M.vertices.sum (fun y => gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z)) * M.dist x z)) =
+        M.vertices.sum (fun x => M.vertices.sum (fun z => M.vertices.sum (fun y =>
+          gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z * M.dist x z))) := by
+      apply Finset.sum_congr rfl
+      intro x _
+      apply Finset.sum_congr rfl
+      intro z _
+      rw [Finset.sum_mul]
+    _ = M.vertices.sum (fun x => M.vertices.sum (fun y => M.vertices.sum (fun z =>
+          gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z * M.dist x z))) := by
+      apply Finset.sum_congr rfl
+      intro x _
+      rw [Finset.sum_comm]
+    _ ≤ M.vertices.sum (fun x => M.vertices.sum (fun y => M.vertices.sum (fun z =>
+          gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z * (M.dist x y + M.dist y z)))) := by
+      apply Finset.sum_le_sum
+      intro x _
+      apply Finset.sum_le_sum
+      intro y _
+      apply Finset.sum_le_sum
+      intro z _
+      exact gluedCouplingTerm_triangle M μ ν ρ γ₁ γ₂ hγ₁ hγ₂ x y z
+    _ = M.vertices.sum (fun x => M.vertices.sum (fun y => M.vertices.sum (fun z =>
+            gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z * M.dist x y))) +
+        M.vertices.sum (fun x => M.vertices.sum (fun y => M.vertices.sum (fun z =>
+            gluedCouplingTerm M.vertices ν γ₁ γ₂ x y z * M.dist y z))) := by
+      rw [← Finset.sum_add_distrib]
+      apply Finset.sum_congr rfl
+      intro x _
+      rw [← Finset.sum_add_distrib]
+      apply Finset.sum_congr rfl
+      intro y _
+      rw [← Finset.sum_add_distrib]
+      apply Finset.sum_congr rfl
+      intro z _
+      ring
+    _ = couplingTransportCost M γ₁ + couplingTransportCost M γ₂ := by
+      rw [gluedCoupling_cost_first_sum M μ ν ρ γ₁ γ₂ hγ₁ hγ₂,
+        gluedCoupling_cost_second_sum M μ ν ρ γ₁ γ₂ hγ₁ hγ₂]
 
 -- ---------------------------------------------------------------------------
 -- Triangle inequality
