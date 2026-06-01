@@ -907,6 +907,7 @@ Module: `UgpLean.Universality.PhiMDLUniversality`; companion: `rule110-lean/Rule
 ### ContinuumLimit
 - `UgpLean.ContinuumLimit.GorardVacuumW1Bridge` — Gorard ORIC adjacent-edge κ=0 ∀ n; vacuum W₁=1; conditional on W₁=1 gives κ=0 (CatAL, zero sorry; graduated 2026-06-01)
 - `UgpLean.ContinuumLimit.WassersteinDistance` — Full W₁ Wasserstein metric scaffold: non-negativity, Kantorovich dual lower bound, triangle inequality via glued coupling, zero-iff-equal, infimum attained, coupling set compact (all zero sorry, CatAL; graduated 2026-06-01)
+- `UgpLean.Universality.MDLDerivabilityCriterion` (§5 extended, 2026-06-01) — **T96-02 CA-level closure CatAL**: `z5_fmdl_no_psc_kink_orbits` (GTE polynomial over GF(5) with winding-based PSC predicate, `native_decide`, 3125 states); `mdl_total_z7z3_strictly_beats_z5z3` (total MDL gap 3+0 < 5+6, `decide`); `mdl_ca_rule_coding_closed` (explicit K_data witness, master closure); non-circular MDL derivation Z₇×Z₃ fully machine-certified without SM input (commits `e38b26a`, `9007574`)
 
 ### Lorentzian ([ugp-physics-lean](https://github.com/novaspivack/ugp-physics-lean))
 - `UgpPhysicsLean.Lorentzian.MinkowskiSpace` — Minkowski metric, LorentzGroup (CatAL)

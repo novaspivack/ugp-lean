@@ -942,6 +942,14 @@ All theorems zero sorry (fully CatAL, zero sorry on every proof path; graduated 
 | **op9_catal_unconditional** | SrrgLean.Bridges.ToMDL | OP9 CatAL unconditional: argmax F = argmin K at the canonical SRRG scalar instance (zero sorry, zero hypotheses) |
 | **srrg_op9_k_alg_biconditional** | SrrgLean.Bridges.ToMDL | Biconditional: K_alg profile ↔ SRRG extremum (CatAD, zero sorry) |
 
+### T96-02 — Unconditional MDL Uniqueness of Z₇×Z₃ (CA-level, zero sorry, 2026-06-01)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **z5_fmdl_no_psc_kink_orbits** | Universality.MDLDerivabilityCriterion | GTE polynomial C+R−CR−LCR over GF(5) with winding-based PSC kink predicate has 0 kink fixed points on 5-cell ring (`native_decide`, 3125 states); (2,2,2,2,2) is a displaced vacuum (zero winding), not a kink |
+| **mdl_total_z7z3_strictly_beats_z5z3** | Universality.MDLDerivabilityCriterion | Total MDL cost: structureSpecCost(7,3) + 0 < structureSpecCost(5,3) + 6, i.e. 3 < 11 (`decide`) |
+| **mdl_ca_rule_coding_closed** | Universality.MDLDerivabilityCriterion | Explicit K_data witness: K_data(7,3)=0, K_data(5,3)=6, and total MDL cost strictly favours Z₇×Z₃; supersedes open placeholder `mdl_ca_rule_coding_open`; closes T96-02 CatAL |
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |
