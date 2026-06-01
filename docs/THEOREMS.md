@@ -982,6 +982,15 @@ All theorems zero sorry (CatAL).
 | **mdl_tower_three_levels_non_circular** | Framework.MDLTower | Extends bundle with supplementary T_GTE K-minimality (`IsKMinimalOnGTE` via `phimdl_continuum_is_K_min_in_T_GTE`) |
 | **mdl_tower_role1_T_GTE_supplement** | Framework.MDLTower | Φ_MDL continuum CA component is K-minimal on `T_GTE` (PhiMDLBridge layer) |
 
+### N_gen Partial Universality — Four CatAL Constraints (083B-NGEN partial, zero sorry, 2026-06-01)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **ngen_partial_universality_catal** | Universality.NgenUniversalityPartial | CatAL bundle: DPP (`dimensional_protocol_principle_master`) ∧ CMCA (`three_generations_physical`) ∧ TPC (`tpc_ngen_equals_level_count`) ∧ Gorard D²=16 (`c_gorard_eq_n_spatial_over_two_dsq`, `gte_dimension_as_ngen_plus_one`) |
+| **ngen_three_from_catal_constraints** | Universality.NgenUniversalityPartial | `n_gen = 3 ∧ fmdl_spatial_dimension = 3 ∧ level_hypercomputation + 1 = 3` |
+| **ngen_unique_catal** | Universality.NgenUniversalityPartial | Parametric uniqueness: `NgenCatALConstraints n → n = 3` for `0 < n` |
+| **NgenCatALConstraints** *(structure)* | Universality.NgenUniversalityPartial | Four CatAL constraint fields (scaffold for full parametric universality) |
+
 ### Particles-Computation-Spacetime Trinity (083B-PCT, zero sorry, 2026-06-01)
 
 | Theorem | Module | Statement |
