@@ -14,6 +14,7 @@ import Mathlib.Topology.Order.Monotone
 import Mathlib.Topology.Order.Real
 import Mathlib.Topology.Instances.Real.Lemmas
 import Mathlib.Topology.Constructions
+import Mathlib.Topology.Algebra.Monoid.FunOnFinite
 import Mathlib.Tactic.Linarith
 
 /-!
@@ -391,38 +392,43 @@ variable {V : Finset ℕ} {μ ν : ProbDist V}
 /-- Vertex pair in the coupling support. -/
 abbrev CouplingPair (V : Finset ℕ) := ↑(V ×ˢ V)
 
+/-- Pair-indexed coupling coefficients with the product topology. -/
+abbrev CouplingCoeffs (V : Finset ℕ) := ∀ _ : CouplingPair V, ℝ
+
+instance : TopologicalSpace (CouplingPair V) := ⊥
+
 /-- Extend pair-indexed coefficients to a full coupling plan, zero outside `V ×ˢ V`. -/
-noncomputable def couplingFromPairs (c : CouplingPair V → ℝ) : ℕ → ℕ → ℝ :=
+noncomputable def couplingFromPairs (c : CouplingCoeffs V) : ℕ → ℕ → ℝ :=
   fun x y => if h : (x, y) ∈ V ×ˢ V then c ⟨(x, y), h⟩ else 0
 
-theorem couplingFromPairs_nonneg (c : CouplingPair V → ℝ)
+theorem couplingFromPairs_nonneg (c : CouplingCoeffs V)
     (hnonneg : ∀ p : CouplingPair V, 0 ≤ c p) (x y : ℕ) :
     0 ≤ couplingFromPairs (V := V) c x y := by
   unfold couplingFromPairs; split_ifs with h
   · exact hnonneg ⟨(x, y), h⟩
   · exact le_rfl
 
-theorem couplingFromPairs_left_outside (c : CouplingPair V → ℝ) (x : ℕ) (hx : x ∉ V) (y : ℕ) :
+theorem couplingFromPairs_left_outside (c : CouplingCoeffs V) (x : ℕ) (hx : x ∉ V) (y : ℕ) :
     couplingFromPairs (V := V) c x y = 0 := by
   unfold couplingFromPairs; split_ifs with h
   · exact absurd (Finset.mem_product.mp h).1 hx
   · rfl
 
-theorem couplingFromPairs_right_outside (c : CouplingPair V → ℝ) (y : ℕ) (hy : y ∉ V) (x : ℕ) :
+theorem couplingFromPairs_right_outside (c : CouplingCoeffs V) (y : ℕ) (hy : y ∉ V) (x : ℕ) :
     couplingFromPairs (V := V) c x y = 0 := by
   unfold couplingFromPairs; split_ifs with h
   · exact absurd (Finset.mem_product.mp h).2 hy
   · rfl
 
 /-- Coefficient-level coupling constraints on `V ×ˢ V`. -/
-structure IsCouplingCoeffs (c : CouplingPair V → ℝ) : Prop where
+structure IsCouplingCoeffs (c : CouplingCoeffs V) : Prop where
   nonneg : ∀ p : CouplingPair V, 0 ≤ c p
   marginal_left :
     ∀ x ∈ V, V.sum (fun y => couplingFromPairs (V := V) c x y) = μ.weights x
   marginal_right :
     ∀ y ∈ V, V.sum (fun x => couplingFromPairs (V := V) c x y) = ν.weights y
 
-theorem IsCouplingCoeffs.isCoupling (c : CouplingPair V → ℝ)
+theorem IsCouplingCoeffs.isCoupling (c : CouplingCoeffs V)
     (hc : IsCouplingCoeffs (V := V) (μ := μ) (ν := ν) c) :
     IsCoupling V μ ν (couplingFromPairs (V := V) c) := by
   refine ⟨couplingFromPairs_nonneg c hc.nonneg,
@@ -432,11 +438,11 @@ theorem IsCouplingCoeffs.isCoupling (c : CouplingPair V → ℝ)
 
 /-- Transport cost from pair-indexed coefficients. -/
 noncomputable def couplingTransportCostPairs (M : FiniteMetricSpace)
-    (c : CouplingPair M.vertices → ℝ) : ℝ :=
+    (c : CouplingCoeffs M.vertices) : ℝ :=
   M.vertices.sum (fun x => M.vertices.sum (fun y =>
     if h : (x, y) ∈ M.vertices ×ˢ M.vertices then c ⟨(x, y), h⟩ * M.dist x y else 0))
 
-theorem couplingTransportCostPairs_eq (M : FiniteMetricSpace) (c : CouplingPair M.vertices → ℝ) :
+theorem couplingTransportCostPairs_eq (M : FiniteMetricSpace) (c : CouplingCoeffs M.vertices) :
     couplingTransportCostPairs M c =
       couplingTransportCost M (couplingFromPairs (V := M.vertices) c) := by
   unfold couplingTransportCostPairs couplingTransportCost couplingFromPairs
@@ -448,10 +454,10 @@ theorem couplingTransportCostPairs_eq (M : FiniteMetricSpace) (c : CouplingPair 
   simp [hpair]
 
 /-- The set of pair-indexed coupling coefficients satisfying marginal constraints. -/
-def couplingPolytope (V : Finset ℕ) (μ ν : ProbDist V) : Set (CouplingPair V → ℝ) :=
+def couplingPolytope (V : Finset ℕ) (μ ν : ProbDist V) : Set (CouplingCoeffs V) :=
   {c | IsCouplingCoeffs (V := V) (μ := μ) (ν := ν) c}
 
-theorem IsCouplingCoeffs.coeff_le_one (c : CouplingPair V → ℝ)
+theorem IsCouplingCoeffs.coeff_le_one (c : CouplingCoeffs V)
     (hc : IsCouplingCoeffs (V := V) (μ := μ) (ν := ν) c) (p : CouplingPair V) :
     c p ≤ 1 := by
   have hp : p.1 ∈ V ×ˢ V := p.2
@@ -479,24 +485,172 @@ theorem couplingPolytope_subset_box (V : Finset ℕ) (μ ν : ProbDist V) :
     simpa [couplingPolytope, Set.mem_setOf_eq] using hc
   exact ⟨hf.nonneg p, IsCouplingCoeffs.coeff_le_one (V := V) (μ := μ) (ν := ν) c hf p⟩
 
-/-- Achievable transport costs are the image of the coupling polytope under pair transport cost.
+/-- Coefficient function extracted from a full coupling plan on `V ×ˢ V`. -/
+noncomputable def couplingToPairs (γ : ℕ → ℕ → ℝ) : CouplingCoeffs V :=
+  fun p => γ p.1.1 p.1.2
 
-    Proof deferred: requires showing every valid coupling arises from pair coefficients and
-    that the two cost definitions agree (the forward direction is `couplingTransportCostPairs_eq`). -/
+theorem couplingFromPairs_couplingToPairs (γ : ℕ → ℕ → ℝ) {x y : ℕ}
+    (hmem : (x, y) ∈ V ×ˢ V) :
+    couplingFromPairs (V := V) (couplingToPairs γ) x y = γ x y := by
+  unfold couplingFromPairs couplingToPairs
+  simp [hmem]
+
+theorem couplingTransportCost_couplingToPairs (M : FiniteMetricSpace) (γ : ℕ → ℕ → ℝ) :
+    couplingTransportCost M (couplingFromPairs (V := M.vertices) (couplingToPairs γ)) =
+      couplingTransportCost M γ := by
+  unfold couplingTransportCost couplingFromPairs couplingToPairs
+  apply Finset.sum_congr rfl
+  intro x hx
+  apply Finset.sum_congr rfl
+  intro y hy
+  have hmem : (x, y) ∈ M.vertices ×ˢ M.vertices := Finset.mem_product.mpr ⟨hx, hy⟩
+  simp [hmem]
+
+theorem couplingToPairs_isCouplingCoeffs (γ : ℕ → ℕ → ℝ)
+    (hγ : IsCoupling V μ ν γ) :
+    IsCouplingCoeffs (V := V) (μ := μ) (ν := ν) (couplingToPairs γ) := by
+  refine ⟨fun p => hγ.nonneg p.1.1 p.1.2, ?_, ?_⟩
+  · intro x hx
+    have hsum :
+        V.sum (fun y => couplingFromPairs (V := V) (couplingToPairs γ) x y) = V.sum (γ x) := by
+      apply Finset.sum_congr rfl
+      intro y hy
+      rw [couplingFromPairs_couplingToPairs γ (Finset.mem_product.mpr ⟨hx, hy⟩)]
+    rw [hsum, hγ.marginal_left x hx]
+  · intro y hy
+    have hsum :
+        V.sum (fun x => couplingFromPairs (V := V) (couplingToPairs γ) x y) = V.sum (γ · y) := by
+      apply Finset.sum_congr rfl
+      intro x hx
+      rw [couplingFromPairs_couplingToPairs γ (Finset.mem_product.mpr ⟨hx, hy⟩)]
+    rw [hsum, hγ.marginal_right y hy]
+
+theorem isCompact_couplingCoeffBox (V : Finset ℕ) :
+    IsCompact (Set.pi Set.univ (fun (_ : CouplingPair V) => Set.Icc (0 : ℝ) 1)) := by
+  apply isCompact_univ_pi
+  intro _
+  exact isCompact_Icc
+
+theorem continuous_couplingCoeffEval (p : CouplingPair V) :
+    Continuous (fun c : CouplingCoeffs V => c p) :=
+  continuous_apply p
+
+theorem continuous_couplingFromPairs (x y : ℕ) :
+    Continuous (fun c : CouplingCoeffs V => couplingFromPairs (V := V) c x y) := by
+  unfold couplingFromPairs
+  by_cases hmem : (x, y) ∈ V ×ˢ V
+  · simp only [dif_pos hmem]
+    exact continuous_apply ((⟨(x, y), hmem⟩ : CouplingPair V))
+  · simp only [dif_neg (fun h => hmem h)]
+    exact continuous_const
+
+theorem continuous_couplingLeftMarginal (x : ℕ) :
+    Continuous (fun c : CouplingCoeffs V =>
+      V.sum (fun y => couplingFromPairs (V := V) c x y)) := by
+  apply continuous_finset_sum
+  intro y _
+  exact continuous_couplingFromPairs (V := V) x y
+
+theorem continuous_couplingRightMarginal (y : ℕ) :
+    Continuous (fun c : CouplingCoeffs V =>
+      V.sum (fun x => couplingFromPairs (V := V) c x y)) := by
+  apply continuous_finset_sum
+  intro x _
+  exact continuous_couplingFromPairs (V := V) x y
+
+theorem couplingPolytope_isClosed (V : Finset ℕ) (μ ν : ProbDist V) :
+    IsClosed (couplingPolytope (V := V) μ ν) := by
+  change IsClosed {c | IsCouplingCoeffs (V := V) (μ := μ) (ν := ν) c}
+  have hnonneg :
+      IsClosed {c : CouplingCoeffs V | ∀ p : CouplingPair V, 0 ≤ c p} := by
+    have heq :
+        {c : CouplingCoeffs V | ∀ p : CouplingPair V, 0 ≤ c p} =
+          ⋂ p : CouplingPair V, {c | 0 ≤ c p} := by
+      ext c
+      simp [Set.mem_iInter]
+    rw [heq]
+    refine isClosed_iInter fun (p : CouplingPair V) =>
+      isClosed_le continuous_const (continuous_couplingCoeffEval p)
+  have hleft :
+      IsClosed {c : CouplingCoeffs V |
+        ∀ x ∈ V, V.sum (fun y => couplingFromPairs (V := V) c x y) = μ.weights x} := by
+    have heq :
+        {c : CouplingCoeffs V | ∀ x ∈ V, V.sum (fun y => couplingFromPairs c x y) = μ.weights x} =
+          ⋂ x ∈ V, {c | V.sum (fun y => couplingFromPairs (V := V) c x y) = μ.weights x} := by
+      ext c
+      simp only [Set.mem_setOf_eq, Set.mem_iInter]
+    rw [heq]
+    exact isClosed_biInter fun x _ =>
+      isClosed_eq (continuous_couplingLeftMarginal (V := V) x) continuous_const
+  have hright :
+      IsClosed {c : CouplingCoeffs V |
+        ∀ y ∈ V, V.sum (fun x => couplingFromPairs (V := V) c x y) = ν.weights y} := by
+    have heq :
+        {c : CouplingCoeffs V | ∀ y ∈ V, V.sum (fun x => couplingFromPairs c x y) = ν.weights y} =
+          ⋂ y ∈ V, {c | V.sum (fun x => couplingFromPairs (V := V) c x y) = ν.weights y} := by
+      ext c
+      simp only [Set.mem_setOf_eq, Set.mem_iInter]
+    rw [heq]
+    exact isClosed_biInter fun y _ =>
+      isClosed_eq (continuous_couplingRightMarginal (V := V) y) continuous_const
+  have hdef :
+      {c | IsCouplingCoeffs (V := V) (μ := μ) (ν := ν) c} =
+        {c : CouplingCoeffs V | ∀ p : CouplingPair V, 0 ≤ c p} ∩
+          {c : CouplingCoeffs V |
+            ∀ x ∈ V, V.sum (fun y => couplingFromPairs (V := V) c x y) = μ.weights x} ∩
+          {c : CouplingCoeffs V |
+            ∀ y ∈ V, V.sum (fun x => couplingFromPairs (V := V) c x y) = ν.weights y} := by
+    ext c
+    simp only [Set.mem_setOf_eq, Set.mem_inter_iff]
+    constructor
+    · intro h
+      exact And.intro (And.intro h.nonneg h.marginal_left) h.marginal_right
+    · intro ⟨⟨h1, h2⟩, h3⟩
+      exact ⟨h1, h2, h3⟩
+  rw [hdef]
+  exact (hnonneg.inter hleft).inter hright
+
+theorem couplingPolytope_isCompact (V : Finset ℕ) (μ ν : ProbDist V) :
+    IsCompact (couplingPolytope (V := V) μ ν) := by
+  apply IsCompact.of_isClosed_subset (isCompact_couplingCoeffBox (V := V))
+  · exact couplingPolytope_isClosed (V := V) μ ν
+  · exact couplingPolytope_subset_box (V := V) μ ν
+
+theorem continuous_couplingTransportCostPairs (M : FiniteMetricSpace) :
+    Continuous (couplingTransportCostPairs (M := M)) := by
+  unfold couplingTransportCostPairs
+  apply continuous_finset_sum
+  intro x _
+  apply continuous_finset_sum
+  intro y _
+  by_cases hmem : (x, y) ∈ M.vertices ×ˢ M.vertices
+  · simp only [dif_pos hmem]
+    exact (continuous_apply ((⟨(x, y), hmem⟩ : CouplingPair M.vertices))).mul continuous_const
+  · simp only [dif_neg (fun h => hmem h)]
+    exact continuous_const
+
+/-- Achievable transport costs are the image of the coupling polytope under pair transport cost. -/
 theorem couplingCostSet_eq_image (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) :
     couplingCostSet M μ ν =
       couplingTransportCostPairs M '' couplingPolytope (V := M.vertices) μ ν := by
-  sorry
+  ext c
+  simp only [couplingCostSet, couplingPolytope, Set.mem_setOf_eq, Set.mem_image]
+  constructor
+  · rintro ⟨γ, hγ, rfl⟩
+    refine ⟨couplingToPairs γ,
+      couplingToPairs_isCouplingCoeffs (V := M.vertices) (μ := μ) (ν := ν) γ hγ, ?_⟩
+    rw [couplingTransportCostPairs_eq, couplingTransportCost_couplingToPairs]
+  · rintro ⟨coeff, hc, rfl⟩
+    refine ⟨couplingFromPairs (V := M.vertices) coeff,
+      IsCouplingCoeffs.isCoupling (V := M.vertices) (μ := μ) (ν := ν) coeff hc, ?_⟩
+    exact (couplingTransportCostPairs_eq M coeff).symm
 
-/-- On a finite vertex set, achievable transport costs form a compact subset of `ℝ`.
-
-    Proof sketch: couplings on `V ×ˢ V` satisfy nonnegativity and linear marginal constraints,
-    forming a closed subset of the compact hypercube `[0,1]^(|V|²)`. Transport cost is a finite
-    sum of bilinear terms, hence continuous; the image of a compact set under a continuous map
-    is compact. Full formalization deferred pending optimal-transport infrastructure in Mathlib. -/
+/-- On a finite vertex set, achievable transport costs form a compact subset of `ℝ`. -/
 theorem couplingCostSet_isCompact (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) :
     IsCompact (couplingCostSet M μ ν) := by
-  sorry
+  rw [couplingCostSet_eq_image]
+  exact IsCompact.image (couplingPolytope_isCompact (V := M.vertices) μ ν)
+    (continuous_couplingTransportCostPairs (M := M))
 
 end CouplingPolytope
 
