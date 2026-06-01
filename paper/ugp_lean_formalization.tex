@@ -587,12 +587,19 @@ proves by \texttt{decide} that exactly one of the $60$
 \texttt{isSMGauge\_iff} gives the full logical characterisation of that label.
 A fourth theorem (\texttt{SM\_is\_D\_minimizer\_extended}) is now proved with
 zero \texttt{sorry} as an alias \texttt{:=\ isSMGauge\_iff}, providing the
-decidable fragment of the SM-uniqueness claim.  The full machine-checked
-proof that the SM is the unique $D$-minimizer over the 34,560-universe scan
-remains an open programme (framework and decidable fragment in place;
-\texttt{native\_decide} certification pending a computable \texttt{Fintype}
-instance on the full \texttt{UniverseParams} product type and computable
-constraint functions; computational certificate in
+decidable fragment of the SM-uniqueness claim.
+Five further theorems close the Layer~I PSC enumeration by \texttt{native\_decide}
+over all 34,560 \texttt{UniverseParams} candidates (zero \texttt{sorry}):
+\texttt{universe\_params\_card} certifies the search space cardinality;
+\texttt{psc\_layer\_i\_certificate} and \texttt{psc\_12\_survivors\_card}
+confirm exactly 12 Layer~I survivors;
+\texttt{psc\_enumeration\_forces\_ngen\_3} proves every Layer~I survivor has
+$N_{\mathrm{gen}} = 3$;
+\texttt{psc\_12\_survivors\_have\_ngen\_3} and
+\texttt{psc\_admissible\_forces\_sm\_gauge} bundle the survivor-cardinality and
+SM-gauge consequences.
+The full soft-constraint $D$-minimizer over all 14 scan constraints remains
+the residual structural target (computational certificate in
 \texttt{ugp-physics/MFRR/.../extended\_scan\_results.json},
 SHA-256: \texttt{407078d7\ldots}).
 
@@ -611,16 +618,14 @@ The only axioms in scope are \lean{}'s foundational axioms
 (\texttt{propext}, \texttt{Quot.sound}, \texttt{Classical.\allowbreak choice})
 and Mathlib's standard imports.
 
-The new \texttt{TE22} module is now zero-\texttt{sorry}: every theorem in
-\texttt{UgpLean.TE22.ScanCertificate} closes by algebraic reasoning or
-\texttt{decide}, including \texttt{SM\_is\_D\_minimizer\_extended} (proved
-as an alias \texttt{:=\ isSMGauge\_iff}, the decidable fragment of the
-full SM-uniqueness claim).  The full machine-checked proof that the SM
-is the unique $D$-minimizer over the extended 34,560-universe scan
-remains an open programme, with proof strategy and computational
-certificate recorded; the \texttt{native\_decide} proof is pending a
-computable \texttt{Fintype} instance on the full \texttt{UniverseParams}
-product type and computable constraint functions.
+The \texttt{TE22} module is zero-\texttt{sorry}: every theorem in
+\texttt{UgpLean.TE22.ScanCertificate} closes by algebraic reasoning,
+\texttt{decide}, or \texttt{native\_decide}, including the 34,560-universe
+Layer~I PSC enumeration (\texttt{psc\_enumeration\_forces\_ngen\_3},
+\texttt{psc\_12\_survivors\_have\_ngen\_3}).  The residual open programme is
+full soft-constraint $D$-minimization over all 14 scan constraints; the
+Layer~I survivor structure and $N_{\mathrm{gen}} = 3$ consequence are
+machine-certified.
 
 \medskip\noindent\textbf{Documented axioms (post-audit: 20 global).}
 Two theorems in \texttt{GTE.AnalyticArchitecture} are declared as
