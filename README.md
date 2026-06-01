@@ -891,13 +891,14 @@ Module: `UgpLean.Universality.PhiMDLUniversality`; companion: `rule110-lean/Rule
 - `UgpLean.Algebra.BaryonNumber` — \(B=(1/3)\sum \chi_q(w_j)\) topological charge; \(B=1/3\) from \(N_{\mathrm{tapes}}=3\) (CatAL)
 - `UgpLean.Algebra.ChiralDoublet` — Rule124 = Rule110 with L↔R spatial reflection (CatAL)
 - `UgpLean.Algebra.SRRGCABridge` — \(1/\varphi\) = positive root of \(p(x,x,x)=x\) (CatAL)
-- `UgpLean.Algebra.GaugeMDL` — SU(2)\(_L\) from PMDL gauging; 1 named axiom (structural CatAL)
+- `UgpLean.Algebra.GaugeMDL` (upgraded 2026-06-01) — three previously axiomatic SU(2)_L propositions now machine-certified: potential invariance, covariant derivative minimality, W-boson generator algebra. All zero sorry.
 
 ### BraidAtlas
 - `UgpLean.BraidAtlas.WindingToBraidRep` — Fermionic sectors \(\{2,4,6\}\) = non-primitive roots of \(\mathbb{Z}_7^\times\); algebraic ID (CatAL)
 
 ### Gravity
 - `UgpLean.Gravity.PMDLGravityTheorems` — MDL uniqueness, vacuum fixed-point, mass hierarchy (CatAL)
+- `UgpLean.Framework.MDLTower` (2026-06-01) — **083B-MDL-TOWER CatAL**: `mdl_tower_bundle` unifies three nested MDL roles (theory selection via `mdl_ca_rule_coding_closed`, PMDL gravity via `unique_cubic_gravity_coupling`, Born rule via `born_rule_unconditional`); `mdl_tower_three_levels_non_circular`; zero sorry, zero axioms
 - `UgpLean.Gravity.GorardRicciFlatVacuum` — Vacuum Ricci-flat; causal diamond \(V=T^4/4\) (CatAL)
 - `UgpLean.Gravity.LorentzGroupSO13` — All 12 \(\mathfrak{so}(1,3)\) commutation relations; Thomas precession (CatAL)
 - `UgpLean.Gravity.FermionicStatistics` — Fermionic statistics chain zero sorry; exchange phase formula (CatAL)
