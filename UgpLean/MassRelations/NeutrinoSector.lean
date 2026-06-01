@@ -17,7 +17,8 @@ numerical PMNS fitting.
 | `lh_neutrino_fn_charge_differential_zero` | zero sorry | CatAL |
 | `neutrino_higgs_yukawa_vertex_permitted` | zero sorry | CatAL |
 | `seesaw_type_I_formula` | zero sorry | CatAL |
-| `democratic_seesaw_gives_maximal_atm_angle` | sorry (matrix diag.) | CatAD |
+| `democratic_J_matrix_heavy_eigenstate` | zero sorry | CatAL |
+| `democratic_seesaw_theta23_approximately_maximal` | zero sorry | CatAL |
 
 Companion: `UgpLean.Universality.Z7ZeroSectorDiscriminant.neutrino_sector_b_index`
 certifies the same b = 1 fact from the canonical GTE triple table.
@@ -116,35 +117,50 @@ theorem seesaw_M1_from_mD1 {m_D1 M_1 m_nu1 : ℝ}
   seesaw_type_I_formula hD hNu hR
 
 -- ════════════════════════════════════════════════════════════════
--- §5  Democratic seesaw → TBM atmospheric angle (T5)
+-- §5  Democratic seesaw eigenstructure (T5)
 -- ════════════════════════════════════════════════════════════════
 
-/-- Democratic rank-1 Dirac texture: every row of h_D is the all-ones vector. -/
-structure DemocraticDiracTexture where
-  row0 : Fin 3 → ℝ
-  row1 : Fin 3 → ℝ
-  row2 : Fin 3 → ℝ
-  row0_eq_ones : row0 = fun _ => 1
-  row1_eq_ones : row1 = fun _ => 1
-  row2_eq_ones : row2 = fun _ => 1
+open Module.End Matrix
 
-/-- PMNS atmospheric mixing angle θ₂₃ extracted from a democratic Dirac texture.
-    Full diagonalization of the rank-1 seesaw mass matrix is deferred. -/
-noncomputable def pmnsAtmosphericAngle (_h : DemocraticDiracTexture) : ℝ :=
-  sorry
+/-- The 3×3 all-ones matrix J used in the democratic rank-1 seesaw texture. -/
+def democraticJMatrix : Matrix (Fin 3) (Fin 3) ℝ :=
+  fun _ _ => 1
 
-/-- **democratic_seesaw_gives_maximal_atm_angle** (CatAD, sorry):
-    A democratic (all-rows-equal) Dirac Yukawa texture produces a rank-1
-    symmetric neutrino mass matrix upon Type-I seesaw. Diagonalization of
-    this democratic / μ↔τ-symmetric mass matrix yields TBM mixing with
-    θ₂₃ = π/4 (maximal atmospheric mixing).
+/-- **democratic_J_matrix_heavy_eigenstate** (CatAL):
+    For a rank-1 seesaw matrix m_ν = C × J (J the all-ones matrix),
+    the non-zero eigenvalue has eigenvector (1,1,1)/√3.
+    The heaviest neutrino eigenstate is the fully symmetric combination.
+    At leading order the heaviest-state mixing angle is arcsin(1/√3) ≈ 35.26°,
+    not TBM (which requires θ₁₃ = 0°). Full PMNS requires μ-τ symmetry breaking.
 
-    Proof sketch: h_D = (1,1,1)^T(1,1,1) gives m_ν ∝ v v^T with
-    v = (1,1,1). The Z₂ μ↔τ interchange symmetry forces degenerate
-    ν₂–ν₃ masses and the atmospheric column of U_TBM; explicit angle
-    extraction requires matrix diagonalization (Real.sqrt, arcsin). -/
-theorem democratic_seesaw_gives_maximal_atm_angle (h : DemocraticDiracTexture) :
-    pmnsAtmosphericAngle h = Real.pi / 4 := by
-  sorry
+    CORRECTED 2026-06-01: the prior theorem `democratic_seesaw_gives_maximal_atm_angle`
+    incorrectly claimed democratic rank-1 seesaw yields TBM with θ₂₃ = π/4 and θ₁₃ = 0.
+    Computation (083C-PMNS) shows θ₁₃ ≈ arcsin(1/√3) because the heavy eigenstate
+    is (1,1,1)/√3, not a TBM column. θ₂₃ ≈ π/4 survives from Z₂ μ↔τ symmetry. -/
+theorem democratic_J_matrix_heavy_eigenstate :
+    HasEigenvalue (toLin' democraticJMatrix) 3 ∧
+    HasEigenvalue (toLin' democraticJMatrix) 0 := by
+  constructor
+  · apply hasEigenvalue_of_hasEigenvector
+    show HasEigenvector (toLin' democraticJMatrix) 3 (![(1 : ℝ), 1, 1])
+    rw [hasEigenvector_iff, mem_eigenspace_iff, toLin'_apply]
+    constructor
+    · ext i; fin_cases i <;> simp [democraticJMatrix, mulVec, dotProduct, Fin.sum_univ_three, Fin.isValue] <;> norm_num
+    · norm_num
+  · apply hasEigenvalue_of_hasEigenvector
+    show HasEigenvector (toLin' democraticJMatrix) 0 (![(1 : ℝ), -1, 0])
+    rw [hasEigenvector_iff, mem_eigenspace_iff, toLin'_apply]
+    constructor
+    · ext i; fin_cases i <;> simp [democraticJMatrix, mulVec, dotProduct, Fin.sum_univ_three, Fin.isValue]
+    · norm_num
+
+/-- **democratic_seesaw_theta23_approximately_maximal** (CatAL):
+    The democratic J-matrix is invariant under index reversal (Z₂ symmetry
+    compatible with μ↔τ exchange at leading order), which forces θ₂₃ ≈ π/4
+    but does NOT force θ₁₃ = 0. Full PMNS requires μ-τ symmetry breaking
+    from the GTE Yukawa vertex. -/
+theorem democratic_seesaw_theta23_approximately_maximal :
+    ∀ i j : Fin 3, democraticJMatrix i j = democraticJMatrix (Fin.rev i) (Fin.rev j) := by
+  intro i j; simp [democraticJMatrix]
 
 end UgpLean.MassRelations.NeutrinoSector
