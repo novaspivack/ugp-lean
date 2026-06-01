@@ -6,7 +6,9 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Data.Real.Archimedean
 import Mathlib.Order.ConditionallyCompleteLattice.Basic
+import Mathlib.Tactic.Linarith
 
 /-!
 # Wasserstein Distance and Ollivier-Ricci Curvature (EPIC_083)
@@ -374,13 +376,14 @@ theorem couplingTransportCost_pos_of_ne_weights
 
 /-- The W₁ infimum is achieved by some coupling plan.
 
-    Proof sketch: couplings form a compact polytope in `ℝ^{|V|²}` and transport cost is linear,
-    so the minimum is attained. Deferred: formal compactness of the coupling polytope. -/
+    Named hypothesis: on a finite vertex set the coupling polytope is a compact
+    finite-dimensional polytope and transport cost is linear, so the minimum is
+    attained. Full proof deferred pending a Mathlib optimal-transport development. -/
 theorem W1_attained
     (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) :
     ∃ γ : ℕ → ℕ → ℝ, IsCoupling M.vertices μ ν γ ∧
       couplingTransportCost M γ = W1 M μ ν := by
-  sorry
+  sorry  -- Infimum attained: coupling polytope is compact (finite-dimensional, closed, bounded)
 
 /-- On a finite metric space, distinct distributions have positive W₁ distance. -/
 theorem W1_pos_of_ne_weights
@@ -540,19 +543,238 @@ theorem W1_eq_zero_iff
     exact le_antisymm hle (W1_nonneg M μ ν)
 
 -- ---------------------------------------------------------------------------
--- Triangle inequality  (explicit sorry — gluing lemma)
+-- Glued coupling (triangle inequality ingredient)
 -- ---------------------------------------------------------------------------
 
-/-- `W1 M μ ρ ≤ W1 M μ ν + W1 M ν ρ`.
+/-- Gluing term `γ₁(x,y) · γ₂(y,z) / ν(y)` when `ν(y) ≠ 0`, else `0`. -/
+noncomputable def gluedCouplingTerm (V : Finset ℕ) (ν : ProbDist V)
+    (γ₁ γ₂ : ℕ → ℕ → ℝ) (x y z : ℕ) : ℝ :=
+  if h : ν.weights y = 0 then 0 else γ₁ x y * γ₂ y z / ν.weights y
 
-    Proof sketch: glue optimal couplings via
-      γ(x,z) = Σ_y γ₁(x,y) γ₂(y,z) / ν(y).
-    Cost satisfies triangle by dist_triangle. Deferred: requires glued coupling
-    to be a valid `IsCoupling` and marginal bookkeeping. -/
+/-- Glued coupling `γ(x,z) = Σ_{y ∈ V} γ₁(x,y) γ₂(y,z) / ν(y)`. -/
+noncomputable def gluedCoupling (V : Finset ℕ) (ν : ProbDist V)
+    (γ₁ γ₂ : ℕ → ℕ → ℝ) (x z : ℕ) : ℝ :=
+  V.sum (fun y => gluedCouplingTerm V ν γ₁ γ₂ x y z)
+
+theorem IsCoupling_col_zero_of_weight_zero (V : Finset ℕ) (μ ν : ProbDist V)
+    (γ : ℕ → ℕ → ℝ) (hγ : IsCoupling V μ ν γ) {y : ℕ} (hy : y ∈ V)
+    (hν : ν.weights y = 0) (x : ℕ) : γ x y = 0 := by
+  by_cases hx : x ∈ V
+  · have hsum := hγ.marginal_right y hy
+    rw [hν] at hsum
+    exact (Finset.sum_eq_zero_iff_of_nonneg fun x' _ => hγ.nonneg x' y).1 hsum x hx
+  · exact hγ.left_outside x hx y
+
+theorem IsCoupling_row_zero_of_weight_zero (V : Finset ℕ) (μ ν : ProbDist V)
+    (γ : ℕ → ℕ → ℝ) (hγ : IsCoupling V μ ν γ) {x : ℕ} (hx : x ∈ V)
+    (hμ : μ.weights x = 0) (y : ℕ) : γ x y = 0 := by
+  by_cases hy : y ∈ V
+  · have hsum := hγ.marginal_left x hx
+    rw [hμ] at hsum
+    exact (Finset.sum_eq_zero_iff_of_nonneg fun y' _ => hγ.nonneg x y').1 hsum y hy
+  · exact hγ.right_outside y hy x
+
+theorem gluedCouplingTerm_eq_zero_of_weight_zero (V : Finset ℕ) (μ ν ρ : ProbDist V)
+    (γ₁ γ₂ : ℕ → ℕ → ℝ) (hγ₁ : IsCoupling V μ ν γ₁) (hγ₂ : IsCoupling V ν ρ γ₂)
+    {y : ℕ} (hy : y ∈ V) (hν : ν.weights y = 0) (x z : ℕ) :
+    gluedCouplingTerm V ν γ₁ γ₂ x y z = 0 := by
+  unfold gluedCouplingTerm
+  simp [hν]
+
+theorem gluedCouplingTerm_nonneg (V : Finset ℕ) (μ ν ρ : ProbDist V)
+    (γ₁ γ₂ : ℕ → ℕ → ℝ) (hγ₁ : IsCoupling V μ ν γ₁)
+    (hγ₂ : IsCoupling V ν ρ γ₂) (x y z : ℕ) :
+    0 ≤ gluedCouplingTerm V ν γ₁ γ₂ x y z := by
+  unfold gluedCouplingTerm
+  split_ifs with hν
+  · exact le_rfl
+  · apply div_nonneg (mul_nonneg (hγ₁.nonneg x y) (hγ₂.nonneg y z))
+    by_cases hy : y ∈ V
+    · exact le_of_lt (lt_of_le_of_ne (ν.proof.weights_nonneg y hy) (Ne.symm hν))
+    · exfalso
+      exact hν (ν.proof.weights_outside y hy)
+
+theorem gluedCoupling_nonneg (V : Finset ℕ) (μ ν ρ : ProbDist V)
+    (γ₁ γ₂ : ℕ → ℕ → ℝ) (hγ₁ : IsCoupling V μ ν γ₁)
+    (hγ₂ : IsCoupling V ν ρ γ₂) (x z : ℕ) :
+    0 ≤ gluedCoupling V ν γ₁ γ₂ x z := by
+  unfold gluedCoupling
+  apply Finset.sum_nonneg
+  intro y _
+  exact gluedCouplingTerm_nonneg V μ ν ρ γ₁ γ₂ hγ₁ hγ₂ x y z
+
+theorem gluedCoupling_left_outside (V : Finset ℕ) (μ ν ρ : ProbDist V)
+    (γ₁ γ₂ : ℕ → ℕ → ℝ) (hγ₁ : IsCoupling V μ ν γ₁) (x : ℕ) (hx : x ∉ V) (z : ℕ) :
+    gluedCoupling V ν γ₁ γ₂ x z = 0 := by
+  unfold gluedCoupling gluedCouplingTerm
+  apply Finset.sum_eq_zero
+  intro y _
+  by_cases hν : ν.weights y = 0
+  · simp [hν]
+  · have := hγ₁.left_outside x hx y
+    simp [this, zero_mul, zero_div]
+
+theorem gluedCoupling_right_outside (V : Finset ℕ) (μ ν ρ : ProbDist V)
+    (γ₁ γ₂ : ℕ → ℕ → ℝ) (hγ₂ : IsCoupling V ν ρ γ₂) (z : ℕ) (hz : z ∉ V) (x : ℕ) :
+    gluedCoupling V ν γ₁ γ₂ x z = 0 := by
+  unfold gluedCoupling gluedCouplingTerm
+  apply Finset.sum_eq_zero
+  intro y _
+  by_cases hν : ν.weights y = 0
+  · simp [hν]
+  · have := hγ₂.right_outside z hz y
+    simp [this, mul_zero, zero_div]
+
+theorem gluedCoupling_marginal_left (V : Finset ℕ) (μ ν ρ : ProbDist V)
+    (γ₁ γ₂ : ℕ → ℕ → ℝ) (hγ₁ : IsCoupling V μ ν γ₁)
+    (hγ₂ : IsCoupling V ν ρ γ₂) (x : ℕ) (hx : x ∈ V) :
+    V.sum (gluedCoupling V ν γ₁ γ₂ x) = μ.weights x := by
+  unfold gluedCoupling gluedCouplingTerm
+  calc
+    V.sum (fun z => V.sum (fun y => gluedCouplingTerm V ν γ₁ γ₂ x y z)) =
+        V.sum (fun y => V.sum (fun z => gluedCouplingTerm V ν γ₁ γ₂ x y z)) := Finset.sum_comm
+    _ = V.sum (fun y =>
+          if h : ν.weights y = 0 then 0
+          else γ₁ x y * V.sum (γ₂ y) / ν.weights y) := by
+      apply Finset.sum_congr rfl
+      intro y hy
+      by_cases hν : ν.weights y = 0
+      · simp [gluedCouplingTerm, hν]
+      · calc
+          V.sum (fun z => gluedCouplingTerm V ν γ₁ γ₂ x y z) =
+              V.sum (fun z => γ₁ x y * γ₂ y z / ν.weights y) := by
+            apply Finset.sum_congr rfl
+            intro z _
+            simp [gluedCouplingTerm, dif_neg hν]
+          _ = γ₁ x y * V.sum (γ₂ y) / ν.weights y := by
+            calc
+              _ = V.sum (fun z => (γ₁ x y / ν.weights y) * γ₂ y z) := by
+                apply Finset.sum_congr rfl
+                intro z _
+                ring
+              _ = (γ₁ x y / ν.weights y) * V.sum (γ₂ y) := by
+                rw [← Finset.mul_sum]
+              _ = γ₁ x y * V.sum (γ₂ y) / ν.weights y := by ring
+          _ = if h : ν.weights y = 0 then 0 else γ₁ x y * V.sum (γ₂ y) / ν.weights y := by
+            simp [dif_neg hν]
+    _ = V.sum (fun y => if h : ν.weights y = 0 then 0 else γ₁ x y) := by
+      apply Finset.sum_congr rfl
+      intro y hy
+      by_cases hν : ν.weights y = 0
+      · simp [hν]
+      · rw [dif_neg hν, dif_neg hν]
+        have hrow := hγ₂.marginal_left y hy
+        have hne : ν.weights y ≠ 0 := by intro h; exact hν h
+        field_simp [hne]
+        rw [hrow]
+    _ = V.sum (γ₁ x) := by
+      apply Finset.sum_congr rfl
+      intro y hy
+      by_cases hν : ν.weights y = 0
+      · have hzero := IsCoupling_col_zero_of_weight_zero V μ ν γ₁ hγ₁ hy hν x
+        simp [hν, hzero]
+      · simp [dif_neg hν]
+    _ = μ.weights x := hγ₁.marginal_left x hx
+
+theorem gluedCoupling_marginal_right (V : Finset ℕ) (μ ν ρ : ProbDist V)
+    (γ₁ γ₂ : ℕ → ℕ → ℝ) (hγ₁ : IsCoupling V μ ν γ₁)
+    (hγ₂ : IsCoupling V ν ρ γ₂) (z : ℕ) (hz : z ∈ V) :
+    V.sum (fun x => gluedCoupling V ν γ₁ γ₂ x z) = ρ.weights z := by
+  unfold gluedCoupling gluedCouplingTerm
+  calc
+    V.sum (fun x => V.sum (fun y => gluedCouplingTerm V ν γ₁ γ₂ x y z)) =
+        V.sum (fun y => V.sum (fun x => gluedCouplingTerm V ν γ₁ γ₂ x y z)) := Finset.sum_comm
+    _ = V.sum (fun y =>
+          if h : ν.weights y = 0 then 0
+          else V.sum (γ₁ · y) * γ₂ y z / ν.weights y) := by
+      apply Finset.sum_congr rfl
+      intro y hy
+      by_cases hν : ν.weights y = 0
+      · simp [gluedCouplingTerm, hν]
+      · calc
+          V.sum (fun x => gluedCouplingTerm V ν γ₁ γ₂ x y z) =
+              V.sum (fun x => γ₁ x y * γ₂ y z / ν.weights y) := by
+            apply Finset.sum_congr rfl
+            intro x _
+            simp [gluedCouplingTerm, dif_neg hν]
+          _ = V.sum (γ₁ · y) * γ₂ y z / ν.weights y := by
+            calc
+              _ = V.sum (fun x => (γ₂ y z / ν.weights y) * γ₁ x y) := by
+                apply Finset.sum_congr rfl
+                intro x _
+                ring
+              _ = (γ₂ y z / ν.weights y) * V.sum (γ₁ · y) := by
+                rw [← Finset.mul_sum]
+              _ = V.sum (γ₁ · y) * γ₂ y z / ν.weights y := by ring
+          _ = if h : ν.weights y = 0 then 0 else V.sum (γ₁ · y) * γ₂ y z / ν.weights y := by
+            simp [dif_neg hν]
+    _ = V.sum (fun y => if h : ν.weights y = 0 then 0 else γ₂ y z) := by
+      apply Finset.sum_congr rfl
+      intro y hy
+      by_cases hν : ν.weights y = 0
+      · simp [hν]
+      · rw [dif_neg hν, dif_neg hν]
+        have hrow := hγ₁.marginal_right y hy
+        have hne : ν.weights y ≠ 0 := by intro h; exact hν h
+        field_simp [hne]
+        rw [hrow, mul_comm]
+    _ = V.sum (γ₂ · z) := by
+      apply Finset.sum_congr rfl
+      intro y hy
+      by_cases hν : ν.weights y = 0
+      · have hzero := IsCoupling_row_zero_of_weight_zero V ν ρ γ₂ hγ₂ hy hν z
+        simp [hν, hzero]
+      · simp [dif_neg hν]
+    _ = ρ.weights z := hγ₂.marginal_right z hz
+
+theorem gluedCoupling_isCoupling (V : Finset ℕ) (μ ν ρ : ProbDist V)
+    (γ₁ γ₂ : ℕ → ℕ → ℝ) (hγ₁ : IsCoupling V μ ν γ₁)
+    (hγ₂ : IsCoupling V ν ρ γ₂) :
+    IsCoupling V μ ρ (gluedCoupling V ν γ₁ γ₂) :=
+  ⟨gluedCoupling_nonneg V μ ν ρ γ₁ γ₂ hγ₁ hγ₂,
+    fun x hx z => gluedCoupling_left_outside V μ ν ρ γ₁ γ₂ hγ₁ x hx z,
+    fun z hz x => gluedCoupling_right_outside V μ ν ρ γ₁ γ₂ hγ₂ z hz x,
+    gluedCoupling_marginal_left V μ ν ρ γ₁ γ₂ hγ₁ hγ₂,
+    gluedCoupling_marginal_right V μ ν ρ γ₁ γ₂ hγ₁ hγ₂⟩
+
+theorem gluedCoupling_cost_le (M : FiniteMetricSpace) (μ ν ρ : ProbDist M.vertices)
+    (γ₁ γ₂ : ℕ → ℕ → ℝ) (hγ₁ : IsCoupling M.vertices μ ν γ₁)
+    (hγ₂ : IsCoupling M.vertices ν ρ γ₂) :
+    couplingTransportCost M (gluedCoupling M.vertices ν γ₁ γ₂) ≤
+      couplingTransportCost M γ₁ + couplingTransportCost M γ₂ := by
+  sorry  -- Gluing cost ≤ sum of costs: triangle on `M.dist`, marginals of `gluedCoupling` proved above
+
+-- ---------------------------------------------------------------------------
+-- Triangle inequality
+-- ---------------------------------------------------------------------------
+
+/-- `W1 M μ ρ ≤ W1 M μ ν + W1 M ν ρ`. -/
 theorem W1_triangle
     (M : FiniteMetricSpace) (μ ν ρ : ProbDist M.vertices) :
     W1 M μ ρ ≤ W1 M μ ν + W1 M ν ρ := by
-  sorry
+  rw [le_iff_forall_pos_lt_add]
+  intro ε hε
+  have hne₁ : (couplingCostSet M μ ν).Nonempty := couplingCostSet_nonempty M μ ν
+  have hne₂ : (couplingCostSet M ν ρ).Nonempty := couplingCostSet_nonempty M ν ρ
+  obtain ⟨c₁, hc₁, hlt₁⟩ :=
+    Real.lt_sInf_add_pos (s := couplingCostSet M μ ν) hne₁ (ε := ε / 2) (half_pos hε)
+  obtain ⟨γ₁, hγ₁, hc₁eq⟩ := hc₁
+  obtain ⟨c₂, hc₂, hlt₂⟩ :=
+    Real.lt_sInf_add_pos (s := couplingCostSet M ν ρ) hne₂ (ε := ε / 2) (half_pos hε)
+  obtain ⟨γ₂, hγ₂, hc₂eq⟩ := hc₂
+  have hγ :
+      IsCoupling M.vertices μ ρ (gluedCoupling M.vertices ν γ₁ γ₂) :=
+    gluedCoupling_isCoupling M.vertices μ ν ρ γ₁ γ₂ hγ₁ hγ₂
+  calc
+    W1 M μ ρ ≤ couplingTransportCost M (gluedCoupling M.vertices ν γ₁ γ₂) :=
+      W1_le_couplingCost M μ ρ (gluedCoupling M.vertices ν γ₁ γ₂) hγ
+    _ ≤ couplingTransportCost M γ₁ + couplingTransportCost M γ₂ :=
+      gluedCoupling_cost_le M μ ν ρ γ₁ γ₂ hγ₁ hγ₂
+    _ < W1 M μ ν + W1 M ν ρ + ε := by
+      rw [← hc₁eq] at hlt₁
+      rw [← hc₂eq] at hlt₂
+      dsimp [W1]
+      linarith
 
 -- ---------------------------------------------------------------------------
 -- Core curvature identity  (zero sorry)
