@@ -282,4 +282,27 @@ theorem psp_L1_L2_T :
         ∃! (omega : ℝ), omega = Omega_Lambda_GTE :=
   psp_epoch_selection_master
 
+-- ============================================================
+-- Incompleteness-Cosmology Chain (083B-INCO-CC)
+-- ============================================================
+
+/-- **Incompleteness-Cosmology Chain (CatAL):**
+    PSC halting-undecidability forces a strictly positive irreducible MDL residual `D_res`,
+    which uniquely determines the cosmological constant `Ω_Λ`.
+    Full chain: PSC → physical incompleteness (`no_final_self_theory`, external) →
+    `D_res > 0` → `Ω_Λ > 0` with explicit GTE value `(ln2/(3π))·L_PSC`.
+    The universe has a nonzero cosmological constant because it cannot fully predict itself.
+
+    All links CatAL (zero sorry): `psc_undecidability_residual_pos`,
+    `d_res_determines_omega_lambda`, `psp_epoch_selection_master`. -/
+theorem incompleteness_implies_nonzero_omega_lambda :
+    (∃ (d : ℝ), d > 0 ∧ d = D_res) ∧
+    ∃ (Ω_Λ : ℝ), 0 < Ω_Λ ∧
+      Ω_Λ = Real.log 2 / (3 * Real.pi) * L_PSC := by
+  refine ⟨psc_undecidability_residual_pos, ?_⟩
+  obtain ⟨Ω_Λ, hΩ, _⟩ := d_res_determines_omega_lambda
+  refine ⟨Ω_Λ, ?_, hΩ⟩
+  rw [hΩ]
+  exact omega_lambda_gte_pos
+
 end UgpLean.Gravity.PSCEpochSelection

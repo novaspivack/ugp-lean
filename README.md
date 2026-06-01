@@ -901,7 +901,7 @@ Module: `UgpLean.Universality.PhiMDLUniversality`; companion: `rule110-lean/Rule
 - `UgpLean.Gravity.GorardRicciFlatVacuum` — Vacuum Ricci-flat; causal diamond \(V=T^4/4\) (CatAL)
 - `UgpLean.Gravity.LorentzGroupSO13` — All 12 \(\mathfrak{so}(1,3)\) commutation relations; Thomas precession (CatAL)
 - `UgpLean.Gravity.FermionicStatistics` — Fermionic statistics chain zero sorry; exchange phase formula (CatAL)
-- `UgpLean.Gravity.PSCEpochSelection` — PSP axiom L1/L2/T-PSP; \(\Omega_\Lambda = 0.690\) numerical bound (CatAL)
+- `UgpLean.Gravity.PSCEpochSelection` — PSP axiom L1/L2/T-PSP; \(\Omega_\Lambda = 0.690\) numerical bound; **Incompleteness-Cosmology chain** `incompleteness_implies_nonzero_omega_lambda` (CatAL)
 - `UgpLean.Gravity.Z7AnomalyFree` — Z₇ global scalar anomaly-free: shift invariance, Jacobian = 1, vacuum sector equiprobability (all zero sorry, CatAL; graduated 2026-06-01)
 
 ### ContinuumLimit

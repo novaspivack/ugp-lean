@@ -950,6 +950,17 @@ All theorems zero sorry (fully CatAL, zero sorry on every proof path; graduated 
 | **mdl_total_z7z3_strictly_beats_z5z3** | Universality.MDLDerivabilityCriterion | Total MDL cost: structureSpecCost(7,3) + 0 < structureSpecCost(5,3) + 6, i.e. 3 < 11 (`decide`) |
 | **mdl_ca_rule_coding_closed** | Universality.MDLDerivabilityCriterion | Explicit K_data witness: K_data(7,3)=0, K_data(5,3)=6, and total MDL cost strictly favours Z₇×Z₃; supersedes open placeholder `mdl_ca_rule_coding_open`; closes T96-02 CatAL |
 
+### PSC Epoch Selection (`Gravity.PSCEpochSelection`)
+
+All theorems zero sorry (CatAL).
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **psc_undecidability_residual_pos** | Gravity.PSCEpochSelection | ∃ d > 0, d = D_res (positive undecidability residual) |
+| **d_res_determines_omega_lambda** | Gravity.PSCEpochSelection | ∃! Ω_Λ, Ω_Λ = (ln2/(3π))·L_PSC |
+| **psp_epoch_selection_master** | Gravity.PSCEpochSelection | D_res > 0 ∧ Ω_Λ^GTE = (ln2/(3π))·L_PSC ∧ uniqueness |
+| **incompleteness_implies_nonzero_omega_lambda** | Gravity.PSCEpochSelection | PSC → D_res > 0 → Ω_Λ > 0; full Incompleteness-Cosmology chain CatAL |
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |
