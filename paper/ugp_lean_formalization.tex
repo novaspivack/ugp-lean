@@ -7967,6 +7967,96 @@ Tier~B1 (ExecInternal stub), Tier~B6
 (Phase4 uniqueness stubs), and Tier~C items per the recommendations audit
 are deferred and documented separately.
 
+\subsection{New theorem inventory (EPIC\_083 foundational completions, 2026-06-01)}\label{subsec:new-theorem-inventory-083}
+
+The following theorems were added across four modules during EPIC\_083:
+\texttt{Gravity/Z7AnomalyFree.lean} (G08 session) formalises the $\mathbb{Z}_7$ global
+scalar anomaly-free argument at the Lebesgue-measure level;
+\texttt{ContinuumLimit/GorardVacuumW1Bridge.lean} closes the Gorard ORIC
+axiom for all adjacent vacuum edges via an explicit Wasserstein-1 calculation;
+\texttt{srrg-lean}: \texttt{Bridges/ToMDL.lean} provides the OP9 MDL equivalence
+proof at CatAL and CatAD levels; and \texttt{Core/CMCALanguage.lean} formalises
+the CMCA encoding-language scaffold.
+
+\begin{table}[h]
+\centering\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}p{5.2cm}p{4.4cm}p{4.4cm}@{}}
+\toprule
+Theorem & Module & Physical content \\
+\midrule
+\multicolumn{3}{@{}l}{\textit{G08 --- $\mathbb{Z}_7$ global scalar anomaly-free (\texttt{Gravity/Z7AnomalyFree.lean})}} \\[2pt]
+\texttt{lebesgue\_\allowbreak shift\_\allowbreak invariant}
+  & Gravity.Z7AnomalyFree
+  & Lebesgue measure is shift-invariant: $\lambda(A+c)=\lambda(A)$ (zero \texttt{sorry}) \\[1pt]
+\texttt{z7\_\allowbreak shift\_\allowbreak measure\_\allowbreak preserving}
+  & Gravity.Z7AnomalyFree
+  & $\mathbb{Z}_7$ shift $\phi\mapsto\phi+2\pi/7$ is Lebesgue-measure-preserving (zero \texttt{sorry}) \\[1pt]
+\texttt{z7\_\allowbreak jacobian\_\allowbreak eq\_\allowbreak one}
+  & Gravity.Z7AnomalyFree
+  & Jacobian of $\mathbb{Z}_7$ shift $= 1$ a.e.\ (zero \texttt{sorry}) \\[1pt]
+\texttt{z7\_\allowbreak global\_\allowbreak scalar\_\allowbreak anomaly\_\allowbreak free}
+  & Gravity.Z7AnomalyFree
+  & $\mathbb{Z}_7$ global scalar shift symmetry is anomaly-free (Fujikawa argument; zero \texttt{sorry}) \\[1pt]
+\texttt{z7\_\allowbreak vacuum\_\allowbreak sectors\_\allowbreak equiprobable}
+  & Gravity.Z7AnomalyFree
+  & All seven $\mathbb{Z}_7$ vacuum sectors have equal integration weight (1 \texttt{sorry}: path-integral bridge) \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{083-ORIC --- Gorard ORIC adjacent-edge $\kappa=0$ (\texttt{ContinuumLimit/GorardVacuumW1Bridge.lean})}} \\[2pt]
+\texttt{vacuum\_\allowbreak coupling\_\allowbreak cost\_\allowbreak eq\_\allowbreak one}
+  & ContinuumLimit.GorardVacuumW1Bridge
+  & Explicit transport cost between adjacent vacuum walk measures $= 1$ (zero \texttt{sorry}) \\[1pt]
+\texttt{vacuum\_\allowbreak w1\_\allowbreak le\_\allowbreak one}
+  & ContinuumLimit.GorardVacuumW1Bridge
+  & $W_1 \le 1$ upper bound via explicit coupling (zero \texttt{sorry}) \\[1pt]
+\texttt{vacuum\_\allowbreak w1\_\allowbreak eq\_\allowbreak one}
+  & ContinuumLimit.GorardVacuumW1Bridge
+  & $W_1 = 1$ for adjacent vacuum walk measures (zero \texttt{sorry}) \\[1pt]
+\texttt{gorard\_\allowbreak vacuum\_\allowbreak oric\_\allowbreak zero\_\allowbreak adjacent}
+  & ContinuumLimit.GorardVacuumW1Bridge
+  & $\kappa_{\rm OR}=0$ for all adjacent vacuum edges; scoped path (zero \texttt{sorry}) \\[1pt]
+\texttt{gorard\_\allowbreak vacuum\_\allowbreak oric\_\allowbreak zero\_\allowbreak scoped}
+  & ContinuumLimit.GorardVacuumW1Bridge
+  & $\kappa_{\rm OR}=0$ for \emph{all} adjacent vacuum edges $\forall n$ (\CatAL; zero \texttt{sorry}) \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{083-SRRG-MDL --- OP9 MDL equivalence (\texttt{srrg-lean/Bridges/ToMDL.lean})}} \\[2pt]
+\texttt{argmax\_\allowbreak viability\_\allowbreak iff\_\allowbreak argmin\_\allowbreak descLen}
+  & SrrgLean.Bridges.ToMDL
+  & $\mathop{\rm argmax}_S F[S] = \mathop{\rm argmin}_S K[S]$; OP9 algebraic core (\CatAD; zero \texttt{sorry}) \\[1pt]
+\texttt{srrg\_\allowbreak fp\_\allowbreak is\_\allowbreak mdl\_\allowbreak minimizer}
+  & SrrgLean.Bridges.ToMDL
+  & SRRG fixed point $g^*=1/\varphi$ is the MDL minimizer (\CatAD; zero \texttt{sorry}) \\[1pt]
+\texttt{srrg\_\allowbreak mdl\_\allowbreak functional\_\allowbreak identity}
+  & SrrgLean.Bridges.ToMDL
+  & $K[S] = B - F[S]$ functional identity (\CatAD; zero \texttt{sorry}) \\[1pt]
+\texttt{srrg\_\allowbreak op9\_\allowbreak k\_\allowbreak alg\_\allowbreak biconditional}
+  & SrrgLean.Bridges.ToMDL
+  & OP9 biconditional for algebraic MDL profile (\CatAD; zero \texttt{sorry}; unconditional) \\[1pt]
+\texttt{op9\_\allowbreak catal\_\allowbreak unconditional}
+  & SrrgLean.Bridges.ToMDL
+  & OP9 \CatAL\ at canonical SRRG instance: $\mathop{\rm argmax} F = \mathop{\rm argmin} K$ (zero \texttt{sorry}; no hypotheses) \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{083-CMCA-LANG --- CMCA encoding language scaffold (\texttt{srrg-lean/Core/CMCALanguage.lean})}} \\[2pt]
+\texttt{mdl\_\allowbreak self\_\allowbreak desc\_\allowbreak eq}
+  & SrrgLean.Core.CMCALanguage
+  & $L[S] = B - R[S]$ (self-description length; zero \texttt{sorry}) \\[1pt]
+\texttt{mdl\_\allowbreak conditional\_\allowbreak eq}
+  & SrrgLean.Core.CMCALanguage
+  & $L[{\rm data}|S] = C_\Lambda[S]$ (conditional description length; zero \texttt{sorry}) \\[1pt]
+\texttt{cmca\_\allowbreak k\_\allowbreak eq\_\allowbreak barrier\_\allowbreak minus\_\allowbreak viability}
+  & SrrgLean.Core.CMCALanguage
+  & $K_{\rm CMCA}(g) = B - V(g)$ (CMCA Kolmogorov description length; zero \texttt{sorry}) \\[1pt]
+\bottomrule
+\end{tabular}
+\caption{EPIC\_083 theorems (2026-06-01): $\mathbb{Z}_7$ global scalar anomaly-free argument,
+Gorard ORIC adjacent-edge vacuum flatness ($W_1=1$, $\kappa=0$ $\forall n$),
+OP9 MDL equivalence at \CatAD/\CatAL\ level (unconditional),
+and CMCA encoding-language scaffold.
+Modules \texttt{Z7AnomalyFree} and \texttt{GorardVacuumW1Bridge} are in \texttt{ugp-lean-exp};
+\texttt{ToMDL} and \texttt{CMCALanguage} are in \texttt{srrg-lean}.}
+\label{tab:new-theorem-inventory-083}
+\end{table}
+
 % ═══════════════════════════════════════════════════════════════
 \section{The Mirror-Dual Conjecture}\label{sec:mirror}
 % ═══════════════════════════════════════════════════════════════
