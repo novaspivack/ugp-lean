@@ -1001,6 +1001,15 @@ All theorems zero sorry (CatAL).
 | **particles_computation_spacetime_trinity_conj** | Universality.ParticlesComputationSpacetimeTrinity | Conjunction form: charge projection, fermion winding ID, PSC sectors, Rule 110 cell simulation |
 | **particles_computation_spacetime_trinity_with_universality** | Universality.ParticlesComputationSpacetimeTrinity | Extends conjunction with `z7kg_kink_universality` (Turing-universal kink dynamics) |
 
+### Single-Source Principle — Five GTE Polynomial Roles (083B-FIVE-ROLES, zero sorry, 2026-06-01)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **gte_polynomial_five_roles_k_extra_zero** | Universality.FiveRolesPolynomial | **Master Single-Source Principle**: same `p(L,C,R)` at `K_extra = 0` for five roles — (1) Rule 110 spatial dynamics, (2) gauge center projection / `gte_winding_sm_vertex_conserved_full`, (3) PMDL gravity mass hierarchy, (4) entanglement Hamiltonian non-degeneracy (Bell S=2.4459 CatA), (5) baryon sector current; plus `Fintype.card LabelledTripleRole = 5` |
+| **gte_polynomial_five_roles_certified** | Universality.FiveRolesPolynomial | Per-role substance bundle (five zero-sorry sub-theorems) |
+| **gte_polynomial_five_labelled_roles** | Universality.FiveRolesPolynomial | Structural: exactly five distinct labelled-triple roles at `K_extra = 0` |
+| **gte_polynomial_three_roles_k_zero** | Gravity.PMDLGravityTheorems | Sub-bundle: Roles 1 (Rule 110) + 3 (gravity mass hierarchy) only |
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |
