@@ -895,6 +895,53 @@ All theorems zero sorry. One bridge axiom `gte_partrec_eval_iff_fmdl_phi` (same 
 
 **Bridge axiom:** `gte_partrec_eval_iff_fmdl_phi` — Mathlib `Partrec.Code.eval` ↔ `fmdl_binary_aps.φ` on halting; same mathematical tier as `fmdl_binary_aps` (APS axiom 1).
 
+## EPIC_083 — Z₇ Anomaly-Free, Gorard ORIC, W₁ Wasserstein, OP9 (2026-06-01; all zero sorry)
+
+### Z₇ Global Scalar Anomaly-Free (`Gravity.Z7AnomalyFree`)
+
+All theorems zero sorry.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **z7_shift_measure_preserving** | Gravity.Z7AnomalyFree | Z₇ shift is measure-preserving on the vacuum distribution |
+| **z7_jacobian_eq_one** | Gravity.Z7AnomalyFree | Jacobian of the Z₇ shift action equals 1 (volume-form preserved) |
+| **z7_vacuum_sectors_equiprobable** | Gravity.Z7AnomalyFree | All 7 Z₇ vacuum sectors are equiprobable (anomaly cancellation) |
+| **z7_global_scalar_anomaly_free** | Gravity.Z7AnomalyFree | Z₇ global scalar anomaly is zero: ∑_sectors φ_shift = ∑_sectors φ |
+
+### Gorard ORIC Adjacent-Edge Vacuum Flatness (`ContinuumLimit.GorardVacuumW1Bridge`)
+
+All theorems zero sorry.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **vacuum_w1_eq_one** | ContinuumLimit.GorardVacuumW1Bridge | Vacuum transport cost W₁(μ_n, μ_{n+1}) = 1 between adjacent steps |
+| **gorard_vacuum_oric_zero_of_w1** | ContinuumLimit.GorardVacuumW1Bridge | κ = 0 for any adjacent edge n, conditional on W₁ = 1 (CatAL) |
+| **gorard_vacuum_oric_zero_scoped** | ContinuumLimit.GorardVacuumW1Bridge | ∀ n, adjacent-edge Ollivier–Ricci curvature κ_n = 0 in the vacuum (CatAL, zero sorry) |
+| **couplingCostSet_eq_image** | ContinuumLimit.GorardVacuumW1Bridge | Coupling cost set equals image of the marginal-cost map |
+
+### W₁ Wasserstein Distance Scaffold (`ContinuumLimit.WassersteinDistance`)
+
+All theorems zero sorry (fully CatAL, zero sorry on every proof path; graduated 2026-06-01).
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **W1_nonneg** | ContinuumLimit.WassersteinDistance | W₁(μ, ν) ≥ 0 (non-negativity) |
+| **W1_le_couplingCost** | ContinuumLimit.WassersteinDistance | W₁ ≤ cost(γ) for any coupling γ (upper bound by coupling cost) |
+| **W1_ge_of_lipschitz** | ContinuumLimit.WassersteinDistance | Kantorovich dual lower bound: W₁ ≥ |𝔼_μ[f] − 𝔼_ν[f]| for any 1-Lipschitz f |
+| **gluedCoupling_cost_le** | ContinuumLimit.WassersteinDistance | Gluing lemma: cost of glued coupling ≤ sum of marginal costs (triangle ingredient) |
+| **W1_triangle** | ContinuumLimit.WassersteinDistance | Triangle inequality: W₁(μ, ρ) ≤ W₁(μ, ν) + W₁(ν, ρ) via glued coupling |
+| **W1_eq_zero_iff** | ContinuumLimit.WassersteinDistance | W₁(μ, ν) = 0 ↔ μ = ν (both directions; identity of indiscernibles) |
+| **W1_attained** | ContinuumLimit.WassersteinDistance | Infimum attained: ∃ γ s.t. W₁ = cost(γ) (finite coupling polytope compactness) |
+| **couplingCostSet_isCompact** | ContinuumLimit.WassersteinDistance | Achievable transport costs form a compact set (finite polytope) |
+| **couplingCostSet_eq_image** | ContinuumLimit.WassersteinDistance | Transport cost set = image of the coupling-to-cost map |
+
+### OP9 — SRRG ↔ MDL Equivalence at CatAL Level (zero sorry)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **op9_catal_unconditional** | SrrgLean.Bridges.ToMDL | OP9 CatAL unconditional: argmax F = argmin K at the canonical SRRG scalar instance (zero sorry, zero hypotheses) |
+| **srrg_op9_k_alg_biconditional** | SrrgLean.Bridges.ToMDL | Biconditional: K_alg profile ↔ SRRG extremum (CatAD, zero sorry) |
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |

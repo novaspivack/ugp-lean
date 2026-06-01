@@ -17,7 +17,7 @@
 
 This repository is part of the **Reflexive Reality** research program by [Nova Spivack](https://www.novaspivack.com/).
 
-**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, quantum gravity completion, three-tape CMCA, and self-reference.  **263 modules, zero sorry on the core proof path** (5 sorries in WassersteinDistance scaffold for OQ-QG-1; see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).
+**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, quantum gravity completion, three-tape CMCA, self-reference, and W₁ Wasserstein distance scaffold (fully CatAL, zero sorry).  **283 modules, zero sorry on the core proof path** (two pre-existing sorry placeholders in `GTE/AnalyticArchitecture` are outside the core path; see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).
 
 | Link | Description |
 |------|-------------|
@@ -36,11 +36,11 @@ lake build
 
 **Toolchain:** Lean 4.29.0-rc6, Mathlib v4.29.1.
 
-A clean build completes with the standard Mathlib axiom signature `[propext, Classical.choice, Quot.sound]`.  Two pre-existing `sorry` placeholders in `GTE/AnalyticArchitecture` (Tenenbaum-class equidistribution) are outside the core proof path and documented in the formalization paper §3.2.  Five `sorry` placeholders in `ContinuumLimit/WassersteinDistance` are the OQ-QG-1 Wasserstein scaffold (metric-space inequalities; documented in the formalization paper).
+A clean build completes with the standard Mathlib axiom signature `[propext, Classical.choice, Quot.sound]`.  Two pre-existing `sorry` placeholders in `GTE/AnalyticArchitecture` (Tenenbaum-class equidistribution) are outside the core proof path and documented in the formalization paper §3.2.  The `ContinuumLimit/WassersteinDistance` module is now **fully proved, zero sorry**: `W1_nonneg`, `W1_le_couplingCost`, `W1_ge_of_lipschitz`, `W1_triangle`, `W1_eq_zero_iff`, `W1_attained`, `couplingCostSet_isCompact`, and `couplingCostSet_eq_image` are all machine-certified (graduated 2026-06-01).
 
 ---
 
-## Module structure (263 modules; **17 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
+## Module structure (283 modules; **17 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
 
 | Layer | Count | Modules |
 |-------|-------|---------|
@@ -902,6 +902,11 @@ Module: `UgpLean.Universality.PhiMDLUniversality`; companion: `rule110-lean/Rule
 - `UgpLean.Gravity.LorentzGroupSO13` — All 12 \(\mathfrak{so}(1,3)\) commutation relations; Thomas precession (CatAL)
 - `UgpLean.Gravity.FermionicStatistics` — Fermionic statistics chain zero sorry; exchange phase formula (CatAL)
 - `UgpLean.Gravity.PSCEpochSelection` — PSP axiom L1/L2/T-PSP; \(\Omega_\Lambda = 0.690\) numerical bound (CatAL)
+- `UgpLean.Gravity.Z7AnomalyFree` — Z₇ global scalar anomaly-free: shift invariance, Jacobian = 1, vacuum sector equiprobability (all zero sorry, CatAL; graduated 2026-06-01)
+
+### ContinuumLimit
+- `UgpLean.ContinuumLimit.GorardVacuumW1Bridge` — Gorard ORIC adjacent-edge κ=0 ∀ n; vacuum W₁=1; conditional on W₁=1 gives κ=0 (CatAL, zero sorry; graduated 2026-06-01)
+- `UgpLean.ContinuumLimit.WassersteinDistance` — Full W₁ Wasserstein metric scaffold: non-negativity, Kantorovich dual lower bound, triangle inequality via glued coupling, zero-iff-equal, infimum attained, coupling set compact (all zero sorry, CatAL; graduated 2026-06-01)
 
 ### Lorentzian ([ugp-physics-lean](https://github.com/novaspivack/ugp-physics-lean))
 - `UgpPhysicsLean.Lorentzian.MinkowskiSpace` — Minkowski metric, LorentzGroup (CatAL)
