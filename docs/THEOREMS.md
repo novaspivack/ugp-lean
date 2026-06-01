@@ -982,6 +982,16 @@ All theorems zero sorry (CatAL).
 | **mdl_tower_three_levels_non_circular** | Framework.MDLTower | Extends bundle with supplementary T_GTE K-minimality (`IsKMinimalOnGTE` via `phimdl_continuum_is_K_min_in_T_GTE`) |
 | **mdl_tower_role1_T_GTE_supplement** | Framework.MDLTower | Φ_MDL continuum CA component is K-minimal on `T_GTE` (PhiMDLBridge layer) |
 
+### Particles-Computation-Spacetime Trinity (083B-PCT, zero sorry, 2026-06-01)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **ParticlesComputationSpacetimeTrinityBundle** *(structure)* | Universality.ParticlesComputationSpacetimeTrinity | CatAL bundle: Role 1 charge from winding + fermion ID + PSC sectors; Role 2 Rule 110 cell step + Turing universality; Role 3 geodesic (cross-ref `psc_orbit_is_curvature_geodesic`) |
+| **particles_computation_spacetime_trinity_certified** | Universality.ParticlesComputationSpacetimeTrinity | Constructive witness for the bundle (zero sorry) |
+| **particles_computation_spacetime_trinity** | Universality.ParticlesComputationSpacetimeTrinity | **Master certificate**: `Nonempty ParticlesComputationSpacetimeTrinityBundle` — one Φ_MDL kink, three roles from `p(L,C,R)` |
+| **particles_computation_spacetime_trinity_conj** | Universality.ParticlesComputationSpacetimeTrinity | Conjunction form: charge projection, fermion winding ID, PSC sectors, Rule 110 cell simulation |
+| **particles_computation_spacetime_trinity_with_universality** | Universality.ParticlesComputationSpacetimeTrinity | Extends conjunction with `z7kg_kink_universality` (Turing-universal kink dynamics) |
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |
