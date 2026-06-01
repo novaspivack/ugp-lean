@@ -8036,6 +8036,26 @@ Theorem & Module & Physical content \\
   & SrrgLean.Bridges.ToMDL
   & OP9 \CatAL\ at canonical SRRG instance: $\mathop{\rm argmax} F = \mathop{\rm argmin} K$ (zero \texttt{sorry}; no hypotheses) \\[1pt]
 \midrule
+\multicolumn{3}{@{}l}{\textit{083-W1 --- $W_1$ Wasserstein distance scaffold (\texttt{ContinuumLimit/WassersteinDistance.lean})}} \\[2pt]
+\texttt{W1\_\allowbreak ge\_\allowbreak of\_\allowbreak lipschitz}
+  & ContinuumLimit.WassersteinDistance
+  & Kantorovich dual lower bound: $W_1 \ge |E_\mu[f] - E_\nu[f]|$ for 1-Lip $f$ (zero \texttt{sorry}) \\[1pt]
+\texttt{W1\_\allowbreak triangle}
+  & ContinuumLimit.WassersteinDistance
+  & Triangle inequality $W_1(\mu,\rho) \le W_1(\mu,\nu) + W_1(\nu,\rho)$ via glued coupling (zero \texttt{sorry}) \\[1pt]
+\texttt{W1\_\allowbreak eq\_\allowbreak zero\_\allowbreak iff}
+  & ContinuumLimit.WassersteinDistance
+  & $W_1(\mu,\nu) = 0 \Leftrightarrow \mu = \nu$ (zero \texttt{sorry}) \\[1pt]
+\texttt{gluedCoupling\_\allowbreak cost\_\allowbreak le}
+  & ContinuumLimit.WassersteinDistance
+  & Gluing lemma: cost of glued coupling $\le$ sum of marginal costs (zero \texttt{sorry}) \\[1pt]
+\texttt{W1\_\allowbreak attained}
+  & ContinuumLimit.WassersteinDistance
+  & Infimum attained: $\exists\,\gamma$ s.t.\ $W_1 = \text{cost}(\gamma)$ (finite coupling polytope; zero \texttt{sorry}) \\[1pt]
+\texttt{couplingCostSet\_\allowbreak isCompact}
+  & ContinuumLimit.WassersteinDistance
+  & Achievable transport costs form a compact set (finite polytope compactness; zero \texttt{sorry}) \\[1pt]
+\midrule
 \multicolumn{3}{@{}l}{\textit{083-CMCA-LANG --- CMCA encoding language scaffold (\texttt{srrg-lean/Core/CMCALanguage.lean})}} \\[2pt]
 \texttt{mdl\_\allowbreak self\_\allowbreak desc\_\allowbreak eq}
   & SrrgLean.Core.CMCALanguage
@@ -8048,11 +8068,14 @@ Theorem & Module & Physical content \\
   & $K_{\rm CMCA}(g) = B - V(g)$ (CMCA Kolmogorov description length; zero \texttt{sorry}) \\[1pt]
 \bottomrule
 \end{tabular}
-\caption{EPIC\_083 theorems (2026-06-01): $\mathbb{Z}_7$ global scalar anomaly-free argument,
-Gorard ORIC adjacent-edge vacuum flatness ($W_1=1$, $\kappa=0$ $\forall n$),
-OP9 MDL equivalence at \CatAD/\CatAL\ level (unconditional),
+\caption{EPIC\_083 theorems (2026-06-01): $\mathbb{Z}_7$ global scalar anomaly-free argument;
+Gorard ORIC adjacent-edge vacuum flatness ($W_1=1$, $\kappa=0$ $\forall n$);
+$W_1$ Wasserstein distance scaffold fully \CatAL\ (triangle inequality, Kantorovich bound,
+attainment, compactness — all zero \texttt{sorry});
+OP9 MDL equivalence at \CatAD/\CatAL\ level (unconditional);
 and CMCA encoding-language scaffold.
-Modules \texttt{Z7AnomalyFree} and \texttt{GorardVacuumW1Bridge} are in \texttt{ugp-lean-exp};
+Modules \texttt{Z7AnomalyFree}, \texttt{GorardVacuumW1Bridge}, and \texttt{WassersteinDistance}
+are in \texttt{ugp-lean} (graduated 2026-06-01);
 \texttt{ToMDL} and \texttt{CMCALanguage} are in \texttt{srrg-lean}.}
 \label{tab:new-theorem-inventory-083}
 \end{table}
