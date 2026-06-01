@@ -302,7 +302,7 @@ Physical motivation: The GTE update map T (particle mass cascade G₁→G₂→G
 - `ugp_lawvere_fixed_point` / `ugp_kleene_recursion_thm` / `ugp_rice_theorem` / `ugp_halting_undecidable` — Self-reference layer
 
 **GTE-NEMS Framework Instance (Framework.GTEFrameworkInstance, 2026-05-20; zero sorry, one bridge axiom)**
-- `GTEFramework` — GTE-Möbius substrate as `NemS.Framework` over `BeableState`
+- `GTEFramework` — GTE-Möbius architecture as `NemS.Framework` over `BeableState`
 - `gte_not_categorical` — vacuum and gen₁ disagree on record query 0
 - `gte_nems` / `GTEPSCBundle` — NEMS + determinacy PSC bundle
 - `GTEDiagonalCapable` — ASR via vacuum reachability + Cook encoding (bridge axiom `gte_partrec_eval_iff_fmdl_phi`)
