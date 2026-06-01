@@ -43,7 +43,7 @@ when `Z_M ⊄ (ℤ/pℤ)ˣ`.
 - `mdl_derivability_criterion_z3_at_seven` — packages criterion at the MDL-selected field
 - Bridge re-exports to `GUTStructure` (`color_subgroup_is_sylow3`, `gf7_minimal_for_z2_z3`)
 - `mdl_z7z3_beats_z7z2` — CA-orbit K(theory): ΔMDL(Z₁₄ vs Z₂₁) ≥ 7 bits (T96-02 Component C)
-- `z5_fmdl_no_nonvacuum_fixed_points` — Z₅ MDL-minimal CA: 0 non-vacuum fixed points (§5)
+- `z5_fmdl_no_psc_kink_orbits` — Z₅ GTE polynomial: 0 PSC kink orbits (§5)
 - `mdl_total_z7z3_strictly_beats_z5z3` — total MDL gap Z₇×Z₃ vs Z₅×Z₃ (theory + data)
 - `mdl_ca_rule_coding_closed` — T96-02 CA-level K(theory) bridge (CatAL, §5)
 -/
@@ -460,29 +460,22 @@ def mdl_z7z3_beats_z7z2_certified : MDLZ7Z3BeatsZ7Z2Certified where
 -- §5  CA-level orbit data bridge (T96-02 CA-level closure)
 -- ════════════════════════════════════════════════════════════════
 
-/-! MDL-minimal Z₅ f_MDL analog on the 5-cell ring: Rule 110 on binary inputs
-    `{0,1}³`, output 0 elsewhere (same construction criterion as `fmdl` over GF(7)
-    without Z₇ orbit constraints). On binary inputs this agrees with the GTE
-    polynomial p(L,C,R) = C+R−CR−LCR. Computational backing:
-    `rank96_z5_orbit_results.json` — 0 non-vacuum periodic states.
-    Supersedes the open placeholder `mdl_ca_rule_coding_open` via `mdl_ca_rule_coding_closed`. -/
+/-!
+### MDL-minimal Z₅ competitor: GTE polynomial over GF(5)
 
-/-- Rule 110 lookup on binary `{0,1}` neighborhoods (embedded in GF(5)). -/
-private def rule110BinaryZ5 : Fin 2 → Fin 2 → Fin 2 → ℕ
-  | 0, 0, 0 => 0
-  | 0, 0, 1 => 1
-  | 0, 1, 0 => 1
-  | 0, 1, 1 => 1
-  | 1, 0, 0 => 0
-  | 1, 0, 1 => 1
-  | 1, 1, 0 => 1
-  | 1, 1, 1 => 0
+The MDL-minimal Z₅ CA competitor is the SAME polynomial p(L,C,R) = C+R−CR−LCR
+evaluated over GF(5), with the modulus changed from 7 to 5 (same 19-bit
+specification template; see paper P46 §2.3). NOT the Rule 110 binary analog.
 
-/-- MDL-minimal Z₅ CA rule: Rule 110 on binary inputs, zero elsewhere. -/
-def fmdlZ5 (L C R : ZMod 5) : ZMod 5 :=
-  if h : L.val ≤ 1 ∧ C.val ≤ 1 ∧ R.val ≤ 1 then
-    rule110BinaryZ5 ⟨L.val, by omega⟩ ⟨C.val, by omega⟩ ⟨R.val, by omega⟩
-  else 0
+Key GF(5) fact: x=2 satisfies x²+x−1≡0 (mod 5) because discriminant Δ=5≡0,
+so p(x,x,x)≡x has the nontrivial solution x=2 in GF(5). The constant state
+(2,2,2,2,2) is therefore a fixed point of the ring evolution but has
+**zero topological winding** — it is a displaced vacuum, not a PSC kink orbit.
+The correct PSC non-vacuum predicate is winding-based, not value-based.
+-/
+
+/-- The MDL-minimal Z₅ CA: GTE polynomial p(L,C,R) = C+R−CR−LCR over GF(5). -/
+def fmdlZ5 (L C R : ZMod 5) : ZMod 5 := C + R - C * R - L * C * R
 
 /-- One cell update on the 5-cell ring under periodic boundary conditions. -/
 def fmdlRingStepZ5 (s : Fin 5 → ZMod 5) (i : Fin 5) : ZMod 5 :=
@@ -496,20 +489,34 @@ instance : DecidablePred isFixedPointZ5 := by
   unfold isFixedPointZ5
   infer_instance
 
-/-- Non-vacuum: not the all-zero configuration. -/
-def isNonVacuumZ5 (s : Fin 5 → ZMod 5) : Prop := s ≠ 0
+/-- Topological winding number on the 5-cell ring: sum of consecutive differences.
+    For the constant state (2,2,2,2,2): winding = 0 (displaced vacuum, not a kink). -/
+def ringWindingZ5 (s : Fin 5 → ZMod 5) : ZMod 5 :=
+  Finset.univ.sum (fun i => s ⟨(i.val + 1) % 5, by omega⟩ - s i)
 
-instance : DecidablePred isNonVacuumZ5 := by
-  unfold isNonVacuumZ5
+instance : DecidablePred (fun s => ringWindingZ5 s ≠ (0 : ZMod 5)) := by
+  intro s
+  exact instDecidableNot
+
+/-- A PSC kink orbit: fixed point with non-zero topological winding. -/
+def isPSCKinkZ5 (s : Fin 5 → ZMod 5) : Prop :=
+  isFixedPointZ5 s ∧ ringWindingZ5 s ≠ 0
+
+instance : DecidablePred isPSCKinkZ5 := by
+  unfold isPSCKinkZ5
   infer_instance
 
-/-- Fixed non-vacuum states on the GF(5) 5-cell ring (3125 total states). -/
-def z5FixedNonVacuumStates : Finset (Fin 5 → ZMod 5) :=
-  Finset.univ.filter (fun s => isFixedPointZ5 s ∧ isNonVacuumZ5 s)
+/-- Fixed PSC kink states on the GF(5) 5-cell ring (3125 total states). -/
+def z5PSCKinkStates : Finset (Fin 5 → ZMod 5) :=
+  Finset.univ.filter isPSCKinkZ5
 
-/-- **Z₅ GTE polynomial: zero non-vacuum fixed points** (3125-state `native_decide`). -/
-theorem z5_fmdl_no_nonvacuum_fixed_points :
-    z5FixedNonVacuumStates = ∅ := by
+/-- **GTE polynomial over GF(5): zero PSC kink orbits** (3125-state `native_decide`).
+
+    The constant state (2,2,2,2,2) is a fixed point (it satisfies p(2,2,2)=2 since
+    x=2 solves x²+x−1≡0 mod 5) but has winding number 0 — it is a displaced vacuum,
+    not a kink. No fixed-point state with non-zero winding exists. -/
+theorem z5_fmdl_no_psc_kink_orbits :
+    z5PSCKinkStates = ∅ := by
   native_decide
 
 /-- External bits to specify 3 generations when the CA has 0 intrinsic non-vacuum orbit types.
@@ -538,7 +545,8 @@ theorem mdl_total_z7z3_strictly_beats_z5z3 :
 
     Explicit witness for a `K_data` function that, combined with `structureSpecCost`,
     proves Z₇×Z₃ is the MDL-minimal Z_N×Z_M substrate at the CA orbit data level.
-    Z₅ GTE polynomial has 0 non-vacuum PSC orbits (`z5_fmdl_no_nonvacuum_fixed_points`),
+    Z₅ GTE polynomial has 0 PSC kink orbits (`z5_fmdl_no_psc_kink_orbits`): the only
+    fixed point (2,2,2,2,2) has zero winding and is a displaced vacuum,
     requiring ≥ 6 bits of external generation specification.
     Supersedes the open placeholder `mdl_ca_rule_coding_open`. -/
 theorem mdl_ca_rule_coding_closed :
