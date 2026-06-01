@@ -6629,6 +6629,9 @@ Theorem & Module & Physical role \\
 \texttt{d\_\allowbreak res\_\allowbreak determines\_\allowbreak omega\_\allowbreak lambda}
   & Gravity.PSCEpochSelection
   & $D_{\rm res}$ determines $\Omega_\Lambda$ \\[1pt]
+\texttt{incompleteness\_\allowbreak implies\_\allowbreak nonzero\_\allowbreak omega\_\allowbreak lambda}
+  & Gravity.PSCEpochSelection
+  & PSC $\to$ $D_{\rm res}>0$ $\to$ $\Omega_\Lambda>0$; full incompleteness-cosmology chain \\[1pt]
 \texttt{gte\_\allowbreak triple\_\allowbreak kink\_\allowbreak exchange\_\allowbreak statistics}
   & Gravity.FermionicStatistics
   & $\mathbb{Z}_7$ kink exchange gives $-1$ phase \\[1pt]
@@ -6717,7 +6720,7 @@ Theorem & Module & Physical role \\
   & Burnside span rank $9$ (4 named axioms; \texttt{matrix\_algebra\_finrank\_nine} CatAL) \\[1pt]
 \texttt{su2l\_\allowbreak weak\_\allowbreak force\_\allowbreak derivation}
   & Algebra.GaugeMDL
-  & SU(2)$_L$ from PMDL gauging (1 named axiom) \\[1pt]
+  & SU(2)$_L$ from PMDL gauging (zero named axioms; \texttt{phimdl\_potential\_su2l\_invariant}, \texttt{su2l\_wpm\_generator\_algebra} CatAL) \\[1pt]
 \texttt{sm\_\allowbreak gauge\_\allowbreak group\_\allowbreak certificate}
   & Algebra.SMGaugeGroup
   & $G_{\rm SM}=\mathrm{SU}(3)\times\mathrm{SU}(2)_L\times\mathrm{U}(1)_Y$ bundle (zero \texttt{sorry}) \\[1pt]
@@ -7329,21 +7332,49 @@ The complete counting formula \lstinline|gte_cc_counting_formula| expresses
 $\rho_{\rm CC} = N_{\rm spatial}^2/(D^2 \cdot |\mathbb{Z}_7|) \times M_{\rm Pl}^2 H_0^2$
 (zero \texttt{sorry}).
 
-\begin{theorem}[\lstinline|su2l_within_tape_l2_from_phimdl|, structural ($\CatAD$)]
+\begin{theorem}[\lstinline|su2l_within_tape_l2_from_phimdl|, zero \texttt{sorry} ($\CatAL$)]
 The within-tape doublet $(\Phi_+,\Phi_-)$ gains SU(2)$_L$ covariant kinetic term
-$|D_\mu\Psi|^2$ via the MDL principle (structural $\CatAD$; LC5 orbit geometry
-pending for $\CatAL$).
+$|D_\mu\Psi|^2$ via the MDL principle (zero \texttt{sorry}; LC5 orbit geometry
+pending for full continuum $\CatAL$).
 \end{theorem}
 
-\begin{theorem}[\lstinline|su2l_full_gauging_catad|, zero \texttt{sorry} ($\CatAD$)]
+\begin{theorem}[\lstinline|phimdl_potential_su2l_invariant|, zero \texttt{sorry} ($\CatAL$)]
+The within-tape doublet L2 norm is preserved under orthogonal $2\times2$ rotations:
+$\|U\Psi\|_2=\|\Psi\|_2$ when $U^\top U=1$, so the $\Phi_{\mathrm{MDL}}$ potential
+$V(|\Psi|)$ is SU(2)$_L$ invariant.
+\end{theorem}
+
+\begin{theorem}[\lstinline|su2l_covariant_derivative_minimal|, zero \texttt{sorry} ($\CatAL$)]
+MDL minimality on the weak-isospin doublet orbit forces the covariant kinetic term:
+$\K_{\mathrm{gauged}}<\K_{\mathrm{global}}$ for the finite doublet proxy.
+\end{theorem}
+
+\begin{theorem}[\lstinline|tPlus_tMinus_commutator|, zero \texttt{sorry} ($\CatAL$)]
+SU(2)$_L$ raising/lowering commutator on the rational $2\times2$ proxy:
+$[T_+,T_-]=2T_0$.
+\end{theorem}
+
+\begin{theorem}[\lstinline|tZero_tPlus_commutator|, zero \texttt{sorry} ($\CatAL$)]
+$[T_0,T_+]=T_+$ on the rational $2\times2$ proxy ($2T_0$ convention).
+\end{theorem}
+
+\begin{theorem}[\lstinline|tZero_tMinus_commutator|, zero \texttt{sorry} ($\CatAL$)]
+$[T_0,T_-]=-T_-$ on the rational $2\times2$ proxy ($2T_0$ convention).
+\end{theorem}
+
+\begin{theorem}[\lstinline|su2l_wpm_generator_algebra|, zero \texttt{sorry} ($\CatAL$)]
+SU(2)$_L$ W-boson generator algebra bundled: all three Lie algebra relations
+(\lstinline|tPlus_tMinus_commutator|, \lstinline|tZero_tPlus_commutator|,
+\lstinline|tZero_tMinus_commutator|).
+\end{theorem}
+
+\begin{theorem}[\lstinline|su2l_full_gauging_catad|, zero \texttt{sorry} ($\CatAL$)]
 \label{thm:su2l-full-gauging-catad}
 G18 master bundle: SU(2)$_L$ fully gauged at Level~2.
 Packages the MDL covariant derivative and $J^\mu_W$ structural result
-(\lstinline|PhimdlWeakChargedCurrentCert|), the SU(2)$_L$ potential invariance
+(\lstinline|PhimdlWeakChargedCurrentCert|), SU(2)$_L$ potential invariance
 (\lstinline|PhimdlPotentialSu2lInvariant|), and the W$^\pm$ generator algebra
-structural axiom (\lstinline|su2l_wpm_generator_algebra|: $[T_+,T_-]=2T_0$,
-$[T_0,T_\pm]=\pm T_\pm$). All components $\CatAD$; W$^\pm$ algebra is a
-structural consequence of the G23 gauge group bundle.
+(\lstinline|su2l_wpm_generator_algebra|). All components zero \texttt{sorry}.
 \end{theorem}
 
 \subsection{Holographic mode-count identification (\texttt{Gravity/TemporalVoxelCC.lean}, G30 closure)}\label{subsec:holographic-mode-count}

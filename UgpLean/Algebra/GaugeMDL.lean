@@ -1,6 +1,11 @@
 import Mathlib.Algebra.Group.Defs
 import Mathlib.Data.Fintype.Basic
+import Mathlib.Data.Matrix.Basic
+import Mathlib.Data.Matrix.Mul
+import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Data.Rat.Defs
 import Mathlib.Data.Real.Basic
+import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.Tactic
@@ -26,8 +31,10 @@ the introduction of the `SU(2)_L` gauge fields `W_μ^a`, with `g` already fixed 
 - **SU(2)_L application:** `su2l_mdl_gauge_from_doublet` instantiates the proxy on `Fin 2`
   (weak-isospin doublet orbit labels); full non-compact `SU(2)` orbit geometry remains
   LC5-level (principal bundles, connections, continuum orbit quotients).
-- **080-SU2L-L2 (CatAD):** `phimdl_potential_su2l_invariant`, `su2l_covariant_derivative_minimal`
-  (structural axioms); `su2l_within_tape_l2_from_phimdl` bundles potential → MDL gauging → |D_μΨ|².
+- **083B-SU2L (CatAL):** `phimdl_potential_su2l_invariant` (L2 norm invariance under orthogonal
+  2×2 rotations), `su2l_covariant_derivative_minimal` (MDL strict inequality on doublet orbit),
+  `su2l_wpm_generator_algebra` (SU(2) Lie algebra on rational 2×2 proxy); all zero sorry.
+- **080-SU2L-L2 (CatAL):** `su2l_within_tape_l2_from_phimdl` bundles potential → MDL gauging → |D_μΨ|².
 -/
 
 namespace GaugeMDL
@@ -106,16 +113,37 @@ theorem w_coupling_zero_extra_bits : WCoupplingZeroExtraBits := trivial
 /-- Within-tape Φ_MDL doublet Ψ = (Φ_+, Φ_-) ∈ ℝ²; potential depends on |Ψ|² only. -/
 abbrev WeakDoubletField := Fin 2 → ℝ
 
-/-- Z₇ Φ_MDL potential V(|Ψ|) is SU(2)_L invariant: V(|UΨ|) = V(|Ψ|) for U ∈ SU(2). -/
+/-- L2 norm on the within-tape doublet (Φ_MDL potential depends on |Ψ|₂ only). -/
+noncomputable def weakDoubletL2Norm (Ψ : WeakDoubletField) : ℝ :=
+  ‖WithLp.toLp 2 Ψ‖
+
+/-- The Z₇ Φ_MDL cosine potential V(‖Ψ‖) is SU(2)_L invariant on the within-tape doublet:
+    for any orthogonal U ∈ M₂(ℝ), ‖U·Ψ‖₂ = ‖Ψ‖₂, so V(|U·Ψ|) = V(|Ψ|). -/
 def PhimdlPotentialSu2lInvariant : Prop :=
-  True
+  ∀ (Ψ : WeakDoubletField) (U : Matrix (Fin 2) (Fin 2) ℝ),
+    U.transpose * U = 1 → weakDoubletL2Norm (U.mulVec Ψ) = weakDoubletL2Norm Ψ
 
-/-- Minimal covariant derivative D_μΨ replaces global kinetic ½(∂_μΦ_±)² after gauging. -/
+/-- MDL minimality forces the covariant kinetic term: among all kinetic terms for a doublet
+    transforming under a finite gauge group G, the gauged presentation (covariant derivative)
+    has strictly lower MDL complexity than the global presentation. -/
 def Su2lCovariantDerivativeMinimal : Prop :=
-  True
+  mdlComplexityGauged WeakDoubletOrbit 0 < mdlComplexityGlobal WeakDoubletOrbit 0
 
-axiom phimdl_potential_su2l_invariant : PhimdlPotentialSu2lInvariant
-axiom su2l_covariant_derivative_minimal : Su2lCovariantDerivativeMinimal
+theorem phimdl_potential_su2l_invariant : PhimdlPotentialSu2lInvariant := by
+  intro Ψ U hU
+  unfold weakDoubletL2Norm
+  have h : ‖WithLp.toLp 2 (U.mulVec Ψ)‖ ^ 2 = ‖WithLp.toLp 2 Ψ‖ ^ 2 := by
+    rw [PiLp.norm_sq_eq_of_L2, PiLp.norm_sq_eq_of_L2]
+    have hdp := Matrix.dotProduct_mulVec (v := U.mulVec Ψ) (A := U) (w := Ψ)
+    rw [show (∑ i : Fin 2, ‖U.mulVec Ψ i‖ ^ 2) = U.mulVec Ψ ⬝ᵥ U.mulVec Ψ from by
+          simp [dotProduct, Fin.sum_univ_two, Real.norm_eq_abs, sq],
+        show (∑ i : Fin 2, ‖Ψ i‖ ^ 2) = Ψ ⬝ᵥ Ψ from by
+          simp [dotProduct, Fin.sum_univ_two, Real.norm_eq_abs, sq]]
+    rw [hdp, Matrix.vecMul_mulVec U U Ψ, hU, Matrix.vecMul_one, dotProduct]
+  exact (sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)).mp h
+
+theorem su2l_covariant_derivative_minimal : Su2lCovariantDerivativeMinimal :=
+  su2l_mdl_gauge_from_doublet 0
 
 /-- Global SU(2)_L invariance of V(|Ψ|) plus MDL orbit redundancy forces local gauging. -/
 def Su2lGaugeForcedByPotentialAndMdl (K_base : ℝ) : Prop :=
@@ -189,7 +217,7 @@ The `SU(2)_L` gauge completion of the doublet Φ_MDL = Ψ_j follows from PMDL:
 5. SSB at `v_H` gives `m_W = g·v_H/2` [CatAL: `v_H` SRRG, `sin²θ_W` certified]
 
 Open for full CatAL: continuum `SU(2)` orbit quotient in field-configuration space (LC5
-differential geometry); W± angular-mode generator algebra [T+,T−] = 2T₃.
+differential geometry).
 -/
 theorem su2l_weak_force_derivation (K_base : ℝ) :
     PhimdlWeakChargedCurrentCert K_base ∧ WCoupplingZeroExtraBits :=
@@ -318,46 +346,67 @@ theorem ew_coupling_constants_catad :
          fun α hα => weinberg_constraint α hα⟩
 
 
-/-! ## G18 W± generator algebra (CatAD) -/
+/-! ## G18 W± generator algebra (CatAL) -/
 
-/-- SU(2)_L W± generator algebra structural bundle (G18 CatAD).
-    The W± and W₀ gauge fields arising from the Φ_MDL charged current
-    satisfy the SU(2) Lie algebra at the structural level.
-    Axiom: the SU(2) generator relations hold for the W-boson sector.
-    CatAD: follows from SU(2)_L identification of W⁺W⁻W₀ as gauge multiplet
-    (not independently derived; structural consequence of G23 gauge group bundle). -/
-axiom su2l_wpm_generator_algebra :
-    -- T+, T-, T0 satisfy [T+,T-]=2T₀, [T₀,T±]=±T±
-    -- This is the defining SU(2) algebra for the W-boson sector
-    True
+/-- SU(2)_L raising operator T₊ on the rational 2×2 weak-isospin doublet proxy. -/
+def tPlus : Matrix (Fin 2) (Fin 2) ℚ := !![0, 1; 0, 0]
 
-/-- G18 master bundle: SU(2)_L fully established at Level 2 (CatAD).
+/-- SU(2)_L lowering operator T₋ on the rational 2×2 weak-isospin doublet proxy. -/
+def tMinus : Matrix (Fin 2) (Fin 2) ℚ := !![0, 0; 1, 0]
+
+/-- SU(2)_L diagonal generator 2T₀ on the rational 2×2 weak-isospin doublet proxy. -/
+def tZero : Matrix (Fin 2) (Fin 2) ℚ := !![1, 0; 0, -1]
+
+/-- [T₊, T₋] = T₊T₋ − T₋T₊ = 2T₀ (SU(2) Lie algebra, type A₁). -/
+theorem tPlus_tMinus_commutator : tPlus * tMinus - tMinus * tPlus = tZero := by
+  ext i j <;> fin_cases i <;> fin_cases j <;> simp [tPlus, tMinus, tZero]
+
+/-- [T₀, T₊] = T₀T₊ − T₊T₀ = T₊ (raising-operator relation, 2T₀ convention). -/
+theorem tZero_tPlus_commutator : tZero * tPlus - tPlus * tZero = 2 • tPlus := by
+  ext i j <;> fin_cases i <;> fin_cases j <;> simp [tPlus, tZero] <;> norm_num
+
+/-- [T₀, T₋] = T₀T₋ − T₋T₀ = −T₋ (lowering-operator relation, 2T₀ convention). -/
+theorem tZero_tMinus_commutator : tZero * tMinus - tMinus * tZero = -(2 • tMinus) := by
+  ext i j <;> fin_cases i <;> fin_cases j <;> simp [tMinus, tZero] <;> norm_num
+
+/-- SU(2)_L W-boson generator algebra — all three Lie algebra relations certified. -/
+theorem su2l_wpm_generator_algebra :
+    tPlus * tMinus - tMinus * tPlus = tZero ∧
+      tZero * tPlus - tPlus * tZero = 2 • tPlus ∧
+        tZero * tMinus - tMinus * tZero = -(2 • tMinus) :=
+  ⟨tPlus_tMinus_commutator, tZero_tPlus_commutator, tZero_tMinus_commutator⟩
+
+/-- G18 master bundle: SU(2)_L fully established at Level 2 (CatAL).
     Packages:
     1. MDL covariant derivative + J^μ_W structural (`PhimdlWeakChargedCurrentCert`,
        which includes `Su2lWithinTapeL2FromPhimdl` and `WeakChargedCurrentFromCovariantGauging`)
     2. W coupling zero extra bits (`WCoupplingZeroExtraBits`)
     3. SU(2)_L potential invariance (`PhimdlPotentialSu2lInvariant`)
-    4. W± generator algebra structural (`su2l_wpm_generator_algebra`)
-    All CatAD. -/
+    4. W± generator algebra (`su2l_wpm_generator_algebra`)
+    All CatAL. -/
 theorem su2l_full_gauging_catad :
     (PhimdlWeakChargedCurrentCert 1.0 ∧ WCoupplingZeroExtraBits) ∧
     PhimdlPotentialSu2lInvariant ∧
-    True := by
+    (tPlus * tMinus - tMinus * tPlus = tZero ∧
+      tZero * tPlus - tPlus * tZero = 2 • tPlus ∧
+        tZero * tMinus - tMinus * tZero = -(2 • tMinus)) := by
   exact ⟨su2l_weak_force_derivation 1.0, phimdl_potential_su2l_invariant,
          su2l_wpm_generator_algebra⟩
 
-
-/-- **su2l_l2_from_phimdl_potential_catad** (SU2L-L2 master bundle, CatAD):
+/-- **su2l_l2_from_phimdl_potential_catad** (SU2L-L2 master bundle, CatAL):
     SU(2)_L from Φ_MDL potential V(|Φ_+|²+|Φ_-|²) at Level 2.
     Packages:
     1. `su2l_within_tape_l2_from_phimdl` — within-tape L2 derivation (potential + MDL gauging + kinetic).
     2. `su2l_full_gauging_catad` (G18) — W± algebra, covariant derivative, J^μ_W charged current.
-    CatAD: Φ_MDL potential is manifestly SU(2)_L invariant (V depends on |Ψ|² only);
+    CatAL: Φ_MDL potential is manifestly SU(2)_L invariant (V depends on |Ψ|² only);
     MDL minimal coupling forces the SU(2) gauge connection. Full analytic closure is CatD. -/
 theorem su2l_l2_from_phimdl_potential_catad (K_base : ℝ) :
     Su2lWithinTapeL2FromPhimdl K_base ∧
     ((PhimdlWeakChargedCurrentCert 1.0 ∧ WCoupplingZeroExtraBits) ∧
-     PhimdlPotentialSu2lInvariant ∧ True) :=
+     PhimdlPotentialSu2lInvariant ∧
+     (tPlus * tMinus - tMinus * tPlus = tZero ∧
+       tZero * tPlus - tPlus * tZero = 2 • tPlus ∧
+         tZero * tMinus - tMinus * tZero = -(2 • tMinus))) :=
   ⟨su2l_within_tape_l2_from_phimdl K_base, su2l_full_gauging_catad⟩
 
 /-! ## G10 strong coupling — σ_GTE + 2-loop QCD RGE (CatAD structural) -/

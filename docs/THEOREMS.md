@@ -950,6 +950,57 @@ All theorems zero sorry (fully CatAL, zero sorry on every proof path; graduated 
 | **mdl_total_z7z3_strictly_beats_z5z3** | Universality.MDLDerivabilityCriterion | Total MDL cost: structureSpecCost(7,3) + 0 < structureSpecCost(5,3) + 6, i.e. 3 < 11 (`decide`) |
 | **mdl_ca_rule_coding_closed** | Universality.MDLDerivabilityCriterion | Explicit K_data witness: K_data(7,3)=0, K_data(5,3)=6, and total MDL cost strictly favours Z₇×Z₃; supersedes open placeholder `mdl_ca_rule_coding_open`; closes T96-02 CatAL |
 
+### SU(2)_L GaugeMDL — 083B-SU2L upgrade (zero sorry, 2026-06-01)
+
+Module `Algebra.GaugeMDL`. Three previously axiomatic SU(2)_L propositions are now machine-certified.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **phimdl_potential_su2l_invariant** | Algebra.GaugeMDL | L2 norm of within-tape doublet preserved under orthogonal 2×2 rotations (`weakDoubletL2Norm (U·Ψ) = weakDoubletL2Norm Ψ` when `UᵀU = 1`) |
+| **su2l_covariant_derivative_minimal** | Algebra.GaugeMDL | MDL strict inequality on doublet orbit: `mdlComplexityGauged WeakDoubletOrbit 0 < mdlComplexityGlobal WeakDoubletOrbit 0` |
+| **tPlus_tMinus_commutator** | Algebra.GaugeMDL | `[T₊,T₋] = 2T₀` on rational 2×2 SU(2)_L proxy |
+| **tZero_tPlus_commutator** | Algebra.GaugeMDL | `[T₀,T₊] = T₊` (2T₀ convention) |
+| **tZero_tMinus_commutator** | Algebra.GaugeMDL | `[T₀,T₋] = −T₋` (2T₀ convention) |
+| **su2l_wpm_generator_algebra** | Algebra.GaugeMDL | All three SU(2) Lie algebra relations bundled |
+
+### PSC Epoch Selection (`Gravity.PSCEpochSelection`)
+
+All theorems zero sorry (CatAL).
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **psc_undecidability_residual_pos** | Gravity.PSCEpochSelection | ∃ d > 0, d = D_res (positive undecidability residual) |
+| **d_res_determines_omega_lambda** | Gravity.PSCEpochSelection | ∃! Ω_Λ, Ω_Λ = (ln2/(3π))·L_PSC |
+| **psp_epoch_selection_master** | Gravity.PSCEpochSelection | D_res > 0 ∧ Ω_Λ^GTE = (ln2/(3π))·L_PSC ∧ uniqueness |
+| **incompleteness_implies_nonzero_omega_lambda** | Gravity.PSCEpochSelection | PSC → D_res > 0 → Ω_Λ > 0; full Incompleteness-Cosmology chain CatAL |
+
+### MDL Tower — Three-Level Unification (083B-MDL-TOWER, zero sorry, 2026-06-01)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **mdl_tower_bundle** | Framework.MDLTower | CatAL bundle: Role 1 `mdl_ca_rule_coding_closed` (theory selection) ∧ Role 2 `unique_cubic_gravity_coupling` (PMDL gravity) ∧ Role 3 `born_rule_unconditional` ([D]-adjudication / Born rule); three nested MDL domains, non-circular |
+| **mdl_tower_three_levels_non_circular** | Framework.MDLTower | Extends bundle with supplementary T_GTE K-minimality (`IsKMinimalOnGTE` via `phimdl_continuum_is_K_min_in_T_GTE`) |
+| **mdl_tower_role1_T_GTE_supplement** | Framework.MDLTower | Φ_MDL continuum CA component is K-minimal on `T_GTE` (PhiMDLBridge layer) |
+
+### N_gen Partial Universality — Four CatAL Constraints (083B-NGEN partial, zero sorry, 2026-06-01)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **ngen_partial_universality_catal** | Universality.NgenUniversalityPartial | CatAL bundle: DPP (`dimensional_protocol_principle_master`) ∧ CMCA (`three_generations_physical`) ∧ TPC (`tpc_ngen_equals_level_count`) ∧ Gorard D²=16 (`c_gorard_eq_n_spatial_over_two_dsq`, `gte_dimension_as_ngen_plus_one`) |
+| **ngen_three_from_catal_constraints** | Universality.NgenUniversalityPartial | `n_gen = 3 ∧ fmdl_spatial_dimension = 3 ∧ level_hypercomputation + 1 = 3` |
+| **ngen_unique_catal** | Universality.NgenUniversalityPartial | Parametric uniqueness: `NgenCatALConstraints n → n = 3` for `0 < n` |
+| **NgenCatALConstraints** *(structure)* | Universality.NgenUniversalityPartial | Four CatAL constraint fields (scaffold for full parametric universality) |
+
+### Particles-Computation-Spacetime Trinity (083B-PCT, zero sorry, 2026-06-01)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **ParticlesComputationSpacetimeTrinityBundle** *(structure)* | Universality.ParticlesComputationSpacetimeTrinity | CatAL bundle: Role 1 charge from winding + fermion ID + PSC sectors; Role 2 Rule 110 cell step + Turing universality; Role 3 geodesic (cross-ref `psc_orbit_is_curvature_geodesic`) |
+| **particles_computation_spacetime_trinity_certified** | Universality.ParticlesComputationSpacetimeTrinity | Constructive witness for the bundle (zero sorry) |
+| **particles_computation_spacetime_trinity** | Universality.ParticlesComputationSpacetimeTrinity | **Master certificate**: `Nonempty ParticlesComputationSpacetimeTrinityBundle` — one Φ_MDL kink, three roles from `p(L,C,R)` |
+| **particles_computation_spacetime_trinity_conj** | Universality.ParticlesComputationSpacetimeTrinity | Conjunction form: charge projection, fermion winding ID, PSC sectors, Rule 110 cell simulation |
+| **particles_computation_spacetime_trinity_with_universality** | Universality.ParticlesComputationSpacetimeTrinity | Extends conjunction with `z7kg_kink_universality` (Turing-universal kink dynamics) |
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |

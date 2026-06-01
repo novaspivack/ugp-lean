@@ -17,7 +17,7 @@
 
 This repository is part of the **Reflexive Reality** research program by [Nova Spivack](https://www.novaspivack.com/).
 
-**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, quantum gravity completion, three-tape CMCA, self-reference, and W₁ Wasserstein distance scaffold (fully CatAL, zero sorry).  **283 modules, zero sorry on the core proof path** (two pre-existing sorry placeholders in `GTE/AnalyticArchitecture` are outside the core path; see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).
+**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, quantum gravity completion, three-tape CMCA, self-reference, and W₁ Wasserstein distance scaffold (fully CatAL, zero sorry).  **284 modules, zero sorry on the core proof path** (two pre-existing sorry placeholders in `GTE/AnalyticArchitecture` are outside the core path; see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).
 
 | Link | Description |
 |------|-------------|
@@ -51,7 +51,7 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 | **Structural** | 19 | QuarterLock, LModelDerivation; *ElegantKernel/*: ChiralityFeature, D5StructuralAxiom, FibonacciHessian, KGen2, MuTriple, PentagonalUniqueness; *KGen.lean* deprecated (not imported); *ElegantKernel/Unconditional/*: CyclotomicChain, D5Renormalization, FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure, KLFullClosure, PentagonConstraint, RiccatiFixedPoint |
 | **MassRelations** | 25 | *MassRelations* [umbrella], KoideClosedForm, KoideNewtonFlow, KoideAngle, KoideS3DiscreteIdentities, BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential, FroggattNielsen, NeutrinoFroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational, UpLeptonCyclotomic, Z2OrbifoldDepth, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex, VVMechanism, VVAllCoefficientsFromNc, CKMTheta23, CKMMixing, **NeutrinoMassRatio** |
 | **BraidAtlas** | 13 | ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation, CoxeterConductor, CoxeterConductorTowerLaw, EWBosons, MirrorWindingNumber, EWBosonRHNConnection, **RHNGapTheorem**, **DarkBraidAtlas**, **DarkQuarkCharge**, **DarkGaugeCoupling** |
-| **Universality** | 41 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, CUP4TotalParity, CUP11ModSeven, CUP3DUniqueness, CUP3DPSCUnification, CUP3DPhysicalIncompleteness, TwoLayerConfluence, GTECompilation, GTEUniqueness, GoEHierarchy, **GoEStabilityHierarchy**, **ZGMMesInvariant**, GTEInfTapeEncoding, GTEComputability, HypothesisB, HypothesisBCChain, PSCUniversality, CookRule110Ref, **OrbitPerturbationCatalog**, **Z7ChargeConjugation**, **Z5TransitivityUniqueness**, **DimensionalSliceUniqueness**, **GTPNeutralDiscrimination**, **Z7ZeroSectorDiscriminant**, **SMOrbitCausalIsolation**, **EWBosonStructure**, **EWChiralBridge**, **GUTStructure**, **CasimirMasslessEther**, **LawvereZone**, **ChiralPairVA**, **CouplingNoGo**, **ChiralityEigenstates**, **WeakIsospin**, **PhiMDLUniversality** |
+| **Universality** | 42 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, CUP4TotalParity, CUP11ModSeven, CUP3DUniqueness, CUP3DPSCUnification, CUP3DPhysicalIncompleteness, TwoLayerConfluence, GTECompilation, GTEUniqueness, GoEHierarchy, **GoEStabilityHierarchy**, **ZGMMesInvariant**, GTEInfTapeEncoding, GTEComputability, HypothesisB, HypothesisBCChain, PSCUniversality, CookRule110Ref, **OrbitPerturbationCatalog**, **Z7ChargeConjugation**, **Z5TransitivityUniqueness**, **DimensionalSliceUniqueness**, **GTPNeutralDiscrimination**, **Z7ZeroSectorDiscriminant**, **SMOrbitCausalIsolation**, **EWBosonStructure**, **EWChiralBridge**, **GUTStructure**, **CasimirMasslessEther**, **LawvereZone**, **ChiralPairVA**, **CouplingNoGo**, **ChiralityEigenstates**, **WeakIsospin**, **PhiMDLUniversality**, **ParticlesComputationSpacetimeTrinity** |
 | **Framework** | 3 | **GTEFrameworkInstance**, **GTEOptimalityInstance**, **GTEFinalCoalgebra** |
 | **SelfRef** | 2 | LawvereKleene, RiceHalting |
 
@@ -820,6 +820,14 @@ An independent, Cook-free Turing universality certificate for Rule 110, Φ_MDL, 
 
 Module: `UgpLean.Universality.PhiMDLUniversality`; companion: `rule110-lean/Rule110/AlgebraicUniversality.lean`.
 
+**Particles-Computation-Spacetime Trinity (ParticlesComputationSpacetimeTrinity.lean, 2026-06-01; zero sorry)**
+
+One Φ_MDL kink bundles three CatAL roles from the same 19-bit polynomial `p(L,C,R) = C+R−CR−LCR`:
+
+- `particles_computation_spacetime_trinity` — master `Nonempty ParticlesComputationSpacetimeTrinityBundle` certificate (CatAL)
+- `particles_computation_spacetime_trinity_certified` — constructive bundle witness: charge from winding, fermion ID, PSC sectors, Rule 110 step, Turing universality; Role 3 cross-ref `psc_orbit_is_curvature_geodesic`
+- `particles_computation_spacetime_trinity_with_universality` — conjunction + `z7kg_kink_universality` (CatAL)
+
 ---
 
 **EPIC 074/075/076 Graduation — Algebraic Necessity, Gravity Sector, QCA/QEC (2026-05-26; zero sorry on listed theorems)**
@@ -891,17 +899,19 @@ Module: `UgpLean.Universality.PhiMDLUniversality`; companion: `rule110-lean/Rule
 - `UgpLean.Algebra.BaryonNumber` — \(B=(1/3)\sum \chi_q(w_j)\) topological charge; \(B=1/3\) from \(N_{\mathrm{tapes}}=3\) (CatAL)
 - `UgpLean.Algebra.ChiralDoublet` — Rule124 = Rule110 with L↔R spatial reflection (CatAL)
 - `UgpLean.Algebra.SRRGCABridge` — \(1/\varphi\) = positive root of \(p(x,x,x)=x\) (CatAL)
-- `UgpLean.Algebra.GaugeMDL` — SU(2)\(_L\) from PMDL gauging; 1 named axiom (structural CatAL)
+- `UgpLean.Algebra.GaugeMDL` (upgraded 2026-06-01) — three previously axiomatic SU(2)_L propositions now machine-certified: potential invariance, covariant derivative minimality, W-boson generator algebra. All zero sorry.
 
 ### BraidAtlas
 - `UgpLean.BraidAtlas.WindingToBraidRep` — Fermionic sectors \(\{2,4,6\}\) = non-primitive roots of \(\mathbb{Z}_7^\times\); algebraic ID (CatAL)
 
 ### Gravity
 - `UgpLean.Gravity.PMDLGravityTheorems` — MDL uniqueness, vacuum fixed-point, mass hierarchy (CatAL)
+- `UgpLean.Framework.MDLTower` (2026-06-01) — **083B-MDL-TOWER CatAL**: `mdl_tower_bundle` unifies three nested MDL roles (theory selection via `mdl_ca_rule_coding_closed`, PMDL gravity via `unique_cubic_gravity_coupling`, Born rule via `born_rule_unconditional`); `mdl_tower_three_levels_non_circular`; zero sorry, zero axioms
+- `UgpLean.Universality.NgenUniversalityPartial` (2026-06-01) — **083B-NGEN partial CatAL**: `ngen_partial_universality_catal` bundles four independent CatAL constraints forcing N_gen = 3 (DPP, CMCA three generations, TPC depth, Gorard D²=16); full seven-constraint theorem open; zero sorry, zero axioms
 - `UgpLean.Gravity.GorardRicciFlatVacuum` — Vacuum Ricci-flat; causal diamond \(V=T^4/4\) (CatAL)
 - `UgpLean.Gravity.LorentzGroupSO13` — All 12 \(\mathfrak{so}(1,3)\) commutation relations; Thomas precession (CatAL)
 - `UgpLean.Gravity.FermionicStatistics` — Fermionic statistics chain zero sorry; exchange phase formula (CatAL)
-- `UgpLean.Gravity.PSCEpochSelection` — PSP axiom L1/L2/T-PSP; \(\Omega_\Lambda = 0.690\) numerical bound (CatAL)
+- `UgpLean.Gravity.PSCEpochSelection` — PSP axiom L1/L2/T-PSP; \(\Omega_\Lambda = 0.690\) numerical bound; **Incompleteness-Cosmology chain** `incompleteness_implies_nonzero_omega_lambda` (CatAL)
 - `UgpLean.Gravity.Z7AnomalyFree` — Z₇ global scalar anomaly-free: shift invariance, Jacobian = 1, vacuum sector equiprobability (all zero sorry, CatAL; graduated 2026-06-01)
 
 ### ContinuumLimit
