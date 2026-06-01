@@ -982,6 +982,7 @@ All theorems zero sorry (CatAL).
 | **mdl_tower_three_levels_non_circular** | Framework.MDLTower | Extends bundle with supplementary T_GTE K-minimality (`IsKMinimalOnGTE` via `phimdl_continuum_is_K_min_in_T_GTE`) |
 | **mdl_tower_role1_T_GTE_supplement** | Framework.MDLTower | Φ_MDL continuum CA component is K-minimal on `T_GTE` (PhiMDLBridge layer) |
 
+## External Citations (Not Formalized)
 
 | ID | Claim | Source |
 |----|-------|--------|

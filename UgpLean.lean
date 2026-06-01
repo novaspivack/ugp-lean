@@ -143,6 +143,7 @@ import UgpLean.Framework.GTEFrameworkInstance
 import UgpLean.Framework.GTEOptimalityInstance
 import UgpLean.Framework.GTEFinalCoalgebra
 import UgpLean.Framework.PhiMDLBridge
+import UgpLean.Framework.MDLTower
 import UgpLean.Framework.GTECategoryStructure
 import UgpLean.Framework.CMCAContinuumLimit
 import UgpLean.Framework.CMCAMDLMinimality
