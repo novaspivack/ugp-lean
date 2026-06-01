@@ -143,6 +143,8 @@ N_gen = 3 and N_fam = 5 to the SU(5) grand unified theory and the GUT-scale Wein
 ## §23 — GTE Master Formula — All EW Parameters from N_gen = 3 Alone (Rank 70, CatAL capstone)
 
 - `gte_generating_triple`: N_fam = 2^N_gen − N_gen ∧ c_H = 2^(N_gen+1) − N_gen ∧ c_H = N_gen + 2·N_fam
+- `two_cH_plus_one_eq_ngen_cubed`: 2·c_H + 1 = N_gen³ = 27 (Higgs quartic SRRG denominator)
+- `higgs_cH_value`, `higgs_quartic_denominator_eq_ngen_cubed`: palindrome-count c_H = 13 identities
 - `gte_master_formula_gut_weinberg`: sin²θ_W(GUT) = N_gen / 2^N_gen = 3/8
 - `gte_master_formula_ew_weinberg`: sin²θ_W(EW) = N_gen / c_H = 3/13
 - `gte_master_formula_wolfenstein`: λ = N_gen² / (2^N_gen × N_fam) = 9/40
