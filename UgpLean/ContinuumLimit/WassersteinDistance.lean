@@ -2,6 +2,9 @@ import Mathlib.Data.Finset.Basic
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Real.Archimedean
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
+import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Order.ConditionallyCompleteLattice.Basic
 
@@ -154,7 +157,334 @@ theorem W1_nonneg
     simp [heq]
 
 -- ---------------------------------------------------------------------------
--- Kantorovich dual lower bound  (explicit sorry — marginal sum rewriting)
+-- Helper couplings
+-- ---------------------------------------------------------------------------
+
+/-- Independent product coupling `γ(x,y) = μ(x) · ν(y)`. -/
+noncomputable def productCoupling (V : Finset ℕ) (μ ν : ProbDist V) (x y : ℕ) : ℝ :=
+  μ.weights x * ν.weights y
+
+theorem productCoupling_nonneg (V : Finset ℕ) (μ ν : ProbDist V) (x y : ℕ) :
+    0 ≤ productCoupling V μ ν x y := by
+  unfold productCoupling
+  exact mul_nonneg
+    (by
+      by_cases hx : x ∈ V
+      · exact μ.proof.weights_nonneg x hx
+      · rw [μ.proof.weights_outside x hx])
+    (by
+      by_cases hy : y ∈ V
+      · exact ν.proof.weights_nonneg y hy
+      · rw [ν.proof.weights_outside y hy])
+
+theorem productCoupling_left_outside (V : Finset ℕ) (μ ν : ProbDist V) (x : ℕ)
+    (hx : x ∉ V) (y : ℕ) : productCoupling V μ ν x y = 0 := by
+  unfold productCoupling
+  simp [μ.proof.weights_outside x hx]
+
+theorem productCoupling_right_outside (V : Finset ℕ) (μ ν : ProbDist V) (y : ℕ)
+    (hy : y ∉ V) (x : ℕ) : productCoupling V μ ν x y = 0 := by
+  unfold productCoupling
+  simp [ν.proof.weights_outside y hy]
+
+theorem productCoupling_marginal_left (V : Finset ℕ) (μ ν : ProbDist V) (x : ℕ)
+    (_hx : x ∈ V) :
+    V.sum (productCoupling V μ ν x) = μ.weights x := by
+  unfold productCoupling
+  calc
+    V.sum (fun y => μ.weights x * ν.weights y) =
+        μ.weights x * V.sum ν.weights := by
+      simp [Finset.mul_sum]
+    _ = μ.weights x * 1 := by rw [ν.proof.sum_one]
+    _ = μ.weights x := by ring
+
+theorem productCoupling_marginal_right (V : Finset ℕ) (μ ν : ProbDist V) (y : ℕ)
+    (_hy : y ∈ V) :
+    V.sum (fun x => productCoupling V μ ν x y) = ν.weights y := by
+  unfold productCoupling
+  calc
+    V.sum (fun x => μ.weights x * ν.weights y) =
+        V.sum μ.weights * ν.weights y := by
+      simp [Finset.sum_mul]
+    _ = 1 * ν.weights y := by rw [μ.proof.sum_one]
+    _ = ν.weights y := by ring
+
+theorem productCoupling_isCoupling (V : Finset ℕ) (μ ν : ProbDist V) :
+    IsCoupling V μ ν (productCoupling V μ ν) :=
+  ⟨productCoupling_nonneg V μ ν,
+    productCoupling_left_outside V μ ν,
+    fun y hy x => productCoupling_right_outside V μ ν y hy x,
+    productCoupling_marginal_left V μ ν,
+    productCoupling_marginal_right V μ ν⟩
+
+theorem couplingCostSet_nonempty (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) :
+    (couplingCostSet M μ ν).Nonempty := by
+  refine ⟨couplingTransportCost M (productCoupling M.vertices μ ν), _, ?_, rfl⟩
+  exact productCoupling_isCoupling M.vertices μ ν
+
+/-- Diagonal coupling `γ(x,y) = μ(x)` when `x = y`, else `0`. -/
+noncomputable def diagonalCoupling (V : Finset ℕ) (μ : ProbDist V) (x y : ℕ) : ℝ :=
+  if x = y then μ.weights x else 0
+
+theorem diagonalCoupling_nonneg (V : Finset ℕ) (μ : ProbDist V) (x y : ℕ) :
+    0 ≤ diagonalCoupling V μ x y := by
+  unfold diagonalCoupling; split_ifs with h
+  · subst h
+    by_cases hx : x ∈ V
+    · exact μ.proof.weights_nonneg x hx
+    · simp [μ.proof.weights_outside x hx]
+  · exact le_rfl
+
+theorem diagonalCoupling_left_outside (V : Finset ℕ) (μ : ProbDist V) (x : ℕ)
+    (hx : x ∉ V) (y : ℕ) : diagonalCoupling V μ x y = 0 := by
+  unfold diagonalCoupling
+  split_ifs with h
+  · subst h
+    rw [μ.proof.weights_outside x hx]
+  · rfl
+
+theorem diagonalCoupling_right_outside (V : Finset ℕ) (μ : ProbDist V) (y : ℕ)
+    (hy : y ∉ V) (x : ℕ) : diagonalCoupling V μ x y = 0 := by
+  unfold diagonalCoupling
+  split_ifs with h
+  · have hx : x ∉ V := h ▸ hy
+    exact μ.proof.weights_outside x hx
+  · rfl
+
+theorem diagonalCoupling_marginal_left (V : Finset ℕ) (μ : ProbDist V) (x : ℕ)
+    (hx : x ∈ V) :
+    V.sum (diagonalCoupling V μ x) = μ.weights x := by
+  unfold diagonalCoupling
+  have hsum :
+      V.sum (fun y => if x = y then μ.weights x else 0) = μ.weights x := by
+    calc
+      V.sum (fun y => if x = y then μ.weights x else 0) =
+          V.sum (fun y => if y = x then μ.weights x else 0) := by
+        apply Finset.sum_congr rfl
+        intro y _
+        by_cases hxy : x = y
+        · simp [hxy]
+        · simp [hxy, eq_comm]
+      _ = if x ∈ V then μ.weights x else 0 := by simp [Finset.sum_ite_eq']
+      _ = μ.weights x := by simp [hx]
+  simpa using hsum
+
+theorem diagonalCoupling_marginal_right (V : Finset ℕ) (μ : ProbDist V) (y : ℕ)
+    (hy : y ∈ V) :
+    V.sum (fun x => diagonalCoupling V μ x y) = μ.weights y := by
+  unfold diagonalCoupling
+  have hsum :
+      V.sum (fun x => if x = y then μ.weights x else 0) = μ.weights y := by
+    calc
+      V.sum (fun x => if x = y then μ.weights x else 0) =
+          if y ∈ V then μ.weights y else 0 := by simp [Finset.sum_ite_eq']
+      _ = μ.weights y := by simp [hy]
+  simpa using hsum
+
+theorem diagonalCoupling_isCoupling (V : Finset ℕ) (μ : ProbDist V) :
+    IsCoupling V μ μ (diagonalCoupling V μ) :=
+  ⟨diagonalCoupling_nonneg V μ,
+    diagonalCoupling_left_outside V μ,
+    fun y hy x => diagonalCoupling_right_outside V μ y hy x,
+    diagonalCoupling_marginal_left V μ,
+    diagonalCoupling_marginal_right V μ⟩
+
+theorem diagonalCouplingTransportCost_zero (M : FiniteMetricSpace) (μ : ProbDist M.vertices) :
+    couplingTransportCost M (diagonalCoupling M.vertices μ) = 0 := by
+  unfold couplingTransportCost diagonalCoupling
+  apply Finset.sum_eq_zero
+  intro x hx
+  apply Finset.sum_eq_zero
+  intro y hy
+  by_cases hxy : x = y
+  · rw [if_pos hxy, show M.dist x y = 0 from hxy ▸ M.dist_self x, mul_zero]
+  · rw [if_neg hxy, zero_mul]
+
+/-- Zero transport cost forces equal marginals. -/
+theorem couplingTransportCost_eq_zero_implies_weights_eq
+    (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) (γ : ℕ → ℕ → ℝ)
+    (hγ : IsCoupling M.vertices μ ν γ) (hcost : couplingTransportCost M γ = 0) :
+    μ.weights = ν.weights := by
+  ext x
+  by_cases hx : x ∈ M.vertices
+  · have hrow_nonneg :
+        ∀ x' ∈ M.vertices, 0 ≤ M.vertices.sum (fun y => γ x' y * M.dist x' y) := by
+      intro x' hx'
+      apply Finset.sum_nonneg
+      intro y _
+      exact mul_nonneg (hγ.nonneg x' y) (M.dist_nonneg x' y)
+    have hrows :
+        ∀ x' ∈ M.vertices, M.vertices.sum (fun y => γ x' y * M.dist x' y) = 0 := by
+      intro x' hx'
+      exact (Finset.sum_eq_zero_iff_of_nonneg hrow_nonneg).1 hcost x' hx'
+    have hzero :
+        ∀ x' y, x' ∈ M.vertices → y ∈ M.vertices → γ x' y * M.dist x' y = 0 := by
+      intro x' y hx' hy'
+      exact (Finset.sum_eq_zero_iff_of_nonneg fun z _ =>
+        mul_nonneg (hγ.nonneg x' z) (M.dist_nonneg x' z)).1 (hrows x' hx') y hy'
+    have hoff :
+        ∀ x' y, x' ∈ M.vertices → y ∈ M.vertices → x' ≠ y → γ x' y = 0 := by
+      intro x' y hx' hy' hxy
+      have hdist : 0 < M.dist x' y := by
+        have hne' : M.dist x' y ≠ 0 := by
+          intro h0
+          exact hxy ((M.dist_eq_zero_iff x' y).mp h0)
+        exact (M.dist_nonneg x' y).lt_of_ne hne'.symm
+      exact (mul_eq_zero.mp (hzero x' y hx' hy')).resolve_right (ne_of_gt hdist)
+    have hrow :
+        μ.weights x = M.vertices.sum (γ x) := (hγ.marginal_left x hx).symm
+    have hcol :
+        ν.weights x = M.vertices.sum (fun x' => γ x' x) := (hγ.marginal_right x hx).symm
+    have hdiag :
+        M.vertices.sum (γ x) = γ x x := by
+      rw [Finset.sum_eq_sum_diff_singleton_add hx]
+      have hrest :
+          (M.vertices \ {x}).sum (γ x) = 0 := by
+        apply Finset.sum_eq_zero
+        intro y hy
+        have hyne : y ≠ x := by
+          intro heq
+          exact (Finset.mem_sdiff.mp hy).2 (heq ▸ Finset.mem_singleton_self x)
+        exact hoff x y hx ((Finset.mem_sdiff.mp hy).1) hyne.symm
+      simp [hrest]
+    have hdiag' :
+        M.vertices.sum (fun x' => γ x' x) = γ x x := by
+      rw [Finset.sum_eq_sum_diff_singleton_add hx]
+      have hrest :
+          (M.vertices \ {x}).sum (fun x' => γ x' x) = 0 := by
+        apply Finset.sum_eq_zero
+        intro y hy
+        have hyne : y ≠ x := by
+          intro heq
+          exact (Finset.mem_sdiff.mp hy).2 (heq ▸ Finset.mem_singleton_self x)
+        exact hoff y x ((Finset.mem_sdiff.mp hy).1) hx hyne
+      simp [hrest]
+    rw [hrow, hcol, hdiag, hdiag']
+  · simp [μ.proof.weights_outside x hx, ν.proof.weights_outside x hx]
+
+/-- If the weight functions differ, every valid coupling has positive transport cost. -/
+theorem couplingTransportCost_pos_of_ne_weights
+    (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices)
+    (hne : μ.weights ≠ ν.weights) (γ : ℕ → ℕ → ℝ)
+    (hγ : IsCoupling M.vertices μ ν γ) :
+    0 < couplingTransportCost M γ := by
+  refine lt_of_le_of_ne (couplingTransportCost_nonneg M μ ν γ hγ) ?_
+  intro h0
+  exact hne (couplingTransportCost_eq_zero_implies_weights_eq M μ ν γ hγ h0.symm)
+
+/-- The W₁ infimum is achieved by some coupling plan.
+
+    Proof sketch: couplings form a compact polytope in `ℝ^{|V|²}` and transport cost is linear,
+    so the minimum is attained. Deferred: formal compactness of the coupling polytope. -/
+theorem W1_attained
+    (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) :
+    ∃ γ : ℕ → ℕ → ℝ, IsCoupling M.vertices μ ν γ ∧
+      couplingTransportCost M γ = W1 M μ ν := by
+  sorry
+
+/-- On a finite metric space, distinct distributions have positive W₁ distance. -/
+theorem W1_pos_of_ne_weights
+    (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices)
+    (hne : μ.weights ≠ ν.weights) : 0 < W1 M μ ν := by
+  by_contra hnotpos
+  push Not at hnotpos
+  have hW1 : W1 M μ ν = 0 := le_antisymm hnotpos (W1_nonneg M μ ν)
+  obtain ⟨γ, hγ, hcost⟩ := W1_attained M μ ν
+  rw [hW1] at hcost
+  exact hne (couplingTransportCost_eq_zero_implies_weights_eq M μ ν γ hγ hcost)
+
+theorem exists_zero_cost_coupling_of_W1_eq_zero
+    (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices)
+    (h : W1 M μ ν = 0) :
+    ∃ γ : ℕ → ℕ → ℝ, IsCoupling M.vertices μ ν γ ∧ couplingTransportCost M γ = 0 := by
+  obtain ⟨γ, hγ, hcost⟩ := W1_attained M μ ν
+  rw [h] at hcost
+  exact ⟨γ, hγ, hcost⟩
+
+/-- Kantorovich bound: 1-Lipschitz test functions give a lower bound on transport cost. -/
+theorem abs_probExpectation_sub_le_couplingTransportCost
+    (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) (γ : ℕ → ℕ → ℝ)
+    (hγ : IsCoupling M.vertices μ ν γ) (f : ℕ → ℝ)
+    (hf : ∀ x y, |f x - f y| ≤ M.dist x y) :
+    |probExpectation M μ f - probExpectation M ν f| ≤ couplingTransportCost M γ := by
+  have hμ :
+      probExpectation M μ f =
+        M.vertices.sum (fun x => M.vertices.sum (fun y => γ x y * f x)) := by
+    unfold probExpectation
+    apply Finset.sum_congr rfl
+    intro x hx
+    have hstep :
+        μ.weights x * f x = M.vertices.sum (fun y => γ x y * f x) := by
+      calc
+        μ.weights x * f x = f x * M.vertices.sum (γ x) := by
+          rw [mul_comm, ← hγ.marginal_left x hx]
+        _ = M.vertices.sum (fun y => f x * γ x y) := by rw [Finset.mul_sum]
+        _ = M.vertices.sum (fun y => γ x y * f x) := by
+          apply Finset.sum_congr rfl
+          intro y _
+          ring
+    exact hstep
+  have hν :
+      probExpectation M ν f =
+        M.vertices.sum (fun x => M.vertices.sum (fun y => γ x y * f y)) := by
+    unfold probExpectation
+    have h1 :
+        M.vertices.sum (fun y => ν.weights y * f y) =
+          M.vertices.sum (fun y => M.vertices.sum (fun x => γ x y * f y)) := by
+      apply Finset.sum_congr rfl
+      intro y hy
+      have hstep :
+          ν.weights y * f y = M.vertices.sum (fun x => γ x y * f y) := by
+        calc
+          ν.weights y * f y = f y * M.vertices.sum (fun x => γ x y) := by
+            rw [mul_comm, ← hγ.marginal_right y hy]
+          _ = M.vertices.sum (fun x => f y * γ x y) := by
+            rw [Finset.mul_sum]
+          _ = M.vertices.sum (fun x => γ x y * f y) := by
+            apply Finset.sum_congr rfl
+            intro x _
+            ring
+      exact hstep
+    rw [h1, Finset.sum_comm]
+  have hdiff :
+      probExpectation M μ f - probExpectation M ν f =
+        M.vertices.sum (fun x => M.vertices.sum (fun y => γ x y * (f x - f y))) := by
+    rw [hμ, hν, ← Finset.sum_sub_distrib]
+    congr 1
+    ext x
+    rw [← Finset.sum_sub_distrib]
+    congr 1
+    ext y
+    ring
+  rw [hdiff]
+  calc
+    |M.vertices.sum (fun x => M.vertices.sum (fun y => γ x y * (f x - f y)))|
+        ≤ M.vertices.sum (fun x => |M.vertices.sum (fun y => γ x y * (f x - f y))|) := by
+      simpa using
+        (Finset.abs_sum_le_sum_abs (s := M.vertices)
+          (f := fun x => M.vertices.sum (fun y => γ x y * (f x - f y))))
+    _ ≤ M.vertices.sum (fun x => M.vertices.sum (fun y => |γ x y * (f x - f y)|)) := by
+      apply Finset.sum_le_sum
+      intro x _
+      simpa using
+        (Finset.abs_sum_le_sum_abs (s := M.vertices)
+          (f := fun y => γ x y * (f x - f y)))
+    _ ≤ M.vertices.sum (fun x => M.vertices.sum (fun y => γ x y * |f x - f y|)) := by
+      apply Finset.sum_le_sum
+      intro x _
+      apply Finset.sum_le_sum
+      intro y _
+      rw [abs_mul, abs_of_nonneg (hγ.nonneg x y)]
+    _ ≤ M.vertices.sum (fun x => M.vertices.sum (fun y => γ x y * M.dist x y)) := by
+      apply Finset.sum_le_sum
+      intro x _
+      apply Finset.sum_le_sum
+      intro y _
+      exact mul_le_mul_of_nonneg_left (hf x y) (hγ.nonneg x y)
+    _ = couplingTransportCost M γ := rfl
+
+-- ---------------------------------------------------------------------------
+-- Kantorovich dual lower bound
 -- ---------------------------------------------------------------------------
 
 /-- `|E_μ[f] - E_ν[f]| ≤ W1 M μ ν` for every 1-Lipschitz `f`.
@@ -175,7 +505,11 @@ theorem W1_ge_of_lipschitz
     (f : ℕ → ℝ) (hf : ∀ x y, |f x - f y| ≤ M.dist x y)
     (hne : (couplingCostSet M μ ν).Nonempty) :
     |probExpectation M μ f - probExpectation M ν f| ≤ W1 M μ ν := by
-  sorry
+  unfold W1
+  apply le_csInf hne
+  intro c hc
+  obtain ⟨γ, hγ, rfl⟩ := hc
+  exact abs_probExpectation_sub_le_couplingTransportCost M μ ν γ hγ f hf
 
 -- ---------------------------------------------------------------------------
 -- W₁ = 0 ↔ μ = ν  (explicit sorry — diagonal coupling argument)
@@ -190,7 +524,20 @@ theorem W1_ge_of_lipschitz
 theorem W1_eq_zero_iff
     (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) :
     W1 M μ ν = 0 ↔ μ.weights = ν.weights := by
-  sorry
+  constructor
+  · intro hW1
+    obtain ⟨γ, hγ, hcost⟩ := exists_zero_cost_coupling_of_W1_eq_zero M μ ν hW1
+    exact couplingTransportCost_eq_zero_implies_weights_eq M μ ν γ hγ hcost
+  · intro heq
+    have hγ : IsCoupling M.vertices μ ν (diagonalCoupling M.vertices μ) :=
+      ⟨diagonalCoupling_nonneg M.vertices μ,
+        diagonalCoupling_left_outside M.vertices μ,
+        fun y hy x => diagonalCoupling_right_outside M.vertices μ y hy x,
+        diagonalCoupling_marginal_left M.vertices μ,
+        fun y hy => by rw [← heq]; exact diagonalCoupling_marginal_right M.vertices μ y hy⟩
+    have hle := W1_le_couplingCost M μ ν (diagonalCoupling M.vertices μ) hγ
+    rw [diagonalCouplingTransportCost_zero M μ] at hle
+    exact le_antisymm hle (W1_nonneg M μ ν)
 
 -- ---------------------------------------------------------------------------
 -- Triangle inequality  (explicit sorry — gluing lemma)
