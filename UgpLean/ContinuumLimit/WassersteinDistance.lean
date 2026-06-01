@@ -8,6 +8,12 @@ import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Data.Real.Archimedean
 import Mathlib.Order.ConditionallyCompleteLattice.Basic
+import Mathlib.Topology.Order.Compact
+import Mathlib.Topology.Compactness.Compact
+import Mathlib.Topology.Order.Monotone
+import Mathlib.Topology.Order.Real
+import Mathlib.Topology.Instances.Real.Lemmas
+import Mathlib.Topology.Constructions
 import Mathlib.Tactic.Linarith
 
 /-!
@@ -374,16 +380,142 @@ theorem couplingTransportCost_pos_of_ne_weights
   intro h0
   exact hne (couplingTransportCost_eq_zero_implies_weights_eq M μ ν γ hγ h0.symm)
 
+-- ---------------------------------------------------------------------------
+-- Coupling polytope compactness (finite-dimensional transport polytope)
+-- ---------------------------------------------------------------------------
+
+section CouplingPolytope
+
+variable {V : Finset ℕ} {μ ν : ProbDist V}
+
+/-- Vertex pair in the coupling support. -/
+abbrev CouplingPair (V : Finset ℕ) := ↑(V ×ˢ V)
+
+/-- Extend pair-indexed coefficients to a full coupling plan, zero outside `V ×ˢ V`. -/
+noncomputable def couplingFromPairs (c : CouplingPair V → ℝ) : ℕ → ℕ → ℝ :=
+  fun x y => if h : (x, y) ∈ V ×ˢ V then c ⟨(x, y), h⟩ else 0
+
+theorem couplingFromPairs_nonneg (c : CouplingPair V → ℝ)
+    (hnonneg : ∀ p : CouplingPair V, 0 ≤ c p) (x y : ℕ) :
+    0 ≤ couplingFromPairs (V := V) c x y := by
+  unfold couplingFromPairs; split_ifs with h
+  · exact hnonneg ⟨(x, y), h⟩
+  · exact le_rfl
+
+theorem couplingFromPairs_left_outside (c : CouplingPair V → ℝ) (x : ℕ) (hx : x ∉ V) (y : ℕ) :
+    couplingFromPairs (V := V) c x y = 0 := by
+  unfold couplingFromPairs; split_ifs with h
+  · exact absurd (Finset.mem_product.mp h).1 hx
+  · rfl
+
+theorem couplingFromPairs_right_outside (c : CouplingPair V → ℝ) (y : ℕ) (hy : y ∉ V) (x : ℕ) :
+    couplingFromPairs (V := V) c x y = 0 := by
+  unfold couplingFromPairs; split_ifs with h
+  · exact absurd (Finset.mem_product.mp h).2 hy
+  · rfl
+
+/-- Coefficient-level coupling constraints on `V ×ˢ V`. -/
+structure IsCouplingCoeffs (c : CouplingPair V → ℝ) : Prop where
+  nonneg : ∀ p : CouplingPair V, 0 ≤ c p
+  marginal_left :
+    ∀ x ∈ V, V.sum (fun y => couplingFromPairs (V := V) c x y) = μ.weights x
+  marginal_right :
+    ∀ y ∈ V, V.sum (fun x => couplingFromPairs (V := V) c x y) = ν.weights y
+
+theorem IsCouplingCoeffs.isCoupling (c : CouplingPair V → ℝ)
+    (hc : IsCouplingCoeffs (V := V) (μ := μ) (ν := ν) c) :
+    IsCoupling V μ ν (couplingFromPairs (V := V) c) := by
+  refine ⟨couplingFromPairs_nonneg c hc.nonneg,
+    couplingFromPairs_left_outside c, couplingFromPairs_right_outside c, ?_, ?_⟩
+  · intro x hx; exact hc.marginal_left x hx
+  · intro y hy; exact hc.marginal_right y hy
+
+/-- Transport cost from pair-indexed coefficients. -/
+noncomputable def couplingTransportCostPairs (M : FiniteMetricSpace)
+    (c : CouplingPair M.vertices → ℝ) : ℝ :=
+  M.vertices.sum (fun x => M.vertices.sum (fun y =>
+    if h : (x, y) ∈ M.vertices ×ˢ M.vertices then c ⟨(x, y), h⟩ * M.dist x y else 0))
+
+theorem couplingTransportCostPairs_eq (M : FiniteMetricSpace) (c : CouplingPair M.vertices → ℝ) :
+    couplingTransportCostPairs M c =
+      couplingTransportCost M (couplingFromPairs (V := M.vertices) c) := by
+  unfold couplingTransportCostPairs couplingTransportCost couplingFromPairs
+  apply Finset.sum_congr rfl
+  intro x hx
+  apply Finset.sum_congr rfl
+  intro y hy
+  have hpair : (x, y) ∈ M.vertices ×ˢ M.vertices := Finset.mem_product.mpr ⟨hx, hy⟩
+  simp [hpair]
+
+/-- The set of pair-indexed coupling coefficients satisfying marginal constraints. -/
+def couplingPolytope (V : Finset ℕ) (μ ν : ProbDist V) : Set (CouplingPair V → ℝ) :=
+  {c | IsCouplingCoeffs (V := V) (μ := μ) (ν := ν) c}
+
+theorem IsCouplingCoeffs.coeff_le_one (c : CouplingPair V → ℝ)
+    (hc : IsCouplingCoeffs (V := V) (μ := μ) (ν := ν) c) (p : CouplingPair V) :
+    c p ≤ 1 := by
+  have hp : p.1 ∈ V ×ˢ V := p.2
+  have hx : p.1.1 ∈ V := (Finset.mem_product.mp hp).1
+  have hy : p.1.2 ∈ V := (Finset.mem_product.mp hp).2
+  have hnonneg' : ∀ y ∈ V, 0 ≤ couplingFromPairs (V := V) c p.1.1 y :=
+    fun y _ => couplingFromPairs_nonneg c hc.nonneg p.1.1 y
+  have hcp : c p = couplingFromPairs (V := V) c p.1.1 p.1.2 := by
+    unfold couplingFromPairs; simp [hp]
+  have hle : c p ≤ V.sum (fun y => couplingFromPairs (V := V) c p.1.1 y) := by
+    rw [hcp]
+    exact Finset.single_le_sum hnonneg' hy
+  have hμle : μ.weights p.1.1 ≤ 1 := by
+    have hnonnegμ : ∀ x ∈ V, 0 ≤ μ.weights x := μ.proof.weights_nonneg
+    calc
+      μ.weights p.1.1 ≤ V.sum μ.weights := Finset.single_le_sum hnonnegμ hx
+      _ = 1 := μ.proof.sum_one
+  exact (hle.trans_eq (hc.marginal_left p.1.1 hx)).trans hμle
+
+theorem couplingPolytope_subset_box (V : Finset ℕ) (μ ν : ProbDist V) :
+    couplingPolytope (V := V) μ ν ⊆
+      Set.pi Set.univ (fun (_ : CouplingPair V) => Set.Icc (0 : ℝ) 1) := by
+  intro c hc p _
+  have hf : IsCouplingCoeffs (V := V) (μ := μ) (ν := ν) c := by
+    simpa [couplingPolytope, Set.mem_setOf_eq] using hc
+  exact ⟨hf.nonneg p, IsCouplingCoeffs.coeff_le_one (V := V) (μ := μ) (ν := ν) c hf p⟩
+
+/-- Achievable transport costs are the image of the coupling polytope under pair transport cost.
+
+    Proof deferred: requires showing every valid coupling arises from pair coefficients and
+    that the two cost definitions agree (the forward direction is `couplingTransportCostPairs_eq`). -/
+theorem couplingCostSet_eq_image (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) :
+    couplingCostSet M μ ν =
+      couplingTransportCostPairs M '' couplingPolytope (V := M.vertices) μ ν := by
+  sorry
+
+/-- On a finite vertex set, achievable transport costs form a compact subset of `ℝ`.
+
+    Proof sketch: couplings on `V ×ˢ V` satisfy nonnegativity and linear marginal constraints,
+    forming a closed subset of the compact hypercube `[0,1]^(|V|²)`. Transport cost is a finite
+    sum of bilinear terms, hence continuous; the image of a compact set under a continuous map
+    is compact. Full formalization deferred pending optimal-transport infrastructure in Mathlib. -/
+theorem couplingCostSet_isCompact (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) :
+    IsCompact (couplingCostSet M μ ν) := by
+  sorry
+
+end CouplingPolytope
+
 /-- The W₁ infimum is achieved by some coupling plan.
 
-    Named hypothesis: on a finite vertex set the coupling polytope is a compact
-    finite-dimensional polytope and transport cost is linear, so the minimum is
-    attained. Full proof deferred pending a Mathlib optimal-transport development. -/
+    Proof: `couplingCostSet` is compact (`couplingCostSet_isCompact`), hence the infimum
+    belongs to the cost set (`IsCompact.sInf_mem`). The remaining sorries formalize the
+    finite-dimensional transport polytope and continuity of transport cost. -/
 theorem W1_attained
     (M : FiniteMetricSpace) (μ ν : ProbDist M.vertices) :
     ∃ γ : ℕ → ℕ → ℝ, IsCoupling M.vertices μ ν γ ∧
       couplingTransportCost M γ = W1 M μ ν := by
-  sorry  -- Infimum attained: coupling polytope is compact (finite-dimensional, closed, bounded)
+  have hne := couplingCostSet_nonempty M μ ν
+  have hcompact := couplingCostSet_isCompact M μ ν
+  have hw1_mem : W1 M μ ν ∈ couplingCostSet M μ ν := by
+    unfold W1
+    exact IsCompact.sInf_mem hcompact hne
+  rcases hw1_mem with ⟨γ, hγ, hcost⟩
+  exact ⟨γ, hγ, hcost⟩
 
 /-- On a finite metric space, distinct distributions have positive W₁ distance. -/
 theorem W1_pos_of_ne_weights
