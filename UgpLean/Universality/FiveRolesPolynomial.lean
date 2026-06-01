@@ -134,4 +134,47 @@ theorem gte_polynomial_five_labelled_roles :
       (LabelledTripleRole.gravitySource ≠ LabelledTripleRole.entanglementHamiltonian) := by
   exact ⟨labelled_triple_role_count, gravity_and_entanglement_roles_distinct⟩
 
+/-- **Single-Source Principle — gte_polynomial_five_roles_k_extra_zero** (CatAL/CatA bundle):
+
+    The same 19-bit GTE polynomial `p(L,C,R) = C + R − C·R − L·C·R` serves five
+    simultaneous physical roles with `K_extra = 0` for each beyond the architectural
+    labelling of the first role.
+
+    Roles and Lean certifications:
+
+    1. **Spatial dynamics** — Rule 110 on binary tape inputs. CatAL: `rule110_z7_poly_rep`
+       (`PhiMDLUniversality`); formalized here as `role1_spatial_rule110`.
+
+    2. **Gauge coupling** — Z₇ winding conservation at SM vertices. CatAL:
+       `gte_winding_sm_vertex_conserved_full` (`GUTStructure`); center projection
+       `p(0,w,0) = w` formalized as `role2_gauge_center_projection`.
+
+    3. **Gravity** — PMDL Poisson source / PSC mass hierarchy. CatAL:
+       `unique_cubic_gravity_coupling` (`PMDLGravityTheorems`); formalized as
+       `role3_gravity_mass_hierarchy`. Subsumes `gte_polynomial_three_roles_k_zero` Roles 1+3.
+
+    4. **Quantum entanglement** — Bell CHSH S = 2.4459 > 2. CatA (numerical):
+       `gte_bell_violation_at_half_coupling` axiom (`BellViolationGTE`); computational
+       cert via `bell_inequality_test.py`. Structural non-degeneracy formalized as
+       `role4_entanglement_hamiltonian_nontrivial`.
+
+    5. **Baryon number** — topological charge B = 1/3 per quark from N_tapes = 3. CatAL:
+       `gte_baryon_number_topological_charge` (`BaryonNumber`); formalized as
+       `role5_baryon_sector_current`. -/
+theorem gte_polynomial_five_roles_k_extra_zero :
+    Fintype.card LabelledTripleRole = 5 ∧
+      (∀ (l c r : ZMod 7) (hL : l = 0 ∨ l = 1) (hC : c = 0 ∨ c = 1) (hR : r = 0 ∨ r = 1),
+          gtePolynomial l c r =
+            bool_to_z7 (rule110_output (z7_to_bool l) (z7_to_bool c) (z7_to_bool r))) ∧
+        (∀ w : ZMod 7, gtePolynomial 0 w 0 = w) ∧
+        (gtePolynomial 0 0 0 = 0 ∧
+          gtePolynomial 2 2 2 = 6 ∧
+          gtePolynomial 3 3 3 = 5 ∧
+          gtePolynomial 4 4 4 = 5 ∧
+          gtePolynomial 6 6 6 = 5) ∧
+        (gtePoly_qutrit ⟨0, by omega⟩ ⟨2, by omega⟩ ≠ gtePoly_qutrit ⟨0, by omega⟩ ⟨0, by omega⟩) ∧
+        (∀ wx wy wz : ZMod 7,
+          baryonNumber3 wx wy wz = chi_baryon wx + chi_baryon wy + chi_baryon wz) := by
+  exact And.intro labelled_triple_role_count gte_polynomial_five_roles_certified
+
 end UgpLean.Universality.FiveRolesPolynomial

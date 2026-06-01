@@ -828,6 +828,15 @@ One Φ_MDL kink bundles three CatAL roles from the same 19-bit polynomial `p(L,C
 - `particles_computation_spacetime_trinity_certified` — constructive bundle witness: charge from winding, fermion ID, PSC sectors, Rule 110 step, Turing universality; Role 3 cross-ref `psc_orbit_is_curvature_geodesic`
 - `particles_computation_spacetime_trinity_with_universality` — conjunction + `z7kg_kink_universality` (CatAL)
 
+**Single-Source Principle — Five GTE Polynomial Roles (FiveRolesPolynomial.lean, 2026-06-01; zero sorry)**
+
+The same 19-bit polynomial `p(L,C,R) = C+R−CR−LCR` serves five physical roles at `K_extra = 0`:
+
+- `gte_polynomial_five_roles_k_extra_zero` — **master Single-Source Principle bundle** (CatAL/CatA): Role 1 Rule 110 (`rule110_z7_poly_rep`), Role 2 gauge (`gte_winding_sm_vertex_conserved_full` docstring ref), Role 3 gravity (`unique_cubic_gravity_coupling`), Role 4 entanglement (CatA Bell S=2.4459), Role 5 baryon (`gte_baryon_number_topological_charge`); plus exactly five distinct roles
+- `gte_polynomial_five_roles_certified` — per-role substance (five zero-sorry sub-theorems)
+- `gte_polynomial_five_labelled_roles` — structural role count and gravity/entanglement distinctness
+- `gte_polynomial_three_roles_k_zero` — sub-bundle in `PMDLGravityTheorems.lean` (Roles 1+3 only)
+
 ---
 
 **EPIC 074/075/076 Graduation — Algebraic Necessity, Gravity Sector, QCA/QEC (2026-05-26; zero sorry on listed theorems)**
