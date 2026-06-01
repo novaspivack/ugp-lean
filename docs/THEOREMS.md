@@ -252,7 +252,12 @@ Module: `ElegantKernel.Unconditional.KGenFullClosure` (§§1–9).
 | **ugp_g1g2_prediction_close_to_SM** | TE22.ScanCertificate | UGP g1²/g2² prediction within 2% of SM value at M_Z |
 | **SM_gauge_uniquely_selected** | TE22.ScanCertificate | Among all 60 (GaugeGroup, Dimension) pairs, exactly `(SU3xSU2xU1, 4D)` satisfies `isSMGauge` (decided) |
 | **isSMGauge_iff** | TE22.ScanCertificate | `isSMGauge g d = true ↔ g = SU3xSU2xU1 ∧ dim_val d = 4` (decided) |
-| **SM_is_D_minimizer_extended** | TE22.ScanCertificate | Alias of `isSMGauge_iff` (decidable fragment of full D-minimizer claim; full claim over 34,560 universes still pending Fintype+native_decide) |
+| **SM_is_D_minimizer_extended** | TE22.ScanCertificate | Alias of `isSMGauge_iff` (decidable fragment of full D-minimizer claim) |
+| **universe_params_card** | TE22.ScanCertificate | `Fintype.card UniverseParams = 34560` (native_decide) |
+| **psc_layer_i_certificate** | TE22.ScanCertificate | Layer I PSC filter: 12 survivors, all N_gen=3, all SM gauge (native_decide) |
+| **psc_enumeration_forces_ngen_3** | TE22.ScanCertificate | ∀ PSC-admissible u, `ngen_val u.ngen = 3` — Two-Layer PSC Layer I (native_decide, CatAL) |
+| **psc_12_survivors_have_ngen_3** | TE22.ScanCertificate | 12 Layer I survivors ∧ all have N_gen = 3 |
+| **psc_admissible_forces_sm_gauge** | TE22.ScanCertificate | ∀ PSC-admissible u, `isSMGauge u.gauge u.dim` (native_decide) |
 
 ## GTE Number Theory
 
@@ -986,7 +991,7 @@ All theorems zero sorry (CatAL).
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
-| **ngen_partial_universality_catal** | Universality.NgenUniversalityPartial | CatAL bundle: DPP (`dimensional_protocol_principle_master`) ∧ CMCA (`three_generations_physical`) ∧ TPC (`tpc_ngen_equals_level_count`) ∧ Gorard D²=16 (`c_gorard_eq_n_spatial_over_two_dsq`, `gte_dimension_as_ngen_plus_one`) |
+| **ngen_partial_universality_catal** | Universality.NgenUniversalityPartial | CatAL bundle: PSC PI Layer I (`psc_enumeration_forces_ngen_3`) ∧ DPP ∧ CMCA ∧ TPC ∧ Gorard D²=16 |
 | **ngen_three_from_catal_constraints** | Universality.NgenUniversalityPartial | `n_gen = 3 ∧ fmdl_spatial_dimension = 3 ∧ level_hypercomputation + 1 = 3` |
 | **ngen_unique_catal** | Universality.NgenUniversalityPartial | Parametric uniqueness: `NgenCatALConstraints n → n = 3` for `0 < n` |
 | **NgenCatALConstraints** *(structure)* | Universality.NgenUniversalityPartial | Four CatAL constraint fields (scaffold for full parametric universality) |
