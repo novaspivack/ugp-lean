@@ -2369,6 +2369,40 @@ theorem gte_generating_triple :
   simp only [n_gen, n_fam, EWBosonStructure.c_higgs]
   norm_num
 
+/-- **higgs_cH_value** (CatAL):
+    The Higgs boundary c-value from the palindrome-count formula
+    `c_H = 2^(N_gen+1) − N_gen` at `N_gen = 3` equals 13.
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem higgs_cH_value : 2^(n_gen+1) - n_gen = 13 := by
+  simp only [n_gen]; norm_num
+
+/-- **two_cH_plus_one_eq_ngen_cubed** (CatAL):
+    The Higgs boundary excitation count satisfies `2·c_H + 1 = N_gen³`.
+
+    With `c_H = 2^(N_gen+1) − N_gen = 13` and `N_gen = 3`:
+    `2×13 + 1 = 27 = 3³`.
+
+    This links the Higgs triple boundary value to the generation cube and is the
+    denominator in the SRRG Higgs-quartic correction `λ³/(2·c_H+1)`.
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem two_cH_plus_one_eq_ngen_cubed :
+    2 * EWBosonStructure.c_higgs + 1 = n_gen^3 := by
+  simp only [n_gen, EWBosonStructure.c_higgs]
+  norm_num
+
+/-- **higgs_quartic_denominator_eq_ngen_cubed** (CatAL):
+    The SRRG Higgs-quartic correction denominator `2·c_H + 1` equals `N_gen³ = 27`.
+
+    Explicit form using the palindrome-count formula for `c_H`.
+
+    LEAN-CERTIFIED (norm_num, zero sorry). -/
+theorem higgs_quartic_denominator_eq_ngen_cubed :
+    2 * (2^(n_gen+1) - n_gen) + 1 = n_gen^3 := by
+  simp only [n_gen]
+  norm_num
+
 /-- **gte_master_formula_gut_weinberg** (CatAL):
     The GUT-scale Weinberg angle from N_gen alone: sin²θ_W(GUT) = N_gen / 2^N_gen = 3/8.
 
