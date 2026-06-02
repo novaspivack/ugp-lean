@@ -2,6 +2,8 @@ import Mathlib
 import UgpLean.Universality.GTPNeutralDiscrimination
 import UgpLean.Universality.Z7ZeroSectorDiscriminant
 import UgpLean.Universality.ChiralPairVA
+import UgpLean.Universality.GUTStructure
+import UgpLean.Universality.EWBosonStructure
 import UgpLean.Substrate.ChiralCurrentL2
 
 /-!
@@ -27,6 +29,13 @@ numerical PMNS fitting.
 | `rh_neutrino_couples_antiflavon` | zero sorry | CatAL |
 | `pmns_cp_phase_from_z7_winding` | zero sorry | CatAL |
 | `pmns_cp_phase_degrees` | zero sorry | CatAL |
+| `pmns_solar_angle_sq_rational` | zero sorry | CatAL |
+| `pmns_solar_sin_sq` | zero sorry | CatAL |
+| `pmns_atm_bvalues` | zero sorry | CatAL |
+| `pmns_atm_sin_sq` | zero sorry | CatAL |
+| `pmns_reactor_sin_rational` | zero sorry | CatAL |
+| `pmns_reactor_sin_val` | zero sorry | CatAL |
+| `pmns_sin_theta13_lt_one` | zero sorry | CatAL |
 
 Companion: `UgpLean.Universality.Z7ZeroSectorDiscriminant.neutrino_sector_b_index`
 certifies the same b = 1 fact from the canonical GTE triple table.
@@ -35,7 +44,7 @@ certifies the same b = 1 fact from the canonical GTE triple table.
 namespace UgpLean.MassRelations.NeutrinoSector
 
 open GTPNeutralDiscrimination Z7ZeroSectorDiscriminant
-open ChiralPairVA GTE.ChiralCurrentL2
+open ChiralPairVA GTE.ChiralCurrentL2 GUTStructure EWBosonStructure
 
 -- ════════════════════════════════════════════════════════════════
 -- §1  LH neutrino GTE b-values (T1)
@@ -383,5 +392,87 @@ theorem pmns_cp_phase_degrees :
 /-- Exact rational degree numerator before integer division. -/
 theorem pmns_cp_phase_degrees_rational :
     4 * 360 = 7 * 205 + 5 := by decide
+
+-- ════════════════════════════════════════════════════════════════
+-- §10  PMNS mixing angle orbit-ratio formulas (083C-LEAN-5)
+-- ════════════════════════════════════════════════════════════════
+
+/-!
+GTE orbit-ratio formulas for the three PMNS mixing angles (P32 CKM analogy).
+The physical identification sin²θ₁₂ = strand²/c_H, sin²θ₂₃ = b_R3/b_L2,
+sin θ₁₃ = b_R2/b_L1 is CatAD; the rational arithmetic below is CatAL.
+
+Constants:
+  strand = (N_c² − 1)/4 = 2       (QCD adjoint strand count)
+  c_H = 13                        (`EWBosonStructure.c_higgs`, CatAL)
+  b_L1 = 73, b_L2 = 42            (`GUTStructure.b_gen1`, `b_gen2`, CatAL)
+  b_R2 = 11                       RH ν_μ N-value, triple (7, 11, 13)
+  b_R3 = 19                       RH ν_τ N-value, triple (17, 19, 23)
+-/
+
+/-- Strand count (N_c² − 1)/4 = 2 at N_c = 3. -/
+def strand_count : ℕ := (3 ^ 2 - 1) / 4
+
+/-- RH ν_μ generation N-value: b-component of GTE triple (7, 11, 13). -/
+def b_R2 : ℕ := 11
+
+/-- RH ν_τ generation N-value: b-component of GTE triple (17, 19, 23). -/
+def b_R3 : ℕ := 19
+
+theorem strand_count_eq_two : strand_count = 2 := by
+  unfold strand_count
+  decide
+
+/-- **pmns_solar_angle_sq_rational** (CatAL):
+    strand²/c_H = 4/13 via the integer identity strand² · c_H = 4 · c_H
+    with strand = 2 and c_H = 13. -/
+theorem pmns_solar_angle_sq_rational :
+    let strand : ℕ := strand_count
+    let c_H : ℕ := EWBosonStructure.c_higgs
+    strand ^ 2 * c_H = 4 * c_H := by
+  dsimp
+  decide
+
+/-- **pmns_solar_sin_sq** (CatAL): sin²(θ₁₂) = strand²/c_H = 4/13. -/
+theorem pmns_solar_sin_sq :
+    (4 : ℚ) / EWBosonStructure.c_higgs =
+      (strand_count : ℚ) ^ 2 / EWBosonStructure.c_higgs := by
+  norm_num [strand_count, EWBosonStructure.c_higgs]
+
+/-- **pmns_atm_bvalues** (CatAL): b_R3 < b_L2 (sin²θ < 1). -/
+theorem pmns_atm_bvalues : b_R3 < b_gen2 := by
+  unfold b_R3
+  norm_num [b_gen2]
+
+/-- **pmns_atm_sin_sq** (CatAL): sin²(θ₂₃) = b_R3/b_L2 = 19/42. -/
+theorem pmns_atm_sin_sq : (b_R3 : ℚ) / b_gen2 = 19 / 42 := by
+  norm_num [b_R3, b_gen2]
+
+/-- **pmns_reactor_sin_rational** (CatAL): b_R2 < b_L1 (sin θ < 1). -/
+theorem pmns_reactor_sin_rational : b_R2 < b_gen1 := by
+  unfold b_R2
+  norm_num [b_gen1]
+
+/-- **pmns_reactor_sin_val** (CatAL): sin(θ₁₃) = b_R2/b_L1 = 11/73 < 1. -/
+theorem pmns_reactor_sin_val : (b_R2 : ℚ) / b_gen1 < 1 := by
+  norm_num [b_R2, b_gen1]
+
+/-!
+Jarlskog invariant ingredients from GTE orbit ratios (CatAD identification;
+positivity bound below is CatAL arithmetic).
+-/
+
+/-- sin(θ₁₂) = √(4/13) from the solar orbit ratio. -/
+noncomputable def pmns_sin_theta12 : ℝ := Real.sqrt (4 / (13 : ℝ))
+
+/-- sin(θ₂₃) = √(19/42) from the atmospheric orbit ratio. -/
+noncomputable def pmns_sin_theta23 : ℝ := Real.sqrt (19 / (42 : ℝ))
+
+/-- sin(θ₁₃) = 11/73 from the reactor orbit ratio. -/
+noncomputable def pmns_sin_theta13 : ℝ := 11 / (73 : ℝ)
+
+theorem pmns_sin_theta13_lt_one : pmns_sin_theta13 < 1 := by
+  unfold pmns_sin_theta13
+  norm_num
 
 end UgpLean.MassRelations.NeutrinoSector
