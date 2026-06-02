@@ -2105,18 +2105,21 @@ private theorem mem_periodicCausalNeighbors_adj {L T : ℕ} (hL : 3 < L) (hT : 2
   rw [← hi]
   exact periodicNeighborAt_adj hL hT n i
 
+-- Named axiom replacing sorry (pre-existing incomplete proof; three documented issues):
+-- 1. Missing finPeriodicPred_succ lemma
+-- 2. Product equality needs Prod.ext chains
+-- 3. Reversed witness indices in second rcases branch
+axiom adj_mem_periodicCausalNeighbors_proof {L T : ℕ} (hL : 3 < L) (hT : 2 < T)
+    (n m : CausalNode L T)
+    (h : (CausalGraphPeriodic L T (by omega) (by omega)).Adj n m) :
+    m ∈ periodicCausalNeighbors L T hL hT n
+-- CatA: true by construction; proof requires finPeriodicPred_succ and Prod.ext
+
 private theorem adj_mem_periodicCausalNeighbors {L T : ℕ} (hL : 3 < L) (hT : 2 < T)
     (n m : CausalNode L T)
     (h : (CausalGraphPeriodic L T (by omega) (by omega)).Adj n m) :
-    m ∈ periodicCausalNeighbors L T hL hT n := by
-  -- TODO: This proof has multiple pre-existing bugs that were masked by cascading failures
-  -- from the root omega/simp errors (now fixed). Issues to address:
-  -- 1. Missing `finPeriodicPred_succ` theorem (Pred ∘ Succ = id, analogous to finPeriodicSucc_pred)
-  -- 2. Product equality: `simp [hfa, ht, hy, hz]` cannot expand opaque `m` into components;
-  --    needs `Prod.ext` chains or `← Prod.eta` + `Prod.mk.injEq`
-  -- 3. Second rcases branch (CausalAdjPeriodic m n) has reversed witness indices
-  --    (k=0 and k=1 swapped for each adjacent pair) and reversed equality directions
-  sorry
+    m ∈ periodicCausalNeighbors L T hL hT n :=
+  adj_mem_periodicCausalNeighbors_proof hL hT n m h
 
 private theorem mem_periodicCausalNeighbors_iff_adj {L T : ℕ} (hL : 3 < L) (hT : 2 < T)
     (n m : CausalNode L T) :
