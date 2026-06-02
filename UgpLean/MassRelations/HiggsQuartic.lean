@@ -21,7 +21,8 @@ where:
 | `higgs_quartic_denominator_is_ngen_cubed` | zero sorry | CatAL |
 | `higgs_quartic_denominator_eq_ngen_cubed` | zero sorry | CatAL |
 | `higgs_quartic_corrected_pos` | zero sorry | CatAL |
-| `higgs_quartic_ch_correction` | 1 sorry | CatA |
+| `higgs_quartic_ch_correction` | zero sorry | CatAL |
+| `higgs_quartic_numerical_approx` | 1 sorry | CatA |
 
 The explicit noncomputable definitions `srrgIPT` / `higgs_quartic_corrected` package the
 full SRRG formula (alias `IPT` / `higgs_quartic_gte`).
@@ -108,11 +109,10 @@ theorem higgs_quartic_corrected_pos : 0 < higgs_quartic_corrected := by
       mul_pos hbase hcorr
     _ = higgs_quartic_corrected := rfl
 
-/-- **higgs_quartic_ch_correction** (CatA — numerical bound sorry):
+/-- **higgs_quartic_ch_correction** (CatAL):
 
     GTE Higgs quartic with SRRG N_gen³ correction at c_H = 13, denominator 27.
-    Structural positivity is `higgs_quartic_corrected_pos`; numerical match to PDG
-    λ ≈ 0.129 requires interval arithmetic on `srrgIPT` (≈ 1.13092). -/
+    Structural positivity is `higgs_quartic_corrected_pos`. -/
 theorem higgs_quartic_ch_correction :
     higgs_quartic_corrected =
       Real.goldenRatio / (4 * Real.pi) * (1 + (srrgIPT - 1) / 27) ∧
@@ -123,10 +123,14 @@ theorem higgs_quartic_ch_correction :
     rw [show ((2 * c_H + 1) : ℝ) = 27 from higgs_quartic_denominator_is_27_real]
   · exact higgs_quartic_corrected_pos
 
-/-- Numerical approximation λ ≈ 0.129 (CatA — interval bound; sorry).
+/-- **higgs_quartic_numerical_approx** (CatA — interval bound; 1 sorry):
 
-    **Strategy:** `norm_num` with Mathlib interval lemmas on `Real.log` at golden ratio,
-    or external computational certificate imported as `OfScientific` bound. -/
+    GTE/SRRG corrected Higgs quartic satisfies 0.12 < λ < 0.14 (PDG central value ≈ 0.129).
+    Computationally verified (λ ≈ 0.12938 from φ, IPT = 1 + log φ/(2 log 2π), denominator 27).
+
+    **Lean status:** interval arithmetic on `Real.log` at golden ratio and `2π` requires a
+    dedicated `norm_num` extension or Mathlib interval lemmas not yet wired here; structural
+    positivity is `higgs_quartic_corrected_pos`. -/
 theorem higgs_quartic_numerical_approx :
     0.12 < higgs_quartic_corrected ∧ higgs_quartic_corrected < 0.14 := by
   sorry
