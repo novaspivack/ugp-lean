@@ -36,6 +36,14 @@ numerical PMNS fitting.
 | `pmns_reactor_sin_rational` | zero sorry | CatAL |
 | `pmns_reactor_sin_val` | zero sorry | CatAL |
 | `pmns_sin_theta13_lt_one` | zero sorry | CatAL |
+| `jarlskog_denominator_eq` | zero sorry | CatAL |
+| `jarlskog_numerator_factors` | zero sorry | CatAL |
+| `jarlskog_sqrt_arg` | zero sorry | CatAL |
+| `cos2_theta13` | zero sorry | CatAL |
+| `jarlskog_cross_cancel` | zero sorry | CatAL |
+| `jarlskog_rational_part` | zero sorry | CatAL |
+| `gte_jarlskog_is_negative` | zero sorry | CatAL |
+| `pmns_sin_delta_cp` | zero sorry | CatAL |
 
 Companion: `UgpLean.Universality.Z7ZeroSectorDiscriminant.neutrino_sector_b_index`
 certifies the same b = 1 fact from the canonical GTE triple table.
@@ -491,5 +499,77 @@ noncomputable def pmns_sin_theta13 : ℝ := 11 / (73 : ℝ)
 theorem pmns_sin_theta13_lt_one : pmns_sin_theta13 < 1 := by
   unfold pmns_sin_theta13
   norm_num
+
+-- ════════════════════════════════════════════════════════════════
+-- §11  Jarlskog invariant from GTE orbit ratios (083C-LEAN-7)
+-- ════════════════════════════════════════════════════════════════
+
+/-!
+The PMNS Jarlskog CP invariant from GTE orbit-ratio mixing angles and Z₇ CP phase:
+
+  J = sinθ₁₂ cosθ₁₂ sinθ₂₃ cosθ₂₃ sinθ₁₃ cos²θ₁₃ sinδ
+
+with sin²θ₁₂ = 4/13, sin²θ₂₃ = 19/42, sin θ₁₃ = 11/73, δ = 8π/7 (CatAD+CatAL).
+
+Algebraic closed form (083C OQ-PMNS-JARLSKOG):
+
+  J_GTE = −(8184 × √437 / 5057221) × sin(π/7)
+
+where 8184 = 2³×3×11×31, 5057221 = 13×73³ = c_H×b_L1³,
+√437 = √(19×23) = √(b_R3×(b_L2−b_R3)), and sin(8π/7) = −sin(π/7).
+-/
+
+/-- **jarlskog_denominator_eq** (CatAL): 5057221 = c_H × b_L1³ = 13 × 73³. -/
+theorem jarlskog_denominator_eq :
+    (13 : ℕ) * 73 ^ 3 = 5057221 := by norm_num
+
+/-- **jarlskog_numerator_factors** (CatAL): 8184 = 2³ × 3 × 11 × 31. -/
+theorem jarlskog_numerator_factors :
+    (8184 : ℕ) = 2 ^ 3 * 3 * 11 * 31 := by norm_num
+
+/-- **jarlskog_sqrt_arg** (CatAL): 437 = b_R3 × (b_L2 − b_R3) = 19 × 23. -/
+theorem jarlskog_sqrt_arg :
+    (19 : ℕ) * 23 = 437 := by norm_num
+
+/-- **cos2_theta13** (CatAL): cos²θ₁₃ = (b_L1² − b_R2²)/b_L1² numerator 5208 = 73² − 11². -/
+theorem cos2_theta13 : (73 : ℕ) ^ 2 - 11 ^ 2 = 5208 := by norm_num
+
+/-- **jarlskog_cross_cancel** (CatAL): 6 × 11 × 5208 = 8184 × 42 (Jarlskog numerator cancellation). -/
+theorem jarlskog_cross_cancel : (6 : ℕ) * 11 * 5208 = 8184 * 42 := by norm_num
+
+/-- sinθ₁₃ cos²θ₁₃ = 11 × 5208 / 73³ (reactor orbit ratio × cos² factor). -/
+theorem jarlskog_sin13_cos2_num : (11 : ℕ) * 5208 = 57288 := by norm_num
+
+/-- 73³ = 389017 (b_L1³). -/
+theorem jarlskog_bL1_cubed : (73 : ℕ) ^ 3 = 389017 := by norm_num
+
+/-- **jarlskog_rational_part** (CatAL):
+    Angle prefactor (6/13)(√437/42)(11×5208/73³) = 8184√437/5057221. -/
+theorem jarlskog_rational_part :
+    (6 : ℝ) / 13 * (Real.sqrt 437 / 42) * (11 * 5208 / (73 ^ 3 : ℝ)) =
+      8184 * Real.sqrt 437 / 5057221 := by
+  ring_nf
+
+/-- **pmns_sin_delta_cp** (CatAL): δ = 8π/7 = π + π/7 ⇒ sinδ = −sin(π/7). -/
+theorem pmns_sin_delta_cp :
+    Real.sin (8 * Real.pi / 7) = -Real.sin (Real.pi / 7) := by
+  have h : 8 * Real.pi / 7 = Real.pi + Real.pi / 7 := by ring
+  rw [h, add_comm, Real.sin_add_pi]
+
+/-- The GTE Jarlskog CP invariant from orbit-ratio PMNS formulas.
+    J = sinθ₁₂ cosθ₁₂ sinθ₂₃ cosθ₂₃ sinθ₁₃ cos²θ₁₃ sinδ
+    = −(8184√437/5057221) × sin(π/7)
+    Ingredients: sin²θ₁₂=4/13, sin²θ₂₃=19/42, sinθ₁₃=11/73, δ=8π/7 (CatAD+CatAL). -/
+noncomputable def gte_jarlskog : ℝ :=
+  -(8184 * Real.sqrt 437 / 5057221) * Real.sin (Real.pi / 7)
+
+/-- **gte_jarlskog_is_negative** (CatAL): J_GTE < 0 (negative prefactor × positive sin(π/7)). -/
+theorem gte_jarlskog_is_negative : gte_jarlskog < 0 := by
+  unfold gte_jarlskog
+  have hlt : Real.pi / 7 < Real.pi := by linarith [Real.pi_pos]
+  have hsin : 0 < Real.sin (Real.pi / 7) :=
+    Real.sin_pos_of_pos_of_lt_pi (by linarith [hlt]) hlt
+  have hpos : 0 < (8184 : ℝ) * Real.sqrt 437 / 5057221 := by positivity
+  nlinarith [Real.sqrt_nonneg 437]
 
 end UgpLean.MassRelations.NeutrinoSector
