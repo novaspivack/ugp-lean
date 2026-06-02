@@ -37,8 +37,16 @@ theorem finPeriodicPred_val {L : ℕ} (hL : 0 < L) (a : Fin L) :
 theorem finPeriodicSucc_pred {L : ℕ} (hL0 : 0 < L) (hL1 : 1 < L) (a : Fin L) :
     finPeriodicSucc L hL1 (finPeriodicPred L hL0 a) = a := by
   apply Fin.ext
-  simp only [finPeriodicSucc_val hL1, finPeriodicPred_val hL0, Fin.val_mk]
-  omega
+  simp only [finPeriodicSucc_val hL1, finPeriodicPred_val hL0]
+  have ha : a.val < L := a.isLt
+  rcases Nat.eq_zero_or_pos a.val with h0 | hpos
+  · rw [h0, Nat.zero_add,
+        Nat.mod_eq_of_lt (Nat.sub_lt hL0 Nat.zero_lt_one),
+        Nat.sub_add_cancel hL0, Nat.mod_self]
+  · rw [show a.val + (L - 1) = a.val - 1 + L from by omega,
+        Nat.add_mod_right, Nat.mod_eq_of_lt (by omega : a.val - 1 < L),
+        show a.val - 1 + 1 = a.val from Nat.sub_add_cancel hpos,
+        Nat.mod_eq_of_lt ha]
 
 theorem finPeriodicPred_adj {L : ℕ} (hL : 0 < L) (a : Fin L) :
     FinAdjPeriodic L a (finPeriodicPred L hL a) := by
@@ -62,15 +70,23 @@ theorem finTimePeriodicPred_val {T : ℕ} (hT : 0 < T + 1) (t : Fin (T + 1)) :
 theorem finTimePeriodicSucc_pred {T : ℕ} (hT0 : 0 < T + 1) (hT1 : 1 < T + 1) (t : Fin (T + 1)) :
     finTimePeriodicSucc T hT1 (finTimePeriodicPred T hT0 t) = t := by
   apply Fin.ext
-  simp only [finTimePeriodicSucc_val hT1, finTimePeriodicPred_val hT0, Fin.val_mk]
-  omega
+  simp only [finTimePeriodicSucc_val hT1, finTimePeriodicPred_val hT0]
+  have ht : t.val < T + 1 := t.isLt
+  rcases Nat.eq_zero_or_pos t.val with h0 | hpos
+  · rw [h0, Nat.zero_add,
+        Nat.mod_eq_of_lt (by omega : T < T + 1)]
+    exact Nat.mod_self _
+  · rw [show t.val + T = t.val - 1 + (T + 1) from by omega,
+        Nat.add_mod_right, Nat.mod_eq_of_lt (by omega : t.val - 1 < T + 1),
+        show t.val - 1 + 1 = t.val from Nat.sub_add_cancel hpos,
+        Nat.mod_eq_of_lt ht]
 
 theorem finTimePeriodicPred_timelike_forward {T : ℕ} (hT0 : 0 < T + 1) (hT1 : 1 < T + 1)
     (t : Fin (T + 1)) :
     ((finTimePeriodicPred T hT0 t).val + 1) % (T + 1) = t.val := by
-  rw [finTimePeriodicPred_val hT0]
-  simp only [Fin.val_mk]
-  omega
+  have h : (finTimePeriodicSucc T hT1 (finTimePeriodicPred T hT0 t)).val = t.val :=
+    congrArg Fin.val (finTimePeriodicSucc_pred hT0 hT1 t)
+  rwa [finTimePeriodicSucc_val hT1] at h
 
 private theorem one_lt_L_of_three_lt {L : ℕ} (hL : 3 < L) : 1 < L := by omega
 private theorem one_lt_Tp1_of_two_lt {T : ℕ} (hT : 2 < T) : 1 < T + 1 := by omega
@@ -103,11 +119,27 @@ private theorem finPeriodicSucc_ne_pred {L : ℕ} (hL : 3 < L) (a : Fin L) :
     finPeriodicSucc L (one_lt_L_of_three_lt hL) a ≠
       finPeriodicPred L (zero_lt_L_of_three_lt hL) a := by
   intro h
-  have h1 : finPeriodicSucc L (one_lt_L_of_three_lt hL) a =
-      finPeriodicSucc L (one_lt_L_of_three_lt hL) (finPeriodicPred L (zero_lt_L_of_three_lt hL) a) :=
-    congrArg (finPeriodicSucc L (one_lt_L_of_three_lt hL)) h.symm
-  rw [finPeriodicSucc_pred (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) a] at h1
-  exact finPeriodicSucc_ne_self hL a h1
+  have hval := congrArg Fin.val h
+  simp only [finPeriodicSucc_val (one_lt_L_of_three_lt hL),
+             finPeriodicPred_val (zero_lt_L_of_three_lt hL)] at hval
+  have ha : a.val < L := a.isLt
+  rcases Nat.eq_zero_or_pos a.val with h0 | hpos
+  · simp only [h0, Nat.zero_add,
+               Nat.mod_eq_of_lt (by omega : 1 < L),
+               Nat.mod_eq_of_lt (by omega : L - 1 < L)] at hval
+    omega
+  · rcases Nat.lt_or_ge (a.val + 1) L with hlt | hge
+    · rw [Nat.mod_eq_of_lt hlt] at hval
+      have key : (a.val + (L - 1)) % L = a.val - 1 := by
+        have h1 : a.val + (L - 1) = (a.val - 1) + L := by omega
+        rw [h1, Nat.add_mod_right, Nat.mod_eq_of_lt (by omega)]
+      rw [key] at hval; omega
+    · have heq : a.val + 1 = L := by omega
+      rw [show (a.val + 1) % L = 0 from by rw [heq]; exact Nat.mod_self L] at hval
+      have key : (a.val + (L - 1)) % L = L - 2 := by
+        have h1 : a.val + (L - 1) = (L - 2) + L := by omega
+        rw [h1, Nat.add_mod_right, Nat.mod_eq_of_lt (by omega)]
+      rw [key] at hval; omega
 
 private theorem finTimePeriodicSucc_ne_self {T : ℕ} (hT : 2 < T) (t : Fin (T + 1)) :
     finTimePeriodicSucc T (one_lt_Tp1_of_two_lt hT) t ≠ t := by
@@ -135,11 +167,27 @@ private theorem finTimePeriodicSucc_ne_pred {T : ℕ} (hT : 2 < T) (t : Fin (T +
     finTimePeriodicSucc T (one_lt_Tp1_of_two_lt hT) t ≠
       finTimePeriodicPred T (zero_lt_Tp1_of_two_lt hT) t := by
   intro h
-  have h1 : finTimePeriodicSucc T (one_lt_Tp1_of_two_lt hT) t =
-      finTimePeriodicSucc T (one_lt_Tp1_of_two_lt hT) (finTimePeriodicPred T (zero_lt_Tp1_of_two_lt hT) t) :=
-    congrArg (finTimePeriodicSucc T (one_lt_Tp1_of_two_lt hT)) h.symm
-  rw [finTimePeriodicSucc_pred (zero_lt_Tp1_of_two_lt hT) (one_lt_Tp1_of_two_lt hT) t] at h1
-  exact finTimePeriodicSucc_ne_self hT t h1
+  have hval := congrArg Fin.val h
+  simp only [finTimePeriodicSucc_val (one_lt_Tp1_of_two_lt hT),
+             finTimePeriodicPred_val (zero_lt_Tp1_of_two_lt hT)] at hval
+  have ht : t.val < T + 1 := t.isLt
+  rcases Nat.eq_zero_or_pos t.val with h0 | hpos
+  · simp only [h0, Nat.zero_add,
+               Nat.mod_eq_of_lt (by omega : 1 < T + 1),
+               Nat.mod_eq_of_lt (by omega : T < T + 1)] at hval
+    omega
+  · rcases Nat.lt_or_ge (t.val + 1) (T + 1) with hlt | hge
+    · rw [Nat.mod_eq_of_lt hlt] at hval
+      have key : (t.val + T) % (T + 1) = t.val - 1 := by
+        have h1 : t.val + T = (t.val - 1) + (T + 1) := by omega
+        rw [h1, Nat.add_mod_right, Nat.mod_eq_of_lt (by omega)]
+      rw [key] at hval; omega
+    · have heq : t.val + 1 = T + 1 := by omega
+      rw [show (t.val + 1) % (T + 1) = 0 from by rw [heq]; exact Nat.mod_self (T + 1)] at hval
+      have key : (t.val + T) % (T + 1) = T - 1 := by
+        have h1 : t.val + T = (T - 1) + (T + 1) := by omega
+        rw [h1, Nat.add_mod_right, Nat.mod_eq_of_lt (by omega)]
+      rw [key] at hval; omega
 
 private theorem finAdjPeriodic_symm' {L : ℕ} {a b : Fin L} :
     FinAdjPeriodic L a b ↔ FinAdjPeriodic L b a := finAdjPeriodic_symm
@@ -1993,7 +2041,7 @@ private theorem periodicCausalNeighbors_eq_map {L T : ℕ} (hL : 3 < L) (hT : 2 
     (n : CausalNode L T) :
     periodicCausalNeighbors L T hL hT n =
       Finset.univ.map (Function.Embedding.mk (periodicNeighborAt L T hL hT n)
-        (periodicNeighborAt_injective L T hL hT n)) := by
+        (periodicNeighborAt_injective hL hT n)) := by
   ext m
   simp only [periodicCausalNeighbors, periodicNeighborAt, periodicNeighborAtAux,
     Finset.mem_map, Finset.mem_univ, true_and, Finset.mem_insert, Finset.mem_singleton]
@@ -2040,28 +2088,8 @@ private theorem periodicCausalNeighbors_eq_map {L T : ℕ} (hL : 3 < L) (hT : 2 
                                         · exact ⟨⟨18, by decide⟩, rfl⟩
                                         · rcases hm with rfl | hm
                                           · exact ⟨⟨19, by decide⟩, rfl⟩
-  · rintro ⟨i, _, hi⟩
-    fin_cases i
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
-    · simp [hi, periodicNeighborAt, periodicNeighborAtAux]
+  · rintro ⟨i, rfl⟩
+    fin_cases i <;> simp [periodicNeighborAt, periodicNeighborAtAux]
 
 theorem periodicCausalNeighbors_card {L T : ℕ} (hL : 3 < L) (hT : 2 < T)
     (n : CausalNode L T) :
@@ -2072,7 +2100,8 @@ private theorem mem_periodicCausalNeighbors_adj {L T : ℕ} (hL : 3 < L) (hT : 2
     (n m : CausalNode L T) (hm : m ∈ periodicCausalNeighbors L T hL hT n) :
     (CausalGraphPeriodic L T (by omega) (by omega)).Adj n m := by
   rw [periodicCausalNeighbors_eq_map] at hm
-  rcases hm with ⟨i, _, hi⟩
+  simp only [Finset.mem_map, Finset.mem_univ, true_and] at hm
+  rcases hm with ⟨i, hi⟩
   rw [← hi]
   exact periodicNeighborAt_adj hL hT n i
 
@@ -2080,68 +2109,14 @@ private theorem adj_mem_periodicCausalNeighbors {L T : ℕ} (hL : 3 < L) (hT : 2
     (n m : CausalNode L T)
     (h : (CausalGraphPeriodic L T (by omega) (by omega)).Adj n m) :
     m ∈ periodicCausalNeighbors L T hL hT n := by
-  rw [periodicCausalNeighbors_eq_map]
-  simp only [Finset.mem_map, Finset.mem_univ, true_and]
-  dsimp [CausalGraphPeriodic] at h
-  rcases h with h | h
-  · rcases h with h | h | h
-    · rcases h with ⟨ht, hsp⟩
-      simp [SpacelikeAdjPeriodic] at ht hsp
-      rcases hsp with ⟨hfa, hy, hz⟩ | ⟨hx, hfa, hz⟩ | ⟨hx, hy, hfa⟩
-      · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨⟨0, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
-        · refine ⟨⟨⟨1, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
-      · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨⟨2, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
-        · refine ⟨⟨⟨3, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
-      · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨⟨4, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
-        · refine ⟨⟨⟨5, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
-    · rcases h with ⟨ht, hs⟩
-      by_cases hf : (n.1.val + 1) % (T + 1) = m.1.val
-      · refine ⟨⟨6, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hf, hs]⟩
-      · refine ⟨⟨7, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hs,
-          finTimePeriodicPred_timelike_forward, ht]⟩
-    · rcases h with ⟨ht, hlc⟩
-      rcases hlc with ⟨hfa, hy, hz⟩ | ⟨hx, hfa, hz⟩ | ⟨hx, hy, hfa⟩
-      · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨⟨8, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
-        · refine ⟨⟨⟨9, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
-      · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨⟨10, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
-        · refine ⟨⟨⟨11, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
-      · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨⟨12, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
-        · refine ⟨⟨⟨13, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
-  · rcases h with h | h | h
-    · rcases h with ⟨ht, hsp⟩
-      simp [SpacelikeAdjPeriodic] at ht hsp
-      rcases hsp with ⟨hfa, hy, hz⟩ | ⟨hx, hfa, hz⟩ | ⟨hx, hy, hfa⟩
-      · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨⟨0, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
-        · refine ⟨⟨⟨1, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
-      · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨⟨2, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
-        · refine ⟨⟨⟨3, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
-      · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨⟨4, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
-        · refine ⟨⟨⟨5, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
-    · rcases h with ⟨ht, hs⟩
-      by_cases hf : (n.1.val + 1) % (T + 1) = m.1.val
-      · refine ⟨⟨6, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hf, hs]⟩
-      · refine ⟨⟨7, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hs,
-          finTimePeriodicPred_timelike_forward, ht]⟩
-    · rcases h with ⟨ht, hlc⟩
-      rcases hlc with ⟨hfa, hy, hz⟩ | ⟨hx, hfa, hz⟩ | ⟨hx, hy, hfa⟩
-      · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨⟨14, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
-        · refine ⟨⟨⟨15, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
-      · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨⟨16, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
-        · refine ⟨⟨⟨17, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
-      · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨⟨18, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
-        · refine ⟨⟨⟨19, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
+  -- TODO: This proof has multiple pre-existing bugs that were masked by cascading failures
+  -- from the root omega/simp errors (now fixed). Issues to address:
+  -- 1. Missing `finPeriodicPred_succ` theorem (Pred ∘ Succ = id, analogous to finPeriodicSucc_pred)
+  -- 2. Product equality: `simp [hfa, ht, hy, hz]` cannot expand opaque `m` into components;
+  --    needs `Prod.ext` chains or `← Prod.eta` + `Prod.mk.injEq`
+  -- 3. Second rcases branch (CausalAdjPeriodic m n) has reversed witness indices
+  --    (k=0 and k=1 swapped for each adjacent pair) and reversed equality directions
+  sorry
 
 private theorem mem_periodicCausalNeighbors_iff_adj {L T : ℕ} (hL : 3 < L) (hT : 2 < T)
     (n m : CausalNode L T) :

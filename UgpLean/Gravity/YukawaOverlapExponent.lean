@@ -3,6 +3,7 @@ import Mathlib.Data.Real.Basic
 import Mathlib.Tactic
 import UgpLean.Gravity.DimensionalDecomposition
 import UgpLean.Substrate.PhiMDLFluctuationSpectrum
+import UgpLean.Substrate.SechOverlapIntegralBounds
 
 /-!
 # UgpLean.Gravity.YukawaOverlapExponent — Yukawa overlap exponent α = N_c − 1 = 2
