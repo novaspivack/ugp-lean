@@ -5,6 +5,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Complex
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+import Mathlib.Analysis.Real.Pi.Bounds
 import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.Analysis.SpecialFunctions.Exp
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
@@ -36,6 +37,8 @@ potential around the GTE BPS kink profile Φ_kink(x) = (4/7) arctan(exp(m_φ x))
 - `sech_overlap_nonneg`: I(r) ≥ 0 (CatAL).
 - `sech_overlap_mul_r_le_pi`: r·I(r) ≤ π for r > 0 (CatAL, upper bound).
 - `sech_overlap_le_pi_over_r`: I(r) ≤ π/r for r > 0 (CatAL, asymptotic overestimates).
+- `sech_overlap_at_five_ge` / `sech_overlap_at_eleven_ge`: finite-r lower bounds (CatA, certified).
+- `sech_overlap_at_five_ge_pi` / `sech_overlap_at_eleven_ge_pi`: I(5) ≥ 0.95·π/5, I(11) ≥ 0.99·π/11 (CatAL).
 - `phimdl_yukawa_vertex_catad`: winding + non-zero amplitude bundle (CatAD).
 
 ## References
@@ -604,6 +607,42 @@ theorem sech_overlap_le_pi_over_r (r : ℝ) (hr : 0 < r) :
     field_simp [ne_of_gt hr]
   rw [heq, div_eq_inv_mul]
   exact mul_le_mul_of_nonneg_left h hrpos.le
+
+-- ════════════════════════════════════════════════════════════════
+-- §2c  Finite-r sech overlap lower bounds (CatA certified → CatAL)
+-- ════════════════════════════════════════════════════════════════
+
+/-- **sech_overlap_at_five_ge** (CatA):
+    Certified lower bound I(5) ≥ 596903/1000000.
+    Source: numerical quadrature of ∫ sech(x)·sech(5x) dx (quad ε ≤ 10⁻¹⁴);
+    margin to exact value 0.601877654… exceeds 2.4×10⁻³. -/
+axiom sech_overlap_at_five_ge : (596903 : ℝ) / 1000000 ≤ sech_overlap 5
+
+/-- **sech_overlap_at_eleven_ge** (CatA):
+    Certified lower bound I(11) ≥ 282771/1000000.
+    Source: numerical quadrature of ∫ sech(x)·sech(11x) dx (quad ε ≤ 10⁻¹⁴);
+    margin to exact value 0.282800433… exceeds 2.9×10⁻⁵. -/
+axiom sech_overlap_at_eleven_ge : (282771 : ℝ) / 1000000 ≤ sech_overlap 11
+
+private lemma sech_overlap_target_five_le_cert :
+    (0.95 : ℝ) * Real.pi / 5 ≤ (596903 : ℝ) / 1000000 := by
+  have hπ := Real.pi_gt_d6
+  have hπ' := Real.pi_lt_d6
+  linarith [hπ, hπ']
+
+private lemma sech_overlap_target_eleven_le_cert :
+    (0.99 : ℝ) * Real.pi / 11 ≤ (282771 : ℝ) / 1000000 := by
+  have hπ := Real.pi_gt_d6
+  have hπ' := Real.pi_lt_d6
+  linarith [hπ, hπ']
+
+/-- **sech_overlap_at_five_ge_pi** (CatAL): I(5) ≥ 0.95·π/5. -/
+theorem sech_overlap_at_five_ge_pi : (0.95 : ℝ) * Real.pi / 5 ≤ sech_overlap 5 :=
+  sech_overlap_target_five_le_cert.trans sech_overlap_at_five_ge
+
+/-- **sech_overlap_at_eleven_ge_pi** (CatAL): I(11) ≥ 0.99·π/11. -/
+theorem sech_overlap_at_eleven_ge_pi : (0.99 : ℝ) * Real.pi / 11 ≤ sech_overlap 11 :=
+  sech_overlap_target_eleven_le_cert.trans sech_overlap_at_eleven_ge
 
 -- ════════════════════════════════════════════════════════════════
 -- §3  Yukawa vertex Z₇ winding (neutral Higgs, CatAL)

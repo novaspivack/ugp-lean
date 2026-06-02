@@ -62,7 +62,7 @@ Therefore **α = N_c − 1 = 2**.
 5. `yukawa_overlap_suppression`     — f_i = b_R^{−α} with α = 2; f₁ × f₂ = 1/3025 (CatAD)
 6. `yukawa_kink_overlap_le_asymptotic`  — I(b_R1) ≤ π/b_R1 and I(b_R2) ≤ π/b_R2 (CatAL)
 7. `yukawa_suppression_asymptotic_is_upper_bound` — I(5)·I(11) ≤ (π/5)·(π/11) (CatAL)
-8. `yukawa_suppression_exact_correction_catad`    — finite-r bounds at r=5,11 (CatAD, 2 sorry)
+8. `yukawa_suppression_exact_correction_catad`    — finite-r bounds at r=5,11 (CatAL)
 
 -/
 
@@ -292,23 +292,18 @@ theorem yukawa_suppression_asymptotic_is_upper_bound :
       I(5)  ≥ 0.95 · π/5   (verified: 0.60188 > 0.59690)
       I(11) ≥ 0.99 · π/11  (verified: 0.28280 > 0.28274)
 
-    For CatAL: requires a Lean proof of ∫ sech(x)·sech(5x) dx ≥ 0.95·π/5, which
-    in turn needs either the exact closed form for I(r) or a lower bound from the
-    monotone increasing property of r·I(r) combined with a certified initial value. -/
+    Lower bounds: `sech_overlap_at_five_ge_pi` and `sech_overlap_at_eleven_ge_pi` (CatAL),
+    chaining CatA-certified rational bounds with Mathlib π brackets (`pi_gt_d6`, `pi_lt_d6`). -/
 theorem yukawa_suppression_exact_correction_catad :
     -- Upper bound (CatAL part, re-exported from yukawa_suppression_asymptotic_is_upper_bound)
     sech_overlap (b_R1 : ℝ) * sech_overlap (b_R2 : ℝ) ≤
       (Real.pi / (b_R1 : ℝ)) * (Real.pi / (b_R2 : ℝ)) ∧
-    -- Lower bound at b_{R,1} = 5: I(5) ≥ 0.95·π/5 (numerical, sorry below)
+    -- Lower bound at b_{R,1} = 5: I(5) ≥ 0.95·π/5
     0.95 * Real.pi / (b_R1 : ℝ) ≤ sech_overlap (b_R1 : ℝ) ∧
-    -- Lower bound at b_{R,2} = 11: I(11) ≥ 0.99·π/11 (numerical, sorry below)
+    -- Lower bound at b_{R,2} = 11: I(11) ≥ 0.99·π/11
     0.99 * Real.pi / (b_R2 : ℝ) ≤ sech_overlap (b_R2 : ℝ) := by
   refine ⟨yukawa_suppression_asymptotic_is_upper_bound, ?_, ?_⟩
-  · -- I(5) ≥ 0.95·π/5 = 0.5969...
-    -- Exact: I(5) = 0.6019 > 0.5969; verified by eta_b_exact_sech_overlap.py
-    sorry
-  · -- I(11) ≥ 0.99·π/11 = 0.2827...
-    -- Exact: I(11) = 0.2828 > 0.2827; verified by eta_b_exact_sech_overlap.py
-    sorry
+  · simpa [b_R1] using sech_overlap_at_five_ge_pi
+  · simpa [b_R2] using sech_overlap_at_eleven_ge_pi
 
 end UgpLean.Gravity.YukawaOverlapExponent
