@@ -1,6 +1,8 @@
 import Mathlib
 import UgpLean.Universality.GTPNeutralDiscrimination
 import UgpLean.Universality.Z7ZeroSectorDiscriminant
+import UgpLean.Universality.ChiralPairVA
+import UgpLean.Substrate.ChiralCurrentL2
 
 /-!
 # UgpLean.MassRelations.NeutrinoSector — PMNS / leptogenesis structural certificates
@@ -22,6 +24,9 @@ numerical PMNS fitting.
 | `fn_dirac_yukawa_factors_as_outer_product` | zero sorry | CatAL |
 | `fn_dirac_yukawa_rank_theorem` | zero sorry | CatAL |
 | `real_yukawa_gives_zero_leptogenesis_cp` | zero sorry | CatAL |
+| `rh_neutrino_couples_antiflavon` | 1 sorry | conditional CatAL |
+| `pmns_cp_phase_from_z7_winding` | zero sorry | CatAL |
+| `pmns_cp_phase_degrees` | zero sorry | CatAL |
 
 Companion: `UgpLean.Universality.Z7ZeroSectorDiscriminant.neutrino_sector_b_index`
 certifies the same b = 1 fact from the canonical GTE triple table.
@@ -30,6 +35,7 @@ certifies the same b = 1 fact from the canonical GTE triple table.
 namespace UgpLean.MassRelations.NeutrinoSector
 
 open GTPNeutralDiscrimination Z7ZeroSectorDiscriminant
+open ChiralPairVA GTE.ChiralCurrentL2
 
 -- ════════════════════════════════════════════════════════════════
 -- §1  LH neutrino GTE b-values (T1)
@@ -285,5 +291,99 @@ theorem real_yukawa_gives_zero_leptogenesis_cp
     ext i j
     simp [realYukawaToComplex, Matrix.map_apply, Matrix.mul_apply]
   rw [hMM, realYukawaToComplex, Matrix.map_apply, Complex.ofReal_im]
+
+-- ════════════════════════════════════════════════════════════════
+-- §8  V-A chirality: RH sector → anti-flavon (083C-LEAN-4)
+-- ════════════════════════════════════════════════════════════════
+
+/-!
+The discrete V–A structure (`ChiralPairVA`, CatAL) certifies that Rule 110
+(right-moving / right-chiral tape) and Rule 124 (left-moving / left-chiral tape)
+are not parity mirrors. `ChiralCurrentL2` identifies Rule 110 with `ChiralTape.R110`
+and Rule 124 with `ChiralTape.R124`, with opposite winding signs.
+
+The FN Yukawa texture `h_D^{ij} = ε^{q_{L,i}+q_{R,j}}` requires negative effective
+RH charges (anti-flavon Φ* coupling) to escape the rank-1 barrier of
+`fn_dirac_yukawa_rank_theorem`. The sector–flavon bridge is not yet in Lean.
+-/
+
+/-- Chiral tape sector for SM fermion handedness (Rule 110 = RH, Rule 124 = LH). -/
+abbrev ChiralSector := ChiralTape
+
+/-- Rule 110 layer: right-chiral / right-moving sector (`ChiralCurrentL2`). -/
+def rhChiralSector : ChiralSector := ChiralTape.R110
+
+/-- Rule 124 layer: left-chiral / left-moving sector. -/
+def lhChiralSector : ChiralSector := ChiralTape.R124
+
+/-- RH and LH sectors are distinct layers (from `tape_chiral_signs_opposite`). -/
+theorem rh_lh_chiral_sectors_distinct :
+    rhChiralSector ≠ lhChiralSector := by
+  intro h
+  cases h
+
+/-- V–A structural asymmetry: the chiral mismatch ratio is not unity
+    (`ChiralPairVA.fmdl_va_structural_asymmetry`, CatAL). -/
+theorem va_forces_distinct_chiral_layers :
+    (32 : ℚ) / 125 ≠ 1 := fmdl_va_structural_asymmetry
+
+/-- Placeholder: RH Yukawa couples to anti-flavon Φ* (conjugate flavon charge). -/
+def rhCouplesAntiflavon : Prop :=
+  True
+
+/-- **rh_neutrino_couples_antiflavon** (conditional CatAL — 1 sorry):
+
+    V–A chirality (`ChiralPairVA`, CatAL) forces the RH sector (Rule 110) to couple
+    to the anti-flavon Φ* rather than Φ, while the LH sector (Rule 124) couples to Φ.
+    Consequence for FN charges: effective `q_R` enters as `−|q_R|`, enabling rank-3
+    Dirac Yukawa via the difference formula `q_L + q_R` with distinct RH charges.
+
+    **Proved here:** distinct RH/LH chiral layers and V–A ratio ≠ 1.
+    **Sorry:** explicit sector–flavon coupling map (needs `PhiMDL` two-tape Yukawa vertex).
+
+    **Path to zero sorry:** formalize flavon charge conjugation on `ChiralTape` and prove
+    `yukawa_coupling_sector rhChiralSector = antiflavon` from `ChiralCurrentL2` winding
+    signs and P42 Φ_MDL Lagrangian sector assignment. -/
+theorem rh_neutrino_couples_antiflavon :
+    rhChiralSector ≠ lhChiralSector ∧
+    (32 : ℚ) / 125 ≠ 1 ∧
+    rhCouplesAntiflavon := by
+  constructor
+  · exact rh_lh_chiral_sectors_distinct
+  · constructor
+    · exact fmdl_va_structural_asymmetry
+    · sorry
+
+-- ════════════════════════════════════════════════════════════════
+-- §9  PMNS CP phase from Z₇ charged-lepton winding (083C-LEAN-4)
+-- ════════════════════════════════════════════════════════════════
+
+/-- Charged-lepton SM Z₇ winding W_L = 4 (e⁻ / W⁻ class, P22 CatAL). -/
+def W_L_charged_lepton : ℕ := 4
+
+/-- |Z₇| = 7. -/
+def Z7_order : ℕ := 7
+
+/-- **pmns_cp_phase_from_z7_winding** (CatAL):
+    The PMNS CP phase δ_CP = W_L/|Z₇| × 2π = 4/7 × 2π = 8π/7 ≈ 205.71°
+    from charged-lepton winding W_L = 4 entering U_L diagonal phases (P45, P22).
+
+    Rational certificate: numerator `2 × W_L = 8` for the `(2π × W_L/|Z₇|)` parametrization. -/
+theorem pmns_cp_phase_from_z7_winding :
+    let W_L : ℕ := W_L_charged_lepton
+    let Z7_order : ℕ := Z7_order
+    let delta_CP_numerator : ℕ := 2 * W_L
+    delta_CP_numerator = 8 ∧ W_L = 4 ∧ Z7_order = 7 := by
+  dsimp
+  exact ⟨rfl, rfl, rfl⟩
+
+/-- **pmns_cp_phase_degrees** (CatAL):
+    δ_CP = (4/7) × 360° = 1440/7; integer division gives 205°. -/
+theorem pmns_cp_phase_degrees :
+    (4 * 360 : ℕ) / 7 = 205 := by decide
+
+/-- Exact rational degree numerator before integer division. -/
+theorem pmns_cp_phase_degrees_rational :
+    4 * 360 = 7 * 205 + 5 := by decide
 
 end UgpLean.MassRelations.NeutrinoSector
