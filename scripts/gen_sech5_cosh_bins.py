@@ -1,10 +1,19 @@
 #!/usr/bin/env python3
+# Run from: ugp-lean-exp/scripts/ or adjust paths accordingly
 """Generate per-bin cosh upper-bound lemmas used by the r=5 mesh."""
 from __future__ import annotations
 
 import math
+import signal
 import sys
 from pathlib import Path
+
+TIMEOUT_SECONDS = 600
+
+
+def _timeout_handler(signum, frame):
+    print(f"\nTIMEOUT: wall-clock limit {TIMEOUT_SECONDS}s reached.")
+    sys.exit(1)
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -188,6 +197,8 @@ def emit_cosh_bin(name: str, b: float, num: int | None = None, den: int = COSH_S
 
 
 def main() -> None:
+    signal.signal(signal.SIGALRM, _timeout_handler)
+    signal.alarm(TIMEOUT_SECONDS)
     bins: dict[str, float] = {}
     for i in range(N):
         u = 5 * (i + 1) / N
@@ -212,6 +223,7 @@ def main() -> None:
     lines += ["end UgpLean.Substrate.PhiMDLFluctuationSpectrum", ""]
     OUT.write_text("\n".join(lines))
     print(f"Wrote {OUT}, bins={len(bins)}")
+    signal.alarm(0)
 
 
 if __name__ == "__main__":

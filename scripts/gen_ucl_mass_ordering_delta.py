@@ -1,8 +1,23 @@
 #!/usr/bin/env python3
+# Run from: ugp-lean-exp/scripts/ or adjust paths accordingly
 """Generate UCLMassOrderingDelta.lean — k_const cancels in generation differences."""
 
 import math
+import signal
+import sys
 from fractions import Fraction
+from pathlib import Path
+
+TIMEOUT_SECONDS = 600
+
+
+def _timeout_handler(signum, frame):
+    print(f"\nTIMEOUT: wall-clock limit {TIMEOUT_SECONDS}s reached.")
+    sys.exit(1)
+
+
+signal.signal(signal.SIGALRM, _timeout_handler)
+signal.alarm(TIMEOUT_SECONDS)
 
 log2_lo = Fraction(6931471803, 10**10)
 log2_hi = Fraction(6931471808, 10**10)
@@ -157,6 +172,8 @@ for sname, triples in sectors.items():
 
 lines += ["end UgpLean.ElegantKernel.Unconditional.UCLMassOrderingDelta", ""]
 
-with open("UgpLean/ElegantKernel/Unconditional/UCLMassOrderingDelta.lean", "w", encoding="utf-8") as f:
+out_path = Path(__file__).resolve().parents[1] / "UgpLean/ElegantKernel/Unconditional/UCLMassOrderingDelta.lean"
+with open(out_path, "w", encoding="utf-8") as f:
     f.write("\n".join(lines))
-print("Wrote UCLMassOrderingDelta.lean")
+print(f"Wrote {out_path}")
+signal.alarm(0)

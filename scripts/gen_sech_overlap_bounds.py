@@ -1,10 +1,20 @@
 #!/usr/bin/env python3
+# Run from: ugp-lean-exp/scripts/ or adjust paths accordingly
 """Generate r=11 mesh certification for SechOverlapIntegralBounds_r11cert.lean."""
 from __future__ import annotations
 
 import math
+import signal
+import sys
 from fractions import Fraction
 from pathlib import Path
+
+TIMEOUT_SECONDS = 600
+
+
+def _timeout_handler(signum, frame):
+    print(f"\nTIMEOUT: wall-clock limit {TIMEOUT_SECONDS}s reached.")
+    sys.exit(1)
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "UgpLean/Substrate/SechOverlapIntegralBounds_r11cert.lean"
@@ -75,6 +85,8 @@ def emit_batch(batch_id: int, indices: list[int], h: float, cert_micro: int) -> 
 
 
 def main() -> None:
+    signal.signal(signal.SIGALRM, _timeout_handler)
+    signal.alarm(TIMEOUT_SECONDS)
     segments = [
         ("seg01", 0.0, 0.2, 0.0002),
         ("seg02", 0.2, 2.0, 0.0002),
@@ -166,6 +178,7 @@ def main() -> None:
     ]
     OUT.write_text("\n".join(lines))
     print(f"Wrote {OUT}, total_cert={total_cert}, 2*cert={2*total_cert}, points={idx}")
+    signal.alarm(0)
 
 
 if __name__ == "__main__":

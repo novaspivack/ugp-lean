@@ -1,11 +1,25 @@
 #!/usr/bin/env python3
+# Run from: ugp-lean-exp/scripts/ or adjust paths accordingly
 """Generate UCLMassOrderingSBounds.lean — term-by-term coupled-corner delta proofs."""
 
 from __future__ import annotations
 
 import math
+import signal
+import sys
 from fractions import Fraction
 from pathlib import Path
+
+TIMEOUT_SECONDS = 600
+
+
+def _timeout_handler(signum, frame):
+    print(f"\nTIMEOUT: wall-clock limit {TIMEOUT_SECONDS}s reached.")
+    sys.exit(1)
+
+
+signal.signal(signal.SIGALRM, _timeout_handler)
+signal.alarm(TIMEOUT_SECONDS)
 
 log2_lo = Fraction(6931471803, 10**10)
 log2_hi = Fraction(6931471808, 10**10)
@@ -230,7 +244,8 @@ delta_lines += [
 
 delta_lines += ["end UgpLean.ElegantKernel.Unconditional.UCLMassOrderingDelta", ""]
 
-root = Path("UgpLean/ElegantKernel/Unconditional")
+root = Path(__file__).resolve().parents[1] / "UgpLean/ElegantKernel/Unconditional"
 (root / "UCLMassOrderingSBounds.lean").write_text("\n".join(lines), encoding="utf-8")
 (root / "UCLMassOrderingDelta.lean").write_text("\n".join(delta_lines), encoding="utf-8")
 print("Wrote UCLMassOrderingSBounds.lean and UCLMassOrderingDelta.lean")
+signal.alarm(0)

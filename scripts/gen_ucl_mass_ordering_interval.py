@@ -1,5 +1,17 @@
 #!/usr/bin/env python3
+# Run from: ugp-lean-exp/scripts/ or adjust paths accordingly
 """Generate UCLMassOrderingInterval.lean log bound lemmas."""
+
+import signal
+import sys
+from pathlib import Path
+
+TIMEOUT_SECONDS = 600
+
+
+def _timeout_handler(signum, frame):
+    print(f"\nTIMEOUT: wall-clock limit {TIMEOUT_SECONDS}s reached.")
+    sys.exit(1)
 
 log2_lo_num = 6931471803
 log2_hi_num = 6931471808
@@ -126,6 +138,8 @@ theorem L_{name}_hi : Real.log ({b} : ℝ) - Real.log ({c} : ℝ) < ({bd['nhi']}
 
 
 def main() -> None:
+    signal.signal(signal.SIGALRM, _timeout_handler)
+    signal.alarm(TIMEOUT_SECONDS)
     nums = [73, 823, 42, 1023, 275, 65535, 9, 337920, 5, 186, 8191]
     bounds = {n: log_bounds_lean(n) for n in nums}
     pairs = [
@@ -145,10 +159,11 @@ def main() -> None:
     for name, b, c in pairs:
         parts.append(emit_ratio_bounds(name, b, c, bounds[b], bounds.get(c)))
     parts.append("\nend UgpLean.ElegantKernel.Unconditional.UCLMassOrderingInterval\n")
-    path = "UgpLean/ElegantKernel/Unconditional/UCLMassOrderingInterval.lean"
+    path = Path(__file__).resolve().parents[1] / "UgpLean/ElegantKernel/Unconditional/UCLMassOrderingInterval.lean"
     with open(path, "w", encoding="utf-8") as f:
         f.write("".join(parts))
     print(f"Wrote {path} ({len(''.join(parts).splitlines())} lines)")
+    signal.alarm(0)
 
 
 if __name__ == "__main__":

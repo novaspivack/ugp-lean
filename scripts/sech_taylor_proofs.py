@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Run from: ugp-lean-exp/scripts/ or adjust paths accordingly
 """Helpers for generating exp/cosh Taylor proof terms in Lean."""
 from __future__ import annotations
 

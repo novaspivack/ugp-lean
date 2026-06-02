@@ -1,11 +1,25 @@
 #!/usr/bin/env python3
+# Run from: ugp-lean-exp/scripts/ or adjust paths accordingly
 """Generate UCL mass ordering cert, S-bound, and bridge Lean modules."""
 
 from __future__ import annotations
 
 import math
+import signal
+import sys
 from fractions import Fraction
 from pathlib import Path
+
+TIMEOUT_SECONDS = 600
+
+
+def _timeout_handler(signum, frame):
+    print(f"\nTIMEOUT: wall-clock limit {TIMEOUT_SECONDS}s reached.")
+    sys.exit(1)
+
+
+signal.signal(signal.SIGALRM, _timeout_handler)
+signal.alarm(TIMEOUT_SECONDS)
 
 log2_lo = Fraction(6931471803, 10**10)
 log2_hi = Fraction(6931471808, 10**10)
@@ -282,8 +296,9 @@ for sector, a, b, tag in PAIRS:
 
 bridge.append("end UgpLean.ElegantKernel.Unconditional.UCLMassOrderingBridge\n")
 
-root = Path("UgpLean/ElegantKernel/Unconditional")
+root = Path(__file__).resolve().parents[1] / "UgpLean/ElegantKernel/Unconditional"
 (root / "UCLMassOrderingSBounds.lean").write_text("\n".join(s_bounds), encoding="utf-8")
 (root / "UCLMassOrderingCerts.lean").write_text("\n".join(certs), encoding="utf-8")
 (root / "UCLMassOrderingBridge.lean").write_text("\n".join(bridge), encoding="utf-8")
 print("Wrote UCLMassOrderingSBounds.lean, UCLMassOrderingCerts.lean, UCLMassOrderingBridge.lean")
+signal.alarm(0)
