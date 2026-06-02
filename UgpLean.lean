@@ -76,6 +76,7 @@ import UgpLean.ElegantKernel.Unconditional.CyclotomicChain
 import UgpLean.ElegantKernel.Unconditional.KGenFullClosure
 import UgpLean.ElegantKernel.Unconditional.KLFullClosure
 import UgpLean.ElegantKernel.Unconditional.KConstFullClosure
+import UgpLean.ElegantKernel.Unconditional.MasterCertification
 import UgpLean.LModelDerivation
 import UgpLean.Instance.NemSBridge
 import UgpLean.Papers.Paper25

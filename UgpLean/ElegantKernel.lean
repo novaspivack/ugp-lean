@@ -112,4 +112,10 @@ theorem L_model_pos : 0 < L_model := by
   · norm_num
   · norm_num
 
+/-! ## Master certification
+
+All nine Elegant Kernel coefficients are packaged in
+`UgpLean.ElegantKernel.Unconditional.MasterCertification.elegant_kernel_full_certification`.
+The Quarter-Lock coefficient `k_M` lives in `UgpLean.QuarterLock`. -/
+
 end UgpLean
