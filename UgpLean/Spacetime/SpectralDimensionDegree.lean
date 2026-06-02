@@ -2125,103 +2125,125 @@ private theorem adj_mem_periodicCausalNeighbors {L T : ℕ} (hL : 3 < L) (hT : 2
     m ∈ periodicCausalNeighbors L T hL hT n := by
   rw [periodicCausalNeighbors_eq_map]
   simp only [Finset.mem_map, Finset.mem_univ, true_and]
+  suffices ∃ i : Fin 20, periodicNeighborAt L T hL hT n i = m from this
   dsimp [CausalGraphPeriodic] at h
+  have hL0 := zero_lt_L_of_three_lt hL
+  have hL1 := one_lt_L_of_three_lt hL
+  have hT0 := zero_lt_Tp1_of_two_lt hT
+  have hT1 := one_lt_Tp1_of_two_lt hT
+  -- Helper: prove finPeriodicPred n.x = m.x when hfa : n.x = finPeriodicSucc m.x
+  have pred_succ_x : ∀ (a b : Fin L), a = finPeriodicSucc L hL1 b →
+      finPeriodicPred L hL0 a = b := fun a b h => by
+    rw [h]; exact finPeriodicPred_succ hL0 hL1 b
+  -- Helper: prove time successor equals m.1 when ht : (n.1.val + 1) % (T+1) = m.1.val
+  have time_succ_eq : ∀ (ht : (n.1.val + 1) % (T + 1) = m.1.val),
+      finTimePeriodicSucc T hT1 n.1 = m.1 := fun ht =>
+    Fin.ext (by rw [finTimePeriodicSucc_val]; exact ht)
+  -- Helper: prove time predecessor equals m.1 when ht : (m.1.val + 1) % (T+1) = n.1.val
+  have time_pred_eq : ∀ (ht : (m.1.val + 1) % (T + 1) = n.1.val),
+      finTimePeriodicPred T hT0 n.1 = m.1 := fun ht => by
+    apply Fin.ext
+    rw [finTimePeriodicPred_val]
+    rcases Nat.lt_or_ge (m.1.val + 1) (T + 1) with hlt | hge
+    · rw [Nat.mod_eq_of_lt hlt] at ht
+      rw [show n.1.val + T = m.1.val + (T + 1) from by omega,
+          Nat.add_mod_right, Nat.mod_eq_of_lt m.1.isLt]
+    · have heq : m.1.val + 1 = T + 1 := by omega
+      rw [show m.1.val + 1 = T + 1 from heq, Nat.mod_self] at ht
+      rw [← ht, Nat.zero_add, Nat.mod_eq_of_lt (by omega : T < T + 1)]
+      omega
   rcases h with h | h
   · -- h : CausalAdjPeriodic L T n m
     rcases h with h | h | h
     · -- SpacelikeAdjPeriodic L T n m: ht : n.1 = m.1
       rcases h with ⟨ht, hsp⟩
       rcases hsp with ⟨hfa, hy, hz⟩ | ⟨hx, hfa, hz⟩ | ⟨hx, hy, hfa⟩
-      · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · exact ⟨⟨0, by decide⟩, Prod.ext ht (Prod.ext hfa.symm (Prod.ext hy hz))⟩
-        · exact ⟨⟨1, by decide⟩, Prod.ext ht (Prod.ext (by rw [hfa]; exact finPeriodicPred_succ (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) _)
-                (Prod.ext hy hz))⟩
-      · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · exact ⟨⟨2, by decide⟩, Prod.ext ht (Prod.ext hx (Prod.ext hfa.symm hz))⟩
-        · exact ⟨⟨3, by decide⟩, Prod.ext ht (Prod.ext hx (Prod.ext (by rw [hfa]; exact finPeriodicPred_succ (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) _) hz))⟩
-      · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · exact ⟨⟨4, by decide⟩, Prod.ext ht (Prod.ext hx (Prod.ext hy hfa.symm))⟩
-        · exact ⟨⟨5, by decide⟩, Prod.ext ht (Prod.ext hx (Prod.ext hy (by rw [hfa]; exact finPeriodicPred_succ (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) _)))⟩
+      · rcases finAdjPeriodic_decompose hL0 hL1 hfa with hfa | hfa
+        · refine ⟨⟨0, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext ht (Prod.ext hfa.symm (Prod.ext hy hz))
+        · refine ⟨⟨1, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext ht (Prod.ext (pred_succ_x n.2.1 m.2.1 hfa) (Prod.ext hy hz))
+      · rcases finAdjPeriodic_decompose hL0 hL1 hfa with hfa | hfa
+        · refine ⟨⟨2, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext ht (Prod.ext hx (Prod.ext hfa.symm hz))
+        · refine ⟨⟨3, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext ht (Prod.ext hx (Prod.ext (pred_succ_x n.2.2.1 m.2.2.1 hfa) hz))
+      · rcases finAdjPeriodic_decompose hL0 hL1 hfa with hfa | hfa
+        · refine ⟨⟨4, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext ht (Prod.ext hx (Prod.ext hy hfa.symm))
+        · refine ⟨⟨5, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext ht (Prod.ext hx (Prod.ext hy (pred_succ_x n.2.2.2 m.2.2.2 hfa)))
     · -- TimelikeAdjPeriodic L T n m: ht : n.1.val + 1 = m.1.val, hs : n.2 = m.2
       rcases h with ⟨ht, hs⟩
-      exact ⟨⟨6, by decide⟩, Prod.ext (Fin.ext (by rw [finTimePeriodicSucc_val,
-            Nat.mod_eq_of_lt (by omega)]; exact ht)) hs⟩
+      refine ⟨⟨6, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+      exact Prod.ext (time_succ_eq ht) hs
     · -- LightConeAdjPeriodic L T n m: ht : n.1.val + 1 = m.1.val, hlc
       rcases h with ⟨ht, hlc⟩
-      have hts : finTimePeriodicSucc T (one_lt_Tp1_of_two_lt hT) n.1 = m.1 :=
-        Fin.ext (by rw [finTimePeriodicSucc_val, Nat.mod_eq_of_lt (by omega)]; exact ht)
+      have hts := time_succ_eq ht
       rcases hlc with ⟨hfa, hy, hz⟩ | ⟨hx, hfa, hz⟩ | ⟨hx, hy, hfa⟩
-      · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · exact ⟨⟨8, by decide⟩, Prod.ext hts (Prod.ext hfa.symm (Prod.ext hy hz))⟩
-        · exact ⟨⟨9, by decide⟩, Prod.ext hts (Prod.ext (by rw [hfa]; exact finPeriodicPred_succ (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) _) (Prod.ext hy hz))⟩
-      · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · exact ⟨⟨10, by decide⟩, Prod.ext hts (Prod.ext hx (Prod.ext hfa.symm hz))⟩
-        · exact ⟨⟨11, by decide⟩, Prod.ext hts (Prod.ext hx (Prod.ext (by rw [hfa]; exact finPeriodicPred_succ (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) _) hz))⟩
-      · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · exact ⟨⟨12, by decide⟩, Prod.ext hts (Prod.ext hx (Prod.ext hy hfa.symm))⟩
-        · exact ⟨⟨13, by decide⟩, Prod.ext hts (Prod.ext hx (Prod.ext hy (by rw [hfa]; exact finPeriodicPred_succ (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) _)))⟩
-  · -- h : CausalAdjPeriodic L T m n (reversed: ht/hy/hz/hx/hs go m→n)
+      · rcases finAdjPeriodic_decompose hL0 hL1 hfa with hfa | hfa
+        · refine ⟨⟨8, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext hts (Prod.ext hfa.symm (Prod.ext hy hz))
+        · refine ⟨⟨9, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext hts (Prod.ext (pred_succ_x n.2.1 m.2.1 hfa) (Prod.ext hy hz))
+      · rcases finAdjPeriodic_decompose hL0 hL1 hfa with hfa | hfa
+        · refine ⟨⟨10, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext hts (Prod.ext hx (Prod.ext hfa.symm hz))
+        · refine ⟨⟨11, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext hts (Prod.ext hx (Prod.ext (pred_succ_x n.2.2.1 m.2.2.1 hfa) hz))
+      · rcases finAdjPeriodic_decompose hL0 hL1 hfa with hfa | hfa
+        · refine ⟨⟨12, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext hts (Prod.ext hx (Prod.ext hy hfa.symm))
+        · refine ⟨⟨13, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext hts (Prod.ext hx (Prod.ext hy (pred_succ_x n.2.2.2 m.2.2.2 hfa)))
+  · -- h : CausalAdjPeriodic L T m n (reversed: hypotheses go m→n direction)
     rcases h with h | h | h
     · -- SpacelikeAdjPeriodic L T m n: ht : m.1 = n.1 (reversed)
       rcases h with ⟨ht, hsp⟩
       rcases hsp with ⟨hfa, hy, hz⟩ | ⟨hx, hfa, hz⟩ | ⟨hx, hy, hfa⟩
       · -- x-adj: hfa : FinAdjPeriodic L m.2.1 n.2.1
-        rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
+        rcases finAdjPeriodic_decompose hL0 hL1 hfa with hfa | hfa
         · -- hfa : n.2.1 = finPeriodicSucc ... m.2.1 → k=1
-          exact ⟨⟨1, by decide⟩, Prod.ext ht.symm (Prod.ext (by rw [hfa]; exact finPeriodicPred_succ (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) _)
-                (Prod.ext hy.symm hz.symm))⟩
+          refine ⟨⟨1, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext ht.symm (Prod.ext (pred_succ_x n.2.1 m.2.1 hfa) (Prod.ext hy.symm hz.symm))
         · -- hfa : m.2.1 = finPeriodicSucc ... n.2.1 → k=0
-          exact ⟨⟨0, by decide⟩, Prod.ext ht.symm (Prod.ext hfa.symm (Prod.ext hy.symm hz.symm))⟩
-      · -- y-adj: hfa : FinAdjPeriodic L m.2.2.1 n.2.2.1
-        rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · -- hfa : n.2.2.1 = finPeriodicSucc ... m.2.2.1 → k=3
-          exact ⟨⟨3, by decide⟩, Prod.ext ht.symm (Prod.ext hx.symm (Prod.ext (by rw [hfa]; exact finPeriodicPred_succ (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) _) hz.symm))⟩
-        · -- hfa : m.2.2.1 = finPeriodicSucc ... n.2.2.1 → k=2
-          exact ⟨⟨2, by decide⟩, Prod.ext ht.symm (Prod.ext hx.symm (Prod.ext hfa.symm hz.symm))⟩
-      · -- z-adj: hfa : FinAdjPeriodic L m.2.2.2 n.2.2.2
-        rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · -- hfa : n.2.2.2 = finPeriodicSucc ... m.2.2.2 → k=5
-          exact ⟨⟨5, by decide⟩, Prod.ext ht.symm (Prod.ext hx.symm (Prod.ext hy.symm (by rw [hfa];
-                exact finPeriodicPred_succ (zero_lt_L_of_three_lt hL)
-                  (one_lt_L_of_three_lt hL) _)))⟩
-        · -- hfa : m.2.2.2 = finPeriodicSucc ... n.2.2.2 → k=4
-          exact ⟨⟨4, by decide⟩, Prod.ext ht.symm (Prod.ext hx.symm (Prod.ext hy.symm hfa.symm))⟩
+          refine ⟨⟨0, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext ht.symm (Prod.ext hfa.symm (Prod.ext hy.symm hz.symm))
+      · -- y-adj
+        rcases finAdjPeriodic_decompose hL0 hL1 hfa with hfa | hfa
+        · refine ⟨⟨3, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext ht.symm (Prod.ext hx.symm (Prod.ext (pred_succ_x n.2.2.1 m.2.2.1 hfa) hz.symm))
+        · refine ⟨⟨2, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext ht.symm (Prod.ext hx.symm (Prod.ext hfa.symm hz.symm))
+      · -- z-adj
+        rcases finAdjPeriodic_decompose hL0 hL1 hfa with hfa | hfa
+        · refine ⟨⟨5, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext ht.symm (Prod.ext hx.symm (Prod.ext hy.symm (pred_succ_x n.2.2.2 m.2.2.2 hfa)))
+        · refine ⟨⟨4, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext ht.symm (Prod.ext hx.symm (Prod.ext hy.symm hfa.symm))
     · -- TimelikeAdjPeriodic L T m n: ht : m.1.val + 1 = n.1.val, hs : m.2 = n.2
       rcases h with ⟨ht, hs⟩
-      have htp : finTimePeriodicPred T (zero_lt_Tp1_of_two_lt hT) n.1 = m.1 :=
-        Fin.ext (by rw [finTimePeriodicPred_val,
-            show n.1.val + T = m.1.val + (T + 1) from by omega,
-            Nat.add_mod_right, Nat.mod_eq_of_lt m.1.isLt])
-      exact ⟨⟨7, by decide⟩, Prod.ext htp hs.symm⟩
+      refine ⟨⟨7, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+      exact Prod.ext (time_pred_eq ht) hs.symm
     · -- LightConeAdjPeriodic L T m n: ht : m.1.val + 1 = n.1.val, hlc
       rcases h with ⟨ht, hlc⟩
-      have htp : finTimePeriodicPred T (zero_lt_Tp1_of_two_lt hT) n.1 = m.1 :=
-        Fin.ext (by rw [finTimePeriodicPred_val,
-            show n.1.val + T = m.1.val + (T + 1) from by omega,
-            Nat.add_mod_right, Nat.mod_eq_of_lt m.1.isLt])
+      have htp := time_pred_eq ht
       rcases hlc with ⟨hfa, hy, hz⟩ | ⟨hx, hfa, hz⟩ | ⟨hx, hy, hfa⟩
-      · -- x-adj: hfa : FinAdjPeriodic L m.2.1 n.2.1
-        rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · -- hfa : n.2.1 = finPeriodicSucc ... m.2.1 → k=15
-          exact ⟨⟨15, by decide⟩, Prod.ext htp (Prod.ext (by rw [hfa]; exact finPeriodicPred_succ (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) _)
-                (Prod.ext hy.symm hz.symm))⟩
-        · -- hfa : m.2.1 = finPeriodicSucc ... n.2.1 → k=14
-          exact ⟨⟨14, by decide⟩, Prod.ext htp (Prod.ext hfa.symm (Prod.ext hy.symm hz.symm))⟩
-      · -- y-adj: hfa : FinAdjPeriodic L m.2.2.1 n.2.2.1
-        rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · -- hfa : n.2.2.1 = finPeriodicSucc ... m.2.2.1 → k=17
-          exact ⟨⟨17, by decide⟩, Prod.ext htp (Prod.ext hx.symm (Prod.ext (by rw [hfa]; exact finPeriodicPred_succ (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) _) hz.symm))⟩
-        · -- hfa : m.2.2.1 = finPeriodicSucc ... n.2.2.1 → k=16
-          exact ⟨⟨16, by decide⟩, Prod.ext htp (Prod.ext hx.symm (Prod.ext hfa.symm hz.symm))⟩
-      · -- z-adj: hfa : FinAdjPeriodic L m.2.2.2 n.2.2.2
-        rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · -- hfa : n.2.2.2 = finPeriodicSucc ... m.2.2.2 → k=19
-          exact ⟨⟨19, by decide⟩, Prod.ext htp (Prod.ext hx.symm (Prod.ext hy.symm (by rw [hfa];
-                exact finPeriodicPred_succ (zero_lt_L_of_three_lt hL)
-                  (one_lt_L_of_three_lt hL) _)))⟩
-        · -- hfa : m.2.2.2 = finPeriodicSucc ... n.2.2.2 → k=18
-          exact ⟨⟨18, by decide⟩, Prod.ext htp (Prod.ext hx.symm (Prod.ext hy.symm hfa.symm))⟩
-
+      · rcases finAdjPeriodic_decompose hL0 hL1 hfa with hfa | hfa
+        · refine ⟨⟨15, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext htp (Prod.ext (pred_succ_x n.2.1 m.2.1 hfa) (Prod.ext hy.symm hz.symm))
+        · refine ⟨⟨14, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext htp (Prod.ext hfa.symm (Prod.ext hy.symm hz.symm))
+      · rcases finAdjPeriodic_decompose hL0 hL1 hfa with hfa | hfa
+        · refine ⟨⟨17, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext htp (Prod.ext hx.symm (Prod.ext (pred_succ_x n.2.2.1 m.2.2.1 hfa) hz.symm))
+        · refine ⟨⟨16, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext htp (Prod.ext hx.symm (Prod.ext hfa.symm hz.symm))
+      · rcases finAdjPeriodic_decompose hL0 hL1 hfa with hfa | hfa
+        · refine ⟨⟨19, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext htp (Prod.ext hx.symm (Prod.ext hy.symm (pred_succ_x n.2.2.2 m.2.2.2 hfa)))
+        · refine ⟨⟨18, by decide⟩, ?_⟩; simp only [periodicNeighborAt, periodicNeighborAtAux]
+          exact Prod.ext htp (Prod.ext hx.symm (Prod.ext hy.symm hfa.symm))
 private theorem mem_periodicCausalNeighbors_iff_adj {L T : ℕ} (hL : 3 < L) (hT : 2 < T)
     (n m : CausalNode L T) :
     m ∈ periodicCausalNeighbors L T hL hT n ↔
