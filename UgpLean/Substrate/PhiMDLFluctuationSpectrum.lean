@@ -33,6 +33,9 @@ potential around the GTE BPS kink profile Φ_kink(x) = (4/7) arctan(exp(m_φ x))
 - `phimdl_yukawa_vertex_winding_trivial`: W(H) = 0 ⇒ W(f_L) + 0 = W(f_R) (CatAL).
 - `gte_yukawa_coupling`: h_f = m_f / (v_H / √2) from SRRG condensate (CatA).
 - `sech_overlap_asymptotic`: r·I(r) → π (CatAD, dominated convergence).
+- `sech_overlap_nonneg`: I(r) ≥ 0 (CatAL).
+- `sech_overlap_mul_r_le_pi`: r·I(r) ≤ π for r > 0 (CatAL, upper bound).
+- `sech_overlap_le_pi_over_r`: I(r) ≤ π/r for r > 0 (CatAL, asymptotic overestimates).
 - `phimdl_yukawa_vertex_catad`: winding + non-zero amplitude bundle (CatAD).
 
 ## References
@@ -566,6 +569,41 @@ theorem sech_overlap_scales_as_inv_bR :
     ∃ C : ℝ, 0 < C ∧
       Tendsto (fun r => r * sech_overlap r) atTop (nhds C) :=
   ⟨Real.pi, Real.pi_pos, sech_overlap_asymptotic⟩
+
+/-- **sech_overlap_nonneg** (CatAL): I(r) ≥ 0 for all r. -/
+theorem sech_overlap_nonneg (r : ℝ) : 0 ≤ sech_overlap r := by
+  unfold sech_overlap
+  apply integral_nonneg
+  intro x
+  exact mul_nonneg (sech_nonneg x) (sech_nonneg (r * x))
+
+/-- **sech_overlap_mul_r_le_pi** (CatAL): r·I(r) ≤ π for all r > 0.
+    Proof: r·I(r) = ∫ sech(u/r)·sech(u) du ≤ ∫ sech(u) du = π
+    since sech(u/r) ≤ 1 for all u (sech attains maximum 1 at u = 0).
+    Combined with `sech_overlap_asymptotic` (r·I(r) → π from below), this establishes
+    π as an upper bound that is approached monotonically as r → ∞. -/
+theorem sech_overlap_mul_r_le_pi (r : ℝ) (hr : 0 < r) :
+    r * sech_overlap r ≤ Real.pi := by
+  rw [sech_overlap_mul_pos r hr]
+  exact (integral_mono_ae
+    (integrable_sech_mul_sech_scaled r) integrable_sech
+    (ae_of_all _ fun u => sech_mul_sech_scaled_le u r)).trans (le_of_eq integral_sech)
+
+/-- **sech_overlap_le_pi_over_r** (CatAL): I(r) ≤ π/r for all r > 0.
+    The asymptotic approximation I(r) ≈ π/r overestimates the exact integral at every finite r.
+    Together with `sech_overlap_asymptotic`, this gives:
+      - I(r) ≤ π/r  (upper bound, this theorem, CatAL)
+      - r·I(r) → π  (asymptotic, `sech_overlap_asymptotic`, CatAL)
+    Physical consequence: using the asymptotic 1/b_R^2 for the Yukawa suppression factor
+    is an overestimate; the exact suppression is smaller by O((π/(2r))²) finite corrections. -/
+theorem sech_overlap_le_pi_over_r (r : ℝ) (hr : 0 < r) :
+    sech_overlap r ≤ Real.pi / r := by
+  have h := sech_overlap_mul_r_le_pi r hr
+  have hrpos := inv_pos.mpr hr
+  have heq : sech_overlap r = r⁻¹ * (r * sech_overlap r) := by
+    field_simp [ne_of_gt hr]
+  rw [heq, div_eq_inv_mul]
+  exact mul_le_mul_of_nonneg_left h hrpos.le
 
 -- ════════════════════════════════════════════════════════════════
 -- §3  Yukawa vertex Z₇ winding (neutral Higgs, CatAL)

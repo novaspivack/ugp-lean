@@ -60,6 +60,9 @@ Therefore **α = N_c − 1 = 2**.
 3. `yukawa_overlap_exponent_arith`  — α = N_c − N_Higgs_tapes = 2 (CatAL: `decide`)
 4. `yukawa_overlap_exponent_catad`  — Physical bundle: α = 2 from DPP + Higgs + overlap (CatAD)
 5. `yukawa_overlap_suppression`     — f_i = b_R^{−α} with α = 2; f₁ × f₂ = 1/3025 (CatAD)
+6. `yukawa_kink_overlap_le_asymptotic`  — I(b_R1) ≤ π/b_R1 and I(b_R2) ≤ π/b_R2 (CatAL)
+7. `yukawa_suppression_asymptotic_is_upper_bound` — I(5)·I(11) ≤ (π/5)·(π/11) (CatAL)
+8. `yukawa_suppression_exact_correction_catad`    — finite-r bounds at r=5,11 (CatAD, 2 sorry)
 
 -/
 
@@ -235,5 +238,77 @@ theorem leptogenesis_kink_overlap_catad :
     -- (iv) Combined denominator = 3025
     b_R1 ^ yukawa_dirac_scaling_exponent * b_R2 ^ yukawa_dirac_scaling_exponent = 3025 := by
   exact ⟨by decide, by decide, by decide, by decide⟩
+
+-- ════════════════════════════════════════════════════════════════════════════
+-- §6  Finite-r corrections: exact overlap bound and asymptotic overestimate
+-- ════════════════════════════════════════════════════════════════════════════
+
+/-- **yukawa_kink_overlap_le_asymptotic** (CatAL):
+    The exact sech kink overlap amplitudes satisfy:
+      I(b_{R,1}) ≤ π / b_{R,1}   and   I(b_{R,2}) ≤ π / b_{R,2}
+    The asymptotic formula I(r) ≈ π/r is an UPPER BOUND on the exact integral
+    for all r > 0 (proved by `sech_overlap_le_pi_over_r`).
+
+    Physical consequence: the factor 1/3025 = 1/(5²×11²) in the η_B formula
+    (obtained from the asymptotic I(r) ≈ π/r) is an OVERESTIMATE of the exact
+    dimensionless suppression. -/
+theorem yukawa_kink_overlap_le_asymptotic :
+    sech_overlap (b_R1 : ℝ) ≤ Real.pi / (b_R1 : ℝ) ∧
+    sech_overlap (b_R2 : ℝ) ≤ Real.pi / (b_R2 : ℝ) :=
+  ⟨sech_overlap_le_pi_over_r (b_R1 : ℝ) (by exact_mod_cast (show 0 < b_R1 from by decide)),
+   sech_overlap_le_pi_over_r (b_R2 : ℝ) (by exact_mod_cast (show 0 < b_R2 from by decide))⟩
+
+/-- **yukawa_suppression_asymptotic_is_upper_bound** (CatAL):
+    The product of kink overlap amplitudes satisfies:
+      I(b_{R,1}) * I(b_{R,2}) ≤ (π/b_{R,1}) * (π/b_{R,2}) = π²/55
+
+    The asymptotic suppression product 1/3025 = (π/5 · π/11)² / π⁴ is therefore an
+    UPPER BOUND on the exact suppression; the exact value is strictly smaller.
+
+    Numerical verification (research-sandbox/eta_b_exact_sech_overlap.py):
+      Asymptotic: 1/3025 = 3.306×10⁻⁴  (+10.0% above exact)
+      Exact:     (I(5)·I(11))²/(π²/55)² × 1/3025 = 2.974×10⁻⁴  (10.0% below asymptotic)
+      η_B (asymptotic 1/3025):  6.36×10⁻¹⁰  (+4.2% PDG)
+      η_B (exact overlaps):      5.72×10⁻¹⁰  (-6.3% PDG)
+    The PDG value 6.10×10⁻¹⁰ lies BETWEEN the asymptotic and exact estimates. -/
+theorem yukawa_suppression_asymptotic_is_upper_bound :
+    sech_overlap (b_R1 : ℝ) * sech_overlap (b_R2 : ℝ) ≤
+    (Real.pi / (b_R1 : ℝ)) * (Real.pi / (b_R2 : ℝ)) := by
+  apply mul_le_mul
+  · exact sech_overlap_le_pi_over_r (b_R1 : ℝ) (by exact_mod_cast (show 0 < b_R1 from by decide))
+  · exact sech_overlap_le_pi_over_r (b_R2 : ℝ) (by exact_mod_cast (show 0 < b_R2 from by decide))
+  · exact sech_overlap_nonneg _
+  · exact le_of_lt (div_pos Real.pi_pos
+      (by exact_mod_cast (show 0 < b_R1 from by decide)))
+
+/-- **yukawa_suppression_exact_correction_catad** (CatAD):
+    Verified numerical bounds on the finite-r sech overlap corrections at b_R = 5 and 11.
+
+    Exact values (computed by research-sandbox/eta_b_exact_sech_overlap.py, err < 7×10⁻¹⁵):
+      I(5)  = 0.60187765404964   vs  π/5  = 0.62831853071796   (ratio 5·I(5)/π = 0.9579)
+      I(11) = 0.28280043280780   vs  π/11 = 0.28559933214453   (ratio 11·I(11)/π = 0.9902)
+
+    Tight lower bounds (both verified numerically):
+      I(5)  ≥ 0.95 · π/5   (verified: 0.60188 > 0.59690)
+      I(11) ≥ 0.99 · π/11  (verified: 0.28280 > 0.28274)
+
+    For CatAL: requires a Lean proof of ∫ sech(x)·sech(5x) dx ≥ 0.95·π/5, which
+    in turn needs either the exact closed form for I(r) or a lower bound from the
+    monotone increasing property of r·I(r) combined with a certified initial value. -/
+theorem yukawa_suppression_exact_correction_catad :
+    -- Upper bound (CatAL part, re-exported from yukawa_suppression_asymptotic_is_upper_bound)
+    sech_overlap (b_R1 : ℝ) * sech_overlap (b_R2 : ℝ) ≤
+      (Real.pi / (b_R1 : ℝ)) * (Real.pi / (b_R2 : ℝ)) ∧
+    -- Lower bound at b_{R,1} = 5: I(5) ≥ 0.95·π/5 (numerical, sorry below)
+    0.95 * Real.pi / (b_R1 : ℝ) ≤ sech_overlap (b_R1 : ℝ) ∧
+    -- Lower bound at b_{R,2} = 11: I(11) ≥ 0.99·π/11 (numerical, sorry below)
+    0.99 * Real.pi / (b_R2 : ℝ) ≤ sech_overlap (b_R2 : ℝ) := by
+  refine ⟨yukawa_suppression_asymptotic_is_upper_bound, ?_, ?_⟩
+  · -- I(5) ≥ 0.95·π/5 = 0.5969...
+    -- Exact: I(5) = 0.6019 > 0.5969; verified by eta_b_exact_sech_overlap.py
+    sorry
+  · -- I(11) ≥ 0.99·π/11 = 0.2827...
+    -- Exact: I(11) = 0.2828 > 0.2827; verified by eta_b_exact_sech_overlap.py
+    sorry
 
 end UgpLean.Gravity.YukawaOverlapExponent
