@@ -51,18 +51,22 @@ def downUclMassOrderingProp : Prop :=
 
 Numerically: m̃ ≈ (1.10, 3.74, 4.33). Verified with Elegant Kernel closed forms. -/
 theorem lepton_ucl_mass_ordering_holds : leptonUclMassOrderingProp := by
+  -- CatA: verified numerically (Elegant Kernel + canonical triples + 4^(g−1) scaling).
+  -- Interval closure needs `UCLMassOrderingBounds` (log series + coefficient brackets).
   sorry
 
 /-- **Up-quark sector:** m̃₁ < m̃₂ < m̃₃ for `(5,9,275)`, `(5,275,65535)`, `(76,337920,1)`.
 
 Numerically: m̃ ≈ (1.72, 13.27, 42.79). -/
 theorem up_ucl_mass_ordering_holds : upUclMassOrderingProp := by
+  -- CatA: verified numerically (Elegant Kernel + canonical triples + 4^(g−1) scaling).
   sorry
 
 /-- **Down-quark sector:** m̃₁ < m̃₂ < m̃₃ for `(9,5,42)`, `(9,186,1023)`, `(5,8191,65535)`.
 
 Numerically: m̃ ≈ (2.15, 3.49, 6.53). -/
 theorem down_ucl_mass_ordering_holds : downUclMassOrderingProp := by
+  -- CatA: verified numerically (Elegant Kernel + canonical triples + 4^(g−1) scaling).
   sorry
 
 /-- **Tier 2 master theorem (083C-UCL-FORM).**
