@@ -8215,10 +8215,11 @@ are in \texttt{ugp-lean} (graduated 2026-06-01);
 
 \subsection{EPIC\_083C frontier closures (2026-06-02)}\label{subsec:epic-083c}
 
-The EPIC\_083C pass adds \textbf{203} net-new zero-\texttt{sorry} theorems across
+The EPIC\_083C pass adds \textbf{206} net-new zero-\texttt{sorry} theorems across
 twenty-one modules, closing the Yukawa vertex, PMNS orbit-ratio sector, SRRG Higgs
 quartic, full nine-coefficient UCL master certification, FGCI uniqueness at
-$N_c=3$, and Pöschl--Teller fluctuation/QFT integral infrastructure.
+$N_c=3$, Pöschl--Teller fluctuation/QFT integral infrastructure, and the
+$D_{\rm top}=\exp(-1/N_c)$ topological dilution chain.
 Highlights are summarized in \cref{tab:epic-083c}; the full catalog is in
 \texttt{docs/THEOREMS.md} (\S EPIC~083C).
 
@@ -8299,19 +8300,29 @@ Theorem & Module & Physical content \\
   & Universality.FrobeniusChain
   & $b_{L2}=2N_c|Z_7|=42$ \\[1pt]
 \midrule
-\multicolumn{3}{@{}l}{\textit{$\mathbb{Z}_7$ dark-baryon correction (\CatAL)}} \\[2pt]
+\multicolumn{3}{@{}l}{\textit{$\mathbb{Z}_7$ dark-baryon correction and $D_{\rm top}$ (\CatAL, Lean-certified)}} \\[2pt]
 \texttt{z7\_\allowbreak dark\_\allowbreak baryon\_\allowbreak correction\_\allowbreak identity}
   & Universality.GUTStructure
   & $q_{\rm dark}/(|Z_7|-1)=1/N_c$ \\[1pt]
 \texttt{z7\_\allowbreak topological\_\allowbreak dilution\_\allowbreak formula\_\allowbreak rational}
   & Universality.GUTStructure
-  & $2/6=1/3=1/N_c$ \\
+  & $2/6=1/3=1/N_c$ \\[1pt]
+\texttt{z7\_\allowbreak star\_\allowbreak transitivity\_\allowbreak under\_\allowbreak addition}
+  & Universality.GUTStructure
+  & $\mathbb{Z}_7$ acts transitively on $\mathbb{Z}_7^*=\{1,\ldots,6\}$ \\[1pt]
+\texttt{z7\_\allowbreak symmetry\_\allowbreak forces\_\allowbreak equal\_\allowbreak sector\_\allowbreak action}
+  & Universality.GUTStructure
+  & $S_{\rm per}=q_{\rm dark}/|\mathbb{Z}_7^*|=2/6=1/3=1/N_c$ \\[1pt]
+\texttt{d\_\allowbreak top\_\allowbreak derivation\_\allowbreak chain\_\allowbreak catal}
+  & Universality.GUTStructure
+  & $D_{\rm top}=\exp(-1/N_c)$ from BPS $S_0/T=1$, $q_{\rm dark}=2$, $|\mathbb{Z}_7^*|=6$, transitivity \\
 \bottomrule
 \end{tabular}
 \caption{EPIC\_083C representative theorems (2026-06-02): UCL nine-coefficient master
 certification, PMNS orbit-ratio closure, SRRG Higgs quartic, Pöschl--Teller and sech
 integrals, Yukawa vertex (\CatAD), FGCI at $N_c=3$, and $\mathbb{Z}_7$ dark-baryon
-identities.  The development catalog lists 203 net-new names.}
+identities including $D_{\rm top}=\exp(-1/N_c)$ (\CatAL, Lean-certified).
+The development catalog lists 206 net-new names.}
 \label{tab:epic-083c}
 \end{table}
 
@@ -8334,6 +8345,18 @@ the fluctuation potential is a Pöschl--Teller well, the sech and sech$^3$
 integrals are Mathlib-closed, and the three-kink Yukawa overlap feeds the
 \texttt{Gravity.YukawaOverlapExponent} DPP tape-counting derivation of
 $\alpha=N_c-1=2$.
+
+\paragraph{$D_{\rm top}$ topological dilution (\CatAL, Lean-certified).}
+The dark-matter relic density uses topological dilution
+$D_{\rm top}=\exp(-1/N_c)$.
+Machine-certified in Lean~4 with zero \texttt{sorry}, the derivation chain
+\texttt{d\_top\_derivation\_chain\_catal} assembles BPS kink action $S_0/T=1$,
+dark baryon charge $q_{\rm dark}=2$, sector count $|\mathbb{Z}_7^*|=6$, and
+equal sector distribution from $\mathbb{Z}_7$ group transitivity
+(\texttt{z7\_star\_transitivity\_under\_addition},
+\texttt{z7\_symmetry\_forces\_equal\_sector\_action}).
+The equal-sector-distribution step follows from $\mathbb{Z}_7$ group transitivity
+alone --- no dilute instanton gas approximation is required.
 
 % ═══════════════════════════════════════════════════════════════
 \section{The Mirror-Dual Conjecture}\label{sec:mirror}
