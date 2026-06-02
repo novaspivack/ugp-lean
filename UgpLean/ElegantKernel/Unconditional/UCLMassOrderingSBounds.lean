@@ -30,8 +30,8 @@ private theorem lep1_f_lo : (12374531 : ℝ) / 50000000 < k_L_derived * (Real.lo
   have hkgen2hi := k_gen2_hi
   have hkMlo := k_M_lo
   have hkMhi := k_M_hi
-  rw [k_L_derived_closed_form]
-  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq]
+  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq, k_L_derived_closed_form]
+  ring_nf
   nlinarith [hLlo, hLhi, hkLlo, hkLhi, hkgenlo, hkgenhi, hkgen2lo, hkgen2hi, hkMlo, hkMhi]
 
 private theorem lep1_f_hi : k_L_derived * (Real.log (73 : ℝ) - Real.log (823 : ℝ)) + (7 / 512 : ℝ) * (Real.log (73 : ℝ) - Real.log (823 : ℝ)) ^ 2 + k_gen_derived * 1 + k_gen2 * (1 : ℝ) ^ 2 + k_M * (1 : ℝ) * (-1 : ℝ) * (-1 : ℝ) + (1 / 8 : ℝ) * (1 : ℤ) + (-3 / 2 : ℝ) * (-1 : ℤ) + (4 / 3 : ℝ) * (-1 : ℤ) < (25473819 : ℝ) / 100000000 := by
@@ -45,8 +45,8 @@ private theorem lep1_f_hi : k_L_derived * (Real.log (73 : ℝ) - Real.log (823 :
   have hkgen2hi := k_gen2_hi
   have hkMlo := k_M_lo
   have hkMhi := k_M_hi
-  rw [k_L_derived_closed_form]
-  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq]
+  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq, k_L_derived_closed_form]
+  ring_nf
   nlinarith [hLlo, hLhi, hkLlo, hkLhi, hkgenlo, hkgenhi, hkgen2lo, hkgen2hi, hkMlo, hkMhi]
 
 theorem lep1_S_lo : (-64125469 : ℝ) / 50000000 < uclLogCalibration (1 : ℤ) (-1 : ℤ) (-1 : ℤ) (Real.log (73 : ℝ) - Real.log (823 : ℝ)) 1 := by
@@ -72,8 +72,7 @@ private theorem lep2_f_lo : (8017609 : ℝ) / 100000000 < k_L_derived * (Real.lo
   have hkgen2hi := k_gen2_hi
   have hkMlo := k_M_lo
   have hkMhi := k_M_hi
-  rw [k_L_derived_closed_form]
-  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq]
+  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq, k_L_derived_closed_form]
   nlinarith [hLlo, hLhi, hkLlo, hkLhi, hkgenlo, hkgenhi, hkgen2lo, hkgen2hi, hkMlo, hkMhi]
 
 private theorem lep2_f_hi : k_L_derived * (Real.log (42 : ℝ) - Real.log (1023 : ℝ)) + (7 / 512 : ℝ) * (Real.log (42 : ℝ) - Real.log (1023 : ℝ)) ^ 2 + k_gen_derived * 2 + k_gen2 * (2 : ℝ) ^ 2 + k_M * (0 : ℝ) * (-1 : ℝ) * (-1 : ℝ) + (1 / 8 : ℝ) * (0 : ℤ) + (-3 / 2 : ℝ) * (-1 : ℤ) + (4 / 3 : ℝ) * (-1 : ℤ) < (2667759 : ℝ) / 25000000 := by
@@ -87,8 +86,7 @@ private theorem lep2_f_hi : k_L_derived * (Real.log (42 : ℝ) - Real.log (1023 
   have hkgen2hi := k_gen2_hi
   have hkMlo := k_M_lo
   have hkMhi := k_M_hi
-  rw [k_L_derived_closed_form]
-  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq]
+  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq, k_L_derived_closed_form]
   nlinarith [hLlo, hLhi, hkLlo, hkLhi, hkgenlo, hkgenhi, hkgen2lo, hkgen2hi, hkMlo, hkMhi]
 
 theorem lep2_S_lo : (-144982391 : ℝ) / 100000000 < uclLogCalibration (0 : ℤ) (-1 : ℤ) (-1 : ℤ) (Real.log (42 : ℝ) - Real.log (1023 : ℝ)) 2 := by
@@ -114,8 +112,7 @@ private theorem lep3_f_lo : (-57924427 : ℝ) / 50000000 < k_L_derived * (Real.l
   have hkgen2hi := k_gen2_hi
   have hkMlo := k_M_lo
   have hkMhi := k_M_hi
-  rw [k_L_derived_closed_form]
-  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq]
+  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq, k_L_derived_closed_form]
   nlinarith [hLlo, hLhi, hkLlo, hkLhi, hkgenlo, hkgenhi, hkgen2lo, hkgen2hi, hkMlo, hkMhi]
 
 private theorem lep3_f_hi : k_L_derived * (Real.log (275 : ℝ) - Real.log (65535 : ℝ)) + (7 / 512 : ℝ) * (Real.log (275 : ℝ) - Real.log (65535 : ℝ)) ^ 2 + k_gen_derived * 3 + k_gen2 * (3 : ℝ) ^ 2 + k_M * (-1 : ℝ) * (0 : ℝ) * (1 : ℝ) + (1 / 8 : ℝ) * (-1 : ℤ) + (-3 / 2 : ℝ) * (0 : ℤ) + (4 / 3 : ℝ) * (1 : ℤ) < (-111355927 : ℝ) / 100000000 := by
@@ -129,8 +126,7 @@ private theorem lep3_f_hi : k_L_derived * (Real.log (275 : ℝ) - Real.log (6553
   have hkgen2hi := k_gen2_hi
   have hkMlo := k_M_lo
   have hkMhi := k_M_hi
-  rw [k_L_derived_closed_form]
-  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq]
+  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq, k_L_derived_closed_form]
   nlinarith [hLlo, hLhi, hkLlo, hkLhi, hkgenlo, hkgenhi, hkgen2lo, hkgen2hi, hkMlo, hkMhi]
 
 theorem lep3_S_lo : (-134424427 : ℝ) / 50000000 < uclLogCalibration (-1 : ℤ) (0 : ℤ) (1 : ℤ) (Real.log (275 : ℝ) - Real.log (65535 : ℝ)) 3 := by
@@ -156,8 +152,7 @@ private theorem up1_f_lo : (69666783 : ℝ) / 100000000 < k_L_derived * (Real.lo
   have hkgen2hi := k_gen2_hi
   have hkMlo := k_M_lo
   have hkMhi := k_M_hi
-  rw [k_L_derived_closed_form]
-  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq]
+  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq, k_L_derived_closed_form]
   nlinarith [hLlo, hLhi, hkLlo, hkLhi, hkgenlo, hkgenhi, hkgen2lo, hkgen2hi, hkMlo, hkMhi]
 
 private theorem up1_f_hi : k_L_derived * (Real.log (9 : ℝ) - Real.log (275 : ℝ)) + (7 / 512 : ℝ) * (Real.log (9 : ℝ) - Real.log (275 : ℝ)) ^ 2 + k_gen_derived * 1 + k_gen2 * (1 : ℝ) ^ 2 + k_M * (-1 : ℝ) * (0 : ℝ) * (0 : ℝ) + (1 / 8 : ℝ) * (-1 : ℤ) + (-3 / 2 : ℝ) * (0 : ℤ) + (4 / 3 : ℝ) * (0 : ℤ) < (6974057 : ℝ) / 10000000 := by
@@ -171,8 +166,7 @@ private theorem up1_f_hi : k_L_derived * (Real.log (9 : ℝ) - Real.log (275 : �
   have hkgen2hi := k_gen2_hi
   have hkMlo := k_M_lo
   have hkMhi := k_M_hi
-  rw [k_L_derived_closed_form]
-  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq]
+  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq, k_L_derived_closed_form]
   nlinarith [hLlo, hLhi, hkLlo, hkLhi, hkgenlo, hkgenhi, hkgen2lo, hkgen2hi, hkMlo, hkMhi]
 
 theorem up1_S_lo : (-83333217 : ℝ) / 100000000 < uclLogCalibration (-1 : ℤ) (0 : ℤ) (0 : ℤ) (Real.log (9 : ℝ) - Real.log (275 : ℝ)) 1 := by
@@ -198,8 +192,7 @@ private theorem up2_f_lo : (134775467 : ℝ) / 100000000 < k_L_derived * (Real.l
   have hkgen2hi := k_gen2_hi
   have hkMlo := k_M_lo
   have hkMhi := k_M_hi
-  rw [k_L_derived_closed_form]
-  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq]
+  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq, k_L_derived_closed_form]
   nlinarith [hLlo, hLhi, hkLlo, hkLhi, hkgenlo, hkgenhi, hkgen2lo, hkgen2hi, hkMlo, hkMhi]
 
 private theorem up2_f_hi : k_L_derived * (Real.log (275 : ℝ) - Real.log (65535 : ℝ)) + (7 / 512 : ℝ) * (Real.log (275 : ℝ) - Real.log (65535 : ℝ)) ^ 2 + k_gen_derived * 2 + k_gen2 * (2 : ℝ) ^ 2 + k_M * (-1 : ℝ) * (0 : ℝ) * (1 : ℝ) + (1 / 8 : ℝ) * (-1 : ℤ) + (-3 / 2 : ℝ) * (0 : ℤ) + (4 / 3 : ℝ) * (1 : ℤ) < (139268393 : ℝ) / 100000000 := by
@@ -213,8 +206,7 @@ private theorem up2_f_hi : k_L_derived * (Real.log (275 : ℝ) - Real.log (65535
   have hkgen2hi := k_gen2_hi
   have hkMlo := k_M_lo
   have hkMhi := k_M_hi
-  rw [k_L_derived_closed_form]
-  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq]
+  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq, k_L_derived_closed_form]
   nlinarith [hLlo, hLhi, hkLlo, hkLhi, hkgenlo, hkgenhi, hkgen2lo, hkgen2hi, hkMlo, hkMhi]
 
 theorem up2_S_lo : (-18224533 : ℝ) / 100000000 < uclLogCalibration (-1 : ℤ) (0 : ℤ) (1 : ℤ) (Real.log (275 : ℝ) - Real.log (65535 : ℝ)) 2 := by
@@ -240,8 +232,7 @@ private theorem up3_f_lo : (113523589 : ℝ) / 100000000 < k_L_derived * (Real.l
   have hkgen2hi := k_gen2_hi
   have hkMlo := k_M_lo
   have hkMhi := k_M_hi
-  rw [k_L_derived_closed_form]
-  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq]
+  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq, k_L_derived_closed_form]
   nlinarith [hLlo, hLhi, hkLlo, hkLhi, hkgenlo, hkgenhi, hkgen2lo, hkgen2hi, hkMlo, hkMhi]
 
 private theorem up3_f_hi : k_L_derived * (Real.log (337920 : ℝ) - Real.log 1) + (7 / 512 : ℝ) * (Real.log (337920 : ℝ) - Real.log 1) ^ 2 + k_gen_derived * 3 + k_gen2 * (3 : ℝ) ^ 2 + k_M * (0 : ℝ) * (0 : ℝ) * (1 : ℝ) + (1 / 8 : ℝ) * (0 : ℤ) + (-3 / 2 : ℝ) * (0 : ℤ) + (4 / 3 : ℝ) * (1 : ℤ) < (114868057 : ℝ) / 100000000 := by
@@ -255,8 +246,7 @@ private theorem up3_f_hi : k_L_derived * (Real.log (337920 : ℝ) - Real.log 1) 
   have hkgen2hi := k_gen2_hi
   have hkMlo := k_M_lo
   have hkMhi := k_M_hi
-  rw [k_L_derived_closed_form]
-  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq]
+  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq, k_L_derived_closed_form]
   nlinarith [hLlo, hLhi, hkLlo, hkLhi, hkgenlo, hkgenhi, hkgen2lo, hkgen2hi, hkMlo, hkMhi]
 
 theorem up3_S_lo : (-39476411 : ℝ) / 100000000 < uclLogCalibration (0 : ℤ) (0 : ℤ) (1 : ℤ) (Real.log (337920 : ℝ) - Real.log 1) 3 := by
@@ -282,8 +272,7 @@ private theorem dn1_f_lo : (45766269 : ℝ) / 50000000 < k_L_derived * (Real.log
   have hkgen2hi := k_gen2_hi
   have hkMlo := k_M_lo
   have hkMhi := k_M_hi
-  rw [k_L_derived_closed_form]
-  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq]
+  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq, k_L_derived_closed_form]
   nlinarith [hLlo, hLhi, hkLlo, hkLhi, hkgenlo, hkgenhi, hkgen2lo, hkgen2hi, hkMlo, hkMhi]
 
 private theorem dn1_f_hi : k_L_derived * (Real.log (5 : ℝ) - Real.log (42 : ℝ)) + (7 / 512 : ℝ) * (Real.log (5 : ℝ) - Real.log (42 : ℝ)) ^ 2 + k_gen_derived * 1 + k_gen2 * (1 : ℝ) ^ 2 + k_M * (0 : ℝ) * (-1 : ℝ) * (-1 : ℝ) + (1 / 8 : ℝ) * (0 : ℤ) + (-3 / 2 : ℝ) * (-1 : ℤ) + (4 / 3 : ℝ) * (-1 : ℤ) < (91803017 : ℝ) / 100000000 := by
@@ -297,8 +286,7 @@ private theorem dn1_f_hi : k_L_derived * (Real.log (5 : ℝ) - Real.log (42 : �
   have hkgen2hi := k_gen2_hi
   have hkMlo := k_M_lo
   have hkMhi := k_M_hi
-  rw [k_L_derived_closed_form]
-  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq]
+  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq, k_L_derived_closed_form]
   nlinarith [hLlo, hLhi, hkLlo, hkLhi, hkgenlo, hkgenhi, hkgen2lo, hkgen2hi, hkMlo, hkMhi]
 
 theorem dn1_S_lo : (-30733731 : ℝ) / 50000000 < uclLogCalibration (0 : ℤ) (-1 : ℤ) (-1 : ℤ) (Real.log (5 : ℝ) - Real.log (42 : ℝ)) 1 := by
@@ -324,8 +312,7 @@ private theorem dn2_f_lo : (291947 : ℝ) / 25000000 < k_L_derived * (Real.log (
   have hkgen2hi := k_gen2_hi
   have hkMlo := k_M_lo
   have hkMhi := k_M_hi
-  rw [k_L_derived_closed_form]
-  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq]
+  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq, k_L_derived_closed_form]
   nlinarith [hLlo, hLhi, hkLlo, hkLhi, hkgenlo, hkgenhi, hkgen2lo, hkgen2hi, hkMlo, hkMhi]
 
 private theorem dn2_f_hi : k_L_derived * (Real.log (186 : ℝ) - Real.log (1023 : ℝ)) + (7 / 512 : ℝ) * (Real.log (186 : ℝ) - Real.log (1023 : ℝ)) ^ 2 + k_gen_derived * 2 + k_gen2 * (2 : ℝ) ^ 2 + k_M * (0 : ℝ) * (-1 : ℝ) * (-1 : ℝ) + (1 / 8 : ℝ) * (0 : ℤ) + (-3 / 2 : ℝ) * (-1 : ℤ) + (4 / 3 : ℝ) * (-1 : ℤ) < (240197 : ℝ) / 10000000 := by
@@ -339,8 +326,7 @@ private theorem dn2_f_hi : k_L_derived * (Real.log (186 : ℝ) - Real.log (1023 
   have hkgen2hi := k_gen2_hi
   have hkMlo := k_M_lo
   have hkMhi := k_M_hi
-  rw [k_L_derived_closed_form]
-  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq]
+  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq, k_L_derived_closed_form]
   nlinarith [hLlo, hLhi, hkLlo, hkLhi, hkgenlo, hkgenhi, hkgen2lo, hkgen2hi, hkMlo, hkMhi]
 
 theorem dn2_S_lo : (-37958053 : ℝ) / 25000000 < uclLogCalibration (0 : ℤ) (-1 : ℤ) (-1 : ℤ) (Real.log (186 : ℝ) - Real.log (1023 : ℝ)) 2 := by
@@ -366,8 +352,7 @@ private theorem dn3_f_lo : (-18866653 : ℝ) / 25000000 < k_L_derived * (Real.lo
   have hkgen2hi := k_gen2_hi
   have hkMlo := k_M_lo
   have hkMhi := k_M_hi
-  rw [k_L_derived_closed_form]
-  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq]
+  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq, k_L_derived_closed_form]
   nlinarith [hLlo, hLhi, hkLlo, hkLhi, hkgenlo, hkgenhi, hkgen2lo, hkgen2hi, hkMlo, hkMhi]
 
 private theorem dn3_f_hi : k_L_derived * (Real.log (8191 : ℝ) - Real.log (65535 : ℝ)) + (7 / 512 : ℝ) * (Real.log (8191 : ℝ) - Real.log (65535 : ℝ)) ^ 2 + k_gen_derived * 3 + k_gen2 * (3 : ℝ) ^ 2 + k_M * (-1 : ℝ) * (-1 : ℝ) * (1 : ℝ) + (1 / 8 : ℝ) * (-1 : ℤ) + (-3 / 2 : ℝ) * (-1 : ℤ) + (4 / 3 : ℝ) * (1 : ℤ) < (-4562003 : ℝ) / 6250000 := by
@@ -381,8 +366,7 @@ private theorem dn3_f_hi : k_L_derived * (Real.log (8191 : ℝ) - Real.log (6553
   have hkgen2hi := k_gen2_hi
   have hkMlo := k_M_lo
   have hkMhi := k_M_hi
-  rw [k_L_derived_closed_form]
-  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq]
+  simp only [k_L2_eq, k_a_eq, k_b_eq, k_c_eq, k_L_derived_closed_form]
   nlinarith [hLlo, hLhi, hkLlo, hkLhi, hkgenlo, hkgenhi, hkgen2lo, hkgen2hi, hkMlo, hkMhi]
 
 theorem dn3_S_lo : (-57116653 : ℝ) / 25000000 < uclLogCalibration (-1 : ℤ) (-1 : ℤ) (1 : ℤ) (Real.log (8191 : ℝ) - Real.log (65535 : ℝ)) 3 := by

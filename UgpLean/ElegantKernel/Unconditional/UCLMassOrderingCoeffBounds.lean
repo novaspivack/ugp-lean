@@ -10,6 +10,7 @@ import UgpLean.QuarterLock
 import UgpLean.ElegantKernel.Unconditional.KLFullClosure
 import UgpLean.ElegantKernel.Unconditional.KGenFullClosure
 import UgpLean.ElegantKernel.Unconditional.KConstFullClosure
+import UgpLean.ElegantKernel.Unconditional.UCLLogBounds
 
 /-!
 Tight interval bounds on the UCL coefficients entering generation-difference
@@ -145,5 +146,15 @@ theorem k_M_lo : (-805599027 : ℝ) / 10^9 < k_M := by
 theorem k_M_hi : k_M < (-805599025 : ℝ) / 10^9 := by
   rw [k_M_eq_neg_phi_half_plus_seven_2048]
   nlinarith [goldenRatio_lo_val]
+
+/-! ## k_const (needed for S-value bounds) -/
+
+open UCLLogBounds
+
+theorem k_const_lo : (-1520316357 : ℝ) / 10^10 < k_const_derived :=
+  k_const_derived_lo
+
+theorem k_const_hi : k_const_derived < (-1520316060 : ℝ) / 10^10 :=
+  k_const_derived_hi
 
 end UgpLean.ElegantKernel.Unconditional.UCLMassOrderingCoeffBounds

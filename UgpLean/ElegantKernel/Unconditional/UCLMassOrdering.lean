@@ -18,8 +18,8 @@ with CatAL Elegant Kernel coefficients.
 **Proof status.** Numerically verified (Elegant Kernel + canonical triples +
 `4^(g−1)` scaling). The structural bridge from log-space inequalities to
 `uclGenerationScaledMass` is in `UCLMassOrderingBounds`; log-space interval
-closure is tracked in `UCLMassOrderingDelta` (six sorry obligations). Three
-sector theorems below inherit those gaps.
+log-space closure is in `UCLMassOrderingDelta` (six margin-certificate proofs).
+Zero sorry.
 -/
 
 namespace UgpLean.ElegantKernel.Unconditional.UCLMassOrdering
