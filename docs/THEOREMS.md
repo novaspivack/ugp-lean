@@ -1015,6 +1015,101 @@ All theorems zero sorry (CatAL).
 | **gte_polynomial_five_labelled_roles** | Universality.FiveRolesPolynomial | Structural: exactly five distinct labelled-triple roles at `K_extra = 0` |
 | **gte_polynomial_three_roles_k_zero** | Gravity.PMDLGravityTheorems | Sub-bundle: Roles 1 (Rule 110) + 3 (gravity mass hierarchy) only |
 
+---
+
+## EPIC 083C — Frontier Closures (2026-06-02)
+
+**Scope:** 203 net-new `theorem`/`lemma` names across 21 Lean modules (zero sorry on listed results; two pre-existing `axiom` stubs in `GUTStructure.EWChiralBridge` unchanged). Cat levels: **CatAL** unless noted **CatAD**.
+
+### Φ_MDL fluctuation spectrum and Yukawa vertex (`Substrate.PhiMDLFluctuationSpectrum`)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **phimdl_fluctuation_is_poschl_teller** | Substrate.PhiMDLFluctuationSpectrum | $V_{\rm fl}(x)=m_\phi^2[1-2\,\mathrm{sech}^2(m_\phi x)]$ (Pöschl–Teller well; CatAL) |
+| **integral_sech** | Substrate.PhiMDLFluctuationSpectrum | $\int \mathrm{sech}(x)\,dx = \pi$ (Mathlib FTC; CatAL) |
+| **integral_sech_cubed** | Substrate.PhiMDLFluctuationSpectrum | $\int \mathrm{sech}^3(x)\,dx = \pi/2$ (CatAL) |
+| **phimdl_three_kink_overlap_integral** | Substrate.PhiMDLFluctuationSpectrum | Three-kink overlap $G_3(0)$ integral scaffold (CatAL) |
+| **phimdl_yukawa_amplitude_formula** | Substrate.PhiMDLFluctuationSpectrum | Yukawa amplitude closed form via sech$^3$ product (CatAL) |
+| **yukawa_amplitude_nonzero_sech3** | Substrate.PhiMDLFluctuationSpectrum | Nonzero three-kink Yukawa amplitude for $m_\phi>0$ (CatAL) |
+| **sech_overlap_asymptotic** | Substrate.PhiMDLFluctuationSpectrum | $r\cdot I(r)\to\pi$ as $r\to\infty$ (CatAL) |
+| **sech_overlap_le_pi** | Substrate.PhiMDLFluctuationSpectrum | Overlap integral $\le\pi$ (CatAL) |
+| **phimdl_yukawa_vertex_catad** | Substrate.PhiMDLFluctuationSpectrum | **Master Yukawa vertex**: Pöschl–Teller + sech$^3$ integral + amplitude assembly (CatAD) |
+| **phimdl_yukawa_vertex_winding_trivial** | Substrate.PhiMDLFluctuationSpectrum | Equal LH/RH winding $\Rightarrow$ $|ΔW|=0$ at Higgs vertex (CatAL) |
+| **yukawa_winding_conservation** | Substrate.PhiMDLFluctuationSpectrum | Winding conservation at permitted Yukawa vertex (CatAL) |
+| **gte_yukawa_positive** | Substrate.PhiMDLFluctuationSpectrum | Positive Yukawa coupling for $m_f,v_H>0$ (CatAL) |
+
+### Yukawa overlap exponent from DPP tape counting (`Gravity.YukawaOverlapExponent`)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **yukawa_overlap_exponent_arith** | Gravity.YukawaOverlapExponent | $N_c-1=2$ (`decide`; CatAL) |
+| **yukawa_overlap_exponent_catad** | Gravity.YukawaOverlapExponent | Dirac scaling exponent $\alpha=N_c-1=2$ from three-tape DPP counting (CatAD) |
+| **yukawa_dirac_scaling_exponent_eq** | Gravity.YukawaOverlapExponent | $\alpha=2$ (definitional alias; CatAL) |
+| **yukawa_spatial_dims_from_dpp** | Gravity.YukawaOverlapExponent | Spatial dimensions from DPP tape geometry (CatAD) |
+| **yukawa_suppression_denominator** | Gravity.YukawaOverlapExponent | $5^2\times 11^2=3025$ (CatAL) |
+| **leptogenesis_kink_overlap_catad** | Gravity.YukawaOverlapExponent | $f_1\times f_2=1/3025$ (CatAD) |
+| **yukawa_overlap_tape_count** | Gravity.YukawaOverlapExponent | Fermion-sector tape count certified (CatAL) |
+| **yukawa_total_tapes** | Gravity.YukawaOverlapExponent | Total tape budget for Yukawa vertex (CatAL) |
+
+### PMNS and neutrino sector (`MassRelations.NeutrinoSector`)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **lh_neutrino_fn_charge_differential_zero** | MassRelations.NeutrinoSector | $q_L=0$ for all LH generations (CatAL) |
+| **neutrino_higgs_yukawa_vertex_permitted** | MassRelations.NeutrinoSector | $|ΔW|=0$ at ν–H–ν vertex (CatAL) |
+| **seesaw_type_I_formula** | MassRelations.NeutrinoSector | Type-I seesaw $M_R=m_D^2/m_\nu$ (CatAL) |
+| **fn_dirac_yukawa_rank_theorem** | MassRelations.NeutrinoSector | Positive FN charges $\Rightarrow$ rank-1 Dirac Yukawa (CatAL) |
+| **real_yukawa_gives_zero_leptogenesis_cp** | MassRelations.NeutrinoSector | Real Yukawa $\Rightarrow$ $\varepsilon_1=0$ (CatAL) |
+| **pmns_solar_sin_sq** | MassRelations.NeutrinoSector | $\sin^2\theta_{12}=4/13$ (CatAL) |
+| **pmns_atm_sin_sq** | MassRelations.NeutrinoSector | $\sin^2\theta_{23}=19/42$ (CatAL) |
+| **pmns_reactor_sin_val** | MassRelations.NeutrinoSector | $\sin\theta_{13}=11/73$ (CatAL) |
+| **pmns_cp_phase_from_z7_winding** | MassRelations.NeutrinoSector | $\delta_{\rm CP}=8\pi/7$ from $W_L=4$ (CatAL) |
+| **gte_jarlskog_is_negative** | MassRelations.NeutrinoSector | GTE Jarlskog $J<0$ (CatAL) |
+| **pmns_sin_delta_cp** | MassRelations.NeutrinoSector | $\sin\delta_{\rm CP}$ from orbit-ratio algebra (CatAL) |
+| **rh_neutrino_couples_antiflavon** | MassRelations.NeutrinoSector | RH neutrino sector couples to anti-flavon layer (CatAL) |
+| **democratic_seesaw_theta23_approximately_maximal** | MassRelations.NeutrinoSector | Democratic J-matrix $\Rightarrow$ near-maximal $\theta_{23}$ (CatAD; structural) |
+
+### Higgs quartic from SRRG (`MassRelations.HiggsQuartic`)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **higgs_quartic_ch_correction** | MassRelations.HiggsQuartic | $\lambda=\dfrac{\varphi}{4\pi}\left(1+\dfrac{{\rm IPT}-1}{27}\right)$ with $2c_H+1=N_{\rm gen}^3=27$ (CatAL; zero sorry) |
+| **higgs_quartic_numerical_approx** | MassRelations.HiggsQuartic | $0.12<\lambda<0.14$ (interval arithmetic via `UCLLogBounds`; CatAL) |
+| **higgs_quartic_denominator_is_27** | MassRelations.HiggsQuartic | Denominator $2c_H+1=27=N_{\rm gen}^3$ (CatAL) |
+| **higgs_quartic_corrected_pos** | MassRelations.HiggsQuartic | Corrected quartic strictly positive (CatAL) |
+
+### UCL Elegant Kernel — master certification and tiers (`ElegantKernel/Unconditional/*`)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **elegant_kernel_full_certification** | ElegantKernel.Unconditional.MasterCertification | All nine UCL coefficients CatAL in one bundle (`k_{L^2},k_{\rm gen},k_{\rm gen2},k_L,k_{\rm const},k_{M},k_{a,b,c}`) |
+| **ucl_fermion_mass_ordering** | ElegantKernel.Unconditional.UCLMassOrdering | gen1 $<$ gen2 $<$ gen3 per sector under UCL + $4^{g-1}$ scaling (CatAL; conditional on interval certs) |
+| **ucl_tier2_mass_ordering** | ElegantKernel.Unconditional.MasterCertification | Tier-2 mass-ordering bundle (alias of `ucl_fermion_mass_ordering`) |
+| **ucl_lepton_sector_koide_identity** | ElegantKernel.Unconditional.UCLKoide | Koide $Q=2/3$ from GTE-pinned phase + amplitude chain (CatAL) |
+| **ucl_tier3_lepton_koide** | ElegantKernel.Unconditional.MasterCertification | Tier-3 Koide bundle (alias) |
+| **oq_083c_ucl_3_resolution** | ElegantKernel.Unconditional.UCLKoide | UCL log form alone does not force $Q=2/3$; emergence needs amplitude chain |
+| **thm_quarter_lock_catal** | QuarterLock | $k_M=-\varphi/2+7/2048$ (Quarter-Lock CatAL) |
+| **UCL interval infrastructure** | UCLLogBounds, UCLMassOrderingCoeffBounds, UCLMassOrderingInterval, UCLMassOrderingSBounds, UCLMassOrderingCerts, UCLMassOrderingBounds, UCLMassOrderingBridge | Margin certificates: $\log\varphi$, $\log(2\pi)$, all UCL coefficient intervals, six sector $\Delta_{12},\Delta_{23}$ bounds, 40 GTE $b$-seed log intervals (all zero sorry) |
+
+### FGCI and Frobenius chain (`Universality.FrobeniusChain`)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **fgci_unique_at_nc** | Universality.FrobeniusChain | FGCI: $F(3)=G(3)=73$ unique at $N_c=3$ (CatAL) |
+| **frobenius_chain_two_primes** | Universality.FrobeniusChain | Frobenius cascade $\{7,73\}$ complete; level-3 terminates (CatAL) |
+| **b_L2_eq_two_Nc_Z7** | Universality.FrobeniusChain | $b_{L2}=2N_c|Z_7|=42$ (CatAL) |
+| **fgci_bundle** | Universality.FrobeniusChain | Joint FGCI + chain + $b_{\rm gen1}$ double determination (CatAL) |
+| **b_gen2_frobenius_factorization** | Universality.FrobeniusChain | $b_{\rm gen2}=2N_c|Z_7|$ factorization (CatAL) |
+
+### GUTStructure additions (`Universality.GUTStructure` §35)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **z7_dark_baryon_correction_identity** | Universality.GUTStructure | $q_{\rm dark}/(|Z_7|-1)=1/N_c$ (CatAL) |
+| **z7_topological_dilution_formula_rational** | Universality.GUTStructure | Topological dilution $2/6=1/3=1/N_c$ (CatAL) |
+
+**083C catalog entry count (this section):** 58 named flagship theorems plus 40 interval-bound lemmas and 25 UCL margin/delta certificates documented in the module list above (**203** total net-new names in the epic scorecard).
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |

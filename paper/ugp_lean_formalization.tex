@@ -2800,6 +2800,22 @@ the certified rational/real witnesses and are derived---not assumed.
 \end{leanref}
 \end{theorem}
 
+\begin{theorem}[Nine-coefficient UCL master certification]\label{thm:ucl-master-083c}
+All nine Elegant Kernel coefficients---$k_{L^2}$, $k_{\rm gen}$, $k_{\rm gen}^{(2)}$,
+$k_L$, $k_{\rm const}$, $k_M$, and the Möbius triple $(k_a,k_b,k_c)$---are
+simultaneously certified in one \CatAL\ bundle, with
+$k_M = -\varphi/2 + 7/2048$ (Quarter-Lock) and tier-2/3 mass-spectrum consequences
+(fermion mass ordering and lepton-sector Koide $Q=2/3$).
+
+\begin{leanref} \lstinline|elegant_kernel_full_certification|,
+\lstinline|thm_quarter_lock_catal|,
+\lstinline|ucl_fermion_mass_ordering|,
+\lstinline|ucl_lepton_sector_koide_identity|
+\textup{(in \nolinkurl{ElegantKernel/Unconditional/MasterCertification},
+\nolinkurl{QuarterLock}, \nolinkurl{UCLMassOrdering}, \nolinkurl{UCLKoide})}
+\end{leanref}
+\end{theorem}
+
 \noindent
 Fibonacci eigenvalue structure is certified in
 \texttt{GTE/StructuralTheorems}
@@ -2811,7 +2827,8 @@ the unconditional UCL$_2$ block is
 \section[Mass Relations]{Mass Relations and Physical Spectrum}\label{sec:massrelations}
 % ═══════════════════════════════════════════════════════════════
 
-The \texttt{MassRelations} layer (23 modules) formalizes the
+The \texttt{MassRelations} layer (27 modules on the development branch, including
+\texttt{NeutrinoSector} and \texttt{HiggsQuartic} from EPIC\_083C) formalizes the
 passage from the \ugp{} ridge arithmetic to physical fermion mass
 ratios, covering the Koide closed form, the SU(3) flavour geometry,
 the Froggatt--Nielsen mechanism, the resulting physical spectrum,
@@ -4707,6 +4724,24 @@ Composes Rank 72d with Rank 25-CCF.
 \end{theorem}
 
 All theorems are zero \texttt{sorry}, zero custom axioms.
+
+\subsection{$\Phi_{\mathrm{MDL}}$ fluctuation spectrum and Yukawa vertex
+(\texttt{Substrate/PhiMDLFluctuationSpectrum}, EPIC\_083C)}\label{subsec:phimdl-fluctuation-083c}
+
+The \texttt{PhiMDLFluctuationSpectrum} module certifies the loop-level
+fluctuation potential and Yukawa overlap infrastructure used in the P42
+$\Phi_{\mathrm{MDL}}$ field paper.  The fluctuation Lagrangian reduces to a
+Pöschl--Teller well $V_{\rm fl}(x)=m_\phi^2[1-2\,\mathrm{sech}^2(m_\phi x)]$
+(\lstinline|phimdl_fluctuation_is_poschl_teller|, \CatAL).  The sech integrals
+$\int\mathrm{sech}\,dx=\pi$ and $\int\mathrm{sech}^3\,dx=\pi/2$ are closed via
+Mathlib's fundamental theorem of calculus (\lstinline|integral_sech|,
+\lstinline|integral_sech_cubed|, \CatAL).  The three-kink overlap amplitude
+feeds \lstinline|phimdl_yukawa_vertex_catad| (\CatAD), and the asymptotic
+overlap law \lstinline|sech_overlap_asymptotic| certifies $r\cdot I(r)\to\pi$.
+The companion module \texttt{Gravity/YukawaOverlapExponent} derives the Dirac
+scaling exponent $\alpha=N_c-1=2$ from three-tape DPP counting
+(\lstinline|yukawa_overlap_exponent_catad|, \CatAD) and the leptogenesis
+suppression $f_1 f_2 = 1/3025$ (\lstinline|leptogenesis_kink_overlap_catad|).
 
 \subsection{QCD String Tension: Casimir Scaling Formula (\CatAD{})}\label{subsec:string-tension-catad}
 
@@ -7346,7 +7381,7 @@ $V(|\Psi|)$ is SU(2)$_L$ invariant.
 
 \begin{theorem}[\lstinline|su2l_covariant_derivative_minimal|, zero \texttt{sorry} ($\CatAL$)]
 MDL minimality on the weak-isospin doublet orbit forces the covariant kinetic term:
-$\K_{\mathrm{gauged}}<\K_{\mathrm{global}}$ for the finite doublet proxy.
+$K_{\mathrm{gauged}}<K_{\mathrm{global}}$ for the finite doublet proxy.
 \end{theorem}
 
 \begin{theorem}[\lstinline|tPlus_tMinus_commutator|, zero \texttt{sorry} ($\CatAL$)]
@@ -8177,6 +8212,128 @@ are in \texttt{ugp-lean} (graduated 2026-06-01);
 \texttt{ToMDL} and \texttt{CMCALanguage} are in \texttt{srrg-lean}.}
 \label{tab:new-theorem-inventory-083}
 \end{table}
+
+\subsection{EPIC\_083C frontier closures (2026-06-02)}\label{subsec:epic-083c}
+
+The EPIC\_083C pass adds \textbf{203} net-new zero-\texttt{sorry} theorems across
+twenty-one modules, closing the Yukawa vertex, PMNS orbit-ratio sector, SRRG Higgs
+quartic, full nine-coefficient UCL master certification, FGCI uniqueness at
+$N_c=3$, and Pöschl--Teller fluctuation/QFT integral infrastructure.
+Highlights are summarized in \cref{tab:epic-083c}; the full catalog is in
+\texttt{docs/THEOREMS.md} (\S EPIC~083C).
+
+\begin{table}[h]
+\centering\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}p{5.0cm}p{4.2cm}p{4.6cm}@{}}
+\toprule
+Theorem & Module & Physical content \\
+\midrule
+\multicolumn{3}{@{}l}{\textit{UCL master certification --- all nine EK coefficients (\CatAL)}} \\[2pt]
+\texttt{elegant\_\allowbreak kernel\_\allowbreak full\_\allowbreak certification}
+  & ElegantKernel.Unconditional.MasterCertification
+  & $k_{L^2},k_{\rm gen},k_{\rm gen2},k_L,k_{\rm const},k_M,k_{a,b,c}$ bundled; links to FullClosure, KGen/KL/KConst, MuTriple, QuarterLock \\[1pt]
+\texttt{thm\_\allowbreak quarter\_\allowbreak lock\_\allowbreak catal}
+  & QuarterLock
+  & $k_M = -\varphi/2 + 7/2048$ (Quarter-Lock, \CatAL) \\[1pt]
+\texttt{ucl\_\allowbreak fermion\_\allowbreak mass\_\allowbreak ordering}
+  & ElegantKernel.Unconditional.UCLMassOrdering
+  & gen$_1<$gen$_2<$gen$_3$ per sector under UCL + $4^{g-1}$ scaling (interval margin certs) \\[1pt]
+\texttt{ucl\_\allowbreak lepton\_\allowbreak sector\_\allowbreak koide\_\allowbreak identity}
+  & ElegantKernel.Unconditional.UCLKoide
+  & Koide $Q=2/3$ from GTE-pinned phase and amplitude chain (\CatAL) \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{PMNS orbit ratios and CP (\CatAL)}} \\[2pt]
+\texttt{pmns\_\allowbreak solar\_\allowbreak sin\_\allowbreak sq}
+  & MassRelations.NeutrinoSector
+  & $\sin^2\theta_{12} = 4/13$ \\[1pt]
+\texttt{pmns\_\allowbreak atm\_\allowbreak sin\_\allowbreak sq}
+  & MassRelations.NeutrinoSector
+  & $\sin^2\theta_{23} = 19/42$ \\[1pt]
+\texttt{pmns\_\allowbreak reactor\_\allowbreak sin\_\allowbreak val}
+  & MassRelations.NeutrinoSector
+  & $\sin\theta_{13} = 11/73$ \\[1pt]
+\texttt{pmns\_\allowbreak cp\_\allowbreak phase\_\allowbreak from\_\allowbreak z7\_\allowbreak winding}
+  & MassRelations.NeutrinoSector
+  & $\delta_{\rm CP} = 8\pi/7$ from $W_L=4$ \\[1pt]
+\texttt{gte\_\allowbreak jarlskog\_\allowbreak is\_\allowbreak negative}
+  & MassRelations.NeutrinoSector
+  & GTE Jarlskog invariant $J<0$ \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{Higgs quartic from SRRG (\CatAL)}} \\[2pt]
+\texttt{higgs\_\allowbreak quartic\_\allowbreak ch\_\allowbreak correction}
+  & MassRelations.HiggsQuartic
+  & $\lambda = \dfrac{\varphi}{4\pi}\bigl(1+\dfrac{{\rm IPT}-1}{27}\bigr)$ with $2c_H+1=N_{\rm gen}^3$ \\[1pt]
+\texttt{higgs\_\allowbreak quartic\_\allowbreak numerical\_\allowbreak approx}
+  & MassRelations.HiggsQuartic
+  & $0.12 < \lambda < 0.14$ (PDG central $\approx 0.129$) \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{$\Phi_{\rm MDL}$ Yukawa vertex and sech integrals}} \\[2pt]
+\texttt{phimdl\_\allowbreak fluctuation\_\allowbreak is\_\allowbreak poschl\_\allowbreak teller}
+  & Substrate.PhiMDLFluctuationSpectrum
+  & $V_{\rm fl}(x)=m_\phi^2[1-2\,\mathrm{sech}^2(m_\phi x)]$ (\CatAL) \\[1pt]
+\texttt{integral\_\allowbreak sech} / \texttt{integral\_\allowbreak sech\_\allowbreak cubed}
+  & Substrate.PhiMDLFluctuationSpectrum
+  & $\int\mathrm{sech}\,dx=\pi$, $\int\mathrm{sech}^3\,dx=\pi/2$ (\CatAL; Mathlib FTC) \\[1pt]
+\texttt{sech\_\allowbreak overlap\_\allowbreak asymptotic}
+  & Substrate.PhiMDLFluctuationSpectrum
+  & $r\cdot I(r)\to\pi$ as $r\to\infty$ (\CatAL) \\[1pt]
+\texttt{phimdl\_\allowbreak yukawa\_\allowbreak vertex\_\allowbreak catad}
+  & Substrate.PhiMDLFluctuationSpectrum
+  & Three-kink overlap amplitude assembly (\CatAD) \\[1pt]
+\texttt{yukawa\_\allowbreak overlap\_\allowbreak exponent\_\allowbreak catad}
+  & Gravity.YukawaOverlapExponent
+  & Dirac scaling $\alpha=N_c-1=2$ from three-tape DPP counting (\CatAD) \\[1pt]
+\texttt{leptogenesis\_\allowbreak kink\_\allowbreak overlap\_\allowbreak catad}
+  & Gravity.YukawaOverlapExponent
+  & $f_1\times f_2 = 1/3025 = 1/(5^2\cdot 11^2)$ (\CatAD) \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{FGCI and Frobenius chain (\CatAL)}} \\[2pt]
+\texttt{fgci\_\allowbreak unique\_\allowbreak at\_\allowbreak nc}
+  & Universality.FrobeniusChain
+  & $F(3)=G(3)=73$ unique at $N_c=3$ \\[1pt]
+\texttt{frobenius\_\allowbreak chain\_\allowbreak two\_\allowbreak primes}
+  & Universality.FrobeniusChain
+  & Cascade $\{7,73\}$ complete; level-3 non-prime termination \\[1pt]
+\texttt{b\_\allowbreak L2\_\allowbreak eq\_\allowbreak two\_\allowbreak Nc\_\allowbreak Z7}
+  & Universality.FrobeniusChain
+  & $b_{L2}=2N_c|Z_7|=42$ \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{$\mathbb{Z}_7$ dark-baryon correction (\CatAL)}} \\[2pt]
+\texttt{z7\_\allowbreak dark\_\allowbreak baryon\_\allowbreak correction\_\allowbreak identity}
+  & Universality.GUTStructure
+  & $q_{\rm dark}/(|Z_7|-1)=1/N_c$ \\[1pt]
+\texttt{z7\_\allowbreak topological\_\allowbreak dilution\_\allowbreak formula\_\allowbreak rational}
+  & Universality.GUTStructure
+  & $2/6=1/3=1/N_c$ \\
+\bottomrule
+\end{tabular}
+\caption{EPIC\_083C representative theorems (2026-06-02): UCL nine-coefficient master
+certification, PMNS orbit-ratio closure, SRRG Higgs quartic, Pöschl--Teller and sech
+integrals, Yukawa vertex (\CatAD), FGCI at $N_c=3$, and $\mathbb{Z}_7$ dark-baryon
+identities.  The development catalog lists 203 net-new names.}
+\label{tab:epic-083c}
+\end{table}
+
+\paragraph{UCL master certification.}
+\cref{subsec:ucl-unconditional} documents the unconditional closure modules;
+\texttt{elegant\_kernel\_full\_certification} (\cref{tab:epic-083c}) packages all
+nine Elegant Kernel coefficients with their derivation sources in a single
+\CatAL\ bundle, including the Quarter-Lock identity
+$k_M = k_{\rm gen2} + k_{L^2}/4 = -\varphi/2 + 7/2048$.
+
+\paragraph{PMNS and neutrino sector.}
+The \texttt{MassRelations.NeutrinoSector} module (new in 083C) certifies LH
+FN charge neutrality ($q_L=0$), the Type-I seesaw algebra, rank-1 Dirac Yukawa
+from positive FN charges, and the orbit-ratio PMNS sines and CP phase listed in
+\cref{tab:epic-083c}.
+
+\paragraph{QFT fluctuation spectrum.}
+\cref{sec:qft-modules} is extended by \texttt{Substrate.PhiMDLFluctuationSpectrum}:
+the fluctuation potential is a Pöschl--Teller well, the sech and sech$^3$
+integrals are Mathlib-closed, and the three-kink Yukawa overlap feeds the
+\texttt{Gravity.YukawaOverlapExponent} DPP tape-counting derivation of
+$\alpha=N_c-1=2$.
 
 % ═══════════════════════════════════════════════════════════════
 \section{The Mirror-Dual Conjecture}\label{sec:mirror}
