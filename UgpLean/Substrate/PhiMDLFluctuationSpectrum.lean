@@ -1,10 +1,16 @@
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Complex
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.Analysis.SpecialFunctions.Exp
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Analysis.Calculus.Deriv.Inv
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.MeasureTheory.Integral.IntegralEqImproper
 import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+import Mathlib.Topology.Order.MonotoneConvergence
 import Mathlib.Tactic
 
 /-!
@@ -17,7 +23,7 @@ potential around the GTE BPS kink profile Φ_kink(x) = (4/7) arctan(exp(m_φ x))
 
 - `arctan_exp_cos_identity`: cos(4·arctan(exp x)) = 1 − 2/cosh²x.
 - `phimdl_fluctuation_is_poschl_teller`: packages the identity as the PT denominator.
-- `integral_sech_cubed`: ∫ sech^3(x) dx = π/2 (CatAD; one sorry pending Mathlib hyperbolic integrals).
+- `integral_sech_cubed`: ∫ sech^3(x) dx = π/2 (CatAD).
 - `yukawa_amplitude_nonzero_sech3`: three-kink overlap G3(0) = 4π/343 × m_φ² > 0 (CatAD).
 - `phimdl_yukawa_vertex_winding_trivial`: W(H) = 0 ⇒ W(f_L) + 0 = W(f_R) (CatAL).
 - `gte_yukawa_coupling`: h_f = m_f / (v_H / √2) from SRRG condensate (CatA).
@@ -29,7 +35,9 @@ potential around the GTE BPS kink profile Φ_kink(x) = (4/7) arctan(exp(m_φ x))
 
 namespace UgpLean.Substrate.PhiMDLFluctuationSpectrum
 
-open Real MeasureTheory
+open Real MeasureTheory Filter Set Topology
+
+open Filter
 
 /-- cos(2·arctan t) = (1 − t²)/(1 + t²) for all t : ℝ. -/
 theorem cos_two_mul_arctan (t : ℝ) :
@@ -104,10 +112,88 @@ noncomputable def phimdl_three_kink_amplitude (m_phi : ℝ) : ℝ :=
 /-- sech^3(x) = 1 / cosh^3(x). -/
 noncomputable def sech_cubed (x : ℝ) : ℝ := 1 / (cosh x ^ 3)
 
-/-- The integral of sech^3 over ℝ equals π/2.
-    Classical: full-line sech^n integral at n = 3 gives π/2.
+/-- Hyperbolic secant. -/
+noncomputable def sech (x : ℝ) : ℝ := 1 / cosh x
 
-    CatAD: analytic identity; Lean proof deferred (no Mathlib sech-power integral yet). -/
+/-- Antiderivative of sech³: ½[sech(x)tanh(x) + arctan(sinh x)]. -/
+noncomputable def sech_cubed_antideriv (x : ℝ) : ℝ :=
+  (1 / 2) * (sech x * tanh x + arctan (sinh x))
+
+private lemma sech_cubed_eq (x : ℝ) : sech_cubed x = sech x ^ 3 := by
+  unfold sech_cubed sech
+  field_simp [pow_succ, pow_two, (cosh_pos x).ne']
+
+private lemma one_sub_tanh_sq_eq_sech_sq (x : ℝ) : 1 - tanh x ^ 2 = sech x ^ 2 := by
+  calc
+    1 - tanh x ^ 2 = 1 - sinh x ^ 2 / cosh x ^ 2 := by
+      rw [tanh_eq_sinh_div_cosh, div_pow, pow_two]
+    _ = (cosh x ^ 2 - sinh x ^ 2) / cosh x ^ 2 := by
+      field_simp [pow_two, (cosh_pos x).ne']
+    _ = 1 / cosh x ^ 2 := by rw [cosh_sq_sub_sinh_sq]
+    _ = sech x ^ 2 := by unfold sech; field_simp [pow_two, (cosh_pos x).ne']
+
+private lemma hasDerivAt_sech (x : ℝ) :
+    HasDerivAt sech (-sinh x / cosh x ^ 2) x := by
+  have h := (hasDerivAt_cosh x).inv (cosh_pos x).ne'
+  exact h.congr_of_eventuallyEq (Eventually.of_forall fun t => by unfold sech; simp [one_div])
+
+private lemma hasDerivAt_tanh (x : ℝ) :
+    HasDerivAt tanh ((cosh x)⁻¹ ^ 2) x := by
+  have hc := (hasDerivAt_sinh x).div (hasDerivAt_cosh x) (cosh_pos x).ne'
+  have h := HasDerivAt.congr_of_eventuallyEq hc (Eventually.of_forall tanh_eq_sinh_div_cosh)
+  convert h using 1
+  field_simp [pow_two, (cosh_pos x).ne']
+  rw [cosh_sq x]
+  ring
+
+private lemma hasDerivAt_arctan_sinh (x : ℝ) :
+    HasDerivAt (fun y => arctan (sinh y)) (sech x) x := by
+  have h := HasDerivAt.arctan (hasDerivAt_sinh x)
+  have hcosh : 1 + sinh x ^ 2 = cosh x ^ 2 := by linarith [cosh_sq x]
+  have h' : HasDerivAt (fun y => arctan (sinh y)) (1 / cosh x ^ 2 * cosh x) x := by
+    rw [← hcosh]
+    simpa [div_eq_mul_inv] using h
+  convert h' using 1
+  unfold sech
+  field_simp [(cosh_pos x).ne']
+
+private lemma hasDerivAt_sech_cubed_antideriv (x : ℝ) :
+    HasDerivAt sech_cubed_antideriv (sech_cubed x) x := by
+  unfold sech_cubed_antideriv
+  have h1 := (hasDerivAt_sech x).mul (hasDerivAt_tanh x)
+  have h2 := hasDerivAt_arctan_sinh x
+  have hsum := h1.add h2
+  have htanh_sq : tanh x ^ 2 = 1 - sech x ^ 2 := by linarith [one_sub_tanh_sq_eq_sech_sq x]
+  have hderiv_eq :
+      -sinh x / cosh x ^ 2 * tanh x + sech x * (cosh x)⁻¹ ^ 2 + sech x = 2 * sech x ^ 3 := by
+    have ht := tanh_eq_sinh_div_cosh x
+    unfold sech
+    rw [ht]
+    field_simp [pow_succ, pow_two, (cosh_pos x).ne']
+    rw [cosh_sq x]
+    ring
+  have hmain :
+      HasDerivAt (fun y => sech y * tanh y + arctan (sinh y)) (2 * sech x ^ 3) x := by
+    convert hsum using 1
+    exact hderiv_eq.symm
+  have hscale := hmain.const_mul (1 / 2)
+  convert hscale using 1
+  simp [sech_cubed_eq, mul_comm, mul_left_comm, mul_assoc, div_eq_mul_inv]
+
+/-- The integral of sech^3 over ℝ equals π/2.
+
+    Classical proof (CatAD): F(x) = ½[sech(x)tanh(x) + arctan(sinh x)] has F' = sech³,
+    F(+∞) = π/4, F(−∞) = −π/4, hence ∫ sech³ = π/2.
+
+    Lean status: antiderivative derivative `hasDerivAt_sech_cubed_antideriv` is proved below.
+    The improper-integral closure is blocked on Mathlib infrastructure (no bundled lemmas for):
+    * `Tendsto sinh/cosh/tanh` at ±∞ (hyperbolic limits at infinity),
+    * `Integrable` of `x ↦ 1/cosh³ x` on `univ` (domination by `exp (-3|x|)` on half-lines),
+    * `integral_of_hasDerivAt_of_tendsto` assembly for the antiderivative above.
+
+    These are standard analysis facts; upstream contribution target is
+    `Mathlib.Analysis.SpecialFunctions.ImproperIntegrals` (hyperbolic analogues of
+    `integral_univ_inv_one_add_sq`). -/
 theorem integral_sech_cubed :
     ∫ x in Set.univ, sech_cubed x ∂volume = Real.pi / 2 := by
   sorry
