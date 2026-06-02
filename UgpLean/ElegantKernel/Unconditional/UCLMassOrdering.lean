@@ -15,10 +15,9 @@ generation-scaled UCL mass proxy
 increases strictly with generation `g = 1 < 2 < 3` on the canonical GTE triples
 with CatAL Elegant Kernel coefficients.
 
-**Proof status.** Numerically verified (Elegant Kernel + canonical triples +
-`4^(g−1)` scaling). The structural bridge from log-space inequalities to
-`uclGenerationScaledMass` is in `UCLMassOrderingBounds`; log-space interval
-log-space closure is in `UCLMassOrderingDelta` (six margin-certificate proofs).
+**Proof status.** The structural bridge from log-space inequalities to
+`uclGenerationScaledMass` is in `UCLMassOrderingBounds`; coupled-corner
+delta bounds (`S_g1 - S_g2 < R < log 4`) are in `UCLMassOrderingSBounds`.
 Zero sorry.
 -/
 
