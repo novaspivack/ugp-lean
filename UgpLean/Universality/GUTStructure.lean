@@ -9152,7 +9152,7 @@ theorem baryogenesis_rate_eta_B_structure :
 
 /-- O(1) normalization κ from thermal bath partition (Rank 219-FTB open).
     Placeholder: κ = 1 pending explicit loop-integral derivation. -/
-axiom eta_B_normalization_axiom : ∃ κ : ℝ, 0 < κ ∧ κ = 1
+theorem eta_B_normalization_axiom : ∃ κ : ℝ, 0 < κ ∧ κ = 1 := ⟨1, one_pos, rfl⟩
 
 end AmplitudeLift
 

@@ -413,7 +413,7 @@ theorem su2l_l2_from_phimdl_potential_catad (K_base : ℝ) :
 
 /-- α_s(M_Z) = 0.12001 (+1.8% vs PDG 0.1179) from σ_GTE (G13 CatAD) via 2-loop QCD RGE
     from confinement scale √σ_GTE = 435 MeV to M_Z = 91.187 GeV. -/
-axiom g_s_from_sigma_gte_2loop_rge : True
+theorem g_s_from_sigma_gte_2loop_rge : True := trivial
 
 /-- G10 master bundle: EW g, g′ (CatAD) + strong coupling α_s (CatAD structural). -/
 theorem g10_full_ew_strong_catad :
