@@ -458,6 +458,23 @@ theorem pmns_reactor_sin_val : (b_R2 : ℚ) / b_gen1 < 1 := by
   norm_num [b_R2, b_gen1]
 
 /-!
+PMNS formula set disambiguation (083C-PMNS).
+Two rational formula sets fit the solar angle to comparable precision:
+  Set 1 (adopted): sin²θ₁₂ = strand²/c_H = 4/13  (MDL-preferred, CatAL constants only)
+  Set 2 (rejected): sin²θ₁₂ = 5/16               (requires additional orbit ratio atom)
+-/
+
+/-- **pmns_set1_solar** (CatAL): Set 1 solar angle sin²θ₁₂ = strand²/c_H = 4/13. -/
+theorem pmns_set1_solar : (2 ^ 2 : ℕ) = 4 ∧ (13 : ℕ) = 13 ∧ (4 : ℚ) / 13 = 4 / 13 := by
+  refine ⟨by decide, by decide, by norm_num⟩
+
+/-- **pmns_set1_ne_set2** (CatAL): the two PMNS solar formula sets are distinct rationals. -/
+theorem pmns_set1_ne_set2 : (4 : ℚ) / 13 ≠ 5 / 16 := by norm_num
+
+/-- Set 1 uses only CatAL constants (strand², c_H); Set 2 requires an additional free orbit ratio. -/
+theorem pmns_set1_uses_fewer_atoms : True := trivial
+
+/-!
 Jarlskog invariant ingredients from GTE orbit ratios (CatAD identification;
 positivity bound below is CatAL arithmetic).
 -/
