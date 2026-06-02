@@ -181,6 +181,7 @@ import UgpLean.Universality.SylowIndexCouplingHierarchy
 import UgpLean.Universality.GaugeInvariance
 import UgpLean.Universality.BetaCoefficientIdentity
 import UgpLean.Universality.FrobeniusPrimeIdentity
+import UgpLean.Universality.FrobeniusChain
 import UgpLean.Universality.Z3SubOrbitDisjointness
 import UgpLean.Universality.Z3InvariantEntropy
 import UgpLean.Universality.PSCOrbitWindows
@@ -317,6 +318,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Universality.AlgebraicNecessityTheorem` — Rank 075-ALGEC-NECESSITY: Algebraic Necessity Theorem; F₂₁ = Z₇ ⋊ Z₃ is the unique non-abelian group of order 21 (Burnside pq certificates, zero sorry); N_gen=3 uniquely forced; no-CA-replica as corollary; all CatAL zero sorry (2026-05-26)
 - `UgpLean.Universality.BetaCoefficientIdentity` — b₀ = |Z₇| = 7 from F₂₁ = Z₇ ⋊ Z₃: (11N_c − 2N_f)/3 = |F₂₁|/|Z₃|; Planck cascade group identity; zero sorry (2026-05-26)
 - `UgpLean.Universality.FrobeniusPrimeIdentity` — |Z₇| = |Z₃|² − |Z₃| + 1 unifies F₂₁ and PSC n=10 derivations; frobenius_prime_bundle; zero sorry (2026-05-26)
+- `UgpLean.Universality.FrobeniusChain` — FGCI: Frobenius chain `n⁴−n²+1` = cascade `n⁴−(n²+1)/2−n` iff `n=3`; `{7,73}` tower; `b_gen2=2·N_c·|Z₇|`; zero sorry (2026-06-02)
 - `UgpLean.Universality.BellViolationGTE` — EPIC_080 G44: `gte_poly_qutrit_values`, `gte_hgrav_diagonal_nontrivial`, `gte_hgrav_has_nonzero_entries`, `z7_qutrit_poly_nondegenerate`, `gte_poly_double_role`; axioms `gte_bell_violation_at_half_coupling`, `gte_bell_threshold` (CatA named); GTE gravitational coupling generates Bell-violating entanglement; zero sorry (2026-05-29)
 - `UgpLean.Universality.FiveRolesPolynomial` — EPIC_080/083B: `gte_polynomial_five_roles_k_extra_zero` (Single-Source Principle master bundle), `labelled_triple_role_count` (5 roles, decide-proved), `gte_polynomial_five_roles_certified`, `gte_polynomial_five_labelled_roles`; exactly five distinct K_extra=0 labelled-triple roles of the GTE polynomial; CatAL, zero sorry (2026-06-01)
 - `UgpLean.Universality.ParticlesComputationSpacetimeTrinity` — 083B-PCT: `particles_computation_spacetime_trinity`, `particles_computation_spacetime_trinity_certified`; one Φ_MDL kink bundles particle identity, Rule 110 computation, and spacetime geodesic (Role 3 cross-ref `psc_orbit_is_curvature_geodesic`); CatAL, zero sorry (2026-06-01)
