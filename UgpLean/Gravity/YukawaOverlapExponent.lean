@@ -50,9 +50,8 @@ Therefore **α = N_c − 1 = 2**.
   * Per-tape overlap ~ 1/b_R: analytically derived from sech integral (CatAD)
   * Product formula over N_c−1 tapes: CatAD
 
-- **CatAD gap (asymptotic only)**: `sech_overlap_scales_as_inv_bR` — I(1,b_R) ~ π/b_R
-  for large b_R; `integral_sech` and `integral_sech_cubed` are proved in
-  `PhiMDLFluctuationSpectrum`; the large-b_R limit remains an axiom (peak-function proof pending).
+- **CatAD (proved)**: `sech_overlap_scales_as_inv_bR` — `r·I(r) → π` via dominated convergence
+  in `PhiMDLFluctuationSpectrum.sech_overlap_asymptotic`.
 
 ## Theorems
 
@@ -131,14 +130,7 @@ theorem yukawa_spatial_dims_from_dpp :
 -- §3  Physical bundle: α = N_c − 1 = 2 from DPP + Higgs + overlap (CatAD)
 -- ════════════════════════════════════════════════════════════════════════════
 
-/-- The sech kink overlap amplitude scales as 1/b_R in the GTE approximation
-    (large-b_R limit of I_zm(1, b_R) = ∫ sech(x)·sech(b_R·x)dx → π/b_R).
-    Note: ∫ sech(x)·sech(rx)dx = 2 for r = 1 (not π); the π/r law is the large-b_R asymptotic.
-    Provable bound: `sech_overlap_le_pi` (I(r) ≤ π). Asymptotic: CatAD axiom below. -/
-axiom sech_overlap_scales_as_inv_bR (b_R : ℝ) (hb : 0 < b_R) :
-    ∃ C : ℝ, 0 < C ∧
-    ∀ ε > 0, ∃ B > 0, b_R > B →
-    |sech_overlap b_R - C / b_R| < ε
+-- Sech overlap large-r limit: `sech_overlap_scales_as_inv_bR` in PhiMDLFluctuationSpectrum.
 
 /-- The Yukawa h_D for a Dirac neutrino with LH index b_L = 1 and RH index b_R
     scales as b_R^{−(N_c−1)} in the three-tape CMCA (P45).
@@ -231,8 +223,7 @@ theorem yukawa_suppression_product : 25 * 121 = (3025 : ℕ) := by decide
     The arithmetic facts here are CatAL (certified by this bundle).
     The physical identification of α with the tape count is CatAD.
     Upgrade to CatAL requires:
-      (a) Lean proof of sech overlap large-b_R limit I(r) ~ π/r (peak-function / dominated convergence)
-      (b) Lean proof that tape contributions factorize independently
+      (a) Lean proof that tape contributions factorize independently
           (follows from DPP independence + locality of kink profile) -/
 theorem leptogenesis_kink_overlap_catad :
     -- (i) Exponent α = 2 (tape counting, CatAL component)

@@ -10,6 +10,7 @@ import Mathlib.Analysis.SpecialFunctions.Exp
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.Calculus.Deriv.Inv
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.MeasureTheory.Integral.IntegralEqImproper
 import Mathlib.MeasureTheory.Measure.Haar.NormedSpace
 import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
@@ -31,6 +32,8 @@ potential around the GTE BPS kink profile Φ_kink(x) = (4/7) arctan(exp(m_φ x))
 - `yukawa_amplitude_nonzero_sech3`: three-kink overlap G3(0) = 4π/343 × m_φ² > 0 (CatAD).
 - `phimdl_yukawa_vertex_winding_trivial`: W(H) = 0 ⇒ W(f_L) + 0 = W(f_R) (CatAL).
 - `gte_yukawa_coupling`: h_f = m_f / (v_H / √2) from SRRG condensate (CatA).
+- `sech_overlap_asymptotic`: r·I(r) → π (CatAD, dominated convergence).
+- `phimdl_yukawa_vertex_catad`: winding + non-zero amplitude bundle (CatAD).
 
 ## References
 
@@ -489,6 +492,81 @@ theorem sech_overlap_le_pi (r : ℝ) : sech_overlap r ≤ Real.pi := by
       (ae_of_all _ fun x => sech_mul_sech_le x r)
   exact hmono.trans (le_of_eq integral_sech)
 
+private lemma sech_nonneg (x : ℝ) : 0 ≤ sech x := by
+  unfold sech
+  exact le_of_lt (one_div_pos.2 (cosh_pos x))
+
+private lemma sech_zero : sech 0 = 1 := by
+  unfold sech
+  simp
+
+private lemma sech_mul_sech_scaled_le (u r : ℝ) : sech (u / r) * sech u ≤ sech u := by
+  rw [mul_comm]
+  exact mul_le_of_le_one_right (sech_nonneg u) (sech_le_one (u / r))
+
+private lemma continuous_sech_mul_sech_scaled (r : ℝ) :
+    Continuous (fun u => sech (u / r) * sech u) :=
+  continuous_sech.comp (continuous_id.div_const r) |>.mul continuous_sech
+
+private lemma integrable_sech_mul_sech_scaled (r : ℝ) :
+    Integrable (fun u => sech (u / r) * sech u) := by
+  refine Integrable.mono_nonneg integrable_sech
+    (continuous_sech_mul_sech_scaled r).aestronglyMeasurable
+    (ae_of_all _ fun u => le_of_lt (mul_pos (one_div_pos.2 (cosh_pos (u / r)))
+      (one_div_pos.2 (cosh_pos u))))
+    (ae_of_all _ fun u => sech_mul_sech_scaled_le u r)
+
+/-- For `r > 0`, substitution `u = r·x` gives `r·I(r) = ∫ sech(u/r)·sech(u) du`. -/
+private lemma sech_overlap_mul_pos (r : ℝ) (hr : 0 < r) :
+    r * sech_overlap r = ∫ u, sech (u / r) * sech u := by
+  unfold sech_overlap
+  have hr0 : r ≠ 0 := ne_of_gt hr
+  calc
+    r * ∫ x, sech x * sech (r * x)
+        = r * ∫ x, sech (r * x / r) * sech (r * x) := by
+          congr 1
+          exact integral_congr_ae (ae_of_all _ fun x => by simp only [mul_div_cancel_left₀ _ hr0])
+    _ = r * ((r⁻¹ : ℝ) * ∫ y, sech (y / r) * sech y) := by
+          congr 1
+          rw [Measure.integral_comp_mul_left (fun y => sech (y / r) * sech y) r]
+          simp only [abs_of_pos (inv_pos.2 hr), smul_eq_mul]
+    _ = ∫ y, sech (y / r) * sech y := by
+          field_simp [hr0]
+
+private lemma tendsto_sech_div_atTop (u : ℝ) :
+    Tendsto (fun r : ℝ => sech (u / r)) atTop (nhds 1) := by
+  have hu : Tendsto (fun r : ℝ => u / r) atTop (nhds 0) :=
+    Filter.Tendsto.const_div_atTop tendsto_id u
+  simpa [sech_zero] using (continuous_sech.tendsto (0 : ℝ)).comp hu
+
+/-- **sech_overlap_asymptotic** (CatAD): `r·I(r) → π` as `r → ∞`.
+    Proof: `r·I(r) = ∫ sech(u/r)·sech(u) du`; dominated convergence with bound `sech`. -/
+theorem sech_overlap_asymptotic :
+    Tendsto (fun r => r * sech_overlap r) atTop (nhds Real.pi) := by
+  have hpos : ∀ᶠ r in atTop, (0 : ℝ) < r := eventually_gt_atTop 0
+  have htends : Tendsto (fun r => ∫ u, sech (u / r) * sech u) atTop (nhds Real.pi) := by
+    have hlim := tendsto_integral_filter_of_dominated_convergence (G := ℝ) (μ := volume)
+      sech (Eventually.of_forall fun r => (integrable_sech_mul_sech_scaled r).aestronglyMeasurable)
+      (Eventually.of_forall fun r => ae_of_all _ fun u => by
+        have hs0 := sech_nonneg (u / r)
+        have hs1 := sech_nonneg u
+        simp only [norm_mul, Real.norm_eq_abs, abs_of_nonneg hs0, abs_of_nonneg hs1]
+        exact sech_mul_sech_scaled_le u r)
+      integrable_sech
+      (ae_of_all _ fun u => (tendsto_sech_div_atTop u).mul tendsto_const_nhds)
+    have hπ : (∫ a, 1 * sech a) = Real.pi := by
+      simpa [one_mul] using integral_sech
+    rw [hπ] at hlim
+    exact hlim
+  refine htends.congr' (hpos.mono fun r hr => ?_)
+  exact (sech_overlap_mul_pos r hr).symm
+
+/-- **sech_overlap_scales_as_inv_bR** (CatAD): large-`r` zero-mode overlap `I(r) ~ π/r`. -/
+theorem sech_overlap_scales_as_inv_bR :
+    ∃ C : ℝ, 0 < C ∧
+      Tendsto (fun r => r * sech_overlap r) atTop (nhds C) :=
+  ⟨Real.pi, Real.pi_pos, sech_overlap_asymptotic⟩
+
 -- ════════════════════════════════════════════════════════════════
 -- §3  Yukawa vertex Z₇ winding (neutral Higgs, CatAL)
 -- ════════════════════════════════════════════════════════════════
@@ -530,5 +608,14 @@ theorem gte_yukawa_positive (m_f v_H : ℝ) (hm : 0 < m_f) (hv : 0 < v_H) :
 theorem yukawa_coupling_from_srrg_condensate (m_f v_H : ℝ) :
     gte_yukawa_coupling m_f v_H = m_f / (v_H / Real.sqrt 2) :=
   rfl
+
+/-- **phimdl_yukawa_vertex_catad** (CatAD): Φ_MDL Yukawa vertex bundle —
+    Z₇ winding permitted (CatAL) and three-kink amplitude non-zero (CatAD). -/
+theorem phimdl_yukawa_vertex_catad (m_phi : ℝ) (hm : 0 < m_phi) :
+    And ((4 : ℤ) + W_Higgs = (4 : ℤ))
+      (And (∫ x, phimdl_kink_density m_phi x ^ 3 > 0)
+        (phimdl_three_kink_amplitude m_phi > 0)) := by
+  refine And.intro (yukawa_winding_conservation (4 : ℤ) (4 : ℤ) rfl) ?_
+  exact yukawa_amplitude_nonzero_sech3 m_phi hm
 
 end UgpLean.Substrate.PhiMDLFluctuationSpectrum
