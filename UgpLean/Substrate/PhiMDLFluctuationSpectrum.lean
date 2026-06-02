@@ -1,3 +1,5 @@
+import Mathlib.Topology.Algebra.Order.Field
+import Mathlib.Analysis.Complex.Trigonometric
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
@@ -34,6 +36,8 @@ potential around the GTE BPS kink profile Φ_kink(x) = (4/7) arctan(exp(m_φ x))
 -/
 
 namespace UgpLean.Substrate.PhiMDLFluctuationSpectrum
+
+set_option maxHeartbeats 800000
 
 open Real MeasureTheory Filter Set Topology
 
@@ -178,25 +182,200 @@ private lemma hasDerivAt_sech_cubed_antideriv (x : ℝ) :
     exact hderiv_eq.symm
   have hscale := hmain.const_mul (1 / 2)
   convert hscale using 1
-  simp [sech_cubed_eq, mul_comm, mul_left_comm, mul_assoc, div_eq_mul_inv]
+  simp [sech_cubed_eq, div_eq_mul_inv]
 
-/-- The integral of sech^3 over ℝ equals π/2.
+/-- Antiderivative of sech: `2 * arctan (exp x)`. -/
+noncomputable def sech_antideriv (x : ℝ) : ℝ := 2 * arctan (exp x)
 
-    Classical proof (CatAD): F(x) = ½[sech(x)tanh(x) + arctan(sinh x)] has F' = sech³,
-    F(+∞) = π/4, F(−∞) = −π/4, hence ∫ sech³ = π/2.
+private lemma sech_neg (x : ℝ) : sech (-x) = sech x := by
+  unfold sech
+  rw [cosh_neg]
 
-    Lean status: antiderivative derivative `hasDerivAt_sech_cubed_antideriv` is proved below.
-    The improper-integral closure is blocked on Mathlib infrastructure (no bundled lemmas for):
-    * `Tendsto sinh/cosh/tanh` at ±∞ (hyperbolic limits at infinity),
-    * `Integrable` of `x ↦ 1/cosh³ x` on `univ` (domination by `exp (-3|x|)` on half-lines),
-    * `integral_of_hasDerivAt_of_tendsto` assembly for the antiderivative above.
+private lemma sech_cubed_neg (x : ℝ) : sech_cubed (-x) = sech_cubed x := by
+  unfold sech_cubed
+  rw [cosh_neg]
 
-    These are standard analysis facts; upstream contribution target is
-    `Mathlib.Analysis.SpecialFunctions.ImproperIntegrals` (hyperbolic analogues of
-    `integral_univ_inv_one_add_sq`). -/
+private lemma hasDerivAt_sech_antideriv (x : ℝ) :
+    HasDerivAt sech_antideriv (sech x) x := by
+  unfold sech_antideriv sech
+  have h1 := hasDerivAt_exp x
+  have h2 := hasDerivAt_arctan (exp x)
+  have h3 := h2.comp x h1
+  convert h3.const_mul 2 using 1
+  rw [cosh_eq, exp_neg]
+  field_simp [exp_ne_zero x]
+  ring
+
+private lemma tendsto_sech_antideriv_atTop :
+    Tendsto sech_antideriv atTop (𝓝 Real.pi) := by
+  unfold sech_antideriv
+  have h :=
+    (tendsto_nhds_of_tendsto_nhdsWithin tendsto_arctan_atTop).comp tendsto_exp_atTop
+  simpa [two_mul] using h.const_mul 2
+
+private lemma tendsto_sech_antideriv_atBot :
+    Tendsto sech_antideriv atBot (𝓝 0) := by
+  unfold sech_antideriv
+  simpa [arctan_zero, mul_zero] using
+    ((continuous_arctan.tendsto 0).comp tendsto_exp_atBot).const_mul 2
+
+private lemma tendsto_exp_add_exp_neg_atTop :
+    Tendsto (fun x => exp x + exp (-x)) atTop atTop :=
+  tendsto_exp_atTop.atTop_add (tendsto_exp_atBot.comp tendsto_neg_atTop_atBot)
+
+private lemma tendsto_exp_add_exp_neg_atBot :
+    Tendsto (fun x => exp x + exp (-x)) atBot atTop := by
+  have h := (tendsto_exp_atTop.comp tendsto_neg_atBot_atTop).atTop_add tendsto_exp_atBot
+  convert h using 1
+  funext x
+  rw [Function.comp_apply, add_comm]
+
+private lemma tendsto_neg_exp_neg_atTop :
+    Tendsto (fun x => -exp (-x)) atTop (𝓝 0) := by
+  have h := (continuous_neg.tendsto 0).comp (tendsto_exp_atBot.comp tendsto_neg_atTop_atBot)
+  exact h.mono_right (by simp [neg_zero])
+
+private lemma tendsto_neg_exp_neg_atBot :
+    Tendsto (fun x => -exp (-x)) atBot atBot := by
+  have h := tendsto_neg_atTop_atBot.comp (tendsto_exp_atTop.comp tendsto_neg_atBot_atTop)
+  exact h.congr' (Eventually.of_forall fun _ => rfl)
+
+private lemma tendsto_sinh_atTop : Tendsto sinh atTop atTop := by
+  have h : Tendsto (fun x => (exp x + (-exp (-x))) / 2) atTop atTop :=
+    (tendsto_exp_atTop.atTop_add tendsto_neg_exp_neg_atTop).atTop_div_const
+      (by norm_num : (0 : ℝ) < 2)
+  convert h using 1
+  funext x
+  rw [sinh_eq, sub_eq_add_neg]
+
+private lemma tendsto_sinh_atBot : Tendsto sinh atBot atBot := by
+  have h : Tendsto (fun x => (exp x + (-exp (-x))) / 2) atBot atBot :=
+    (tendsto_div_const_atBot_of_pos (by norm_num : (0 : ℝ) < 2)).mpr <|
+      (by simpa [add_comm] using tendsto_neg_exp_neg_atBot.atBot_add tendsto_exp_atBot)
+  convert h using 1
+  funext x
+  rw [sinh_eq, sub_eq_add_neg]
+
+private lemma tendsto_cosh_atTop : Tendsto cosh atTop atTop := by
+  rw [show cosh = fun x => (exp x + exp (-x)) / 2 from funext cosh_eq]
+  exact tendsto_exp_add_exp_neg_atTop.atTop_div_const (by norm_num : (0 : ℝ) < 2)
+
+private lemma tendsto_sech_atTop : Tendsto sech atTop (𝓝 0) := by
+  have h := tendsto_cosh_atTop.inv_tendsto_atTop
+  convert h using 1
+  funext x
+  unfold sech
+  simp [one_div]
+
+private lemma tendsto_cosh_atBot : Tendsto cosh atBot atTop := by
+  rw [show cosh = fun x => (exp x + exp (-x)) / 2 from funext cosh_eq]
+  exact tendsto_exp_add_exp_neg_atBot.atTop_div_const (by norm_num : (0 : ℝ) < 2)
+
+private lemma tendsto_sech_atBot : Tendsto sech atBot (𝓝 0) := by
+  have h := tendsto_cosh_atBot.inv_tendsto_atTop
+  convert h using 1
+  funext x
+  unfold sech
+  simp [one_div]
+
+private lemma tanh_ge_neg_one (x : ℝ) : -1 ≤ tanh x :=
+  (neg_one_lt_tanh x).le
+
+private lemma tanh_le_one (x : ℝ) : tanh x ≤ 1 :=
+  (tanh_lt_one x).le
+
+private lemma tendsto_sech_mul_tanh_atTop : Tendsto (fun x => sech x * tanh x) atTop (𝓝 0) := by
+  have hb : ∀ᶠ _ in atTop, (-1 : ℝ) ≤ tanh _ := Eventually.of_forall tanh_ge_neg_one
+  have hB : ∀ᶠ _ in atTop, tanh _ ≤ 1 := Eventually.of_forall tanh_le_one
+  have h := bdd_le_mul_tendsto_zero (f := tanh) (g := sech) hb hB tendsto_sech_atTop
+  convert h using 1
+  ext; ring
+
+private lemma tendsto_sech_mul_tanh_atBot : Tendsto (fun x => sech x * tanh x) atBot (𝓝 0) := by
+  have hb : ∀ᶠ _ in atBot, (-1 : ℝ) ≤ tanh _ := Eventually.of_forall tanh_ge_neg_one
+  have hB : ∀ᶠ _ in atBot, tanh _ ≤ 1 := Eventually.of_forall tanh_le_one
+  have h := bdd_le_mul_tendsto_zero (f := tanh) (g := sech) hb hB tendsto_sech_atBot
+  convert h using 1
+  ext; ring
+
+private lemma tendsto_arctan_sinh_atTop :
+    Tendsto (fun x => arctan (sinh x)) atTop (𝓝 (Real.pi / 2)) :=
+  tendsto_nhds_of_tendsto_nhdsWithin (tendsto_arctan_atTop.comp tendsto_sinh_atTop)
+
+private lemma tendsto_arctan_sinh_atBot :
+    Tendsto (fun x => arctan (sinh x)) atBot (𝓝 (-Real.pi / 2)) := by
+  convert tendsto_nhds_of_tendsto_nhdsWithin (tendsto_arctan_atBot.comp tendsto_sinh_atBot) using 1
+  rw [neg_div]
+
+private lemma tendsto_sech_cubed_antideriv_atTop :
+    Tendsto sech_cubed_antideriv atTop (𝓝 (Real.pi / 4)) := by
+  unfold sech_cubed_antideriv
+  have h := (tendsto_sech_mul_tanh_atTop.add tendsto_arctan_sinh_atTop).const_mul (1 / 2)
+  rw [show (1 / 2 : ℝ) * (0 + Real.pi / 2) = Real.pi / 4 by ring] at h
+  exact h
+
+private lemma tendsto_sech_cubed_antideriv_atBot :
+    Tendsto sech_cubed_antideriv atBot (𝓝 (-Real.pi / 4)) := by
+  unfold sech_cubed_antideriv
+  have h := (tendsto_sech_mul_tanh_atBot.add tendsto_arctan_sinh_atBot).const_mul (1 / 2)
+  rw [show (1 / 2 : ℝ) * (0 + -Real.pi / 2) = -Real.pi / 4 by ring] at h
+  exact h
+
+private lemma integrableOn_sech_Ioi :
+    IntegrableOn sech (Ioi 0) :=
+  integrableOn_Ioi_deriv_of_nonneg' (fun x _ => hasDerivAt_sech_antideriv x)
+    (fun x _ => le_of_lt (one_div_pos.2 (cosh_pos x))) tendsto_sech_antideriv_atTop
+
+private lemma integrableOn_sech_Ici :
+    IntegrableOn sech (Ici 0) :=
+  (integrableOn_Ici_iff_integrableOn_Ioi (by finiteness)).mpr integrableOn_sech_Ioi
+
+private lemma integrableOn_sech_Iic : IntegrableOn sech (Iic 0) := by
+  have h_Ici : IntegrableOn sech (Ici (-(0 : ℝ))) := by simpa using integrableOn_sech_Ici
+  exact (h_Ici.comp_neg_Iic (c := (0 : ℝ))).congr (Eventually.of_forall fun x => sech_neg x)
+
+private lemma integrable_sech : Integrable sech := by
+  rw [← integrableOn_univ, ← Iic_union_Ioi (a := (0 : ℝ)), integrableOn_union]
+  exact ⟨integrableOn_sech_Iic, integrableOn_sech_Ioi⟩
+
+/-- **integral_sech** (CatAD): `∫_{-∞}^{∞} sech(x) dx = π`. -/
+theorem integral_sech : ∫ x, sech x = Real.pi := by
+  have hderiv : ∀ x, HasDerivAt sech_antideriv (sech x) x := fun x =>
+    hasDerivAt_sech_antideriv x
+  simpa using
+    integral_of_hasDerivAt_of_tendsto hderiv integrable_sech
+      tendsto_sech_antideriv_atBot tendsto_sech_antideriv_atTop
+
+private lemma integrableOn_sech_cubed_Ioi :
+    IntegrableOn sech_cubed (Ioi 0) :=
+  integrableOn_Ioi_deriv_of_nonneg' (fun x _ => hasDerivAt_sech_cubed_antideriv x)
+    (fun x _ => le_of_lt (one_div_pos.2 (pow_pos (cosh_pos x) 3))) tendsto_sech_cubed_antideriv_atTop
+
+private lemma integrableOn_sech_cubed_Ici :
+    IntegrableOn sech_cubed (Ici 0) :=
+  (integrableOn_Ici_iff_integrableOn_Ioi (by finiteness)).mpr integrableOn_sech_cubed_Ioi
+
+private lemma integrableOn_sech_cubed_Iic : IntegrableOn sech_cubed (Iic 0) := by
+  have h_Ici : IntegrableOn sech_cubed (Ici (-(0 : ℝ))) := by simpa using integrableOn_sech_cubed_Ici
+  exact (h_Ici.comp_neg_Iic (c := (0 : ℝ))).congr (Eventually.of_forall fun x => sech_cubed_neg x)
+
+private lemma integrable_sech_cubed : Integrable sech_cubed := by
+  rw [← integrableOn_univ, ← Iic_union_Ioi (a := (0 : ℝ)), integrableOn_union]
+  exact ⟨integrableOn_sech_cubed_Iic, integrableOn_sech_cubed_Ioi⟩
+
+/-- **integral_sech_cubed** (CatAD): `∫_{-∞}^{∞} sech³(x) dx = π/2`.
+
+    Proof: F(x) = ½[sech(x)tanh(x) + arctan(sinh x)] has F' = sech³,
+    F(+∞) = π/4, F(−∞) = −π/4; FTC on ℝ gives π/2. -/
 theorem integral_sech_cubed :
     ∫ x in Set.univ, sech_cubed x ∂volume = Real.pi / 2 := by
-  sorry
+  have hderiv : ∀ x, HasDerivAt sech_cubed_antideriv (sech_cubed x) x := fun x =>
+    hasDerivAt_sech_cubed_antideriv x
+  have h :=
+    integral_of_hasDerivAt_of_tendsto hderiv integrable_sech_cubed
+      tendsto_sech_cubed_antideriv_atBot tendsto_sech_cubed_antideriv_atTop
+  rw [← setIntegral_univ] at h
+  rw [h, show Real.pi / 4 - -Real.pi / 4 = Real.pi / 2 by ring]
 
 /-- **phimdl_yukawa_amplitude_pos** (CatAD): G₃(0) > 0 for m_φ > 0. -/
 theorem phimdl_yukawa_amplitude_pos (m_phi : ℝ) (hm : 0 < m_phi) :
