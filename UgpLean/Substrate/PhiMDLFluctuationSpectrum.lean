@@ -11,6 +11,7 @@ import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.Calculus.Deriv.Inv
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+import Mathlib.MeasureTheory.Measure.Haar.NormedSpace
 import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 import Mathlib.Topology.Order.MonotoneConvergence
 import Mathlib.Tactic
@@ -26,6 +27,7 @@ potential around the GTE BPS kink profile Φ_kink(x) = (4/7) arctan(exp(m_φ x))
 - `arctan_exp_cos_identity`: cos(4·arctan(exp x)) = 1 − 2/cosh²x.
 - `phimdl_fluctuation_is_poschl_teller`: packages the identity as the PT denominator.
 - `integral_sech_cubed`: ∫ sech^3(x) dx = π/2 (CatAD).
+- `phimdl_three_kink_overlap_integral`: ∫ ρ³ dx = G₃(0) via `integral_sech_cubed` (CatAD).
 - `yukawa_amplitude_nonzero_sech3`: three-kink overlap G3(0) = 4π/343 × m_φ² > 0 (CatAD).
 - `phimdl_yukawa_vertex_winding_trivial`: W(H) = 0 ⇒ W(f_L) + 0 = W(f_R) (CatAL).
 - `gte_yukawa_coupling`: h_f = m_f / (v_H / √2) from SRRG condensate (CatA).
@@ -377,6 +379,46 @@ theorem integral_sech_cubed :
   rw [← setIntegral_univ] at h
   rw [h, show Real.pi / 4 - -Real.pi / 4 = Real.pi / 2 by ring]
 
+private lemma phimdl_kink_density_cubed_eq (m_phi x : ℝ) :
+    phimdl_kink_density m_phi x ^ 3 = (2 * m_phi / 7) ^ 3 * sech_cubed (m_phi * x) := by
+  unfold phimdl_kink_density sech_cubed
+  simp only [div_pow, one_div]
+  ring
+
+private lemma integral_sech_cubed_comp_mul (m_phi : ℝ) (hm : 0 < m_phi) :
+    ∫ x, sech_cubed (m_phi * x) = (Real.pi / 2) / m_phi := by
+  have hm0 : m_phi ≠ 0 := ne_of_gt hm
+  calc
+    ∫ x, sech_cubed (m_phi * x)
+        = |m_phi⁻¹| * ∫ x, sech_cubed x := by
+          rw [Measure.integral_comp_mul_left (g := sech_cubed) m_phi]
+          simp only [Real.norm_eq_abs, smul_eq_mul]
+    _ = |m_phi⁻¹| * (Real.pi / 2) := by
+          rw [← setIntegral_univ, integral_sech_cubed]
+    _ = (Real.pi / 2) / m_phi := by
+          rw [abs_of_pos (inv_pos.2 hm), div_eq_mul_inv]
+          field_simp [hm0]
+
+private lemma integrable_sech_cubed_comp_mul (m_phi : ℝ) (hm : m_phi ≠ 0) :
+    Integrable (fun x => sech_cubed (m_phi * x)) :=
+  Integrable.comp_mul_left' integrable_sech_cubed hm
+
+/-- **phimdl_three_kink_overlap_integral** (CatAD): coincident three-kink overlap equals G₃(0),
+    with the sech³ factor from `integral_sech_cubed`. -/
+theorem phimdl_three_kink_overlap_integral (m_phi : ℝ) (hm : 0 < m_phi) :
+    ∫ x, phimdl_kink_density m_phi x ^ 3 = phimdl_three_kink_amplitude m_phi := by
+  have hm0 : m_phi ≠ 0 := ne_of_gt hm
+  calc
+    ∫ x, phimdl_kink_density m_phi x ^ 3
+        = ∫ x, (2 * m_phi / 7) ^ 3 * sech_cubed (m_phi * x) := by
+          congr 1; funext x; exact phimdl_kink_density_cubed_eq m_phi x
+    _ = (2 * m_phi / 7) ^ 3 * ∫ x, sech_cubed (m_phi * x) := by
+          rw [← integral_const_mul ((2 * m_phi / 7) ^ 3) (fun x => sech_cubed (m_phi * x))]
+    _ = phimdl_three_kink_amplitude m_phi := by
+          unfold phimdl_three_kink_amplitude
+          rw [integral_sech_cubed_comp_mul m_phi hm]
+          ring
+
 /-- **phimdl_yukawa_amplitude_pos** (CatAD): G₃(0) > 0 for m_φ > 0. -/
 theorem phimdl_yukawa_amplitude_pos (m_phi : ℝ) (hm : 0 < m_phi) :
     phimdl_three_kink_amplitude m_phi > 0 := by
@@ -399,10 +441,53 @@ theorem phimdl_yukawa_amplitude_formula (m_phi : ℝ) (hm : 0 < m_phi) :
   field_simp [hm0]
   ring
 
-/-- **yukawa_amplitude_nonzero_sech3** (CatAD): alias for the positive three-kink amplitude. -/
+/-- **phimdl_three_kink_overlap_integral_formula** (CatAD): ∫ ρ³ = 4π/343 × m_φ² via sech³ integral. -/
+theorem phimdl_three_kink_overlap_integral_formula (m_phi : ℝ) (hm : 0 < m_phi) :
+    ∫ x, phimdl_kink_density m_phi x ^ 3 = 4 * Real.pi / 343 * m_phi ^ 2 := by
+  rw [phimdl_three_kink_overlap_integral m_phi hm, phimdl_yukawa_amplitude_formula m_phi hm]
+
+/-- **yukawa_amplitude_nonzero_sech3** (CatAD): ∫ ρ³ = G₃(0) > 0 via `integral_sech_cubed`. -/
 theorem yukawa_amplitude_nonzero_sech3 (m_phi : ℝ) (hm : 0 < m_phi) :
-    phimdl_three_kink_amplitude m_phi > 0 :=
-  phimdl_yukawa_amplitude_pos m_phi hm
+    ∫ x, phimdl_kink_density m_phi x ^ 3 > 0 ∧
+    phimdl_three_kink_amplitude m_phi > 0 := by
+  have hpos := phimdl_yukawa_amplitude_pos m_phi hm
+  exact ⟨by rw [phimdl_three_kink_overlap_integral m_phi hm]; exact hpos, hpos⟩
+
+-- ════════════════════════════════════════════════════════════════
+-- §2b  Sech product overlap (P45 zero-mode factor)
+-- ════════════════════════════════════════════════════════════════
+
+/-- Zero-mode sech overlap I(r) = ∫ sech(x)·sech(r·x) dx (P45 Yukawa tape factor). -/
+noncomputable def sech_overlap (r : ℝ) : ℝ := ∫ x, sech x * sech (r * x)
+
+private lemma sech_le_one (x : ℝ) : sech x ≤ 1 := by
+  have h : 1 / cosh x ≤ 1 / 1 := by
+    gcongr
+    exact one_le_cosh x
+  simpa [sech] using h
+
+private lemma sech_mul_sech_le (x r : ℝ) : sech x * sech (r * x) ≤ sech x := by
+  exact mul_le_of_le_one_right (le_of_lt (one_div_pos.2 (cosh_pos x))) (sech_le_one (r * x))
+
+private lemma continuous_sech : Continuous sech := by
+  unfold sech
+  exact continuous_const.div continuous_cosh fun x => (cosh_pos x).ne'
+
+private lemma integrable_sech_mul_sech (r : ℝ) :
+    Integrable (fun x => sech x * sech (r * x)) := by
+  have hcont : Continuous (fun x => sech x * sech (r * x)) :=
+    continuous_sech.mul (continuous_sech.comp (continuous_id.const_mul r))
+  exact Integrable.mono_nonneg integrable_sech hcont.aestronglyMeasurable
+    (ae_of_all _ fun x => le_of_lt (mul_pos (one_div_pos.2 (cosh_pos x)) (one_div_pos.2 (cosh_pos (r * x)))))
+    (ae_of_all _ fun x => sech_mul_sech_le x r)
+
+/-- **sech_overlap_le_pi** (CatAD): I(r) ≤ π since sech(r·x) ≤ 1. -/
+theorem sech_overlap_le_pi (r : ℝ) : sech_overlap r ≤ Real.pi := by
+  unfold sech_overlap
+  have hmono :=
+    integral_mono_ae (integrable_sech_mul_sech r) integrable_sech
+      (ae_of_all _ fun x => sech_mul_sech_le x r)
+  exact hmono.trans (le_of_eq integral_sech)
 
 -- ════════════════════════════════════════════════════════════════
 -- §3  Yukawa vertex Z₇ winding (neutral Higgs, CatAL)

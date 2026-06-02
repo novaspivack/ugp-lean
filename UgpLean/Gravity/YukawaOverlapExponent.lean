@@ -50,8 +50,9 @@ Therefore **α = N_c − 1 = 2**.
   * Per-tape overlap ~ 1/b_R: analytically derived from sech integral (CatAD)
   * Product formula over N_c−1 tapes: CatAD
 
-- **CatAL gap**: sech overlap integral `∫ sech(x)·sech(r·x) dx → π/r` needs
-  Lean formalization (blocked by same Mathlib gap as `integral_sech_cubed`).
+- **CatAD gap (asymptotic only)**: `sech_overlap_scales_as_inv_bR` — I(1,b_R) ~ π/b_R
+  for large b_R; `integral_sech` and `integral_sech_cubed` are proved in
+  `PhiMDLFluctuationSpectrum`; the large-b_R limit remains an axiom (peak-function proof pending).
 
 ## Theorems
 
@@ -98,6 +99,10 @@ theorem yukawa_overlap_tape_count :
 theorem yukawa_overlap_exponent_arith :
     N_c - N_Higgs_tapes = 2 := by decide
 
+/-- **sech_overlap_bounded** (CatAD): zero-mode overlap I(b_R) ≤ π (`sech_overlap_le_pi`). -/
+theorem sech_overlap_bounded (b_R : ℝ) : sech_overlap b_R ≤ Real.pi :=
+  sech_overlap_le_pi b_R
+
 /-- **yukawa_higgs_tape_count** (CatAL):
     Exactly one tape hosts the Higgs boundary factor (N_Higgs_tapes = 1). -/
 theorem yukawa_higgs_tape_count : N_Higgs_tapes = 1 := by decide
@@ -128,11 +133,12 @@ theorem yukawa_spatial_dims_from_dpp :
 
 /-- The sech kink overlap amplitude scales as 1/b_R in the GTE approximation
     (large-b_R limit of I_zm(1, b_R) = ∫ sech(x)·sech(b_R·x)dx → π/b_R).
-    This is an analytically derived bound: CatAD. -/
+    Note: ∫ sech(x)·sech(rx)dx = 2 for r = 1 (not π); the π/r law is the large-b_R asymptotic.
+    Provable bound: `sech_overlap_le_pi` (I(r) ≤ π). Asymptotic: CatAD axiom below. -/
 axiom sech_overlap_scales_as_inv_bR (b_R : ℝ) (hb : 0 < b_R) :
     ∃ C : ℝ, 0 < C ∧
     ∀ ε > 0, ∃ B > 0, b_R > B →
-    |∫ x, (1 / Real.cosh x) * (1 / Real.cosh (b_R * x)) - C / b_R| < ε
+    |sech_overlap b_R - C / b_R| < ε
 
 /-- The Yukawa h_D for a Dirac neutrino with LH index b_L = 1 and RH index b_R
     scales as b_R^{−(N_c−1)} in the three-tape CMCA (P45).
@@ -225,8 +231,7 @@ theorem yukawa_suppression_product : 25 * 121 = (3025 : ℕ) := by decide
     The arithmetic facts here are CatAL (certified by this bundle).
     The physical identification of α with the tape count is CatAD.
     Upgrade to CatAL requires:
-      (a) Lean proof of sech overlap integral decay rate: I_zm(1,r) ~ π/r
-          (blocked by same Mathlib gap as `integral_sech_cubed` sorry)
+      (a) Lean proof of sech overlap large-b_R limit I(r) ~ π/r (peak-function / dominated convergence)
       (b) Lean proof that tape contributions factorize independently
           (follows from DPP independence + locality of kink profile) -/
 theorem leptogenesis_kink_overlap_catad :
