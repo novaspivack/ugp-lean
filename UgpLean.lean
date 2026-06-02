@@ -204,6 +204,7 @@ import UgpLean.Substrate.WindingCoinDecoupling
 import UgpLean.Substrate.CMCAHilbertFockBridge
 import UgpLean.Substrate.PhiMDLPropagator
 import UgpLean.Substrate.PhiMDLFluctuationSpectrum
+import UgpLean.Substrate.SechOverlapIntegralBounds
 import UgpLean.Substrate.WightmanAxioms
 import UgpLean.Substrate.ChiralCurrentL2
 import UgpLean.Substrate.RSCodeOrbit

@@ -198,7 +198,7 @@ private lemma hasDerivAt_sech_cubed_antideriv (x : ℝ) :
 /-- Antiderivative of sech: `2 * arctan (exp x)`. -/
 noncomputable def sech_antideriv (x : ℝ) : ℝ := 2 * arctan (exp x)
 
-private lemma sech_neg (x : ℝ) : sech (-x) = sech x := by
+lemma sech_neg (x : ℝ) : sech (-x) = sech x := by
   unfold sech
   rw [cosh_neg]
 
@@ -345,7 +345,7 @@ private lemma integrableOn_sech_Iic : IntegrableOn sech (Iic 0) := by
   have h_Ici : IntegrableOn sech (Ici (-(0 : ℝ))) := by simpa using integrableOn_sech_Ici
   exact (h_Ici.comp_neg_Iic (c := (0 : ℝ))).congr (Eventually.of_forall fun x => sech_neg x)
 
-private lemma integrable_sech : Integrable sech := by
+lemma integrable_sech : Integrable sech := by
   rw [← integrableOn_univ, ← Iic_union_Ioi (a := (0 : ℝ)), integrableOn_union]
   exact ⟨integrableOn_sech_Iic, integrableOn_sech_Ioi⟩
 
@@ -478,7 +478,7 @@ private lemma sech_le_one (x : ℝ) : sech x ≤ 1 := by
 private lemma sech_mul_sech_le (x r : ℝ) : sech x * sech (r * x) ≤ sech x := by
   exact mul_le_of_le_one_right (le_of_lt (one_div_pos.2 (cosh_pos x))) (sech_le_one (r * x))
 
-private lemma continuous_sech : Continuous sech := by
+lemma continuous_sech : Continuous sech := by
   unfold sech
   exact continuous_const.div continuous_cosh fun x => (cosh_pos x).ne'
 
@@ -498,7 +498,7 @@ theorem sech_overlap_le_pi (r : ℝ) : sech_overlap r ≤ Real.pi := by
       (ae_of_all _ fun x => sech_mul_sech_le x r)
   exact hmono.trans (le_of_eq integral_sech)
 
-private lemma sech_nonneg (x : ℝ) : 0 ≤ sech x := by
+lemma sech_nonneg (x : ℝ) : 0 ≤ sech x := by
   unfold sech
   exact le_of_lt (one_div_pos.2 (cosh_pos x))
 
@@ -506,15 +506,15 @@ private lemma sech_zero : sech 0 = 1 := by
   unfold sech
   simp
 
-private lemma sech_mul_sech_scaled_le (u r : ℝ) : sech (u / r) * sech u ≤ sech u := by
+lemma sech_mul_sech_scaled_le (u r : ℝ) : sech (u / r) * sech u ≤ sech u := by
   rw [mul_comm]
   exact mul_le_of_le_one_right (sech_nonneg u) (sech_le_one (u / r))
 
-private lemma continuous_sech_mul_sech_scaled (r : ℝ) :
+lemma continuous_sech_mul_sech_scaled (r : ℝ) :
     Continuous (fun u => sech (u / r) * sech u) :=
   continuous_sech.comp (continuous_id.div_const r) |>.mul continuous_sech
 
-private lemma integrable_sech_mul_sech_scaled (r : ℝ) :
+lemma integrable_sech_mul_sech_scaled (r : ℝ) :
     Integrable (fun u => sech (u / r) * sech u) := by
   refine Integrable.mono_nonneg integrable_sech
     (continuous_sech_mul_sech_scaled r).aestronglyMeasurable
@@ -523,7 +523,7 @@ private lemma integrable_sech_mul_sech_scaled (r : ℝ) :
     (ae_of_all _ fun u => sech_mul_sech_scaled_le u r)
 
 /-- For `r > 0`, substitution `u = r·x` gives `r·I(r) = ∫ sech(u/r)·sech(u) du`. -/
-private lemma sech_overlap_mul_pos (r : ℝ) (hr : 0 < r) :
+lemma sech_overlap_mul_pos (r : ℝ) (hr : 0 < r) :
     r * sech_overlap r = ∫ u, sech (u / r) * sech u := by
   unfold sech_overlap
   have hr0 : r ≠ 0 := ne_of_gt hr
@@ -612,53 +612,19 @@ theorem sech_overlap_le_pi_over_r (r : ℝ) (hr : 0 < r) :
 -- §2c  Finite-r sech overlap lower bounds (CatA certified → CatAL)
 -- ════════════════════════════════════════════════════════════════
 
-/-- **sech_overlap_at_five_ge** (CatAL):
-    Certified lower bound I(5) ≥ 596903/1000000.
-
-    Proof route (Riemann certification on scaled integral):
-    1. `5·I(5) = ∫ sech(u/5)·sech(u) du` (`sech_overlap_mul_pos`).
-    2. Restrict to `[-5,5]` using nonnegativity on the complement.
-    3. Lower-bound the finite integral by the unit-step right-endpoint Riemann sum
-       `∑_{k=-4}^{5} sech(k/5)·sech(k)` (10 cells; sum ≈ 2.99342 ≤ 2.99438 ≤ 5·I(5)).
-    4. Certify the rational sum bound `≥ 5·596903/10⁶` with `norm_num` on floored grid values.
-
-    Exact value 0.601877654…; certified margin 2.4×10⁻³. -/
-theorem sech_overlap_at_five_ge : (596903 : ℝ) / 1000000 ≤ sech_overlap 5 := by
-  sorry
-
-/-- **sech_overlap_at_eleven_ge** (CatAL):
-    Certified lower bound I(11) ≥ 282771/1000000.
-
-    Proof route (Riemann certification on scaled integral):
-    1. `11·I(11) = ∫ sech(u/11)·sech(u) du` (`sech_overlap_mul_pos`).
-    2. Restrict to `[-15,15]` via `sech_overlap_ge_scaled_interval`.
-    3. Lower-bound by the step-0.2 right-endpoint Riemann sum on 150 cells
-       (sum ≈ 3.110804 ≤ 3.110804 ≤ 11·I(11); margin to target π − 0.031108 is 3.2×10⁻⁴).
-    4. Certify the rational sum bound with `norm_num` on floored grid values.
-
-    Exact value 0.282800433…; certified margin 2.9×10⁻⁵. -/
-theorem sech_overlap_at_eleven_ge : (282771 : ℝ) / 1000000 ≤ sech_overlap 11 := by
-  sorry
-
-private lemma sech_overlap_target_five_le_cert :
+lemma sech_overlap_target_five_le_cert :
     (0.95 : ℝ) * Real.pi / 5 ≤ (596903 : ℝ) / 1000000 := by
   have hπ := Real.pi_gt_d6
   have hπ' := Real.pi_lt_d6
   linarith [hπ, hπ']
 
-private lemma sech_overlap_target_eleven_le_cert :
+lemma sech_overlap_target_eleven_le_cert :
     (0.99 : ℝ) * Real.pi / 11 ≤ (282771 : ℝ) / 1000000 := by
   have hπ := Real.pi_gt_d6
   have hπ' := Real.pi_lt_d6
   linarith [hπ, hπ']
 
-/-- **sech_overlap_at_five_ge_pi** (CatAL): I(5) ≥ 0.95·π/5. -/
-theorem sech_overlap_at_five_ge_pi : (0.95 : ℝ) * Real.pi / 5 ≤ sech_overlap 5 :=
-  sech_overlap_target_five_le_cert.trans sech_overlap_at_five_ge
-
-/-- **sech_overlap_at_eleven_ge_pi** (CatAL): I(11) ≥ 0.99·π/11. -/
-theorem sech_overlap_at_eleven_ge_pi : (0.99 : ℝ) * Real.pi / 11 ≤ sech_overlap 11 :=
-  sech_overlap_target_eleven_le_cert.trans sech_overlap_at_eleven_ge
+-- Finite-r lower bounds and π-fraction corollaries: `SechOverlapIntegralBounds.lean`.
 
 -- ════════════════════════════════════════════════════════════════
 -- §3  Yukawa vertex Z₇ winding (neutral Higgs, CatAL)
