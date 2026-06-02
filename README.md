@@ -17,7 +17,7 @@
 
 This repository is part of the **Reflexive Reality** research program by [Nova Spivack](https://www.novaspivack.com/).
 
-**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, quantum gravity completion, three-tape CMCA, self-reference, and W₁ Wasserstein distance scaffold (fully CatAL, zero sorry).  **295 modules, zero sorry on the core proof path** (two pre-existing sorry placeholders in `GTE/AnalyticArchitecture` are outside the core path; see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).  **EPIC 083C (2026-06-02):** **206** net-new certified theorems — see [Recent additions (083C)](#recent-additions-083c-2026-06-02) below and `docs/THEOREMS.md` §EPIC 083C.
+**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, quantum gravity completion, three-tape CMCA, self-reference, and W₁ Wasserstein distance scaffold (fully CatAL, zero sorry).  **296 modules, zero sorry on the core proof path** (two pre-existing sorry placeholders in `GTE/AnalyticArchitecture` are outside the core path; see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).  **EPIC 083C (2026-06-02):** **206** net-new certified theorems — see [Recent additions (083C)](#recent-additions-083c-2026-06-02) below and `docs/THEOREMS.md` §EPIC 083C.  Sech overlap finite-$r$ bounds: **0 sorry** in `PhiMDLFluctuationSpectrum` and `SechOverlapIntegralBounds`; **2 CatA axioms** in `SechOverlapIntegralBounds_bridge.lean` document the mesh→integral bridge.
 
 | Link | Description |
 |------|-------------|
@@ -40,7 +40,7 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 
 ---
 
-## Module structure (295 modules; **17 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
+## Module structure (296 modules; **17 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
 
 | Layer | Count | Modules |
 |-------|-------|---------|
@@ -55,8 +55,8 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 | **Framework** | 3 | **GTEFrameworkInstance**, **GTEOptimalityInstance**, **GTEFinalCoalgebra** |
 | **SelfRef** | 2 | LawvereKleene, RiceHalting |
 
-| **Substrate** | 1 | **PhiMDLFluctuationSpectrum** (Pöschl–Teller spectrum, sech integrals, Yukawa vertex) |
-| **Gravity** | +1 | **YukawaOverlapExponent** (DPP tape counting; $\alpha=N_c-1=2$) |
+| **Substrate** | +2 | **PhiMDLFluctuationSpectrum** (Pöschl–Teller, sech integrals; 0 sorry), **SechOverlapIntegralBounds** (+ `_cosh`, `_r5bins`, `_bridge`, `_r11cert`; 0 sorry in main module; 2 CatA axioms in `_bridge`) |
+| **Gravity** | +1 | **YukawaOverlapExponent** (DPP tape counting; $\alpha=N_c-1=2$; leptogenesis overlap **CatAL conditional** on sech bridge axioms) |
 | **QFT** | 2 | **GaugedMassGap**, **ChiralSymmetryBreaking** |
 
 Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity, PositiveRootTheorem, GaloisProtection, TwoLoopCoefficient), **GaloisStructure** (2), **CyclotomicCompleteness** (2), **PSC** (1: RCCInfiniteFamilies), **TE22** (1: ScanCertificate), **Papers** (2), **Instance** (1), **Conjectures** — per the formalization paper: `Phase4.GaloisProtection`, `TwoLoopCoefficient`, modules under `GaloisStructure.*` and `CyclotomicCompleteness.*`, and `TE22` carry fully mechanized statements where the paper claims zero sorry; `Papers` and `Instance` are chiefly citable stubs and bridges; `Conjectures` records resolved and open claims; `Phase4` also mixes stubs (e.g. UCL, PR1 presentation) with the precision theorems above.
@@ -67,7 +67,7 @@ Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, Asympt
 
 ## Recent additions (083C, 2026-06-02)
 
-**206 net-new theorems** (zero sorry on the 083C path; full inventory in `docs/THEOREMS.md` §EPIC 083C):
+**206 net-new theorems** (zero sorry on the 083C path except 2 disclosed **CatA** axioms in `SechOverlapIntegralBounds_bridge.lean`; full inventory in `docs/THEOREMS.md` §EPIC 083C):
 
 | Area | Module | Highlights |
 |------|--------|------------|
@@ -75,7 +75,7 @@ Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, Asympt
 | **Quarter-Lock** | `QuarterLock` | `thm_quarter_lock_catal`: $k_M=-\varphi/2+7/2048$ |
 | **PMNS** | `MassRelations/NeutrinoSector` | $\sin^2\theta_{12}=4/13$, $\sin^2\theta_{23}=19/42$, $\sin\theta_{13}=11/73$, $\delta_{\rm CP}=8\pi/7$, $J<0$ |
 | **Higgs quartic** | `MassRelations/HiggsQuartic` | $\lambda=\dfrac{\varphi}{4\pi}(1+({\rm IPT}-1)/27)$; $0.12<\lambda<0.14$ |
-| **Yukawa vertex** | `Substrate/PhiMDLFluctuationSpectrum`, `Gravity/YukawaOverlapExponent` | Pöschl–Teller + $\int\mathrm{sech}^3=\pi/2$; $\alpha=2$ CatAD; $1/3025$ suppression |
+| **Yukawa vertex / η_B** | `Substrate/PhiMDLFluctuationSpectrum`, `Substrate/SechOverlapIntegralBounds_*`, `Gravity/YukawaOverlapExponent` | Pöschl–Teller + $\int\mathrm{sech}^3=\pi/2$; $\alpha=2$ CatAD; $f_1 f_2=1/3025$ suppression. **η_B / leptogenesis overlap: CatAL conditional** (2 CatA axioms for sech overlap mesh→integral bridge; full CatAL requires `AntitoneOn.sum_le_integral_Ico` proof) |
 | **FGCI** | `Universality/FrobeniusChain` | $F(3)=G(3)=73$ unique at $N_c=3$; chain $\{7,73\}$; $b_{L2}=2N_c|Z_7|$ |
 | **Dark baryon** | `Universality/GUTStructure` | $q_{\rm dark}/6=1/N_c$; dilution $2/6=1/3$; $D_{\rm top}=\exp(-1/N_c)$ via Z₇ transitivity |
 

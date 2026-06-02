@@ -115,6 +115,7 @@
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\Fib}{\ensuremath{\mathrm{Fib}}}
 \newcommand{\CatAL}{\ensuremath{\mathrm{CatAL}}}
+\newcommand{\CatA}{\ensuremath{\mathrm{CatA}}}
 \newcommand{\CatAD}{\ensuremath{\mathrm{CatAD}}}
 \newcommand{\CatB}{\ensuremath{\mathrm{CatB}}}
 \newcommand{\GTE}{\ensuremath{\mathrm{GTE}}}
@@ -137,7 +138,7 @@
 \begin{abstract}
 We present \textbf{ugp-lean}, a \lean{}~4 formalization of the
 Universal Generative Principle (\ugp{}) against Mathlib, comprising
-297~\lean{} modules across seventeen layers (extended development branch covering
+296~\lean{} modules across seventeen layers (extended development branch covering
 spacetime, QFT, and hadronic physics) with a strict zero-sorry,
 zero-custom-axiom policy on the core proof path (20 global custom
 named axioms after the 2026-05-24 audit,\linebreak[2] down from 24).
@@ -424,7 +425,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 297~\lean{} modules across seventeen layers
+The artifact is organized into 296~\lean{} modules across seventeen layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -4738,10 +4739,24 @@ Mathlib's fundamental theorem of calculus (\lstinline|integral_sech|,
 \lstinline|integral_sech_cubed|, \CatAL).  The three-kink overlap amplitude
 feeds \lstinline|phimdl_yukawa_vertex_catad| (\CatAD), and the asymptotic
 overlap law \lstinline|sech_overlap_asymptotic| certifies $r\cdot I(r)\to\pi$.
+Finite-$r$ lower bounds \lstinline|sech_overlap_at_five_ge| and
+\lstinline|sech_overlap_at_eleven_ge| are zero-\texttt{sorry} in
+\texttt{PhiMDLFluctuationSpectrum} via import from the companion stack
+\texttt{Substrate/SechOverlapIntegralBounds}: the main module has zero
+\texttt{sorry} and zero custom axioms; certified rational mesh bounds live in
+\texttt{SechOverlapIntegralBounds\_cosh} and
+\texttt{SechOverlapIntegralBounds\_r5bins} (all \CatAL); the only
+non-computational step is isolated as two named \CatA\ axioms in
+\texttt{SechOverlapIntegralBounds\_bridge}
+(\lstinline|sech_overlap_at_five_ge_certified|,
+\lstinline|sech_overlap_at_eleven_ge_certified|), recording the antitone
+right-Riemann mesh-sum $\le$ integral comparison pending a Mathlib
+\lstinline|AntitoneOn.sum_le_integral_Ico| proof.
 The companion module \texttt{Gravity/YukawaOverlapExponent} derives the Dirac
 scaling exponent $\alpha=N_c-1=2$ from three-tape DPP counting
 (\lstinline|yukawa_overlap_exponent_catad|, \CatAD) and the leptogenesis
-suppression $f_1 f_2 = 1/3025$ (\lstinline|leptogenesis_kink_overlap_catad|).
+suppression $f_1 f_2 = 1/3025$ (\lstinline|leptogenesis_kink_overlap_catad|,
+\CatAD\ conditional on the sech bridge axioms).
 
 \subsection{QCD String Tension: Casimir Scaling Formula (\CatAD{})}\label{subsec:string-tension-catad}
 
@@ -8216,7 +8231,7 @@ are in \texttt{ugp-lean} (graduated 2026-06-01);
 \subsection{EPIC\_083C frontier closures (2026-06-02)}\label{subsec:epic-083c}
 
 The EPIC\_083C pass adds \textbf{206} net-new zero-\texttt{sorry} theorems across
-twenty-one modules, closing the Yukawa vertex, PMNS orbit-ratio sector, SRRG Higgs
+twenty-two modules, closing the Yukawa vertex, PMNS orbit-ratio sector, SRRG Higgs
 quartic, full nine-coefficient UCL master certification, FGCI uniqueness at
 $N_c=3$, Pöschl--Teller fluctuation/QFT integral infrastructure, and the
 $D_{\rm top}=\exp(-1/N_c)$ topological dilution chain.
@@ -8279,6 +8294,18 @@ Theorem & Module & Physical content \\
 \texttt{sech\_\allowbreak overlap\_\allowbreak asymptotic}
   & Substrate.PhiMDLFluctuationSpectrum
   & $r\cdot I(r)\to\pi$ as $r\to\infty$ (\CatAL) \\[1pt]
+\texttt{sech\_\allowbreak overlap\_\allowbreak at\_\allowbreak five\_\allowbreak ge\_\allowbreak pi}
+  & Substrate.SechOverlapIntegralBounds
+  & $I(5)\ge 0.95\pi/5$ (zero \texttt{sorry}, zero axiom; imports bridge) \\[1pt]
+\texttt{sech\_\allowbreak overlap\_\allowbreak at\_\allowbreak eleven\_\allowbreak ge\_\allowbreak pi}
+  & Substrate.SechOverlapIntegralBounds
+  & $I(11)\ge 0.99\pi/11$ (zero \texttt{sorry}, zero axiom) \\[1pt]
+\texttt{SechOverlapIntegralBounds\_\allowbreak cosh} / \texttt{\_r5bins}
+  & Substrate.SechOverlapIntegralBounds
+  & Certified $\cosh$ and per-bin sech-product rational lower bounds (\CatAL) \\[1pt]
+\texttt{SechOverlapIntegralBounds\_\allowbreak bridge}
+  & Substrate.SechOverlapIntegralBounds\_bridge
+  & 2 \CatA\ axioms: mesh sum $\le$ integral for $r\in\{5,11\}$ \\[1pt]
 \texttt{phimdl\_\allowbreak yukawa\_\allowbreak vertex\_\allowbreak catad}
   & Substrate.PhiMDLFluctuationSpectrum
   & Three-kink overlap amplitude assembly (\CatAD) \\[1pt]
@@ -8287,7 +8314,7 @@ Theorem & Module & Physical content \\
   & Dirac scaling $\alpha=N_c-1=2$ from three-tape DPP counting (\CatAD) \\[1pt]
 \texttt{leptogenesis\_\allowbreak kink\_\allowbreak overlap\_\allowbreak catad}
   & Gravity.YukawaOverlapExponent
-  & $f_1\times f_2 = 1/3025 = 1/(5^2\cdot 11^2)$ (\CatAD) \\[1pt]
+  & $f_1\times f_2 = 1/3025 = 1/(5^2\cdot 11^2)$ (\CatAD; \CatAL\ conditional on sech bridge) \\[1pt]
 \midrule
 \multicolumn{3}{@{}l}{\textit{FGCI and Frobenius chain (\CatAL)}} \\[2pt]
 \texttt{fgci\_\allowbreak unique\_\allowbreak at\_\allowbreak nc}
@@ -8345,6 +8372,14 @@ the fluctuation potential is a Pöschl--Teller well, the sech and sech$^3$
 integrals are Mathlib-closed, and the three-kink Yukawa overlap feeds the
 \texttt{Gravity.YukawaOverlapExponent} DPP tape-counting derivation of
 $\alpha=N_c-1=2$.
+Finite-$r$ overlap lower bounds are certified in
+\texttt{Substrate.SechOverlapIntegralBounds} (main module: zero \texttt{sorry},
+zero custom axioms) with supporting \CatAL\ rational certifications in
+\texttt{SechOverlapIntegralBounds\_cosh} and \texttt{\_r5bins}; the mesh-to-integral
+bridge is disclosed as two \CatA\ axioms in \texttt{SechOverlapIntegralBounds\_bridge}
+(see \cref{subsec:phimdl-fluctuation-083c}).
+The leptogenesis suppression \lstinline|leptogenesis_kink_overlap_catad| is
+\CatAD\ (\CatAL\ conditional on those bridge axioms).
 
 \paragraph{$D_{\rm top}$ topological dilution (\CatAL, Lean-certified).}
 The dark-matter relic density uses topological dilution

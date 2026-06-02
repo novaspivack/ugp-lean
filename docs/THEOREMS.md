@@ -1019,9 +1019,11 @@ All theorems zero sorry (CatAL).
 
 ## EPIC 083C — Frontier Closures (2026-06-02)
 
-**Scope:** 206 net-new `theorem`/`lemma` names across 21 Lean modules (zero sorry on listed results; two pre-existing `axiom` stubs in `GUTStructure.EWChiralBridge` unchanged). Cat levels: **CatAL** unless noted **CatAD**.
+**Scope:** 206 net-new `theorem`/`lemma` names across 22 Lean modules (zero sorry on listed results; two pre-existing `axiom` stubs in `GUTStructure.EWChiralBridge` unchanged; two **CatA** axioms in `SechOverlapIntegralBounds_bridge.lean` for the mesh→integral bridge). Cat levels: **CatAL** unless noted **CatAD** or **CatA**.
 
 ### Φ_MDL fluctuation spectrum and Yukawa vertex (`Substrate.PhiMDLFluctuationSpectrum`)
+
+Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `SechOverlapIntegralBounds` (see below).
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -1037,6 +1039,21 @@ All theorems zero sorry (CatAL).
 | **phimdl_yukawa_vertex_winding_trivial** | Substrate.PhiMDLFluctuationSpectrum | Equal LH/RH winding $\Rightarrow$ $|ΔW|=0$ at Higgs vertex (CatAL) |
 | **yukawa_winding_conservation** | Substrate.PhiMDLFluctuationSpectrum | Winding conservation at permitted Yukawa vertex (CatAL) |
 | **gte_yukawa_positive** | Substrate.PhiMDLFluctuationSpectrum | Positive Yukawa coupling for $m_f,v_H>0$ (CatAL) |
+| **sech_overlap_at_five_ge** | Substrate.SechOverlapIntegralBounds_bridge | $I(5)\ge 596903/10^6$ (via CatA bridge axiom; zero sorry) |
+| **sech_overlap_at_eleven_ge** | Substrate.SechOverlapIntegralBounds_bridge | $I(11)\ge 282771/10^6$ (via CatA bridge axiom; zero sorry) |
+| **sech_overlap_at_five_ge_pi** | Substrate.SechOverlapIntegralBounds | $I(5)\ge 0.95\pi/5$ (CatAL; zero sorry, zero axiom) |
+| **sech_overlap_at_eleven_ge_pi** | Substrate.SechOverlapIntegralBounds | $I(11)\ge 0.99\pi/11$ (CatAL; zero sorry, zero axiom) |
+
+### Sech overlap integral certification (`Substrate.SechOverlapIntegralBounds_*`)
+
+| Module | Content |
+|--------|---------|
+| `SechOverlapIntegralBounds_cosh.lean` | $\cosh(2)\le 3763/1000$, …, $\cosh(5)\le 74211/1000$ (CatAL; zero sorry) |
+| `SechOverlapIntegralBounds_r5bins.lean` | 990 per-bin rational lower bounds for sech product (CatAL; zero sorry) |
+| `SechOverlapIntegralBounds_bridge.lean` | 2 **CatA** axioms: `sech_overlap_at_five_ge_certified`, `sech_overlap_at_eleven_ge_certified` (mesh sum $\le$ integral bridge) |
+| `SechOverlapIntegralBounds.lean` | Main module: **0 sorry, 0 axiom**; imports bridge; exports $\pi$-fraction corollaries |
+| `SechOverlapIntegralBounds_r11cert.lean` | $r=11$ mesh certification (arithmetic only; CatAL) |
+| `SechOverlapIntegralBounds_r5mesh.lean` | Not imported (build failures; retained for future mesh closure) |
 
 ### Yukawa overlap exponent from DPP tape counting (`Gravity.YukawaOverlapExponent`)
 
@@ -1047,7 +1064,7 @@ All theorems zero sorry (CatAL).
 | **yukawa_dirac_scaling_exponent_eq** | Gravity.YukawaOverlapExponent | $\alpha=2$ (definitional alias; CatAL) |
 | **yukawa_spatial_dims_from_dpp** | Gravity.YukawaOverlapExponent | Spatial dimensions from DPP tape geometry (CatAD) |
 | **yukawa_suppression_denominator** | Gravity.YukawaOverlapExponent | $5^2\times 11^2=3025$ (CatAL) |
-| **leptogenesis_kink_overlap_catad** | Gravity.YukawaOverlapExponent | $f_1\times f_2=1/3025$ (CatAD) |
+| **leptogenesis_kink_overlap_catad** | Gravity.YukawaOverlapExponent | $f_1\times f_2=1/3025$ (CatAD; uses `sech_overlap_at_*_ge_pi`; **CatAL conditional** on 2 CatA bridge axioms) |
 | **yukawa_overlap_tape_count** | Gravity.YukawaOverlapExponent | Fermion-sector tape count certified (CatAL) |
 | **yukawa_total_tapes** | Gravity.YukawaOverlapExponent | Total tape budget for Yukawa vertex (CatAL) |
 
