@@ -14,7 +14,7 @@ def exp_taylor_bound(t: float, n: int) -> tuple[int, int]:
     return int(ub * 1_000_000) + 1, 1_000_000
 
 
-def pick_taylor_n(t: float, max_n: int = 30) -> tuple[int, int, int]:
+def pick_taylor_n(t: float, max_n: int = 80) -> tuple[int, int, int]:
     """Find minimal n such that Taylor bound certifies exp(t)."""
     for n in range(3, max_n + 1):
         num, den = exp_taylor_bound(t, n)

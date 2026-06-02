@@ -10,63 +10,43 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from sech_taylor_proofs import pick_taylor_n, rat  # noqa: E402
+from sech_taylor_proofs import rat  # noqa: E402
+from gen_sech5_cosh_bins import BIN_STEP, COSH_SCALE, R, bin_key, bin_val  # noqa: E402
 
 OUT = ROOT / "UgpLean/Substrate/SechOverlapIntegralBounds_r5mesh.lean"
 
-R = 5
 N = 550
 H = 5 / N
 HALF_TARGET = 1492288
 BATCH = 50
 
-COSH_CEIL = {
-    2: (3763, 1000),
-    3: (10068, 1000),
-    4: (27309, 1000),
-    5: (84600, 1000),
-}
+
+def cosh_ub_rational(u: float) -> tuple[int, int]:
+    b = bin_val(u)
+    return int(math.cosh(b) * COSH_SCALE) + 1, COSH_SCALE
 
 
 def sech_lb_micro(u: float) -> int:
-    nu = cosh_ub_val(u)
-    nv = cosh_ub_val(u / R)
-    return int(1 / nu / nv * H * 1_000_000)
+    nu, du = cosh_ub_rational(u)
+    nv, dv = cosh_ub_rational(u / R)
+    return int(dv * du / nv / nu * H * 1_000_000)
 
 
 def cosh_ub_val(u: float) -> float:
-    if u <= 1.0:
-        t = u * u / 2
-        n, num, den = pick_taylor_n(t)
-        return num / den
-    k = int(math.ceil(u - 1e-12))
-    num, den = COSH_CEIL[k]
+    num, den = cosh_ub_rational(u)
     return num / den
 
 
 def emit_cosh_le(u: float, idx: int, comp: str) -> list[str]:
     u_expr = rat(u)
     name = f"cosh5_{comp}_{idx}_le"
-    if u <= 1.0:
-        t = u * u / 2
-        n, num, den = pick_taylor_n(t)
-        exp_name = f"exp5_{comp}_{idx}_le"
-        return [
-            f"private lemma {exp_name} : exp (({u_expr})^2 / 2) ≤ ({num} : ℝ) / {den} := by",
-            f"  refine exp_le_taylor (by norm_num) (by norm_num) (n := {n}) (by norm_num) ?_",
-            "  simp [Finset.sum_range_succ, Nat.factorial]",
-            "  norm_num",
-            "",
-            f"private lemma {name} : cosh {u_expr} ≤ ({num} : ℝ) / {den} := by",
-            f"  exact (cosh_le_exp_half_sq {u_expr}).trans {exp_name}",
-            "",
-        ]
-    k = int(math.ceil(u - 1e-12))
-    num, den = COSH_CEIL[k]
+    bk = bin_key(u)
+    b_expr = rat(bin_val(u))
+    num, _ = cosh_ub_rational(u)
     return [
-        f"private lemma {name} : cosh {u_expr} ≤ ({num} : ℝ) / {den} := by",
-        f"  gcongr",
-        f"  exact cosh_{k}_le",
+        f"private lemma {name} : cosh {u_expr} ≤ ({num} : ℝ) / {COSH_SCALE} := by",
+        f"  have hmono := cosh_mono_Ici ({u_expr}) (by norm_num) (by norm_num : ({u_expr}) ≤ ({b_expr}))",
+        f"  exact hmono.trans cosh_{bk}_ub",
         "",
     ]
 
@@ -80,11 +60,16 @@ def batch_micro(indices: list[int]) -> int:
 
 def main() -> None:
     header = [
-        "import UgpLean.Substrate.SechOverlapIntegralBounds_cosh",
+        "import UgpLean.Substrate.SechOverlapIntegralBounds_r5bins",
         "",
         "namespace UgpLean.Substrate.PhiMDLFluctuationSpectrum",
         "",
         "open Real",
+        "",
+        "lemma sech_ge_of_cosh_le {x C : ℝ} (hC : 0 < C) (hc : cosh x ≤ C) :",
+        "    1 / C ≤ sech x := by",
+        "  unfold sech",
+        "  exact (one_div_le_one_div (cosh_pos x) hC).2 hc",
         "",
         f"def sech5_meshN : Nat := {N}",
         "",

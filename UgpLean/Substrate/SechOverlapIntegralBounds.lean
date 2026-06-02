@@ -3,20 +3,11 @@ import UgpLean.Substrate.PhiMDLFluctuationSpectrum
 /-!
 # Sech overlap integral lower bounds (Riemann certification)
 
-Completes `sech_overlap_at_five_ge` and `sech_overlap_at_eleven_ge` in the
-`PhiMDLFluctuationSpectrum` namespace (moved here to avoid circular imports).
+Route: `r·I(r) = ∫ sech(u/r)·sech(u) du`, restrict to a symmetric interval, lower-bound
+by an antitone right-endpoint Riemann sum, certify the sum with mesh-generated bounds.
 
-## Proof route (documented; certification in progress)
-
-1. `r·I(r) = ∫ sech(u/r)·sech(u) du` via `sech_overlap_mul_pos`.
-2. Restrict to `[-L,L]` using nonnegativity (`setIntegral_le_integral`).
-3. Lower-bound the finite integral by the unit-step right-endpoint Riemann sum
-   `∑_{k=-L+1}^{L} sech(k/r)·sech(k)` using per-cell antitone bounds on unit intervals
-   (`intervalIntegral.integral_mono_on` + `intervalIntegral.sum_integral_adjacent_intervals`).
-4. Certify `∑ ≥ r·target` with `norm_num` on conservative per-cell rational lower bounds.
-
-Pending lemmas: `riemann_sum_le_integral_sech_scaled`, `sech_scaled5_sum_ge`,
-`sech_scaled11_sum_ge` (see proof sketches in module docstring above).
+Mesh generators: `scripts/gen_sech5_cosh_bins.py`, `scripts/gen_sech5_mesh_proof.py`,
+`scripts/gen_sech11_mesh_proof.py`. Helper lemmas: `SechOverlapIntegralBounds_cosh.lean`.
 -/
 
 namespace UgpLean.Substrate.PhiMDLFluctuationSpectrum
