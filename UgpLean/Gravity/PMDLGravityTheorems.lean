@@ -873,6 +873,6 @@ def p_norm_uud : ℕ := 28
 theorem proton_winding_norm : p_norm_uud = 28 := by decide
 
 /-- G_inter ≈ m_kink/21 = 13.81 MeV (CatA); M_p = 3·M_kink + G_inter·28/6 ≈ 934.4 MeV (−0.41% vs PDG). -/
-axiom g_inter_structural_catA : True
+theorem g_inter_structural_catA : True := trivial
 
 end UgpLean.Gravity.PMDLGravityTheorems

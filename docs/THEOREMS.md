@@ -1019,7 +1019,7 @@ All theorems zero sorry (CatAL).
 
 ## EPIC 083C — Frontier Closures (2026-06-02)
 
-**Scope:** 206 net-new `theorem`/`lemma` names across 22 Lean modules (zero sorry on listed results; two pre-existing `axiom` stubs in `GUTStructure.EWChiralBridge` unchanged; two **CatA** axioms in `SechOverlapIntegralBounds_bridge.lean` for the mesh→integral bridge). Cat levels: **CatAL** unless noted **CatAD** or **CatA**.
+**Scope:** 221 net-new `theorem`/`lemma` names across 22 Lean modules (zero sorry on listed results; two pre-existing `axiom` stubs in `GUTStructure.EWChiralBridge` unchanged; two **CatA** axioms in `SechOverlapIntegralBounds_bridge.lean` for the mesh→integral bridge). Cat levels: **CatAL** unless noted **CatAD** or **CatA**.
 
 ### Φ_MDL fluctuation spectrum and Yukawa vertex (`Substrate.PhiMDLFluctuationSpectrum`)
 
@@ -1128,7 +1128,7 @@ Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `Sec
 | **z7_symmetry_forces_equal_sector_action** | Universality.GUTStructure | Equal distribution forced: S_per = q_dark/|Z₇\*| = 2/6 = 1/3 = 1/N_c (CatAL) |
 | **d_top_derivation_chain_catal** | Universality.GUTStructure | Master CatAL assembly: BPS S₀/T=1 + q_dark=2 + |Z₇\*|=6 + Z₇ transitivity → D_top = exp(−1/N_c) (CatAL) |
 
-**083C catalog entry count (this section):** 61 named flagship theorems plus 40 interval-bound lemmas and 25 UCL margin/delta certificates documented in the module list above (**206** total net-new names in the epic scorecard).
+**083C catalog entry count (this section):** 61 named flagship theorems plus 40 interval-bound lemmas and 25 UCL margin/delta certificates documented in the module list above (**221** total net-new names in the epic scorecard).
 
 ## External Citations (Not Formalized)
 

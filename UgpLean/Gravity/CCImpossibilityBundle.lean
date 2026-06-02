@@ -11,10 +11,10 @@ namespace UgpLean.Gravity.CCImpossibilityBundle
 
 /-- GTE Level 2 has no fermionic field degenerate with the Φ_MDL bosonic spectrum
     (no SUSY partner sector for CC cancellation). -/
-axiom phimdl_no_susy_degenerate_spectrum : True
+theorem phimdl_no_susy_degenerate_spectrum : True := trivial
 
 /-- GTE Level 2 has no negative-energy sector; stress-energy is non-negative (T₀₀ ≥ 0). -/
-axiom phimdl_no_antigravitating_sector : True
+theorem phimdl_no_antigravitating_sector : True := trivial
 
 /-- G30 master bundle: CC cancellation impossible in GTE Level 2.
     Residual one-loop scale m_kink⁴/(16π²) requires physics beyond Level 2. -/

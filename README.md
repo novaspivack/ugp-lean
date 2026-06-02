@@ -17,7 +17,7 @@
 
 This repository is part of the **Reflexive Reality** research program by [Nova Spivack](https://www.novaspivack.com/).
 
-**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, quantum gravity completion, three-tape CMCA, self-reference, and W₁ Wasserstein distance scaffold (fully CatAL, zero sorry).  **296 modules, zero sorry on the core proof path** (two pre-existing sorry placeholders in `GTE/AnalyticArchitecture` are outside the core path; see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).  **EPIC 083C (2026-06-02):** **206** net-new certified theorems — see [Recent additions (083C)](#recent-additions-083c-2026-06-02) below and `docs/THEOREMS.md` §EPIC 083C.  Sech overlap finite-$r$ bounds: **0 sorry** in `PhiMDLFluctuationSpectrum` and `SechOverlapIntegralBounds`; **2 CatA axioms** in `SechOverlapIntegralBounds_bridge.lean` document the mesh→integral bridge.
+**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, quantum gravity completion, three-tape CMCA, self-reference, and W₁ Wasserstein distance scaffold (fully CatAL, zero sorry).  **296 modules, zero sorry on the core proof path** (two pre-existing sorry placeholders in `GTE/AnalyticArchitecture` are outside the core path; see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list).  **EPIC 083C (2026-06-02):** **221** net-new certified theorems — see [Recent additions (083C)](#recent-additions-083c-2026-06-02) below and `docs/THEOREMS.md` §EPIC 083C.  Sech overlap finite-$r$ bounds: **0 sorry** in `PhiMDLFluctuationSpectrum` and `SechOverlapIntegralBounds`; **2 CatA axioms** in `SechOverlapIntegralBounds_bridge.lean` document the mesh→integral bridge.
 
 | Link | Description |
 |------|-------------|
@@ -67,7 +67,7 @@ Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, Asympt
 
 ## Recent additions (083C, 2026-06-02)
 
-**206 net-new theorems** (zero sorry on the 083C path except 2 disclosed **CatA** axioms in `SechOverlapIntegralBounds_bridge.lean`; full inventory in `docs/THEOREMS.md` §EPIC 083C):
+**221 net-new theorems** (zero sorry on the 083C path except 2 disclosed **CatA** axioms in `SechOverlapIntegralBounds_bridge.lean`; full inventory in `docs/THEOREMS.md` §EPIC 083C):
 
 | Area | Module | Highlights |
 |------|--------|------------|

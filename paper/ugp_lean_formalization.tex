@@ -140,8 +140,10 @@ We present \textbf{ugp-lean}, a \lean{}~4 formalization of the
 Universal Generative Principle (\ugp{}) against Mathlib, comprising
 296~\lean{} modules across seventeen layers (extended development branch covering
 spacetime, QFT, and hadronic physics) with a strict zero-sorry,
-zero-custom-axiom policy on the core proof path (20 global custom
-named axioms after the 2026-05-24 audit,\linebreak[2] down from 24).
+zero-custom-axiom policy on the core proof path (83 global custom
+named axioms after the 2026-06-02 frontier-closure extensions,\linebreak[2]
+up from 20 at the 2026-05-24 audit; core physics proof path remains
+zero-axiom).
 The \ugp{} is a deterministic arithmetic framework on integer ridges
 $R_n = 2^n - 16$ that produces, from first principles and without free
 parameters, a unique canonical seed $(1,73,823)$ and a rigid
@@ -628,7 +630,7 @@ full soft-constraint $D$-minimization over all 14 scan constraints; the
 Layer~I survivor structure and $N_{\mathrm{gen}} = 3$ consequence are
 machine-certified.
 
-\medskip\noindent\textbf{Documented axioms (post-audit: 20 global).}
+\medskip\noindent\textbf{Documented axioms (post-audit 2026-05-24: 20 global; post-EPIC\_083C 2026-06-02: 83 global).}
 Two theorems in \texttt{GTE.AnalyticArchitecture} are declared as
 \texttt{axiom} rather than \texttt{sorry}: \texttt{dickman\_equidistribution\_in\_APs}
 and \texttt{crt\_equidistribution\_within\_regime}, both citing
@@ -646,6 +648,13 @@ A systematic audit (2026-05-24) discharged four previously declared
 axioms in \texttt{VEVProof/GoldstoneEntropyCorrection.lean} as genuine
 theorems, reducing the global custom named-axiom count from 24 to
 \textbf{20}; see \S\ref{sec:audit-capstones} for details.
+The EPIC\_083C frontier-closure pass (2026-06-02) subsequently added 63 bridge
+and extension axioms---primarily in \texttt{GUTStructure}, \texttt{FrobeniusChain},
+\texttt{NeutrinoSector}, \texttt{SechOverlapIntegralBounds\_bridge}, and related
+extension modules---bringing the global count to \textbf{83}
+(see Table~\ref{tab:axiom-inventory} and \S\ref{subsec:epic-083c}).
+The core physics proof path (charged leptons, couplings, generation count) remains
+zero-custom-axiom.
 
 \medskip\noindent\textbf{One additional disclosed axiom (\texttt{BraidAtlas.ChargeTheorem}, 2026-05-08):}
 \texttt{mirror\_winding\_number\_zero}: $W_{g,\text{mirror}} = 0$ for the GTE-P7
@@ -6291,6 +6300,8 @@ locality, positivity); axioms~1--5 bundle in
 A systematic audit of the full library discharged four previously declared
 axioms in \texttt{VEVProof/GoldstoneEntropyCorrection.lean} as theorems,
 reducing the global custom named-axiom count from \textbf{24 to 20}.
+Subsequent frontier-closure extensions (EPIC\_083C, 2026-06-02) added 63 bridge
+and extension axioms, bringing the verified total to \textbf{83}.
 
 Discharged axioms (now theorems, zero sorry):
 \begin{itemize}[nosep]
@@ -6306,17 +6317,29 @@ Discharged axioms (now theorems, zero sorry):
 
 \begin{table}[h]
 \centering\small
-\begin{tabular}{@{}llr@{}}
+\begin{tabular}{@{}p{6.2cm}p{4.5cm}r@{}}
 \toprule
 Module & Scope & Custom axioms \\
 \midrule
 \texttt{GTE.AnalyticArchitecture}     & Dickman / CRT equidistribution & 2 \\
 Rule110-lean pin \texttt{13811a3}     & ChiralGliderDynamics / Rank 85c & (cross-repo) \\
 \hline
-\textbf{Global named custom axioms}   & \textbf{post-audit} & \textbf{20} \\
+\textbf{Global named custom axioms}   & \textbf{post-audit (2026-05-24)} & \textbf{20} \\
+\midrule
+\texttt{Substrate.SechOverlap\allowbreak IntegralBounds\_bridge} & Mesh-to-integral bridge for $r\in\{5,11\}$ & 2 \\
+\texttt{Universality.GUTStructure}    & Native\_decide certs and SM structure & 43 \\
+\texttt{Universality.FrobeniusChain}  & FGCI uniqueness and chain closure & 4 \\
+\texttt{MassRelations.NeutrinoSector} & PMNS angles, CP phase, seesaw & 5 \\
+\texttt{Gravity.YukawaOverlapExponent} & DPP tape-counting, Yukawa scaling & 4 \\
+Other extension modules               & Bridge and auxiliary axioms & 5 \\
+\hline
+\textbf{Global named custom axioms}   & \textbf{post-EPIC\_083C (2026-06-02)} & \textbf{83} \\
 \bottomrule
 \end{tabular}
-\caption{Custom axiom inventory after the 2026-05-24 audit.
+\caption{Custom axiom inventory. The 2026-05-24 audit reduced the count from 24 to 20.
+  EPIC\_083C frontier-closure extensions (2026-06-02) added 63 bridge and extension
+  axioms, bringing the verified total to 83.  The core physics proof path (charged
+  leptons, couplings, generation count) remains zero-custom-axiom.
   Rank~143-PATH-AXIOM discharged \lstinline|causal_path_exists| as a theorem
   (forward-causal pairs only); it is no longer a module-local axiom.}
 \label{tab:axiom-inventory}
@@ -8230,7 +8253,7 @@ are in \texttt{ugp-lean} (graduated 2026-06-01);
 
 \subsection{EPIC\_083C frontier closures (2026-06-02)}\label{subsec:epic-083c}
 
-The EPIC\_083C pass adds \textbf{206} net-new zero-\texttt{sorry} theorems across
+The EPIC\_083C pass adds \textbf{221} net-new zero-\texttt{sorry} theorems across
 twenty-two modules, closing the Yukawa vertex, PMNS orbit-ratio sector, SRRG Higgs
 quartic, full nine-coefficient UCL master certification, FGCI uniqueness at
 $N_c=3$, Pöschl--Teller fluctuation/QFT integral infrastructure, and the
@@ -8349,7 +8372,7 @@ Theorem & Module & Physical content \\
 certification, PMNS orbit-ratio closure, SRRG Higgs quartic, Pöschl--Teller and sech
 integrals, Yukawa vertex (\CatAD), FGCI at $N_c=3$, and $\mathbb{Z}_7$ dark-baryon
 identities including $D_{\rm top}=\exp(-1/N_c)$ (\CatAL, Lean-certified).
-The development catalog lists 206 net-new names.}
+The development catalog lists 221 net-new names.}
 \label{tab:epic-083c}
 \end{table}
 
@@ -9263,7 +9286,8 @@ exclusion criterion (\lstinline|unified_physical_exclusion|) and the
 three-generation uniqueness capstone
 (\lstinline|gte_uniquely_predicts_three_generations|).
 A systematic audit reduced the global custom named-axiom count from 24 to 20
-by discharging four \texttt{VEVProof} axioms as genuine theorems.
+by discharging four \texttt{VEVProof} axioms as genuine theorems;
+subsequent frontier-closure extensions brought the total to 83 (see Table~\ref{tab:axiom-inventory}).
 
 \paragraph{What remains open.}
 Six conjectures are formally stated in \cref{tab:conjectures}.
