@@ -7743,5139 +7743,7449 @@ lemma cosh_b14095_ub : cosh ((2819 : ℝ) / 2000) ≤ (270025301 : ℝ) / 100000
     linarith [hupper, htaylor]
   exact (cosh_le_exp_half_sq ((2819 : ℝ) / 2000)).trans (le_trans exp_b14095 (by norm_num))
 
-lemma cosh_b14185_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b14185 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b14185_ub : cosh ((2837 : ℝ) / 2000) ≤ (225000634 : ℝ) / 100000000 := by
+  have exp_frac_b14185 : exp ((837 : ℝ) / 2000) ≤ (151968101 : ℝ) / 100000000 := by
+    have ht : ((837 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((837 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((837 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (151968101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b14185 (by norm_num))
+  have hexp : exp ((2837 : ℝ) / 2000) = exp 1 * exp ((837 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (837 : ℝ) / 2000 = (2837 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((2837 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2837 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b14185 (exp_pos ((837 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2837 : ℝ) / 2000), exp_pos (-((2837 : ℝ) / 2000))]
 
-lemma cosh_b14275_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b14275 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b14275_ub : cosh ((571 : ℝ) / 400) ≤ (226868451 : ℝ) / 100000000 := by
+  have exp_frac_b14275 : exp ((171 : ℝ) / 400) ≤ (153342001 : ℝ) / 100000000 := by
+    have ht : ((171 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((171 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((171 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (153342001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b14275 (by norm_num))
+  have hexp : exp ((571 : ℝ) / 400) = exp 1 * exp ((171 : ℝ) / 400) := by
+    rw [← exp_add, show (1 : ℝ) + (171 : ℝ) / 400 = (571 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((571 : ℝ) / 400)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((571 : ℝ) / 400) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b14275 (exp_pos ((171 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((571 : ℝ) / 400), exp_pos (-((571 : ℝ) / 400))]
 
-lemma cosh_b14365_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b14365 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b14365_ub : cosh ((2873 : ℝ) / 2000) ≤ (228753126 : ℝ) / 100000000 := by
+  have exp_frac_b14365 : exp ((873 : ℝ) / 2000) ≤ (154728301 : ℝ) / 100000000 := by
+    have ht : ((873 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((873 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((873 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (154728301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b14365 (by norm_num))
+  have hexp : exp ((2873 : ℝ) / 2000) = exp 1 * exp ((873 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (873 : ℝ) / 2000 = (2873 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((2873 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2873 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b14365 (exp_pos ((873 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2873 : ℝ) / 2000), exp_pos (-((2873 : ℝ) / 2000))]
 
-lemma cosh_b14455_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b14455 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b14455_ub : cosh ((2891 : ℝ) / 2000) ≤ (230654794 : ℝ) / 100000000 := by
+  have exp_frac_b14455 : exp ((891 : ℝ) / 2000) ≤ (156127101 : ℝ) / 100000000 := by
+    have ht : ((891 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((891 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((891 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (156127101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b14455 (by norm_num))
+  have hexp : exp ((2891 : ℝ) / 2000) = exp 1 * exp ((891 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (891 : ℝ) / 2000 = (2891 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((2891 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2891 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b14455 (exp_pos ((891 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2891 : ℝ) / 2000), exp_pos (-((2891 : ℝ) / 2000))]
 
-lemma cosh_b14550_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b14550 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b14550_ub : cosh ((291 : ℝ) / 200) ≤ (232680857 : ℝ) / 100000000 := by
+  have exp_frac_b14550 : exp ((91 : ℝ) / 200) ≤ (157617401 : ℝ) / 100000000 := by
+    have ht : ((91 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((91 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((91 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (157617401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b14550 (by norm_num))
+  have hexp : exp ((291 : ℝ) / 200) = exp 1 * exp ((91 : ℝ) / 200) := by
+    rw [← exp_add, show (1 : ℝ) + (91 : ℝ) / 200 = (291 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((291 : ℝ) / 200)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((291 : ℝ) / 200) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b14550 (exp_pos ((91 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((291 : ℝ) / 200), exp_pos (-((291 : ℝ) / 200))]
 
-lemma cosh_b14640_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b14640 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b14640_ub : cosh ((183 : ℝ) / 125) ≤ (234618009 : ℝ) / 100000000 := by
+  have exp_frac_b14640 : exp ((58 : ℝ) / 125) ≤ (159042301 : ℝ) / 100000000 := by
+    have ht : ((58 : ℝ) / 125) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((58 : ℝ) / 125) ^ m / (Nat.factorial m)) +
+          ((58 : ℝ) / 125) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (159042301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b14640 (by norm_num))
+  have hexp : exp ((183 : ℝ) / 125) = exp 1 * exp ((58 : ℝ) / 125) := by
+    rw [← exp_add, show (1 : ℝ) + (58 : ℝ) / 125 = (183 : ℝ) / 125 by norm_num]
+  have hneg : exp (-((183 : ℝ) / 125)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((183 : ℝ) / 125) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b14640 (exp_pos ((58 : ℝ) / 125)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((183 : ℝ) / 125), exp_pos (-((183 : ℝ) / 125))]
 
-lemma cosh_b14730_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b14730 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b14730_ub : cosh ((1473 : ℝ) / 1000) ≤ (236572834 : ℝ) / 100000000 := by
+  have exp_frac_b14730 : exp ((473 : ℝ) / 1000) ≤ (160480201 : ℝ) / 100000000 := by
+    have ht : ((473 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((473 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((473 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (160480201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b14730 (by norm_num))
+  have hexp : exp ((1473 : ℝ) / 1000) = exp 1 * exp ((473 : ℝ) / 1000) := by
+    rw [← exp_add, show (1 : ℝ) + (473 : ℝ) / 1000 = (1473 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((1473 : ℝ) / 1000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1473 : ℝ) / 1000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b14730 (exp_pos ((473 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1473 : ℝ) / 1000), exp_pos (-((1473 : ℝ) / 1000))]
 
-lemma cosh_b14820_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b14820 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b14820_ub : cosh ((741 : ℝ) / 500) ≤ (238545196 : ℝ) / 100000000 := by
+  have exp_frac_b14820 : exp ((241 : ℝ) / 500) ≤ (161931001 : ℝ) / 100000000 := by
+    have ht : ((241 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((241 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((241 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (161931001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b14820 (by norm_num))
+  have hexp : exp ((741 : ℝ) / 500) = exp 1 * exp ((241 : ℝ) / 500) := by
+    rw [← exp_add, show (1 : ℝ) + (241 : ℝ) / 500 = (741 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((741 : ℝ) / 500)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((741 : ℝ) / 500) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b14820 (exp_pos ((241 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((741 : ℝ) / 500), exp_pos (-((741 : ℝ) / 500))]
 
-lemma cosh_b14910_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b14910 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b14910_ub : cosh ((1491 : ℝ) / 1000) ≤ (240535504 : ℝ) / 100000000 := by
+  have exp_frac_b14910 : exp ((491 : ℝ) / 1000) ≤ (163395001 : ℝ) / 100000000 := by
+    have ht : ((491 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((491 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((491 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (163395001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b14910 (by norm_num))
+  have hexp : exp ((1491 : ℝ) / 1000) = exp 1 * exp ((491 : ℝ) / 1000) := by
+    rw [← exp_add, show (1 : ℝ) + (491 : ℝ) / 1000 = (1491 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((1491 : ℝ) / 1000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1491 : ℝ) / 1000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b14910 (exp_pos ((491 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1491 : ℝ) / 1000), exp_pos (-((1491 : ℝ) / 1000))]
 
-lemma cosh_b15000_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b15000 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b15000_ub : cosh ((3 : ℝ) / 2) ≤ (242543758 : ℝ) / 100000000 := by
+  have exp_frac_b15000 : exp ((1 : ℝ) / 2) ≤ (164872201 : ℝ) / 100000000 := by
+    have ht : ((1 : ℝ) / 2) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1 : ℝ) / 2) ^ m / (Nat.factorial m)) +
+          ((1 : ℝ) / 2) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (164872201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b15000 (by norm_num))
+  have hexp : exp ((3 : ℝ) / 2) = exp 1 * exp ((1 : ℝ) / 2) := by
+    rw [← exp_add, show (1 : ℝ) + (1 : ℝ) / 2 = (3 : ℝ) / 2 by norm_num]
+  have hneg : exp (-((3 : ℝ) / 2)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3 : ℝ) / 2) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b15000 (exp_pos ((1 : ℝ) / 2)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3 : ℝ) / 2), exp_pos (-((3 : ℝ) / 2))]
 
-lemma cosh_b15095_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b15095 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b15095_ub : cosh ((3019 : ℝ) / 2000) ≤ (244683203 : ℝ) / 100000000 := by
+  have exp_frac_b15095 : exp ((1019 : ℝ) / 2000) ≤ (166445901 : ℝ) / 100000000 := by
+    have ht : ((1019 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1019 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1019 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (166445901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b15095 (by norm_num))
+  have hexp : exp ((3019 : ℝ) / 2000) = exp 1 * exp ((1019 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1019 : ℝ) / 2000 = (3019 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3019 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3019 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b15095 (exp_pos ((1019 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3019 : ℝ) / 2000), exp_pos (-((3019 : ℝ) / 2000))]
 
-lemma cosh_b15185_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b15185 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b15185_ub : cosh ((3037 : ℝ) / 2000) ≤ (246728979 : ℝ) / 100000000 := by
+  have exp_frac_b15185 : exp ((1037 : ℝ) / 2000) ≤ (167950701 : ℝ) / 100000000 := by
+    have ht : ((1037 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1037 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1037 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (167950701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b15185 (by norm_num))
+  have hexp : exp ((3037 : ℝ) / 2000) = exp 1 * exp ((1037 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1037 : ℝ) / 2000 = (3037 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3037 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3037 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b15185 (exp_pos ((1037 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3037 : ℝ) / 2000), exp_pos (-((3037 : ℝ) / 2000))]
 
-lemma cosh_b15275_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b15275 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b15275_ub : cosh ((611 : ℝ) / 400) ≤ (248793243 : ℝ) / 100000000 := by
+  have exp_frac_b15275 : exp ((211 : ℝ) / 400) ≤ (169469101 : ℝ) / 100000000 := by
+    have ht : ((211 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((211 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((211 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (169469101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b15275 (by norm_num))
+  have hexp : exp ((611 : ℝ) / 400) = exp 1 * exp ((211 : ℝ) / 400) := by
+    rw [← exp_add, show (1 : ℝ) + (211 : ℝ) / 400 = (611 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((611 : ℝ) / 400)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((611 : ℝ) / 400) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b15275 (exp_pos ((211 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((611 : ℝ) / 400), exp_pos (-((611 : ℝ) / 400))]
 
-lemma cosh_b15365_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b15365 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b15365_ub : cosh ((3073 : ℝ) / 2000) ≤ (250876133 : ℝ) / 100000000 := by
+  have exp_frac_b15365 : exp ((1073 : ℝ) / 2000) ≤ (171001201 : ℝ) / 100000000 := by
+    have ht : ((1073 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1073 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1073 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (171001201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b15365 (by norm_num))
+  have hexp : exp ((3073 : ℝ) / 2000) = exp 1 * exp ((1073 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1073 : ℝ) / 2000 = (3073 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3073 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3073 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b15365 (exp_pos ((1073 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3073 : ℝ) / 2000), exp_pos (-((3073 : ℝ) / 2000))]
 
-lemma cosh_b15455_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b15455 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b15455_ub : cosh ((3091 : ℝ) / 2000) ≤ (252977784 : ℝ) / 100000000 := by
+  have exp_frac_b15455 : exp ((1091 : ℝ) / 2000) ≤ (172547101 : ℝ) / 100000000 := by
+    have ht : ((1091 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1091 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1091 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (172547101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b15455 (by norm_num))
+  have hexp : exp ((3091 : ℝ) / 2000) = exp 1 * exp ((1091 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1091 : ℝ) / 2000 = (3091 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3091 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3091 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b15455 (exp_pos ((1091 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3091 : ℝ) / 2000), exp_pos (-((3091 : ℝ) / 2000))]
 
-lemma cosh_b15550_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b15550 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b15550_ub : cosh ((311 : ℝ) / 200) ≤ (255216881 : ℝ) / 100000000 := by
+  have exp_frac_b15550 : exp ((111 : ℝ) / 200) ≤ (174194101 : ℝ) / 100000000 := by
+    have ht : ((111 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((111 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((111 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (174194101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b15550 (by norm_num))
+  have hexp : exp ((311 : ℝ) / 200) = exp 1 * exp ((111 : ℝ) / 200) := by
+    rw [← exp_add, show (1 : ℝ) + (111 : ℝ) / 200 = (311 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((311 : ℝ) / 200)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((311 : ℝ) / 200) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b15550 (exp_pos ((111 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((311 : ℝ) / 200), exp_pos (-((311 : ℝ) / 200))]
 
-lemma cosh_b15640_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b15640 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b15640_ub : cosh ((391 : ℝ) / 250) ≤ (257357957 : ℝ) / 100000000 := by
+  have exp_frac_b15640 : exp ((141 : ℝ) / 250) ≤ (175769001 : ℝ) / 100000000 := by
+    have ht : ((141 : ℝ) / 250) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((141 : ℝ) / 250) ^ m / (Nat.factorial m)) +
+          ((141 : ℝ) / 250) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (175769001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b15640 (by norm_num))
+  have hexp : exp ((391 : ℝ) / 250) = exp 1 * exp ((141 : ℝ) / 250) := by
+    rw [← exp_add, show (1 : ℝ) + (141 : ℝ) / 250 = (391 : ℝ) / 250 by norm_num]
+  have hneg : exp (-((391 : ℝ) / 250)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((391 : ℝ) / 250) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b15640 (exp_pos ((141 : ℝ) / 250)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((391 : ℝ) / 250), exp_pos (-((391 : ℝ) / 250))]
 
-lemma cosh_b15730_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b15730 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b15730_ub : cosh ((1573 : ℝ) / 1000) ≤ (259518203 : ℝ) / 100000000 := by
+  have exp_frac_b15730 : exp ((573 : ℝ) / 1000) ≤ (177358001 : ℝ) / 100000000 := by
+    have ht : ((573 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((573 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((573 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (177358001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b15730 (by norm_num))
+  have hexp : exp ((1573 : ℝ) / 1000) = exp 1 * exp ((573 : ℝ) / 1000) := by
+    rw [← exp_add, show (1 : ℝ) + (573 : ℝ) / 1000 = (1573 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((1573 : ℝ) / 1000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1573 : ℝ) / 1000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b15730 (exp_pos ((573 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1573 : ℝ) / 1000), exp_pos (-((1573 : ℝ) / 1000))]
 
-lemma cosh_b15820_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b15820 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b15820_ub : cosh ((791 : ℝ) / 500) ≤ (261698161 : ℝ) / 100000000 := by
+  have exp_frac_b15820 : exp ((291 : ℝ) / 500) ≤ (178961501 : ℝ) / 100000000 := by
+    have ht : ((291 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((291 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((291 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (178961501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b15820 (by norm_num))
+  have hexp : exp ((791 : ℝ) / 500) = exp 1 * exp ((291 : ℝ) / 500) := by
+    rw [← exp_add, show (1 : ℝ) + (291 : ℝ) / 500 = (791 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((791 : ℝ) / 500)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((791 : ℝ) / 500) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b15820 (exp_pos ((291 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((791 : ℝ) / 500), exp_pos (-((791 : ℝ) / 500))]
 
-lemma cosh_b15910_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b15910 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b15910_ub : cosh ((1591 : ℝ) / 1000) ≤ (263897696 : ℝ) / 100000000 := by
+  have exp_frac_b15910 : exp ((591 : ℝ) / 1000) ≤ (180579401 : ℝ) / 100000000 := by
+    have ht : ((591 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((591 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((591 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (180579401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b15910 (by norm_num))
+  have hexp : exp ((1591 : ℝ) / 1000) = exp 1 * exp ((591 : ℝ) / 1000) := by
+    rw [← exp_add, show (1 : ℝ) + (591 : ℝ) / 1000 = (1591 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((1591 : ℝ) / 1000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1591 : ℝ) / 1000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b15910 (exp_pos ((591 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1591 : ℝ) / 1000), exp_pos (-((1591 : ℝ) / 1000))]
 
-lemma cosh_b16000_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b16000 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b16000_ub : cosh ((8 : ℝ) / 5) ≤ (266117080 : ℝ) / 100000000 := by
+  have exp_frac_b16000 : exp ((3 : ℝ) / 5) ≤ (182211901 : ℝ) / 100000000 := by
+    have ht : ((3 : ℝ) / 5) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((3 : ℝ) / 5) ^ m / (Nat.factorial m)) +
+          ((3 : ℝ) / 5) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (182211901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b16000 (by norm_num))
+  have hexp : exp ((8 : ℝ) / 5) = exp 1 * exp ((3 : ℝ) / 5) := by
+    rw [← exp_add, show (1 : ℝ) + (3 : ℝ) / 5 = (8 : ℝ) / 5 by norm_num]
+  have hneg : exp (-((8 : ℝ) / 5)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8 : ℝ) / 5) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b16000 (exp_pos ((3 : ℝ) / 5)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8 : ℝ) / 5), exp_pos (-((8 : ℝ) / 5))]
 
-lemma cosh_b16095_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b16095 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b16095_ub : cosh ((3219 : ℝ) / 2000) ≤ (268481658 : ℝ) / 100000000 := by
+  have exp_frac_b16095 : exp ((1219 : ℝ) / 2000) ≤ (183951201 : ℝ) / 100000000 := by
+    have ht : ((1219 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1219 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1219 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (183951201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b16095 (by norm_num))
+  have hexp : exp ((3219 : ℝ) / 2000) = exp 1 * exp ((1219 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1219 : ℝ) / 2000 = (3219 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3219 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3219 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b16095 (exp_pos ((1219 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3219 : ℝ) / 2000), exp_pos (-((3219 : ℝ) / 2000))]
 
-lemma cosh_b16185_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b16185 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b16185_ub : cosh ((3237 : ℝ) / 2000) ≤ (270742507 : ℝ) / 100000000 := by
+  have exp_frac_b16185 : exp ((1237 : ℝ) / 2000) ≤ (185614201 : ℝ) / 100000000 := by
+    have ht : ((1237 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1237 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1237 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (185614201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b16185 (by norm_num))
+  have hexp : exp ((3237 : ℝ) / 2000) = exp 1 * exp ((1237 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1237 : ℝ) / 2000 = (3237 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3237 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3237 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b16185 (exp_pos ((1237 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3237 : ℝ) / 2000), exp_pos (-((3237 : ℝ) / 2000))]
 
-lemma cosh_b16275_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b16275 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b16275_ub : cosh ((651 : ℝ) / 400) ≤ (273023884 : ℝ) / 100000000 := by
+  have exp_frac_b16275 : exp ((251 : ℝ) / 400) ≤ (187292301 : ℝ) / 100000000 := by
+    have ht : ((251 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((251 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((251 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (187292301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b16275 (by norm_num))
+  have hexp : exp ((651 : ℝ) / 400) = exp 1 * exp ((251 : ℝ) / 400) := by
+    rw [← exp_add, show (1 : ℝ) + (251 : ℝ) / 400 = (651 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((651 : ℝ) / 400)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((651 : ℝ) / 400) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b16275 (exp_pos ((251 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((651 : ℝ) / 400), exp_pos (-((651 : ℝ) / 400))]
 
-lemma cosh_b16365_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b16365 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b16365_ub : cosh ((3273 : ℝ) / 2000) ≤ (275325789 : ℝ) / 100000000 := by
+  have exp_frac_b16365 : exp ((1273 : ℝ) / 2000) ≤ (188985501 : ℝ) / 100000000 := by
+    have ht : ((1273 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1273 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1273 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (188985501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b16365 (by norm_num))
+  have hexp : exp ((3273 : ℝ) / 2000) = exp 1 * exp ((1273 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1273 : ℝ) / 2000 = (3273 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3273 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3273 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b16365 (exp_pos ((1273 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3273 : ℝ) / 2000), exp_pos (-((3273 : ℝ) / 2000))]
 
-lemma cosh_b16455_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b16455 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b16455_ub : cosh ((3291 : ℝ) / 2000) ≤ (277648631 : ℝ) / 100000000 := by
+  have exp_frac_b16455 : exp ((1291 : ℝ) / 2000) ≤ (190694101 : ℝ) / 100000000 := by
+    have ht : ((1291 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1291 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1291 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (190694101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b16455 (by norm_num))
+  have hexp : exp ((3291 : ℝ) / 2000) = exp 1 * exp ((1291 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1291 : ℝ) / 2000 = (3291 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3291 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3291 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b16455 (exp_pos ((1291 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3291 : ℝ) / 2000), exp_pos (-((3291 : ℝ) / 2000))]
 
-lemma cosh_b16550_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b16550 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b16550_ub : cosh ((331 : ℝ) / 200) ≤ (280123193 : ℝ) / 100000000 := by
+  have exp_frac_b16550 : exp ((131 : ℝ) / 200) ≤ (192514301 : ℝ) / 100000000 := by
+    have ht : ((131 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((131 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((131 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (192514301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b16550 (by norm_num))
+  have hexp : exp ((331 : ℝ) / 200) = exp 1 * exp ((131 : ℝ) / 200) := by
+    rw [← exp_add, show (1 : ℝ) + (131 : ℝ) / 200 = (331 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((331 : ℝ) / 200)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((331 : ℝ) / 200) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b16550 (exp_pos ((131 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((331 : ℝ) / 200), exp_pos (-((331 : ℝ) / 200))]
 
-lemma cosh_b16640_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b16640 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b16640_ub : cosh ((208 : ℝ) / 125) ≤ (282489402 : ℝ) / 100000000 := by
+  have exp_frac_b16640 : exp ((83 : ℝ) / 125) ≤ (194254801 : ℝ) / 100000000 := by
+    have ht : ((83 : ℝ) / 125) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((83 : ℝ) / 125) ^ m / (Nat.factorial m)) +
+          ((83 : ℝ) / 125) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (194254801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b16640 (by norm_num))
+  have hexp : exp ((208 : ℝ) / 125) = exp 1 * exp ((83 : ℝ) / 125) := by
+    rw [← exp_add, show (1 : ℝ) + (83 : ℝ) / 125 = (208 : ℝ) / 125 by norm_num]
+  have hneg : exp (-((208 : ℝ) / 125)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((208 : ℝ) / 125) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b16640 (exp_pos ((83 : ℝ) / 125)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((208 : ℝ) / 125), exp_pos (-((208 : ℝ) / 125))]
 
-lemma cosh_b16730_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b16730 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b16730_ub : cosh ((1673 : ℝ) / 1000) ≤ (284876820 : ℝ) / 100000000 := by
+  have exp_frac_b16730 : exp ((673 : ℝ) / 1000) ≤ (196010901 : ℝ) / 100000000 := by
+    have ht : ((673 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((673 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((673 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (196010901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b16730 (by norm_num))
+  have hexp : exp ((1673 : ℝ) / 1000) = exp 1 * exp ((673 : ℝ) / 1000) := by
+    rw [← exp_add, show (1 : ℝ) + (673 : ℝ) / 1000 = (1673 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((1673 : ℝ) / 1000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1673 : ℝ) / 1000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b16730 (exp_pos ((673 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1673 : ℝ) / 1000), exp_pos (-((1673 : ℝ) / 1000))]
 
-lemma cosh_b16820_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b16820 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b16820_ub : cosh ((841 : ℝ) / 500) ≤ (287285990 : ℝ) / 100000000 := by
+  have exp_frac_b16820 : exp ((341 : ℝ) / 500) ≤ (197783001 : ℝ) / 100000000 := by
+    have ht : ((341 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((341 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((341 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (197783001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b16820 (by norm_num))
+  have hexp : exp ((841 : ℝ) / 500) = exp 1 * exp ((341 : ℝ) / 500) := by
+    rw [← exp_add, show (1 : ℝ) + (341 : ℝ) / 500 = (841 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((841 : ℝ) / 500)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((841 : ℝ) / 500) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b16820 (exp_pos ((341 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((841 : ℝ) / 500), exp_pos (-((841 : ℝ) / 500))]
 
-lemma cosh_b16910_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b16910 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b16910_ub : cosh ((1691 : ℝ) / 1000) ≤ (289716912 : ℝ) / 100000000 := by
+  have exp_frac_b16910 : exp ((691 : ℝ) / 1000) ≤ (199571101 : ℝ) / 100000000 := by
+    have ht : ((691 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((691 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((691 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (199571101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b16910 (by norm_num))
+  have hexp : exp ((1691 : ℝ) / 1000) = exp 1 * exp ((691 : ℝ) / 1000) := by
+    rw [← exp_add, show (1 : ℝ) + (691 : ℝ) / 1000 = (1691 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((1691 : ℝ) / 1000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1691 : ℝ) / 1000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b16910 (exp_pos ((691 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1691 : ℝ) / 1000), exp_pos (-((1691 : ℝ) / 1000))]
 
-lemma cosh_b17000_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b17000 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b17000_ub : cosh ((17 : ℝ) / 10) ≤ (292169722 : ℝ) / 100000000 := by
+  have exp_frac_b17000 : exp ((7 : ℝ) / 10) ≤ (201375301 : ℝ) / 100000000 := by
+    have ht : ((7 : ℝ) / 10) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((7 : ℝ) / 10) ^ m / (Nat.factorial m)) +
+          ((7 : ℝ) / 10) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (201375301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b17000 (by norm_num))
+  have hexp : exp ((17 : ℝ) / 10) = exp 1 * exp ((7 : ℝ) / 10) := by
+    rw [← exp_add, show (1 : ℝ) + (7 : ℝ) / 10 = (17 : ℝ) / 10 by norm_num]
+  have hneg : exp (-((17 : ℝ) / 10)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((17 : ℝ) / 10) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b17000 (exp_pos ((7 : ℝ) / 10)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((17 : ℝ) / 10), exp_pos (-((17 : ℝ) / 10))]
 
-lemma cosh_b17095_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b17095 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b17095_ub : cosh ((3419 : ℝ) / 2000) ≤ (294782953 : ℝ) / 100000000 := by
+  have exp_frac_b17095 : exp ((1419 : ℝ) / 2000) ≤ (203297501 : ℝ) / 100000000 := by
+    have ht : ((1419 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1419 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1419 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (203297501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b17095 (by norm_num))
+  have hexp : exp ((3419 : ℝ) / 2000) = exp 1 * exp ((1419 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1419 : ℝ) / 2000 = (3419 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3419 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3419 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b17095 (exp_pos ((1419 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3419 : ℝ) / 2000), exp_pos (-((3419 : ℝ) / 2000))]
 
-lemma cosh_b17185_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b17185 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b17185_ub : cosh ((3437 : ℝ) / 2000) ≤ (297281578 : ℝ) / 100000000 := by
+  have exp_frac_b17185 : exp ((1437 : ℝ) / 2000) ≤ (205135401 : ℝ) / 100000000 := by
+    have ht : ((1437 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1437 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1437 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (205135401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b17185 (by norm_num))
+  have hexp : exp ((3437 : ℝ) / 2000) = exp 1 * exp ((1437 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1437 : ℝ) / 2000 = (3437 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3437 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3437 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b17185 (exp_pos ((1437 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3437 : ℝ) / 2000), exp_pos (-((3437 : ℝ) / 2000))]
 
-lemma cosh_b17275_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b17275 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b17275_ub : cosh ((691 : ℝ) / 400) ≤ (299802907 : ℝ) / 100000000 := by
+  have exp_frac_b17275 : exp ((291 : ℝ) / 400) ≤ (206990001 : ℝ) / 100000000 := by
+    have ht : ((291 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((291 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((291 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (206990001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b17275 (by norm_num))
+  have hexp : exp ((691 : ℝ) / 400) = exp 1 * exp ((291 : ℝ) / 400) := by
+    rw [← exp_add, show (1 : ℝ) + (291 : ℝ) / 400 = (691 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((691 : ℝ) / 400)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((691 : ℝ) / 400) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b17275 (exp_pos ((291 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((691 : ℝ) / 400), exp_pos (-((691 : ℝ) / 400))]
 
-lemma cosh_b17365_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b17365 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b17365_ub : cosh ((3473 : ℝ) / 2000) ≤ (302346939 : ℝ) / 100000000 := by
+  have exp_frac_b17365 : exp ((1473 : ℝ) / 2000) ≤ (208861301 : ℝ) / 100000000 := by
+    have ht : ((1473 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1473 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1473 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (208861301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b17365 (by norm_num))
+  have hexp : exp ((3473 : ℝ) / 2000) = exp 1 * exp ((1473 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1473 : ℝ) / 2000 = (3473 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3473 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3473 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b17365 (exp_pos ((1473 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3473 : ℝ) / 2000), exp_pos (-((3473 : ℝ) / 2000))]
 
-lemma cosh_b17455_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b17455 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b17455_ub : cosh ((3491 : ℝ) / 2000) ≤ (304914083 : ℝ) / 100000000 := by
+  have exp_frac_b17455 : exp ((1491 : ℝ) / 2000) ≤ (210749601 : ℝ) / 100000000 := by
+    have ht : ((1491 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1491 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1491 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (210749601 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b17455 (by norm_num))
+  have hexp : exp ((3491 : ℝ) / 2000) = exp 1 * exp ((1491 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1491 : ℝ) / 2000 = (3491 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3491 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3491 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b17455 (exp_pos ((1491 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3491 : ℝ) / 2000), exp_pos (-((3491 : ℝ) / 2000))]
 
-lemma cosh_b17550_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b17550 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b17550_ub : cosh ((351 : ℝ) / 200) ≤ (307648853 : ℝ) / 100000000 := by
+  have exp_frac_b17550 : exp ((151 : ℝ) / 200) ≤ (212761201 : ℝ) / 100000000 := by
+    have ht : ((151 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((151 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((151 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (212761201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b17550 (by norm_num))
+  have hexp : exp ((351 : ℝ) / 200) = exp 1 * exp ((151 : ℝ) / 200) := by
+    rw [← exp_add, show (1 : ℝ) + (151 : ℝ) / 200 = (351 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((351 : ℝ) / 200)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((351 : ℝ) / 200) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b17550 (exp_pos ((151 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((351 : ℝ) / 200), exp_pos (-((351 : ℝ) / 200))]
 
-lemma cosh_b17640_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b17640 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b17640_ub : cosh ((441 : ℝ) / 250) ≤ (310263852 : ℝ) / 100000000 := by
+  have exp_frac_b17640 : exp ((191 : ℝ) / 250) ≤ (214684701 : ℝ) / 100000000 := by
+    have ht : ((191 : ℝ) / 250) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((191 : ℝ) / 250) ^ m / (Nat.factorial m)) +
+          ((191 : ℝ) / 250) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (214684701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b17640 (by norm_num))
+  have hexp : exp ((441 : ℝ) / 250) = exp 1 * exp ((191 : ℝ) / 250) := by
+    rw [← exp_add, show (1 : ℝ) + (191 : ℝ) / 250 = (441 : ℝ) / 250 by norm_num]
+  have hneg : exp (-((441 : ℝ) / 250)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((441 : ℝ) / 250) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b17640 (exp_pos ((191 : ℝ) / 250)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((441 : ℝ) / 250), exp_pos (-((441 : ℝ) / 250))]
 
-lemma cosh_b17730_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b17730 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b17730_ub : cosh ((1773 : ℝ) / 1000) ≤ (312902505 : ℝ) / 100000000 := by
+  have exp_frac_b17730 : exp ((773 : ℝ) / 1000) ≤ (216625601 : ℝ) / 100000000 := by
+    have ht : ((773 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((773 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((773 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (216625601 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b17730 (by norm_num))
+  have hexp : exp ((1773 : ℝ) / 1000) = exp 1 * exp ((773 : ℝ) / 1000) := by
+    rw [← exp_add, show (1 : ℝ) + (773 : ℝ) / 1000 = (1773 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((1773 : ℝ) / 1000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1773 : ℝ) / 1000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b17730 (exp_pos ((773 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1773 : ℝ) / 1000), exp_pos (-((1773 : ℝ) / 1000))]
 
-lemma cosh_b17820_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b17820 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b17820_ub : cosh ((891 : ℝ) / 500) ≤ (315564950 : ℝ) / 100000000 := by
+  have exp_frac_b17820 : exp ((391 : ℝ) / 500) ≤ (218584001 : ℝ) / 100000000 := by
+    have ht : ((391 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((391 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((391 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (218584001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b17820 (by norm_num))
+  have hexp : exp ((891 : ℝ) / 500) = exp 1 * exp ((391 : ℝ) / 500) := by
+    rw [← exp_add, show (1 : ℝ) + (391 : ℝ) / 500 = (891 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((891 : ℝ) / 500)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((891 : ℝ) / 500) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b17820 (exp_pos ((391 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((891 : ℝ) / 500), exp_pos (-((891 : ℝ) / 500))]
 
-lemma cosh_b17910_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b17910 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b17910_ub : cosh ((1791 : ℝ) / 1000) ≤ (318251594 : ℝ) / 100000000 := by
+  have exp_frac_b17910 : exp ((791 : ℝ) / 1000) ≤ (220560201 : ℝ) / 100000000 := by
+    have ht : ((791 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((791 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((791 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (220560201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b17910 (by norm_num))
+  have hexp : exp ((1791 : ℝ) / 1000) = exp 1 * exp ((791 : ℝ) / 1000) := by
+    rw [← exp_add, show (1 : ℝ) + (791 : ℝ) / 1000 = (1791 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((1791 : ℝ) / 1000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1791 : ℝ) / 1000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b17910 (exp_pos ((791 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1791 : ℝ) / 1000), exp_pos (-((1791 : ℝ) / 1000))]
 
-lemma cosh_b18000_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b18000 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b18000_ub : cosh ((9 : ℝ) / 5) ≤ (320962437 : ℝ) / 100000000 := by
+  have exp_frac_b18000 : exp ((4 : ℝ) / 5) ≤ (222554201 : ℝ) / 100000000 := by
+    have ht : ((4 : ℝ) / 5) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((4 : ℝ) / 5) ^ m / (Nat.factorial m)) +
+          ((4 : ℝ) / 5) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (222554201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b18000 (by norm_num))
+  have hexp : exp ((9 : ℝ) / 5) = exp 1 * exp ((4 : ℝ) / 5) := by
+    rw [← exp_add, show (1 : ℝ) + (4 : ℝ) / 5 = (9 : ℝ) / 5 by norm_num]
+  have hneg : exp (-((9 : ℝ) / 5)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9 : ℝ) / 5) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b18000 (exp_pos ((4 : ℝ) / 5)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9 : ℝ) / 5), exp_pos (-((9 : ℝ) / 5))]
 
-lemma cosh_b18095_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b18095 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b18095_ub : cosh ((3619 : ℝ) / 2000) ≤ (323850423 : ℝ) / 100000000 := by
+  have exp_frac_b18095 : exp ((1619 : ℝ) / 2000) ≤ (224678501 : ℝ) / 100000000 := by
+    have ht : ((1619 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1619 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1619 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (224678501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b18095 (by norm_num))
+  have hexp : exp ((3619 : ℝ) / 2000) = exp 1 * exp ((1619 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1619 : ℝ) / 2000 = (3619 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3619 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3619 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b18095 (exp_pos ((1619 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3619 : ℝ) / 2000), exp_pos (-((3619 : ℝ) / 2000))]
 
-lemma cosh_b18185_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b18185 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b18185_ub : cosh ((3637 : ℝ) / 2000) ≤ (326611839 : ℝ) / 100000000 := by
+  have exp_frac_b18185 : exp ((1637 : ℝ) / 2000) ≤ (226709701 : ℝ) / 100000000 := by
+    have ht : ((1637 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1637 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1637 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (226709701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b18185 (by norm_num))
+  have hexp : exp ((3637 : ℝ) / 2000) = exp 1 * exp ((1637 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1637 : ℝ) / 2000 = (3637 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3637 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3637 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b18185 (exp_pos ((1637 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3637 : ℝ) / 2000), exp_pos (-((3637 : ℝ) / 2000))]
 
-lemma cosh_b18275_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b18275 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b18275_ub : cosh ((731 : ℝ) / 400) ≤ (329398270 : ℝ) / 100000000 := by
+  have exp_frac_b18275 : exp ((331 : ℝ) / 400) ≤ (228759301 : ℝ) / 100000000 := by
+    have ht : ((331 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((331 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((331 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (228759301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b18275 (by norm_num))
+  have hexp : exp ((731 : ℝ) / 400) = exp 1 * exp ((331 : ℝ) / 400) := by
+    rw [← exp_add, show (1 : ℝ) + (331 : ℝ) / 400 = (731 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((731 : ℝ) / 400)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((731 : ℝ) / 400) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b18275 (exp_pos ((331 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((731 : ℝ) / 400), exp_pos (-((731 : ℝ) / 400))]
 
-lemma cosh_b18365_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b18365 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b18365_ub : cosh ((3673 : ℝ) / 2000) ≤ (332209988 : ℝ) / 100000000 := by
+  have exp_frac_b18365 : exp ((1673 : ℝ) / 2000) ≤ (230827501 : ℝ) / 100000000 := by
+    have ht : ((1673 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1673 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1673 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (230827501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b18365 (by norm_num))
+  have hexp : exp ((3673 : ℝ) / 2000) = exp 1 * exp ((1673 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1673 : ℝ) / 2000 = (3673 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3673 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3673 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b18365 (exp_pos ((1673 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3673 : ℝ) / 2000), exp_pos (-((3673 : ℝ) / 2000))]
 
-lemma cosh_b18455_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b18455 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b18455_ub : cosh ((3691 : ℝ) / 2000) ≤ (335046993 : ℝ) / 100000000 := by
+  have exp_frac_b18455 : exp ((1691 : ℝ) / 2000) ≤ (232914301 : ℝ) / 100000000 := by
+    have ht : ((1691 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1691 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1691 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (232914301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b18455 (by norm_num))
+  have hexp : exp ((3691 : ℝ) / 2000) = exp 1 * exp ((1691 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1691 : ℝ) / 2000 = (3691 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3691 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3691 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b18455 (exp_pos ((1691 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3691 : ℝ) / 2000), exp_pos (-((3691 : ℝ) / 2000))]
 
-lemma cosh_b18550_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b18550 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b18550_ub : cosh ((371 : ℝ) / 200) ≤ (338069433 : ℝ) / 100000000 := by
+  have exp_frac_b18550 : exp ((171 : ℝ) / 200) ≤ (235137501 : ℝ) / 100000000 := by
+    have ht : ((171 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((171 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((171 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (235137501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b18550 (by norm_num))
+  have hexp : exp ((371 : ℝ) / 200) = exp 1 * exp ((171 : ℝ) / 200) := by
+    rw [← exp_add, show (1 : ℝ) + (171 : ℝ) / 200 = (371 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((371 : ℝ) / 200)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((371 : ℝ) / 200) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b18550 (exp_pos ((171 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((371 : ℝ) / 200), exp_pos (-((371 : ℝ) / 200))]
 
-lemma cosh_b18640_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b18640 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b18640_ub : cosh ((233 : ℝ) / 125) ≤ (340959458 : ℝ) / 100000000 := by
+  have exp_frac_b18640 : exp ((108 : ℝ) / 125) ≤ (237263301 : ℝ) / 100000000 := by
+    have ht : ((108 : ℝ) / 125) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((108 : ℝ) / 125) ^ m / (Nat.factorial m)) +
+          ((108 : ℝ) / 125) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (237263301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b18640 (by norm_num))
+  have hexp : exp ((233 : ℝ) / 125) = exp 1 * exp ((108 : ℝ) / 125) := by
+    rw [← exp_add, show (1 : ℝ) + (108 : ℝ) / 125 = (233 : ℝ) / 125 by norm_num]
+  have hneg : exp (-((233 : ℝ) / 125)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((233 : ℝ) / 125) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b18640 (exp_pos ((108 : ℝ) / 125)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((233 : ℝ) / 125), exp_pos (-((233 : ℝ) / 125))]
 
-lemma cosh_b18730_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b18730 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b18730_ub : cosh ((1873 : ℝ) / 1000) ≤ (343875586 : ℝ) / 100000000 := by
+  have exp_frac_b18730 : exp ((873 : ℝ) / 1000) ≤ (239408301 : ℝ) / 100000000 := by
+    have ht : ((873 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((873 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((873 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (239408301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b18730 (by norm_num))
+  have hexp : exp ((1873 : ℝ) / 1000) = exp 1 * exp ((873 : ℝ) / 1000) := by
+    rw [← exp_add, show (1 : ℝ) + (873 : ℝ) / 1000 = (1873 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((1873 : ℝ) / 1000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1873 : ℝ) / 1000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b18730 (exp_pos ((873 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1873 : ℝ) / 1000), exp_pos (-((1873 : ℝ) / 1000))]
 
-lemma cosh_b18820_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b18820 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b18820_ub : cosh ((941 : ℝ) / 500) ≤ (346818088 : ℝ) / 100000000 := by
+  have exp_frac_b18820 : exp ((441 : ℝ) / 500) ≤ (241572701 : ℝ) / 100000000 := by
+    have ht : ((441 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((441 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((441 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (241572701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b18820 (by norm_num))
+  have hexp : exp ((941 : ℝ) / 500) = exp 1 * exp ((441 : ℝ) / 500) := by
+    rw [← exp_add, show (1 : ℝ) + (441 : ℝ) / 500 = (941 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((941 : ℝ) / 500)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((941 : ℝ) / 500) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b18820 (exp_pos ((441 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((941 : ℝ) / 500), exp_pos (-((941 : ℝ) / 500))]
 
-lemma cosh_b18910_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b18910 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b18910_ub : cosh ((1891 : ℝ) / 1000) ≤ (349787236 : ℝ) / 100000000 := by
+  have exp_frac_b18910 : exp ((891 : ℝ) / 1000) ≤ (243756701 : ℝ) / 100000000 := by
+    have ht : ((891 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((891 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((891 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (243756701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b18910 (by norm_num))
+  have hexp : exp ((1891 : ℝ) / 1000) = exp 1 * exp ((891 : ℝ) / 1000) := by
+    rw [← exp_add, show (1 : ℝ) + (891 : ℝ) / 1000 = (1891 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((1891 : ℝ) / 1000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1891 : ℝ) / 1000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b18910 (exp_pos ((891 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1891 : ℝ) / 1000), exp_pos (-((1891 : ℝ) / 1000))]
 
-lemma cosh_b19000_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b19000 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b19000_ub : cosh ((19 : ℝ) / 10) ≤ (352783166 : ℝ) / 100000000 := by
+  have exp_frac_b19000 : exp ((9 : ℝ) / 10) ≤ (245960401 : ℝ) / 100000000 := by
+    have ht : ((9 : ℝ) / 10) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((9 : ℝ) / 10) ^ m / (Nat.factorial m)) +
+          ((9 : ℝ) / 10) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (245960401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b19000 (by norm_num))
+  have hexp : exp ((19 : ℝ) / 10) = exp 1 * exp ((9 : ℝ) / 10) := by
+    rw [← exp_add, show (1 : ℝ) + (9 : ℝ) / 10 = (19 : ℝ) / 10 by norm_num]
+  have hneg : exp (-((19 : ℝ) / 10)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((19 : ℝ) / 10) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b19000 (exp_pos ((9 : ℝ) / 10)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((19 : ℝ) / 10), exp_pos (-((19 : ℝ) / 10))]
 
-lemma cosh_b19095_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b19095 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b19095_ub : cosh ((3819 : ℝ) / 2000) ≤ (355974864 : ℝ) / 100000000 := by
+  have exp_frac_b19095 : exp ((1819 : ℝ) / 2000) ≤ (248308101 : ℝ) / 100000000 := by
+    have ht : ((1819 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1819 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1819 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (248308101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b19095 (by norm_num))
+  have hexp : exp ((3819 : ℝ) / 2000) = exp 1 * exp ((1819 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1819 : ℝ) / 2000 = (3819 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3819 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3819 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b19095 (exp_pos ((1819 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3819 : ℝ) / 2000), exp_pos (-((3819 : ℝ) / 2000))]
 
-lemma cosh_b19185_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b19185 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b19185_ub : cosh ((3837 : ℝ) / 2000) ≤ (359026805 : ℝ) / 100000000 := by
+  have exp_frac_b19185 : exp ((1837 : ℝ) / 2000) ≤ (250553001 : ℝ) / 100000000 := by
+    have ht : ((1837 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1837 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1837 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (250553001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b19185 (by norm_num))
+  have hexp : exp ((3837 : ℝ) / 2000) = exp 1 * exp ((1837 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1837 : ℝ) / 2000 = (3837 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3837 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3837 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b19185 (exp_pos ((1837 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3837 : ℝ) / 2000), exp_pos (-((3837 : ℝ) / 2000))]
 
-lemma cosh_b19275_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b19275 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b19275_ub : cosh ((771 : ℝ) / 400) ≤ (362106209 : ℝ) / 100000000 := by
+  have exp_frac_b19275 : exp ((371 : ℝ) / 400) ≤ (252818101 : ℝ) / 100000000 := by
+    have ht : ((371 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((371 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((371 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (252818101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b19275 (by norm_num))
+  have hexp : exp ((771 : ℝ) / 400) = exp 1 * exp ((371 : ℝ) / 400) := by
+    rw [← exp_add, show (1 : ℝ) + (371 : ℝ) / 400 = (771 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((771 : ℝ) / 400)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((771 : ℝ) / 400) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b19275 (exp_pos ((371 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((771 : ℝ) / 400), exp_pos (-((771 : ℝ) / 400))]
 
-lemma cosh_b19365_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b19365 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b19365_ub : cosh ((3873 : ℝ) / 2000) ≤ (365213618 : ℝ) / 100000000 := by
+  have exp_frac_b19365 : exp ((1873 : ℝ) / 2000) ≤ (255103801 : ℝ) / 100000000 := by
+    have ht : ((1873 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1873 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1873 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (255103801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b19365 (by norm_num))
+  have hexp : exp ((3873 : ℝ) / 2000) = exp 1 * exp ((1873 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1873 : ℝ) / 2000 = (3873 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3873 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3873 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b19365 (exp_pos ((1873 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3873 : ℝ) / 2000), exp_pos (-((3873 : ℝ) / 2000))]
 
-lemma cosh_b19455_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b19455 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b19455_ub : cosh ((3891 : ℝ) / 2000) ≤ (368349033 : ℝ) / 100000000 := by
+  have exp_frac_b19455 : exp ((1891 : ℝ) / 2000) ≤ (257410101 : ℝ) / 100000000 := by
+    have ht : ((1891 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1891 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1891 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (257410101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b19455 (by norm_num))
+  have hexp : exp ((3891 : ℝ) / 2000) = exp 1 * exp ((1891 : ℝ) / 2000) := by
+    rw [← exp_add, show (1 : ℝ) + (1891 : ℝ) / 2000 = (3891 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((3891 : ℝ) / 2000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3891 : ℝ) / 2000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b19455 (exp_pos ((1891 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3891 : ℝ) / 2000), exp_pos (-((3891 : ℝ) / 2000))]
 
-lemma cosh_b19550_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b19550 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b19550_ub : cosh ((391 : ℝ) / 200) ≤ (371689324 : ℝ) / 100000000 := by
+  have exp_frac_b19550 : exp ((191 : ℝ) / 200) ≤ (259867101 : ℝ) / 100000000 := by
+    have ht : ((191 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((191 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((191 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (259867101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b19550 (by norm_num))
+  have hexp : exp ((391 : ℝ) / 200) = exp 1 * exp ((191 : ℝ) / 200) := by
+    rw [← exp_add, show (1 : ℝ) + (191 : ℝ) / 200 = (391 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((391 : ℝ) / 200)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((391 : ℝ) / 200) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b19550 (exp_pos ((191 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((391 : ℝ) / 200), exp_pos (-((391 : ℝ) / 200))]
 
-lemma cosh_b19640_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b19640 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b19640_ub : cosh ((491 : ℝ) / 250) ≤ (374883334 : ℝ) / 100000000 := by
+  have exp_frac_b19640 : exp ((241 : ℝ) / 250) ≤ (262216501 : ℝ) / 100000000 := by
+    have ht : ((241 : ℝ) / 250) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((241 : ℝ) / 250) ^ m / (Nat.factorial m)) +
+          ((241 : ℝ) / 250) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (262216501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b19640 (by norm_num))
+  have hexp : exp ((491 : ℝ) / 250) = exp 1 * exp ((241 : ℝ) / 250) := by
+    rw [← exp_add, show (1 : ℝ) + (241 : ℝ) / 250 = (491 : ℝ) / 250 by norm_num]
+  have hneg : exp (-((491 : ℝ) / 250)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((491 : ℝ) / 250) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b19640 (exp_pos ((241 : ℝ) / 250)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((491 : ℝ) / 250), exp_pos (-((491 : ℝ) / 250))]
 
-lemma cosh_b19730_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b19730 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b19730_ub : cosh ((1973 : ℝ) / 1000) ≤ (378106164 : ℝ) / 100000000 := by
+  have exp_frac_b19730 : exp ((973 : ℝ) / 1000) ≤ (264587101 : ℝ) / 100000000 := by
+    have ht : ((973 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((973 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((973 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (264587101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b19730 (by norm_num))
+  have hexp : exp ((1973 : ℝ) / 1000) = exp 1 * exp ((973 : ℝ) / 1000) := by
+    rw [← exp_add, show (1 : ℝ) + (973 : ℝ) / 1000 = (1973 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((1973 : ℝ) / 1000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1973 : ℝ) / 1000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b19730 (exp_pos ((973 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1973 : ℝ) / 1000), exp_pos (-((1973 : ℝ) / 1000))]
 
-lemma cosh_b19820_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b19820 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b19820_ub : cosh ((991 : ℝ) / 500) ≤ (381358088 : ℝ) / 100000000 := by
+  have exp_frac_b19820 : exp ((491 : ℝ) / 500) ≤ (266979101 : ℝ) / 100000000 := by
+    have ht : ((491 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((491 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((491 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (266979101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b19820 (by norm_num))
+  have hexp : exp ((991 : ℝ) / 500) = exp 1 * exp ((491 : ℝ) / 500) := by
+    rw [← exp_add, show (1 : ℝ) + (491 : ℝ) / 500 = (991 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((991 : ℝ) / 500)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((991 : ℝ) / 500) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b19820 (exp_pos ((491 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((991 : ℝ) / 500), exp_pos (-((991 : ℝ) / 500))]
 
-lemma cosh_b19910_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b19910 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
+lemma cosh_b19910_ub : cosh ((1991 : ℝ) / 1000) ≤ (384639513 : ℝ) / 100000000 := by
+  have exp_frac_b19910 : exp ((991 : ℝ) / 1000) ≤ (269392801 : ℝ) / 100000000 := by
+    have ht : ((991 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((991 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((991 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (269392801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b19910 (by norm_num))
+  have hexp : exp ((1991 : ℝ) / 1000) = exp 1 * exp ((991 : ℝ) / 1000) := by
+    rw [← exp_add, show (1 : ℝ) + (991 : ℝ) / 1000 = (1991 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((1991 : ℝ) / 1000)) ≤ (368 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1991 : ℝ) / 1000) ≤ -(1 : ℝ))).trans exp_neg_one_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_one_le exp_frac_b19910 (exp_pos ((991 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1991 : ℝ) / 1000), exp_pos (-((1991 : ℝ) / 1000))]
 
-lemma cosh_b20000_ub : cosh ((2 : ℝ) / 1) ≤ (738905701 : ℝ) / 100000000 := by
-  have exp_b20000 : exp (((2 : ℝ) / 1)^2 / 2) ≤ (738905701 : ℝ) / 100000000 := by
-    have ht : ((2 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 14) (by norm_num)
-    have htaylor :
-        (∑ m ∈ Finset.range 14, (((2 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((2 : ℝ) / 1)^2 / 2) ^ 14 * (14 + 1) / (Nat.factorial 14 * 14) ≤
-          (738905701 : ℝ) / 100000000 := by
-      simp [Finset.sum_range_succ, Nat.factorial]
-      norm_num
-    linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((2 : ℝ) / 1)).trans (le_trans exp_b20000 (by norm_num))
+lemma cosh_b20000_ub : cosh ((2 : ℝ) / 1) ≤ (376300001 : ℝ) / 100000000 := by
+  rw [show (2 : ℝ) / 1 = (2 : ℝ) by norm_num]
+  exact (cosh_two_le).trans (by norm_num)
 
-lemma cosh_b20095_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b20095 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b20095_ub : cosh ((4019 : ℝ) / 2000) ≤ (379827251 : ℝ) / 100000000 := by
+  have exp_frac_b20095 : exp ((19 : ℝ) / 2000) ≤ (100954601 : ℝ) / 100000000 := by
+    have ht : ((19 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((19 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((19 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (100954601 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b20095 (by norm_num))
+  have hexp : exp ((4019 : ℝ) / 2000) = exp 2 * exp ((19 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (19 : ℝ) / 2000 = (4019 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4019 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4019 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b20095 (exp_pos ((19 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4019 : ℝ) / 2000), exp_pos (-((4019 : ℝ) / 2000))]
 
-lemma cosh_b20185_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b20185 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b20185_ub : cosh ((4037 : ℝ) / 2000) ≤ (383199678 : ℝ) / 100000000 := by
+  have exp_frac_b20185 : exp ((37 : ℝ) / 2000) ≤ (101867301 : ℝ) / 100000000 := by
+    have ht : ((37 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((37 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((37 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (101867301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b20185 (by norm_num))
+  have hexp : exp ((4037 : ℝ) / 2000) = exp 2 * exp ((37 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (37 : ℝ) / 2000 = (4037 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4037 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4037 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b20185 (exp_pos ((37 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4037 : ℝ) / 2000), exp_pos (-((4037 : ℝ) / 2000))]
 
-lemma cosh_b20275_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b20275 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b20275_ub : cosh ((811 : ℝ) / 400) ≤ (386602403 : ℝ) / 100000000 := by
+  have exp_frac_b20275 : exp ((11 : ℝ) / 400) ≤ (102788201 : ℝ) / 100000000 := by
+    have ht : ((11 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((11 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((11 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (102788201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b20275 (by norm_num))
+  have hexp : exp ((811 : ℝ) / 400) = exp 2 * exp ((11 : ℝ) / 400) := by
+    rw [← exp_add, show (2 : ℝ) + (11 : ℝ) / 400 = (811 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((811 : ℝ) / 400)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((811 : ℝ) / 400) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b20275 (exp_pos ((11 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((811 : ℝ) / 400), exp_pos (-((811 : ℝ) / 400))]
 
-lemma cosh_b20365_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b20365 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b20365_ub : cosh ((4073 : ℝ) / 2000) ≤ (390036167 : ℝ) / 100000000 := by
+  have exp_frac_b20365 : exp ((73 : ℝ) / 2000) ≤ (103717501 : ℝ) / 100000000 := by
+    have ht : ((73 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((73 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((73 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (103717501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b20365 (by norm_num))
+  have hexp : exp ((4073 : ℝ) / 2000) = exp 2 * exp ((73 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (73 : ℝ) / 2000 = (4073 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4073 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4073 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b20365 (exp_pos ((73 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4073 : ℝ) / 2000), exp_pos (-((4073 : ℝ) / 2000))]
 
-lemma cosh_b20455_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b20455 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b20455_ub : cosh ((4091 : ℝ) / 2000) ≤ (393500968 : ℝ) / 100000000 := by
+  have exp_frac_b20455 : exp ((91 : ℝ) / 2000) ≤ (104655201 : ℝ) / 100000000 := by
+    have ht : ((91 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((91 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((91 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (104655201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b20455 (by norm_num))
+  have hexp : exp ((4091 : ℝ) / 2000) = exp 2 * exp ((91 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (91 : ℝ) / 2000 = (4091 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4091 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4091 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b20455 (exp_pos ((91 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4091 : ℝ) / 2000), exp_pos (-((4091 : ℝ) / 2000))]
 
-lemma cosh_b20550_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b20550 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b20550_ub : cosh ((411 : ℝ) / 200) ≤ (397191904 : ℝ) / 100000000 := by
+  have exp_frac_b20550 : exp ((11 : ℝ) / 200) ≤ (105654101 : ℝ) / 100000000 := by
+    have ht : ((11 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((11 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((11 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (105654101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b20550 (by norm_num))
+  have hexp : exp ((411 : ℝ) / 200) = exp 2 * exp ((11 : ℝ) / 200) := by
+    rw [← exp_add, show (2 : ℝ) + (11 : ℝ) / 200 = (411 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((411 : ℝ) / 200)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((411 : ℝ) / 200) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b20550 (exp_pos ((11 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((411 : ℝ) / 200), exp_pos (-((411 : ℝ) / 200))]
 
-lemma cosh_b20640_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b20640 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b20640_ub : cosh ((258 : ℝ) / 125) ≤ (400721368 : ℝ) / 100000000 := by
+  have exp_frac_b20640 : exp ((8 : ℝ) / 125) ≤ (106609301 : ℝ) / 100000000 := by
+    have ht : ((8 : ℝ) / 125) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((8 : ℝ) / 125) ^ m / (Nat.factorial m)) +
+          ((8 : ℝ) / 125) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (106609301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b20640 (by norm_num))
+  have hexp : exp ((258 : ℝ) / 125) = exp 2 * exp ((8 : ℝ) / 125) := by
+    rw [← exp_add, show (2 : ℝ) + (8 : ℝ) / 125 = (258 : ℝ) / 125 by norm_num]
+  have hneg : exp (-((258 : ℝ) / 125)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((258 : ℝ) / 125) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b20640 (exp_pos ((8 : ℝ) / 125)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((258 : ℝ) / 125), exp_pos (-((258 : ℝ) / 125))]
 
-lemma cosh_b20730_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b20730 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b20730_ub : cosh ((2073 : ℝ) / 1000) ≤ (404282609 : ℝ) / 100000000 := by
+  have exp_frac_b20730 : exp ((73 : ℝ) / 1000) ≤ (107573101 : ℝ) / 100000000 := by
+    have ht : ((73 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((73 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((73 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (107573101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b20730 (by norm_num))
+  have hexp : exp ((2073 : ℝ) / 1000) = exp 2 * exp ((73 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (73 : ℝ) / 1000 = (2073 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2073 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2073 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b20730 (exp_pos ((73 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2073 : ℝ) / 1000), exp_pos (-((2073 : ℝ) / 1000))]
 
-lemma cosh_b20820_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b20820 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b20820_ub : cosh ((1041 : ℝ) / 500) ≤ (407875996 : ℝ) / 100000000 := by
+  have exp_frac_b20820 : exp ((41 : ℝ) / 500) ≤ (108545601 : ℝ) / 100000000 := by
+    have ht : ((41 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((41 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((41 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (108545601 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b20820 (by norm_num))
+  have hexp : exp ((1041 : ℝ) / 500) = exp 2 * exp ((41 : ℝ) / 500) := by
+    rw [← exp_add, show (2 : ℝ) + (41 : ℝ) / 500 = (1041 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1041 : ℝ) / 500)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1041 : ℝ) / 500) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b20820 (exp_pos ((41 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1041 : ℝ) / 500), exp_pos (-((1041 : ℝ) / 500))]
 
-lemma cosh_b20910_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b20910 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b20910_ub : cosh ((2091 : ℝ) / 1000) ≤ (411502269 : ℝ) / 100000000 := by
+  have exp_frac_b20910 : exp ((91 : ℝ) / 1000) ≤ (109527001 : ℝ) / 100000000 := by
+    have ht : ((91 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((91 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((91 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (109527001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b20910 (by norm_num))
+  have hexp : exp ((2091 : ℝ) / 1000) = exp 2 * exp ((91 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (91 : ℝ) / 1000 = (2091 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2091 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2091 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b20910 (exp_pos ((91 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2091 : ℝ) / 1000), exp_pos (-((2091 : ℝ) / 1000))]
 
-lemma cosh_b21000_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b21000 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b21000_ub : cosh ((21 : ℝ) / 10) ≤ (415160689 : ℝ) / 100000000 := by
+  have exp_frac_b21000 : exp ((1 : ℝ) / 10) ≤ (110517101 : ℝ) / 100000000 := by
+    have ht : ((1 : ℝ) / 10) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1 : ℝ) / 10) ^ m / (Nat.factorial m)) +
+          ((1 : ℝ) / 10) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (110517101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b21000 (by norm_num))
+  have hexp : exp ((21 : ℝ) / 10) = exp 2 * exp ((1 : ℝ) / 10) := by
+    rw [← exp_add, show (2 : ℝ) + (1 : ℝ) / 10 = (21 : ℝ) / 10 by norm_num]
+  have hneg : exp (-((21 : ℝ) / 10)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((21 : ℝ) / 10) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b21000 (exp_pos ((1 : ℝ) / 10)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((21 : ℝ) / 10), exp_pos (-((21 : ℝ) / 10))]
 
-lemma cosh_b21095_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b21095 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b21095_ub : cosh ((4219 : ℝ) / 2000) ≤ (419058914 : ℝ) / 100000000 := by
+  have exp_frac_b21095 : exp ((219 : ℝ) / 2000) ≤ (111572101 : ℝ) / 100000000 := by
+    have ht : ((219 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((219 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((219 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (111572101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b21095 (by norm_num))
+  have hexp : exp ((4219 : ℝ) / 2000) = exp 2 * exp ((219 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (219 : ℝ) / 2000 = (4219 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4219 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4219 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b21095 (exp_pos ((219 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4219 : ℝ) / 2000), exp_pos (-((4219 : ℝ) / 2000))]
 
-lemma cosh_b21185_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b21185 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b21185_ub : cosh ((4237 : ℝ) / 2000) ≤ (422785691 : ℝ) / 100000000 := by
+  have exp_frac_b21185 : exp ((237 : ℝ) / 2000) ≤ (112580701 : ℝ) / 100000000 := by
+    have ht : ((237 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((237 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((237 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (112580701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b21185 (by norm_num))
+  have hexp : exp ((4237 : ℝ) / 2000) = exp 2 * exp ((237 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (237 : ℝ) / 2000 = (4237 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4237 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4237 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b21185 (exp_pos ((237 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4237 : ℝ) / 2000), exp_pos (-((4237 : ℝ) / 2000))]
 
-lemma cosh_b21275_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b21275 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b21275_ub : cosh ((851 : ℝ) / 400) ≤ (426546462 : ℝ) / 100000000 := by
+  have exp_frac_b21275 : exp ((51 : ℝ) / 400) ≤ (113598501 : ℝ) / 100000000 := by
+    have ht : ((51 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((51 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((51 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (113598501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b21275 (by norm_num))
+  have hexp : exp ((851 : ℝ) / 400) = exp 2 * exp ((51 : ℝ) / 400) := by
+    rw [← exp_add, show (2 : ℝ) + (51 : ℝ) / 400 = (851 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((851 : ℝ) / 400)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((851 : ℝ) / 400) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b21275 (exp_pos ((51 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((851 : ℝ) / 400), exp_pos (-((851 : ℝ) / 400))]
 
-lemma cosh_b21365_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b21365 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b21365_ub : cosh ((4273 : ℝ) / 2000) ≤ (430341227 : ℝ) / 100000000 := by
+  have exp_frac_b21365 : exp ((273 : ℝ) / 2000) ≤ (114625501 : ℝ) / 100000000 := by
+    have ht : ((273 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((273 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((273 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (114625501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b21365 (by norm_num))
+  have hexp : exp ((4273 : ℝ) / 2000) = exp 2 * exp ((273 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (273 : ℝ) / 2000 = (4273 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4273 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4273 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b21365 (exp_pos ((273 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4273 : ℝ) / 2000), exp_pos (-((4273 : ℝ) / 2000))]
 
-lemma cosh_b21455_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b21455 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b21455_ub : cosh ((4291 : ℝ) / 2000) ≤ (434170355 : ℝ) / 100000000 := by
+  have exp_frac_b21455 : exp ((291 : ℝ) / 2000) ≤ (115661801 : ℝ) / 100000000 := by
+    have ht : ((291 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((291 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((291 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (115661801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b21455 (by norm_num))
+  have hexp : exp ((4291 : ℝ) / 2000) = exp 2 * exp ((291 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (291 : ℝ) / 2000 = (4291 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4291 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4291 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b21455 (exp_pos ((291 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4291 : ℝ) / 2000), exp_pos (-((4291 : ℝ) / 2000))]
 
-lemma cosh_b21550_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b21550 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b21550_ub : cosh ((431 : ℝ) / 200) ≤ (438249635 : ℝ) / 100000000 := by
+  have exp_frac_b21550 : exp ((31 : ℝ) / 200) ≤ (116765801 : ℝ) / 100000000 := by
+    have ht : ((31 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((31 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((31 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (116765801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b21550 (by norm_num))
+  have hexp : exp ((431 : ℝ) / 200) = exp 2 * exp ((31 : ℝ) / 200) := by
+    rw [← exp_add, show (2 : ℝ) + (31 : ℝ) / 200 = (431 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((431 : ℝ) / 200)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((431 : ℝ) / 200) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b21550 (exp_pos ((31 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((431 : ℝ) / 200), exp_pos (-((431 : ℝ) / 200))]
 
-lemma cosh_b21640_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b21640 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b21640_ub : cosh ((541 : ℝ) / 250) ≤ (442150447 : ℝ) / 100000000 := by
+  have exp_frac_b21640 : exp ((41 : ℝ) / 250) ≤ (117821501 : ℝ) / 100000000 := by
+    have ht : ((41 : ℝ) / 250) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((41 : ℝ) / 250) ^ m / (Nat.factorial m)) +
+          ((41 : ℝ) / 250) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (117821501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b21640 (by norm_num))
+  have hexp : exp ((541 : ℝ) / 250) = exp 2 * exp ((41 : ℝ) / 250) := by
+    rw [← exp_add, show (2 : ℝ) + (41 : ℝ) / 250 = (541 : ℝ) / 250 by norm_num]
+  have hneg : exp (-((541 : ℝ) / 250)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((541 : ℝ) / 250) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b21640 (exp_pos ((41 : ℝ) / 250)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((541 : ℝ) / 250), exp_pos (-((541 : ℝ) / 250))]
 
-lemma cosh_b21730_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b21730 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b21730_ub : cosh ((2173 : ℝ) / 1000) ≤ (446086361 : ℝ) / 100000000 := by
+  have exp_frac_b21730 : exp ((173 : ℝ) / 1000) ≤ (118886701 : ℝ) / 100000000 := by
+    have ht : ((173 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((173 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((173 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (118886701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b21730 (by norm_num))
+  have hexp : exp ((2173 : ℝ) / 1000) = exp 2 * exp ((173 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (173 : ℝ) / 1000 = (2173 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2173 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2173 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b21730 (exp_pos ((173 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2173 : ℝ) / 1000), exp_pos (-((2173 : ℝ) / 1000))]
 
-lemma cosh_b21820_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b21820 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b21820_ub : cosh ((1091 : ℝ) / 500) ≤ (450057747 : ℝ) / 100000000 := by
+  have exp_frac_b21820 : exp ((91 : ℝ) / 500) ≤ (119961501 : ℝ) / 100000000 := by
+    have ht : ((91 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((91 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((91 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (119961501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b21820 (by norm_num))
+  have hexp : exp ((1091 : ℝ) / 500) = exp 2 * exp ((91 : ℝ) / 500) := by
+    rw [← exp_add, show (2 : ℝ) + (91 : ℝ) / 500 = (1091 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1091 : ℝ) / 500)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1091 : ℝ) / 500) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b21820 (exp_pos ((91 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1091 : ℝ) / 500), exp_pos (-((1091 : ℝ) / 500))]
 
-lemma cosh_b21910_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b21910 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b21910_ub : cosh ((2191 : ℝ) / 1000) ≤ (454064974 : ℝ) / 100000000 := by
+  have exp_frac_b21910 : exp ((191 : ℝ) / 1000) ≤ (121046001 : ℝ) / 100000000 := by
+    have ht : ((191 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((191 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((191 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (121046001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b21910 (by norm_num))
+  have hexp : exp ((2191 : ℝ) / 1000) = exp 2 * exp ((191 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (191 : ℝ) / 1000 = (2191 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2191 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2191 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b21910 (exp_pos ((191 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2191 : ℝ) / 1000), exp_pos (-((2191 : ℝ) / 1000))]
 
-lemma cosh_b22000_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b22000 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b22000_ub : cosh ((11 : ℝ) / 5) ≤ (458108413 : ℝ) / 100000000 := by
+  have exp_frac_b22000 : exp ((1 : ℝ) / 5) ≤ (122140301 : ℝ) / 100000000 := by
+    have ht : ((1 : ℝ) / 5) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1 : ℝ) / 5) ^ m / (Nat.factorial m)) +
+          ((1 : ℝ) / 5) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (122140301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b22000 (by norm_num))
+  have hexp : exp ((11 : ℝ) / 5) = exp 2 * exp ((1 : ℝ) / 5) := by
+    rw [← exp_add, show (2 : ℝ) + (1 : ℝ) / 5 = (11 : ℝ) / 5 by norm_num]
+  have hneg : exp (-((11 : ℝ) / 5)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((11 : ℝ) / 5) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b22000 (exp_pos ((1 : ℝ) / 5)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((11 : ℝ) / 5), exp_pos (-((11 : ℝ) / 5))]
 
-lemma cosh_b22095_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b22095 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b22095_ub : cosh ((4419 : ℝ) / 2000) ≤ (462416413 : ℝ) / 100000000 := by
+  have exp_frac_b22095 : exp ((419 : ℝ) / 2000) ≤ (123306201 : ℝ) / 100000000 := by
+    have ht : ((419 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((419 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((419 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (123306201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b22095 (by norm_num))
+  have hexp : exp ((4419 : ℝ) / 2000) = exp 2 * exp ((419 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (419 : ℝ) / 2000 = (4419 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4419 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4419 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b22095 (exp_pos ((419 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4419 : ℝ) / 2000), exp_pos (-((4419 : ℝ) / 2000))]
 
-lemma cosh_b22185_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b22185 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b22185_ub : cosh ((4437 : ℝ) / 2000) ≤ (466535599 : ℝ) / 100000000 := by
+  have exp_frac_b22185 : exp ((437 : ℝ) / 2000) ≤ (124421001 : ℝ) / 100000000 := by
+    have ht : ((437 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((437 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((437 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (124421001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b22185 (by norm_num))
+  have hexp : exp ((4437 : ℝ) / 2000) = exp 2 * exp ((437 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (437 : ℝ) / 2000 = (4437 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4437 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4437 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b22185 (exp_pos ((437 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4437 : ℝ) / 2000), exp_pos (-((4437 : ℝ) / 2000))]
 
-lemma cosh_b22275_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b22275 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b22275_ub : cosh ((891 : ℝ) / 400) ≤ (470691735 : ℝ) / 100000000 := by
+  have exp_frac_b22275 : exp ((91 : ℝ) / 400) ≤ (125545801 : ℝ) / 100000000 := by
+    have ht : ((91 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((91 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((91 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (125545801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b22275 (by norm_num))
+  have hexp : exp ((891 : ℝ) / 400) = exp 2 * exp ((91 : ℝ) / 400) := by
+    rw [← exp_add, show (2 : ℝ) + (91 : ℝ) / 400 = (891 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((891 : ℝ) / 400)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((891 : ℝ) / 400) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b22275 (exp_pos ((91 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((891 : ℝ) / 400), exp_pos (-((891 : ℝ) / 400))]
 
-lemma cosh_b22365_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b22365 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b22365_ub : cosh ((4473 : ℝ) / 2000) ≤ (474885560 : ℝ) / 100000000 := by
+  have exp_frac_b22365 : exp ((473 : ℝ) / 2000) ≤ (126680801 : ℝ) / 100000000 := by
+    have ht : ((473 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((473 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((473 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (126680801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b22365 (by norm_num))
+  have hexp : exp ((4473 : ℝ) / 2000) = exp 2 * exp ((473 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (473 : ℝ) / 2000 = (4473 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4473 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4473 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b22365 (exp_pos ((473 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4473 : ℝ) / 2000), exp_pos (-((4473 : ℝ) / 2000))]
 
-lemma cosh_b22455_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b22455 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b22455_ub : cosh ((4491 : ℝ) / 2000) ≤ (479117444 : ℝ) / 100000000 := by
+  have exp_frac_b22455 : exp ((491 : ℝ) / 2000) ≤ (127826101 : ℝ) / 100000000 := by
+    have ht : ((491 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((491 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((491 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (127826101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b22455 (by norm_num))
+  have hexp : exp ((4491 : ℝ) / 2000) = exp 2 * exp ((491 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (491 : ℝ) / 2000 = (4491 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4491 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4491 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b22455 (exp_pos ((491 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4491 : ℝ) / 2000), exp_pos (-((4491 : ℝ) / 2000))]
 
-lemma cosh_b22550_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b22550 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b22550_ub : cosh ((451 : ℝ) / 200) ≤ (483625713 : ℝ) / 100000000 := by
+  have exp_frac_b22550 : exp ((51 : ℝ) / 200) ≤ (129046201 : ℝ) / 100000000 := by
+    have ht : ((51 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((51 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((51 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (129046201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b22550 (by norm_num))
+  have hexp : exp ((451 : ℝ) / 200) = exp 2 * exp ((51 : ℝ) / 200) := by
+    rw [← exp_add, show (2 : ℝ) + (51 : ℝ) / 200 = (451 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((451 : ℝ) / 200)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((451 : ℝ) / 200) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b22550 (exp_pos ((51 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((451 : ℝ) / 200), exp_pos (-((451 : ℝ) / 200))]
 
-lemma cosh_b22640_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b22640 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b22640_ub : cosh ((283 : ℝ) / 125) ≤ (487936670 : ℝ) / 100000000 := by
+  have exp_frac_b22640 : exp ((33 : ℝ) / 125) ≤ (130212901 : ℝ) / 100000000 := by
+    have ht : ((33 : ℝ) / 125) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((33 : ℝ) / 125) ^ m / (Nat.factorial m)) +
+          ((33 : ℝ) / 125) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (130212901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b22640 (by norm_num))
+  have hexp : exp ((283 : ℝ) / 125) = exp 2 * exp ((33 : ℝ) / 125) := by
+    rw [← exp_add, show (2 : ℝ) + (33 : ℝ) / 125 = (283 : ℝ) / 125 by norm_num]
+  have hneg : exp (-((283 : ℝ) / 125)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((283 : ℝ) / 125) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b22640 (exp_pos ((33 : ℝ) / 125)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((283 : ℝ) / 125), exp_pos (-((283 : ℝ) / 125))]
 
-lemma cosh_b22730_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b22730 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b22730_ub : cosh ((2273 : ℝ) / 1000) ≤ (492286424 : ℝ) / 100000000 := by
+  have exp_frac_b22730 : exp ((273 : ℝ) / 1000) ≤ (131390101 : ℝ) / 100000000 := by
+    have ht : ((273 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((273 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((273 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (131390101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b22730 (by norm_num))
+  have hexp : exp ((2273 : ℝ) / 1000) = exp 2 * exp ((273 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (273 : ℝ) / 1000 = (2273 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2273 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2273 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b22730 (exp_pos ((273 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2273 : ℝ) / 1000), exp_pos (-((2273 : ℝ) / 1000))]
 
-lemma cosh_b22820_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b22820 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b22820_ub : cosh ((1141 : ℝ) / 500) ≤ (496675345 : ℝ) / 100000000 := by
+  have exp_frac_b22820 : exp ((141 : ℝ) / 500) ≤ (132577901 : ℝ) / 100000000 := by
+    have ht : ((141 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((141 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((141 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (132577901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b22820 (by norm_num))
+  have hexp : exp ((1141 : ℝ) / 500) = exp 2 * exp ((141 : ℝ) / 500) := by
+    rw [← exp_add, show (2 : ℝ) + (141 : ℝ) / 500 = (1141 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1141 : ℝ) / 500)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1141 : ℝ) / 500) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b22820 (exp_pos ((141 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1141 : ℝ) / 500), exp_pos (-((1141 : ℝ) / 500))]
 
-lemma cosh_b22910_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b22910 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b22910_ub : cosh ((2291 : ℝ) / 1000) ≤ (501104172 : ℝ) / 100000000 := by
+  have exp_frac_b22910 : exp ((291 : ℝ) / 1000) ≤ (133776501 : ℝ) / 100000000 := by
+    have ht : ((291 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((291 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((291 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (133776501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b22910 (by norm_num))
+  have hexp : exp ((2291 : ℝ) / 1000) = exp 2 * exp ((291 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (291 : ℝ) / 1000 = (2291 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2291 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2291 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b22910 (exp_pos ((291 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2291 : ℝ) / 1000), exp_pos (-((2291 : ℝ) / 1000))]
 
-lemma cosh_b23000_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b23000 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b23000_ub : cosh ((23 : ℝ) / 10) ≤ (505572905 : ℝ) / 100000000 := by
+  have exp_frac_b23000 : exp ((3 : ℝ) / 10) ≤ (134985901 : ℝ) / 100000000 := by
+    have ht : ((3 : ℝ) / 10) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((3 : ℝ) / 10) ^ m / (Nat.factorial m)) +
+          ((3 : ℝ) / 10) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (134985901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b23000 (by norm_num))
+  have hexp : exp ((23 : ℝ) / 10) = exp 2 * exp ((3 : ℝ) / 10) := by
+    rw [← exp_add, show (2 : ℝ) + (3 : ℝ) / 10 = (23 : ℝ) / 10 by norm_num]
+  have hneg : exp (-((23 : ℝ) / 10)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((23 : ℝ) / 10) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b23000 (exp_pos ((3 : ℝ) / 10)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((23 : ℝ) / 10), exp_pos (-((23 : ℝ) / 10))]
 
-lemma cosh_b23095_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b23095 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b23095_ub : cosh ((4619 : ℝ) / 2000) ≤ (510333912 : ℝ) / 100000000 := by
+  have exp_frac_b23095 : exp ((619 : ℝ) / 2000) ≤ (136274401 : ℝ) / 100000000 := by
+    have ht : ((619 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((619 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((619 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (136274401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b23095 (by norm_num))
+  have hexp : exp ((4619 : ℝ) / 2000) = exp 2 * exp ((619 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (619 : ℝ) / 2000 = (4619 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4619 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4619 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b23095 (exp_pos ((619 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4619 : ℝ) / 2000), exp_pos (-((4619 : ℝ) / 2000))]
 
-lemma cosh_b23185_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b23185 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b23185_ub : cosh ((4637 : ℝ) / 2000) ≤ (514886152 : ℝ) / 100000000 := by
+  have exp_frac_b23185 : exp ((637 : ℝ) / 2000) ≤ (137506401 : ℝ) / 100000000 := by
+    have ht : ((637 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((637 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((637 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (137506401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b23185 (by norm_num))
+  have hexp : exp ((4637 : ℝ) / 2000) = exp 2 * exp ((637 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (637 : ℝ) / 2000 = (4637 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4637 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4637 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b23185 (exp_pos ((637 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4637 : ℝ) / 2000), exp_pos (-((4637 : ℝ) / 2000))]
 
-lemma cosh_b23275_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b23275 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b23275_ub : cosh ((931 : ℝ) / 400) ≤ (519479776 : ℝ) / 100000000 := by
+  have exp_frac_b23275 : exp ((131 : ℝ) / 400) ≤ (138749601 : ℝ) / 100000000 := by
+    have ht : ((131 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((131 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((131 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (138749601 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b23275 (by norm_num))
+  have hexp : exp ((931 : ℝ) / 400) = exp 2 * exp ((131 : ℝ) / 400) := by
+    rw [← exp_add, show (2 : ℝ) + (131 : ℝ) / 400 = (931 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((931 : ℝ) / 400)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((931 : ℝ) / 400) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b23275 (exp_pos ((131 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((931 : ℝ) / 400), exp_pos (-((931 : ℝ) / 400))]
 
-lemma cosh_b23365_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b23365 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b23365_ub : cosh ((4673 : ℝ) / 2000) ≤ (524114415 : ℝ) / 100000000 := by
+  have exp_frac_b23365 : exp ((673 : ℝ) / 2000) ≤ (140003901 : ℝ) / 100000000 := by
+    have ht : ((673 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((673 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((673 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (140003901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b23365 (by norm_num))
+  have hexp : exp ((4673 : ℝ) / 2000) = exp 2 * exp ((673 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (673 : ℝ) / 2000 = (4673 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4673 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4673 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b23365 (exp_pos ((673 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4673 : ℝ) / 2000), exp_pos (-((4673 : ℝ) / 2000))]
 
-lemma cosh_b23455_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b23455 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b23455_ub : cosh ((4691 : ℝ) / 2000) ≤ (528791546 : ℝ) / 100000000 := by
+  have exp_frac_b23455 : exp ((691 : ℝ) / 2000) ≤ (141269701 : ℝ) / 100000000 := by
+    have ht : ((691 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((691 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((691 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (141269701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b23455 (by norm_num))
+  have hexp : exp ((4691 : ℝ) / 2000) = exp 2 * exp ((691 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (691 : ℝ) / 2000 = (4691 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4691 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4691 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b23455 (exp_pos ((691 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4691 : ℝ) / 2000), exp_pos (-((4691 : ℝ) / 2000))]
 
-lemma cosh_b23550_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b23550 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b23550_ub : cosh ((471 : ℝ) / 200) ≤ (533773884 : ℝ) / 100000000 := by
+  have exp_frac_b23550 : exp ((71 : ℝ) / 200) ≤ (142618101 : ℝ) / 100000000 := by
+    have ht : ((71 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((71 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((71 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (142618101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b23550 (by norm_num))
+  have hexp : exp ((471 : ℝ) / 200) = exp 2 * exp ((71 : ℝ) / 200) := by
+    rw [← exp_add, show (2 : ℝ) + (71 : ℝ) / 200 = (471 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((471 : ℝ) / 200)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((471 : ℝ) / 200) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b23550 (exp_pos ((71 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((471 : ℝ) / 200), exp_pos (-((471 : ℝ) / 200))]
 
-lemma cosh_b23640_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b23640 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b23640_ub : cosh ((591 : ℝ) / 250) ≤ (538538217 : ℝ) / 100000000 := by
+  have exp_frac_b23640 : exp ((91 : ℝ) / 250) ≤ (143907501 : ℝ) / 100000000 := by
+    have ht : ((91 : ℝ) / 250) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((91 : ℝ) / 250) ^ m / (Nat.factorial m)) +
+          ((91 : ℝ) / 250) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (143907501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b23640 (by norm_num))
+  have hexp : exp ((591 : ℝ) / 250) = exp 2 * exp ((91 : ℝ) / 250) := by
+    rw [← exp_add, show (2 : ℝ) + (91 : ℝ) / 250 = (591 : ℝ) / 250 by norm_num]
+  have hneg : exp (-((591 : ℝ) / 250)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((591 : ℝ) / 250) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b23640 (exp_pos ((91 : ℝ) / 250)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((591 : ℝ) / 250), exp_pos (-((591 : ℝ) / 250))]
 
-lemma cosh_b23730_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b23730 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b23730_ub : cosh ((2373 : ℝ) / 1000) ≤ (543345412 : ℝ) / 100000000 := by
+  have exp_frac_b23730 : exp ((373 : ℝ) / 1000) ≤ (145208501 : ℝ) / 100000000 := by
+    have ht : ((373 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((373 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((373 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (145208501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b23730 (by norm_num))
+  have hexp : exp ((2373 : ℝ) / 1000) = exp 2 * exp ((373 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (373 : ℝ) / 1000 = (2373 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2373 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2373 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b23730 (exp_pos ((373 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2373 : ℝ) / 1000), exp_pos (-((2373 : ℝ) / 1000))]
 
-lemma cosh_b23820_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b23820 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b23820_ub : cosh ((1191 : ℝ) / 500) ≤ (548196208 : ℝ) / 100000000 := by
+  have exp_frac_b23820 : exp ((191 : ℝ) / 500) ≤ (146521301 : ℝ) / 100000000 := by
+    have ht : ((191 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((191 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((191 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (146521301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b23820 (by norm_num))
+  have hexp : exp ((1191 : ℝ) / 500) = exp 2 * exp ((191 : ℝ) / 500) := by
+    rw [← exp_add, show (2 : ℝ) + (191 : ℝ) / 500 = (1191 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1191 : ℝ) / 500)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1191 : ℝ) / 500) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b23820 (exp_pos ((191 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1191 : ℝ) / 500), exp_pos (-((1191 : ℝ) / 500))]
 
-lemma cosh_b23910_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b23910 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b23910_ub : cosh ((2391 : ℝ) / 1000) ≤ (553090605 : ℝ) / 100000000 := by
+  have exp_frac_b23910 : exp ((391 : ℝ) / 1000) ≤ (147845901 : ℝ) / 100000000 := by
+    have ht : ((391 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((391 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((391 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (147845901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b23910 (by norm_num))
+  have hexp : exp ((2391 : ℝ) / 1000) = exp 2 * exp ((391 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (391 : ℝ) / 1000 = (2391 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2391 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2391 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b23910 (exp_pos ((391 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2391 : ℝ) / 1000), exp_pos (-((2391 : ℝ) / 1000))]
 
-lemma cosh_b24000_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b24000 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b24000_ub : cosh ((12 : ℝ) / 5) ≤ (558029342 : ℝ) / 100000000 := by
+  have exp_frac_b24000 : exp ((2 : ℝ) / 5) ≤ (149182501 : ℝ) / 100000000 := by
+    have ht : ((2 : ℝ) / 5) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((2 : ℝ) / 5) ^ m / (Nat.factorial m)) +
+          ((2 : ℝ) / 5) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (149182501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b24000 (by norm_num))
+  have hexp : exp ((12 : ℝ) / 5) = exp 2 * exp ((2 : ℝ) / 5) := by
+    rw [← exp_add, show (2 : ℝ) + (2 : ℝ) / 5 = (12 : ℝ) / 5 by norm_num]
+  have hneg : exp (-((12 : ℝ) / 5)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((12 : ℝ) / 5) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b24000 (exp_pos ((2 : ℝ) / 5)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((12 : ℝ) / 5), exp_pos (-((12 : ℝ) / 5))]
 
-lemma cosh_b24095_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b24095 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b24095_ub : cosh ((4819 : ℝ) / 2000) ≤ (563291022 : ℝ) / 100000000 := by
+  have exp_frac_b24095 : exp ((819 : ℝ) / 2000) ≤ (150606501 : ℝ) / 100000000 := by
+    have ht : ((819 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((819 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((819 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (150606501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b24095 (by norm_num))
+  have hexp : exp ((4819 : ℝ) / 2000) = exp 2 * exp ((819 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (819 : ℝ) / 2000 = (4819 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4819 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4819 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b24095 (exp_pos ((819 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4819 : ℝ) / 2000), exp_pos (-((4819 : ℝ) / 2000))]
 
-lemma cosh_b24185_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b24185 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b24185_ub : cosh ((4837 : ℝ) / 2000) ≤ (568322134 : ℝ) / 100000000 := by
+  have exp_frac_b24185 : exp ((837 : ℝ) / 2000) ≤ (151968101 : ℝ) / 100000000 := by
+    have ht : ((837 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((837 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((837 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (151968101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b24185 (by norm_num))
+  have hexp : exp ((4837 : ℝ) / 2000) = exp 2 * exp ((837 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (837 : ℝ) / 2000 = (4837 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4837 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4837 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b24185 (exp_pos ((837 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4837 : ℝ) / 2000), exp_pos (-((4837 : ℝ) / 2000))]
 
-lemma cosh_b24275_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b24275 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b24275_ub : cosh ((971 : ℝ) / 400) ≤ (573398694 : ℝ) / 100000000 := by
+  have exp_frac_b24275 : exp ((171 : ℝ) / 400) ≤ (153342001 : ℝ) / 100000000 := by
+    have ht : ((171 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((171 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((171 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (153342001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b24275 (by norm_num))
+  have hexp : exp ((971 : ℝ) / 400) = exp 2 * exp ((171 : ℝ) / 400) := by
+    rw [← exp_add, show (2 : ℝ) + (171 : ℝ) / 400 = (971 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((971 : ℝ) / 400)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((971 : ℝ) / 400) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b24275 (exp_pos ((171 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((971 : ℝ) / 400), exp_pos (-((971 : ℝ) / 400))]
 
-lemma cosh_b24365_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b24365 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b24365_ub : cosh ((4873 : ℝ) / 2000) ≤ (578521073 : ℝ) / 100000000 := by
+  have exp_frac_b24365 : exp ((873 : ℝ) / 2000) ≤ (154728301 : ℝ) / 100000000 := by
+    have ht : ((873 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((873 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((873 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (154728301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b24365 (by norm_num))
+  have hexp : exp ((4873 : ℝ) / 2000) = exp 2 * exp ((873 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (873 : ℝ) / 2000 = (4873 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4873 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4873 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b24365 (exp_pos ((873 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4873 : ℝ) / 2000), exp_pos (-((4873 : ℝ) / 2000))]
 
-lemma cosh_b24455_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b24455 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b24455_ub : cosh ((4891 : ℝ) / 2000) ≤ (583689639 : ℝ) / 100000000 := by
+  have exp_frac_b24455 : exp ((891 : ℝ) / 2000) ≤ (156127101 : ℝ) / 100000000 := by
+    have ht : ((891 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((891 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((891 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (156127101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b24455 (by norm_num))
+  have hexp : exp ((4891 : ℝ) / 2000) = exp 2 * exp ((891 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (891 : ℝ) / 2000 = (4891 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((4891 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4891 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b24455 (exp_pos ((891 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4891 : ℝ) / 2000), exp_pos (-((4891 : ℝ) / 2000))]
 
-lemma cosh_b24550_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b24550 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b24550_ub : cosh ((491 : ℝ) / 200) ≤ (589196297 : ℝ) / 100000000 := by
+  have exp_frac_b24550 : exp ((91 : ℝ) / 200) ≤ (157617401 : ℝ) / 100000000 := by
+    have ht : ((91 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((91 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((91 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (157617401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b24550 (by norm_num))
+  have hexp : exp ((491 : ℝ) / 200) = exp 2 * exp ((91 : ℝ) / 200) := by
+    rw [← exp_add, show (2 : ℝ) + (91 : ℝ) / 200 = (491 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((491 : ℝ) / 200)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((491 : ℝ) / 200) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b24550 (exp_pos ((91 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((491 : ℝ) / 200), exp_pos (-((491 : ℝ) / 200))]
 
-lemma cosh_b24640_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b24640 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b24640_ub : cosh ((308 : ℝ) / 125) ≤ (594461303 : ℝ) / 100000000 := by
+  have exp_frac_b24640 : exp ((58 : ℝ) / 125) ≤ (159042301 : ℝ) / 100000000 := by
+    have ht : ((58 : ℝ) / 125) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((58 : ℝ) / 125) ^ m / (Nat.factorial m)) +
+          ((58 : ℝ) / 125) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (159042301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b24640 (by norm_num))
+  have hexp : exp ((308 : ℝ) / 125) = exp 2 * exp ((58 : ℝ) / 125) := by
+    rw [← exp_add, show (2 : ℝ) + (58 : ℝ) / 125 = (308 : ℝ) / 125 by norm_num]
+  have hneg : exp (-((308 : ℝ) / 125)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((308 : ℝ) / 125) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b24640 (exp_pos ((58 : ℝ) / 125)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((308 : ℝ) / 125), exp_pos (-((308 : ℝ) / 125))]
 
-lemma cosh_b24730_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b24730 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b24730_ub : cosh ((2473 : ℝ) / 1000) ≤ (599774343 : ℝ) / 100000000 := by
+  have exp_frac_b24730 : exp ((473 : ℝ) / 1000) ≤ (160480201 : ℝ) / 100000000 := by
+    have ht : ((473 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((473 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((473 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (160480201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b24730 (by norm_num))
+  have hexp : exp ((2473 : ℝ) / 1000) = exp 2 * exp ((473 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (473 : ℝ) / 1000 = (2473 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2473 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2473 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b24730 (exp_pos ((473 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2473 : ℝ) / 1000), exp_pos (-((2473 : ℝ) / 1000))]
 
-lemma cosh_b24820_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b24820 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b24820_ub : cosh ((1241 : ℝ) / 500) ≤ (605135049 : ℝ) / 100000000 := by
+  have exp_frac_b24820 : exp ((241 : ℝ) / 500) ≤ (161931001 : ℝ) / 100000000 := by
+    have ht : ((241 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((241 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((241 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (161931001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b24820 (by norm_num))
+  have hexp : exp ((1241 : ℝ) / 500) = exp 2 * exp ((241 : ℝ) / 500) := by
+    rw [← exp_add, show (2 : ℝ) + (241 : ℝ) / 500 = (1241 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1241 : ℝ) / 500)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1241 : ℝ) / 500) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b24820 (exp_pos ((241 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1241 : ℝ) / 500), exp_pos (-((1241 : ℝ) / 500))]
 
-lemma cosh_b24910_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b24910 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b24910_ub : cosh ((2491 : ℝ) / 1000) ≤ (610544529 : ℝ) / 100000000 := by
+  have exp_frac_b24910 : exp ((491 : ℝ) / 1000) ≤ (163395001 : ℝ) / 100000000 := by
+    have ht : ((491 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((491 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((491 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (163395001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b24910 (by norm_num))
+  have hexp : exp ((2491 : ℝ) / 1000) = exp 2 * exp ((491 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (491 : ℝ) / 1000 = (2491 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2491 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2491 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b24910 (exp_pos ((491 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2491 : ℝ) / 1000), exp_pos (-((2491 : ℝ) / 1000))]
 
-lemma cosh_b25000_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b25000 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b25000_ub : cosh ((5 : ℝ) / 2) ≤ (616002783 : ℝ) / 100000000 := by
+  have exp_frac_b25000 : exp ((1 : ℝ) / 2) ≤ (164872201 : ℝ) / 100000000 := by
+    have ht : ((1 : ℝ) / 2) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1 : ℝ) / 2) ^ m / (Nat.factorial m)) +
+          ((1 : ℝ) / 2) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (164872201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b25000 (by norm_num))
+  have hexp : exp ((5 : ℝ) / 2) = exp 2 * exp ((1 : ℝ) / 2) := by
+    rw [← exp_add, show (2 : ℝ) + (1 : ℝ) / 2 = (5 : ℝ) / 2 by norm_num]
+  have hneg : exp (-((5 : ℝ) / 2)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5 : ℝ) / 2) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b25000 (exp_pos ((1 : ℝ) / 2)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5 : ℝ) / 2), exp_pos (-((5 : ℝ) / 2))]
 
-lemma cosh_b25095_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b25095 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b25095_ub : cosh ((5019 : ℝ) / 2000) ≤ (621817605 : ℝ) / 100000000 := by
+  have exp_frac_b25095 : exp ((1019 : ℝ) / 2000) ≤ (166445901 : ℝ) / 100000000 := by
+    have ht : ((1019 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1019 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1019 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (166445901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b25095 (by norm_num))
+  have hexp : exp ((5019 : ℝ) / 2000) = exp 2 * exp ((1019 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1019 : ℝ) / 2000 = (5019 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5019 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5019 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b25095 (exp_pos ((1019 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5019 : ℝ) / 2000), exp_pos (-((5019 : ℝ) / 2000))]
 
-lemma cosh_b25185_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b25185 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b25185_ub : cosh ((5037 : ℝ) / 2000) ≤ (627377841 : ℝ) / 100000000 := by
+  have exp_frac_b25185 : exp ((1037 : ℝ) / 2000) ≤ (167950701 : ℝ) / 100000000 := by
+    have ht : ((1037 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1037 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1037 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (167950701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b25185 (by norm_num))
+  have hexp : exp ((5037 : ℝ) / 2000) = exp 2 * exp ((1037 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1037 : ℝ) / 2000 = (5037 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5037 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5037 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b25185 (exp_pos ((1037 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5037 : ℝ) / 2000), exp_pos (-((5037 : ℝ) / 2000))]
 
-lemma cosh_b25275_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b25275 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b25275_ub : cosh ((1011 : ℝ) / 400) ≤ (632988329 : ℝ) / 100000000 := by
+  have exp_frac_b25275 : exp ((211 : ℝ) / 400) ≤ (169469101 : ℝ) / 100000000 := by
+    have ht : ((211 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((211 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((211 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (169469101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b25275 (by norm_num))
+  have hexp : exp ((1011 : ℝ) / 400) = exp 2 * exp ((211 : ℝ) / 400) := by
+    rw [← exp_add, show (2 : ℝ) + (211 : ℝ) / 400 = (1011 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1011 : ℝ) / 400)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1011 : ℝ) / 400) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b25275 (exp_pos ((211 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1011 : ℝ) / 400), exp_pos (-((1011 : ℝ) / 400))]
 
-lemma cosh_b25365_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b25365 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b25365_ub : cosh ((5073 : ℝ) / 2000) ≤ (638649438 : ℝ) / 100000000 := by
+  have exp_frac_b25365 : exp ((1073 : ℝ) / 2000) ≤ (171001201 : ℝ) / 100000000 := by
+    have ht : ((1073 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1073 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1073 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (171001201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b25365 (by norm_num))
+  have hexp : exp ((5073 : ℝ) / 2000) = exp 2 * exp ((1073 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1073 : ℝ) / 2000 = (5073 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5073 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5073 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b25365 (exp_pos ((1073 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5073 : ℝ) / 2000), exp_pos (-((5073 : ℝ) / 2000))]
 
-lemma cosh_b25455_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b25455 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b25455_ub : cosh ((5091 : ℝ) / 2000) ≤ (644361539 : ℝ) / 100000000 := by
+  have exp_frac_b25455 : exp ((1091 : ℝ) / 2000) ≤ (172547101 : ℝ) / 100000000 := by
+    have ht : ((1091 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1091 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1091 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (172547101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b25455 (by norm_num))
+  have hexp : exp ((5091 : ℝ) / 2000) = exp 2 * exp ((1091 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1091 : ℝ) / 2000 = (5091 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5091 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5091 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b25455 (exp_pos ((1091 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5091 : ℝ) / 2000), exp_pos (-((5091 : ℝ) / 2000))]
 
-lemma cosh_b25550_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b25550 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b25550_ub : cosh ((511 : ℝ) / 200) ≤ (650447204 : ℝ) / 100000000 := by
+  have exp_frac_b25550 : exp ((111 : ℝ) / 200) ≤ (174194101 : ℝ) / 100000000 := by
+    have ht : ((111 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((111 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((111 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (174194101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b25550 (by norm_num))
+  have hexp : exp ((511 : ℝ) / 200) = exp 2 * exp ((111 : ℝ) / 200) := by
+    rw [← exp_add, show (2 : ℝ) + (111 : ℝ) / 200 = (511 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((511 : ℝ) / 200)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((511 : ℝ) / 200) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b25550 (exp_pos ((111 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((511 : ℝ) / 200), exp_pos (-((511 : ℝ) / 200))]
 
-lemma cosh_b25640_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b25640 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b25640_ub : cosh ((641 : ℝ) / 250) ≤ (656266459 : ℝ) / 100000000 := by
+  have exp_frac_b25640 : exp ((141 : ℝ) / 250) ≤ (175769001 : ℝ) / 100000000 := by
+    have ht : ((141 : ℝ) / 250) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((141 : ℝ) / 250) ^ m / (Nat.factorial m)) +
+          ((141 : ℝ) / 250) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (175769001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b25640 (by norm_num))
+  have hexp : exp ((641 : ℝ) / 250) = exp 2 * exp ((141 : ℝ) / 250) := by
+    rw [← exp_add, show (2 : ℝ) + (141 : ℝ) / 250 = (641 : ℝ) / 250 by norm_num]
+  have hneg : exp (-((641 : ℝ) / 250)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((641 : ℝ) / 250) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b25640 (exp_pos ((141 : ℝ) / 250)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((641 : ℝ) / 250), exp_pos (-((641 : ℝ) / 250))]
 
-lemma cosh_b25730_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b25730 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b25730_ub : cosh ((2573 : ℝ) / 1000) ≤ (662137814 : ℝ) / 100000000 := by
+  have exp_frac_b25730 : exp ((573 : ℝ) / 1000) ≤ (177358001 : ℝ) / 100000000 := by
+    have ht : ((573 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((573 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((573 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (177358001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b25730 (by norm_num))
+  have hexp : exp ((2573 : ℝ) / 1000) = exp 2 * exp ((573 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (573 : ℝ) / 1000 = (2573 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2573 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2573 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b25730 (exp_pos ((573 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2573 : ℝ) / 1000), exp_pos (-((2573 : ℝ) / 1000))]
 
-lemma cosh_b25820_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b25820 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b25820_ub : cosh ((1291 : ℝ) / 500) ≤ (668062747 : ℝ) / 100000000 := by
+  have exp_frac_b25820 : exp ((291 : ℝ) / 500) ≤ (178961501 : ℝ) / 100000000 := by
+    have ht : ((291 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((291 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((291 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (178961501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b25820 (by norm_num))
+  have hexp : exp ((1291 : ℝ) / 500) = exp 2 * exp ((291 : ℝ) / 500) := by
+    rw [← exp_add, show (2 : ℝ) + (291 : ℝ) / 500 = (1291 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1291 : ℝ) / 500)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1291 : ℝ) / 500) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b25820 (exp_pos ((291 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1291 : ℝ) / 500), exp_pos (-((1291 : ℝ) / 500))]
 
-lemma cosh_b25910_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b25910 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b25910_ub : cosh ((2591 : ℝ) / 1000) ≤ (674040887 : ℝ) / 100000000 := by
+  have exp_frac_b25910 : exp ((591 : ℝ) / 1000) ≤ (180579401 : ℝ) / 100000000 := by
+    have ht : ((591 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((591 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((591 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (180579401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b25910 (by norm_num))
+  have hexp : exp ((2591 : ℝ) / 1000) = exp 2 * exp ((591 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (591 : ℝ) / 1000 = (2591 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2591 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2591 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b25910 (exp_pos ((591 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2591 : ℝ) / 1000), exp_pos (-((2591 : ℝ) / 1000))]
 
-lemma cosh_b26000_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b26000 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b26000_ub : cosh ((13 : ℝ) / 5) ≤ (680072975 : ℝ) / 100000000 := by
+  have exp_frac_b26000 : exp ((3 : ℝ) / 5) ≤ (182211901 : ℝ) / 100000000 := by
+    have ht : ((3 : ℝ) / 5) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((3 : ℝ) / 5) ^ m / (Nat.factorial m)) +
+          ((3 : ℝ) / 5) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (182211901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b26000 (by norm_num))
+  have hexp : exp ((13 : ℝ) / 5) = exp 2 * exp ((3 : ℝ) / 5) := by
+    rw [← exp_add, show (2 : ℝ) + (3 : ℝ) / 5 = (13 : ℝ) / 5 by norm_num]
+  have hneg : exp (-((13 : ℝ) / 5)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((13 : ℝ) / 5) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b26000 (exp_pos ((3 : ℝ) / 5)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((13 : ℝ) / 5), exp_pos (-((13 : ℝ) / 5))]
 
-lemma cosh_b26095_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b26095 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b26095_ub : cosh ((5219 : ℝ) / 2000) ≤ (686499688 : ℝ) / 100000000 := by
+  have exp_frac_b26095 : exp ((1219 : ℝ) / 2000) ≤ (183951201 : ℝ) / 100000000 := by
+    have ht : ((1219 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1219 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1219 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (183951201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b26095 (by norm_num))
+  have hexp : exp ((5219 : ℝ) / 2000) = exp 2 * exp ((1219 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1219 : ℝ) / 2000 = (5219 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5219 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5219 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b26095 (exp_pos ((1219 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5219 : ℝ) / 2000), exp_pos (-((5219 : ℝ) / 2000))]
 
-lemma cosh_b26185_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b26185 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b26185_ub : cosh ((5237 : ℝ) / 2000) ≤ (692644473 : ℝ) / 100000000 := by
+  have exp_frac_b26185 : exp ((1237 : ℝ) / 2000) ≤ (185614201 : ℝ) / 100000000 := by
+    have ht : ((1237 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1237 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1237 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (185614201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b26185 (by norm_num))
+  have hexp : exp ((5237 : ℝ) / 2000) = exp 2 * exp ((1237 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1237 : ℝ) / 2000 = (5237 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5237 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5237 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b26185 (exp_pos ((1237 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5237 : ℝ) / 2000), exp_pos (-((5237 : ℝ) / 2000))]
 
-lemma cosh_b26275_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b26275 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b26275_ub : cosh ((1051 : ℝ) / 400) ≤ (698845053 : ℝ) / 100000000 := by
+  have exp_frac_b26275 : exp ((251 : ℝ) / 400) ≤ (187292301 : ℝ) / 100000000 := by
+    have ht : ((251 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((251 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((251 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (187292301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b26275 (by norm_num))
+  have hexp : exp ((1051 : ℝ) / 400) = exp 2 * exp ((251 : ℝ) / 400) := by
+    rw [← exp_add, show (2 : ℝ) + (251 : ℝ) / 400 = (1051 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1051 : ℝ) / 400)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1051 : ℝ) / 400) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b26275 (exp_pos ((251 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1051 : ℝ) / 400), exp_pos (-((1051 : ℝ) / 400))]
 
-lemma cosh_b26365_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b26365 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b26365_ub : cosh ((5273 : ℝ) / 2000) ≤ (705101427 : ℝ) / 100000000 := by
+  have exp_frac_b26365 : exp ((1273 : ℝ) / 2000) ≤ (188985501 : ℝ) / 100000000 := by
+    have ht : ((1273 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1273 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1273 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (188985501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b26365 (by norm_num))
+  have hexp : exp ((5273 : ℝ) / 2000) = exp 2 * exp ((1273 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1273 : ℝ) / 2000 = (5273 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5273 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5273 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b26365 (exp_pos ((1273 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5273 : ℝ) / 2000), exp_pos (-((5273 : ℝ) / 2000))]
 
-lemma cosh_b26455_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b26455 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b26455_ub : cosh ((5291 : ℝ) / 2000) ≤ (711414704 : ℝ) / 100000000 := by
+  have exp_frac_b26455 : exp ((1291 : ℝ) / 2000) ≤ (190694101 : ℝ) / 100000000 := by
+    have ht : ((1291 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1291 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1291 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (190694101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b26455 (by norm_num))
+  have hexp : exp ((5291 : ℝ) / 2000) = exp 2 * exp ((1291 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1291 : ℝ) / 2000 = (5291 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5291 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5291 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b26455 (exp_pos ((1291 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5291 : ℝ) / 2000), exp_pos (-((5291 : ℝ) / 2000))]
 
-lemma cosh_b26550_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b26550 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b26550_ub : cosh ((531 : ℝ) / 200) ≤ (718140343 : ℝ) / 100000000 := by
+  have exp_frac_b26550 : exp ((131 : ℝ) / 200) ≤ (192514301 : ℝ) / 100000000 := by
+    have ht : ((131 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((131 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((131 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (192514301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b26550 (by norm_num))
+  have hexp : exp ((531 : ℝ) / 200) = exp 2 * exp ((131 : ℝ) / 200) := by
+    rw [← exp_add, show (2 : ℝ) + (131 : ℝ) / 200 = (531 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((531 : ℝ) / 200)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((531 : ℝ) / 200) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b26550 (exp_pos ((131 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((531 : ℝ) / 200), exp_pos (-((531 : ℝ) / 200))]
 
-lemma cosh_b26640_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b26640 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b26640_ub : cosh ((333 : ℝ) / 125) ≤ (724571490 : ℝ) / 100000000 := by
+  have exp_frac_b26640 : exp ((83 : ℝ) / 125) ≤ (194254801 : ℝ) / 100000000 := by
+    have ht : ((83 : ℝ) / 125) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((83 : ℝ) / 125) ^ m / (Nat.factorial m)) +
+          ((83 : ℝ) / 125) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (194254801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b26640 (by norm_num))
+  have hexp : exp ((333 : ℝ) / 125) = exp 2 * exp ((83 : ℝ) / 125) := by
+    rw [← exp_add, show (2 : ℝ) + (83 : ℝ) / 125 = (333 : ℝ) / 125 by norm_num]
+  have hneg : exp (-((333 : ℝ) / 125)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((333 : ℝ) / 125) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b26640 (exp_pos ((83 : ℝ) / 125)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((333 : ℝ) / 125), exp_pos (-((333 : ℝ) / 125))]
 
-lemma cosh_b26730_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b26730 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b26730_ub : cosh ((2673 : ℝ) / 1000) ≤ (731060280 : ℝ) / 100000000 := by
+  have exp_frac_b26730 : exp ((673 : ℝ) / 1000) ≤ (196010901 : ℝ) / 100000000 := by
+    have ht : ((673 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((673 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((673 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (196010901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b26730 (by norm_num))
+  have hexp : exp ((2673 : ℝ) / 1000) = exp 2 * exp ((673 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (673 : ℝ) / 1000 = (2673 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2673 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2673 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b26730 (exp_pos ((673 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2673 : ℝ) / 1000), exp_pos (-((2673 : ℝ) / 1000))]
 
-lemma cosh_b26820_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b26820 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b26820_ub : cosh ((1341 : ℝ) / 500) ≤ (737608189 : ℝ) / 100000000 := by
+  have exp_frac_b26820 : exp ((341 : ℝ) / 500) ≤ (197783001 : ℝ) / 100000000 := by
+    have ht : ((341 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((341 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((341 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (197783001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b26820 (by norm_num))
+  have hexp : exp ((1341 : ℝ) / 500) = exp 2 * exp ((341 : ℝ) / 500) := by
+    rw [← exp_add, show (2 : ℝ) + (341 : ℝ) / 500 = (1341 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1341 : ℝ) / 500)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1341 : ℝ) / 500) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b26820 (exp_pos ((341 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1341 : ℝ) / 500), exp_pos (-((1341 : ℝ) / 500))]
 
-lemma cosh_b26910_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b26910 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b26910_ub : cosh ((2691 : ℝ) / 1000) ≤ (744215219 : ℝ) / 100000000 := by
+  have exp_frac_b26910 : exp ((691 : ℝ) / 1000) ≤ (199571101 : ℝ) / 100000000 := by
+    have ht : ((691 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((691 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((691 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (199571101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b26910 (by norm_num))
+  have hexp : exp ((2691 : ℝ) / 1000) = exp 2 * exp ((691 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (691 : ℝ) / 1000 = (2691 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2691 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2691 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b26910 (exp_pos ((691 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2691 : ℝ) / 1000), exp_pos (-((2691 : ℝ) / 1000))]
 
-lemma cosh_b27000_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b27000 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b27000_ub : cosh ((27 : ℝ) / 10) ≤ (750881738 : ℝ) / 100000000 := by
+  have exp_frac_b27000 : exp ((7 : ℝ) / 10) ≤ (201375301 : ℝ) / 100000000 := by
+    have ht : ((7 : ℝ) / 10) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((7 : ℝ) / 10) ^ m / (Nat.factorial m)) +
+          ((7 : ℝ) / 10) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (201375301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b27000 (by norm_num))
+  have hexp : exp ((27 : ℝ) / 10) = exp 2 * exp ((7 : ℝ) / 10) := by
+    rw [← exp_add, show (2 : ℝ) + (7 : ℝ) / 10 = (27 : ℝ) / 10 by norm_num]
+  have hneg : exp (-((27 : ℝ) / 10)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((27 : ℝ) / 10) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b27000 (exp_pos ((7 : ℝ) / 10)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((27 : ℝ) / 10), exp_pos (-((27 : ℝ) / 10))]
 
-lemma cosh_b27095_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b27095 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b27095_ub : cosh ((5419 : ℝ) / 2000) ≤ (757984267 : ℝ) / 100000000 := by
+  have exp_frac_b27095 : exp ((1419 : ℝ) / 2000) ≤ (203297501 : ℝ) / 100000000 := by
+    have ht : ((1419 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1419 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1419 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (203297501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b27095 (by norm_num))
+  have hexp : exp ((5419 : ℝ) / 2000) = exp 2 * exp ((1419 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1419 : ℝ) / 2000 = (5419 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5419 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5419 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b27095 (exp_pos ((1419 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5419 : ℝ) / 2000), exp_pos (-((5419 : ℝ) / 2000))]
 
-lemma cosh_b27185_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b27185 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b27185_ub : cosh ((5437 : ℝ) / 2000) ≤ (764775307 : ℝ) / 100000000 := by
+  have exp_frac_b27185 : exp ((1437 : ℝ) / 2000) ≤ (205135401 : ℝ) / 100000000 := by
+    have ht : ((1437 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1437 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1437 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (205135401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b27185 (by norm_num))
+  have hexp : exp ((5437 : ℝ) / 2000) = exp 2 * exp ((1437 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1437 : ℝ) / 2000 = (5437 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5437 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5437 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b27185 (exp_pos ((1437 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5437 : ℝ) / 2000), exp_pos (-((5437 : ℝ) / 2000))]
 
-lemma cosh_b27275_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b27275 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b27275_ub : cosh ((1091 : ℝ) / 400) ≤ (771628054 : ℝ) / 100000000 := by
+  have exp_frac_b27275 : exp ((291 : ℝ) / 400) ≤ (206990001 : ℝ) / 100000000 := by
+    have ht : ((291 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((291 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((291 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (206990001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b27275 (by norm_num))
+  have hexp : exp ((1091 : ℝ) / 400) = exp 2 * exp ((291 : ℝ) / 400) := by
+    rw [← exp_add, show (2 : ℝ) + (291 : ℝ) / 400 = (1091 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1091 : ℝ) / 400)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1091 : ℝ) / 400) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b27275 (exp_pos ((291 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1091 : ℝ) / 400), exp_pos (-((1091 : ℝ) / 400))]
 
-lemma cosh_b27365_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b27365 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b27365_ub : cosh ((5473 : ℝ) / 2000) ≤ (778542508 : ℝ) / 100000000 := by
+  have exp_frac_b27365 : exp ((1473 : ℝ) / 2000) ≤ (208861301 : ℝ) / 100000000 := by
+    have ht : ((1473 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1473 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1473 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (208861301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b27365 (by norm_num))
+  have hexp : exp ((5473 : ℝ) / 2000) = exp 2 * exp ((1473 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1473 : ℝ) / 2000 = (5473 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5473 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5473 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b27365 (exp_pos ((1473 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5473 : ℝ) / 2000), exp_pos (-((5473 : ℝ) / 2000))]
 
-lemma cosh_b27455_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b27455 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b27455_ub : cosh ((5491 : ℝ) / 2000) ≤ (785519776 : ℝ) / 100000000 := by
+  have exp_frac_b27455 : exp ((1491 : ℝ) / 2000) ≤ (210749601 : ℝ) / 100000000 := by
+    have ht : ((1491 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1491 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1491 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (210749601 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b27455 (by norm_num))
+  have hexp : exp ((5491 : ℝ) / 2000) = exp 2 * exp ((1491 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1491 : ℝ) / 2000 = (5491 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5491 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5491 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b27455 (exp_pos ((1491 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5491 : ℝ) / 2000), exp_pos (-((5491 : ℝ) / 2000))]
 
-lemma cosh_b27550_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b27550 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b27550_ub : cosh ((551 : ℝ) / 200) ≤ (792952638 : ℝ) / 100000000 := by
+  have exp_frac_b27550 : exp ((151 : ℝ) / 200) ≤ (212761201 : ℝ) / 100000000 := by
+    have ht : ((151 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((151 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((151 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (212761201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b27550 (by norm_num))
+  have hexp : exp ((551 : ℝ) / 200) = exp 2 * exp ((151 : ℝ) / 200) := by
+    rw [← exp_add, show (2 : ℝ) + (151 : ℝ) / 200 = (551 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((551 : ℝ) / 200)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((551 : ℝ) / 200) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b27550 (exp_pos ((151 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((551 : ℝ) / 200), exp_pos (-((551 : ℝ) / 200))]
 
-lemma cosh_b27640_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b27640 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b27640_ub : cosh ((691 : ℝ) / 250) ≤ (800059971 : ℝ) / 100000000 := by
+  have exp_frac_b27640 : exp ((191 : ℝ) / 250) ≤ (214684701 : ℝ) / 100000000 := by
+    have ht : ((191 : ℝ) / 250) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((191 : ℝ) / 250) ^ m / (Nat.factorial m)) +
+          ((191 : ℝ) / 250) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (214684701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b27640 (by norm_num))
+  have hexp : exp ((691 : ℝ) / 250) = exp 2 * exp ((191 : ℝ) / 250) := by
+    rw [← exp_add, show (2 : ℝ) + (191 : ℝ) / 250 = (691 : ℝ) / 250 by norm_num]
+  have hneg : exp (-((691 : ℝ) / 250)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((691 : ℝ) / 250) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b27640 (exp_pos ((191 : ℝ) / 250)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((691 : ℝ) / 250), exp_pos (-((691 : ℝ) / 250))]
 
-lemma cosh_b27730_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b27730 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b27730_ub : cosh ((2773 : ℝ) / 1000) ≤ (807231596 : ℝ) / 100000000 := by
+  have exp_frac_b27730 : exp ((773 : ℝ) / 1000) ≤ (216625601 : ℝ) / 100000000 := by
+    have ht : ((773 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((773 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((773 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (216625601 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b27730 (by norm_num))
+  have hexp : exp ((2773 : ℝ) / 1000) = exp 2 * exp ((773 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (773 : ℝ) / 1000 = (2773 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2773 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2773 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b27730 (exp_pos ((773 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2773 : ℝ) / 1000), exp_pos (-((2773 : ℝ) / 1000))]
 
-lemma cosh_b27820_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b27820 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b27820_ub : cosh ((1391 : ℝ) / 500) ≤ (814467884 : ℝ) / 100000000 := by
+  have exp_frac_b27820 : exp ((391 : ℝ) / 500) ≤ (218584001 : ℝ) / 100000000 := by
+    have ht : ((391 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((391 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((391 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (218584001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b27820 (by norm_num))
+  have hexp : exp ((1391 : ℝ) / 500) = exp 2 * exp ((391 : ℝ) / 500) := by
+    rw [← exp_add, show (2 : ℝ) + (391 : ℝ) / 500 = (1391 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1391 : ℝ) / 500)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1391 : ℝ) / 500) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b27820 (exp_pos ((391 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1391 : ℝ) / 500), exp_pos (-((1391 : ℝ) / 500))]
 
-lemma cosh_b27910_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b27910 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b27910_ub : cosh ((2791 : ℝ) / 1000) ≤ (821769943 : ℝ) / 100000000 := by
+  have exp_frac_b27910 : exp ((791 : ℝ) / 1000) ≤ (220560201 : ℝ) / 100000000 := by
+    have ht : ((791 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((791 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((791 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (220560201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b27910 (by norm_num))
+  have hexp : exp ((2791 : ℝ) / 1000) = exp 2 * exp ((791 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (791 : ℝ) / 1000 = (2791 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2791 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2791 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b27910 (exp_pos ((791 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2791 : ℝ) / 1000), exp_pos (-((2791 : ℝ) / 1000))]
 
-lemma cosh_b28000_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b28000 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b28000_ub : cosh ((14 : ℝ) / 5) ≤ (829137773 : ℝ) / 100000000 := by
+  have exp_frac_b28000 : exp ((4 : ℝ) / 5) ≤ (222554201 : ℝ) / 100000000 := by
+    have ht : ((4 : ℝ) / 5) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((4 : ℝ) / 5) ^ m / (Nat.factorial m)) +
+          ((4 : ℝ) / 5) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (222554201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b28000 (by norm_num))
+  have hexp : exp ((14 : ℝ) / 5) = exp 2 * exp ((4 : ℝ) / 5) := by
+    rw [← exp_add, show (2 : ℝ) + (4 : ℝ) / 5 = (14 : ℝ) / 5 by norm_num]
+  have hneg : exp (-((14 : ℝ) / 5)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((14 : ℝ) / 5) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b28000 (exp_pos ((4 : ℝ) / 5)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((14 : ℝ) / 5), exp_pos (-((14 : ℝ) / 5))]
 
-lemma cosh_b28095_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b28095 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b28095_ub : cosh ((5619 : ℝ) / 2000) ≤ (836987062 : ℝ) / 100000000 := by
+  have exp_frac_b28095 : exp ((1619 : ℝ) / 2000) ≤ (224678501 : ℝ) / 100000000 := by
+    have ht : ((1619 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1619 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1619 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (224678501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b28095 (by norm_num))
+  have hexp : exp ((5619 : ℝ) / 2000) = exp 2 * exp ((1619 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1619 : ℝ) / 2000 = (5619 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5619 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5619 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b28095 (exp_pos ((1619 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5619 : ℝ) / 2000), exp_pos (-((5619 : ℝ) / 2000))]
 
-lemma cosh_b28185_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b28185 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b28185_ub : cosh ((5637 : ℝ) / 2000) ≤ (844492346 : ℝ) / 100000000 := by
+  have exp_frac_b28185 : exp ((1637 : ℝ) / 2000) ≤ (226709701 : ℝ) / 100000000 := by
+    have ht : ((1637 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1637 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1637 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (226709701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b28185 (by norm_num))
+  have hexp : exp ((5637 : ℝ) / 2000) = exp 2 * exp ((1637 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1637 : ℝ) / 2000 = (5637 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5637 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5637 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b28185 (exp_pos ((1637 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5637 : ℝ) / 2000), exp_pos (-((5637 : ℝ) / 2000))]
 
-lemma cosh_b28275_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b28275 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b28275_ub : cosh ((1131 : ℝ) / 400) ≤ (852065618 : ℝ) / 100000000 := by
+  have exp_frac_b28275 : exp ((331 : ℝ) / 400) ≤ (228759301 : ℝ) / 100000000 := by
+    have ht : ((331 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((331 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((331 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (228759301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b28275 (by norm_num))
+  have hexp : exp ((1131 : ℝ) / 400) = exp 2 * exp ((331 : ℝ) / 400) := by
+    rw [← exp_add, show (2 : ℝ) + (331 : ℝ) / 400 = (1131 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1131 : ℝ) / 400)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1131 : ℝ) / 400) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b28275 (exp_pos ((331 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1131 : ℝ) / 400), exp_pos (-((1131 : ℝ) / 400))]
 
-lemma cosh_b28365_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b28365 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b28365_ub : cosh ((5673 : ℝ) / 2000) ≤ (859707617 : ℝ) / 100000000 := by
+  have exp_frac_b28365 : exp ((1673 : ℝ) / 2000) ≤ (230827501 : ℝ) / 100000000 := by
+    have ht : ((1673 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1673 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1673 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (230827501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b28365 (by norm_num))
+  have hexp : exp ((5673 : ℝ) / 2000) = exp 2 * exp ((1673 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1673 : ℝ) / 2000 = (5673 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5673 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5673 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b28365 (exp_pos ((1673 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5673 : ℝ) / 2000), exp_pos (-((5673 : ℝ) / 2000))]
 
-lemma cosh_b28455_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b28455 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b28455_ub : cosh ((5691 : ℝ) / 2000) ≤ (867418343 : ℝ) / 100000000 := by
+  have exp_frac_b28455 : exp ((1691 : ℝ) / 2000) ≤ (232914301 : ℝ) / 100000000 := by
+    have ht : ((1691 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1691 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1691 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (232914301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b28455 (by norm_num))
+  have hexp : exp ((5691 : ℝ) / 2000) = exp 2 * exp ((1691 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1691 : ℝ) / 2000 = (5691 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5691 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5691 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b28455 (exp_pos ((1691 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5691 : ℝ) / 2000), exp_pos (-((5691 : ℝ) / 2000))]
 
-lemma cosh_b28550_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b28550 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b28550_ub : cosh ((571 : ℝ) / 200) ≤ (875633067 : ℝ) / 100000000 := by
+  have exp_frac_b28550 : exp ((171 : ℝ) / 200) ≤ (235137501 : ℝ) / 100000000 := by
+    have ht : ((171 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((171 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((171 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (235137501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b28550 (by norm_num))
+  have hexp : exp ((571 : ℝ) / 200) = exp 2 * exp ((171 : ℝ) / 200) := by
+    rw [← exp_add, show (2 : ℝ) + (171 : ℝ) / 200 = (571 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((571 : ℝ) / 200)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((571 : ℝ) / 200) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b28550 (exp_pos ((171 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((571 : ℝ) / 200), exp_pos (-((571 : ℝ) / 200))]
 
-lemma cosh_b28640_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b28640 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b28640_ub : cosh ((358 : ℝ) / 125) ≤ (883487898 : ℝ) / 100000000 := by
+  have exp_frac_b28640 : exp ((108 : ℝ) / 125) ≤ (237263301 : ℝ) / 100000000 := by
+    have ht : ((108 : ℝ) / 125) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((108 : ℝ) / 125) ^ m / (Nat.factorial m)) +
+          ((108 : ℝ) / 125) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (237263301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b28640 (by norm_num))
+  have hexp : exp ((358 : ℝ) / 125) = exp 2 * exp ((108 : ℝ) / 125) := by
+    rw [← exp_add, show (2 : ℝ) + (108 : ℝ) / 125 = (358 : ℝ) / 125 by norm_num]
+  have hneg : exp (-((358 : ℝ) / 125)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((358 : ℝ) / 125) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b28640 (exp_pos ((108 : ℝ) / 125)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((358 : ℝ) / 125), exp_pos (-((358 : ℝ) / 125))]
 
-lemma cosh_b28730_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b28730 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b28730_ub : cosh ((2873 : ℝ) / 1000) ≤ (891413673 : ℝ) / 100000000 := by
+  have exp_frac_b28730 : exp ((873 : ℝ) / 1000) ≤ (239408301 : ℝ) / 100000000 := by
+    have ht : ((873 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((873 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((873 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (239408301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b28730 (by norm_num))
+  have hexp : exp ((2873 : ℝ) / 1000) = exp 2 * exp ((873 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (873 : ℝ) / 1000 = (2873 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2873 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2873 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b28730 (exp_pos ((873 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2873 : ℝ) / 1000), exp_pos (-((2873 : ℝ) / 1000))]
 
-lemma cosh_b28820_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b28820 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b28820_ub : cosh ((1441 : ℝ) / 500) ≤ (899411131 : ℝ) / 100000000 := by
+  have exp_frac_b28820 : exp ((441 : ℝ) / 500) ≤ (241572701 : ℝ) / 100000000 := by
+    have ht : ((441 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((441 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((441 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (241572701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b28820 (by norm_num))
+  have hexp : exp ((1441 : ℝ) / 500) = exp 2 * exp ((441 : ℝ) / 500) := by
+    rw [← exp_add, show (2 : ℝ) + (441 : ℝ) / 500 = (1441 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1441 : ℝ) / 500)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1441 : ℝ) / 500) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b28820 (exp_pos ((441 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1441 : ℝ) / 500), exp_pos (-((1441 : ℝ) / 500))]
 
-lemma cosh_b28910_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b28910 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b28910_ub : cosh ((2891 : ℝ) / 1000) ≤ (907481011 : ℝ) / 100000000 := by
+  have exp_frac_b28910 : exp ((891 : ℝ) / 1000) ≤ (243756701 : ℝ) / 100000000 := by
+    have ht : ((891 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((891 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((891 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (243756701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b28910 (by norm_num))
+  have hexp : exp ((2891 : ℝ) / 1000) = exp 2 * exp ((891 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (891 : ℝ) / 1000 = (2891 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2891 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2891 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b28910 (exp_pos ((891 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2891 : ℝ) / 1000), exp_pos (-((2891 : ℝ) / 1000))]
 
-lemma cosh_b29000_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b29000 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b29000_ub : cosh ((29 : ℝ) / 10) ≤ (915623682 : ℝ) / 100000000 := by
+  have exp_frac_b29000 : exp ((9 : ℝ) / 10) ≤ (245960401 : ℝ) / 100000000 := by
+    have ht : ((9 : ℝ) / 10) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((9 : ℝ) / 10) ^ m / (Nat.factorial m)) +
+          ((9 : ℝ) / 10) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (245960401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b29000 (by norm_num))
+  have hexp : exp ((29 : ℝ) / 10) = exp 2 * exp ((9 : ℝ) / 10) := by
+    rw [← exp_add, show (2 : ℝ) + (9 : ℝ) / 10 = (29 : ℝ) / 10 by norm_num]
+  have hneg : exp (-((29 : ℝ) / 10)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((29 : ℝ) / 10) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b29000 (exp_pos ((9 : ℝ) / 10)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((29 : ℝ) / 10), exp_pos (-((29 : ℝ) / 10))]
 
-lemma cosh_b29095_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b29095 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b29095_ub : cosh ((5819 : ℝ) / 2000) ≤ (924298434 : ℝ) / 100000000 := by
+  have exp_frac_b29095 : exp ((1819 : ℝ) / 2000) ≤ (248308101 : ℝ) / 100000000 := by
+    have ht : ((1819 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1819 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1819 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (248308101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b29095 (by norm_num))
+  have hexp : exp ((5819 : ℝ) / 2000) = exp 2 * exp ((1819 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1819 : ℝ) / 2000 = (5819 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5819 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5819 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b29095 (exp_pos ((1819 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5819 : ℝ) / 2000), exp_pos (-((5819 : ℝ) / 2000))]
 
-lemma cosh_b29185_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b29185 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b29185_ub : cosh ((5837 : ℝ) / 2000) ≤ (932593339 : ℝ) / 100000000 := by
+  have exp_frac_b29185 : exp ((1837 : ℝ) / 2000) ≤ (250553001 : ℝ) / 100000000 := by
+    have ht : ((1837 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1837 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1837 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (250553001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b29185 (by norm_num))
+  have hexp : exp ((5837 : ℝ) / 2000) = exp 2 * exp ((1837 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1837 : ℝ) / 2000 = (5837 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5837 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5837 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b29185 (exp_pos ((1837 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5837 : ℝ) / 2000), exp_pos (-((5837 : ℝ) / 2000))]
 
-lemma cosh_b29275_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b29275 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b29275_ub : cosh ((1171 : ℝ) / 400) ≤ (940962884 : ℝ) / 100000000 := by
+  have exp_frac_b29275 : exp ((371 : ℝ) / 400) ≤ (252818101 : ℝ) / 100000000 := by
+    have ht : ((371 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((371 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((371 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (252818101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b29275 (by norm_num))
+  have hexp : exp ((1171 : ℝ) / 400) = exp 2 * exp ((371 : ℝ) / 400) := by
+    rw [← exp_add, show (2 : ℝ) + (371 : ℝ) / 400 = (1171 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1171 : ℝ) / 400)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1171 : ℝ) / 400) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b29275 (exp_pos ((371 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1171 : ℝ) / 400), exp_pos (-((1171 : ℝ) / 400))]
 
-lemma cosh_b29365_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b29365 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b29365_ub : cosh ((5873 : ℝ) / 2000) ≤ (949408545 : ℝ) / 100000000 := by
+  have exp_frac_b29365 : exp ((1873 : ℝ) / 2000) ≤ (255103801 : ℝ) / 100000000 := by
+    have ht : ((1873 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1873 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1873 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (255103801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b29365 (by norm_num))
+  have hexp : exp ((5873 : ℝ) / 2000) = exp 2 * exp ((1873 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1873 : ℝ) / 2000 = (5873 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5873 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5873 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b29365 (exp_pos ((1873 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5873 : ℝ) / 2000), exp_pos (-((5873 : ℝ) / 2000))]
 
-lemma cosh_b29455_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b29455 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b29455_ub : cosh ((5891 : ℝ) / 2000) ≤ (957930324 : ℝ) / 100000000 := by
+  have exp_frac_b29455 : exp ((1891 : ℝ) / 2000) ≤ (257410101 : ℝ) / 100000000 := by
+    have ht : ((1891 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1891 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1891 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (257410101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b29455 (by norm_num))
+  have hexp : exp ((5891 : ℝ) / 2000) = exp 2 * exp ((1891 : ℝ) / 2000) := by
+    rw [← exp_add, show (2 : ℝ) + (1891 : ℝ) / 2000 = (5891 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((5891 : ℝ) / 2000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((5891 : ℝ) / 2000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b29455 (exp_pos ((1891 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((5891 : ℝ) / 2000), exp_pos (-((5891 : ℝ) / 2000))]
 
-lemma cosh_b29550_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b29550 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b29550_ub : cosh ((591 : ℝ) / 200) ≤ (967008939 : ℝ) / 100000000 := by
+  have exp_frac_b29550 : exp ((191 : ℝ) / 200) ≤ (259867101 : ℝ) / 100000000 := by
+    have ht : ((191 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((191 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((191 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (259867101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b29550 (by norm_num))
+  have hexp : exp ((591 : ℝ) / 200) = exp 2 * exp ((191 : ℝ) / 200) := by
+    rw [← exp_add, show (2 : ℝ) + (191 : ℝ) / 200 = (591 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((591 : ℝ) / 200)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((591 : ℝ) / 200) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b29550 (exp_pos ((191 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((591 : ℝ) / 200), exp_pos (-((591 : ℝ) / 200))]
 
-lemma cosh_b29640_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b29640 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b29640_ub : cosh ((741 : ℝ) / 250) ≤ (975689972 : ℝ) / 100000000 := by
+  have exp_frac_b29640 : exp ((241 : ℝ) / 250) ≤ (262216501 : ℝ) / 100000000 := by
+    have ht : ((241 : ℝ) / 250) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((241 : ℝ) / 250) ^ m / (Nat.factorial m)) +
+          ((241 : ℝ) / 250) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (262216501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b29640 (by norm_num))
+  have hexp : exp ((741 : ℝ) / 250) = exp 2 * exp ((241 : ℝ) / 250) := by
+    rw [← exp_add, show (2 : ℝ) + (241 : ℝ) / 250 = (741 : ℝ) / 250 by norm_num]
+  have hneg : exp (-((741 : ℝ) / 250)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((741 : ℝ) / 250) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b29640 (exp_pos ((241 : ℝ) / 250)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((741 : ℝ) / 250), exp_pos (-((741 : ℝ) / 250))]
 
-lemma cosh_b29730_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b29730 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b29730_ub : cosh ((2973 : ℝ) / 1000) ≤ (984449339 : ℝ) / 100000000 := by
+  have exp_frac_b29730 : exp ((973 : ℝ) / 1000) ≤ (264587101 : ℝ) / 100000000 := by
+    have ht : ((973 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((973 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((973 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (264587101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b29730 (by norm_num))
+  have hexp : exp ((2973 : ℝ) / 1000) = exp 2 * exp ((973 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (973 : ℝ) / 1000 = (2973 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2973 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2973 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b29730 (exp_pos ((973 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2973 : ℝ) / 1000), exp_pos (-((2973 : ℝ) / 1000))]
 
-lemma cosh_b29820_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b29820 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b29820_ub : cosh ((1491 : ℝ) / 500) ≤ (993287779 : ℝ) / 100000000 := by
+  have exp_frac_b29820 : exp ((491 : ℝ) / 500) ≤ (266979101 : ℝ) / 100000000 := by
+    have ht : ((491 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((491 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((491 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (266979101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b29820 (by norm_num))
+  have hexp : exp ((1491 : ℝ) / 500) = exp 2 * exp ((491 : ℝ) / 500) := by
+    rw [← exp_add, show (2 : ℝ) + (491 : ℝ) / 500 = (1491 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1491 : ℝ) / 500)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1491 : ℝ) / 500) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b29820 (exp_pos ((491 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1491 : ℝ) / 500), exp_pos (-((1491 : ℝ) / 500))]
 
-lemma cosh_b29910_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b29910 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
+lemma cosh_b29910_ub : cosh ((2991 : ℝ) / 1000) ≤ (1002206400 : ℝ) / 100000000 := by
+  have exp_frac_b29910 : exp ((991 : ℝ) / 1000) ≤ (269392801 : ℝ) / 100000000 := by
+    have ht : ((991 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((991 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((991 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (269392801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b29910 (by norm_num))
+  have hexp : exp ((2991 : ℝ) / 1000) = exp 2 * exp ((991 : ℝ) / 1000) := by
+    rw [← exp_add, show (2 : ℝ) + (991 : ℝ) / 1000 = (2991 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((2991 : ℝ) / 1000)) ≤ (136 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2991 : ℝ) / 1000) ≤ -(2 : ℝ))).trans exp_neg_two_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_two_le exp_frac_b29910 (exp_pos ((991 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2991 : ℝ) / 1000), exp_pos (-((2991 : ℝ) / 1000))]
 
-lemma cosh_b30000_ub : cosh ((3 : ℝ) / 1) ≤ (9001713201 : ℝ) / 100000000 := by
-  have exp_b30000 : exp (((3 : ℝ) / 1)^2 / 2) ≤ (9001713201 : ℝ) / 100000000 := by
-    have ht : ((3 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 21) (by norm_num)
-    have htaylor :
-        (∑ m ∈ Finset.range 21, (((3 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((3 : ℝ) / 1)^2 / 2) ^ 21 * (21 + 1) / (Nat.factorial 21 * 21) ≤
-          (9001713201 : ℝ) / 100000000 := by
-      simp [Finset.sum_range_succ, Nat.factorial]
-      norm_num
-    linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((3 : ℝ) / 1)).trans (le_trans exp_b30000 (by norm_num))
+lemma cosh_b30000_ub : cosh ((3 : ℝ) / 1) ≤ (1006800001 : ℝ) / 100000000 := by
+  rw [show (3 : ℝ) / 1 = (3 : ℝ) by norm_num]
+  exact (cosh_three_le).trans (by norm_num)
 
-lemma cosh_b30095_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b30095 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b30095_ub : cosh ((6019 : ℝ) / 2000) ≤ (1016387058 : ℝ) / 100000000 := by
+  have exp_frac_b30095 : exp ((19 : ℝ) / 2000) ≤ (100954601 : ℝ) / 100000000 := by
+    have ht : ((19 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((19 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((19 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (100954601 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b30095 (by norm_num))
+  have hexp : exp ((6019 : ℝ) / 2000) = exp 3 * exp ((19 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (19 : ℝ) / 2000 = (6019 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6019 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6019 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b30095 (exp_pos ((19 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6019 : ℝ) / 2000), exp_pos (-((6019 : ℝ) / 2000))]
 
-lemma cosh_b30185_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b30185 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b30185_ub : cosh ((6037 : ℝ) / 2000) ≤ (1025553304 : ℝ) / 100000000 := by
+  have exp_frac_b30185 : exp ((37 : ℝ) / 2000) ≤ (101867301 : ℝ) / 100000000 := by
+    have ht : ((37 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((37 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((37 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (101867301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b30185 (by norm_num))
+  have hexp : exp ((6037 : ℝ) / 2000) = exp 3 * exp ((37 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (37 : ℝ) / 2000 = (6037 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6037 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6037 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b30185 (exp_pos ((37 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6037 : ℝ) / 2000), exp_pos (-((6037 : ℝ) / 2000))]
 
-lemma cosh_b30275_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b30275 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b30275_ub : cosh ((1211 : ℝ) / 400) ≤ (1034801903 : ℝ) / 100000000 := by
+  have exp_frac_b30275 : exp ((11 : ℝ) / 400) ≤ (102788201 : ℝ) / 100000000 := by
+    have ht : ((11 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((11 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((11 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (102788201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b30275 (by norm_num))
+  have hexp : exp ((1211 : ℝ) / 400) = exp 3 * exp ((11 : ℝ) / 400) := by
+    rw [← exp_add, show (3 : ℝ) + (11 : ℝ) / 400 = (1211 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1211 : ℝ) / 400)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1211 : ℝ) / 400) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b30275 (exp_pos ((11 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1211 : ℝ) / 400), exp_pos (-((1211 : ℝ) / 400))]
 
-lemma cosh_b30365_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b30365 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b30365_ub : cosh ((6073 : ℝ) / 2000) ≤ (1044134863 : ℝ) / 100000000 := by
+  have exp_frac_b30365 : exp ((73 : ℝ) / 2000) ≤ (103717501 : ℝ) / 100000000 := by
+    have ht : ((73 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((73 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((73 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (103717501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b30365 (by norm_num))
+  have hexp : exp ((6073 : ℝ) / 2000) = exp 3 * exp ((73 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (73 : ℝ) / 2000 = (6073 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6073 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6073 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b30365 (exp_pos ((73 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6073 : ℝ) / 2000), exp_pos (-((6073 : ℝ) / 2000))]
 
-lemma cosh_b30455_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b30455 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b30455_ub : cosh ((6091 : ℝ) / 2000) ≤ (1053552184 : ℝ) / 100000000 := by
+  have exp_frac_b30455 : exp ((91 : ℝ) / 2000) ≤ (104655201 : ℝ) / 100000000 := by
+    have ht : ((91 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((91 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((91 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (104655201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b30455 (by norm_num))
+  have hexp : exp ((6091 : ℝ) / 2000) = exp 3 * exp ((91 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (91 : ℝ) / 2000 = (6091 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6091 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6091 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b30455 (exp_pos ((91 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6091 : ℝ) / 2000), exp_pos (-((6091 : ℝ) / 2000))]
 
-lemma cosh_b30550_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b30550 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b30550_ub : cosh ((611 : ℝ) / 200) ≤ (1063584137 : ℝ) / 100000000 := by
+  have exp_frac_b30550 : exp ((11 : ℝ) / 200) ≤ (105654101 : ℝ) / 100000000 := by
+    have ht : ((11 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((11 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((11 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (105654101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b30550 (by norm_num))
+  have hexp : exp ((611 : ℝ) / 200) = exp 3 * exp ((11 : ℝ) / 200) := by
+    rw [← exp_add, show (3 : ℝ) + (11 : ℝ) / 200 = (611 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((611 : ℝ) / 200)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((611 : ℝ) / 200) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b30550 (exp_pos ((11 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((611 : ℝ) / 200), exp_pos (-((611 : ℝ) / 200))]
 
-lemma cosh_b30640_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b30640 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b30640_ub : cosh ((383 : ℝ) / 125) ≤ (1073177210 : ℝ) / 100000000 := by
+  have exp_frac_b30640 : exp ((8 : ℝ) / 125) ≤ (106609301 : ℝ) / 100000000 := by
+    have ht : ((8 : ℝ) / 125) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((8 : ℝ) / 125) ^ m / (Nat.factorial m)) +
+          ((8 : ℝ) / 125) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (106609301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b30640 (by norm_num))
+  have hexp : exp ((383 : ℝ) / 125) = exp 3 * exp ((8 : ℝ) / 125) := by
+    rw [← exp_add, show (3 : ℝ) + (8 : ℝ) / 125 = (383 : ℝ) / 125 by norm_num]
+  have hneg : exp (-((383 : ℝ) / 125)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((383 : ℝ) / 125) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b30640 (exp_pos ((8 : ℝ) / 125)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((383 : ℝ) / 125), exp_pos (-((383 : ℝ) / 125))]
 
-lemma cosh_b30730_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b30730 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b30730_ub : cosh ((3073 : ℝ) / 1000) ≤ (1082856654 : ℝ) / 100000000 := by
+  have exp_frac_b30730 : exp ((73 : ℝ) / 1000) ≤ (107573101 : ℝ) / 100000000 := by
+    have ht : ((73 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((73 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((73 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (107573101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b30730 (by norm_num))
+  have hexp : exp ((3073 : ℝ) / 1000) = exp 3 * exp ((73 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (73 : ℝ) / 1000 = (3073 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3073 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3073 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b30730 (exp_pos ((73 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3073 : ℝ) / 1000), exp_pos (-((3073 : ℝ) / 1000))]
 
-lemma cosh_b30820_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b30820 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b30820_ub : cosh ((1541 : ℝ) / 500) ≤ (1092623471 : ℝ) / 100000000 := by
+  have exp_frac_b30820 : exp ((41 : ℝ) / 500) ≤ (108545601 : ℝ) / 100000000 := by
+    have ht : ((41 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((41 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((41 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (108545601 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b30820 (by norm_num))
+  have hexp : exp ((1541 : ℝ) / 500) = exp 3 * exp ((41 : ℝ) / 500) := by
+    rw [← exp_add, show (3 : ℝ) + (41 : ℝ) / 500 = (1541 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1541 : ℝ) / 500)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1541 : ℝ) / 500) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b30820 (exp_pos ((41 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1541 : ℝ) / 500), exp_pos (-((1541 : ℝ) / 500))]
 
-lemma cosh_b30910_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b30910 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b30910_ub : cosh ((3091 : ℝ) / 1000) ≤ (1102479672 : ℝ) / 100000000 := by
+  have exp_frac_b30910 : exp ((91 : ℝ) / 1000) ≤ (109527001 : ℝ) / 100000000 := by
+    have ht : ((91 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((91 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((91 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (109527001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b30910 (by norm_num))
+  have hexp : exp ((3091 : ℝ) / 1000) = exp 3 * exp ((91 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (91 : ℝ) / 1000 = (3091 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3091 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3091 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b30910 (exp_pos ((91 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3091 : ℝ) / 1000), exp_pos (-((3091 : ℝ) / 1000))]
 
-lemma cosh_b31000_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b31000 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b31000_ub : cosh ((31 : ℝ) / 10) ≤ (1112423246 : ℝ) / 100000000 := by
+  have exp_frac_b31000 : exp ((1 : ℝ) / 10) ≤ (110517101 : ℝ) / 100000000 := by
+    have ht : ((1 : ℝ) / 10) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1 : ℝ) / 10) ^ m / (Nat.factorial m)) +
+          ((1 : ℝ) / 10) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (110517101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b31000 (by norm_num))
+  have hexp : exp ((31 : ℝ) / 10) = exp 3 * exp ((1 : ℝ) / 10) := by
+    rw [← exp_add, show (3 : ℝ) + (1 : ℝ) / 10 = (31 : ℝ) / 10 by norm_num]
+  have hneg : exp (-((31 : ℝ) / 10)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((31 : ℝ) / 10) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b31000 (exp_pos ((1 : ℝ) / 10)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((31 : ℝ) / 10), exp_pos (-((31 : ℝ) / 10))]
 
-lemma cosh_b31095_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b31095 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b31095_ub : cosh ((6219 : ℝ) / 2000) ≤ (1123018611 : ℝ) / 100000000 := by
+  have exp_frac_b31095 : exp ((219 : ℝ) / 2000) ≤ (111572101 : ℝ) / 100000000 := by
+    have ht : ((219 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((219 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((219 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (111572101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b31095 (by norm_num))
+  have hexp : exp ((6219 : ℝ) / 2000) = exp 3 * exp ((219 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (219 : ℝ) / 2000 = (6219 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6219 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6219 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b31095 (exp_pos ((219 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6219 : ℝ) / 2000), exp_pos (-((6219 : ℝ) / 2000))]
 
-lemma cosh_b31185_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b31185 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b31185_ub : cosh ((6237 : ℝ) / 2000) ≤ (1133147981 : ℝ) / 100000000 := by
+  have exp_frac_b31185 : exp ((237 : ℝ) / 2000) ≤ (112580701 : ℝ) / 100000000 := by
+    have ht : ((237 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((237 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((237 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (112580701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b31185 (by norm_num))
+  have hexp : exp ((6237 : ℝ) / 2000) = exp 3 * exp ((237 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (237 : ℝ) / 2000 = (6237 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6237 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6237 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b31185 (exp_pos ((237 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6237 : ℝ) / 2000), exp_pos (-((6237 : ℝ) / 2000))]
 
-lemma cosh_b31275_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b31275 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b31275_ub : cosh ((1251 : ℝ) / 400) ≤ (1143369746 : ℝ) / 100000000 := by
+  have exp_frac_b31275 : exp ((51 : ℝ) / 400) ≤ (113598501 : ℝ) / 100000000 := by
+    have ht : ((51 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((51 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((51 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (113598501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b31275 (by norm_num))
+  have hexp : exp ((1251 : ℝ) / 400) = exp 3 * exp ((51 : ℝ) / 400) := by
+    rw [← exp_add, show (3 : ℝ) + (51 : ℝ) / 400 = (1251 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1251 : ℝ) / 400)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1251 : ℝ) / 400) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b31275 (exp_pos ((51 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1251 : ℝ) / 400), exp_pos (-((1251 : ℝ) / 400))]
 
-lemma cosh_b31365_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b31365 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b31365_ub : cosh ((6273 : ℝ) / 2000) ≤ (1153683907 : ℝ) / 100000000 := by
+  have exp_frac_b31365 : exp ((273 : ℝ) / 2000) ≤ (114625501 : ℝ) / 100000000 := by
+    have ht : ((273 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((273 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((273 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (114625501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b31365 (by norm_num))
+  have hexp : exp ((6273 : ℝ) / 2000) = exp 3 * exp ((273 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (273 : ℝ) / 2000 = (6273 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6273 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6273 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b31365 (exp_pos ((273 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6273 : ℝ) / 2000), exp_pos (-((6273 : ℝ) / 2000))]
 
-lemma cosh_b31455_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b31455 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b31455_ub : cosh ((6291 : ℝ) / 2000) ≤ (1164091468 : ℝ) / 100000000 := by
+  have exp_frac_b31455 : exp ((291 : ℝ) / 2000) ≤ (115661801 : ℝ) / 100000000 := by
+    have ht : ((291 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((291 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((291 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (115661801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b31455 (by norm_num))
+  have hexp : exp ((6291 : ℝ) / 2000) = exp 3 * exp ((291 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (291 : ℝ) / 2000 = (6291 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6291 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6291 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b31455 (exp_pos ((291 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6291 : ℝ) / 2000), exp_pos (-((6291 : ℝ) / 2000))]
 
-lemma cosh_b31550_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b31550 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b31550_ub : cosh ((631 : ℝ) / 200) ≤ (1175178940 : ℝ) / 100000000 := by
+  have exp_frac_b31550 : exp ((31 : ℝ) / 200) ≤ (116765801 : ℝ) / 100000000 := by
+    have ht : ((31 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((31 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((31 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (116765801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b31550 (by norm_num))
+  have hexp : exp ((631 : ℝ) / 200) = exp 3 * exp ((31 : ℝ) / 200) := by
+    rw [← exp_add, show (3 : ℝ) + (31 : ℝ) / 200 = (631 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((631 : ℝ) / 200)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((631 : ℝ) / 200) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b31550 (exp_pos ((31 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((631 : ℝ) / 200), exp_pos (-((631 : ℝ) / 200))]
 
-lemma cosh_b31640_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b31640 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b31640_ub : cosh ((791 : ℝ) / 250) ≤ (1185781335 : ℝ) / 100000000 := by
+  have exp_frac_b31640 : exp ((41 : ℝ) / 250) ≤ (117821501 : ℝ) / 100000000 := by
+    have ht : ((41 : ℝ) / 250) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((41 : ℝ) / 250) ^ m / (Nat.factorial m)) +
+          ((41 : ℝ) / 250) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (117821501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b31640 (by norm_num))
+  have hexp : exp ((791 : ℝ) / 250) = exp 3 * exp ((41 : ℝ) / 250) := by
+    rw [← exp_add, show (3 : ℝ) + (41 : ℝ) / 250 = (791 : ℝ) / 250 by norm_num]
+  have hneg : exp (-((791 : ℝ) / 250)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((791 : ℝ) / 250) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b31640 (exp_pos ((41 : ℝ) / 250)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((791 : ℝ) / 250), exp_pos (-((791 : ℝ) / 250))]
 
-lemma cosh_b31730_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b31730 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b31730_ub : cosh ((3173 : ℝ) / 1000) ≤ (1196479139 : ℝ) / 100000000 := by
+  have exp_frac_b31730 : exp ((173 : ℝ) / 1000) ≤ (118886701 : ℝ) / 100000000 := by
+    have ht : ((173 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((173 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((173 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (118886701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b31730 (by norm_num))
+  have hexp : exp ((3173 : ℝ) / 1000) = exp 3 * exp ((173 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (173 : ℝ) / 1000 = (3173 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3173 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3173 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b31730 (exp_pos ((173 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3173 : ℝ) / 1000), exp_pos (-((3173 : ℝ) / 1000))]
 
-lemma cosh_b31820_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b31820 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b31820_ub : cosh ((1591 : ℝ) / 500) ≤ (1207273355 : ℝ) / 100000000 := by
+  have exp_frac_b31820 : exp ((91 : ℝ) / 500) ≤ (119961501 : ℝ) / 100000000 := by
+    have ht : ((91 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((91 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((91 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (119961501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b31820 (by norm_num))
+  have hexp : exp ((1591 : ℝ) / 500) = exp 3 * exp ((91 : ℝ) / 500) := by
+    rw [← exp_add, show (3 : ℝ) + (91 : ℝ) / 500 = (1591 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1591 : ℝ) / 500)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1591 : ℝ) / 500) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b31820 (exp_pos ((91 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1591 : ℝ) / 500), exp_pos (-((1591 : ℝ) / 500))]
 
-lemma cosh_b31910_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b31910 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b31910_ub : cosh ((3191 : ℝ) / 1000) ≤ (1218164989 : ℝ) / 100000000 := by
+  have exp_frac_b31910 : exp ((191 : ℝ) / 1000) ≤ (121046001 : ℝ) / 100000000 := by
+    have ht : ((191 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((191 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((191 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (121046001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b31910 (by norm_num))
+  have hexp : exp ((3191 : ℝ) / 1000) = exp 3 * exp ((191 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (191 : ℝ) / 1000 = (3191 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3191 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3191 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b31910 (exp_pos ((191 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3191 : ℝ) / 1000), exp_pos (-((3191 : ℝ) / 1000))]
 
-lemma cosh_b32000_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b32000 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b32000_ub : cosh ((16 : ℝ) / 5) ≤ (1229155043 : ℝ) / 100000000 := by
+  have exp_frac_b32000 : exp ((1 : ℝ) / 5) ≤ (122140301 : ℝ) / 100000000 := by
+    have ht : ((1 : ℝ) / 5) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1 : ℝ) / 5) ^ m / (Nat.factorial m)) +
+          ((1 : ℝ) / 5) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (122140301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b32000 (by norm_num))
+  have hexp : exp ((16 : ℝ) / 5) = exp 3 * exp ((1 : ℝ) / 5) := by
+    rw [← exp_add, show (3 : ℝ) + (1 : ℝ) / 5 = (16 : ℝ) / 5 by norm_num]
+  have hneg : exp (-((16 : ℝ) / 5)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((16 : ℝ) / 5) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b32000 (exp_pos ((1 : ℝ) / 5)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((16 : ℝ) / 5), exp_pos (-((16 : ℝ) / 5))]
 
-lemma cosh_b32095_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b32095 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b32095_ub : cosh ((6419 : ℝ) / 2000) ≤ (1240864177 : ℝ) / 100000000 := by
+  have exp_frac_b32095 : exp ((419 : ℝ) / 2000) ≤ (123306201 : ℝ) / 100000000 := by
+    have ht : ((419 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((419 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((419 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (123306201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b32095 (by norm_num))
+  have hexp : exp ((6419 : ℝ) / 2000) = exp 3 * exp ((419 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (419 : ℝ) / 2000 = (6419 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6419 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6419 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b32095 (exp_pos ((419 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6419 : ℝ) / 2000), exp_pos (-((6419 : ℝ) / 2000))]
 
-lemma cosh_b32185_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b32185 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b32185_ub : cosh ((6437 : ℝ) / 2000) ≤ (1252060114 : ℝ) / 100000000 := by
+  have exp_frac_b32185 : exp ((437 : ℝ) / 2000) ≤ (124421001 : ℝ) / 100000000 := by
+    have ht : ((437 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((437 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((437 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (124421001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b32185 (by norm_num))
+  have hexp : exp ((6437 : ℝ) / 2000) = exp 3 * exp ((437 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (437 : ℝ) / 2000 = (6437 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6437 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6437 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b32185 (exp_pos ((437 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6437 : ℝ) / 2000), exp_pos (-((6437 : ℝ) / 2000))]
 
-lemma cosh_b32275_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b32275 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b32275_ub : cosh ((1291 : ℝ) / 400) ≤ (1263356480 : ℝ) / 100000000 := by
+  have exp_frac_b32275 : exp ((91 : ℝ) / 400) ≤ (125545801 : ℝ) / 100000000 := by
+    have ht : ((91 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((91 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((91 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (125545801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b32275 (by norm_num))
+  have hexp : exp ((1291 : ℝ) / 400) = exp 3 * exp ((91 : ℝ) / 400) := by
+    rw [← exp_add, show (3 : ℝ) + (91 : ℝ) / 400 = (1291 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1291 : ℝ) / 400)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1291 : ℝ) / 400) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b32275 (exp_pos ((91 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1291 : ℝ) / 400), exp_pos (-((1291 : ℝ) / 400))]
 
-lemma cosh_b32365_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b32365 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b32365_ub : cosh ((6473 : ℝ) / 2000) ≤ (1274755285 : ℝ) / 100000000 := by
+  have exp_frac_b32365 : exp ((473 : ℝ) / 2000) ≤ (126680801 : ℝ) / 100000000 := by
+    have ht : ((473 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((473 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((473 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (126680801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b32365 (by norm_num))
+  have hexp : exp ((6473 : ℝ) / 2000) = exp 3 * exp ((473 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (473 : ℝ) / 2000 = (6473 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6473 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6473 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b32365 (exp_pos ((473 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6473 : ℝ) / 2000), exp_pos (-((6473 : ℝ) / 2000))]
 
-lemma cosh_b32455_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b32455 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b32455_ub : cosh ((6491 : ℝ) / 2000) ≤ (1286257533 : ℝ) / 100000000 := by
+  have exp_frac_b32455 : exp ((491 : ℝ) / 2000) ≤ (127826101 : ℝ) / 100000000 := by
+    have ht : ((491 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((491 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((491 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (127826101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b32455 (by norm_num))
+  have hexp : exp ((6491 : ℝ) / 2000) = exp 3 * exp ((491 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (491 : ℝ) / 2000 = (6491 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6491 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6491 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b32455 (exp_pos ((491 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6491 : ℝ) / 2000), exp_pos (-((6491 : ℝ) / 2000))]
 
-lemma cosh_b32550_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b32550 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b32550_ub : cosh ((651 : ℝ) / 200) ≤ (1298510997 : ℝ) / 100000000 := by
+  have exp_frac_b32550 : exp ((51 : ℝ) / 200) ≤ (129046201 : ℝ) / 100000000 := by
+    have ht : ((51 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((51 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((51 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (129046201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b32550 (by norm_num))
+  have hexp : exp ((651 : ℝ) / 200) = exp 3 * exp ((51 : ℝ) / 200) := by
+    rw [← exp_add, show (3 : ℝ) + (51 : ℝ) / 200 = (651 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((651 : ℝ) / 200)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((651 : ℝ) / 200) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b32550 (exp_pos ((51 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((651 : ℝ) / 200), exp_pos (-((651 : ℝ) / 200))]
 
-lemma cosh_b32640_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b32640 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b32640_ub : cosh ((408 : ℝ) / 125) ≤ (1310228165 : ℝ) / 100000000 := by
+  have exp_frac_b32640 : exp ((33 : ℝ) / 125) ≤ (130212901 : ℝ) / 100000000 := by
+    have ht : ((33 : ℝ) / 125) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((33 : ℝ) / 125) ^ m / (Nat.factorial m)) +
+          ((33 : ℝ) / 125) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (130212901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b32640 (by norm_num))
+  have hexp : exp ((408 : ℝ) / 125) = exp 3 * exp ((33 : ℝ) / 125) := by
+    rw [← exp_add, show (3 : ℝ) + (33 : ℝ) / 125 = (408 : ℝ) / 125 by norm_num]
+  have hneg : exp (-((408 : ℝ) / 125)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((408 : ℝ) / 125) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b32640 (exp_pos ((33 : ℝ) / 125)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((408 : ℝ) / 125), exp_pos (-((408 : ℝ) / 125))]
 
-lemma cosh_b32730_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b32730 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b32730_ub : cosh ((3273 : ℝ) / 1000) ≤ (1322050785 : ℝ) / 100000000 := by
+  have exp_frac_b32730 : exp ((273 : ℝ) / 1000) ≤ (131390101 : ℝ) / 100000000 := by
+    have ht : ((273 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((273 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((273 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (131390101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b32730 (by norm_num))
+  have hexp : exp ((3273 : ℝ) / 1000) = exp 3 * exp ((273 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (273 : ℝ) / 1000 = (3273 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3273 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3273 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b32730 (exp_pos ((273 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3273 : ℝ) / 1000), exp_pos (-((3273 : ℝ) / 1000))]
 
-lemma cosh_b32820_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b32820 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b32820_ub : cosh ((1641 : ℝ) / 500) ≤ (1333979860 : ℝ) / 100000000 := by
+  have exp_frac_b32820 : exp ((141 : ℝ) / 500) ≤ (132577901 : ℝ) / 100000000 := by
+    have ht : ((141 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((141 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((141 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (132577901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b32820 (by norm_num))
+  have hexp : exp ((1641 : ℝ) / 500) = exp 3 * exp ((141 : ℝ) / 500) := by
+    rw [← exp_add, show (3 : ℝ) + (141 : ℝ) / 500 = (1641 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1641 : ℝ) / 500)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1641 : ℝ) / 500) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b32820 (exp_pos ((141 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1641 : ℝ) / 500), exp_pos (-((1641 : ℝ) / 500))]
 
-lemma cosh_b32910_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b32910 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b32910_ub : cosh ((3291 : ℝ) / 1000) ≤ (1346017400 : ℝ) / 100000000 := by
+  have exp_frac_b32910 : exp ((291 : ℝ) / 1000) ≤ (133776501 : ℝ) / 100000000 := by
+    have ht : ((291 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((291 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((291 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (133776501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b32910 (by norm_num))
+  have hexp : exp ((3291 : ℝ) / 1000) = exp 3 * exp ((291 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (291 : ℝ) / 1000 = (3291 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3291 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3291 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b32910 (exp_pos ((291 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3291 : ℝ) / 1000), exp_pos (-((3291 : ℝ) / 1000))]
 
-lemma cosh_b33000_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b33000 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b33000_ub : cosh ((33 : ℝ) / 10) ≤ (1358163404 : ℝ) / 100000000 := by
+  have exp_frac_b33000 : exp ((3 : ℝ) / 10) ≤ (134985901 : ℝ) / 100000000 := by
+    have ht : ((3 : ℝ) / 10) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((3 : ℝ) / 10) ^ m / (Nat.factorial m)) +
+          ((3 : ℝ) / 10) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (134985901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b33000 (by norm_num))
+  have hexp : exp ((33 : ℝ) / 10) = exp 3 * exp ((3 : ℝ) / 10) := by
+    rw [← exp_add, show (3 : ℝ) + (3 : ℝ) / 10 = (33 : ℝ) / 10 by norm_num]
+  have hneg : exp (-((33 : ℝ) / 10)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((33 : ℝ) / 10) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b33000 (exp_pos ((3 : ℝ) / 10)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((33 : ℝ) / 10), exp_pos (-((33 : ℝ) / 10))]
 
-lemma cosh_b33095_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b33095 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b33095_ub : cosh ((6619 : ℝ) / 2000) ≤ (1371103810 : ℝ) / 100000000 := by
+  have exp_frac_b33095 : exp ((619 : ℝ) / 2000) ≤ (136274401 : ℝ) / 100000000 := by
+    have ht : ((619 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((619 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((619 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (136274401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b33095 (by norm_num))
+  have hexp : exp ((6619 : ℝ) / 2000) = exp 3 * exp ((619 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (619 : ℝ) / 2000 = (6619 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6619 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6619 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b33095 (exp_pos ((619 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6619 : ℝ) / 2000), exp_pos (-((6619 : ℝ) / 2000))]
 
-lemma cosh_b33185_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b33185 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b33185_ub : cosh ((6637 : ℝ) / 2000) ≤ (1383476786 : ℝ) / 100000000 := by
+  have exp_frac_b33185 : exp ((637 : ℝ) / 2000) ≤ (137506401 : ℝ) / 100000000 := by
+    have ht : ((637 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((637 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((637 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (137506401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b33185 (by norm_num))
+  have hexp : exp ((6637 : ℝ) / 2000) = exp 3 * exp ((637 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (637 : ℝ) / 2000 = (6637 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6637 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6637 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b33185 (exp_pos ((637 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6637 : ℝ) / 2000), exp_pos (-((6637 : ℝ) / 2000))]
 
-lemma cosh_b33275_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b33275 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b33275_ub : cosh ((1331 : ℝ) / 400) ≤ (1395962243 : ℝ) / 100000000 := by
+  have exp_frac_b33275 : exp ((131 : ℝ) / 400) ≤ (138749601 : ℝ) / 100000000 := by
+    have ht : ((131 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((131 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((131 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (138749601 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b33275 (by norm_num))
+  have hexp : exp ((1331 : ℝ) / 400) = exp 3 * exp ((131 : ℝ) / 400) := by
+    rw [← exp_add, show (3 : ℝ) + (131 : ℝ) / 400 = (1331 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1331 : ℝ) / 400)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1331 : ℝ) / 400) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b33275 (exp_pos ((131 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1331 : ℝ) / 400), exp_pos (-((1331 : ℝ) / 400))]
 
-lemma cosh_b33365_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b33365 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b33365_ub : cosh ((6673 : ℝ) / 2000) ≤ (1408559178 : ℝ) / 100000000 := by
+  have exp_frac_b33365 : exp ((673 : ℝ) / 2000) ≤ (140003901 : ℝ) / 100000000 := by
+    have ht : ((673 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((673 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((673 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (140003901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b33365 (by norm_num))
+  have hexp : exp ((6673 : ℝ) / 2000) = exp 3 * exp ((673 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (673 : ℝ) / 2000 = (6673 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6673 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6673 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b33365 (exp_pos ((673 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6673 : ℝ) / 2000), exp_pos (-((6673 : ℝ) / 2000))]
 
-lemma cosh_b33455_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b33455 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b33455_ub : cosh ((6691 : ℝ) / 2000) ≤ (1421271608 : ℝ) / 100000000 := by
+  have exp_frac_b33455 : exp ((691 : ℝ) / 2000) ≤ (141269701 : ℝ) / 100000000 := by
+    have ht : ((691 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((691 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((691 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (141269701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b33455 (by norm_num))
+  have hexp : exp ((6691 : ℝ) / 2000) = exp 3 * exp ((691 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (691 : ℝ) / 2000 = (6691 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6691 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6691 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b33455 (exp_pos ((691 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6691 : ℝ) / 2000), exp_pos (-((6691 : ℝ) / 2000))]
 
-lemma cosh_b33550_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b33550 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b33550_ub : cosh ((671 : ℝ) / 200) ≤ (1434813589 : ℝ) / 100000000 := by
+  have exp_frac_b33550 : exp ((71 : ℝ) / 200) ≤ (142618101 : ℝ) / 100000000 := by
+    have ht : ((71 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((71 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((71 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (142618101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b33550 (by norm_num))
+  have hexp : exp ((671 : ℝ) / 200) = exp 3 * exp ((71 : ℝ) / 200) := by
+    rw [← exp_add, show (3 : ℝ) + (71 : ℝ) / 200 = (671 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((671 : ℝ) / 200)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((671 : ℝ) / 200) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b33550 (exp_pos ((71 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((671 : ℝ) / 200), exp_pos (-((671 : ℝ) / 200))]
 
-lemma cosh_b33640_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b33640 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b33640_ub : cosh ((841 : ℝ) / 250) ≤ (1447763033 : ℝ) / 100000000 := by
+  have exp_frac_b33640 : exp ((91 : ℝ) / 250) ≤ (143907501 : ℝ) / 100000000 := by
+    have ht : ((91 : ℝ) / 250) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((91 : ℝ) / 250) ^ m / (Nat.factorial m)) +
+          ((91 : ℝ) / 250) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (143907501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b33640 (by norm_num))
+  have hexp : exp ((841 : ℝ) / 250) = exp 3 * exp ((91 : ℝ) / 250) := by
+    rw [← exp_add, show (3 : ℝ) + (91 : ℝ) / 250 = (841 : ℝ) / 250 by norm_num]
+  have hneg : exp (-((841 : ℝ) / 250)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((841 : ℝ) / 250) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b33640 (exp_pos ((91 : ℝ) / 250)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((841 : ℝ) / 250), exp_pos (-((841 : ℝ) / 250))]
 
-lemma cosh_b33730_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b33730 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b33730_ub : cosh ((3373 : ℝ) / 1000) ≤ (1460828976 : ℝ) / 100000000 := by
+  have exp_frac_b33730 : exp ((373 : ℝ) / 1000) ≤ (145208501 : ℝ) / 100000000 := by
+    have ht : ((373 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((373 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((373 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (145208501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b33730 (by norm_num))
+  have hexp : exp ((3373 : ℝ) / 1000) = exp 3 * exp ((373 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (373 : ℝ) / 1000 = (3373 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3373 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3373 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b33730 (exp_pos ((373 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3373 : ℝ) / 1000), exp_pos (-((3373 : ℝ) / 1000))]
 
-lemma cosh_b33820_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b33820 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b33820_ub : cosh ((1691 : ℝ) / 500) ≤ (1474013426 : ℝ) / 100000000 := by
+  have exp_frac_b33820 : exp ((191 : ℝ) / 500) ≤ (146521301 : ℝ) / 100000000 := by
+    have ht : ((191 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((191 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((191 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (146521301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b33820 (by norm_num))
+  have hexp : exp ((1691 : ℝ) / 500) = exp 3 * exp ((191 : ℝ) / 500) := by
+    rw [← exp_add, show (3 : ℝ) + (191 : ℝ) / 500 = (1691 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1691 : ℝ) / 500)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1691 : ℝ) / 500) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b33820 (exp_pos ((191 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1691 : ℝ) / 500), exp_pos (-((1691 : ℝ) / 500))]
 
-lemma cosh_b33910_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b33910 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b33910_ub : cosh ((3391 : ℝ) / 1000) ≤ (1487316384 : ℝ) / 100000000 := by
+  have exp_frac_b33910 : exp ((391 : ℝ) / 1000) ≤ (147845901 : ℝ) / 100000000 := by
+    have ht : ((391 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((391 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((391 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (147845901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b33910 (by norm_num))
+  have hexp : exp ((3391 : ℝ) / 1000) = exp 3 * exp ((391 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (391 : ℝ) / 1000 = (3391 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3391 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3391 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b33910 (exp_pos ((391 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3391 : ℝ) / 1000), exp_pos (-((3391 : ℝ) / 1000))]
 
-lemma cosh_b34000_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b34000 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b34000_ub : cosh ((17 : ℝ) / 5) ≤ (1500739858 : ℝ) / 100000000 := by
+  have exp_frac_b34000 : exp ((2 : ℝ) / 5) ≤ (149182501 : ℝ) / 100000000 := by
+    have ht : ((2 : ℝ) / 5) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((2 : ℝ) / 5) ^ m / (Nat.factorial m)) +
+          ((2 : ℝ) / 5) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (149182501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b34000 (by norm_num))
+  have hexp : exp ((17 : ℝ) / 5) = exp 3 * exp ((2 : ℝ) / 5) := by
+    rw [← exp_add, show (3 : ℝ) + (2 : ℝ) / 5 = (17 : ℝ) / 5 by norm_num]
+  have hneg : exp (-((17 : ℝ) / 5)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((17 : ℝ) / 5) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b34000 (exp_pos ((2 : ℝ) / 5)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((17 : ℝ) / 5), exp_pos (-((17 : ℝ) / 5))]
 
-lemma cosh_b34095_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b34095 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b34095_ub : cosh ((6819 : ℝ) / 2000) ≤ (1515041090 : ℝ) / 100000000 := by
+  have exp_frac_b34095 : exp ((819 : ℝ) / 2000) ≤ (150606501 : ℝ) / 100000000 := by
+    have ht : ((819 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((819 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((819 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (150606501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b34095 (by norm_num))
+  have hexp : exp ((6819 : ℝ) / 2000) = exp 3 * exp ((819 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (819 : ℝ) / 2000 = (6819 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6819 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6819 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b34095 (exp_pos ((819 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6819 : ℝ) / 2000), exp_pos (-((6819 : ℝ) / 2000))]
 
-lemma cosh_b34185_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b34185 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b34185_ub : cosh ((6837 : ℝ) / 2000) ≤ (1528715639 : ℝ) / 100000000 := by
+  have exp_frac_b34185 : exp ((837 : ℝ) / 2000) ≤ (151968101 : ℝ) / 100000000 := by
+    have ht : ((837 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((837 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((837 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (151968101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b34185 (by norm_num))
+  have hexp : exp ((6837 : ℝ) / 2000) = exp 3 * exp ((837 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (837 : ℝ) / 2000 = (6837 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6837 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6837 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b34185 (exp_pos ((837 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6837 : ℝ) / 2000), exp_pos (-((6837 : ℝ) / 2000))]
 
-lemma cosh_b34275_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b34275 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b34275_ub : cosh ((1371 : ℝ) / 400) ≤ (1542513717 : ℝ) / 100000000 := by
+  have exp_frac_b34275 : exp ((171 : ℝ) / 400) ≤ (153342001 : ℝ) / 100000000 := by
+    have ht : ((171 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((171 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((171 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (153342001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b34275 (by norm_num))
+  have hexp : exp ((1371 : ℝ) / 400) = exp 3 * exp ((171 : ℝ) / 400) := by
+    rw [← exp_add, show (3 : ℝ) + (171 : ℝ) / 400 = (1371 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1371 : ℝ) / 400)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1371 : ℝ) / 400) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b34275 (exp_pos ((171 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1371 : ℝ) / 400), exp_pos (-((1371 : ℝ) / 400))]
 
-lemma cosh_b34365_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b34365 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b34365_ub : cosh ((6873 : ℝ) / 2000) ≤ (1556436327 : ℝ) / 100000000 := by
+  have exp_frac_b34365 : exp ((873 : ℝ) / 2000) ≤ (154728301 : ℝ) / 100000000 := by
+    have ht : ((873 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((873 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((873 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (154728301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b34365 (by norm_num))
+  have hexp : exp ((6873 : ℝ) / 2000) = exp 3 * exp ((873 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (873 : ℝ) / 2000 = (6873 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6873 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6873 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b34365 (exp_pos ((873 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6873 : ℝ) / 2000), exp_pos (-((6873 : ℝ) / 2000))]
 
-lemma cosh_b34455_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b34455 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b34455_ub : cosh ((6891 : ℝ) / 2000) ≤ (1570484476 : ℝ) / 100000000 := by
+  have exp_frac_b34455 : exp ((891 : ℝ) / 2000) ≤ (156127101 : ℝ) / 100000000 := by
+    have ht : ((891 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((891 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((891 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (156127101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b34455 (by norm_num))
+  have hexp : exp ((6891 : ℝ) / 2000) = exp 3 * exp ((891 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (891 : ℝ) / 2000 = (6891 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((6891 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((6891 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b34455 (exp_pos ((891 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((6891 : ℝ) / 2000), exp_pos (-((6891 : ℝ) / 2000))]
 
-lemma cosh_b34550_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b34550 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b34550_ub : cosh ((691 : ℝ) / 200) ≤ (1585451559 : ℝ) / 100000000 := by
+  have exp_frac_b34550 : exp ((91 : ℝ) / 200) ≤ (157617401 : ℝ) / 100000000 := by
+    have ht : ((91 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((91 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((91 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (157617401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b34550 (by norm_num))
+  have hexp : exp ((691 : ℝ) / 200) = exp 3 * exp ((91 : ℝ) / 200) := by
+    rw [← exp_add, show (3 : ℝ) + (91 : ℝ) / 200 = (691 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((691 : ℝ) / 200)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((691 : ℝ) / 200) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b34550 (exp_pos ((91 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((691 : ℝ) / 200), exp_pos (-((691 : ℝ) / 200))]
 
-lemma cosh_b34640_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b34640 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b34640_ub : cosh ((433 : ℝ) / 125) ≤ (1599761829 : ℝ) / 100000000 := by
+  have exp_frac_b34640 : exp ((58 : ℝ) / 125) ≤ (159042301 : ℝ) / 100000000 := by
+    have ht : ((58 : ℝ) / 125) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((58 : ℝ) / 125) ^ m / (Nat.factorial m)) +
+          ((58 : ℝ) / 125) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (159042301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b34640 (by norm_num))
+  have hexp : exp ((433 : ℝ) / 125) = exp 3 * exp ((58 : ℝ) / 125) := by
+    rw [← exp_add, show (3 : ℝ) + (58 : ℝ) / 125 = (433 : ℝ) / 125 by norm_num]
+  have hneg : exp (-((433 : ℝ) / 125)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((433 : ℝ) / 125) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b34640 (exp_pos ((58 : ℝ) / 125)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((433 : ℝ) / 125), exp_pos (-((433 : ℝ) / 125))]
 
-lemma cosh_b34730_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b34730 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b34730_ub : cosh ((3473 : ℝ) / 1000) ≤ (1614202659 : ℝ) / 100000000 := by
+  have exp_frac_b34730 : exp ((473 : ℝ) / 1000) ≤ (160480201 : ℝ) / 100000000 := by
+    have ht : ((473 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((473 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((473 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (160480201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b34730 (by norm_num))
+  have hexp : exp ((3473 : ℝ) / 1000) = exp 3 * exp ((473 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (473 : ℝ) / 1000 = (3473 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3473 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3473 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b34730 (exp_pos ((473 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3473 : ℝ) / 1000), exp_pos (-((3473 : ℝ) / 1000))]
 
-lemma cosh_b34820_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b34820 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b34820_ub : cosh ((1741 : ℝ) / 500) ≤ (1628773044 : ℝ) / 100000000 := by
+  have exp_frac_b34820 : exp ((241 : ℝ) / 500) ≤ (161931001 : ℝ) / 100000000 := by
+    have ht : ((241 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((241 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((241 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (161931001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b34820 (by norm_num))
+  have hexp : exp ((1741 : ℝ) / 500) = exp 3 * exp ((241 : ℝ) / 500) := by
+    rw [← exp_add, show (3 : ℝ) + (241 : ℝ) / 500 = (1741 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1741 : ℝ) / 500)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1741 : ℝ) / 500) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b34820 (exp_pos ((241 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1741 : ℝ) / 500), exp_pos (-((1741 : ℝ) / 500))]
 
-lemma cosh_b34910_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b34910 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b34910_ub : cosh ((3491 : ℝ) / 1000) ≤ (1643475996 : ℝ) / 100000000 := by
+  have exp_frac_b34910 : exp ((491 : ℝ) / 1000) ≤ (163395001 : ℝ) / 100000000 := by
+    have ht : ((491 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((491 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((491 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (163395001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b34910 (by norm_num))
+  have hexp : exp ((3491 : ℝ) / 1000) = exp 3 * exp ((491 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (491 : ℝ) / 1000 = (3491 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3491 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3491 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b34910 (exp_pos ((491 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3491 : ℝ) / 1000), exp_pos (-((3491 : ℝ) / 1000))]
 
-lemma cosh_b35000_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b35000 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b35000_ub : cosh ((7 : ℝ) / 2) ≤ (1658311515 : ℝ) / 100000000 := by
+  have exp_frac_b35000 : exp ((1 : ℝ) / 2) ≤ (164872201 : ℝ) / 100000000 := by
+    have ht : ((1 : ℝ) / 2) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1 : ℝ) / 2) ^ m / (Nat.factorial m)) +
+          ((1 : ℝ) / 2) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (164872201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b35000 (by norm_num))
+  have hexp : exp ((7 : ℝ) / 2) = exp 3 * exp ((1 : ℝ) / 2) := by
+    rw [← exp_add, show (3 : ℝ) + (1 : ℝ) / 2 = (7 : ℝ) / 2 by norm_num]
+  have hneg : exp (-((7 : ℝ) / 2)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7 : ℝ) / 2) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b35000 (exp_pos ((1 : ℝ) / 2)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7 : ℝ) / 2), exp_pos (-((7 : ℝ) / 2))]
 
-lemma cosh_b35095_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b35095 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b35095_ub : cosh ((7019 : ℝ) / 2000) ≤ (1674116184 : ℝ) / 100000000 := by
+  have exp_frac_b35095 : exp ((1019 : ℝ) / 2000) ≤ (166445901 : ℝ) / 100000000 := by
+    have ht : ((1019 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1019 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1019 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (166445901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b35095 (by norm_num))
+  have hexp : exp ((7019 : ℝ) / 2000) = exp 3 * exp ((1019 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1019 : ℝ) / 2000 = (7019 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7019 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7019 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b35095 (exp_pos ((1019 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7019 : ℝ) / 2000), exp_pos (-((7019 : ℝ) / 2000))]
 
-lemma cosh_b35185_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b35185 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b35185_ub : cosh ((7037 : ℝ) / 2000) ≤ (1689228891 : ℝ) / 100000000 := by
+  have exp_frac_b35185 : exp ((1037 : ℝ) / 2000) ≤ (167950701 : ℝ) / 100000000 := by
+    have ht : ((1037 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1037 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1037 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (167950701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b35185 (by norm_num))
+  have hexp : exp ((7037 : ℝ) / 2000) = exp 3 * exp ((1037 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1037 : ℝ) / 2000 = (7037 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7037 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7037 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b35185 (exp_pos ((1037 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7037 : ℝ) / 2000), exp_pos (-((7037 : ℝ) / 2000))]
 
-lemma cosh_b35275_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b35275 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b35275_ub : cosh ((1411 : ℝ) / 400) ≤ (1704478182 : ℝ) / 100000000 := by
+  have exp_frac_b35275 : exp ((211 : ℝ) / 400) ≤ (169469101 : ℝ) / 100000000 := by
+    have ht : ((211 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((211 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((211 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (169469101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b35275 (by norm_num))
+  have hexp : exp ((1411 : ℝ) / 400) = exp 3 * exp ((211 : ℝ) / 400) := by
+    rw [← exp_add, show (3 : ℝ) + (211 : ℝ) / 400 = (1411 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1411 : ℝ) / 400)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1411 : ℝ) / 400) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b35275 (exp_pos ((211 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1411 : ℝ) / 400), exp_pos (-((1411 : ℝ) / 400))]
 
-lemma cosh_b35365_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b35365 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b35365_ub : cosh ((7073 : ℝ) / 2000) ≤ (1719865062 : ℝ) / 100000000 := by
+  have exp_frac_b35365 : exp ((1073 : ℝ) / 2000) ≤ (171001201 : ℝ) / 100000000 := by
+    have ht : ((1073 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1073 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1073 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (171001201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b35365 (by norm_num))
+  have hexp : exp ((7073 : ℝ) / 2000) = exp 3 * exp ((1073 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1073 : ℝ) / 2000 = (7073 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7073 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7073 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b35365 (exp_pos ((1073 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7073 : ℝ) / 2000), exp_pos (-((7073 : ℝ) / 2000))]
 
-lemma cosh_b35455_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b35455 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b35455_ub : cosh ((7091 : ℝ) / 2000) ≤ (1735390536 : ℝ) / 100000000 := by
+  have exp_frac_b35455 : exp ((1091 : ℝ) / 2000) ≤ (172547101 : ℝ) / 100000000 := by
+    have ht : ((1091 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1091 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1091 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (172547101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b35455 (by norm_num))
+  have hexp : exp ((7091 : ℝ) / 2000) = exp 3 * exp ((1091 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1091 : ℝ) / 2000 = (7091 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7091 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7091 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b35455 (exp_pos ((1091 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7091 : ℝ) / 2000), exp_pos (-((7091 : ℝ) / 2000))]
 
-lemma cosh_b35550_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b35550 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b35550_ub : cosh ((711 : ℝ) / 200) ≤ (1751931357 : ℝ) / 100000000 := by
+  have exp_frac_b35550 : exp ((111 : ℝ) / 200) ≤ (174194101 : ℝ) / 100000000 := by
+    have ht : ((111 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((111 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((111 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (174194101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b35550 (by norm_num))
+  have hexp : exp ((711 : ℝ) / 200) = exp 3 * exp ((111 : ℝ) / 200) := by
+    rw [← exp_add, show (3 : ℝ) + (111 : ℝ) / 200 = (711 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((711 : ℝ) / 200)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((711 : ℝ) / 200) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b35550 (exp_pos ((111 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((711 : ℝ) / 200), exp_pos (-((711 : ℝ) / 200))]
 
-lemma cosh_b35640_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b35640 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b35640_ub : cosh ((891 : ℝ) / 250) ≤ (1767748078 : ℝ) / 100000000 := by
+  have exp_frac_b35640 : exp ((141 : ℝ) / 250) ≤ (175769001 : ℝ) / 100000000 := by
+    have ht : ((141 : ℝ) / 250) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((141 : ℝ) / 250) ^ m / (Nat.factorial m)) +
+          ((141 : ℝ) / 250) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (175769001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b35640 (by norm_num))
+  have hexp : exp ((891 : ℝ) / 250) = exp 3 * exp ((141 : ℝ) / 250) := by
+    rw [← exp_add, show (3 : ℝ) + (141 : ℝ) / 250 = (891 : ℝ) / 250 by norm_num]
+  have hneg : exp (-((891 : ℝ) / 250)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((891 : ℝ) / 250) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b35640 (exp_pos ((141 : ℝ) / 250)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((891 : ℝ) / 250), exp_pos (-((891 : ℝ) / 250))]
 
-lemma cosh_b35730_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b35730 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b35730_ub : cosh ((3573 : ℝ) / 1000) ≤ (1783706405 : ℝ) / 100000000 := by
+  have exp_frac_b35730 : exp ((573 : ℝ) / 1000) ≤ (177358001 : ℝ) / 100000000 := by
+    have ht : ((573 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((573 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((573 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (177358001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b35730 (by norm_num))
+  have hexp : exp ((3573 : ℝ) / 1000) = exp 3 * exp ((573 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (573 : ℝ) / 1000 = (3573 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3573 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3573 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b35730 (exp_pos ((573 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3573 : ℝ) / 1000), exp_pos (-((3573 : ℝ) / 1000))]
 
-lemma cosh_b35820_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b35820 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b35820_ub : cosh ((1791 : ℝ) / 500) ≤ (1799810355 : ℝ) / 100000000 := by
+  have exp_frac_b35820 : exp ((291 : ℝ) / 500) ≤ (178961501 : ℝ) / 100000000 := by
+    have ht : ((291 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((291 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((291 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (178961501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b35820 (by norm_num))
+  have hexp : exp ((1791 : ℝ) / 500) = exp 3 * exp ((291 : ℝ) / 500) := by
+    rw [← exp_add, show (3 : ℝ) + (291 : ℝ) / 500 = (1791 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1791 : ℝ) / 500)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1791 : ℝ) / 500) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b35820 (exp_pos ((291 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1791 : ℝ) / 500), exp_pos (-((1791 : ℝ) / 500))]
 
-lemma cosh_b35910_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b35910 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b35910_ub : cosh ((3591 : ℝ) / 1000) ≤ (1816058925 : ℝ) / 100000000 := by
+  have exp_frac_b35910 : exp ((591 : ℝ) / 1000) ≤ (180579401 : ℝ) / 100000000 := by
+    have ht : ((591 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((591 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((591 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (180579401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b35910 (by norm_num))
+  have hexp : exp ((3591 : ℝ) / 1000) = exp 3 * exp ((591 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (591 : ℝ) / 1000 = (3591 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3591 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3591 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b35910 (exp_pos ((591 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3591 : ℝ) / 1000), exp_pos (-((3591 : ℝ) / 1000))]
 
-lemma cosh_b36000_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b36000 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b36000_ub : cosh ((18 : ℝ) / 5) ≤ (1832454122 : ℝ) / 100000000 := by
+  have exp_frac_b36000 : exp ((3 : ℝ) / 5) ≤ (182211901 : ℝ) / 100000000 := by
+    have ht : ((3 : ℝ) / 5) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((3 : ℝ) / 5) ^ m / (Nat.factorial m)) +
+          ((3 : ℝ) / 5) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (182211901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b36000 (by norm_num))
+  have hexp : exp ((18 : ℝ) / 5) = exp 3 * exp ((3 : ℝ) / 5) := by
+    rw [← exp_add, show (3 : ℝ) + (3 : ℝ) / 5 = (18 : ℝ) / 5 by norm_num]
+  have hneg : exp (-((18 : ℝ) / 5)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((18 : ℝ) / 5) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b36000 (exp_pos ((3 : ℝ) / 5)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((18 : ℝ) / 5), exp_pos (-((18 : ℝ) / 5))]
 
-lemma cosh_b36095_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b36095 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b36095_ub : cosh ((7219 : ℝ) / 2000) ≤ (1849921912 : ℝ) / 100000000 := by
+  have exp_frac_b36095 : exp ((1219 : ℝ) / 2000) ≤ (183951201 : ℝ) / 100000000 := by
+    have ht : ((1219 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1219 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1219 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (183951201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b36095 (by norm_num))
+  have hexp : exp ((7219 : ℝ) / 2000) = exp 3 * exp ((1219 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1219 : ℝ) / 2000 = (7219 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7219 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7219 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b36095 (exp_pos ((1219 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7219 : ℝ) / 2000), exp_pos (-((7219 : ℝ) / 2000))]
 
-lemma cosh_b36185_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b36185 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b36185_ub : cosh ((7237 : ℝ) / 2000) ≤ (1866623421 : ℝ) / 100000000 := by
+  have exp_frac_b36185 : exp ((1237 : ℝ) / 2000) ≤ (185614201 : ℝ) / 100000000 := by
+    have ht : ((1237 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1237 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1237 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (185614201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b36185 (by norm_num))
+  have hexp : exp ((7237 : ℝ) / 2000) = exp 3 * exp ((1237 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1237 : ℝ) / 2000 = (7237 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7237 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7237 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b36185 (exp_pos ((1237 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7237 : ℝ) / 2000), exp_pos (-((7237 : ℝ) / 2000))]
 
-lemma cosh_b36275_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b36275 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b36275_ub : cosh ((1451 : ℝ) / 400) ≤ (1883476579 : ℝ) / 100000000 := by
+  have exp_frac_b36275 : exp ((251 : ℝ) / 400) ≤ (187292301 : ℝ) / 100000000 := by
+    have ht : ((251 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((251 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((251 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (187292301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b36275 (by norm_num))
+  have hexp : exp ((1451 : ℝ) / 400) = exp 3 * exp ((251 : ℝ) / 400) := by
+    rw [← exp_add, show (3 : ℝ) + (251 : ℝ) / 400 = (1451 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1451 : ℝ) / 400)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1451 : ℝ) / 400) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b36275 (exp_pos ((251 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1451 : ℝ) / 400), exp_pos (-((1451 : ℝ) / 400))]
 
-lemma cosh_b36365_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b36365 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b36365_ub : cosh ((7273 : ℝ) / 2000) ≤ (1900481387 : ℝ) / 100000000 := by
+  have exp_frac_b36365 : exp ((1273 : ℝ) / 2000) ≤ (188985501 : ℝ) / 100000000 := by
+    have ht : ((1273 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1273 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1273 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (188985501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b36365 (by norm_num))
+  have hexp : exp ((7273 : ℝ) / 2000) = exp 3 * exp ((1273 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1273 : ℝ) / 2000 = (7273 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7273 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7273 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b36365 (exp_pos ((1273 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7273 : ℝ) / 2000), exp_pos (-((7273 : ℝ) / 2000))]
 
-lemma cosh_b36455_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b36455 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b36455_ub : cosh ((7291 : ℝ) / 2000) ≤ (1917640857 : ℝ) / 100000000 := by
+  have exp_frac_b36455 : exp ((1291 : ℝ) / 2000) ≤ (190694101 : ℝ) / 100000000 := by
+    have ht : ((1291 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1291 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1291 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (190694101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b36455 (by norm_num))
+  have hexp : exp ((7291 : ℝ) / 2000) = exp 3 * exp ((1291 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1291 : ℝ) / 2000 = (7291 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7291 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7291 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b36455 (exp_pos ((1291 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7291 : ℝ) / 2000), exp_pos (-((7291 : ℝ) / 2000))]
 
-lemma cosh_b36550_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b36550 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b36550_ub : cosh ((731 : ℝ) / 200) ≤ (1935921125 : ℝ) / 100000000 := by
+  have exp_frac_b36550 : exp ((131 : ℝ) / 200) ≤ (192514301 : ℝ) / 100000000 := by
+    have ht : ((131 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((131 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((131 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (192514301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b36550 (by norm_num))
+  have hexp : exp ((731 : ℝ) / 200) = exp 3 * exp ((131 : ℝ) / 200) := by
+    rw [← exp_add, show (3 : ℝ) + (131 : ℝ) / 200 = (731 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((731 : ℝ) / 200)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((731 : ℝ) / 200) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b36550 (exp_pos ((131 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((731 : ℝ) / 200), exp_pos (-((731 : ℝ) / 200))]
 
-lemma cosh_b36640_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b36640 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b36640_ub : cosh ((458 : ℝ) / 125) ≤ (1953400967 : ℝ) / 100000000 := by
+  have exp_frac_b36640 : exp ((83 : ℝ) / 125) ≤ (194254801 : ℝ) / 100000000 := by
+    have ht : ((83 : ℝ) / 125) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((83 : ℝ) / 125) ^ m / (Nat.factorial m)) +
+          ((83 : ℝ) / 125) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (194254801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b36640 (by norm_num))
+  have hexp : exp ((458 : ℝ) / 125) = exp 3 * exp ((83 : ℝ) / 125) := by
+    rw [← exp_add, show (3 : ℝ) + (83 : ℝ) / 125 = (458 : ℝ) / 125 by norm_num]
+  have hneg : exp (-((458 : ℝ) / 125)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((458 : ℝ) / 125) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b36640 (exp_pos ((83 : ℝ) / 125)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((458 : ℝ) / 125), exp_pos (-((458 : ℝ) / 125))]
 
-lemma cosh_b36730_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b36730 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b36730_ub : cosh ((3673 : ℝ) / 1000) ≤ (1971037479 : ℝ) / 100000000 := by
+  have exp_frac_b36730 : exp ((673 : ℝ) / 1000) ≤ (196010901 : ℝ) / 100000000 := by
+    have ht : ((673 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((673 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((673 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (196010901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b36730 (by norm_num))
+  have hexp : exp ((3673 : ℝ) / 1000) = exp 3 * exp ((673 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (673 : ℝ) / 1000 = (3673 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3673 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3673 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b36730 (exp_pos ((673 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3673 : ℝ) / 1000), exp_pos (-((3673 : ℝ) / 1000))]
 
-lemma cosh_b36820_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b36820 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b36820_ub : cosh ((1841 : ℝ) / 500) ≤ (1988834680 : ℝ) / 100000000 := by
+  have exp_frac_b36820 : exp ((341 : ℝ) / 500) ≤ (197783001 : ℝ) / 100000000 := by
+    have ht : ((341 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((341 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((341 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (197783001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b36820 (by norm_num))
+  have hexp : exp ((1841 : ℝ) / 500) = exp 3 * exp ((341 : ℝ) / 500) := by
+    rw [← exp_add, show (3 : ℝ) + (341 : ℝ) / 500 = (1841 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1841 : ℝ) / 500)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1841 : ℝ) / 500) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b36820 (exp_pos ((341 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1841 : ℝ) / 500), exp_pos (-((1841 : ℝ) / 500))]
 
-lemma cosh_b36910_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b36910 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b36910_ub : cosh ((3691 : ℝ) / 1000) ≤ (2006792568 : ℝ) / 100000000 := by
+  have exp_frac_b36910 : exp ((691 : ℝ) / 1000) ≤ (199571101 : ℝ) / 100000000 := by
+    have ht : ((691 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((691 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((691 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (199571101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b36910 (by norm_num))
+  have hexp : exp ((3691 : ℝ) / 1000) = exp 3 * exp ((691 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (691 : ℝ) / 1000 = (3691 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3691 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3691 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b36910 (exp_pos ((691 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3691 : ℝ) / 1000), exp_pos (-((3691 : ℝ) / 1000))]
 
-lemma cosh_b37000_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b37000 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b37000_ub : cosh ((37 : ℝ) / 10) ≤ (2024912148 : ℝ) / 100000000 := by
+  have exp_frac_b37000 : exp ((7 : ℝ) / 10) ≤ (201375301 : ℝ) / 100000000 := by
+    have ht : ((7 : ℝ) / 10) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((7 : ℝ) / 10) ^ m / (Nat.factorial m)) +
+          ((7 : ℝ) / 10) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (201375301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b37000 (by norm_num))
+  have hexp : exp ((37 : ℝ) / 10) = exp 3 * exp ((7 : ℝ) / 10) := by
+    rw [← exp_add, show (3 : ℝ) + (7 : ℝ) / 10 = (37 : ℝ) / 10 by norm_num]
+  have hneg : exp (-((37 : ℝ) / 10)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((37 : ℝ) / 10) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b37000 (exp_pos ((7 : ℝ) / 10)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((37 : ℝ) / 10), exp_pos (-((37 : ℝ) / 10))]
 
-lemma cosh_b37095_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b37095 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b37095_ub : cosh ((7419 : ℝ) / 2000) ≤ (2044216803 : ℝ) / 100000000 := by
+  have exp_frac_b37095 : exp ((1419 : ℝ) / 2000) ≤ (203297501 : ℝ) / 100000000 := by
+    have ht : ((1419 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1419 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1419 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (203297501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b37095 (by norm_num))
+  have hexp : exp ((7419 : ℝ) / 2000) = exp 3 * exp ((1419 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1419 : ℝ) / 2000 = (7419 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7419 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7419 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b37095 (exp_pos ((1419 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7419 : ℝ) / 2000), exp_pos (-((7419 : ℝ) / 2000))]
 
-lemma cosh_b37185_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b37185 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b37185_ub : cosh ((7437 : ℝ) / 2000) ≤ (2062674833 : ℝ) / 100000000 := by
+  have exp_frac_b37185 : exp ((1437 : ℝ) / 2000) ≤ (205135401 : ℝ) / 100000000 := by
+    have ht : ((1437 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1437 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1437 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (205135401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b37185 (by norm_num))
+  have hexp : exp ((7437 : ℝ) / 2000) = exp 3 * exp ((1437 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1437 : ℝ) / 2000 = (7437 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7437 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7437 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b37185 (exp_pos ((1437 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7437 : ℝ) / 2000), exp_pos (-((7437 : ℝ) / 2000))]
 
-lemma cosh_b37275_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b37275 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b37275_ub : cosh ((1491 : ℝ) / 400) ≤ (2081300581 : ℝ) / 100000000 := by
+  have exp_frac_b37275 : exp ((291 : ℝ) / 400) ≤ (206990001 : ℝ) / 100000000 := by
+    have ht : ((291 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((291 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((291 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (206990001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b37275 (by norm_num))
+  have hexp : exp ((1491 : ℝ) / 400) = exp 3 * exp ((291 : ℝ) / 400) := by
+    rw [← exp_add, show (3 : ℝ) + (291 : ℝ) / 400 = (1491 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1491 : ℝ) / 400)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1491 : ℝ) / 400) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b37275 (exp_pos ((291 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1491 : ℝ) / 400), exp_pos (-((1491 : ℝ) / 400))]
 
-lemma cosh_b37365_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b37365 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b37365_ub : cosh ((7473 : ℝ) / 2000) ≤ (2100094046 : ℝ) / 100000000 := by
+  have exp_frac_b37365 : exp ((1473 : ℝ) / 2000) ≤ (208861301 : ℝ) / 100000000 := by
+    have ht : ((1473 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1473 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1473 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (208861301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b37365 (by norm_num))
+  have hexp : exp ((7473 : ℝ) / 2000) = exp 3 * exp ((1473 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1473 : ℝ) / 2000 = (7473 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7473 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7473 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b37365 (exp_pos ((1473 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7473 : ℝ) / 2000), exp_pos (-((7473 : ℝ) / 2000))]
 
-lemma cosh_b37455_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b37455 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b37455_ub : cosh ((7491 : ℝ) / 2000) ≤ (2119058243 : ℝ) / 100000000 := by
+  have exp_frac_b37455 : exp ((1491 : ℝ) / 2000) ≤ (210749601 : ℝ) / 100000000 := by
+    have ht : ((1491 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1491 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1491 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (210749601 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b37455 (by norm_num))
+  have hexp : exp ((7491 : ℝ) / 2000) = exp 3 * exp ((1491 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1491 : ℝ) / 2000 = (7491 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7491 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7491 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b37455 (exp_pos ((1491 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7491 : ℝ) / 2000), exp_pos (-((7491 : ℝ) / 2000))]
 
-lemma cosh_b37550_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b37550 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b37550_ub : cosh ((751 : ℝ) / 200) ≤ (2139260742 : ℝ) / 100000000 := by
+  have exp_frac_b37550 : exp ((151 : ℝ) / 200) ≤ (212761201 : ℝ) / 100000000 := by
+    have ht : ((151 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((151 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((151 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (212761201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b37550 (by norm_num))
+  have hexp : exp ((751 : ℝ) / 200) = exp 3 * exp ((151 : ℝ) / 200) := by
+    rw [← exp_add, show (3 : ℝ) + (151 : ℝ) / 200 = (751 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((751 : ℝ) / 200)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((751 : ℝ) / 200) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b37550 (exp_pos ((151 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((751 : ℝ) / 200), exp_pos (-((751 : ℝ) / 200))]
 
-lemma cosh_b37640_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b37640 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b37640_ub : cosh ((941 : ℝ) / 250) ≤ (2158578453 : ℝ) / 100000000 := by
+  have exp_frac_b37640 : exp ((191 : ℝ) / 250) ≤ (214684701 : ℝ) / 100000000 := by
+    have ht : ((191 : ℝ) / 250) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((191 : ℝ) / 250) ^ m / (Nat.factorial m)) +
+          ((191 : ℝ) / 250) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (214684701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b37640 (by norm_num))
+  have hexp : exp ((941 : ℝ) / 250) = exp 3 * exp ((191 : ℝ) / 250) := by
+    rw [← exp_add, show (3 : ℝ) + (191 : ℝ) / 250 = (941 : ℝ) / 250 by norm_num]
+  have hneg : exp (-((941 : ℝ) / 250)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((941 : ℝ) / 250) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b37640 (exp_pos ((191 : ℝ) / 250)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((941 : ℝ) / 250), exp_pos (-((941 : ℝ) / 250))]
 
-lemma cosh_b37730_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b37730 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b37730_ub : cosh ((3773 : ℝ) / 1000) ≤ (2178070911 : ℝ) / 100000000 := by
+  have exp_frac_b37730 : exp ((773 : ℝ) / 1000) ≤ (216625601 : ℝ) / 100000000 := by
+    have ht : ((773 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((773 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((773 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (216625601 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b37730 (by norm_num))
+  have hexp : exp ((3773 : ℝ) / 1000) = exp 3 * exp ((773 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (773 : ℝ) / 1000 = (3773 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3773 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3773 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b37730 (exp_pos ((773 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3773 : ℝ) / 1000), exp_pos (-((3773 : ℝ) / 1000))]
 
-lemma cosh_b37820_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b37820 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b37820_ub : cosh ((1891 : ℝ) / 500) ≤ (2197739123 : ℝ) / 100000000 := by
+  have exp_frac_b37820 : exp ((391 : ℝ) / 500) ≤ (218584001 : ℝ) / 100000000 := by
+    have ht : ((391 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((391 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((391 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (218584001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b37820 (by norm_num))
+  have hexp : exp ((1891 : ℝ) / 500) = exp 3 * exp ((391 : ℝ) / 500) := by
+    rw [← exp_add, show (3 : ℝ) + (391 : ℝ) / 500 = (1891 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1891 : ℝ) / 500)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1891 : ℝ) / 500) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b37820 (exp_pos ((391 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1891 : ℝ) / 500), exp_pos (-((1891 : ℝ) / 500))]
 
-lemma cosh_b37910_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b37910 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b37910_ub : cosh ((3791 : ℝ) / 1000) ≤ (2217586099 : ℝ) / 100000000 := by
+  have exp_frac_b37910 : exp ((791 : ℝ) / 1000) ≤ (220560201 : ℝ) / 100000000 := by
+    have ht : ((791 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((791 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((791 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (220560201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b37910 (by norm_num))
+  have hexp : exp ((3791 : ℝ) / 1000) = exp 3 * exp ((791 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (791 : ℝ) / 1000 = (3791 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3791 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3791 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b37910 (exp_pos ((791 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3791 : ℝ) / 1000), exp_pos (-((3791 : ℝ) / 1000))]
 
-lemma cosh_b38000_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b38000 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b38000_ub : cosh ((19 : ℝ) / 5) ≤ (2237611841 : ℝ) / 100000000 := by
+  have exp_frac_b38000 : exp ((4 : ℝ) / 5) ≤ (222554201 : ℝ) / 100000000 := by
+    have ht : ((4 : ℝ) / 5) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((4 : ℝ) / 5) ^ m / (Nat.factorial m)) +
+          ((4 : ℝ) / 5) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (222554201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b38000 (by norm_num))
+  have hexp : exp ((19 : ℝ) / 5) = exp 3 * exp ((4 : ℝ) / 5) := by
+    rw [← exp_add, show (3 : ℝ) + (4 : ℝ) / 5 = (19 : ℝ) / 5 by norm_num]
+  have hneg : exp (-((19 : ℝ) / 5)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((19 : ℝ) / 5) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b38000 (exp_pos ((4 : ℝ) / 5)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((19 : ℝ) / 5), exp_pos (-((19 : ℝ) / 5))]
 
-lemma cosh_b38095_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b38095 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b38095_ub : cosh ((7619 : ℝ) / 2000) ≤ (2258946186 : ℝ) / 100000000 := by
+  have exp_frac_b38095 : exp ((1619 : ℝ) / 2000) ≤ (224678501 : ℝ) / 100000000 := by
+    have ht : ((1619 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1619 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1619 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (224678501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b38095 (by norm_num))
+  have hexp : exp ((7619 : ℝ) / 2000) = exp 3 * exp ((1619 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1619 : ℝ) / 2000 = (7619 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7619 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7619 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b38095 (exp_pos ((1619 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7619 : ℝ) / 2000), exp_pos (-((7619 : ℝ) / 2000))]
 
-lemma cosh_b38185_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b38185 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b38185_ub : cosh ((7637 : ℝ) / 2000) ≤ (2279345528 : ℝ) / 100000000 := by
+  have exp_frac_b38185 : exp ((1637 : ℝ) / 2000) ≤ (226709701 : ℝ) / 100000000 := by
+    have ht : ((1637 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1637 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1637 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (226709701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b38185 (by norm_num))
+  have hexp : exp ((7637 : ℝ) / 2000) = exp 3 * exp ((1637 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1637 : ℝ) / 2000 = (7637 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7637 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7637 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b38185 (exp_pos ((1637 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7637 : ℝ) / 2000), exp_pos (-((7637 : ℝ) / 2000))]
 
-lemma cosh_b38275_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b38275 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b38275_ub : cosh ((1531 : ℝ) / 400) ≤ (2299929660 : ℝ) / 100000000 := by
+  have exp_frac_b38275 : exp ((331 : ℝ) / 400) ≤ (228759301 : ℝ) / 100000000 := by
+    have ht : ((331 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((331 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((331 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (228759301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b38275 (by norm_num))
+  have hexp : exp ((1531 : ℝ) / 400) = exp 3 * exp ((331 : ℝ) / 400) := by
+    rw [← exp_add, show (3 : ℝ) + (331 : ℝ) / 400 = (1531 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1531 : ℝ) / 400)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1531 : ℝ) / 400) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b38275 (exp_pos ((331 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1531 : ℝ) / 400), exp_pos (-((1531 : ℝ) / 400))]
 
-lemma cosh_b38365_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b38365 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b38365_ub : cosh ((7673 : ℝ) / 2000) ≤ (2320700593 : ℝ) / 100000000 := by
+  have exp_frac_b38365 : exp ((1673 : ℝ) / 2000) ≤ (230827501 : ℝ) / 100000000 := by
+    have ht : ((1673 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1673 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1673 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (230827501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b38365 (by norm_num))
+  have hexp : exp ((7673 : ℝ) / 2000) = exp 3 * exp ((1673 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1673 : ℝ) / 2000 = (7673 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7673 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7673 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b38365 (exp_pos ((1673 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7673 : ℝ) / 2000), exp_pos (-((7673 : ℝ) / 2000))]
 
-lemma cosh_b38455_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b38455 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b38455_ub : cosh ((7691 : ℝ) / 2000) ≤ (2341658325 : ℝ) / 100000000 := by
+  have exp_frac_b38455 : exp ((1691 : ℝ) / 2000) ≤ (232914301 : ℝ) / 100000000 := by
+    have ht : ((1691 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1691 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1691 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (232914301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b38455 (by norm_num))
+  have hexp : exp ((7691 : ℝ) / 2000) = exp 3 * exp ((1691 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1691 : ℝ) / 2000 = (7691 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7691 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7691 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b38455 (exp_pos ((1691 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7691 : ℝ) / 2000), exp_pos (-((7691 : ℝ) / 2000))]
 
-lemma cosh_b38550_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b38550 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b38550_ub : cosh ((771 : ℝ) / 200) ≤ (2363985923 : ℝ) / 100000000 := by
+  have exp_frac_b38550 : exp ((171 : ℝ) / 200) ≤ (235137501 : ℝ) / 100000000 := by
+    have ht : ((171 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((171 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((171 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (235137501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b38550 (by norm_num))
+  have hexp : exp ((771 : ℝ) / 200) = exp 3 * exp ((171 : ℝ) / 200) := by
+    rw [← exp_add, show (3 : ℝ) + (171 : ℝ) / 200 = (771 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((771 : ℝ) / 200)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((771 : ℝ) / 200) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b38550 (exp_pos ((171 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((771 : ℝ) / 200), exp_pos (-((771 : ℝ) / 200))]
 
-lemma cosh_b38640_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b38640 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b38640_ub : cosh ((483 : ℝ) / 125) ≤ (2385335332 : ℝ) / 100000000 := by
+  have exp_frac_b38640 : exp ((108 : ℝ) / 125) ≤ (237263301 : ℝ) / 100000000 := by
+    have ht : ((108 : ℝ) / 125) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((108 : ℝ) / 125) ^ m / (Nat.factorial m)) +
+          ((108 : ℝ) / 125) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (237263301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b38640 (by norm_num))
+  have hexp : exp ((483 : ℝ) / 125) = exp 3 * exp ((108 : ℝ) / 125) := by
+    rw [← exp_add, show (3 : ℝ) + (108 : ℝ) / 125 = (483 : ℝ) / 125 by norm_num]
+  have hneg : exp (-((483 : ℝ) / 125)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((483 : ℝ) / 125) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b38640 (exp_pos ((108 : ℝ) / 125)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((483 : ℝ) / 125), exp_pos (-((483 : ℝ) / 125))]
 
-lemma cosh_b38730_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b38730 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b38730_ub : cosh ((3873 : ℝ) / 1000) ≤ (2406877567 : ℝ) / 100000000 := by
+  have exp_frac_b38730 : exp ((873 : ℝ) / 1000) ≤ (239408301 : ℝ) / 100000000 := by
+    have ht : ((873 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((873 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((873 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (239408301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b38730 (by norm_num))
+  have hexp : exp ((3873 : ℝ) / 1000) = exp 3 * exp ((873 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (873 : ℝ) / 1000 = (3873 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3873 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3873 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b38730 (exp_pos ((873 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3873 : ℝ) / 1000), exp_pos (-((3873 : ℝ) / 1000))]
 
-lemma cosh_b38820_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b38820 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b38820_ub : cosh ((1941 : ℝ) / 500) ≤ (2428614637 : ℝ) / 100000000 := by
+  have exp_frac_b38820 : exp ((441 : ℝ) / 500) ≤ (241572701 : ℝ) / 100000000 := by
+    have ht : ((441 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((441 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((441 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (241572701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b38820 (by norm_num))
+  have hexp : exp ((1941 : ℝ) / 500) = exp 3 * exp ((441 : ℝ) / 500) := by
+    rw [← exp_add, show (3 : ℝ) + (441 : ℝ) / 500 = (1941 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1941 : ℝ) / 500)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1941 : ℝ) / 500) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b38820 (exp_pos ((441 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1941 : ℝ) / 500), exp_pos (-((1941 : ℝ) / 500))]
 
-lemma cosh_b38910_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b38910 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b38910_ub : cosh ((3891 : ℝ) / 1000) ≤ (2450548549 : ℝ) / 100000000 := by
+  have exp_frac_b38910 : exp ((891 : ℝ) / 1000) ≤ (243756701 : ℝ) / 100000000 := by
+    have ht : ((891 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((891 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((891 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (243756701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b38910 (by norm_num))
+  have hexp : exp ((3891 : ℝ) / 1000) = exp 3 * exp ((891 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (891 : ℝ) / 1000 = (3891 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3891 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3891 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b38910 (exp_pos ((891 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3891 : ℝ) / 1000), exp_pos (-((3891 : ℝ) / 1000))]
 
-lemma cosh_b39000_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b39000 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b39000_ub : cosh ((39 : ℝ) / 10) ≤ (2472680308 : ℝ) / 100000000 := by
+  have exp_frac_b39000 : exp ((9 : ℝ) / 10) ≤ (245960401 : ℝ) / 100000000 := by
+    have ht : ((9 : ℝ) / 10) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((9 : ℝ) / 10) ^ m / (Nat.factorial m)) +
+          ((9 : ℝ) / 10) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (245960401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b39000 (by norm_num))
+  have hexp : exp ((39 : ℝ) / 10) = exp 3 * exp ((9 : ℝ) / 10) := by
+    rw [← exp_add, show (3 : ℝ) + (9 : ℝ) / 10 = (39 : ℝ) / 10 by norm_num]
+  have hneg : exp (-((39 : ℝ) / 10)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((39 : ℝ) / 10) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b39000 (exp_pos ((9 : ℝ) / 10)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((39 : ℝ) / 10), exp_pos (-((39 : ℝ) / 10))]
 
-lemma cosh_b39095_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b39095 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b39095_ub : cosh ((7819 : ℝ) / 2000) ≤ (2496258259 : ℝ) / 100000000 := by
+  have exp_frac_b39095 : exp ((1819 : ℝ) / 2000) ≤ (248308101 : ℝ) / 100000000 := by
+    have ht : ((1819 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1819 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1819 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (248308101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b39095 (by norm_num))
+  have hexp : exp ((7819 : ℝ) / 2000) = exp 3 * exp ((1819 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1819 : ℝ) / 2000 = (7819 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7819 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7819 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b39095 (exp_pos ((1819 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7819 : ℝ) / 2000), exp_pos (-((7819 : ℝ) / 2000))]
 
-lemma cosh_b39185_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b39185 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b39185_ub : cosh ((7837 : ℝ) / 2000) ≤ (2518803790 : ℝ) / 100000000 := by
+  have exp_frac_b39185 : exp ((1837 : ℝ) / 2000) ≤ (250553001 : ℝ) / 100000000 := by
+    have ht : ((1837 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1837 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1837 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (250553001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b39185 (by norm_num))
+  have hexp : exp ((7837 : ℝ) / 2000) = exp 3 * exp ((1837 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1837 : ℝ) / 2000 = (7837 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7837 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7837 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b39185 (exp_pos ((1837 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7837 : ℝ) / 2000), exp_pos (-((7837 : ℝ) / 2000))]
 
-lemma cosh_b39275_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b39275 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b39275_ub : cosh ((1571 : ℝ) / 400) ≤ (2541552189 : ℝ) / 100000000 := by
+  have exp_frac_b39275 : exp ((371 : ℝ) / 400) ≤ (252818101 : ℝ) / 100000000 := by
+    have ht : ((371 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((371 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((371 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (252818101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b39275 (by norm_num))
+  have hexp : exp ((1571 : ℝ) / 400) = exp 3 * exp ((371 : ℝ) / 400) := by
+    rw [← exp_add, show (3 : ℝ) + (371 : ℝ) / 400 = (1571 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1571 : ℝ) / 400)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1571 : ℝ) / 400) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b39275 (exp_pos ((371 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1571 : ℝ) / 400), exp_pos (-((1571 : ℝ) / 400))]
 
-lemma cosh_b39365_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b39365 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b39365_ub : cosh ((7873 : ℝ) / 2000) ≤ (2564507474 : ℝ) / 100000000 := by
+  have exp_frac_b39365 : exp ((1873 : ℝ) / 2000) ≤ (255103801 : ℝ) / 100000000 := by
+    have ht : ((1873 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1873 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1873 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (255103801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b39365 (by norm_num))
+  have hexp : exp ((7873 : ℝ) / 2000) = exp 3 * exp ((1873 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1873 : ℝ) / 2000 = (7873 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7873 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7873 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b39365 (exp_pos ((1873 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7873 : ℝ) / 2000), exp_pos (-((7873 : ℝ) / 2000))]
 
-lemma cosh_b39455_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b39455 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b39455_ub : cosh ((7891 : ℝ) / 2000) ≤ (2587669645 : ℝ) / 100000000 := by
+  have exp_frac_b39455 : exp ((1891 : ℝ) / 2000) ≤ (257410101 : ℝ) / 100000000 := by
+    have ht : ((1891 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1891 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1891 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (257410101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b39455 (by norm_num))
+  have hexp : exp ((7891 : ℝ) / 2000) = exp 3 * exp ((1891 : ℝ) / 2000) := by
+    rw [← exp_add, show (3 : ℝ) + (1891 : ℝ) / 2000 = (7891 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((7891 : ℝ) / 2000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((7891 : ℝ) / 2000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b39455 (exp_pos ((1891 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((7891 : ℝ) / 2000), exp_pos (-((7891 : ℝ) / 2000))]
 
-lemma cosh_b39550_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b39550 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b39550_ub : cosh ((791 : ℝ) / 200) ≤ (2612345296 : ℝ) / 100000000 := by
+  have exp_frac_b39550 : exp ((191 : ℝ) / 200) ≤ (259867101 : ℝ) / 100000000 := by
+    have ht : ((191 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((191 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((191 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (259867101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b39550 (by norm_num))
+  have hexp : exp ((791 : ℝ) / 200) = exp 3 * exp ((191 : ℝ) / 200) := by
+    rw [← exp_add, show (3 : ℝ) + (191 : ℝ) / 200 = (791 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((791 : ℝ) / 200)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((791 : ℝ) / 200) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b39550 (exp_pos ((191 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((791 : ℝ) / 200), exp_pos (-((791 : ℝ) / 200))]
 
-lemma cosh_b39640_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b39640 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b39640_ub : cosh ((991 : ℝ) / 250) ≤ (2635940320 : ℝ) / 100000000 := by
+  have exp_frac_b39640 : exp ((241 : ℝ) / 250) ≤ (262216501 : ℝ) / 100000000 := by
+    have ht : ((241 : ℝ) / 250) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((241 : ℝ) / 250) ^ m / (Nat.factorial m)) +
+          ((241 : ℝ) / 250) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (262216501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b39640 (by norm_num))
+  have hexp : exp ((991 : ℝ) / 250) = exp 3 * exp ((241 : ℝ) / 250) := by
+    rw [← exp_add, show (3 : ℝ) + (241 : ℝ) / 250 = (991 : ℝ) / 250 by norm_num]
+  have hneg : exp (-((991 : ℝ) / 250)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((991 : ℝ) / 250) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b39640 (exp_pos ((241 : ℝ) / 250)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((991 : ℝ) / 250), exp_pos (-((991 : ℝ) / 250))]
 
-lemma cosh_b39730_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b39730 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b39730_ub : cosh ((3973 : ℝ) / 1000) ≤ (2659748256 : ℝ) / 100000000 := by
+  have exp_frac_b39730 : exp ((973 : ℝ) / 1000) ≤ (264587101 : ℝ) / 100000000 := by
+    have ht : ((973 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((973 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((973 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (264587101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b39730 (by norm_num))
+  have hexp : exp ((3973 : ℝ) / 1000) = exp 3 * exp ((973 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (973 : ℝ) / 1000 = (3973 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3973 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3973 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b39730 (exp_pos ((973 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3973 : ℝ) / 1000), exp_pos (-((3973 : ℝ) / 1000))]
 
-lemma cosh_b39820_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b39820 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b39820_ub : cosh ((1991 : ℝ) / 500) ≤ (2683771112 : ℝ) / 100000000 := by
+  have exp_frac_b39820 : exp ((491 : ℝ) / 500) ≤ (266979101 : ℝ) / 100000000 := by
+    have ht : ((491 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((491 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((491 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (266979101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b39820 (by norm_num))
+  have hexp : exp ((1991 : ℝ) / 500) = exp 3 * exp ((491 : ℝ) / 500) := by
+    rw [← exp_add, show (3 : ℝ) + (491 : ℝ) / 500 = (1991 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((1991 : ℝ) / 500)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1991 : ℝ) / 500) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b39820 (exp_pos ((491 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1991 : ℝ) / 500), exp_pos (-((1991 : ℝ) / 500))]
 
-lemma cosh_b39910_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b39910 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
+lemma cosh_b39910_ub : cosh ((3991 : ℝ) / 1000) ≤ (2708011901 : ℝ) / 100000000 := by
+  have exp_frac_b39910 : exp ((991 : ℝ) / 1000) ≤ (269392801 : ℝ) / 100000000 := by
+    have ht : ((991 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((991 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((991 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (269392801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b39910 (by norm_num))
+  have hexp : exp ((3991 : ℝ) / 1000) = exp 3 * exp ((991 : ℝ) / 1000) := by
+    rw [← exp_add, show (3 : ℝ) + (991 : ℝ) / 1000 = (3991 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((3991 : ℝ) / 1000)) ≤ (50 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((3991 : ℝ) / 1000) ≤ -(3 : ℝ))).trans exp_neg_three_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_three_le exp_frac_b39910 (exp_pos ((991 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((3991 : ℝ) / 1000), exp_pos (-((3991 : ℝ) / 1000))]
 
-lemma cosh_b40000_ub : cosh ((4 : ℝ) / 1) ≤ (298095798801 : ℝ) / 100000000 := by
-  have exp_b40000 : exp (((4 : ℝ) / 1)^2 / 2) ≤ (298095798801 : ℝ) / 100000000 := by
-    have ht : ((4 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 33) (by norm_num)
-    have htaylor :
-        (∑ m ∈ Finset.range 33, (((4 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((4 : ℝ) / 1)^2 / 2) ^ 33 * (33 + 1) / (Nat.factorial 33 * 33) ≤
-          (298095798801 : ℝ) / 100000000 := by
-      simp [Finset.sum_range_succ, Nat.factorial]
-      norm_num
-    linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((4 : ℝ) / 1)).trans (le_trans exp_b40000 (by norm_num))
+lemma cosh_b40000_ub : cosh ((4 : ℝ) / 1) ≤ (2730900001 : ℝ) / 100000000 := by
+  rw [show (4 : ℝ) / 1 = (4 : ℝ) by norm_num]
+  exact (cosh_four_le).trans (by norm_num)
 
-lemma cosh_b40095_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b40095 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b40095_ub : cosh ((8019 : ℝ) / 2000) ≤ (2756960130 : ℝ) / 100000000 := by
+  have exp_frac_b40095 : exp ((19 : ℝ) / 2000) ≤ (100954601 : ℝ) / 100000000 := by
+    have ht : ((19 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((19 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((19 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (100954601 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b40095 (by norm_num))
+  have hexp : exp ((8019 : ℝ) / 2000) = exp 4 * exp ((19 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (19 : ℝ) / 2000 = (8019 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8019 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8019 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b40095 (exp_pos ((19 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8019 : ℝ) / 2000), exp_pos (-((8019 : ℝ) / 2000))]
 
-lemma cosh_b40185_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b40185 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b40185_ub : cosh ((8037 : ℝ) / 2000) ≤ (2781876384 : ℝ) / 100000000 := by
+  have exp_frac_b40185 : exp ((37 : ℝ) / 2000) ≤ (101867301 : ℝ) / 100000000 := by
+    have ht : ((37 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((37 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((37 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (101867301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b40185 (by norm_num))
+  have hexp : exp ((8037 : ℝ) / 2000) = exp 4 * exp ((37 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (37 : ℝ) / 2000 = (8037 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8037 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8037 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b40185 (exp_pos ((37 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8037 : ℝ) / 2000), exp_pos (-((8037 : ℝ) / 2000))]
 
-lemma cosh_b40275_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b40275 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b40275_ub : cosh ((1611 : ℝ) / 400) ≤ (2807016494 : ℝ) / 100000000 := by
+  have exp_frac_b40275 : exp ((11 : ℝ) / 400) ≤ (102788201 : ℝ) / 100000000 := by
+    have ht : ((11 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((11 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((11 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (102788201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b40275 (by norm_num))
+  have hexp : exp ((1611 : ℝ) / 400) = exp 4 * exp ((11 : ℝ) / 400) := by
+    rw [← exp_add, show (4 : ℝ) + (11 : ℝ) / 400 = (1611 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1611 : ℝ) / 400)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1611 : ℝ) / 400) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b40275 (exp_pos ((11 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1611 : ℝ) / 400), exp_pos (-((1611 : ℝ) / 400))]
 
-lemma cosh_b40365_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b40365 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b40365_ub : cosh ((8073 : ℝ) / 2000) ≤ (2832385919 : ℝ) / 100000000 := by
+  have exp_frac_b40365 : exp ((73 : ℝ) / 2000) ≤ (103717501 : ℝ) / 100000000 := by
+    have ht : ((73 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((73 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((73 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (103717501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b40365 (by norm_num))
+  have hexp : exp ((8073 : ℝ) / 2000) = exp 4 * exp ((73 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (73 : ℝ) / 2000 = (8073 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8073 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8073 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b40365 (exp_pos ((73 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8073 : ℝ) / 2000), exp_pos (-((8073 : ℝ) / 2000))]
 
-lemma cosh_b40455_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b40455 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b40455_ub : cosh ((8091 : ℝ) / 2000) ≤ (2857984660 : ℝ) / 100000000 := by
+  have exp_frac_b40455 : exp ((91 : ℝ) / 2000) ≤ (104655201 : ℝ) / 100000000 := by
+    have ht : ((91 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((91 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((91 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (104655201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b40455 (by norm_num))
+  have hexp : exp ((8091 : ℝ) / 2000) = exp 4 * exp ((91 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (91 : ℝ) / 2000 = (8091 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8091 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8091 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b40455 (exp_pos ((91 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8091 : ℝ) / 2000), exp_pos (-((8091 : ℝ) / 2000))]
 
-lemma cosh_b40550_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b40550 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b40550_ub : cosh ((811 : ℝ) / 200) ≤ (2885254131 : ℝ) / 100000000 := by
+  have exp_frac_b40550 : exp ((11 : ℝ) / 200) ≤ (105654101 : ℝ) / 100000000 := by
+    have ht : ((11 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((11 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((11 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (105654101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b40550 (by norm_num))
+  have hexp : exp ((811 : ℝ) / 200) = exp 4 * exp ((11 : ℝ) / 200) := by
+    rw [← exp_add, show (4 : ℝ) + (11 : ℝ) / 200 = (811 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((811 : ℝ) / 200)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((811 : ℝ) / 200) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b40550 (exp_pos ((11 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((811 : ℝ) / 200), exp_pos (-((811 : ℝ) / 200))]
 
-lemma cosh_b40640_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b40640 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b40640_ub : cosh ((508 : ℝ) / 125) ≤ (2911330613 : ℝ) / 100000000 := by
+  have exp_frac_b40640 : exp ((8 : ℝ) / 125) ≤ (106609301 : ℝ) / 100000000 := by
+    have ht : ((8 : ℝ) / 125) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((8 : ℝ) / 125) ^ m / (Nat.factorial m)) +
+          ((8 : ℝ) / 125) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (106609301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b40640 (by norm_num))
+  have hexp : exp ((508 : ℝ) / 125) = exp 4 * exp ((8 : ℝ) / 125) := by
+    rw [← exp_add, show (4 : ℝ) + (8 : ℝ) / 125 = (508 : ℝ) / 125 by norm_num]
+  have hneg : exp (-((508 : ℝ) / 125)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((508 : ℝ) / 125) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b40640 (exp_pos ((8 : ℝ) / 125)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((508 : ℝ) / 125), exp_pos (-((508 : ℝ) / 125))]
 
-lemma cosh_b40730_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b40730 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b40730_ub : cosh ((4073 : ℝ) / 1000) ≤ (2937641871 : ℝ) / 100000000 := by
+  have exp_frac_b40730 : exp ((73 : ℝ) / 1000) ≤ (107573101 : ℝ) / 100000000 := by
+    have ht : ((73 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((73 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((73 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (107573101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b40730 (by norm_num))
+  have hexp : exp ((4073 : ℝ) / 1000) = exp 4 * exp ((73 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (73 : ℝ) / 1000 = (4073 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4073 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4073 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b40730 (exp_pos ((73 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4073 : ℝ) / 1000), exp_pos (-((4073 : ℝ) / 1000))]
 
-lemma cosh_b40820_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b40820 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b40820_ub : cosh ((2041 : ℝ) / 500) ≤ (2964190635 : ℝ) / 100000000 := by
+  have exp_frac_b40820 : exp ((41 : ℝ) / 500) ≤ (108545601 : ℝ) / 100000000 := by
+    have ht : ((41 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((41 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((41 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (108545601 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b40820 (by norm_num))
+  have hexp : exp ((2041 : ℝ) / 500) = exp 4 * exp ((41 : ℝ) / 500) := by
+    rw [← exp_add, show (4 : ℝ) + (41 : ℝ) / 500 = (2041 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((2041 : ℝ) / 500)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2041 : ℝ) / 500) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b40820 (exp_pos ((41 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2041 : ℝ) / 500), exp_pos (-((2041 : ℝ) / 500))]
 
-lemma cosh_b40910_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b40910 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b40910_ub : cosh ((4091 : ℝ) / 1000) ≤ (2990982364 : ℝ) / 100000000 := by
+  have exp_frac_b40910 : exp ((91 : ℝ) / 1000) ≤ (109527001 : ℝ) / 100000000 := by
+    have ht : ((91 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((91 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((91 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (109527001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b40910 (by norm_num))
+  have hexp : exp ((4091 : ℝ) / 1000) = exp 4 * exp ((91 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (91 : ℝ) / 1000 = (4091 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4091 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4091 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b40910 (exp_pos ((91 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4091 : ℝ) / 1000), exp_pos (-((4091 : ℝ) / 1000))]
 
-lemma cosh_b41000_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b41000 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b41000_ub : cosh ((41 : ℝ) / 10) ≤ (3018011599 : ℝ) / 100000000 := by
+  have exp_frac_b41000 : exp ((1 : ℝ) / 10) ≤ (110517101 : ℝ) / 100000000 := by
+    have ht : ((1 : ℝ) / 10) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1 : ℝ) / 10) ^ m / (Nat.factorial m)) +
+          ((1 : ℝ) / 10) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (110517101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b41000 (by norm_num))
+  have hexp : exp ((41 : ℝ) / 10) = exp 4 * exp ((1 : ℝ) / 10) := by
+    rw [← exp_add, show (4 : ℝ) + (1 : ℝ) / 10 = (41 : ℝ) / 10 by norm_num]
+  have hneg : exp (-((41 : ℝ) / 10)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((41 : ℝ) / 10) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b41000 (exp_pos ((1 : ℝ) / 10)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((41 : ℝ) / 10), exp_pos (-((41 : ℝ) / 10))]
 
-lemma cosh_b41095_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b41095 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b41095_ub : cosh ((8219 : ℝ) / 2000) ≤ (3046812572 : ℝ) / 100000000 := by
+  have exp_frac_b41095 : exp ((219 : ℝ) / 2000) ≤ (111572101 : ℝ) / 100000000 := by
+    have ht : ((219 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((219 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((219 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (111572101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b41095 (by norm_num))
+  have hexp : exp ((8219 : ℝ) / 2000) = exp 4 * exp ((219 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (219 : ℝ) / 2000 = (8219 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8219 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8219 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b41095 (exp_pos ((219 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8219 : ℝ) / 2000), exp_pos (-((8219 : ℝ) / 2000))]
 
-lemma cosh_b41185_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b41185 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b41185_ub : cosh ((8237 : ℝ) / 2000) ≤ (3074346847 : ℝ) / 100000000 := by
+  have exp_frac_b41185 : exp ((237 : ℝ) / 2000) ≤ (112580701 : ℝ) / 100000000 := by
+    have ht : ((237 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((237 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((237 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (112580701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b41185 (by norm_num))
+  have hexp : exp ((8237 : ℝ) / 2000) = exp 4 * exp ((237 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (237 : ℝ) / 2000 = (8237 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8237 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8237 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b41185 (exp_pos ((237 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8237 : ℝ) / 2000), exp_pos (-((8237 : ℝ) / 2000))]
 
-lemma cosh_b41275_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b41275 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b41275_ub : cosh ((1651 : ℝ) / 400) ≤ (3102132279 : ℝ) / 100000000 := by
+  have exp_frac_b41275 : exp ((51 : ℝ) / 400) ≤ (113598501 : ℝ) / 100000000 := by
+    have ht : ((51 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((51 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((51 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (113598501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b41275 (by norm_num))
+  have hexp : exp ((1651 : ℝ) / 400) = exp 4 * exp ((51 : ℝ) / 400) := by
+    rw [← exp_add, show (4 : ℝ) + (51 : ℝ) / 400 = (1651 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1651 : ℝ) / 400)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1651 : ℝ) / 400) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b41275 (exp_pos ((51 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1651 : ℝ) / 400), exp_pos (-((1651 : ℝ) / 400))]
 
-lemma cosh_b41365_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b41365 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b41365_ub : cosh ((8273 : ℝ) / 2000) ≤ (3130168865 : ℝ) / 100000000 := by
+  have exp_frac_b41365 : exp ((273 : ℝ) / 2000) ≤ (114625501 : ℝ) / 100000000 := by
+    have ht : ((273 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((273 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((273 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (114625501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b41365 (by norm_num))
+  have hexp : exp ((8273 : ℝ) / 2000) = exp 4 * exp ((273 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (273 : ℝ) / 2000 = (8273 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8273 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8273 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b41365 (exp_pos ((273 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8273 : ℝ) / 2000), exp_pos (-((8273 : ℝ) / 2000))]
 
-lemma cosh_b41455_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b41455 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b41455_ub : cosh ((8291 : ℝ) / 2000) ≤ (3158459337 : ℝ) / 100000000 := by
+  have exp_frac_b41455 : exp ((291 : ℝ) / 2000) ≤ (115661801 : ℝ) / 100000000 := by
+    have ht : ((291 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((291 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((291 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (115661801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b41455 (by norm_num))
+  have hexp : exp ((8291 : ℝ) / 2000) = exp 4 * exp ((291 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (291 : ℝ) / 2000 = (8291 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8291 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8291 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b41455 (exp_pos ((291 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8291 : ℝ) / 2000), exp_pos (-((8291 : ℝ) / 2000))]
 
-lemma cosh_b41550_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b41550 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b41550_ub : cosh ((831 : ℝ) / 200) ≤ (3188597985 : ℝ) / 100000000 := by
+  have exp_frac_b41550 : exp ((31 : ℝ) / 200) ≤ (116765801 : ℝ) / 100000000 := by
+    have ht : ((31 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((31 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((31 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (116765801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b41550 (by norm_num))
+  have hexp : exp ((831 : ℝ) / 200) = exp 4 * exp ((31 : ℝ) / 200) := by
+    rw [← exp_add, show (4 : ℝ) + (31 : ℝ) / 200 = (831 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((831 : ℝ) / 200)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((831 : ℝ) / 200) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b41550 (exp_pos ((31 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((831 : ℝ) / 200), exp_pos (-((831 : ℝ) / 200))]
 
-lemma cosh_b41640_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b41640 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b41640_ub : cosh ((1041 : ℝ) / 250) ≤ (3217418067 : ℝ) / 100000000 := by
+  have exp_frac_b41640 : exp ((41 : ℝ) / 250) ≤ (117821501 : ℝ) / 100000000 := by
+    have ht : ((41 : ℝ) / 250) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((41 : ℝ) / 250) ^ m / (Nat.factorial m)) +
+          ((41 : ℝ) / 250) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (117821501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b41640 (by norm_num))
+  have hexp : exp ((1041 : ℝ) / 250) = exp 4 * exp ((41 : ℝ) / 250) := by
+    rw [← exp_add, show (4 : ℝ) + (41 : ℝ) / 250 = (1041 : ℝ) / 250 by norm_num]
+  have hneg : exp (-((1041 : ℝ) / 250)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1041 : ℝ) / 250) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b41640 (exp_pos ((41 : ℝ) / 250)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1041 : ℝ) / 250), exp_pos (-((1041 : ℝ) / 250))]
 
-lemma cosh_b41730_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b41730 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b41730_ub : cosh ((4173 : ℝ) / 1000) ≤ (3246497494 : ℝ) / 100000000 := by
+  have exp_frac_b41730 : exp ((173 : ℝ) / 1000) ≤ (118886701 : ℝ) / 100000000 := by
+    have ht : ((173 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((173 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((173 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (118886701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b41730 (by norm_num))
+  have hexp : exp ((4173 : ℝ) / 1000) = exp 4 * exp ((173 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (173 : ℝ) / 1000 = (4173 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4173 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4173 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b41730 (exp_pos ((173 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4173 : ℝ) / 1000), exp_pos (-((4173 : ℝ) / 1000))]
 
-lemma cosh_b41820_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b41820 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b41820_ub : cosh ((2091 : ℝ) / 500) ≤ (3275838997 : ℝ) / 100000000 := by
+  have exp_frac_b41820 : exp ((91 : ℝ) / 500) ≤ (119961501 : ℝ) / 100000000 := by
+    have ht : ((91 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((91 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((91 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (119961501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b41820 (by norm_num))
+  have hexp : exp ((2091 : ℝ) / 500) = exp 4 * exp ((91 : ℝ) / 500) := by
+    rw [← exp_add, show (4 : ℝ) + (91 : ℝ) / 500 = (2091 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((2091 : ℝ) / 500)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2091 : ℝ) / 500) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b41820 (exp_pos ((91 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2091 : ℝ) / 500), exp_pos (-((2091 : ℝ) / 500))]
 
-lemma cosh_b41910_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b41910 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b41910_ub : cosh ((4191 : ℝ) / 1000) ≤ (3305445305 : ℝ) / 100000000 := by
+  have exp_frac_b41910 : exp ((191 : ℝ) / 1000) ≤ (121046001 : ℝ) / 100000000 := by
+    have ht : ((191 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((191 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((191 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (121046001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b41910 (by norm_num))
+  have hexp : exp ((4191 : ℝ) / 1000) = exp 4 * exp ((191 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (191 : ℝ) / 1000 = (4191 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4191 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4191 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b41910 (exp_pos ((191 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4191 : ℝ) / 1000), exp_pos (-((4191 : ℝ) / 1000))]
 
-lemma cosh_b42000_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b42000 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b42000_ub : cosh ((21 : ℝ) / 5) ≤ (3335319148 : ℝ) / 100000000 := by
+  have exp_frac_b42000 : exp ((1 : ℝ) / 5) ≤ (122140301 : ℝ) / 100000000 := by
+    have ht : ((1 : ℝ) / 5) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1 : ℝ) / 5) ^ m / (Nat.factorial m)) +
+          ((1 : ℝ) / 5) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (122140301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b42000 (by norm_num))
+  have hexp : exp ((21 : ℝ) / 5) = exp 4 * exp ((1 : ℝ) / 5) := by
+    rw [← exp_add, show (4 : ℝ) + (1 : ℝ) / 5 = (21 : ℝ) / 5 by norm_num]
+  have hneg : exp (-((21 : ℝ) / 5)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((21 : ℝ) / 5) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b42000 (exp_pos ((1 : ℝ) / 5)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((21 : ℝ) / 5), exp_pos (-((21 : ℝ) / 5))]
 
-lemma cosh_b42095_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b42095 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b42095_ub : cosh ((8419 : ℝ) / 2000) ≤ (3367147635 : ℝ) / 100000000 := by
+  have exp_frac_b42095 : exp ((419 : ℝ) / 2000) ≤ (123306201 : ℝ) / 100000000 := by
+    have ht : ((419 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((419 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((419 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (123306201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b42095 (by norm_num))
+  have hexp : exp ((8419 : ℝ) / 2000) = exp 4 * exp ((419 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (419 : ℝ) / 2000 = (8419 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8419 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8419 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b42095 (exp_pos ((419 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8419 : ℝ) / 2000), exp_pos (-((8419 : ℝ) / 2000))]
 
-lemma cosh_b42185_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b42185 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b42185_ub : cosh ((8437 : ℝ) / 2000) ≤ (3397581117 : ℝ) / 100000000 := by
+  have exp_frac_b42185 : exp ((437 : ℝ) / 2000) ≤ (124421001 : ℝ) / 100000000 := by
+    have ht : ((437 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((437 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((437 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (124421001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b42185 (by norm_num))
+  have hexp : exp ((8437 : ℝ) / 2000) = exp 4 * exp ((437 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (437 : ℝ) / 2000 = (8437 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8437 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8437 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b42185 (exp_pos ((437 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8437 : ℝ) / 2000), exp_pos (-((8437 : ℝ) / 2000))]
 
-lemma cosh_b42275_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b42275 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b42275_ub : cosh ((1691 : ℝ) / 400) ≤ (3428287595 : ℝ) / 100000000 := by
+  have exp_frac_b42275 : exp ((91 : ℝ) / 400) ≤ (125545801 : ℝ) / 100000000 := by
+    have ht : ((91 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((91 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((91 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (125545801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b42275 (by norm_num))
+  have hexp : exp ((1691 : ℝ) / 400) = exp 4 * exp ((91 : ℝ) / 400) := by
+    rw [← exp_add, show (4 : ℝ) + (91 : ℝ) / 400 = (1691 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1691 : ℝ) / 400)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1691 : ℝ) / 400) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b42275 (exp_pos ((91 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1691 : ℝ) / 400), exp_pos (-((1691 : ℝ) / 400))]
 
-lemma cosh_b42365_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b42365 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b42365_ub : cosh ((8473 : ℝ) / 2000) ≤ (3459272527 : ℝ) / 100000000 := by
+  have exp_frac_b42365 : exp ((473 : ℝ) / 2000) ≤ (126680801 : ℝ) / 100000000 := by
+    have ht : ((473 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((473 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((473 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (126680801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b42365 (by norm_num))
+  have hexp : exp ((8473 : ℝ) / 2000) = exp 4 * exp ((473 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (473 : ℝ) / 2000 = (8473 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8473 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8473 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b42365 (exp_pos ((473 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8473 : ℝ) / 2000), exp_pos (-((8473 : ℝ) / 2000))]
 
-lemma cosh_b42455_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b42455 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b42455_ub : cosh ((8491 : ℝ) / 2000) ≤ (3490538645 : ℝ) / 100000000 := by
+  have exp_frac_b42455 : exp ((491 : ℝ) / 2000) ≤ (127826101 : ℝ) / 100000000 := by
+    have ht : ((491 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((491 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((491 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (127826101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b42455 (by norm_num))
+  have hexp : exp ((8491 : ℝ) / 2000) = exp 4 * exp ((491 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (491 : ℝ) / 2000 = (8491 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8491 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8491 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b42455 (exp_pos ((491 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8491 : ℝ) / 2000), exp_pos (-((8491 : ℝ) / 2000))]
 
-lemma cosh_b42550_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b42550 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b42550_ub : cosh ((851 : ℝ) / 200) ≤ (3523846765 : ℝ) / 100000000 := by
+  have exp_frac_b42550 : exp ((51 : ℝ) / 200) ≤ (129046201 : ℝ) / 100000000 := by
+    have ht : ((51 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((51 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((51 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (129046201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b42550 (by norm_num))
+  have hexp : exp ((851 : ℝ) / 200) = exp 4 * exp ((51 : ℝ) / 200) := by
+    rw [← exp_add, show (4 : ℝ) + (51 : ℝ) / 200 = (851 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((851 : ℝ) / 200)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((851 : ℝ) / 200) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b42550 (exp_pos ((51 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((851 : ℝ) / 200), exp_pos (-((851 : ℝ) / 200))]
 
-lemma cosh_b42640_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b42640 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b42640_ub : cosh ((533 : ℝ) / 125) ≤ (3555697091 : ℝ) / 100000000 := by
+  have exp_frac_b42640 : exp ((33 : ℝ) / 125) ≤ (130212901 : ℝ) / 100000000 := by
+    have ht : ((33 : ℝ) / 125) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((33 : ℝ) / 125) ^ m / (Nat.factorial m)) +
+          ((33 : ℝ) / 125) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (130212901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b42640 (by norm_num))
+  have hexp : exp ((533 : ℝ) / 125) = exp 4 * exp ((33 : ℝ) / 125) := by
+    rw [← exp_add, show (4 : ℝ) + (33 : ℝ) / 125 = (533 : ℝ) / 125 by norm_num]
+  have hneg : exp (-((533 : ℝ) / 125)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((533 : ℝ) / 125) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b42640 (exp_pos ((33 : ℝ) / 125)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((533 : ℝ) / 125), exp_pos (-((533 : ℝ) / 125))]
 
-lemma cosh_b42730_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b42730 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b42730_ub : cosh ((4273 : ℝ) / 1000) ≤ (3587834063 : ℝ) / 100000000 := by
+  have exp_frac_b42730 : exp ((273 : ℝ) / 1000) ≤ (131390101 : ℝ) / 100000000 := by
+    have ht : ((273 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((273 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((273 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (131390101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b42730 (by norm_num))
+  have hexp : exp ((4273 : ℝ) / 1000) = exp 4 * exp ((273 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (273 : ℝ) / 1000 = (4273 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4273 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4273 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b42730 (exp_pos ((273 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4273 : ℝ) / 1000), exp_pos (-((4273 : ℝ) / 1000))]
 
-lemma cosh_b42820_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b42820 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b42820_ub : cosh ((2141 : ℝ) / 500) ≤ (3620260409 : ℝ) / 100000000 := by
+  have exp_frac_b42820 : exp ((141 : ℝ) / 500) ≤ (132577901 : ℝ) / 100000000 := by
+    have ht : ((141 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((141 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((141 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (132577901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b42820 (by norm_num))
+  have hexp : exp ((2141 : ℝ) / 500) = exp 4 * exp ((141 : ℝ) / 500) := by
+    rw [← exp_add, show (4 : ℝ) + (141 : ℝ) / 500 = (2141 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((2141 : ℝ) / 500)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2141 : ℝ) / 500) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b42820 (exp_pos ((141 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2141 : ℝ) / 500), exp_pos (-((2141 : ℝ) / 500))]
 
-lemma cosh_b42910_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b42910 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b42910_ub : cosh ((4291 : ℝ) / 1000) ≤ (3652981590 : ℝ) / 100000000 := by
+  have exp_frac_b42910 : exp ((291 : ℝ) / 1000) ≤ (133776501 : ℝ) / 100000000 := by
+    have ht : ((291 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((291 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((291 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (133776501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b42910 (by norm_num))
+  have hexp : exp ((4291 : ℝ) / 1000) = exp 4 * exp ((291 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (291 : ℝ) / 1000 = (4291 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4291 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4291 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b42910 (exp_pos ((291 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4291 : ℝ) / 1000), exp_pos (-((4291 : ℝ) / 1000))]
 
-lemma cosh_b43000_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b43000 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b43000_ub : cosh ((43 : ℝ) / 10) ≤ (3685997605 : ℝ) / 100000000 := by
+  have exp_frac_b43000 : exp ((3 : ℝ) / 10) ≤ (134985901 : ℝ) / 100000000 := by
+    have ht : ((3 : ℝ) / 10) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((3 : ℝ) / 10) ^ m / (Nat.factorial m)) +
+          ((3 : ℝ) / 10) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (134985901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b43000 (by norm_num))
+  have hexp : exp ((43 : ℝ) / 10) = exp 4 * exp ((3 : ℝ) / 10) := by
+    rw [← exp_add, show (4 : ℝ) + (3 : ℝ) / 10 = (43 : ℝ) / 10 by norm_num]
+  have hneg : exp (-((43 : ℝ) / 10)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((43 : ℝ) / 10) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b43000 (exp_pos ((3 : ℝ) / 10)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((43 : ℝ) / 10), exp_pos (-((43 : ℝ) / 10))]
 
-lemma cosh_b43095_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b43095 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b43095_ub : cosh ((8619 : ℝ) / 2000) ≤ (3721173011 : ℝ) / 100000000 := by
+  have exp_frac_b43095 : exp ((619 : ℝ) / 2000) ≤ (136274401 : ℝ) / 100000000 := by
+    have ht : ((619 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((619 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((619 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (136274401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b43095 (by norm_num))
+  have hexp : exp ((8619 : ℝ) / 2000) = exp 4 * exp ((619 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (619 : ℝ) / 2000 = (8619 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8619 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8619 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b43095 (exp_pos ((619 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8619 : ℝ) / 2000), exp_pos (-((8619 : ℝ) / 2000))]
 
-lemma cosh_b43185_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b43185 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b43185_ub : cosh ((8637 : ℝ) / 2000) ≤ (3754805995 : ℝ) / 100000000 := by
+  have exp_frac_b43185 : exp ((637 : ℝ) / 2000) ≤ (137506401 : ℝ) / 100000000 := by
+    have ht : ((637 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((637 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((637 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (137506401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b43185 (by norm_num))
+  have hexp : exp ((8637 : ℝ) / 2000) = exp 4 * exp ((637 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (637 : ℝ) / 2000 = (8637 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8637 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8637 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b43185 (exp_pos ((637 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8637 : ℝ) / 2000), exp_pos (-((8637 : ℝ) / 2000))]
 
-lemma cosh_b43275_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b43275 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b43275_ub : cosh ((1731 : ℝ) / 400) ≤ (3788744733 : ℝ) / 100000000 := by
+  have exp_frac_b43275 : exp ((131 : ℝ) / 400) ≤ (138749601 : ℝ) / 100000000 := by
+    have ht : ((131 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((131 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((131 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (138749601 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b43275 (by norm_num))
+  have hexp : exp ((1731 : ℝ) / 400) = exp 4 * exp ((131 : ℝ) / 400) := by
+    rw [← exp_add, show (4 : ℝ) + (131 : ℝ) / 400 = (1731 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1731 : ℝ) / 400)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1731 : ℝ) / 400) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b43275 (exp_pos ((131 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1731 : ℝ) / 400), exp_pos (-((1731 : ℝ) / 400))]
 
-lemma cosh_b43365_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b43365 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b43365_ub : cosh ((8673 : ℝ) / 2000) ≤ (3822986496 : ℝ) / 100000000 := by
+  have exp_frac_b43365 : exp ((673 : ℝ) / 2000) ≤ (140003901 : ℝ) / 100000000 := by
+    have ht : ((673 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((673 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((673 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (140003901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b43365 (by norm_num))
+  have hexp : exp ((8673 : ℝ) / 2000) = exp 4 * exp ((673 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (673 : ℝ) / 2000 = (8673 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8673 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8673 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b43365 (exp_pos ((673 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8673 : ℝ) / 2000), exp_pos (-((8673 : ℝ) / 2000))]
 
-lemma cosh_b43455_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b43455 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b43455_ub : cosh ((8691 : ℝ) / 2000) ≤ (3857542203 : ℝ) / 100000000 := by
+  have exp_frac_b43455 : exp ((691 : ℝ) / 2000) ≤ (141269701 : ℝ) / 100000000 := by
+    have ht : ((691 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((691 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((691 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (141269701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b43455 (by norm_num))
+  have hexp : exp ((8691 : ℝ) / 2000) = exp 4 * exp ((691 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (691 : ℝ) / 2000 = (8691 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8691 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8691 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b43455 (exp_pos ((691 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8691 : ℝ) / 2000), exp_pos (-((8691 : ℝ) / 2000))]
 
-lemma cosh_b43550_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b43550 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b43550_ub : cosh ((871 : ℝ) / 200) ≤ (3894352849 : ℝ) / 100000000 := by
+  have exp_frac_b43550 : exp ((71 : ℝ) / 200) ≤ (142618101 : ℝ) / 100000000 := by
+    have ht : ((71 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((71 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((71 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (142618101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b43550 (by norm_num))
+  have hexp : exp ((871 : ℝ) / 200) = exp 4 * exp ((71 : ℝ) / 200) := by
+    rw [← exp_add, show (4 : ℝ) + (71 : ℝ) / 200 = (871 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((871 : ℝ) / 200)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((871 : ℝ) / 200) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b43550 (exp_pos ((71 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((871 : ℝ) / 200), exp_pos (-((871 : ℝ) / 200))]
 
-lemma cosh_b43640_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b43640 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b43640_ub : cosh ((1091 : ℝ) / 250) ≤ (3929552824 : ℝ) / 100000000 := by
+  have exp_frac_b43640 : exp ((91 : ℝ) / 250) ≤ (143907501 : ℝ) / 100000000 := by
+    have ht : ((91 : ℝ) / 250) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((91 : ℝ) / 250) ^ m / (Nat.factorial m)) +
+          ((91 : ℝ) / 250) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (143907501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b43640 (by norm_num))
+  have hexp : exp ((1091 : ℝ) / 250) = exp 4 * exp ((91 : ℝ) / 250) := by
+    rw [← exp_add, show (4 : ℝ) + (91 : ℝ) / 250 = (1091 : ℝ) / 250 by norm_num]
+  have hneg : exp (-((1091 : ℝ) / 250)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1091 : ℝ) / 250) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b43640 (exp_pos ((91 : ℝ) / 250)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1091 : ℝ) / 250), exp_pos (-((1091 : ℝ) / 250))]
 
-lemma cosh_b43730_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b43730 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b43730_ub : cosh ((4373 : ℝ) / 1000) ≤ (3965069474 : ℝ) / 100000000 := by
+  have exp_frac_b43730 : exp ((373 : ℝ) / 1000) ≤ (145208501 : ℝ) / 100000000 := by
+    have ht : ((373 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((373 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((373 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (145208501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b43730 (by norm_num))
+  have hexp : exp ((4373 : ℝ) / 1000) = exp 4 * exp ((373 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (373 : ℝ) / 1000 = (4373 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4373 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4373 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b43730 (exp_pos ((373 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4373 : ℝ) / 1000), exp_pos (-((4373 : ℝ) / 1000))]
 
-lemma cosh_b43820_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b43820 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b43820_ub : cosh ((2191 : ℝ) / 500) ≤ (4000908257 : ℝ) / 100000000 := by
+  have exp_frac_b43820 : exp ((191 : ℝ) / 500) ≤ (146521301 : ℝ) / 100000000 := by
+    have ht : ((191 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((191 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((191 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (146521301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b43820 (by norm_num))
+  have hexp : exp ((2191 : ℝ) / 500) = exp 4 * exp ((191 : ℝ) / 500) := by
+    rw [← exp_add, show (4 : ℝ) + (191 : ℝ) / 500 = (2191 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((2191 : ℝ) / 500)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2191 : ℝ) / 500) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b43820 (exp_pos ((191 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2191 : ℝ) / 500), exp_pos (-((2191 : ℝ) / 500))]
 
-lemma cosh_b43910_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b43910 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b43910_ub : cosh ((4391 : ℝ) / 1000) ≤ (4037069175 : ℝ) / 100000000 := by
+  have exp_frac_b43910 : exp ((391 : ℝ) / 1000) ≤ (147845901 : ℝ) / 100000000 := by
+    have ht : ((391 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((391 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((391 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (147845901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b43910 (by norm_num))
+  have hexp : exp ((4391 : ℝ) / 1000) = exp 4 * exp ((391 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (391 : ℝ) / 1000 = (4391 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4391 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4391 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b43910 (exp_pos ((391 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4391 : ℝ) / 1000), exp_pos (-((4391 : ℝ) / 1000))]
 
-lemma cosh_b44000_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b44000 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b44000_ub : cosh ((22 : ℝ) / 5) ≤ (4073557687 : ℝ) / 100000000 := by
+  have exp_frac_b44000 : exp ((2 : ℝ) / 5) ≤ (149182501 : ℝ) / 100000000 := by
+    have ht : ((2 : ℝ) / 5) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((2 : ℝ) / 5) ^ m / (Nat.factorial m)) +
+          ((2 : ℝ) / 5) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (149182501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b44000 (by norm_num))
+  have hexp : exp ((22 : ℝ) / 5) = exp 4 * exp ((2 : ℝ) / 5) := by
+    rw [← exp_add, show (4 : ℝ) + (2 : ℝ) / 5 = (22 : ℝ) / 5 by norm_num]
+  have hneg : exp (-((22 : ℝ) / 5)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((22 : ℝ) / 5) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b44000 (exp_pos ((2 : ℝ) / 5)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((22 : ℝ) / 5), exp_pos (-((22 : ℝ) / 5))]
 
-lemma cosh_b44095_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b44095 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b44095_ub : cosh ((8819 : ℝ) / 2000) ≤ (4112432175 : ℝ) / 100000000 := by
+  have exp_frac_b44095 : exp ((819 : ℝ) / 2000) ≤ (150606501 : ℝ) / 100000000 := by
+    have ht : ((819 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((819 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((819 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (150606501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b44095 (by norm_num))
+  have hexp : exp ((8819 : ℝ) / 2000) = exp 4 * exp ((819 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (819 : ℝ) / 2000 = (8819 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8819 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8819 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b44095 (exp_pos ((819 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8819 : ℝ) / 2000), exp_pos (-((8819 : ℝ) / 2000))]
 
-lemma cosh_b44185_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b44185 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b44185_ub : cosh ((8837 : ℝ) / 2000) ≤ (4149603174 : ℝ) / 100000000 := by
+  have exp_frac_b44185 : exp ((837 : ℝ) / 2000) ≤ (151968101 : ℝ) / 100000000 := by
+    have ht : ((837 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((837 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((837 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (151968101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b44185 (by norm_num))
+  have hexp : exp ((8837 : ℝ) / 2000) = exp 4 * exp ((837 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (837 : ℝ) / 2000 = (8837 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8837 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8837 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b44185 (exp_pos ((837 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8837 : ℝ) / 2000), exp_pos (-((8837 : ℝ) / 2000))]
 
-lemma cosh_b44275_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b44275 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b44275_ub : cosh ((1771 : ℝ) / 400) ≤ (4187109957 : ℝ) / 100000000 := by
+  have exp_frac_b44275 : exp ((171 : ℝ) / 400) ≤ (153342001 : ℝ) / 100000000 := by
+    have ht : ((171 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((171 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((171 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (153342001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b44275 (by norm_num))
+  have hexp : exp ((1771 : ℝ) / 400) = exp 4 * exp ((171 : ℝ) / 400) := by
+    rw [← exp_add, show (4 : ℝ) + (171 : ℝ) / 400 = (1771 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1771 : ℝ) / 400)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1771 : ℝ) / 400) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b44275 (exp_pos ((171 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1771 : ℝ) / 400), exp_pos (-((1771 : ℝ) / 400))]
 
-lemma cosh_b44365_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b44365 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b44365_ub : cosh ((8873 : ℝ) / 2000) ≤ (4224955254 : ℝ) / 100000000 := by
+  have exp_frac_b44365 : exp ((873 : ℝ) / 2000) ≤ (154728301 : ℝ) / 100000000 := by
+    have ht : ((873 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((873 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((873 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (154728301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b44365 (by norm_num))
+  have hexp : exp ((8873 : ℝ) / 2000) = exp 4 * exp ((873 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (873 : ℝ) / 2000 = (8873 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8873 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8873 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b44365 (exp_pos ((873 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8873 : ℝ) / 2000), exp_pos (-((8873 : ℝ) / 2000))]
 
-lemma cosh_b44455_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b44455 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b44455_ub : cosh ((8891 : ℝ) / 2000) ≤ (4263141794 : ℝ) / 100000000 := by
+  have exp_frac_b44455 : exp ((891 : ℝ) / 2000) ≤ (156127101 : ℝ) / 100000000 := by
+    have ht : ((891 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((891 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((891 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (156127101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b44455 (by norm_num))
+  have hexp : exp ((8891 : ℝ) / 2000) = exp 4 * exp ((891 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (891 : ℝ) / 2000 = (8891 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((8891 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((8891 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b44455 (exp_pos ((891 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((8891 : ℝ) / 2000), exp_pos (-((8891 : ℝ) / 2000))]
 
-lemma cosh_b44550_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b44550 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b44550_ub : cosh ((891 : ℝ) / 200) ≤ (4303826239 : ℝ) / 100000000 := by
+  have exp_frac_b44550 : exp ((91 : ℝ) / 200) ≤ (157617401 : ℝ) / 100000000 := by
+    have ht : ((91 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((91 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((91 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (157617401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b44550 (by norm_num))
+  have hexp : exp ((891 : ℝ) / 200) = exp 4 * exp ((91 : ℝ) / 200) := by
+    rw [← exp_add, show (4 : ℝ) + (91 : ℝ) / 200 = (891 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((891 : ℝ) / 200)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((891 : ℝ) / 200) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b44550 (exp_pos ((91 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((891 : ℝ) / 200), exp_pos (-((891 : ℝ) / 200))]
 
-lemma cosh_b44640_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b44640 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b44640_ub : cosh ((558 : ℝ) / 125) ≤ (4342725297 : ℝ) / 100000000 := by
+  have exp_frac_b44640 : exp ((58 : ℝ) / 125) ≤ (159042301 : ℝ) / 100000000 := by
+    have ht : ((58 : ℝ) / 125) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((58 : ℝ) / 125) ^ m / (Nat.factorial m)) +
+          ((58 : ℝ) / 125) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (159042301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b44640 (by norm_num))
+  have hexp : exp ((558 : ℝ) / 125) = exp 4 * exp ((58 : ℝ) / 125) := by
+    rw [← exp_add, show (4 : ℝ) + (58 : ℝ) / 125 = (558 : ℝ) / 125 by norm_num]
+  have hneg : exp (-((558 : ℝ) / 125)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((558 : ℝ) / 125) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b44640 (exp_pos ((58 : ℝ) / 125)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((558 : ℝ) / 125), exp_pos (-((558 : ℝ) / 125))]
 
-lemma cosh_b44730_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b44730 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b44730_ub : cosh ((4473 : ℝ) / 1000) ≤ (4381979248 : ℝ) / 100000000 := by
+  have exp_frac_b44730 : exp ((473 : ℝ) / 1000) ≤ (160480201 : ℝ) / 100000000 := by
+    have ht : ((473 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((473 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((473 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (160480201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b44730 (by norm_num))
+  have hexp : exp ((4473 : ℝ) / 1000) = exp 4 * exp ((473 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (473 : ℝ) / 1000 = (4473 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4473 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4473 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b44730 (exp_pos ((473 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4473 : ℝ) / 1000), exp_pos (-((4473 : ℝ) / 1000))]
 
-lemma cosh_b44820_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b44820 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b44820_ub : cosh ((2241 : ℝ) / 500) ≤ (4421585362 : ℝ) / 100000000 := by
+  have exp_frac_b44820 : exp ((241 : ℝ) / 500) ≤ (161931001 : ℝ) / 100000000 := by
+    have ht : ((241 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((241 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((241 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (161931001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b44820 (by norm_num))
+  have hexp : exp ((2241 : ℝ) / 500) = exp 4 * exp ((241 : ℝ) / 500) := by
+    rw [← exp_add, show (4 : ℝ) + (241 : ℝ) / 500 = (2241 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((2241 : ℝ) / 500)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2241 : ℝ) / 500) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b44820 (exp_pos ((241 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2241 : ℝ) / 500), exp_pos (-((2241 : ℝ) / 500))]
 
-lemma cosh_b44910_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b44910 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b44910_ub : cosh ((4491 : ℝ) / 1000) ≤ (4461551830 : ℝ) / 100000000 := by
+  have exp_frac_b44910 : exp ((491 : ℝ) / 1000) ≤ (163395001 : ℝ) / 100000000 := by
+    have ht : ((491 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((491 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((491 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (163395001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b44910 (by norm_num))
+  have hexp : exp ((4491 : ℝ) / 1000) = exp 4 * exp ((491 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (491 : ℝ) / 1000 = (4491 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4491 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4491 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b44910 (exp_pos ((491 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4491 : ℝ) / 1000), exp_pos (-((4491 : ℝ) / 1000))]
 
-lemma cosh_b45000_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b45000 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b45000_ub : cosh ((9 : ℝ) / 2) ≤ (4501878652 : ℝ) / 100000000 := by
+  have exp_frac_b45000 : exp ((1 : ℝ) / 2) ≤ (164872201 : ℝ) / 100000000 := by
+    have ht : ((1 : ℝ) / 2) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1 : ℝ) / 2) ^ m / (Nat.factorial m)) +
+          ((1 : ℝ) / 2) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (164872201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b45000 (by norm_num))
+  have hexp : exp ((9 : ℝ) / 2) = exp 4 * exp ((1 : ℝ) / 2) := by
+    rw [← exp_add, show (4 : ℝ) + (1 : ℝ) / 2 = (9 : ℝ) / 2 by norm_num]
+  have hneg : exp (-((9 : ℝ) / 2)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9 : ℝ) / 2) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b45000 (exp_pos ((1 : ℝ) / 2)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9 : ℝ) / 2), exp_pos (-((9 : ℝ) / 2))]
 
-lemma cosh_b45095_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b45095 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b45095_ub : cosh ((9019 : ℝ) / 2000) ≤ (4544839875 : ℝ) / 100000000 := by
+  have exp_frac_b45095 : exp ((1019 : ℝ) / 2000) ≤ (166445901 : ℝ) / 100000000 := by
+    have ht : ((1019 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1019 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1019 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (166445901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b45095 (by norm_num))
+  have hexp : exp ((9019 : ℝ) / 2000) = exp 4 * exp ((1019 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1019 : ℝ) / 2000 = (9019 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9019 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9019 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b45095 (exp_pos ((1019 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9019 : ℝ) / 2000), exp_pos (-((9019 : ℝ) / 2000))]
 
-lemma cosh_b45185_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b45185 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b45185_ub : cosh ((9037 : ℝ) / 2000) ≤ (4585920162 : ℝ) / 100000000 := by
+  have exp_frac_b45185 : exp ((1037 : ℝ) / 2000) ≤ (167950701 : ℝ) / 100000000 := by
+    have ht : ((1037 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1037 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1037 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (167950701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b45185 (by norm_num))
+  have hexp : exp ((9037 : ℝ) / 2000) = exp 4 * exp ((1037 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1037 : ℝ) / 2000 = (9037 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9037 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9037 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b45185 (exp_pos ((1037 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9037 : ℝ) / 2000), exp_pos (-((9037 : ℝ) / 2000))]
 
-lemma cosh_b45275_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b45275 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b45275_ub : cosh ((1811 : ℝ) / 400) ≤ (4627371723 : ℝ) / 100000000 := by
+  have exp_frac_b45275 : exp ((211 : ℝ) / 400) ≤ (169469101 : ℝ) / 100000000 := by
+    have ht : ((211 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((211 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((211 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (169469101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b45275 (by norm_num))
+  have hexp : exp ((1811 : ℝ) / 400) = exp 4 * exp ((211 : ℝ) / 400) := by
+    rw [← exp_add, show (4 : ℝ) + (211 : ℝ) / 400 = (1811 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1811 : ℝ) / 400)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1811 : ℝ) / 400) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b45275 (exp_pos ((211 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1811 : ℝ) / 400), exp_pos (-((1811 : ℝ) / 400))]
 
-lemma cosh_b45365_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b45365 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b45365_ub : cosh ((9073 : ℝ) / 2000) ≤ (4669197287 : ℝ) / 100000000 := by
+  have exp_frac_b45365 : exp ((1073 : ℝ) / 2000) ≤ (171001201 : ℝ) / 100000000 := by
+    have ht : ((1073 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1073 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1073 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (171001201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b45365 (by norm_num))
+  have hexp : exp ((9073 : ℝ) / 2000) = exp 4 * exp ((1073 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1073 : ℝ) / 2000 = (9073 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9073 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9073 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b45365 (exp_pos ((1073 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9073 : ℝ) / 2000), exp_pos (-((9073 : ℝ) / 2000))]
 
-lemma cosh_b45455_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b45455 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b45455_ub : cosh ((9091 : ℝ) / 2000) ≤ (4711399584 : ℝ) / 100000000 := by
+  have exp_frac_b45455 : exp ((1091 : ℝ) / 2000) ≤ (172547101 : ℝ) / 100000000 := by
+    have ht : ((1091 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1091 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1091 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (172547101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b45455 (by norm_num))
+  have hexp : exp ((9091 : ℝ) / 2000) = exp 4 * exp ((1091 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1091 : ℝ) / 2000 = (9091 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9091 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9091 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b45455 (exp_pos ((1091 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9091 : ℝ) / 2000), exp_pos (-((9091 : ℝ) / 2000))]
 
-lemma cosh_b45550_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b45550 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b45550_ub : cosh ((911 : ℝ) / 200) ≤ (4756361861 : ℝ) / 100000000 := by
+  have exp_frac_b45550 : exp ((111 : ℝ) / 200) ≤ (174194101 : ℝ) / 100000000 := by
+    have ht : ((111 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((111 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((111 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (174194101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b45550 (by norm_num))
+  have hexp : exp ((911 : ℝ) / 200) = exp 4 * exp ((111 : ℝ) / 200) := by
+    rw [← exp_add, show (4 : ℝ) + (111 : ℝ) / 200 = (911 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((911 : ℝ) / 200)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((911 : ℝ) / 200) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b45550 (exp_pos ((111 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((911 : ℝ) / 200), exp_pos (-((911 : ℝ) / 200))]
 
-lemma cosh_b45640_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b45640 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b45640_ub : cosh ((1141 : ℝ) / 250) ≤ (4799355843 : ℝ) / 100000000 := by
+  have exp_frac_b45640 : exp ((141 : ℝ) / 250) ≤ (175769001 : ℝ) / 100000000 := by
+    have ht : ((141 : ℝ) / 250) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((141 : ℝ) / 250) ^ m / (Nat.factorial m)) +
+          ((141 : ℝ) / 250) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (175769001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b45640 (by norm_num))
+  have hexp : exp ((1141 : ℝ) / 250) = exp 4 * exp ((141 : ℝ) / 250) := by
+    rw [← exp_add, show (4 : ℝ) + (141 : ℝ) / 250 = (1141 : ℝ) / 250 by norm_num]
+  have hneg : exp (-((1141 : ℝ) / 250)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1141 : ℝ) / 250) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b45640 (exp_pos ((141 : ℝ) / 250)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1141 : ℝ) / 250), exp_pos (-((1141 : ℝ) / 250))]
 
-lemma cosh_b45730_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b45730 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b45730_ub : cosh ((4573 : ℝ) / 1000) ≤ (4842734749 : ℝ) / 100000000 := by
+  have exp_frac_b45730 : exp ((573 : ℝ) / 1000) ≤ (177358001 : ℝ) / 100000000 := by
+    have ht : ((573 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((573 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((573 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (177358001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b45730 (by norm_num))
+  have hexp : exp ((4573 : ℝ) / 1000) = exp 4 * exp ((573 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (573 : ℝ) / 1000 = (4573 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4573 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4573 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b45730 (exp_pos ((573 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4573 : ℝ) / 1000), exp_pos (-((4573 : ℝ) / 1000))]
 
-lemma cosh_b45820_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b45820 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b45820_ub : cosh ((2291 : ℝ) / 500) ≤ (4886509497 : ℝ) / 100000000 := by
+  have exp_frac_b45820 : exp ((291 : ℝ) / 500) ≤ (178961501 : ℝ) / 100000000 := by
+    have ht : ((291 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((291 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((291 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (178961501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b45820 (by norm_num))
+  have hexp : exp ((2291 : ℝ) / 500) = exp 4 * exp ((291 : ℝ) / 500) := by
+    rw [← exp_add, show (4 : ℝ) + (291 : ℝ) / 500 = (2291 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((2291 : ℝ) / 500)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2291 : ℝ) / 500) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b45820 (exp_pos ((291 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2291 : ℝ) / 500), exp_pos (-((2291 : ℝ) / 500))]
 
-lemma cosh_b45910_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b45910 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b45910_ub : cosh ((4591 : ℝ) / 1000) ≤ (4930677358 : ℝ) / 100000000 := by
+  have exp_frac_b45910 : exp ((591 : ℝ) / 1000) ≤ (180579401 : ℝ) / 100000000 := by
+    have ht : ((591 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((591 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((591 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (180579401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b45910 (by norm_num))
+  have hexp : exp ((4591 : ℝ) / 1000) = exp 4 * exp ((591 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (591 : ℝ) / 1000 = (4591 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4591 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4591 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b45910 (exp_pos ((591 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4591 : ℝ) / 1000), exp_pos (-((4591 : ℝ) / 1000))]
 
-lemma cosh_b46000_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b46000 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b46000_ub : cosh ((23 : ℝ) / 5) ≤ (4975243792 : ℝ) / 100000000 := by
+  have exp_frac_b46000 : exp ((3 : ℝ) / 5) ≤ (182211901 : ℝ) / 100000000 := by
+    have ht : ((3 : ℝ) / 5) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((3 : ℝ) / 5) ^ m / (Nat.factorial m)) +
+          ((3 : ℝ) / 5) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (182211901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b46000 (by norm_num))
+  have hexp : exp ((23 : ℝ) / 5) = exp 4 * exp ((3 : ℝ) / 5) := by
+    rw [← exp_add, show (4 : ℝ) + (3 : ℝ) / 5 = (23 : ℝ) / 5 by norm_num]
+  have hneg : exp (-((23 : ℝ) / 5)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((23 : ℝ) / 5) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b46000 (exp_pos ((3 : ℝ) / 5)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((23 : ℝ) / 5), exp_pos (-((23 : ℝ) / 5))]
 
-lemma cosh_b46095_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b46095 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b46095_ub : cosh ((9219 : ℝ) / 2000) ≤ (5022725812 : ℝ) / 100000000 := by
+  have exp_frac_b46095 : exp ((1219 : ℝ) / 2000) ≤ (183951201 : ℝ) / 100000000 := by
+    have ht : ((1219 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1219 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1219 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (183951201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b46095 (by norm_num))
+  have hexp : exp ((9219 : ℝ) / 2000) = exp 4 * exp ((1219 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1219 : ℝ) / 2000 = (9219 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9219 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9219 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b46095 (exp_pos ((1219 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9219 : ℝ) / 2000), exp_pos (-((9219 : ℝ) / 2000))]
 
-lemma cosh_b46185_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b46185 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b46185_ub : cosh ((9237 : ℝ) / 2000) ≤ (5068124881 : ℝ) / 100000000 := by
+  have exp_frac_b46185 : exp ((1237 : ℝ) / 2000) ≤ (185614201 : ℝ) / 100000000 := by
+    have ht : ((1237 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1237 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1237 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (185614201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b46185 (by norm_num))
+  have hexp : exp ((9237 : ℝ) / 2000) = exp 4 * exp ((1237 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1237 : ℝ) / 2000 = (9237 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9237 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9237 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b46185 (exp_pos ((1237 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9237 : ℝ) / 2000), exp_pos (-((9237 : ℝ) / 2000))]
 
-lemma cosh_b46275_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b46275 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b46275_ub : cosh ((1851 : ℝ) / 400) ≤ (5113936172 : ℝ) / 100000000 := by
+  have exp_frac_b46275 : exp ((251 : ℝ) / 400) ≤ (187292301 : ℝ) / 100000000 := by
+    have ht : ((251 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((251 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((251 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (187292301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b46275 (by norm_num))
+  have hexp : exp ((1851 : ℝ) / 400) = exp 4 * exp ((251 : ℝ) / 400) := by
+    rw [← exp_add, show (4 : ℝ) + (251 : ℝ) / 400 = (1851 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1851 : ℝ) / 400)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1851 : ℝ) / 400) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b46275 (exp_pos ((251 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1851 : ℝ) / 400), exp_pos (-((1851 : ℝ) / 400))]
 
-lemma cosh_b46365_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b46365 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b46365_ub : cosh ((9273 : ℝ) / 2000) ≤ (5160159685 : ℝ) / 100000000 := by
+  have exp_frac_b46365 : exp ((1273 : ℝ) / 2000) ≤ (188985501 : ℝ) / 100000000 := by
+    have ht : ((1273 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1273 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1273 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (188985501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b46365 (by norm_num))
+  have hexp : exp ((9273 : ℝ) / 2000) = exp 4 * exp ((1273 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1273 : ℝ) / 2000 = (9273 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9273 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9273 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b46365 (exp_pos ((1273 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9273 : ℝ) / 2000), exp_pos (-((9273 : ℝ) / 2000))]
 
-lemma cosh_b46455_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b46455 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b46455_ub : cosh ((9291 : ℝ) / 2000) ≤ (5206803611 : ℝ) / 100000000 := by
+  have exp_frac_b46455 : exp ((1291 : ℝ) / 2000) ≤ (190694101 : ℝ) / 100000000 := by
+    have ht : ((1291 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1291 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1291 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (190694101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b46455 (by norm_num))
+  have hexp : exp ((9291 : ℝ) / 2000) = exp 4 * exp ((1291 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1291 : ℝ) / 2000 = (9291 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9291 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9291 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b46455 (exp_pos ((1291 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9291 : ℝ) / 2000), exp_pos (-((9291 : ℝ) / 2000))]
 
-lemma cosh_b46550_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b46550 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b46550_ub : cosh ((931 : ℝ) / 200) ≤ (5256494161 : ℝ) / 100000000 := by
+  have exp_frac_b46550 : exp ((131 : ℝ) / 200) ≤ (192514301 : ℝ) / 100000000 := by
+    have ht : ((131 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((131 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((131 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (192514301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b46550 (by norm_num))
+  have hexp : exp ((931 : ℝ) / 200) = exp 4 * exp ((131 : ℝ) / 200) := by
+    rw [← exp_add, show (4 : ℝ) + (131 : ℝ) / 200 = (931 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((931 : ℝ) / 200)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((931 : ℝ) / 200) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b46550 (exp_pos ((131 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((931 : ℝ) / 200), exp_pos (-((931 : ℝ) / 200))]
 
-lemma cosh_b46640_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b46640 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b46640_ub : cosh ((583 : ℝ) / 125) ≤ (5304008940 : ℝ) / 100000000 := by
+  have exp_frac_b46640 : exp ((83 : ℝ) / 125) ≤ (194254801 : ℝ) / 100000000 := by
+    have ht : ((83 : ℝ) / 125) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((83 : ℝ) / 125) ^ m / (Nat.factorial m)) +
+          ((83 : ℝ) / 125) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (194254801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b46640 (by norm_num))
+  have hexp : exp ((583 : ℝ) / 125) = exp 4 * exp ((83 : ℝ) / 125) := by
+    rw [← exp_add, show (4 : ℝ) + (83 : ℝ) / 125 = (583 : ℝ) / 125 by norm_num]
+  have hneg : exp (-((583 : ℝ) / 125)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((583 : ℝ) / 125) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b46640 (exp_pos ((83 : ℝ) / 125)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((583 : ℝ) / 125), exp_pos (-((583 : ℝ) / 125))]
 
-lemma cosh_b46730_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b46730 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b46730_ub : cosh ((4673 : ℝ) / 1000) ≤ (5351949592 : ℝ) / 100000000 := by
+  have exp_frac_b46730 : exp ((673 : ℝ) / 1000) ≤ (196010901 : ℝ) / 100000000 := by
+    have ht : ((673 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((673 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((673 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (196010901 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b46730 (by norm_num))
+  have hexp : exp ((4673 : ℝ) / 1000) = exp 4 * exp ((673 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (673 : ℝ) / 1000 = (4673 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4673 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4673 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b46730 (exp_pos ((673 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4673 : ℝ) / 1000), exp_pos (-((4673 : ℝ) / 1000))]
 
-lemma cosh_b46820_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b46820 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b46820_ub : cosh ((2341 : ℝ) / 500) ≤ (5400327036 : ℝ) / 100000000 := by
+  have exp_frac_b46820 : exp ((341 : ℝ) / 500) ≤ (197783001 : ℝ) / 100000000 := by
+    have ht : ((341 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((341 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((341 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (197783001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b46820 (by norm_num))
+  have hexp : exp ((2341 : ℝ) / 500) = exp 4 * exp ((341 : ℝ) / 500) := by
+    rw [← exp_add, show (4 : ℝ) + (341 : ℝ) / 500 = (2341 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((2341 : ℝ) / 500)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2341 : ℝ) / 500) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b46820 (exp_pos ((341 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2341 : ℝ) / 500), exp_pos (-((2341 : ℝ) / 500))]
 
-lemma cosh_b46910_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b46910 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b46910_ub : cosh ((4691 : ℝ) / 1000) ≤ (5449141272 : ℝ) / 100000000 := by
+  have exp_frac_b46910 : exp ((691 : ℝ) / 1000) ≤ (199571101 : ℝ) / 100000000 := by
+    have ht : ((691 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((691 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((691 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (199571101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b46910 (by norm_num))
+  have hexp : exp ((4691 : ℝ) / 1000) = exp 4 * exp ((691 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (691 : ℝ) / 1000 = (4691 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4691 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4691 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b46910 (exp_pos ((691 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4691 : ℝ) / 1000), exp_pos (-((4691 : ℝ) / 1000))]
 
-lemma cosh_b47000_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b47000 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b47000_ub : cosh ((47 : ℝ) / 10) ≤ (5498395030 : ℝ) / 100000000 := by
+  have exp_frac_b47000 : exp ((7 : ℝ) / 10) ≤ (201375301 : ℝ) / 100000000 := by
+    have ht : ((7 : ℝ) / 10) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((7 : ℝ) / 10) ^ m / (Nat.factorial m)) +
+          ((7 : ℝ) / 10) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (201375301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b47000 (by norm_num))
+  have hexp : exp ((47 : ℝ) / 10) = exp 4 * exp ((7 : ℝ) / 10) := by
+    rw [← exp_add, show (4 : ℝ) + (7 : ℝ) / 10 = (47 : ℝ) / 10 by norm_num]
+  have hneg : exp (-((47 : ℝ) / 10)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((47 : ℝ) / 10) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b47000 (exp_pos ((7 : ℝ) / 10)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((47 : ℝ) / 10), exp_pos (-((47 : ℝ) / 10))]
 
-lemma cosh_b47095_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b47095 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b47095_ub : cosh ((9419 : ℝ) / 2000) ≤ (5550870129 : ℝ) / 100000000 := by
+  have exp_frac_b47095 : exp ((1419 : ℝ) / 2000) ≤ (203297501 : ℝ) / 100000000 := by
+    have ht : ((1419 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1419 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1419 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (203297501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b47095 (by norm_num))
+  have hexp : exp ((9419 : ℝ) / 2000) = exp 4 * exp ((1419 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1419 : ℝ) / 2000 = (9419 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9419 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9419 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b47095 (exp_pos ((1419 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9419 : ℝ) / 2000), exp_pos (-((9419 : ℝ) / 2000))]
 
-lemma cosh_b47185_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b47185 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b47185_ub : cosh ((9437 : ℝ) / 2000) ≤ (5601043880 : ℝ) / 100000000 := by
+  have exp_frac_b47185 : exp ((1437 : ℝ) / 2000) ≤ (205135401 : ℝ) / 100000000 := by
+    have ht : ((1437 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1437 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1437 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (205135401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b47185 (by norm_num))
+  have hexp : exp ((9437 : ℝ) / 2000) = exp 4 * exp ((1437 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1437 : ℝ) / 2000 = (9437 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9437 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9437 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b47185 (exp_pos ((1437 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9437 : ℝ) / 2000), exp_pos (-((9437 : ℝ) / 2000))]
 
-lemma cosh_b47275_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b47275 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b47275_ub : cosh ((1891 : ℝ) / 400) ≤ (5651673533 : ℝ) / 100000000 := by
+  have exp_frac_b47275 : exp ((291 : ℝ) / 400) ≤ (206990001 : ℝ) / 100000000 := by
+    have ht : ((291 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((291 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((291 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (206990001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b47275 (by norm_num))
+  have hexp : exp ((1891 : ℝ) / 400) = exp 4 * exp ((291 : ℝ) / 400) := by
+    rw [← exp_add, show (4 : ℝ) + (291 : ℝ) / 400 = (1891 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1891 : ℝ) / 400)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1891 : ℝ) / 400) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b47275 (exp_pos ((291 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1891 : ℝ) / 400), exp_pos (-((1891 : ℝ) / 400))]
 
-lemma cosh_b47365_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b47365 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b47365_ub : cosh ((9473 : ℝ) / 2000) ≤ (5702759087 : ℝ) / 100000000 := by
+  have exp_frac_b47365 : exp ((1473 : ℝ) / 2000) ≤ (208861301 : ℝ) / 100000000 := by
+    have ht : ((1473 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1473 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1473 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (208861301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b47365 (by norm_num))
+  have hexp : exp ((9473 : ℝ) / 2000) = exp 4 * exp ((1473 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1473 : ℝ) / 2000 = (9473 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9473 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9473 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b47365 (exp_pos ((1473 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9473 : ℝ) / 2000), exp_pos (-((9473 : ℝ) / 2000))]
 
-lemma cosh_b47455_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b47455 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b47455_ub : cosh ((9491 : ℝ) / 2000) ≤ (5754308733 : ℝ) / 100000000 := by
+  have exp_frac_b47455 : exp ((1491 : ℝ) / 2000) ≤ (210749601 : ℝ) / 100000000 := by
+    have ht : ((1491 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1491 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1491 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (210749601 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b47455 (by norm_num))
+  have hexp : exp ((9491 : ℝ) / 2000) = exp 4 * exp ((1491 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1491 : ℝ) / 2000 = (9491 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9491 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9491 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b47455 (exp_pos ((1491 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9491 : ℝ) / 2000), exp_pos (-((9491 : ℝ) / 2000))]
 
-lemma cosh_b47550_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b47550 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b47550_ub : cosh ((951 : ℝ) / 200) ≤ (5809224407 : ℝ) / 100000000 := by
+  have exp_frac_b47550 : exp ((151 : ℝ) / 200) ≤ (212761201 : ℝ) / 100000000 := by
+    have ht : ((151 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((151 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((151 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (212761201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b47550 (by norm_num))
+  have hexp : exp ((951 : ℝ) / 200) = exp 4 * exp ((151 : ℝ) / 200) := by
+    rw [← exp_add, show (4 : ℝ) + (151 : ℝ) / 200 = (951 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((951 : ℝ) / 200)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((951 : ℝ) / 200) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b47550 (exp_pos ((151 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((951 : ℝ) / 200), exp_pos (-((951 : ℝ) / 200))]
 
-lemma cosh_b47640_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b47640 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b47640_ub : cosh ((1191 : ℝ) / 250) ≤ (5861734995 : ℝ) / 100000000 := by
+  have exp_frac_b47640 : exp ((191 : ℝ) / 250) ≤ (214684701 : ℝ) / 100000000 := by
+    have ht : ((191 : ℝ) / 250) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((191 : ℝ) / 250) ^ m / (Nat.factorial m)) +
+          ((191 : ℝ) / 250) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (214684701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b47640 (by norm_num))
+  have hexp : exp ((1191 : ℝ) / 250) = exp 4 * exp ((191 : ℝ) / 250) := by
+    rw [← exp_add, show (4 : ℝ) + (191 : ℝ) / 250 = (1191 : ℝ) / 250 by norm_num]
+  have hneg : exp (-((1191 : ℝ) / 250)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1191 : ℝ) / 250) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b47640 (exp_pos ((191 : ℝ) / 250)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1191 : ℝ) / 250), exp_pos (-((1191 : ℝ) / 250))]
 
-lemma cosh_b47730_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b47730 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b47730_ub : cosh ((4773 : ℝ) / 1000) ≤ (5914720595 : ℝ) / 100000000 := by
+  have exp_frac_b47730 : exp ((773 : ℝ) / 1000) ≤ (216625601 : ℝ) / 100000000 := by
+    have ht : ((773 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((773 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((773 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (216625601 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b47730 (by norm_num))
+  have hexp : exp ((4773 : ℝ) / 1000) = exp 4 * exp ((773 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (773 : ℝ) / 1000 = (4773 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4773 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4773 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b47730 (exp_pos ((773 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4773 : ℝ) / 1000), exp_pos (-((4773 : ℝ) / 1000))]
 
-lemma cosh_b47820_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b47820 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b47820_ub : cosh ((2391 : ℝ) / 500) ≤ (5968183936 : ℝ) / 100000000 := by
+  have exp_frac_b47820 : exp ((391 : ℝ) / 500) ≤ (218584001 : ℝ) / 100000000 := by
+    have ht : ((391 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((391 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((391 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (218584001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b47820 (by norm_num))
+  have hexp : exp ((2391 : ℝ) / 500) = exp 4 * exp ((391 : ℝ) / 500) := by
+    rw [← exp_add, show (4 : ℝ) + (391 : ℝ) / 500 = (2391 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((2391 : ℝ) / 500)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2391 : ℝ) / 500) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b47820 (exp_pos ((391 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2391 : ℝ) / 500), exp_pos (-((2391 : ℝ) / 500))]
 
-lemma cosh_b47910_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b47910 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b47910_ub : cosh ((4791 : ℝ) / 1000) ≤ (6022133208 : ℝ) / 100000000 := by
+  have exp_frac_b47910 : exp ((791 : ℝ) / 1000) ≤ (220560201 : ℝ) / 100000000 := by
+    have ht : ((791 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((791 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((791 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (220560201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b47910 (by norm_num))
+  have hexp : exp ((4791 : ℝ) / 1000) = exp 4 * exp ((791 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (791 : ℝ) / 1000 = (4791 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4791 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4791 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b47910 (exp_pos ((791 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4791 : ℝ) / 1000), exp_pos (-((4791 : ℝ) / 1000))]
 
-lemma cosh_b48000_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b48000 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b48000_ub : cosh ((24 : ℝ) / 5) ≤ (6076568411 : ℝ) / 100000000 := by
+  have exp_frac_b48000 : exp ((4 : ℝ) / 5) ≤ (222554201 : ℝ) / 100000000 := by
+    have ht : ((4 : ℝ) / 5) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((4 : ℝ) / 5) ^ m / (Nat.factorial m)) +
+          ((4 : ℝ) / 5) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (222554201 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b48000 (by norm_num))
+  have hexp : exp ((24 : ℝ) / 5) = exp 4 * exp ((4 : ℝ) / 5) := by
+    rw [← exp_add, show (4 : ℝ) + (4 : ℝ) / 5 = (24 : ℝ) / 5 by norm_num]
+  have hneg : exp (-((24 : ℝ) / 5)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((24 : ℝ) / 5) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b48000 (exp_pos ((4 : ℝ) / 5)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((24 : ℝ) / 5), exp_pos (-((24 : ℝ) / 5))]
 
-lemma cosh_b48095_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b48095 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b48095_ub : cosh ((9619 : ℝ) / 2000) ≤ (6134560739 : ℝ) / 100000000 := by
+  have exp_frac_b48095 : exp ((1619 : ℝ) / 2000) ≤ (224678501 : ℝ) / 100000000 := by
+    have ht : ((1619 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1619 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1619 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (224678501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b48095 (by norm_num))
+  have hexp : exp ((9619 : ℝ) / 2000) = exp 4 * exp ((1619 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1619 : ℝ) / 2000 = (9619 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9619 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9619 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b48095 (exp_pos ((1619 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9619 : ℝ) / 2000), exp_pos (-((9619 : ℝ) / 2000))]
 
-lemma cosh_b48185_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b48185 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b48185_ub : cosh ((9637 : ℝ) / 2000) ≤ (6190011483 : ℝ) / 100000000 := by
+  have exp_frac_b48185 : exp ((1637 : ℝ) / 2000) ≤ (226709701 : ℝ) / 100000000 := by
+    have ht : ((1637 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1637 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1637 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (226709701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b48185 (by norm_num))
+  have hexp : exp ((9637 : ℝ) / 2000) = exp 4 * exp ((1637 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1637 : ℝ) / 2000 = (9637 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9637 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9637 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b48185 (exp_pos ((1637 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9637 : ℝ) / 2000), exp_pos (-((9637 : ℝ) / 2000))]
 
-lemma cosh_b48275_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b48275 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b48275_ub : cosh ((1931 : ℝ) / 400) ≤ (6245964538 : ℝ) / 100000000 := by
+  have exp_frac_b48275 : exp ((331 : ℝ) / 400) ≤ (228759301 : ℝ) / 100000000 := by
+    have ht : ((331 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((331 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((331 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (228759301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b48275 (by norm_num))
+  have hexp : exp ((1931 : ℝ) / 400) = exp 4 * exp ((331 : ℝ) / 400) := by
+    rw [← exp_add, show (4 : ℝ) + (331 : ℝ) / 400 = (1931 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1931 : ℝ) / 400)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1931 : ℝ) / 400) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b48275 (exp_pos ((331 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1931 : ℝ) / 400), exp_pos (-((1931 : ℝ) / 400))]
 
-lemma cosh_b48365_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b48365 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b48365_ub : cosh ((9673 : ℝ) / 2000) ≤ (6302425364 : ℝ) / 100000000 := by
+  have exp_frac_b48365 : exp ((1673 : ℝ) / 2000) ≤ (230827501 : ℝ) / 100000000 := by
+    have ht : ((1673 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1673 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1673 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (230827501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b48365 (by norm_num))
+  have hexp : exp ((9673 : ℝ) / 2000) = exp 4 * exp ((1673 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1673 : ℝ) / 2000 = (9673 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9673 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9673 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b48365 (exp_pos ((1673 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9673 : ℝ) / 2000), exp_pos (-((9673 : ℝ) / 2000))]
 
-lemma cosh_b48455_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b48455 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b48455_ub : cosh ((9691 : ℝ) / 2000) ≤ (6359393961 : ℝ) / 100000000 := by
+  have exp_frac_b48455 : exp ((1691 : ℝ) / 2000) ≤ (232914301 : ℝ) / 100000000 := by
+    have ht : ((1691 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1691 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1691 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (232914301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b48455 (by norm_num))
+  have hexp : exp ((9691 : ℝ) / 2000) = exp 4 * exp ((1691 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1691 : ℝ) / 2000 = (9691 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9691 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9691 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b48455 (exp_pos ((1691 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9691 : ℝ) / 2000), exp_pos (-((9691 : ℝ) / 2000))]
 
-lemma cosh_b48550_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b48550 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b48550_ub : cosh ((971 : ℝ) / 200) ≤ (6420086209 : ℝ) / 100000000 := by
+  have exp_frac_b48550 : exp ((171 : ℝ) / 200) ≤ (235137501 : ℝ) / 100000000 := by
+    have ht : ((171 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((171 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((171 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (235137501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b48550 (by norm_num))
+  have hexp : exp ((971 : ℝ) / 200) = exp 4 * exp ((171 : ℝ) / 200) := by
+    rw [← exp_add, show (4 : ℝ) + (171 : ℝ) / 200 = (971 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((971 : ℝ) / 200)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((971 : ℝ) / 200) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b48550 (exp_pos ((171 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((971 : ℝ) / 200), exp_pos (-((971 : ℝ) / 200))]
 
-lemma cosh_b48640_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b48640 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b48640_ub : cosh ((608 : ℝ) / 125) ≤ (6478119486 : ℝ) / 100000000 := by
+  have exp_frac_b48640 : exp ((108 : ℝ) / 125) ≤ (237263301 : ℝ) / 100000000 := by
+    have ht : ((108 : ℝ) / 125) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((108 : ℝ) / 125) ^ m / (Nat.factorial m)) +
+          ((108 : ℝ) / 125) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (237263301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b48640 (by norm_num))
+  have hexp : exp ((608 : ℝ) / 125) = exp 4 * exp ((108 : ℝ) / 125) := by
+    rw [← exp_add, show (4 : ℝ) + (108 : ℝ) / 125 = (608 : ℝ) / 125 by norm_num]
+  have hneg : exp (-((608 : ℝ) / 125)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((608 : ℝ) / 125) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b48640 (exp_pos ((108 : ℝ) / 125)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((608 : ℝ) / 125), exp_pos (-((608 : ℝ) / 125))]
 
-lemma cosh_b48730_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b48730 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b48730_ub : cosh ((4873 : ℝ) / 1000) ≤ (6536676914 : ℝ) / 100000000 := by
+  have exp_frac_b48730 : exp ((873 : ℝ) / 1000) ≤ (239408301 : ℝ) / 100000000 := by
+    have ht : ((873 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((873 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((873 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (239408301 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b48730 (by norm_num))
+  have hexp : exp ((4873 : ℝ) / 1000) = exp 4 * exp ((873 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (873 : ℝ) / 1000 = (4873 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4873 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4873 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b48730 (exp_pos ((873 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4873 : ℝ) / 1000), exp_pos (-((4873 : ℝ) / 1000))]
 
-lemma cosh_b48820_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b48820 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b48820_ub : cosh ((2441 : ℝ) / 500) ≤ (6595763951 : ℝ) / 100000000 := by
+  have exp_frac_b48820 : exp ((441 : ℝ) / 500) ≤ (241572701 : ℝ) / 100000000 := by
+    have ht : ((441 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((441 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((441 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (241572701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b48820 (by norm_num))
+  have hexp : exp ((2441 : ℝ) / 500) = exp 4 * exp ((441 : ℝ) / 500) := by
+    rw [← exp_add, show (4 : ℝ) + (441 : ℝ) / 500 = (2441 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((2441 : ℝ) / 500)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2441 : ℝ) / 500) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b48820 (exp_pos ((441 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2441 : ℝ) / 500), exp_pos (-((2441 : ℝ) / 500))]
 
-lemma cosh_b48910_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b48910 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b48910_ub : cosh ((4891 : ℝ) / 1000) ≤ (6655386059 : ℝ) / 100000000 := by
+  have exp_frac_b48910 : exp ((891 : ℝ) / 1000) ≤ (243756701 : ℝ) / 100000000 := by
+    have ht : ((891 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((891 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((891 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (243756701 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b48910 (by norm_num))
+  have hexp : exp ((4891 : ℝ) / 1000) = exp 4 * exp ((891 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (891 : ℝ) / 1000 = (4891 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4891 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4891 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b48910 (exp_pos ((891 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4891 : ℝ) / 1000), exp_pos (-((4891 : ℝ) / 1000))]
 
-lemma cosh_b49000_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b49000 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b49000_ub : cosh ((49 : ℝ) / 10) ≤ (6715545968 : ℝ) / 100000000 := by
+  have exp_frac_b49000 : exp ((9 : ℝ) / 10) ≤ (245960401 : ℝ) / 100000000 := by
+    have ht : ((9 : ℝ) / 10) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((9 : ℝ) / 10) ^ m / (Nat.factorial m)) +
+          ((9 : ℝ) / 10) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (245960401 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b49000 (by norm_num))
+  have hexp : exp ((49 : ℝ) / 10) = exp 4 * exp ((9 : ℝ) / 10) := by
+    rw [← exp_add, show (4 : ℝ) + (9 : ℝ) / 10 = (49 : ℝ) / 10 by norm_num]
+  have hneg : exp (-((49 : ℝ) / 10)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((49 : ℝ) / 10) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b49000 (exp_pos ((9 : ℝ) / 10)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((49 : ℝ) / 10), exp_pos (-((49 : ℝ) / 10))]
 
-lemma cosh_b49095_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b49095 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b49095_ub : cosh ((9819 : ℝ) / 2000) ≤ (6779637004 : ℝ) / 100000000 := by
+  have exp_frac_b49095 : exp ((1819 : ℝ) / 2000) ≤ (248308101 : ℝ) / 100000000 := by
+    have ht : ((1819 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1819 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1819 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (248308101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b49095 (by norm_num))
+  have hexp : exp ((9819 : ℝ) / 2000) = exp 4 * exp ((1819 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1819 : ℝ) / 2000 = (9819 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9819 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9819 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b49095 (exp_pos ((1819 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9819 : ℝ) / 2000), exp_pos (-((9819 : ℝ) / 2000))]
 
-lemma cosh_b49185_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b49185 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b49185_ub : cosh ((9837 : ℝ) / 2000) ≤ (6840921651 : ℝ) / 100000000 := by
+  have exp_frac_b49185 : exp ((1837 : ℝ) / 2000) ≤ (250553001 : ℝ) / 100000000 := by
+    have ht : ((1837 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1837 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1837 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (250553001 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b49185 (by norm_num))
+  have hexp : exp ((9837 : ℝ) / 2000) = exp 4 * exp ((1837 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1837 : ℝ) / 2000 = (9837 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9837 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9837 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b49185 (exp_pos ((1837 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9837 : ℝ) / 2000), exp_pos (-((9837 : ℝ) / 2000))]
 
-lemma cosh_b49275_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b49275 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b49275_ub : cosh ((1971 : ℝ) / 400) ≤ (6902757749 : ℝ) / 100000000 := by
+  have exp_frac_b49275 : exp ((371 : ℝ) / 400) ≤ (252818101 : ℝ) / 100000000 := by
+    have ht : ((371 : ℝ) / 400) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((371 : ℝ) / 400) ^ m / (Nat.factorial m)) +
+          ((371 : ℝ) / 400) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (252818101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b49275 (by norm_num))
+  have hexp : exp ((1971 : ℝ) / 400) = exp 4 * exp ((371 : ℝ) / 400) := by
+    rw [← exp_add, show (4 : ℝ) + (371 : ℝ) / 400 = (1971 : ℝ) / 400 by norm_num]
+  have hneg : exp (-((1971 : ℝ) / 400)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1971 : ℝ) / 400) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b49275 (exp_pos ((371 : ℝ) / 400)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1971 : ℝ) / 400), exp_pos (-((1971 : ℝ) / 400))]
 
-lemma cosh_b49365_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b49365 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b49365_ub : cosh ((9873 : ℝ) / 2000) ≤ (6965156216 : ℝ) / 100000000 := by
+  have exp_frac_b49365 : exp ((1873 : ℝ) / 2000) ≤ (255103801 : ℝ) / 100000000 := by
+    have ht : ((1873 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1873 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1873 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (255103801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b49365 (by norm_num))
+  have hexp : exp ((9873 : ℝ) / 2000) = exp 4 * exp ((1873 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1873 : ℝ) / 2000 = (9873 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9873 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9873 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b49365 (exp_pos ((1873 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9873 : ℝ) / 2000), exp_pos (-((9873 : ℝ) / 2000))]
 
-lemma cosh_b49455_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b49455 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b49455_ub : cosh ((9891 : ℝ) / 2000) ≤ (7028117053 : ℝ) / 100000000 := by
+  have exp_frac_b49455 : exp ((1891 : ℝ) / 2000) ≤ (257410101 : ℝ) / 100000000 := by
+    have ht : ((1891 : ℝ) / 2000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((1891 : ℝ) / 2000) ^ m / (Nat.factorial m)) +
+          ((1891 : ℝ) / 2000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (257410101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b49455 (by norm_num))
+  have hexp : exp ((9891 : ℝ) / 2000) = exp 4 * exp ((1891 : ℝ) / 2000) := by
+    rw [← exp_add, show (4 : ℝ) + (1891 : ℝ) / 2000 = (9891 : ℝ) / 2000 by norm_num]
+  have hneg : exp (-((9891 : ℝ) / 2000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((9891 : ℝ) / 2000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b49455 (exp_pos ((1891 : ℝ) / 2000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((9891 : ℝ) / 2000), exp_pos (-((9891 : ℝ) / 2000))]
 
-lemma cosh_b49550_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b49550 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b49550_ub : cosh ((991 : ℝ) / 200) ≤ (7095191924 : ℝ) / 100000000 := by
+  have exp_frac_b49550 : exp ((191 : ℝ) / 200) ≤ (259867101 : ℝ) / 100000000 := by
+    have ht : ((191 : ℝ) / 200) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((191 : ℝ) / 200) ^ m / (Nat.factorial m)) +
+          ((191 : ℝ) / 200) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (259867101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b49550 (by norm_num))
+  have hexp : exp ((991 : ℝ) / 200) = exp 4 * exp ((191 : ℝ) / 200) := by
+    rw [← exp_add, show (4 : ℝ) + (191 : ℝ) / 200 = (991 : ℝ) / 200 by norm_num]
+  have hneg : exp (-((991 : ℝ) / 200)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((991 : ℝ) / 200) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b49550 (exp_pos ((191 : ℝ) / 200)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((991 : ℝ) / 200), exp_pos (-((991 : ℝ) / 200))]
 
-lemma cosh_b49640_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b49640 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b49640_ub : cosh ((1241 : ℝ) / 250) ≤ (7159329370 : ℝ) / 100000000 := by
+  have exp_frac_b49640 : exp ((241 : ℝ) / 250) ≤ (262216501 : ℝ) / 100000000 := by
+    have ht : ((241 : ℝ) / 250) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((241 : ℝ) / 250) ^ m / (Nat.factorial m)) +
+          ((241 : ℝ) / 250) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (262216501 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b49640 (by norm_num))
+  have hexp : exp ((1241 : ℝ) / 250) = exp 4 * exp ((241 : ℝ) / 250) := by
+    rw [← exp_add, show (4 : ℝ) + (241 : ℝ) / 250 = (1241 : ℝ) / 250 by norm_num]
+  have hneg : exp (-((1241 : ℝ) / 250)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((1241 : ℝ) / 250) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b49640 (exp_pos ((241 : ℝ) / 250)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((1241 : ℝ) / 250), exp_pos (-((1241 : ℝ) / 250))]
 
-lemma cosh_b49730_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b49730 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b49730_ub : cosh ((4973 : ℝ) / 1000) ≤ (7224045564 : ℝ) / 100000000 := by
+  have exp_frac_b49730 : exp ((973 : ℝ) / 1000) ≤ (264587101 : ℝ) / 100000000 := by
+    have ht : ((973 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((973 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((973 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (264587101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b49730 (by norm_num))
+  have hexp : exp ((4973 : ℝ) / 1000) = exp 4 * exp ((973 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (973 : ℝ) / 1000 = (4973 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4973 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4973 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b49730 (exp_pos ((973 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4973 : ℝ) / 1000), exp_pos (-((4973 : ℝ) / 1000))]
 
-lemma cosh_b49820_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b49820 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b49820_ub : cosh ((2491 : ℝ) / 500) ≤ (7289345968 : ℝ) / 100000000 := by
+  have exp_frac_b49820 : exp ((491 : ℝ) / 500) ≤ (266979101 : ℝ) / 100000000 := by
+    have ht : ((491 : ℝ) / 500) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((491 : ℝ) / 500) ^ m / (Nat.factorial m)) +
+          ((491 : ℝ) / 500) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (266979101 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b49820 (by norm_num))
+  have hexp : exp ((2491 : ℝ) / 500) = exp 4 * exp ((491 : ℝ) / 500) := by
+    rw [← exp_add, show (4 : ℝ) + (491 : ℝ) / 500 = (2491 : ℝ) / 500 by norm_num]
+  have hneg : exp (-((2491 : ℝ) / 500)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((2491 : ℝ) / 500) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b49820 (exp_pos ((491 : ℝ) / 500)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((2491 : ℝ) / 500), exp_pos (-((2491 : ℝ) / 500))]
 
-lemma cosh_b49910_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b49910 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
+lemma cosh_b49910_ub : cosh ((4991 : ℝ) / 1000) ≤ (7355238771 : ℝ) / 100000000 := by
+  have exp_frac_b49910 : exp ((991 : ℝ) / 1000) ≤ (269392801 : ℝ) / 100000000 := by
+    have ht : ((991 : ℝ) / 1000) ≤ 1 := by norm_num
+    have hupper := Real.exp_bound' (by norm_num) ht (n := 8) (by norm_num)
     have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
+        (∑ m ∈ Finset.range 8, ((991 : ℝ) / 1000) ^ m / (Nat.factorial m)) +
+          ((991 : ℝ) / 1000) ^ 8 * (8 + 1) / (Nat.factorial 8 * 8) ≤
+          (269392801 : ℝ) / 100000000 := by
       simp [Finset.sum_range_succ, Nat.factorial]
       norm_num
     linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b49910 (by norm_num))
+  have hexp : exp ((4991 : ℝ) / 1000) = exp 4 * exp ((991 : ℝ) / 1000) := by
+    rw [← exp_add, show (4 : ℝ) + (991 : ℝ) / 1000 = (4991 : ℝ) / 1000 by norm_num]
+  have hneg : exp (-((4991 : ℝ) / 1000)) ≤ (19 : ℝ) / 1000 := by
+    exact (exp_le_exp_of_le (by norm_num : -((4991 : ℝ) / 1000) ≤ -(4 : ℝ))).trans exp_neg_four_le
+  rw [cosh_eq]
+  have hmul := mul_le_mul exp_four_le exp_frac_b49910 (exp_pos ((991 : ℝ) / 1000)).le (by norm_num)
+  nlinarith [hmul, hneg, hexp, exp_pos ((4991 : ℝ) / 1000), exp_pos (-((4991 : ℝ) / 1000))]
 
-lemma cosh_b50000_ub : cosh ((5 : ℝ) / 1) ≤ (26833728652101 : ℝ) / 100000000 := by
-  have exp_b50000 : exp (((5 : ℝ) / 1)^2 / 2) ≤ (26833728652101 : ℝ) / 100000000 := by
-    have ht : ((5 : ℝ) / 1)^2 / 2 ≤ 1 := by norm_num
-    have hupper := Real.exp_bound' (by norm_num) ht (n := 44) (by norm_num)
-    have htaylor :
-        (∑ m ∈ Finset.range 44, (((5 : ℝ) / 1)^2 / 2) ^ m / (Nat.factorial m)) +
-          (((5 : ℝ) / 1)^2 / 2) ^ 44 * (44 + 1) / (Nat.factorial 44 * 44) ≤
-          (26833728652101 : ℝ) / 100000000 := by
-      simp [Finset.sum_range_succ, Nat.factorial]
-      norm_num
-    linarith [hupper, htaylor]
-  exact (cosh_le_exp_half_sq ((5 : ℝ) / 1)).trans (le_trans exp_b50000 (by norm_num))
+lemma cosh_b50000_ub : cosh ((5 : ℝ) / 1) ≤ (7421100001 : ℝ) / 100000000 := by
+  rw [show (5 : ℝ) / 1 = (5 : ℝ) by norm_num]
+  exact (cosh_five_le).trans (by norm_num)
 
 end UgpLean.Substrate.PhiMDLFluctuationSpectrum
