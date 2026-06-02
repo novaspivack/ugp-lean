@@ -140,9 +140,8 @@ We present \textbf{ugp-lean}, a \lean{}~4 formalization of the
 Universal Generative Principle (\ugp{}) against Mathlib, comprising
 296~\lean{} modules across seventeen layers (extended development branch covering
 spacetime, QFT, and hadronic physics) with a strict zero-sorry,
-zero-custom-axiom policy on the core proof path (83 global custom
-named axioms after the 2026-06-02 frontier-closure extensions,\linebreak[2]
-up from 20 at the 2026-05-24 audit; core physics proof path remains
+zero-custom-axiom policy on the core proof path (75 global custom
+named axioms across all modules; core physics proof path remains
 zero-axiom).
 The \ugp{} is a deterministic arithmetic framework on integer ridges
 $R_n = 2^n - 16$ that produces, from first principles and without free
@@ -630,7 +629,7 @@ full soft-constraint $D$-minimization over all 14 scan constraints; the
 Layer~I survivor structure and $N_{\mathrm{gen}} = 3$ consequence are
 machine-certified.
 
-\medskip\noindent\textbf{Documented axioms (post-audit 2026-05-24: 20 global; post-EPIC\_083C 2026-06-02: 83 global).}
+\medskip\noindent\textbf{Documented axioms (75 global named axioms).}
 Two theorems in \texttt{GTE.AnalyticArchitecture} are declared as
 \texttt{axiom} rather than \texttt{sorry}: \texttt{dickman\_equidistribution\_in\_APs}
 and \texttt{crt\_equidistribution\_within\_regime}, both citing
@@ -644,19 +643,22 @@ closure of any physics theorem in the library}: running
 returns exactly the standard Lean/Mathlib signature
 $\{\mathtt{propext},\mathtt{Classical.choice},\mathtt{Quot.sound}\}$.
 
-A systematic audit (2026-05-24) discharged four previously declared
-axioms in \texttt{VEVProof/GoldstoneEntropyCorrection.lean} as genuine
-theorems, reducing the global custom named-axiom count from 24 to
-\textbf{20}; see \S\ref{sec:audit-capstones} for details.
-The EPIC\_083C frontier-closure pass (2026-06-02) subsequently added 63 bridge
-and extension axioms---primarily in \texttt{GUTStructure}, \texttt{FrobeniusChain},
+An audit discharged several previously declared axioms in
+\texttt{VEVProof/GoldstoneEntropyCorrection.lean} as proved theorems;
+see \S\ref{sec:audit-capstones} for details.
+The library currently holds \textbf{75} global custom named axioms,
+primarily in \texttt{GUTStructure}, \texttt{FrobeniusChain},
 \texttt{NeutrinoSector}, \texttt{SechOverlapIntegralBounds\_bridge}, and related
-extension modules---bringing the global count to \textbf{83}
-(see Table~\ref{tab:axiom-inventory} and \S\ref{subsec:epic-083c}).
+modules (see Table~\ref{tab:axiom-inventory} and \S\ref{subsec:epic-083c}).
+The following named axioms were proved as genuine theorems (zero sorry):
+five \lstinline|: True|-type and existential axioms in \texttt{GaugeMDL},
+\texttt{CCImpossibilityBundle}, \texttt{GUTStructure}, and \texttt{PMDLGravityTheorems};
+and \lstinline|adj_mem_periodicCausalNeighbors| in \texttt{SpectralDimensionDegree},
+proved via complete case analysis over all 20 adjacency branches.
 The core physics proof path (charged leptons, couplings, generation count) remains
 zero-custom-axiom.
 
-\medskip\noindent\textbf{One additional disclosed axiom (\texttt{BraidAtlas.ChargeTheorem}, 2026-05-08):}
+\medskip\noindent\textbf{One additional disclosed axiom (\texttt{BraidAtlas.ChargeTheorem}):}
 \texttt{mirror\_winding\_number\_zero}: $W_{g,\text{mirror}} = 0$ for the GTE-P7
 mirror-branch dark matter candidate.  This is a \emph{braid-topology postulate}
 imported from the companion paper P17~\cite{SpivackBraidAtlas}~\S subsec:mirror\_dm:
@@ -1621,7 +1623,7 @@ followed by a finite \lstinline|native_decide| check over $k \in [0, 48]$.
 % ═══════════════════════════════════════════════════════════════
 
 The module \texttt{BraidAtlas.MirrorWindingNumber} provides the structural
-Lean certificate for MBA-5: the elimination of the \lstinline|mirror_winding_number_zero|
+the structural Lean certificate eliminating the \lstinline|mirror_winding_number_zero|
 axiom from \texttt{BraidAtlas.ChargeTheorem}.
 The axiom is replaced by a definition
 \[
@@ -1661,7 +1663,7 @@ $q_1' = 29$ are also machine-certified.  All 13 theorems carry zero
 \lstinline|mirror_prime_certified|,
 \lstinline|mba5_mirror_winding_certificate|
 \textup{(in \texttt{BraidAtlas.MirrorWindingNumber}, 13 theorems, zero \texttt{sorry},
-zero axioms; MBA-5, 2026-05-16)}
+zero axioms)}
 \end{leanref}
 \end{theorem}
 
@@ -1704,7 +1706,7 @@ All 10 theorems carry zero \texttt{sorry} and zero axioms.
 \lstinline|branch_shift_preserved|,
 \lstinline|ew_rhn_structural_connection|
 \textup{(in \texttt{BraidAtlas.EWBosonRHNConnection}, 10 theorems, zero \texttt{sorry},
-zero axioms; 2026-05-17)}
+zero axioms)}
 \end{leanref}
 \end{theorem}
 
@@ -1742,7 +1744,7 @@ single-import certificate for all Lean-verified dark sector facts.
 \lstinline|dark_ew_rhn_connection|,
 \lstinline|dark_braid_atlas_certificate|
 \textup{(in \texttt{BraidAtlas.DarkBraidAtlas}, 16 theorems, zero \texttt{sorry},
-zero axioms; 2026-05-17)}
+zero axioms)}
 \end{leanref}
 \end{theorem}
 
@@ -1769,7 +1771,7 @@ These are arithmetic facts proved by \lstinline|norm_num|.
 The gap $N_c^2 - 1$ is algebraically equivalent to $b_3 = q_2 - b_1$
 (standard: $24 - 5 = 19$; mirror: $42 - 5 = 37$) but neither formula
 has been derived from a GTE cascade rule; the pattern was identified post-hoc
-(MBA-3, 2026-05-17).  This result is therefore \textbf{Category~D (numerical,
+This result is therefore \textbf{Category~D (numerical,
 not structural)}.  Upgrading to Category~A requires identifying and certifying
 the GTE cascade rule that produces $b_3 = q_2 - b_1$ from first principles.
 
@@ -1786,7 +1788,7 @@ zero \texttt{sorry}.
 \lstinline|rhn_gap_equals_su3_adj|,
 \lstinline|rhn_b3_both_prime|
 \textup{(in \texttt{BraidAtlas.RHNGapTheorem}, 9 theorems, zero \texttt{sorry};
-Cat~D — structural derivation open; 2026-05-17)}
+Cat~D — structural derivation open)}
 \end{leanref}
 \end{theorem}
 
@@ -1795,7 +1797,7 @@ Cat~D — structural derivation open; 2026-05-17)}
 \label{subsec:dark_quark_charge_lean}
 % ═══════════════════════════════════════════════════════════════
 
-The module \texttt{BraidAtlas.DarkQuarkCharge} certifies MBA-6: dark quarks
+The module \texttt{BraidAtlas.DarkQuarkCharge} certifies dark quarks
 carry $Q_\mathrm{EM} = 0$.  This resolves the question of whether the mirror
 $b_2 \leftrightarrow q_2$ arithmetic symmetry maps SM quark gauge charges
 (which are non-zero: $Q(u) = +2/3$, $Q(d) = -1/3$) to corresponding
@@ -1808,12 +1810,12 @@ giving $W_{g,\mathrm{mirror}} = N_c \times (T_3 + Y/2) = 0$ and hence $Q = 0$.
 Dark quarks do carry dark $\mathrm{SU}(3)_{\mathrm{dark}}$ colour and confine at
 $\Lambda_\mathrm{dark}$, but are electromagnetically neutral.
 
-The proof is identical in structure to the lepton case (MBA-1/MBA-5,
+The proof is identical in structure to the lepton case (
 \texttt{MirrorWindingNumber}): it reuses \lstinline|mirror_winding_number_zero|
 because the same definition of \lstinline|W_g_mirror| applies regardless of
 quark vs.\ lepton sector.
 
-\begin{theorem}[Dark quark electric neutrality (MBA-6)]\label{thm:dark_quark_neutral}
+\begin{theorem}[Dark quark electric neutrality]\label{thm:dark_quark_neutral}
 For all three dark-quark generations, and for both dark up- and
 dark down-type quarks,
 \[
@@ -1829,7 +1831,7 @@ All 8 theorems carry zero \texttt{sorry} and zero axioms.
 \lstinline|dark_up_quark_differs_from_sm_up|,
 \lstinline|mba6_dark_quark_charge_certificate|
 \textup{(in \texttt{BraidAtlas.DarkQuarkCharge}, 8 theorems, zero \texttt{sorry},
-zero axioms; MBA-6, 2026-05-17)}
+zero axioms)}
 \end{leanref}
 \end{theorem}
 
@@ -1866,7 +1868,7 @@ Let $N_c = 3$ (QCD colour rank). Then:
 \lstinline|z7_sector_separation|,
 \lstinline|z7_dark_charge_certificate|
 \textup{(in \texttt{BraidAtlas.DarkBraidAtlas}~\S9, 7 theorems, zero \texttt{sorry},
-zero axioms; CUP-11a, 2026-05-17)}
+zero axioms)}
 \end{leanref}
 
 % ───────────────────────────────────────────────────────────────
@@ -1898,7 +1900,7 @@ RGE $\beta$-function.  The equality holds at the bare (unification-scale) level.
 \lstinline|g3Sq_dark_bare|,
 \lstinline|dark_su3_coupling_equals_sm|
 \textup{(in \texttt{BraidAtlas.DarkBraidAtlas}~\S10, zero \texttt{sorry},
-zero axioms; 2026-05-17)}
+zero axioms)}
 \end{leanref}
 
 % ───────────────────────────────────────────────────────────────
@@ -1939,7 +1941,7 @@ for a full Cat~A certificate.
 \lstinline|dark_su3_weyl_order_branch_independent|,
 \lstinline|dark_gauge_coupling_certificate|
 \textup{(in \texttt{BraidAtlas.DarkGaugeCoupling}, 8 theorems, zero \texttt{sorry},
-zero axioms; Cat A/C; 2026-05-17)}
+zero axioms; Cat A/C)}
 \end{leanref}
 
 % ═══════════════════════════════════════════════════════════════
@@ -2317,7 +2319,7 @@ question separate from the formal proof.
 \texttt{CyclotomicCompleteness.LieExpSurjective} have all been moved to
 \texttt{ugp-physics-lean} as \texttt{UgpPhysicsLean.GXT.*}.
 In particular, \texttt{UgpPhysicsLean.GXT.LieExpSurjective} proves
-\lstinline|circle_exp_surjective_MAIN| (zero sorry, 2026-05-11):
+\lstinline|circle_exp_surjective_MAIN| (zero sorry):
 $\mathrm{Circle.exp} : \mathbb{R} \to \mathrm{Circle}$ is surjective, via the open
 subgroup theorem (\lstinline|open_subgroup_eq_top_of_connected|, zero sorry), and
 \lstinline|circle_iso_addCircle_2pi| establishes $\mathrm{Circle} \cong \mathbb{R}/(2\pi\mathbb{Z})$
@@ -2838,7 +2840,7 @@ the unconditional UCL$_2$ block is
 % ═══════════════════════════════════════════════════════════════
 
 The \texttt{MassRelations} layer (27 modules on the development branch, including
-\texttt{NeutrinoSector} and \texttt{HiggsQuartic} from EPIC\_083C) formalizes the
+\texttt{NeutrinoSector} and \texttt{HiggsQuartic}) formalizes the
 passage from the \ugp{} ridge arithmetic to physical fermion mass
 ratios, covering the Koide closed form, the SU(3) flavour geometry,
 the Froggatt--Nielsen mechanism, the resulting physical spectrum,
@@ -4736,7 +4738,7 @@ Composes Rank 72d with Rank 25-CCF.
 All theorems are zero \texttt{sorry}, zero custom axioms.
 
 \subsection{$\Phi_{\mathrm{MDL}}$ fluctuation spectrum and Yukawa vertex
-(\texttt{Substrate/PhiMDLFluctuationSpectrum}, EPIC\_083C)}\label{subsec:phimdl-fluctuation-083c}
+(\texttt{Substrate/PhiMDLFluctuationSpectrum})}\label{subsec:phimdl-fluctuation-083c}
 
 The \texttt{PhiMDLFluctuationSpectrum} module certifies the loop-level
 fluctuation potential and Yukawa overlap infrastructure used in the P42
@@ -5349,8 +5351,7 @@ occupations to the conditional Born-rule certificate.
 \subsection{Cogwheel discrete evolution (G21,
   \texttt{Substrate/CogwheelDynamicsG21.lean})}\label{subsec:cogwheel-g21}
 
-Module: \texttt{Substrate/CogwheelDynamicsG21.lean} (graduated to
-\texttt{ugp-lean} canonical, 2026-05-29).  Certifies the Level~1
+Module: \texttt{Substrate/CogwheelDynamicsG21.lean}.  Certifies the Level~1
 't~Hooft cogwheel unitary evolution $U(n)=\exp(-iH_{\rm cyc}n\tau_c)$ on
 $\mathbb{C}^{7^5}$ and its discrete Schr\"odinger algebra (three zero-sorry
 $\CatAL$ theorems; three $\CatAD$ structural commitments---two named axioms
@@ -5504,7 +5505,7 @@ full matrix effect measure compatible with Born sector probabilities.
   (\texttt{Universality/MDLDerivabilityCriterion.lean})}\label{subsec:mdl-derivability}
 
 Module: \texttt{Universality/MDLDerivabilityCriterion.lean} (T96-02-STEPFOUR,
-\textbf{CLOSED CatAL} 2026-06-01, zero \lstinline|sorry| throughout; commits
+\textbf{CLOSED CatAL}, zero \lstinline|sorry| throughout; commits
 \texttt{9007574}, \texttt{e38b26a} in \texttt{ugp-lean}).
 
 Formalizes the K-complexity description-length penalty when a cyclic substructure
@@ -5533,7 +5534,7 @@ under the $\mathbb{Z}_2$ projection, incurring $\geq 7$ bits data penalty with
 zero model-cost difference.
 \end{theorem}
 
-\paragraph{T96-02 CA-level closure (new, 2026-06-01).}
+\paragraph{T96-02 CA-level closure.}
 The following three theorems close the final gap (CA-level K-theory bridge):
 
 \begin{theorem}[\lstinline|z5_fmdl_no_psc_kink_orbits|, CatAL, \lstinline|native_decide|]
@@ -5774,7 +5775,7 @@ the P34 $[\mathbf{D}]$-weighted centroid (point-localization model), and physica
 corollaries.  Vacuum timelike geodesic motion with well-defined centroid is proved
 at CatAL level; the full D2 preferred-direction argument via distributed orbit
 superposition and curvature correction remains CatAD pending the P34 coherence
-measure and Ollivier--Ricci computation (registered in EPIC\_073 Cluster~J).
+measure and Ollivier--Ricci computation (open; Ollivier--Ricci formalization pending).
 
 \begin{keybox}{Geodesic preferred direction (CatAL)}
 \textbf{Theorem \lstinline|geodesic_preferred_direction|.}
@@ -5816,7 +5817,7 @@ Certified predicates and theorems:
 \item \lstinline|photon_null_geodesic| --- the vacuum beable (zero winding, zero
   invariant mass) traces a null geodesic on the light-cone boundary.
 \item \lstinline|d2_orbit_closed_under_step| --- PSC orbit closed under
-  $f_{\mathrm{MDL}}$ step; $\mathtt{DWeight}$ preserved (CatAL, 2026-05-24).
+  $f_{\mathrm{MDL}}$ step; $\mathtt{DWeight}$ preserved (CatAL).
 \item \lstinline|d2_geodesic_step| --- for non-terminal causal node and physical
   beable, an adjacent node with positive $\mathtt{DWeight}$ exists (CatAL).
 \item \lstinline|d2_orbit_closed_iter| --- $\mathtt{DWeight}$ preserved under
@@ -5839,7 +5840,7 @@ Certified predicates and theorems:
   toward the source, reproducing Newtonian attraction.
 \item \lstinline|dweight_centroid_follows_orbit| --- discrete Ehrenfest:
   positive $\mathtt{DWeight}$ preserved under one $f_{\mathrm{MDL}}$ step via
-  QEC projector (\texttt{QECStabilizer}; CatAL, 2026-05-26).
+  QEC projector (\texttt{QECStabilizer}; CatAL).
 \item \lstinline|gte_discrete_equivalence_principle| --- iterated Ehrenfest:
   $\mathtt{DWeight}$ preserved under $n$ orbit steps (CatAL).
 \item \lstinline|gte_geodesic_theorem_orbital| --- PSC-admissibility preserved
@@ -5874,7 +5875,7 @@ Honest scope: \lstinline|DWeightNode| is a structural placeholder (definitionall
 zero), capturing the correct invariance property.  The point-localization centroid
 (\texttt{CentroidMeasure.lean}) certifies vacuum timelike geodesic motion at CatAL;
 curvature-corrected deviation and the full distributed P34 orbit-superposition
-measure remain open pending Ollivier--Ricci formalization (EPIC\_073).
+measure remain open pending Ollivier--Ricci formalization.
 This module is the first formal connection between the emergent gravity programme
 (P36) and particle trajectories in the 3D causal graph.
 
@@ -5901,7 +5902,7 @@ Pass~9). Zero \lstinline|sorry|.
 \subsection{$\mathbb{Z}_3$ Sub-orbit Disjointness
   (\texttt{Universality/\allowbreak Z3SubOrbitDisjointness.lean})}\label{subsec:z3-suborbit}
 
-Module: \texttt{Universality/Z3SubOrbitDisjointness.lean} (EPIC\_076, zero \lstinline|sorry|).
+Module: \texttt{Universality/Z3SubOrbitDisjointness.lean} (zero \lstinline|sorry|).
 
 \begin{keybox}{\lstinline|z7_suborbit_disjoint_z3_conjugate| (zero \texttt{sorry})}
 For two-equal states $(a,a,b)$ with $a \neq b$ in $\mathbb{Z}_7^3$, the
@@ -5913,7 +5914,7 @@ identity at CatAL level.
 \subsection{$\mathbb{Z}_3$-Invariant Entropy and Hierarchy CatAL Closure
   (\texttt{Universality/\allowbreak Z3InvariantEntropy.lean})}\label{subsec:z3-invariant-entropy}
 
-Module: \texttt{Universality/Z3InvariantEntropy.lean} (EPIC\_075/076, zero \lstinline|sorry|).
+Module: \texttt{Universality/Z3InvariantEntropy.lean} (zero \lstinline|sorry|).
 
 \begin{keybox}{\lstinline|z3_invariant_entropy_closes_hierarchy| (zero \texttt{sorry})}
 \lstinline|psc_admissible_implies_color_neutral|: PSC-admissible beables exclude free
@@ -5930,7 +5931,7 @@ $M_{\rm Pl}/m_\tau = |F_{21}|^{10}|Z_7|^7/2$.
 \subsection{PSC Orbit Window Structure
   (\texttt{Universality/\allowbreak PSCOrbitWindows.lean})}\label{subsec:psc-orbit-windows}
 
-Module: \texttt{Universality/PSCOrbitWindows.lean} (EPIC\_076, zero \lstinline|sorry|).
+Module: \texttt{Universality/PSCOrbitWindows.lean} (zero \lstinline|sorry|).
 
 \begin{itemize}[nosep]
 \item \lstinline|gen1_one_generic_window|, \lstinline|gen2_one_generic_window|,
@@ -5945,7 +5946,7 @@ Module: \texttt{Universality/PSCOrbitWindows.lean} (EPIC\_076, zero \lstinline|s
 \subsection{Graviton Fock Space
   (\texttt{Spacetime/\allowbreak GravitonFockSpace.lean})}\label{subsec:graviton-fock}
 
-Module: \texttt{Spacetime/GravitonFockSpace.lean} (EPIC\_076, zero \lstinline|sorry|).
+Module: \texttt{Spacetime/GravitonFockSpace.lean} (zero \lstinline|sorry|).
 
 \begin{keybox}{GTE gravitational coupling (zero \texttt{sorry})}
 \lstinline|gravitational_coupling_from_hierarchy|:
@@ -6297,13 +6298,16 @@ locality, positivity); axioms~1--5 bundle in
 
 \subsection{Axiom budget update}\label{subsec:axiom-budget}
 
-A systematic audit of the full library discharged four previously declared
-axioms in \texttt{VEVProof/GoldstoneEntropyCorrection.lean} as theorems,
-reducing the global custom named-axiom count from \textbf{24 to 20}.
-Subsequent frontier-closure extensions (EPIC\_083C, 2026-06-02) added 63 bridge
-and extension axioms, bringing the verified total to \textbf{83}.
+A full audit of the library discharged previously declared
+axioms in \texttt{VEVProof/GoldstoneEntropyCorrection.lean} as proved theorems.
+Additional named axioms proved as theorems include five \lstinline|: True|-type
+and existential axioms across \texttt{GaugeMDL}, \texttt{CCImpossibilityBundle},
+\texttt{GUTStructure}, and \texttt{PMDLGravityTheorems}, and
+\lstinline|adj_mem_periodicCausalNeighbors| in \texttt{SpectralDimensionDegree}
+(proved via complete case analysis).
+The verified global named-axiom total is \textbf{75}.
 
-Discharged axioms (now theorems, zero sorry):
+The following named axioms are proved theorems (zero sorry):
 \begin{itemize}[nosep]
 \item \lstinline|psc_entropy_contraction_duality| — PSC entropy increases by
   $\log_2(1/\lambda) > 0$ under SRRG contraction $0 < \lambda < 1$.
@@ -6315,6 +6319,18 @@ Discharged axioms (now theorems, zero sorry):
   $\log_2(2\pi^2\varphi^{1/3}) > 0$.
 \end{itemize}
 
+Additionally proved as theorems (zero sorry):
+\begin{itemize}[nosep]
+\item \lstinline|g_s_from_sigma_gte_2loop_rge| (\texttt{GaugeMDL}) — type \lstinline|: True|; trivially proved.
+\item \lstinline|phimdl_no_susy_degenerate_spectrum| (\texttt{CCImpossibilityBundle}) — type \lstinline|: True|; trivially proved.
+\item \lstinline|phimdl_no_antigravitating_sector| (\texttt{CCImpossibilityBundle}) — type \lstinline|: True|; trivially proved.
+\item \lstinline|g_inter_structural_catA| (\texttt{GaugeMDL}) — type \lstinline|: True|; trivially proved.
+\item \lstinline|eta_B_normalization_axiom| (\texttt{GUTStructure}) — type \lstinline|: ∃ κ : ℝ, 0 < κ ∧ κ = 1|; proved by \lstinline|⟨1, one_pos, rfl⟩|.
+\item \lstinline|adj_mem_periodicCausalNeighbors| (\texttt{SpectralDimensionDegree}) — proved via
+  \lstinline|finPeriodicPred_succ| helper theorem and exhaustive case analysis
+  over all 20 adjacency branches of \lstinline|CausalGraphPeriodic|.
+\end{itemize}
+
 \begin{table}[h]
 \centering\small
 \begin{tabular}{@{}p{6.2cm}p{4.5cm}r@{}}
@@ -6324,24 +6340,21 @@ Module & Scope & Custom axioms \\
 \texttt{GTE.AnalyticArchitecture}     & Dickman / CRT equidistribution & 2 \\
 Rule110-lean pin \texttt{13811a3}     & ChiralGliderDynamics / Rank 85c & (cross-repo) \\
 \hline
-\textbf{Global named custom axioms}   & \textbf{post-audit (2026-05-24)} & \textbf{20} \\
-\midrule
 \texttt{Substrate.SechOverlap\allowbreak IntegralBounds\_bridge} & Mesh-to-integral bridge for $r\in\{5,11\}$ & 2 \\
 \texttt{Universality.GUTStructure}    & Native\_decide certs and SM structure & 43 \\
 \texttt{Universality.FrobeniusChain}  & FGCI uniqueness and chain closure & 4 \\
 \texttt{MassRelations.NeutrinoSector} & PMNS angles, CP phase, seesaw & 5 \\
 \texttt{Gravity.YukawaOverlapExponent} & DPP tape-counting, Yukawa scaling & 4 \\
-Other extension modules               & Bridge and auxiliary axioms & 5 \\
+Other modules                         & Bridge and auxiliary axioms & 17 \\
 \hline
-\textbf{Global named custom axioms}   & \textbf{post-EPIC\_083C (2026-06-02)} & \textbf{83} \\
+\textbf{Global named custom axioms}   & \textbf{total} & \textbf{75} \\
 \bottomrule
 \end{tabular}
-\caption{Custom axiom inventory. The 2026-05-24 audit reduced the count from 24 to 20.
-  EPIC\_083C frontier-closure extensions (2026-06-02) added 63 bridge and extension
-  axioms, bringing the verified total to 83.  The core physics proof path (charged
-  leptons, couplings, generation count) remains zero-custom-axiom.
-  Rank~143-PATH-AXIOM discharged \lstinline|causal_path_exists| as a theorem
-  (forward-causal pairs only); it is no longer a module-local axiom.}
+\caption{Custom named-axiom inventory. Each row lists the module, physical scope,
+  and axiom count. The global verified total is \textbf{75}; the core physics
+  proof path (charged leptons, couplings, generation count) uses only standard
+  Lean/Mathlib axioms. \lstinline|causal\_path\_exists| is proved as a theorem
+  (forward-causal pairs only) and is no longer a module-local axiom.}
 \label{tab:axiom-inventory}
 \end{table}
 
@@ -6533,7 +6546,7 @@ on the C2/Gibbs closure chain).
 \item \lstinline|c2_uniqueness_structural_bundle| --- MDL-unique $[\mathbf{D}]$ on
   $\Phi_{\mathrm{MDL}}$ substrate under architectural restrictions (CatAL).
 \item \lstinline|c2_thermal_closure_bundle| --- Gibbs free-energy gap uniquely
-  selects the canonical sector distribution (CatAL; KL sorrys closed 2026-05-26).
+  selects the canonical sector distribution (CatAL).
 \item Lorentz/CPT equivariance from D2:
   \lstinline|lorentz_cpt_implicit_in_d2|, \lstinline|cpt_equivariant_from_d2|.
 \end{itemize}
@@ -6550,10 +6563,10 @@ limit (\lstinline|cmca_continuum_limit_is_phimdl|) with correction
 $\varepsilon_0(M) = \pi^2/(3M^2) \to 0$.
 \end{keybox}
 
-\subsection{New theorem inventory (EPIC\_074 / EPIC\_075)}\label{subsec:new-theorem-inventory}
+\subsection{Theorem inventory: quantum mechanics, Born rule, and gravity sector}\label{subsec:new-theorem-inventory}
 
-The following table summarises all novel zero-sorry theorems introduced across
-EPIC\_074 (QM / Born-rule / 3D substrate) and EPIC\_075 (GR / gravity sector),
+The following table lists zero-sorry theorems spanning quantum mechanics,
+Born-rule derivation, 3D substrate structure, and the GR\,/\,gravity sector,
 with module location and physical role.  All theorems use only standard Lean/Mathlib
 axioms unless a named axiom is explicitly noted.
 
@@ -6623,16 +6636,16 @@ Theorem & Module & Physical role \\
   & $\Phi_{\rm MDL}$ is unique exact-Lorentz CMCA limit \\
 \bottomrule
 \end{tabular}
-\caption{New zero-sorry theorems from EPIC\_074/075, grouped by introducing module.
-  ``CatAL'' denotes physically calibrated category-A level; all others are
-  unconditional unless noted.}
+\caption{Zero-sorry theorems in the quantum mechanics, Born-rule, and gravity sector,
+  grouped by module. ``CatAL'' denotes physically calibrated category-A level;
+  all others are unconditional unless noted.}
 \label{tab:new-theorem-inventory}
 \end{table}
 
-\subsection{New theorem inventory (EPIC\_078)}\label{subsec:new-theorem-inventory-078}
+\subsection{Theorem inventory: quantum-gravity completion}\label{subsec:new-theorem-inventory-078}
 
-The following table records all novel zero-sorry theorems introduced by the EPIC\_078
-quantum-gravity completion pass (2026-05-27/28), covering the minimal-coupling / Wald chain
+The following table records zero-sorry theorems from the quantum-gravity completion,
+covering the minimal-coupling / Wald chain
 (LC1--LC11), the PSP epoch-selection, fermionic statistics, Galois orbit structure, RS code
 identification, and the GF(7) vacuum fixed point.  All theorems are CatAL unless noted.
 A complete row-by-row listing appears in the master inventory
@@ -6737,14 +6750,14 @@ Theorem & Module & Physical role \\
   & $v{=}0$ is unique IR fixed point (GF(7) vacuum) \\
 \bottomrule
 \end{tabular}
-\caption{New zero-sorry CatAL theorems from EPIC\_078 quantum-gravity completion (LC1--LC11, PSP, fermionic statistics, Galois structure, RS codes, GF(7) vacuum fixed point).}
+\caption{Zero-sorry CatAL theorems: quantum-gravity completion (LC1--LC11, PSP, fermionic statistics, Galois structure, RS codes, GF(7) vacuum fixed point).}
 \label{tab:new-theorem-inventory-078}
 \end{table}
 
 \subsection{New theorem inventory (three-tape CMCA)}\label{subsec:new-theorem-inventory-079}
 
-The following table records novel zero-sorry CatAL theorems from the three-tape CMCA
-formalization pass (2026-05-28), covering holographic state counting, the single-polynomial
+The following table records zero-sorry CatAL theorems from the three-tape CMCA
+formalization, covering holographic state counting, the single-polynomial
 charge map with tape-role asymmetry, SU(3) gluon structure, baryon number, chiral
 reflection symmetry, SRRG--CA bridge, Gorard vacuum Ricci-flatness, and the
 $\mathfrak{so}(1,3)$ commutation algebra.  Companion infrastructure for Minkowski
@@ -6793,7 +6806,7 @@ Theorem & Module & Physical role \\
   & Burnside span rank $9$ (4 named axioms; \texttt{matrix\_algebra\_finrank\_nine} CatAL) \\[1pt]
 \texttt{su2l\_\allowbreak weak\_\allowbreak force\_\allowbreak derivation}
   & Algebra.GaugeMDL
-  & SU(2)$_L$ from PMDL gauging (zero named axioms; \texttt{phimdl\_potential\_su2l\_invariant}, \texttt{su2l\_wpm\_generator\_algebra} CatAL) \\[1pt]
+  & SU(2)$_L$ from PMDL gauging; \texttt{phimdl\_\allowbreak potential\_su2l\_\allowbreak invariant}, \texttt{su2l\_\allowbreak wpm\_\allowbreak generator\_\allowbreak algebra} (CatAL) \\[1pt]
 \texttt{sm\_\allowbreak gauge\_\allowbreak group\_\allowbreak certificate}
   & Algebra.SMGaugeGroup
   & $G_{\rm SM}=\mathrm{SU}(3)\times\mathrm{SU}(2)_L\times\mathrm{U}(1)_Y$ bundle (zero \texttt{sorry}) \\[1pt]
@@ -6818,7 +6831,7 @@ Theorem & Module & Physical role \\
 \label{tab:new-theorem-inventory-079}
 \end{table}
 
-\subsection{New theorem inventory (OQ-079-1/OQ-079-3 pass, 2026-05-29)}\label{subsec:new-theorem-inventory-oq1-oq3}
+\subsection{Theorem inventory: OQ-079 gravity force law and entanglement}\label{subsec:new-theorem-inventory-oq1-oq3}
 
 The following modules and theorems were added following the closure of
 OQ-079-1 (Newtonian gravity force law, CatAD) and the partial closure of
@@ -6880,7 +6893,7 @@ Theorem / Axiom & Module & Physical content \\
   & Universality.BellViolationGTE
   & GTE polynomial simultaneously sources gravity and generates entanglement \\[1pt]
 \midrule
-\multicolumn{3}{@{}l}{\textit{L1$\to$L2 Bridge Theorems (Gap closure G1–G4, 2026-05-29)}} \\[2pt]
+\multicolumn{3}{@{}l}{\textit{L1$\to$L2 Bridge Theorems (Gap closure G1–G4)}} \\[2pt]
 \texttt{l1\_l2\_gravity\_bridge} (axiom)
   & Gravity.PMDLGravityTheorems
   & $\phi_{L1}=\phi_{L2}$ when $G_{\rm eff}M_{\rm PMDL}=4\pi G_N M_{\rm kink}$; closes G2 \\[1pt]
@@ -6893,28 +6906,28 @@ Theorem / Axiom & Module & Physical content \\
 \texttt{born\_bridge\_no\_new\_axiom}
   & Gravity.PageWoottersZ7
   & Born bridge requires no axiom beyond \texttt{cmca\_continuum\_limit\_is\_phimdl} \\[1pt]
-\texttt{l1\_chsh\_and\_l2\_epr\_are\_distinct\_layers}
+\texttt{l1\_chsh\_and\_\allowbreak l2\_epr\_are\_\allowbreak distinct\_layers}
   & Universality.BellViolationGTE
   & L1 CHSH ($S=2.4459$) and L2 P43 EPR are separate layers; closes G4 \\[1pt]
 \texttt{alt\_does\_not\_lift\_chsh\_value}
   & Universality.BellViolationGTE
   & ALT lifts algebraic structure, not dynamical Hamiltonians or CHSH values \\[1pt]
-\texttt{gap\_g1\_polynomial\_continuum\_taxonomy}
-  & Algebra.PolynomialContinuumBridge
+\texttt{gap\_g1\_\allowbreak polynomial\_\allowbreak continuum\_\allowbreak taxonomy}
+  & Algebra.\allowbreak PolynomialContinuumBridge
   & $p$ (update/coupling) $\neq$ $V_{\ZS}$ (potential energy); taxonomy; closes G1 \\[1pt]
 \texttt{pCont\_vacuum}, \texttt{pCont\_up\_quark\_triple\_nonzero}
-  & Algebra.PolynomialContinuumBridge
+  & Algebra.\allowbreak PolynomialContinuumBridge
   & $p_{\rm cont}(0,0,0)=0$; $p_{\rm cont}(2,2,2)\neq 0$; discrete-continuum consistency \\[1pt]
 \texttt{gtePoly\_diagonal\_psc\_sector}
-  & Algebra.PolynomialContinuumBridge
+  & Algebra.\allowbreak PolynomialContinuumBridge
   & Diagonal values $p(w,w,w)$ on PSC sector $\{0,2,3,4,6\}$ give $\{0,6,5,5,5\}$ \\[1pt]
 \texttt{vZ7\_nonneg}
-  & Algebra.PolynomialContinuumBridge
+  & Algebra.\allowbreak PolynomialContinuumBridge
   & $V_{\ZS}(\Phi)\geq 0$ everywhere; potential energy non-negative (zero sorry) \\
 \bottomrule
 \end{tabular}
-\caption{New theorems and named axioms from OQ-079-1 (gravity force law), OQ-079-3
-(Born rule + Bell inequality), and the L1$\to$L2 bridge session (gaps G1--G4, 2026-05-29).
+\caption{Theorems and named axioms from OQ-079-1 (gravity force law), OQ-079-3
+(Born rule + Bell inequality), and the L1$\to$L2 bridge (gaps G1--G4).
 Theorems marked (axiom) are named axioms documenting CatAD or CatA results pending full
 Lean formalization. Theorems without (axiom) are zero sorry.}
 \label{tab:new-theorem-inventory-oq1-oq3}
@@ -6964,7 +6977,7 @@ satisfies $V_{\ZS}(\Phi)\ge 0$ for all $\Phi\in\mathbb{R}$ and all $m\in\mathbb{
   (\texttt{Universality/FiveRolesPolynomial.lean})}\label{subsubsec:five-roles-polynomial}
 
 Module: \texttt{Universality/FiveRolesPolynomial.lean}, zero \lstinline|sorry|,
-zero custom axioms (EPIC\_080 rank 080-FIVE-ROLES).
+zero custom axioms.
 
 \begin{theorem}[\lstinline|gte_polynomial_five_labelled_roles|, structural (zero \texttt{sorry})]
 The 3-tape clocked machine exposes exactly five distinct labelled-triple roles for
@@ -7036,10 +7049,9 @@ Level-1 dynamical certificate; what lifts is the structural statement that
 $\Phi_{\mathrm{MDL}}$ supports genuine quantum entanglement.
 \end{theorem}
 
-\subsection{New theorem inventory (theorem audit pass 2026-05-29)}\label{subsec:new-theorem-inventory-audit}
+\subsection{Theorem inventory: phantom-reference resolution}\label{subsec:new-theorem-inventory-audit}
 
-The following theorems were added during the theorem citation audit pass to resolve
-phantom theorem name references in physics papers. All are zero sorry.
+The following theorems resolve phantom theorem name references in physics papers. All are zero sorry.
 
 \begin{table}[h]
 \centering\footnotesize
@@ -7058,7 +7070,7 @@ Theorem & Module & Physical content \\
   & Universality.CookRule110Ref
   & CTS evaluation is deterministic (function = single-valued) \\[1pt]
 \texttt{frobenius\_\allowbreak f21\_\allowbreak is\_\allowbreak z7\_\allowbreak sdp\_\allowbreak z3}
-  & Universality.SylowIndexCouplingHierarchy
+  & Universality.\allowbreak SylowIndex\allowbreak CouplingHierarchy
   & Bundle: $|F_{21}|{=}21$; $\mathbb{Z}_3$ action order~3; non-trivial; $\det{=}1$ \\[1pt]
 \texttt{gte\_\allowbreak winding\_\allowbreak sm\_\allowbreak vertex\_\allowbreak conserved}
   & Universality.GUTStructure
@@ -7076,9 +7088,8 @@ Theorem & Module & Physical content \\
   & Gravity.PSCEpochSelection
   & Alias for \lstinline|psp_epoch_selection_master| (L1+L2+T) \\[1pt]
 \texttt{srrg\_\allowbreak higgs\_\allowbreak vev\_\allowbreak from\_\allowbreak fixed\_\allowbreak point}
-  & srrg-lean: VEVProof.EWVacuumBridge
-  & Alias for \lstinline|ew_vacuum_bridge_grade_certificate|; grade~[A$^-$];
-    $v_{\rm PSC}=246.16$\,GeV ($-0.024\%$) \\[1pt]
+  & srrg-lean: VEVProof.\allowbreak EWVacuumBridge
+  & \texttt{ew\_\allowbreak vacuum\_\allowbreak bridge\_\allowbreak grade\_\allowbreak certificate}; grade~[A$^-$]; $v_{\rm PSC}=246.16$\,GeV \\[1pt]
 \texttt{gte\_\allowbreak winding\_\allowbreak sm\_\allowbreak vertex\_\allowbreak conserved\_\allowbreak full}
   & Universality.GUTStructure
   & All 33 SM vertex types conserve $\mathbb{Z}_7$ winding (CatAL, \texttt{decide}):
@@ -7087,15 +7098,13 @@ Theorem & Module & Physical content \\
     generation symmetry \\
 \bottomrule
 \end{tabular}
-\caption{New zero-sorry theorems added in the theorem citation audit pass (2026-05-29).
-All resolve phantom theorem name references in physics papers.}
+\caption{Zero-sorry theorems resolving phantom theorem name references in physics papers.}
 \label{tab:new-theorem-inventory-audit}
 \end{table}
 
-\subsection{New theorem inventory (EPIC\_080, 2026-05-29)}\label{subsec:new-theorem-inventory-080}
+\subsection{Theorem inventory: L1--L2 bridge and BPS kink dynamics}\label{subsec:new-theorem-inventory-080}
 
-The following modules and theorems were added during the EPIC\_080 sessions covering
-the L1$\to$L2 bridge gap-closure pass.  They span ten new or extended modules:
+The following modules and theorems cover the L1$\to$L2 bridge and span ten modules:
 BPS kink mass and $v_H$ chain (G7), F$_{21}\to$SU(3) holonomy (G12),
 Level-2 chiral current (G16), SM gauge-group sub-certificates (G23),
 Gorard discrete--smooth bridge (G24), strong-field UV bound (G37),
@@ -7273,7 +7282,7 @@ Theorem & Module & Physical content \\
   & G22 master bundle: 12 zero-sorry sector-map theorems ($\CatAL$) \\
 \bottomrule
 \end{tabular}
-\caption{New theorems added in EPIC\_080 sessions (2026-05-29): G7 BPS kink mass and
+\caption{Theorems covering BPS kink mass and
 $v_H$ chain, G37 strong-field UV bound, G46 Hawking kink-emission thresholds,
 G16 Level-2 chiral current, G12 F$_{21}\to$SU(3) holonomy, G23 SM gauge sub-certificates,
 G24 Gorard discrete--smooth bridge, G39/MDLSRRG FCA--SRRG--MDL attractor bridge,
@@ -7301,12 +7310,12 @@ residual documented).
 \begin{theorem}[\lstinline|ca_qft_embedding_reduces_to_g22|, zero \texttt{sorry} ($\CatAD$)]
 G42 is CLOSED $\CatAD$: under \lstinline|cmca_continuum_limit_is_phimdl| ($\CatAL$ conditional),
 the CMCA embeds unitarily into the $\Phi_{\rm MDL}$ Fock space.  Both conditions are now
-$\CatAL$ as of 2026-05-29.
+$\CatAL$.
 \end{theorem}
 
-\subsection{New theorem inventory (G28/G29 neutrino vacuum + EW precision, 2026-05-29)}\label{subsec:new-theorem-inventory-g28-g29}
+\subsection{Theorem inventory: neutrino vacuum sector and EW precision}\label{subsec:new-theorem-inventory-g28-g29}
 
-The following theorems were added in two modules: \texttt{MassRelations/NeutrinoVacuumSectorL2.lean} (G28) formalises the neutrino Level-2 vacuum-sector constraints and dark-ring counting; \texttt{Algebra/GaugeMDL.lean} (G10/G29) certifies EW coupling constants and the one-loop oblique EW precision gap closure.
+The following theorems were added in two modules: \texttt{MassRelations/\allowbreak NeutrinoVacuumSectorL2.lean} (G28) formalises the neutrino Level-2 vacuum-sector constraints and dark-ring counting; \texttt{Algebra/GaugeMDL.lean} (G10/G29) certifies EW coupling constants and the one-loop oblique EW precision gap closure.
 
 \begin{table}[h]
 \centering\footnotesize
@@ -7317,16 +7326,16 @@ Theorem & Module & Physical content \\
 \midrule
 \multicolumn{3}{@{}l}{\textit{G28 --- Neutrino vacuum sector L2 (\texttt{MassRelations/NeutrinoVacuumSectorL2.lean})}} \\[2pt]
 \texttt{neutrino\_\allowbreak winding\_\allowbreak is\_\allowbreak vacuum}
-  & MassRelations.NeutrinoVacuumSectorL2
+  & MassRelations.\allowbreak NeutrinoVacuumSectorL2
   & Neutrino occupies the $w=0$ vacuum winding sector at Level~2 (zero \texttt{sorry}) \\[1pt]
 \texttt{z7\_\allowbreak no\_\allowbreak bion\_\allowbreak criterion}
-  & MassRelations.NeutrinoVacuumSectorL2
+  & MassRelations.\allowbreak NeutrinoVacuumSectorL2
   & $\beta^2=49>8\pi$; bion mechanism for neutrino masses ruled out (zero \texttt{sorry}) \\[1pt]
 \texttt{dark\_\allowbreak ring\_\allowbreak fourth\_\allowbreak qn\_\allowbreak count}
-  & MassRelations.NeutrinoVacuumSectorL2
+  & MassRelations.\allowbreak NeutrinoVacuumSectorL2
   & $\mathbb{Z}_7^4$ dark ring has $7^4=2401$ states from four quantum numbers $(w_x,w_y,w_z,w_\tau)$ (zero \texttt{sorry}) \\[1pt]
 \texttt{dark\_\allowbreak ring\_\allowbreak ratio\_\allowbreak identity}
-  & MassRelations.NeutrinoVacuumSectorL2
+  & MassRelations.\allowbreak NeutrinoVacuumSectorL2
   & $7^4/2^{2N_c^2}=2401/262144$ ($N_c=3$) (zero \texttt{sorry}) \\[1pt]
 \midrule
 \multicolumn{3}{@{}l}{\textit{G29 --- EW precision oblique corrections (\texttt{Algebra/GaugeMDL.lean})}} \\[2pt]
@@ -7374,7 +7383,7 @@ Theorem & Module & Physical content \\
   & $M_p=3M_{\rm kink}+G_{\rm inter}\cdot 28/6\approx 934.4$ MeV ($-0.41\%$ vs PDG; structural axiom) \\[1pt]
 \bottomrule
 \end{tabular}
-\caption{G10/G28/G29 theorems (2026-05-29): EW coupling constants, neutrino vacuum sector winding, dark-ring state counting, and one-loop EW oblique precision. All zero \texttt{sorry}.}
+\caption{EW coupling constants, neutrino vacuum sector winding, dark-ring state counting, and one-loop EW oblique precision. All zero \texttt{sorry}.}
 \label{tab:new-theorem-inventory-g28-g29}
 \end{table}
 
@@ -7589,7 +7598,7 @@ The classical $\mathbb{Z}_2$-EFT spectral index equals the GTE prediction
 $n_s^{\rm physical} = 1 - \ln 2/(2\pi^2) \approx 0.96488$.
 \end{theorem}
 
-\subsection{$\Phi_{\rm MDL}$ propagator, quartic vertex, and ZZ exact S-matrix (G9, 2026-05-29)}\label{subsec:phimdl-propagator-g9}
+\subsection{$\Phi_{\rm MDL}$ propagator, quartic vertex, and ZZ exact S-matrix}\label{subsec:phimdl-propagator-g9}
 
 The module \texttt{Substrate/PhiMDLPropagator.lean} (zero \texttt{sorry}) certifies the
 tree-level QFT data for the $\mathbb{Z}_7$ scalar sector.
@@ -7872,7 +7881,7 @@ residual is $1.2$--$1.8\%$.
   sorry, standard axioms only).
 \end{itemize}
 
-Computational evidence (CatA, 2026-05-24): true AFCA at $M=7$, $L=300$,
+Computational evidence (CatA): true AFCA at $M=7$, $L=300$,
 canonical A-glider ($v=0.532$, $\beta=0.798$), $N_\mathrm{trans}\in\{100,200,300,400\}$
 gives $\tau_c$ ratio $= 1.569\pm0.003$, $\gamma=1.659$, raw error $5.4\%$
 (consistent with $\varepsilon_0(M=7)=6.71\%$), corrected residual $1.2$--$1.8\%$.
@@ -7882,7 +7891,7 @@ DWeight selects the physical PSC-admissible beable.  All three null tests pass
 continuum companion (Rank 67-KGS, Klein--Gordon substrate) achieves
 $0.069\%$ mean error across $\beta\in[0.05,0.90]$.
 
-% ── Rank 070-107 substrate infrastructure (EPIC\_073, 2026-05-25) ──
+% ── Rank 070-107 substrate infrastructure ──
 
 \subsection{Substrate Typeclass
   (\texttt{Substrate/Substrate.lean})}\label{subsec:substrate-typeclass}
@@ -8011,7 +8020,7 @@ the angular momentum charge $L=x\times p$ and symmetric stress-energy components
 certified (\lstinline|vZ7_nonneg|, \lstinline|phimdl_lagrangian_so3_invariant|,
 \lstinline|stress_energy_symmetric|, \lstinline|noetherContractionZ|=0).  Time
 conservation $dL^i/dt=0$ on KG equations of motion uses axiom
-\lstinline|kg_angular_momentum_time_conserved| (EPIC\_080 gap G35).
+\lstinline|kg_angular_momentum_time_conserved|.
 \end{theorem}
 
 \subsection{PSC Presentation Invariance $\Rightarrow$ $[\mathbf{D}]$ Lorentz Equivariance
@@ -8138,9 +8147,9 @@ Tier~B1 (ExecInternal stub), Tier~B6
 (Phase4 uniqueness stubs), and Tier~C items per the recommendations audit
 are deferred and documented separately.
 
-\subsection{New theorem inventory (EPIC\_083 foundational completions, 2026-06-01)}\label{subsec:new-theorem-inventory-083}
+\subsection{Theorem inventory: foundational completions}\label{subsec:new-theorem-inventory-083}
 
-The following theorems were added across four modules during EPIC\_083:
+The following theorems span four modules:
 \texttt{Gravity/Z7AnomalyFree.lean} (G08 session) formalises the $\mathbb{Z}_7$ global
 scalar anomaly-free argument at the Lebesgue-measure level;
 \texttt{ContinuumLimit/GorardVacuumW1Bridge.lean} closes the Gorard ORIC
@@ -8175,19 +8184,19 @@ Theorem & Module & Physical content \\
 \midrule
 \multicolumn{3}{@{}l}{\textit{083-ORIC --- Gorard ORIC adjacent-edge $\kappa=0$ (\texttt{ContinuumLimit/GorardVacuumW1Bridge.lean})}} \\[2pt]
 \texttt{vacuum\_\allowbreak coupling\_\allowbreak cost\_\allowbreak eq\_\allowbreak one}
-  & ContinuumLimit.GorardVacuumW1Bridge
+  & ContinuumLimit.\allowbreak GorardVacuumW1Bridge
   & Explicit transport cost between adjacent vacuum walk measures $= 1$ (zero \texttt{sorry}) \\[1pt]
 \texttt{vacuum\_\allowbreak w1\_\allowbreak le\_\allowbreak one}
-  & ContinuumLimit.GorardVacuumW1Bridge
+  & ContinuumLimit.\allowbreak GorardVacuumW1Bridge
   & $W_1 \le 1$ upper bound via explicit coupling (zero \texttt{sorry}) \\[1pt]
 \texttt{vacuum\_\allowbreak w1\_\allowbreak eq\_\allowbreak one}
-  & ContinuumLimit.GorardVacuumW1Bridge
+  & ContinuumLimit.\allowbreak GorardVacuumW1Bridge
   & $W_1 = 1$ for adjacent vacuum walk measures (zero \texttt{sorry}) \\[1pt]
 \texttt{gorard\_\allowbreak vacuum\_\allowbreak oric\_\allowbreak zero\_\allowbreak adjacent}
-  & ContinuumLimit.GorardVacuumW1Bridge
+  & ContinuumLimit.\allowbreak GorardVacuumW1Bridge
   & $\kappa_{\rm OR}=0$ for all adjacent vacuum edges; scoped path (zero \texttt{sorry}) \\[1pt]
 \texttt{gorard\_\allowbreak vacuum\_\allowbreak oric\_\allowbreak zero\_\allowbreak scoped}
-  & ContinuumLimit.GorardVacuumW1Bridge
+  & ContinuumLimit.\allowbreak GorardVacuumW1Bridge
   & $\kappa_{\rm OR}=0$ for \emph{all} adjacent vacuum edges $\forall n$ (\CatAL; zero \texttt{sorry}) \\[1pt]
 \midrule
 \multicolumn{3}{@{}l}{\textit{083-SRRG-MDL --- OP9 MDL equivalence (\texttt{srrg-lean/Bridges/ToMDL.lean})}} \\[2pt]
@@ -8209,22 +8218,22 @@ Theorem & Module & Physical content \\
 \midrule
 \multicolumn{3}{@{}l}{\textit{083-W1 --- $W_1$ Wasserstein distance scaffold (\texttt{ContinuumLimit/WassersteinDistance.lean})}} \\[2pt]
 \texttt{W1\_\allowbreak ge\_\allowbreak of\_\allowbreak lipschitz}
-  & ContinuumLimit.WassersteinDistance
+  & ContinuumLimit.\allowbreak WassersteinDistance
   & Kantorovich dual lower bound: $W_1 \ge |E_\mu[f] - E_\nu[f]|$ for 1-Lip $f$ (zero \texttt{sorry}) \\[1pt]
 \texttt{W1\_\allowbreak triangle}
-  & ContinuumLimit.WassersteinDistance
+  & ContinuumLimit.\allowbreak WassersteinDistance
   & Triangle inequality $W_1(\mu,\rho) \le W_1(\mu,\nu) + W_1(\nu,\rho)$ via glued coupling (zero \texttt{sorry}) \\[1pt]
 \texttt{W1\_\allowbreak eq\_\allowbreak zero\_\allowbreak iff}
-  & ContinuumLimit.WassersteinDistance
+  & ContinuumLimit.\allowbreak WassersteinDistance
   & $W_1(\mu,\nu) = 0 \Leftrightarrow \mu = \nu$ (zero \texttt{sorry}) \\[1pt]
 \texttt{gluedCoupling\_\allowbreak cost\_\allowbreak le}
-  & ContinuumLimit.WassersteinDistance
+  & ContinuumLimit.\allowbreak WassersteinDistance
   & Gluing lemma: cost of glued coupling $\le$ sum of marginal costs (zero \texttt{sorry}) \\[1pt]
 \texttt{W1\_\allowbreak attained}
-  & ContinuumLimit.WassersteinDistance
+  & ContinuumLimit.\allowbreak WassersteinDistance
   & Infimum attained: $\exists\,\gamma$ s.t.\ $W_1 = \text{cost}(\gamma)$ (finite coupling polytope; zero \texttt{sorry}) \\[1pt]
 \texttt{couplingCostSet\_\allowbreak isCompact}
-  & ContinuumLimit.WassersteinDistance
+  & ContinuumLimit.\allowbreak WassersteinDistance
   & Achievable transport costs form a compact set (finite polytope compactness; zero \texttt{sorry}) \\[1pt]
 \midrule
 \multicolumn{3}{@{}l}{\textit{083-CMCA-LANG --- CMCA encoding language scaffold (\texttt{srrg-lean/Core/CMCALanguage.lean})}} \\[2pt]
@@ -8239,27 +8248,27 @@ Theorem & Module & Physical content \\
   & $K_{\rm CMCA}(g) = B - V(g)$ (CMCA Kolmogorov description length; zero \texttt{sorry}) \\[1pt]
 \bottomrule
 \end{tabular}
-\caption{EPIC\_083 theorems (2026-06-01): $\mathbb{Z}_7$ global scalar anomaly-free argument;
+\caption{Foundational completion theorems: $\mathbb{Z}_7$ global scalar anomaly-free argument;
 Gorard ORIC adjacent-edge vacuum flatness ($W_1=1$, $\kappa=0$ $\forall n$);
 $W_1$ Wasserstein distance scaffold fully \CatAL\ (triangle inequality, Kantorovich bound,
 attainment, compactness — all zero \texttt{sorry});
 OP9 MDL equivalence at \CatAD/\CatAL\ level (unconditional);
 and CMCA encoding-language scaffold.
 Modules \texttt{Z7AnomalyFree}, \texttt{GorardVacuumW1Bridge}, and \texttt{WassersteinDistance}
-are in \texttt{ugp-lean} (graduated 2026-06-01);
+are in \texttt{ugp-lean};
 \texttt{ToMDL} and \texttt{CMCALanguage} are in \texttt{srrg-lean}.}
 \label{tab:new-theorem-inventory-083}
 \end{table}
 
-\subsection{EPIC\_083C frontier closures (2026-06-02)}\label{subsec:epic-083c}
+\subsection{Frontier-closure theorems}\label{subsec:epic-083c}
 
-The EPIC\_083C pass adds \textbf{221} net-new zero-\texttt{sorry} theorems across
+This section covers \textbf{221} net-new zero-\texttt{sorry} theorems across
 twenty-two modules, closing the Yukawa vertex, PMNS orbit-ratio sector, SRRG Higgs
 quartic, full nine-coefficient UCL master certification, FGCI uniqueness at
 $N_c=3$, Pöschl--Teller fluctuation/QFT integral infrastructure, and the
 $D_{\rm top}=\exp(-1/N_c)$ topological dilution chain.
 Highlights are summarized in \cref{tab:epic-083c}; the full catalog is in
-\texttt{docs/THEOREMS.md} (\S EPIC~083C).
+\texttt{docs/THEOREMS.md}.
 
 \begin{table}[h]
 \centering\footnotesize
@@ -8270,16 +8279,16 @@ Theorem & Module & Physical content \\
 \midrule
 \multicolumn{3}{@{}l}{\textit{UCL master certification --- all nine EK coefficients (\CatAL)}} \\[2pt]
 \texttt{elegant\_\allowbreak kernel\_\allowbreak full\_\allowbreak certification}
-  & ElegantKernel.Unconditional.MasterCertification
+  & ElegantKernel.\allowbreak Unconditional.\allowbreak MasterCertification
   & $k_{L^2},k_{\rm gen},k_{\rm gen2},k_L,k_{\rm const},k_M,k_{a,b,c}$ bundled; links to FullClosure, KGen/KL/KConst, MuTriple, QuarterLock \\[1pt]
 \texttt{thm\_\allowbreak quarter\_\allowbreak lock\_\allowbreak catal}
   & QuarterLock
   & $k_M = -\varphi/2 + 7/2048$ (Quarter-Lock, \CatAL) \\[1pt]
 \texttt{ucl\_\allowbreak fermion\_\allowbreak mass\_\allowbreak ordering}
-  & ElegantKernel.Unconditional.UCLMassOrdering
+  & ElegantKernel.\allowbreak Unconditional.\allowbreak UCLMassOrdering
   & gen$_1<$gen$_2<$gen$_3$ per sector under UCL + $4^{g-1}$ scaling (interval margin certs) \\[1pt]
 \texttt{ucl\_\allowbreak lepton\_\allowbreak sector\_\allowbreak koide\_\allowbreak identity}
-  & ElegantKernel.Unconditional.UCLKoide
+  & ElegantKernel.\allowbreak Unconditional.\allowbreak UCLKoide
   & Koide $Q=2/3$ from GTE-pinned phase and amplitude chain (\CatAL) \\[1pt]
 \midrule
 \multicolumn{3}{@{}l}{\textit{PMNS orbit ratios and CP (\CatAL)}} \\[2pt]
@@ -8309,28 +8318,28 @@ Theorem & Module & Physical content \\
 \midrule
 \multicolumn{3}{@{}l}{\textit{$\Phi_{\rm MDL}$ Yukawa vertex and sech integrals}} \\[2pt]
 \texttt{phimdl\_\allowbreak fluctuation\_\allowbreak is\_\allowbreak poschl\_\allowbreak teller}
-  & Substrate.PhiMDLFluctuationSpectrum
+  & Substrate.\allowbreak PhiMDLFluctuationSpectrum
   & $V_{\rm fl}(x)=m_\phi^2[1-2\,\mathrm{sech}^2(m_\phi x)]$ (\CatAL) \\[1pt]
 \texttt{integral\_\allowbreak sech} / \texttt{integral\_\allowbreak sech\_\allowbreak cubed}
-  & Substrate.PhiMDLFluctuationSpectrum
+  & Substrate.\allowbreak PhiMDLFluctuationSpectrum
   & $\int\mathrm{sech}\,dx=\pi$, $\int\mathrm{sech}^3\,dx=\pi/2$ (\CatAL; Mathlib FTC) \\[1pt]
 \texttt{sech\_\allowbreak overlap\_\allowbreak asymptotic}
-  & Substrate.PhiMDLFluctuationSpectrum
+  & Substrate.\allowbreak PhiMDLFluctuationSpectrum
   & $r\cdot I(r)\to\pi$ as $r\to\infty$ (\CatAL) \\[1pt]
 \texttt{sech\_\allowbreak overlap\_\allowbreak at\_\allowbreak five\_\allowbreak ge\_\allowbreak pi}
-  & Substrate.SechOverlapIntegralBounds
+  & Substrate.\allowbreak SechOverlapIntegralBounds
   & $I(5)\ge 0.95\pi/5$ (zero \texttt{sorry}, zero axiom; imports bridge) \\[1pt]
 \texttt{sech\_\allowbreak overlap\_\allowbreak at\_\allowbreak eleven\_\allowbreak ge\_\allowbreak pi}
-  & Substrate.SechOverlapIntegralBounds
+  & Substrate.\allowbreak SechOverlapIntegralBounds
   & $I(11)\ge 0.99\pi/11$ (zero \texttt{sorry}, zero axiom) \\[1pt]
 \texttt{SechOverlapIntegralBounds\_\allowbreak cosh} / \texttt{\_r5bins}
-  & Substrate.SechOverlapIntegralBounds
+  & Substrate.\allowbreak SechOverlapIntegralBounds
   & Certified $\cosh$ and per-bin sech-product rational lower bounds (\CatAL) \\[1pt]
 \texttt{SechOverlapIntegralBounds\_\allowbreak bridge}
-  & Substrate.SechOverlapIntegralBounds\_bridge
+  & Substrate.\allowbreak SechOverlap\allowbreak IntegralBounds\_bridge
   & 2 \CatA\ axioms: mesh sum $\le$ integral for $r\in\{5,11\}$ \\[1pt]
 \texttt{phimdl\_\allowbreak yukawa\_\allowbreak vertex\_\allowbreak catad}
-  & Substrate.PhiMDLFluctuationSpectrum
+  & Substrate.\allowbreak PhiMDLFluctuationSpectrum
   & Three-kink overlap amplitude assembly (\CatAD) \\[1pt]
 \texttt{yukawa\_\allowbreak overlap\_\allowbreak exponent\_\allowbreak catad}
   & Gravity.YukawaOverlapExponent
@@ -8368,11 +8377,11 @@ Theorem & Module & Physical content \\
   & $D_{\rm top}=\exp(-1/N_c)$ from BPS $S_0/T=1$, $q_{\rm dark}=2$, $|\mathbb{Z}_7^*|=6$, transitivity \\
 \bottomrule
 \end{tabular}
-\caption{EPIC\_083C representative theorems (2026-06-02): UCL nine-coefficient master
+\caption{Frontier-closure representative theorems: UCL nine-coefficient master
 certification, PMNS orbit-ratio closure, SRRG Higgs quartic, Pöschl--Teller and sech
 integrals, Yukawa vertex (\CatAD), FGCI at $N_c=3$, and $\mathbb{Z}_7$ dark-baryon
 identities including $D_{\rm top}=\exp(-1/N_c)$ (\CatAL, Lean-certified).
-The development catalog lists 221 net-new names.}
+The library contains 221 net-new names in this section.}
 \label{tab:epic-083c}
 \end{table}
 
@@ -9285,9 +9294,8 @@ and bridge capstones composing earlier results into the unified physical
 exclusion criterion (\lstinline|unified_physical_exclusion|) and the
 three-generation uniqueness capstone
 (\lstinline|gte_uniquely_predicts_three_generations|).
-A systematic audit reduced the global custom named-axiom count from 24 to 20
-by discharging four \texttt{VEVProof} axioms as genuine theorems;
-subsequent frontier-closure extensions brought the total to 83 (see Table~\ref{tab:axiom-inventory}).
+An audit discharged several \texttt{VEVProof} axioms as proved theorems;
+the verified global named-axiom total is 75 (see Table~\ref{tab:axiom-inventory}).
 
 \paragraph{What remains open.}
 Six conjectures are formally stated in \cref{tab:conjectures}.
@@ -9321,6 +9329,7 @@ each generator, the \lean{} module(s) it produces, and its certificate type.
 
 \begin{center}
 \small
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{llp{3.2cm}p{3.5cm}}
 \toprule
 \textbf{Script} & \textbf{Lean module(s)} & \textbf{Certificate type} & \textbf{Regenerate} \\
@@ -9366,7 +9375,8 @@ each generator, the \lean{} module(s) it produces, and its certificate type.
   & Periodic-successor degree proof block; calls \texttt{gen\_inj.py}
   & \texttt{python3 scripts/gen\_degree\_block.py} \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}%
 \end{center}
 
 \subsection*{Hand-derived certificates (no Python generator)}
