@@ -469,6 +469,9 @@ theorem yukawa_amplitude_nonzero_sech3 (m_phi : ℝ) (hm : 0 < m_phi) :
 /-- Zero-mode sech overlap I(r) = ∫ sech(x)·sech(r·x) dx (P45 Yukawa tape factor). -/
 noncomputable def sech_overlap (r : ℝ) : ℝ := ∫ x, sech x * sech (r * x)
 
+/-- Scaled sech product `sech(u/r)·sech(u)` (equals integrand in `sech_overlap_mul_pos`). -/
+noncomputable def sechProd (r u : ℝ) : ℝ := sech (u / r) * sech u
+
 private lemma sech_le_one (x : ℝ) : sech x ≤ 1 := by
   have h : 1 / cosh x ≤ 1 / 1 := by
     gcongr
