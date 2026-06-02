@@ -1,4 +1,4 @@
-import UgpLean.Substrate.PhiMDLFluctuationSpectrum
+import UgpLean.Substrate.SechOverlapIntegralBounds_bridge
 
 /-!
 # Sech overlap integral lower bounds (Riemann certification)
@@ -8,17 +8,12 @@ by an antitone right-endpoint Riemann sum, certify the sum with mesh-generated b
 
 Mesh generators: `scripts/gen_sech5_cosh_bins.py`, `scripts/gen_sech5_mesh_proof.py`,
 `scripts/gen_sech11_mesh_proof.py`. Helper lemmas: `SechOverlapIntegralBounds_cosh.lean`.
+Certified mesh proofs: `SechOverlapIntegralBounds_r5mesh.lean`,
+`SechOverlapIntegralBounds_r11cert.lean`. CatA integral bridge:
+`SechOverlapIntegralBounds_bridge.lean`.
 -/
 
 namespace UgpLean.Substrate.PhiMDLFluctuationSpectrum
-
-/-- **sech_overlap_at_five_ge** (CatAL): certified lower bound `I(5) ≥ 596903/10^6`. -/
-theorem sech_overlap_at_five_ge : (596903 : ℝ) / 1000000 ≤ sech_overlap 5 := by
-  sorry
-
-/-- **sech_overlap_at_eleven_ge** (CatAL): certified lower bound `I(11) ≥ 282771/10^6`. -/
-theorem sech_overlap_at_eleven_ge : (282771 : ℝ) / 1000000 ≤ sech_overlap 11 := by
-  sorry
 
 /-- **sech_overlap_at_five_ge_pi** (CatAL): `I(5) ≥ 0.95·π/5`. -/
 theorem sech_overlap_at_five_ge_pi : (0.95 : ℝ) * Real.pi / 5 ≤ sech_overlap 5 :=
