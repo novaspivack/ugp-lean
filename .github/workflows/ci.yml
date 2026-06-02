@@ -1,0 +1,31 @@
+# CI IS INTENTIONALLY DISABLED ON ugp-lean-exp
+#
+# This repo is the private dev sandbox. Builds run locally with `lake build`.
+# CI on this repo was billing ~$20/month from high-frequency agent pushes
+# (~471 commits/month × ~20 min Lean builds).
+#
+# Verification at graduation happens on public ugp-lean (Actions are free for
+# public repos). Do NOT change this file to add push/pull_request triggers.
+#
+# The `workflow_dispatch` trigger below means this only runs if explicitly
+# clicked in the GitHub UI — it never fires on push or PR.
+
+name: ci-disabled
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Why are you running this? CI is intentionally disabled on ugp-lean-exp."
+        required: true
+
+jobs:
+  nothing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Explain why CI is disabled here
+        run: |
+          echo "CI is intentionally disabled on ugp-lean-exp (private dev sandbox)."
+          echo "Builds run locally with: lake build"
+          echo "CI runs on graduation to ugp-lean (public repo, free Actions minutes)."
+          echo "Do not add push/pull_request triggers to this file."
