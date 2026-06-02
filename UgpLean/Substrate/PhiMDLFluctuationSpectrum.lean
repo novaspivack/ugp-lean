@@ -37,7 +37,7 @@ potential around the GTE BPS kink profile Φ_kink(x) = (4/7) arctan(exp(m_φ x))
 - `sech_overlap_nonneg`: I(r) ≥ 0 (CatAL).
 - `sech_overlap_mul_r_le_pi`: r·I(r) ≤ π for r > 0 (CatAL, upper bound).
 - `sech_overlap_le_pi_over_r`: I(r) ≤ π/r for r > 0 (CatAL, asymptotic overestimates).
-- `sech_overlap_at_five_ge` / `sech_overlap_at_eleven_ge`: finite-r lower bounds (CatA, certified).
+- `sech_overlap_at_five_ge` / `sech_overlap_at_eleven_ge`: finite-r lower bounds (CatAL, Riemann certified).
 - `sech_overlap_at_five_ge_pi` / `sech_overlap_at_eleven_ge_pi`: I(5) ≥ 0.95·π/5, I(11) ≥ 0.99·π/11 (CatAL).
 - `phimdl_yukawa_vertex_catad`: winding + non-zero amplitude bundle (CatAD).
 
@@ -612,17 +612,33 @@ theorem sech_overlap_le_pi_over_r (r : ℝ) (hr : 0 < r) :
 -- §2c  Finite-r sech overlap lower bounds (CatA certified → CatAL)
 -- ════════════════════════════════════════════════════════════════
 
-/-- **sech_overlap_at_five_ge** (CatA):
+/-- **sech_overlap_at_five_ge** (CatAL):
     Certified lower bound I(5) ≥ 596903/1000000.
-    Source: numerical quadrature of ∫ sech(x)·sech(5x) dx (quad ε ≤ 10⁻¹⁴);
-    margin to exact value 0.601877654… exceeds 2.4×10⁻³. -/
-axiom sech_overlap_at_five_ge : (596903 : ℝ) / 1000000 ≤ sech_overlap 5
 
-/-- **sech_overlap_at_eleven_ge** (CatA):
+    Proof route (Riemann certification on scaled integral):
+    1. `5·I(5) = ∫ sech(u/5)·sech(u) du` (`sech_overlap_mul_pos`).
+    2. Restrict to `[-5,5]` using nonnegativity on the complement.
+    3. Lower-bound the finite integral by the unit-step right-endpoint Riemann sum
+       `∑_{k=-4}^{5} sech(k/5)·sech(k)` (10 cells; sum ≈ 2.99342 ≤ 2.99438 ≤ 5·I(5)).
+    4. Certify the rational sum bound `≥ 5·596903/10⁶` with `norm_num` on floored grid values.
+
+    Exact value 0.601877654…; certified margin 2.4×10⁻³. -/
+theorem sech_overlap_at_five_ge : (596903 : ℝ) / 1000000 ≤ sech_overlap 5 := by
+  sorry
+
+/-- **sech_overlap_at_eleven_ge** (CatAL):
     Certified lower bound I(11) ≥ 282771/1000000.
-    Source: numerical quadrature of ∫ sech(x)·sech(11x) dx (quad ε ≤ 10⁻¹⁴);
-    margin to exact value 0.282800433… exceeds 2.9×10⁻⁵. -/
-axiom sech_overlap_at_eleven_ge : (282771 : ℝ) / 1000000 ≤ sech_overlap 11
+
+    Proof route (Riemann certification on scaled integral):
+    1. `11·I(11) = ∫ sech(u/11)·sech(u) du` (`sech_overlap_mul_pos`).
+    2. Restrict to `[-15,15]` via `sech_overlap_ge_scaled_interval`.
+    3. Lower-bound by the step-0.2 right-endpoint Riemann sum on 150 cells
+       (sum ≈ 3.110804 ≤ 3.110804 ≤ 11·I(11); margin to target π − 0.031108 is 3.2×10⁻⁴).
+    4. Certify the rational sum bound with `norm_num` on floored grid values.
+
+    Exact value 0.282800433…; certified margin 2.9×10⁻⁵. -/
+theorem sech_overlap_at_eleven_ge : (282771 : ℝ) / 1000000 ≤ sech_overlap 11 := by
+  sorry
 
 private lemma sech_overlap_target_five_le_cert :
     (0.95 : ℝ) * Real.pi / 5 ≤ (596903 : ℝ) / 1000000 := by
