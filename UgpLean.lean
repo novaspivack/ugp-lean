@@ -245,6 +245,7 @@ import UgpLean.Gravity.PSCQECWaldConnections
 import UgpLean.Gravity.WaldChainAndInitialState
 import UgpLean.Gravity.DimensionalDecomposition
 import UgpLean.Gravity.RelationalTime
+import UgpLean.Gravity.YukawaOverlapExponent
 import UgpLean.Gravity.PMDLGravityTheorems
 import UgpLean.Gravity.CCImpossibilityBundle
 import UgpLean.Gravity.TemporalVoxelCC
