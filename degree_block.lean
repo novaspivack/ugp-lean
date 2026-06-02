@@ -2080,59 +2080,59 @@ private theorem adj_mem_periodicCausalNeighbors {L T : ℕ} (hL : 3 < L) (hT : 2
       simp [SpacelikeAdjPeriodic] at ht hsp
       rcases hsp with ⟨hfa, hy, hz⟩ | ⟨hx, hfa, hz⟩ | ⟨hx, hy, hfa⟩
       · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨0, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
-        · refine ⟨⟨1, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
+        · refine ⟨⟨⟨0, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
+        · refine ⟨⟨⟨1, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
       · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨2, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
-        · refine ⟨⟨3, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
+        · refine ⟨⟨⟨2, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
+        · refine ⟨⟨⟨3, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
       · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨4, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
-        · refine ⟨⟨5, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
+        · refine ⟨⟨⟨4, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
+        · refine ⟨⟨⟨5, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
     · rcases h with ⟨ht, hs⟩
       by_cases hf : (n.1.val + 1) % (T + 1) = m.1.val
-      · refine ⟨6, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hf, hs]⟩
-      · refine ⟨7, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hs,
+      · refine ⟨⟨6, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hf, hs]⟩
+      · refine ⟨⟨7, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hs,
           finTimePeriodicPred_timelike_forward, ht]⟩
     · rcases h with ⟨ht, hlc⟩
       rcases hlc with ⟨hfa, hy, hz⟩ | ⟨hx, hfa, hz⟩ | ⟨hx, hy, hfa⟩
       · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨8, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
-        · refine ⟨⟨9, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
+        · refine ⟨⟨⟨8, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
+        · refine ⟨⟨⟨9, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
       · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨10, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
-        · refine ⟨⟨11, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
+        · refine ⟨⟨⟨10, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
+        · refine ⟨⟨⟨11, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
       · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨12, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
-        · refine ⟨⟨13, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
+        · refine ⟨⟨⟨12, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
+        · refine ⟨⟨⟨13, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
   · rcases h with h | h | h
     · rcases h with ⟨ht, hsp⟩
       simp [SpacelikeAdjPeriodic] at ht hsp
       rcases hsp with ⟨hfa, hy, hz⟩ | ⟨hx, hfa, hz⟩ | ⟨hx, hy, hfa⟩
       · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨0, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
-        · refine ⟨⟨1, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
+        · refine ⟨⟨⟨0, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
+        · refine ⟨⟨⟨1, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
       · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨2, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
-        · refine ⟨⟨3, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
+        · refine ⟨⟨⟨2, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
+        · refine ⟨⟨⟨3, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
       · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨4, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
-        · refine ⟨⟨5, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
+        · refine ⟨⟨⟨4, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
+        · refine ⟨⟨⟨5, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
     · rcases h with ⟨ht, hs⟩
       by_cases hf : (n.1.val + 1) % (T + 1) = m.1.val
-      · refine ⟨6, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hf, hs]⟩
-      · refine ⟨7, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hs,
+      · refine ⟨⟨6, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hf, hs]⟩
+      · refine ⟨⟨7, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hs,
           finTimePeriodicPred_timelike_forward, ht]⟩
     · rcases h with ⟨ht, hlc⟩
       rcases hlc with ⟨hfa, hy, hz⟩ | ⟨hx, hfa, hz⟩ | ⟨hx, hy, hfa⟩
       · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨14, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
-        · refine ⟨⟨15, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
+        · refine ⟨⟨⟨14, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
+        · refine ⟨⟨⟨15, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hy, hz]⟩
       · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨16, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
-        · refine ⟨⟨17, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
+        · refine ⟨⟨⟨16, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
+        · refine ⟨⟨⟨17, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hz]⟩
       · rcases finAdjPeriodic_decompose (zero_lt_L_of_three_lt hL) (one_lt_L_of_three_lt hL) hfa with hfa | hfa
-        · refine ⟨⟨18, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
-        · refine ⟨⟨19, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
+        · refine ⟨⟨⟨18, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
+        · refine ⟨⟨⟨19, by decide⟩, by simp [periodicNeighborAt, periodicNeighborAtAux, hfa, ht, hx, hy]⟩
 
 private theorem mem_periodicCausalNeighbors_iff_adj {L T : ℕ} (hL : 3 < L) (hT : 2 < T)
     (n m : CausalNode L T) :

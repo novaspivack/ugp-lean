@@ -4,8 +4,8 @@
 import subprocess
 from pathlib import Path
 
-ROOT = Path("/Users/nova/ugp-lean-exp")
-subprocess.run(["python3", str(ROOT / "gen_inj.py")], check=True)
+ROOT = Path(__file__).resolve().parents[1]
+subprocess.run(["python3", str(ROOT / "scripts" / "gen_inj.py")], check=True)
 
 HEADER = r'''/-! ## Periodic Successor / Predecessor -/
 

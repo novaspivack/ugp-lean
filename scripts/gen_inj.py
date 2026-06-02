@@ -1,3 +1,5 @@
+from pathlib import Path
+
 neighbors = [
   ("t", "xp", "y", "z"), ("t", "xm", "y", "z"), ("t", "x", "yp", "z"), ("t", "x", "ym", "z"),
   ("t", "x", "y", "zp"), ("t", "x", "y", "zm"), ("tp", "x", "y", "z"), ("tm", "x", "y", "z"),
@@ -61,7 +63,8 @@ for i in range(20):
             lines.append(f"      simp [periodicNeighborAt, periodicNeighborAtAux] at hcomp")
             lines.append(f"      exact absurd hcomp (({lem}){sym})")
 
-open("/Users/nova/ugp-lean-exp/inj_proof_gen.lean", "w").write("\n".join(lines) + "\n")
+_repo_root = Path(__file__).resolve().parents[1]
+(_repo_root / "inj_proof_gen.lean").write_text("\n".join(lines) + "\n")
 for i in range(20):
     for j in range(20):
         if i != j:
