@@ -79,8 +79,9 @@ theorem elegant_kernel_full_certification :
 
 /-- **Tier 2 (083C-UCL-FORM).** Fermion mass ordering under UCL + generation scaling.
 
-Three interval-arithmetic sorry obligations (one per sector) certify log C_f
-bounds; the ordering itself is pure algebra on `exp` and `4^(g−1)`. -/
+CatAL (conditional on EK coefficient interval certificates); zero sorry
+throughout `UCLMassOrdering` and coupled-corner `UCLMassOrderingSBounds`
+(commit `a18a328`). -/
 theorem ucl_tier2_mass_ordering :
     leptonUclMassOrderingProp ∧
     upUclMassOrderingProp ∧

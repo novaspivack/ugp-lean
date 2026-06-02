@@ -1083,7 +1083,7 @@ All theorems zero sorry (CatAL).
 | Theorem | Module | Statement |
 |---------|--------|-----------|
 | **elegant_kernel_full_certification** | ElegantKernel.Unconditional.MasterCertification | All nine UCL coefficients CatAL in one bundle (`k_{L^2},k_{\rm gen},k_{\rm gen2},k_L,k_{\rm const},k_{M},k_{a,b,c}`) |
-| **ucl_fermion_mass_ordering** | ElegantKernel.Unconditional.UCLMassOrdering | gen1 $<$ gen2 $<$ gen3 per sector under UCL + $4^{g-1}$ scaling (CatAL; conditional on interval certs) |
+| **ucl_fermion_mass_ordering** | ElegantKernel.Unconditional.UCLMassOrdering | gen1 $<$ gen2 $<$ gen3 per sector under UCL + $4^{g-1}$ scaling (CatAL conditional on EK coefficient intervals; zero sorry; commit `a18a328`) |
 | **ucl_tier2_mass_ordering** | ElegantKernel.Unconditional.MasterCertification | Tier-2 mass-ordering bundle (alias of `ucl_fermion_mass_ordering`) |
 | **ucl_lepton_sector_koide_identity** | ElegantKernel.Unconditional.UCLKoide | Koide $Q=2/3$ from GTE-pinned phase + amplitude chain (CatAL) |
 | **ucl_tier3_lepton_koide** | ElegantKernel.Unconditional.MasterCertification | Tier-3 Koide bundle (alias) |
