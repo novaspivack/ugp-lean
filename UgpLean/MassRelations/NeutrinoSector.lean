@@ -19,6 +19,9 @@ numerical PMNS fitting.
 | `seesaw_type_I_formula` | zero sorry | CatAL |
 | `democratic_J_matrix_heavy_eigenstate` | zero sorry | CatAL |
 | `democratic_seesaw_theta23_approximately_maximal` | zero sorry | CatAL |
+| `fn_dirac_yukawa_factors_as_outer_product` | zero sorry | CatAL |
+| `fn_dirac_yukawa_rank_theorem` | zero sorry | CatAL |
+| `real_yukawa_gives_zero_leptogenesis_cp` | zero sorry | CatAL |
 
 Companion: `UgpLean.Universality.Z7ZeroSectorDiscriminant.neutrino_sector_b_index`
 certifies the same b = 1 fact from the canonical GTE triple table.
@@ -162,5 +165,125 @@ theorem democratic_J_matrix_heavy_eigenstate :
 theorem democratic_seesaw_theta23_approximately_maximal :
     ∀ i j : Fin 3, democraticJMatrix i j = democraticJMatrix (Fin.rev i) (Fin.rev j) := by
   intro i j; simp [democraticJMatrix]
+
+-- ════════════════════════════════════════════════════════════════
+-- §6  FN Dirac Yukawa rank-1 barrier (083C-LEAN-3)
+-- ════════════════════════════════════════════════════════════════
+
+/-!
+For non-negative additive Froggatt–Nielsen charges, the Dirac Yukawa texture
+`h_D^{ij} = ε^{q_{L,i} + q_{R,j}}` factors as an outer product
+`h_D = A ⊗ B` with `A_i = ε^{q_{L,i}}`, `B_j = ε^{q_{R,j}}`, hence has rank at most 1.
+A positive-additive FN model cannot supply the rank-3 Dirac Yukawa needed for
+non-trivial PMNS mixing from charge hierarchy alone; complex phases or negative
+charges are required (083C-PMNS Round 4).
+-/
+
+/-- FN Dirac Yukawa matrix `h_D^{ij} = ε^{q_{L,i} + q_{R,j}}` for additive FN charges. -/
+def fnDiracYukawaMatrix (ε : ℝ) (q_L q_R : Fin 3 → ℕ) : Matrix (Fin 3) (Fin 3) ℝ :=
+  fun i j => ε ^ (q_L i + q_R j)
+
+/-- Left FN charge vector `A_i = ε^{q_{L,i}}`. -/
+def fnDiracLeftVector (ε : ℝ) (q_L : Fin 3 → ℕ) : Fin 3 → ℝ :=
+  fun i => ε ^ q_L i
+
+/-- Right FN charge vector `B_j = ε^{q_{R,j}}`. -/
+def fnDiracRightVector (ε : ℝ) (q_R : Fin 3 → ℕ) : Fin 3 → ℝ :=
+  fun j => ε ^ q_R j
+
+/-- **fn_dirac_yukawa_factors_as_outer_product** (CatAL):
+    Non-negative additive FN charges give `h_D^{ij} = A_i B_j`. -/
+theorem fn_dirac_yukawa_factors_as_outer_product
+    (ε : ℝ) (_hε : 0 < ε) (_hε1 : ε < 1)
+    (q_L q_R : Fin 3 → ℕ) (i j : Fin 3) :
+    fnDiracYukawaMatrix ε q_L q_R i j =
+      fnDiracLeftVector ε q_L i * fnDiracRightVector ε q_R j := by
+  simp [fnDiracYukawaMatrix, fnDiracLeftVector, fnDiracRightVector, pow_add]
+
+/-- The Dirac Yukawa matrix equals the outer product `vecMulVec A B`. -/
+theorem fn_dirac_yukawa_eq_vecMulVec
+    (ε : ℝ) (hε : 0 < ε) (hε1 : ε < 1)
+    (q_L q_R : Fin 3 → ℕ) :
+    fnDiracYukawaMatrix ε q_L q_R =
+      Matrix.vecMulVec (fnDiracLeftVector ε q_L) (fnDiracRightVector ε q_R) := by
+  ext i j
+  rw [Matrix.vecMulVec_apply, fn_dirac_yukawa_factors_as_outer_product ε hε hε1 q_L q_R i j]
+
+/-- **fn_dirac_yukawa_rank_theorem** (CatAL):
+    For any FN model with non-negative additive charges, the Dirac Yukawa matrix
+    has rank at most 1. A positive-additive FN model cannot produce the rank-3
+    Dirac Yukawa needed for non-trivial PMNS mixing angles from charge hierarchy alone. -/
+theorem fn_dirac_yukawa_rank_theorem
+    (ε : ℝ) (hε : 0 < ε) (hε1 : ε < 1)
+    (q_L q_R : Fin 3 → ℕ) :
+    (fnDiracYukawaMatrix ε q_L q_R).rank ≤ 1 := by
+  rw [fn_dirac_yukawa_eq_vecMulVec ε hε hε1 q_L q_R]
+  exact rank_vecMulVec_le _ _
+
+-- ════════════════════════════════════════════════════════════════
+-- §7  Real Yukawa ⇒ zero leptogenesis CP asymmetry (083C-LEAN-3)
+-- ════════════════════════════════════════════════════════════════
+
+/-!
+The leptogenesis CP asymmetry `ε₁ ∝ Im[(h_D h_D†)²]_{1j}`. For a real Yukawa
+matrix embedded in `ℂ`, every entry of `(h_D h_D†)²` is real, hence the imaginary
+part vanishes. Complex Yukawa phases are required for non-zero leptogenesis.
+-/
+
+open Complex
+
+/-- Embed a real matrix into `Matrix (Fin 3) (Fin 3) ℂ`. -/
+def realYukawaToComplex (Y : Matrix (Fin 3) (Fin 3) ℝ) : Matrix (Fin 3) (Fin 3) ℂ :=
+  Y.map Complex.ofReal
+
+/-- Embedding a real matrix product in `ℂ` yields real entries. -/
+theorem real_matrix_mul_im_zero (A B : Matrix (Fin 3) (Fin 3) ℝ) (i j : Fin 3) :
+    ((realYukawaToComplex A * realYukawaToComplex B) i j).im = 0 := by
+  have h :
+      realYukawaToComplex A * realYukawaToComplex B =
+        realYukawaToComplex (A * B) := by
+    ext i j
+    simp [realYukawaToComplex, Matrix.map_apply, Matrix.mul_apply]
+  rw [h, realYukawaToComplex, Matrix.map_apply, Complex.ofReal_im]
+
+/-- For real `Y`, the Hermitian product `Y Y†` embeds as `(Y Yᵀ).map ofReal`. -/
+theorem real_matrix_conjTranspose_eq_transpose_map
+    (Y : Matrix (Fin 3) (Fin 3) ℝ) :
+    (realYukawaToComplex Y).conjTranspose = realYukawaToComplex Y.transpose := by
+  ext i j
+  simp [Matrix.conjTranspose_apply, realYukawaToComplex, Matrix.map_apply, Complex.conj_ofReal]
+
+/-- Real `Y Y†` has zero imaginary part at every entry. -/
+theorem real_yukawa_YYdag_im_zero (Y : Matrix (Fin 3) (Fin 3) ℝ) (i j : Fin 3) :
+    ((realYukawaToComplex Y * (realYukawaToComplex Y).conjTranspose) i j).im = 0 := by
+  have hM :
+      realYukawaToComplex Y * (realYukawaToComplex Y).conjTranspose =
+        realYukawaToComplex (Y * Y.transpose) := by
+    rw [real_matrix_conjTranspose_eq_transpose_map Y]
+    ext i j
+    simp [realYukawaToComplex, Matrix.map_apply, Matrix.mul_apply]
+  rw [hM, realYukawaToComplex, Matrix.map_apply, Complex.ofReal_im]
+
+/-- **real_yukawa_gives_zero_leptogenesis_cp** (CatAL):
+    For a real Yukawa matrix embedded in `ℂ`, `Im[(Y Y†)²_{ij}] = 0` for all `i, j`.
+    The leptogenesis CP asymmetry `ε₁ ∝ Im[(h_D h_D†)²_{1j}]` therefore vanishes. -/
+theorem real_yukawa_gives_zero_leptogenesis_cp
+    (Y : Matrix (Fin 3) (Fin 3) ℝ) (i j : Fin 3) :
+    let Yc := realYukawaToComplex Y
+    let M := Yc * Yc.conjTranspose
+    ((M * M) i j).im = 0 := by
+  intro Yc M
+  have hYY : Yc * Yc.conjTranspose = realYukawaToComplex (Y * Y.transpose) := by
+    dsimp [Yc]
+    rw [real_matrix_conjTranspose_eq_transpose_map Y]
+    ext i j
+    simp [realYukawaToComplex, Matrix.map_apply, Matrix.mul_apply]
+  have hMM :
+      M * M = realYukawaToComplex ((Y * Y.transpose) * (Y * Y.transpose)) := by
+    dsimp [M]
+    rw [hYY]
+    ext i j
+    simp [realYukawaToComplex, Matrix.map_apply, Matrix.mul_apply]
+  rw [hMM, realYukawaToComplex, Matrix.map_apply, Complex.ofReal_im]
 
 end UgpLean.MassRelations.NeutrinoSector
