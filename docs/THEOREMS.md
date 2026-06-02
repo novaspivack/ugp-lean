@@ -850,7 +850,7 @@ reflexivity-based proof and constitute smuggling). All four are left as
 > module records the architectural shape pending the full upstream
 > NEMS-Lean integration.
 
-## CDM Cabibbo Derivation — Module MassRelations.CKMMixing (2026-05-11)
+## CDM Cabibbo Derivation — Module MassRelations.CKMMixing
 
 Module `MassRelations.CKMMixing` formalizes the CDM mechanism: deriving the Wolfenstein
 Cabibbo parameter λ ≈ |V_us| from GUT group theory and the VV down-type coefficient
@@ -900,7 +900,7 @@ All theorems zero sorry. One bridge axiom `gte_partrec_eval_iff_fmdl_phi` (same 
 
 **Bridge axiom:** `gte_partrec_eval_iff_fmdl_phi` — Mathlib `Partrec.Code.eval` ↔ `fmdl_binary_aps.φ` on halting; same mathematical tier as `fmdl_binary_aps` (APS axiom 1).
 
-## EPIC_083 — Z₇ Anomaly-Free, Gorard ORIC, W₁ Wasserstein, OP9 (2026-06-01; all zero sorry)
+## Z₇ Anomaly-Free, Gorard ORIC, W₁ Wasserstein, OP9 (all zero sorry)
 
 ### Z₇ Global Scalar Anomaly-Free (`Gravity.Z7AnomalyFree`)
 
@@ -926,7 +926,7 @@ All theorems zero sorry.
 
 ### W₁ Wasserstein Distance Scaffold (`ContinuumLimit.WassersteinDistance`)
 
-All theorems zero sorry (fully CatAL, zero sorry on every proof path; graduated 2026-06-01).
+All theorems zero sorry (fully CatAL, zero sorry on every proof path).
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -947,7 +947,7 @@ All theorems zero sorry (fully CatAL, zero sorry on every proof path; graduated 
 | **op9_catal_unconditional** | SrrgLean.Bridges.ToMDL | OP9 CatAL unconditional: argmax F = argmin K at the canonical SRRG scalar instance (zero sorry, zero hypotheses) |
 | **srrg_op9_k_alg_biconditional** | SrrgLean.Bridges.ToMDL | Biconditional: K_alg profile ↔ SRRG extremum (CatAD, zero sorry) |
 
-### T96-02 — Unconditional MDL Uniqueness of Z₇×Z₃ (CA-level, zero sorry, 2026-06-01)
+### T96-02 — Unconditional MDL Uniqueness of Z₇×Z₃ (CA-level, zero sorry)
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -955,7 +955,7 @@ All theorems zero sorry (fully CatAL, zero sorry on every proof path; graduated 
 | **mdl_total_z7z3_strictly_beats_z5z3** | Universality.MDLDerivabilityCriterion | Total MDL cost: structureSpecCost(7,3) + 0 < structureSpecCost(5,3) + 6, i.e. 3 < 11 (`decide`) |
 | **mdl_ca_rule_coding_closed** | Universality.MDLDerivabilityCriterion | Explicit K_data witness: K_data(7,3)=0, K_data(5,3)=6, and total MDL cost strictly favours Z₇×Z₃; supersedes open placeholder `mdl_ca_rule_coding_open`; closes T96-02 CatAL |
 
-### SU(2)_L GaugeMDL — 083B-SU2L upgrade (zero sorry, 2026-06-01)
+### SU(2)_L GaugeMDL — Machine-certified propositions (zero sorry)
 
 Module `Algebra.GaugeMDL`. Three previously axiomatic SU(2)_L propositions are now machine-certified.
 
@@ -979,7 +979,7 @@ All theorems zero sorry (CatAL).
 | **psp_epoch_selection_master** | Gravity.PSCEpochSelection | D_res > 0 ∧ Ω_Λ^GTE = (ln2/(3π))·L_PSC ∧ uniqueness |
 | **incompleteness_implies_nonzero_omega_lambda** | Gravity.PSCEpochSelection | PSC → D_res > 0 → Ω_Λ > 0; full Incompleteness-Cosmology chain CatAL |
 
-### MDL Tower — Three-Level Unification (083B-MDL-TOWER, zero sorry, 2026-06-01)
+### MDL Tower — Three-Level Unification (zero sorry)
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -987,7 +987,7 @@ All theorems zero sorry (CatAL).
 | **mdl_tower_three_levels_non_circular** | Framework.MDLTower | Extends bundle with supplementary T_GTE K-minimality (`IsKMinimalOnGTE` via `phimdl_continuum_is_K_min_in_T_GTE`) |
 | **mdl_tower_role1_T_GTE_supplement** | Framework.MDLTower | Φ_MDL continuum CA component is K-minimal on `T_GTE` (PhiMDLBridge layer) |
 
-### N_gen Partial Universality — Four CatAL Constraints (083B-NGEN partial, zero sorry, 2026-06-01)
+### N_gen Partial Universality — Four CatAL Constraints (zero sorry)
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -996,7 +996,7 @@ All theorems zero sorry (CatAL).
 | **ngen_unique_catal** | Universality.NgenUniversalityPartial | Parametric uniqueness: `NgenCatALConstraints n → n = 3` for `0 < n` |
 | **NgenCatALConstraints** *(structure)* | Universality.NgenUniversalityPartial | Four CatAL constraint fields (scaffold for full parametric universality) |
 
-### Particles-Computation-Spacetime Trinity (083B-PCT, zero sorry, 2026-06-01)
+### Particles-Computation-Spacetime Trinity (zero sorry)
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -1006,7 +1006,7 @@ All theorems zero sorry (CatAL).
 | **particles_computation_spacetime_trinity_conj** | Universality.ParticlesComputationSpacetimeTrinity | Conjunction form: charge projection, fermion winding ID, PSC sectors, Rule 110 cell simulation |
 | **particles_computation_spacetime_trinity_with_universality** | Universality.ParticlesComputationSpacetimeTrinity | Extends conjunction with `z7kg_kink_universality` (Turing-universal kink dynamics) |
 
-### Single-Source Principle — Five GTE Polynomial Roles (083B-FIVE-ROLES, zero sorry, 2026-06-01)
+### Single-Source Principle — Five GTE Polynomial Roles (zero sorry)
 
 | Theorem | Module | Statement |
 |---------|--------|-----------|
@@ -1017,7 +1017,7 @@ All theorems zero sorry (CatAL).
 
 ---
 
-## EPIC 083C — Frontier Closures (2026-06-02)
+## Frontier Closures — Recent additions
 
 **Scope:** 221 net-new `theorem`/`lemma` names across 22 Lean modules (zero sorry on listed results; two pre-existing `axiom` stubs in `GUTStructure.EWChiralBridge` unchanged; two **CatA** axioms in `SechOverlapIntegralBounds_bridge.lean` for the mesh→integral bridge). Cat levels: **CatAL** unless noted **CatAD** or **CatA**.
 
@@ -1100,7 +1100,7 @@ Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `Sec
 | Theorem | Module | Statement |
 |---------|--------|-----------|
 | **elegant_kernel_full_certification** | ElegantKernel.Unconditional.MasterCertification | All nine UCL coefficients CatAL in one bundle (`k_{L^2},k_{\rm gen},k_{\rm gen2},k_L,k_{\rm const},k_{M},k_{a,b,c}`) |
-| **ucl_fermion_mass_ordering** | ElegantKernel.Unconditional.UCLMassOrdering | gen1 $<$ gen2 $<$ gen3 per sector under UCL + $4^{g-1}$ scaling (CatAL conditional on EK coefficient intervals; zero sorry; commit `a18a328`) |
+| **ucl_fermion_mass_ordering** | ElegantKernel.Unconditional.UCLMassOrdering | gen1 $<$ gen2 $<$ gen3 per sector under UCL + $4^{g-1}$ scaling (CatAL conditional on EK coefficient intervals; zero sorry) |
 | **ucl_tier2_mass_ordering** | ElegantKernel.Unconditional.MasterCertification | Tier-2 mass-ordering bundle (alias of `ucl_fermion_mass_ordering`) |
 | **ucl_lepton_sector_koide_identity** | ElegantKernel.Unconditional.UCLKoide | Koide $Q=2/3$ from GTE-pinned phase + amplitude chain (CatAL) |
 | **ucl_tier3_lepton_koide** | ElegantKernel.Unconditional.MasterCertification | Tier-3 Koide bundle (alias) |
@@ -1128,7 +1128,7 @@ Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `Sec
 | **z7_symmetry_forces_equal_sector_action** | Universality.GUTStructure | Equal distribution forced: S_per = q_dark/|Z₇\*| = 2/6 = 1/3 = 1/N_c (CatAL) |
 | **d_top_derivation_chain_catal** | Universality.GUTStructure | Master CatAL assembly: BPS S₀/T=1 + q_dark=2 + |Z₇\*|=6 + Z₇ transitivity → D_top = exp(−1/N_c) (CatAL) |
 
-**083C catalog entry count (this section):** 61 named flagship theorems plus 40 interval-bound lemmas and 25 UCL margin/delta certificates documented in the module list above (**221** total net-new names in the epic scorecard).
+**Recent additions catalog count:** 61 named flagship theorems plus 40 interval-bound lemmas and 25 UCL margin/delta certificates documented in the module list above (**221** total net-new names).
 
 ## External Citations (Not Formalized)
 
