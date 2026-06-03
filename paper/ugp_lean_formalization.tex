@@ -7746,6 +7746,40 @@ This is a $2.6\times$ precision improvement over the previous calibrated value
 $91.35\,\mathrm{MeV}$ ($-0.81\%$), achieved with zero free parameters.
 \end{keybox}
 
+\begin{keybox}{\lstinline|alpha_em_inverse_structural_identity| (zero sorry)}
+The inverse fine-structure constant at zero momentum from GTE orbit arithmetic:
+\[
+  \frac{1}{\alpha_{\rm em}(0)} = 2^{|Z_7|} + N_{\rm gen}^2 = 2^7 + 3^2 = 128 + 9 = 137.
+\]
+Module: \texttt{Universality/AlphaEMStructuralIdentity.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|b0_casimir_relation| (zero sorry)}
+The one-loop QCD coefficient matches orbit-family counting:
+\[
+  b_0 = N_{\rm fam} + N_{\rm gen} - 1 = 5 + 3 - 1 = 7 = |Z_7|.
+\]
+Consequence: $C(b_0,N_{\rm gen})/C(b_0,N_{\rm fam}) = 5/3 = N_{\rm fam}/N_{\rm gen}$.
+Module: \texttt{Universality/CasimirB0Relation.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|top_bottom_mass_ratio_approx| (zero sorry)}
+Top-to-bottom quark $N_{\rm eff}$ ratio:
+\[
+  \frac{b_{\rm top}}{b_b} = \frac{337920}{8191} \approx 41.255,
+\]
+tracking $m_t/m_b$ to $0.072\%$ (PDG). Module: \texttt{Universality/GUTStructure.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|m_omega_ksrf_formula| (zero sorry)}
+$\omega$-meson mass from KSRF with GTE coupling $g_\omega^2 = N_{\rm gen}\,c_Z = 36$:
+\[
+  m_\omega = \sqrt{2\,g_\omega^2}\,f_\pi = \sqrt{72}\,f_\pi \approx 783.55\,\mathrm{MeV}
+  \quad (+0.11\%\text{ vs.\ PDG }782.65\,\mathrm{MeV}).
+\]
+Module: \texttt{MassRelations/MesonMasses.lean}; uses \lstinline|fpi_from_scc|.
+\end{keybox}
+
 \subsection[QEC Stabilizer Code]{QEC Stabilizer Code Interpretation of the
   \texorpdfstring{$[\mathbf{D}]$}{[D]}-Measure
   (\texttt{Spacetime/QECStabilizer.lean})}\label{subsec:qec-stabilizer}

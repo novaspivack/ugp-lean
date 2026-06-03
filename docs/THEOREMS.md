@@ -1118,6 +1118,26 @@ Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `Sec
 | **fgci_bundle** | Universality.FrobeniusChain | Joint FGCI + chain + $b_{\rm gen1}$ double determination (CatAL) |
 | **b_gen2_frobenius_factorization** | Universality.FrobeniusChain | $b_{\rm gen2}=2N_c|Z_7|$ factorization (CatAL) |
 
+### Fine-structure and Casimir identities (`Universality.AlphaEMStructuralIdentity`, `Universality.CasimirB0Relation`)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **alpha_em_inverse_structural_identity** | Universality.AlphaEMStructuralIdentity | $2^7+3^2=137$ (CatAL) |
+| **alpha_em_inverse_from_z7_and_ngen** | Universality.AlphaEMStructuralIdentity | $2^{|Z_7|}+N_{\rm gen}^2=137$ (CatAL) |
+| **b0_casimir_relation** | Universality.CasimirB0Relation | $b_0=N_{\rm fam}+N_{\rm gen}-1=7$ (CatAL) |
+| **casimir_orbit_ratio** | Universality.CasimirB0Relation | $C(7,3)/C(7,2)=5/3=N_{\rm fam}/N_{\rm gen}$ (CatAL) |
+
+### Quark masses and mesons (`MassRelations.PhysicalMasses`, `MassRelations.DownRational`, `MassRelations.MesonMasses`, `Universality.GUTStructure`)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **six_quark_tt_vv_cascade_bundle** | MassRelations.PhysicalMasses | TT+VV hold on PDG $(m_e,m_\mu)$ anchors for $g<3$ (CatAL) |
+| **bottom_quark_vv_cascade** | MassRelations.DownRational | VV log identity for generation-3 down-type mass (CatAL) |
+| **top_bottom_mass_ratio_approx** | Universality.GUTStructure | $|b_{\rm top}/b_b-41.255|<10^{-3}$ (CatAL) |
+| **g_omega_sq_eq_ngen_times_cz** | MassRelations.MesonMasses | $g_\omega^2=N_{\rm gen}\,c_Z=36$ (CatAL) |
+| **m_omega_ksrf_formula** | MassRelations.MesonMasses | $m_\omega=\sqrt{72}\,f_\pi$ from KSRF (CatAL) |
+| **m_omega_pdg_agreement** | MassRelations.MesonMasses | $|783.55\,\mathrm{MeV}-782.65\,\mathrm{MeV}|<1\,\mathrm{MeV}$ rational proxy (CatAL) |
+
 ### GUTStructure additions (`Universality.GUTStructure` §35)
 
 | Theorem | Module | Statement |

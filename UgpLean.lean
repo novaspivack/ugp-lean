@@ -180,6 +180,8 @@ import UgpLean.Universality.PhiMDLThermalState
 import UgpLean.Universality.SylowIndexCouplingHierarchy
 import UgpLean.Universality.GaugeInvariance
 import UgpLean.Universality.BetaCoefficientIdentity
+import UgpLean.Universality.AlphaEMStructuralIdentity
+import UgpLean.Universality.CasimirB0Relation
 import UgpLean.Universality.FrobeniusPrimeIdentity
 import UgpLean.Universality.FrobeniusChain
 import UgpLean.Universality.Z3SubOrbitDisjointness
