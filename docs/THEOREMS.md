@@ -1212,6 +1212,18 @@ Interval axioms for `Real.exp`/`Real.log` factors used by quark and EW numerical
 | **mr1_mr_gut_ratio_bounds** | MassRelations.SeesawNumericalCerts | $M_{R1}/M_{R,\mathrm{GUT}}\in[5.828,5.863]\times10^{-4}$ (uses **exp_neg_pi_bounds**, **mr1_mr_gut_ratio_interval**) | CatAD |
 | **seesaw_leptogenesis_cert_bundle** | MassRelations.SeesawNumericalCerts | Conjunction of all five target interval certificates | CatAD |
 
+### FKTT kink–top coupling (`Physics.FKTTCoupling`)
+
+| Theorem | Module | Statement | Cat |
+|---------|--------|-----------|-----|
+| **bps_kink_is_half_instanton** | Physics.FKTTCoupling | $S_{\rm kink}=\tfrac12 S_{\rm inst}$ under BPS saturation $T_{11}=0$ (axiom **phi_mdl_kink_bps_saturation**) | CatAD-cond |
+| **bps_per_tape_action** | Physics.FKTTCoupling | Per-tape BPS action $S_1=\pi/N_c$ ($|Z_7|$ cancellation) | CatAD-cond |
+| **per_tape_bps_action_eq_pi_over_Nc** | Physics.FKTTCoupling | $S_1=\pi/3$ | CatAL |
+| **per_tape_bps_action_bound** | Physics.FKTTCoupling | $S_1\in[1.047,1.048]$ | CatAL |
+| **kink_top_coupling_eq_eps_FN** | Physics.FKTTCoupling | $g_{\rm kink\text{-}top}=\exp(-S_1)=\varepsilon_{\rm FN}=\exp(-\pi/3)$ | CatAD-cond |
+| **kink_top_coupling_bounds** | Physics.FKTTCoupling | $g_{\rm kink\text{-}top}\in[0.3508,0.3510]$ (axiom **exp_neg_pi_over_three_bounds**) | CatAL |
+| **fktt_coupling_bundle** | Physics.FKTTCoupling | Master conjunction of half-instanton, per-tape action, $\varepsilon_{\rm FN}$ identity, and interval bound | CatAD-cond |
+
 ### GUTStructure additions (`Universality.GUTStructure` §35)
 
 | Theorem | Module | Statement |

@@ -106,6 +106,7 @@ import UgpLean.MassRelations.CKMCPPhase
 import UgpLean.MassRelations.NeutrinoMassRatio
 import UgpLean.MassRelations.TranscendentalMassBounds
 import UgpLean.MassRelations.QuarkMassNumericalCerts
+import UgpLean.MassRelations.SeesawNumericalCerts
 import UgpLean.Universality.EWBosonNumericalCerts
 import UgpLean.MassRelations
 import UgpLean.Phase4.GaloisProtection
@@ -295,6 +296,7 @@ import UgpLean.Spacetime.PhiMDLKinkQuantumNumbers
 import UgpLean.Spacetime.AsyncLiftingTheorem
 import UgpLean.QFT.GaugedMassGap
 import UgpLean.QFT.ChiralSymmetryBreaking
+import UgpLean.Physics.FKTTCoupling
 import UgpLean.Universality.PhiMDLUniversality
 import UgpLean.Universality.BellViolationGTE
 import UgpLean.Universality.FiveRolesPolynomial
