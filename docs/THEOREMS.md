@@ -1043,6 +1043,10 @@ Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `Sec
 | **sech_overlap_at_eleven_ge** | Substrate.SechOverlapIntegralBounds_bridge | $I(11)\ge 282771/10^6$ (via CatA bridge axiom; zero sorry) |
 | **sech_overlap_at_five_ge_pi** | Substrate.SechOverlapIntegralBounds | $I(5)\ge 0.95\pi/5$ (CatAL; zero sorry, zero axiom) |
 | **sech_overlap_at_eleven_ge_pi** | Substrate.SechOverlapIntegralBounds | $I(11)\ge 0.99\pi/11$ (CatAL; zero sorry, zero axiom) |
+| **sech_overlap_at_five_ge_596_thousand** | Substrate.SechOverlapIntegralBounds | $I(5)\ge 596/1000$ (CatAL; zero sorry) |
+| **sech_overlap_at_eleven_ge_282_thousand** | Substrate.SechOverlapIntegralBounds | $I(11)\ge 282/1000$ (CatAL; zero sorry) |
+| **sech_overlap_five_ratio_ge** | Substrate.SechOverlapIntegralBounds | $5I(5)/\pi\ge 2984515/3141593$ (CatAL; zero sorry) |
+| **sech_overlap_eleven_ratio_ge** | Substrate.SechOverlapIntegralBounds | $11I(11)/\pi\ge 3110481/3141593$ (CatAL; zero sorry) |
 
 ### Sech overlap integral certification (`Substrate.SechOverlapIntegralBounds_*`)
 
@@ -1067,7 +1071,8 @@ Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `Sec
 | **leptogenesis_kink_overlap_catad** | Gravity.YukawaOverlapExponent | $f_1\times f_2=1/3025$ (CatAD; uses `sech_overlap_at_*_ge_pi`; **CatAL conditional** on 2 CatA bridge axioms) |
 | **yukawa_overlap_tape_count** | Gravity.YukawaOverlapExponent | Fermion-sector tape count certified (CatAL) |
 | **yukawa_total_tapes** | Gravity.YukawaOverlapExponent | Total tape budget for Yukawa vertex (CatAL) |
-| **eta_B_PDG_in_GTE_bracket** | Gravity.YukawaOverlapExponent | Planck $\eta_B$ in GTE interval $[5.62,6.36]\times 10^{-10}$ (CatAL conditional on $\varepsilon_1^{\mathrm{CI}}$, $\kappa$) |
+| **yukawa_sech_correction_factor_ge** | Gravity.YukawaOverlapExponent | Certified $(5I(5)/\pi)(11I(11)/\pi)$ lower bound at $b_R=\{5,11\}$ (CatAL; zero sorry) |
+| **eta_B_PDG_in_GTE_bracket** | Gravity.YukawaOverlapExponent | Planck $\eta_B$ in GTE interval $[5.62,6.36]\times 10^{-10}$ (CatAL conditional on $\varepsilon_1^{\mathrm{CI}}$, $\kappa$, 2 sech bridge axioms) |
 | **eta_B_loop_bracket** | Gravity.YukawaOverlapExponent | Planck $\eta_B$ in loop-function interval $[6.06,6.36]\times 10^{-10}$ (CatAL conditional on asymptotic/CRV $\varepsilon_1$) |
 | **eta_B_epsilon1_asym_le_CI** | Gravity.YukawaOverlapExponent | Asymptotic loop $\varepsilon_1 \leq \varepsilon_1^{\mathrm{CI}}$ (CatAL) |
 | **eta_B_GTE_loop_lower_le_upper** | Gravity.YukawaOverlapExponent | Loop-bracket endpoints ordered: $\eta_B^{\mathrm{asym}} \leq \eta_B^{\mathrm{CRV}}$ (CatAL) |

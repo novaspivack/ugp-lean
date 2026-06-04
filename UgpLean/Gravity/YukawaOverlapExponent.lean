@@ -333,8 +333,10 @@ def eta_B_d_top_upper_q : ℚ := 716 / 1000
 /-- Asymptotic kink-overlap factor f₁f₂ = 1/(b_{R,1}² b_{R,2}²) = 1/3025. -/
 def eta_B_overlap_asymp_q : ℚ := 1 / 3025
 
-/-- Sech lower-bound proxy: 0.95²×0.99²×(1/3025) from `sech_overlap_at_*_ge_pi`. -/
-def eta_B_overlap_sech_lb_q : ℚ := 8847 / (10000 * 3025)
+/-- Sech lower-bound proxy: `(5·I(5)/π)²·(11·I(11)/π)² / 3025` with certified `I` bounds
+    (`2984515/3141593` and `3110481/3141593`; strictly above the `0.95²×0.99²/3025` proxy). -/
+def eta_B_overlap_sech_lb_q : ℚ :=
+  (2984515 ^ 2 * 3110481 ^ 2) / (3141593 ^ 4 * 3025)
 
 /-- GTE η_B lower bracket endpoint (kink-overlap + CatA constants). -/
 def eta_B_GTE_lower_q : ℚ :=
@@ -353,9 +355,20 @@ noncomputable def eta_B_GTE_lower : ℝ := (eta_B_GTE_lower_q : ℝ)
 noncomputable def eta_B_GTE_upper : ℝ := (eta_B_GTE_upper_q : ℝ)
 noncomputable def eta_B_PDG_center : ℝ := (eta_B_PDG_center_q : ℝ)
 
-/-- **eta_B_PDG_in_GTE_bracket** (CatAL conditional on ε₁^CI and κ):
+/-- Certified sech correction factor lower bound: `(5·I(5)/π)·(11·I(11)/π)` at `b_R = {5,11}`. -/
+theorem yukawa_sech_correction_factor_ge :
+    ((2984515 : ℝ) / 3141593) * ((3110481 : ℝ) / 3141593) ≤
+      ((5 * sech_overlap (b_R1 : ℝ)) / Real.pi) * ((11 * sech_overlap (b_R2 : ℝ)) / Real.pi) := by
+  have hposπ : (0 : ℝ) < Real.pi := Real.pi_pos
+  have hI5π : (0 : ℝ) ≤ 5 * sech_overlap (b_R1 : ℝ) / Real.pi :=
+    div_nonneg (mul_nonneg (by norm_num) (sech_overlap_nonneg _)) hposπ.le
+  simpa [b_R1, b_R2] using
+    mul_le_mul sech_overlap_five_ratio_ge sech_overlap_eleven_ratio_ge
+      (by norm_num : (0 : ℝ) ≤ 3110481 / 3141593) hI5π
+
+/-- **eta_B_PDG_in_GTE_bracket** (CatAL conditional on ε₁^CI, κ, and sech bridge axioms):
     Planck η_B lies between the GTE sech-lower and asymptotic-upper kink-overlap predictions.
-    Lower bound uses `sech_overlap_at_five_ge_pi` and `sech_overlap_at_eleven_ge_pi` (zero sorry).
+    Lower overlap uses `sech_overlap_five_ratio_ge` and `sech_overlap_eleven_ratio_ge` (zero sorry).
     Upper bound uses the asymptotic overlap product `1/3025` (`yukawa_suppression_asymptotic_is_upper_bound`). -/
 theorem eta_B_PDG_in_GTE_bracket :
     (562 : ℚ) / eta_B_q_scale ≤ eta_B_GTE_lower_q ∧
