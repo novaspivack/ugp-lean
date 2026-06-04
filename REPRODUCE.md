@@ -33,6 +33,7 @@ the Lean proofs still check.
 | `scripts/gen_sech_overlap_bounds.py` | `SechOverlapIntegralBounds_gen.lean` (placeholder scaffold) | Scaffold for sech overlap; main bounds hand-certified | (scaffold only) |
 | `scripts/gen_degree_block.py` | `UgpLean/Spacetime/SpectralDimensionDegree.lean` | Periodic-successor degree proof block for causal graph | `python3 scripts/gen_degree_block.py` |
 | `scripts/gen_inj.py` | `inj_proof_gen.lean` (intermediate) | Injectivity block for 20-neighbor periodic causal graph | Called by `gen_degree_block.py` |
+| `scripts/gen_quark_mass_numerical_certs.py` | `UgpLean/MassRelations/TranscendentalMassBounds.lean`, `QuarkMassNumericalCerts.lean`, `EWBosonNumericalCerts.lean` | High-precision rational bounds for TT+VV quark mass intervals (m_u through m_t) and EW boson certs (M_W, M_Z, sin²θ_W); generates `CatAD` axioms via 80-digit Decimal arithmetic | `python3 scripts/gen_quark_mass_numerical_certs.py` |
 
 ---
 

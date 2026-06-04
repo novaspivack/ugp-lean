@@ -1043,6 +1043,10 @@ Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `Sec
 | **sech_overlap_at_eleven_ge** | Substrate.SechOverlapIntegralBounds_bridge | $I(11)\ge 282771/10^6$ (via CatA bridge axiom; zero sorry) |
 | **sech_overlap_at_five_ge_pi** | Substrate.SechOverlapIntegralBounds | $I(5)\ge 0.95\pi/5$ (CatAL; zero sorry, zero axiom) |
 | **sech_overlap_at_eleven_ge_pi** | Substrate.SechOverlapIntegralBounds | $I(11)\ge 0.99\pi/11$ (CatAL; zero sorry, zero axiom) |
+| **sech_overlap_at_five_ge_596_thousand** | Substrate.SechOverlapIntegralBounds | $I(5)\ge 596/1000$ (CatAL; zero sorry) |
+| **sech_overlap_at_eleven_ge_282_thousand** | Substrate.SechOverlapIntegralBounds | $I(11)\ge 282/1000$ (CatAL; zero sorry) |
+| **sech_overlap_five_ratio_ge** | Substrate.SechOverlapIntegralBounds | $5I(5)/\pi\ge 2984515/3141593$ (CatAL; zero sorry) |
+| **sech_overlap_eleven_ratio_ge** | Substrate.SechOverlapIntegralBounds | $11I(11)/\pi\ge 3110481/3141593$ (CatAL; zero sorry) |
 
 ### Sech overlap integral certification (`Substrate.SechOverlapIntegralBounds_*`)
 
@@ -1067,6 +1071,20 @@ Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `Sec
 | **leptogenesis_kink_overlap_catad** | Gravity.YukawaOverlapExponent | $f_1\times f_2=1/3025$ (CatAD; uses `sech_overlap_at_*_ge_pi`; **CatAL conditional** on 2 CatA bridge axioms) |
 | **yukawa_overlap_tape_count** | Gravity.YukawaOverlapExponent | Fermion-sector tape count certified (CatAL) |
 | **yukawa_total_tapes** | Gravity.YukawaOverlapExponent | Total tape budget for Yukawa vertex (CatAL) |
+| **yukawa_sech_correction_factor_ge** | Gravity.YukawaOverlapExponent | Certified $(5I(5)/\pi)(11I(11)/\pi)$ lower bound at $b_R=\{5,11\}$ (CatAL; zero sorry) |
+| **eta_B_PDG_in_GTE_bracket** | Gravity.YukawaOverlapExponent | Planck $\eta_B$ in GTE interval $[5.62,6.36]\times 10^{-10}$ (CatAL conditional on $\varepsilon_1^{\mathrm{CI}}$, $\kappa$, 2 sech bridge axioms) |
+| **eta_B_loop_bracket** | Gravity.YukawaOverlapExponent | Planck $\eta_B$ in loop-function interval $[6.06,6.36]\times 10^{-10}$ (CatAL conditional on asymptotic/CRV $\varepsilon_1$) |
+| **eta_B_epsilon1_asym_le_CI** | Gravity.YukawaOverlapExponent | Asymptotic loop $\varepsilon_1 \leq \varepsilon_1^{\mathrm{CI}}$ (CatAL) |
+| **eta_B_GTE_loop_lower_le_upper** | Gravity.YukawaOverlapExponent | Loop-bracket endpoints ordered: $\eta_B^{\mathrm{asym}} \leq \eta_B^{\mathrm{CRV}}$ (CatAL) |
+
+### PMNS NLO atmospheric mixing (`MassRelations.PMNSNLOCorrection`)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **two_b_R2_eq_F21_succ** | MassRelations.PMNSNLOCorrection | $2 b_{R2} = \|F_{21}\|+1 = 22$ (CatAL) |
+| **ngen_eq_nfam_minus_two** | MassRelations.PMNSNLOCorrection | $N_{\mathrm{gen}} = N_{\mathrm{fam}}-2 = 3$ (CatAL) |
+| **pmns_atm_nlo_formula** | MassRelations.PMNSNLOCorrection | $\sin^2\theta_{23}^{\mathrm{NLO}} = 209/441$ (CatAL) |
+| **pmns_atm_nlo_in_1sigma** | MassRelations.PMNSNLOCorrection | $|209/441 - 0.470| < 0.013$ NuFIT 6.0 IC24 NH (CatAL) |
 
 ### PMNS and neutrino sector (`MassRelations.NeutrinoSector`)
 
@@ -1118,6 +1136,96 @@ Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `Sec
 | **fgci_bundle** | Universality.FrobeniusChain | Joint FGCI + chain + $b_{\rm gen1}$ double determination (CatAL) |
 | **b_gen2_frobenius_factorization** | Universality.FrobeniusChain | $b_{\rm gen2}=2N_c|Z_7|$ factorization (CatAL) |
 
+### Fine-structure and Casimir identities (`Universality.AlphaEMStructuralIdentity`, `Universality.CasimirB0Relation`)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **alpha_em_inverse_structural_identity** | Universality.AlphaEMStructuralIdentity | $2^7+3^2=137$ (CatAL) |
+| **alpha_em_inverse_from_z7_and_ngen** | Universality.AlphaEMStructuralIdentity | $2^{|Z_7|}+N_{\rm gen}^2=137$ (CatAL) |
+| **b0_casimir_relation** | Universality.CasimirB0Relation | $b_0=N_{\rm fam}+N_{\rm gen}-1=7$ (CatAL) |
+| **casimir_orbit_ratio** | Universality.CasimirB0Relation | $C(7,3)/C(7,2)=5/3=N_{\rm fam}/N_{\rm gen}$ (CatAL) |
+
+### Quark masses and mesons (`MassRelations.PhysicalMasses`, `MassRelations.DownRational`, `MassRelations.MesonMasses`, `Universality.GUTStructure`)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **six_quark_tt_vv_cascade_bundle** | MassRelations.PhysicalMasses | TT+VV hold on PDG $(m_e,m_\mu)$ anchors for $g<3$ (CatAL) |
+| **bottom_quark_vv_cascade** | MassRelations.DownRational | VV log identity for generation-3 down-type mass (CatAL) |
+| **top_bottom_mass_ratio_approx** | Universality.GUTStructure | $|b_{\rm top}/b_b-41.255|<10^{-3}$ (CatAL) |
+| **g_omega_sq_eq_ngen_times_cz** | MassRelations.MesonMasses | $g_\omega^2=N_{\rm gen}\,c_Z=36$ (CatAL) |
+| **m_omega_ksrf_formula** | MassRelations.MesonMasses | $m_\omega=\sqrt{72}\,f_\pi$ from KSRF (CatAL) |
+| **m_omega_pdg_agreement** | MassRelations.MesonMasses | $|783.55\,\mathrm{MeV}-782.65\,\mathrm{MeV}|<1\,\mathrm{MeV}$ rational proxy (CatAL) |
+| **g_rho_sq_eq_casimir_orbit** | MassRelations.MesonMasses | $g_\rho^2=C(b_0,N_{\rm gen})=\binom{7}{3}=35$ (CatAL) |
+| **g_omega_rho_coupling_gap** | MassRelations.MesonMasses | $g_\omega^2-g_\rho^2=N_{\rm gen}\,c_Z-C(b_0,N_{\rm gen})=1$ (CatAL) |
+| **m_rho_ksrf_formula** | MassRelations.MesonMasses | $m_\rho=\sqrt{70}\,f_\pi$ from KSRF (CatAL) |
+| **m_rho_ksrf_scc_value** | MassRelations.MesonMasses | $\sqrt{70}\,f_\pi^{\rm SCC}\approx 772.57\,\mathrm{MeV}$ within $0.1\,\mathrm{MeV}$ (CatAL) |
+| **chiral_condensate_kink_identification** | MassRelations.PionMassFromGOR | $|\langle\bar\psi\psi\rangle_{\rm GTE}|=M_{\rm kink}^3$ (CatAL) |
+| **pion_mass_from_gor** | MassRelations.PionMassFromGOR | $m_\pi=\pi\sqrt{(m_u+m_d)M_{\rm kink}}$ from GOR + SCC (CatAL) |
+| **pion_mass_numerical_certificate** | MassRelations.PionMassFromGOR | GTE $m_u+m_d=6.8040$ MeV, $M_{\rm kink}=290.10$ MeV $\Rightarrow$ $m_\pi\approx 139.57$ MeV (CatAL) |
+
+### Transcendental mass bounds (`MassRelations.TranscendentalMassBounds`)
+
+Interval axioms for `Real.exp`/`Real.log` factors used by quark and EW numerical certificates (zero sorry in consumers; axioms state tight rational brackets only).
+
+| Name | Module | Statement | Cat |
+|------|--------|-----------|-----|
+| **tt_exp_g0_bounds** | MassRelations.TranscendentalMassBounds | $\exp((\pi/6)\cdot 2+\pi/8)$ for $m_u$ TT factor | CatA (axiom) |
+| **tt_exp_g1_bounds**, **tt_exp_g2_bounds** | MassRelations.TranscendentalMassBounds | TT factors at $g=1,2$ for $m_c$, $m_t$ | CatA (axiom) |
+| **vv_gamma_exp_bounds** | MassRelations.TranscendentalMassBounds | $\exp(-5/14)$ VV offset | CatA (axiom) |
+| **koide_tau_mass_bounds** | MassRelations.TranscendentalMassBounds | Koide $\tau$ mass at PDG $(m_e,m_\mu)$ | CatA (axiom) |
+| **m_d_predicted_interval**, **m_s_predicted_interval**, **m_b_predicted_interval** | MassRelations.TranscendentalMassBounds | Down-type PDG bands at anchors | CatA (axiom) |
+| **m_c_predicted_interval**, **m_t_predicted_interval** | MassRelations.TranscendentalMassBounds | Up-type PDG bands at anchors | CatA (axiom) |
+| **higgs_threshold_log_bound** | MassRelations.TranscendentalMassBounds | $\ln(m_H/M_Z)$ for Weinberg threshold | CatA (axiom) |
+| **sin2_threshold_value_bounds** | MassRelations.TranscendentalMassBounds | Threshold-corrected $\sin^2\theta_W$ band | CatA (axiom) |
+
+### Quark PDG interval certificates (`MassRelations.QuarkMassNumericalCerts`)
+
+| Theorem | Module | Statement | Cat |
+|---------|--------|-----------|-----|
+| **m_u_pdg_interval** | MassRelations.QuarkMassNumericalCerts | $m_u\in[2.09,2.23]\,\mathrm{MeV}$ (uses **tt_exp_g0_bounds**) | CatAD |
+| **m_d_pdg_interval** | MassRelations.QuarkMassNumericalCerts | $m_d$ in PDG band (uses **m_d_predicted_interval**) | CatAD |
+| **m_s_pdg_interval** | MassRelations.QuarkMassNumericalCerts | $m_s$ in PDG band (uses **m_s_predicted_interval**) | CatAD |
+| **m_c_pdg_interval** | MassRelations.QuarkMassNumericalCerts | $m_c$ in PDG band (uses **m_c_predicted_interval**) | CatAD |
+| **m_t_pdg_interval** | MassRelations.QuarkMassNumericalCerts | $m_t$ in PDG band (uses **m_t_predicted_interval**) | CatAD |
+| **m_b_pdg_interval** | MassRelations.QuarkMassNumericalCerts | $m_b\in(4175,4191)\,\mathrm{MeV}$ (uses **m_b_predicted_interval**) | CatAD |
+
+### Electroweak numerical certificates (`Universality.EWBosonNumericalCerts`)
+
+| Theorem | Module | Statement | Cat |
+|---------|--------|-----------|-----|
+| **m_W_pdg_interval** | Universality.EWBosonNumericalCerts | $M_W=80364\,\mathrm{MeV}\in(80351,80377)\,\mathrm{MeV}$ | CatAL |
+| **m_Z_gte_from_wolfenberg** | Universality.EWBosonNumericalCerts | $M_Z=M_W\sqrt{13/10}$ from GTE $\cos^2\theta_W=3/13$ | CatAL |
+| **m_Z_pdg_interval** | Universality.EWBosonNumericalCerts | $M_Z\in(91600,91660)\,\mathrm{MeV}$ (uses **sqrt_thirteen_ten_bounds**) | CatAD |
+| **sin2_theta_W_threshold_interval** | Universality.EWBosonNumericalCerts | $\sin^2\theta_W\in[0.23128,0.23131]$ (uses **higgs_threshold_log_bound**, **sin2_threshold_value_bounds**) | CatAD |
+
+### Seesaw and leptogenesis numerical certificates (`MassRelations.SeesawNumericalCerts`)
+
+| Theorem | Module | Statement | Cat |
+|---------|--------|-----------|-----|
+| **fn_washout_sum_bounds** | MassRelations.SeesawNumericalCerts | $S=1+\exp(-2\pi/3)+\exp(-2\pi)\in[1.124,1.126]$ (uses **exp_neg_two_pi_over_three_bounds**, **exp_neg_two_pi_bounds**) | CatAD |
+| **b5_seesaw_weight_bounds** | MassRelations.SeesawNumericalCerts | $178<5^{29/9}<179$ (integer 9th-power, **norm_num**) | CatAL |
+| **b11_seesaw_weight_bounds** | MassRelations.SeesawNumericalCerts | $2267<11^{29/9}<2268$ | CatAL |
+| **b19_seesaw_weight_bounds** | MassRelations.SeesawNumericalCerts | $13195<19^{29/9}<13196$ | CatAL |
+| **gte_delta_m21_sq_bounds** | MassRelations.SeesawNumericalCerts | $\Delta m^2_{21}\in[7.36,7.38]\times10^{-5}\,\mathrm{eV}^2$ (uses **gte_delta_m21_sq_interval**) | CatAD |
+| **gte_delta_m31_sq_bounds** | MassRelations.SeesawNumericalCerts | $\Delta m^2_{31}\in[2.509,2.513]\times10^{-3}\,\mathrm{eV}^2$ (uses **gte_delta_m31_sq_interval**) | CatAD |
+| **mr_gut_geV_bounds** | MassRelations.SeesawNumericalCerts | $M_{R,\mathrm{GUT}}\in[1.89,1.91]\times10^{16}\,\mathrm{GeV}$ (uses **mr_gut_geV_interval**) | CatAD |
+| **mr1_mr_gut_ratio_bounds** | MassRelations.SeesawNumericalCerts | $M_{R1}/M_{R,\mathrm{GUT}}\in[5.828,5.863]\times10^{-4}$ (uses **exp_neg_pi_bounds**, **mr1_mr_gut_ratio_interval**) | CatAD |
+| **seesaw_leptogenesis_cert_bundle** | MassRelations.SeesawNumericalCerts | Conjunction of all five target interval certificates | CatAD |
+
+### FKTT kink–top coupling (`Physics.FKTTCoupling`)
+
+| Theorem | Module | Statement | Cat |
+|---------|--------|-----------|-----|
+| **phi_mdl_kink_bps_saturation** | Physics.FKTTCoupling | $T_{11}=0$ on kink background (Bogomolny; proved by `rfl`, zero axioms) | CatAL |
+| **bps_kink_is_half_instanton** | Physics.FKTTCoupling | $S_{\rm kink}=\tfrac12 S_{\rm inst}$ (uses `phi_mdl_kink_bps_saturation`, trivially satisfied) | CatAL |
+| **bps_per_tape_action_unconditional** | Physics.FKTTCoupling | Per-tape BPS action $S_1=\pi/N_c$ — unconditional | CatAL |
+| **bps_per_tape_action** | Physics.FKTTCoupling | Per-tape BPS action $S_1=\pi/N_c$ ($|Z_7|$ cancellation; zero axioms) | CatAL |
+| **per_tape_bps_action_eq_pi_over_Nc** | Physics.FKTTCoupling | $S_1=\pi/3$ | CatAL |
+| **per_tape_bps_action_bound** | Physics.FKTTCoupling | $S_1\in[1.047,1.048]$ | CatAL |
+| **kink_top_coupling_eq_eps_FN** | Physics.FKTTCoupling | $g_{\rm kink\text{-}top}=\exp(-S_1)=\varepsilon_{\rm FN}=\exp(-\pi/3)$ (zero axioms) | CatAL |
+| **kink_top_coupling_bounds** | Physics.FKTTCoupling | $g_{\rm kink\text{-}top}\in[0.3508,0.3510]$ (zero axioms) | CatAL |
+| **fktt_coupling_bundle** | Physics.FKTTCoupling | Master conjunction: half-instanton, per-tape action, $\varepsilon_{\rm FN}$ identity, interval bound (zero axioms) | CatAL |
+
 ### GUTStructure additions (`Universality.GUTStructure` §35)
 
 | Theorem | Module | Statement |
@@ -1128,7 +1236,7 @@ Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `Sec
 | **z7_symmetry_forces_equal_sector_action** | Universality.GUTStructure | Equal distribution forced: S_per = q_dark/|Z₇\*| = 2/6 = 1/3 = 1/N_c (CatAL) |
 | **d_top_derivation_chain_catal** | Universality.GUTStructure | Master CatAL assembly: BPS S₀/T=1 + q_dark=2 + |Z₇\*|=6 + Z₇ transitivity → D_top = exp(−1/N_c) (CatAL) |
 
-**Recent additions catalog count:** 61 named flagship theorems plus 40 interval-bound lemmas and 25 UCL margin/delta certificates documented in the module list above (**221** total net-new names).
+**Recent additions catalog count:** 70 named flagship theorems plus 40 interval-bound lemmas and 25 UCL margin/delta certificates documented in the module list above (**230** total net-new names).
 
 ## External Citations (Not Formalized)
 

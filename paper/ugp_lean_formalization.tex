@@ -2839,7 +2839,7 @@ the unconditional UCL$_2$ block is
 \section[Mass Relations]{Mass Relations and Physical Spectrum}\label{sec:massrelations}
 % ═══════════════════════════════════════════════════════════════
 
-The \texttt{MassRelations} layer (27 modules on the development branch, including
+The \texttt{MassRelations} layer (30 modules on the development branch, including
 \texttt{NeutrinoSector} and \texttt{HiggsQuartic}) formalizes the
 passage from the \ugp{} ridge arithmetic to physical fermion mass
 ratios, covering the Koide closed form, the SU(3) flavour geometry,
@@ -4768,6 +4768,19 @@ scaling exponent $\alpha=N_c-1=2$ from three-tape DPP counting
 (\lstinline|yukawa_overlap_exponent_catad|, \CatAD) and the leptogenesis
 suppression $f_1 f_2 = 1/3025$ (\lstinline|leptogenesis_kink_overlap_catad|,
 \CatAD\ conditional on the sech bridge axioms).
+The Planck 2018 CMB+BBN baryon asymmetry
+$\eta_B = (6.10\pm 0.06)\times 10^{-10}$ is bracketed by the GTE kink-overlap
+interval certified in \lstinline|eta_B_PDG_in_GTE_bracket|
+(\CatAL\ conditional on $\varepsilon_1^{\mathrm{CI}}=3.98\times 10^{-5}$ and
+$\kappa=0.190$): sech lower bounds
+\lstinline|sech_overlap_at_five_ge_pi|,
+\lstinline|sech_overlap_at_eleven_ge_pi| (zero \texttt{sorry}) and the asymptotic
+upper bound \lstinline|yukawa_suppression_asymptotic_is_upper_bound|.
+The leptogenesis loop-function bracket
+\lstinline|eta_B_loop_bracket| certifies Planck $\eta_B$ in
+$[6.06,6.36]\times 10^{-10}$ from asymptotic loop
+$f_{\mathrm{asym}}(x)=-3/(2\sqrt{x})$ ($\varepsilon_1=3.7982\times 10^{-5}$) and exact CRV loop
+($\varepsilon_1^{\mathrm{CI}}=3.98\times 10^{-5}$); zero \texttt{sorry}.
 
 \subsection{QCD String Tension: Casimir Scaling Formula (\CatAD{})}\label{subsec:string-tension-catad}
 
@@ -7746,6 +7759,187 @@ This is a $2.6\times$ precision improvement over the previous calibrated value
 $91.35\,\mathrm{MeV}$ ($-0.81\%$), achieved with zero free parameters.
 \end{keybox}
 
+\begin{keybox}{\lstinline|alpha_em_inverse_structural_identity| (zero sorry)}
+The inverse fine-structure constant at zero momentum from GTE orbit arithmetic:
+\[
+  \frac{1}{\alpha_{\rm em}(0)} = 2^{|Z_7|} + N_{\rm gen}^2 = 2^7 + 3^2 = 128 + 9 = 137.
+\]
+Module: \texttt{Universality/AlphaEMStructuralIdentity.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|b0_casimir_relation| (zero sorry)}
+The one-loop QCD coefficient matches orbit-family counting:
+\[
+  b_0 = N_{\rm fam} + N_{\rm gen} - 1 = 5 + 3 - 1 = 7 = |Z_7|.
+\]
+Consequence: $C(b_0,N_{\rm gen})/C(b_0,N_{\rm fam}) = 5/3 = N_{\rm fam}/N_{\rm gen}$.
+Module: \texttt{Universality/CasimirB0Relation.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|top_bottom_mass_ratio_approx| (zero sorry)}
+Top-to-bottom quark $N_{\rm eff}$ ratio:
+\[
+  \frac{b_{\rm top}}{b_b} = \frac{337920}{8191} \approx 41.255,
+\]
+tracking $m_t/m_b$ to $0.072\%$ (PDG). Module: \texttt{Universality/GUTStructure.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|m_omega_ksrf_formula| (zero sorry)}
+$\omega$-meson mass from KSRF with GTE coupling $g_\omega^2 = N_{\rm gen}\,c_Z = 36$:
+\[
+  m_\omega = \sqrt{2\,g_\omega^2}\,f_\pi = \sqrt{72}\,f_\pi \approx 783.55\,\mathrm{MeV}
+  \quad (+0.11\%\text{ vs.\ PDG }782.65\,\mathrm{MeV}).
+\]
+Module: \texttt{MassRelations/MesonMasses.lean}; uses \lstinline|fpi_from_scc|.
+\end{keybox}
+
+\begin{keybox}{\lstinline|g_rho_sq_eq_casimir_orbit| (zero sorry)}
+$\rho$-meson isospin coupling squared from GTE orbit counting:
+\[
+  g_\rho^2 = C(b_0,N_{\rm gen}) = \binom{7}{3} = 35.
+\]
+Module: \texttt{MassRelations/MesonMasses.lean}; uses \lstinline|Z7_order|, \lstinline|n_gen|.
+\end{keybox}
+
+\begin{keybox}{\lstinline|g_omega_rho_coupling_gap| (zero sorry)}
+Coupling gap between $\omega$ and $\rho$ vector mesons:
+\[
+  g_\omega^2 - g_\rho^2 = N_{\rm gen}\,c_Z - C(b_0,N_{\rm gen}) = 36 - 35 = 1.
+\]
+Module: \texttt{MassRelations/MesonMasses.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|m_rho_ksrf_formula| (zero sorry)}
+$\rho$-meson mass from KSRF with $g_\rho^2 = 35$:
+\[
+  m_\rho = \sqrt{2\,g_\rho^2}\,f_\pi = \sqrt{70}\,f_\pi \approx 772.57\,\mathrm{MeV}
+  \quad (\text{GTE SCC; PDG }775.26\,\mathrm{MeV}).
+\]
+Numerical certificate \lstinline|m_rho_ksrf_scc_value| bounds the prediction within
+$0.1\,\mathrm{MeV}$ of $772.57\,\mathrm{MeV}$.
+Module: \texttt{MassRelations/MesonMasses.lean}; uses \lstinline|fpi_from_scc|.
+\end{keybox}
+
+\begin{keybox}{\lstinline|pion_mass_from_gor| (zero sorry)}
+GOR pion mass with GTE chiral condensate $\langle\bar\psi\psi\rangle_{\rm GTE}=-M_{\rm kink}^3$
+(\lstinline|chiral_condensate_kink_identification|) and $f_\pi=M_{\rm kink}/\pi$
+(\lstinline|fpi_from_scc|):
+\[
+  m_\pi = \pi\sqrt{(m_u+m_d)\,M_{\rm kink}}.
+\]
+Numerical certificate \lstinline|pion_mass_numerical_certificate| bounds the GTE
+quark sum $m_u+m_d=6.8040\,\mathrm{MeV}$ and $M_{\rm kink}=290.10\,\mathrm{MeV}$
+prediction $139.57\,\mathrm{MeV}$ vs.\ PDG $139.5703\,\mathrm{MeV}$.
+Module: \texttt{MassRelations/PionMassFromGOR.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|m_u_pdg_interval| (zero sorry, CatAD)}
+Up-type $m_u$ from the TT cascade at PDG $(m_e,m_\mu)$ anchors lies in the
+PDG 2024 interval $[2.09,2.23]\,\mathrm{MeV}$.
+Uses \lstinline|tt_exp_g0_bounds| from \texttt{TranscendentalMassBounds.lean}.
+Module: \texttt{MassRelations/QuarkMassNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|m_d_pdg_interval|, \lstinline|m_s_pdg_interval| (zero sorry, CatAD)}
+Down-type $m_d$ and $m_s$ from the VV cascade at PDG anchors lie in certified
+PDG bands (uses \lstinline|m_d_predicted_interval|,
+\lstinline|m_s_predicted_interval|).
+Module: \texttt{MassRelations/QuarkMassNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|m_c_pdg_interval|, \lstinline|m_t_pdg_interval| (zero sorry, CatAD)}
+Up-type $m_c$ and $m_t$ PDG intervals (uses \lstinline|m_c_predicted_interval|,
+\lstinline|m_t_predicted_interval|, \lstinline|tt_exp_g1_bounds|,
+\lstinline|tt_exp_g2_bounds|).
+Module: \texttt{MassRelations/QuarkMassNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|m_b_pdg_interval| (zero sorry, CatAD)}
+Bottom quark mass in $[4175,4191]\,\mathrm{MeV}$ at PDG anchors
+(uses \lstinline|m_b_predicted_interval|, \lstinline|vv_gamma_exp_bounds|,
+\lstinline|koide_tau_mass_bounds|).
+Certified in \texttt{QuarkMassNumericalCerts.lean} and
+\texttt{MassRelations/DownRational.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|m_W_pdg_interval| (zero sorry, CatAL)}
+GTE electroweak scale $M_W=80364\,\mathrm{MeV}$ lies in the PDG 2024 interval
+$(80351,80377)\,\mathrm{MeV}$.
+Module: \texttt{Universality/EWBosonNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|m_Z_gte_from_wolfenberg| (zero sorry, CatAL)}
+$M_Z = M_W/\sqrt{1-\sin^2\theta_W} = M_W\sqrt{13/10}$ (definitional from GTE
+Wolfenberg $\cos^2\theta_W=3/13$).
+Module: \texttt{Universality/EWBosonNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|m_Z_pdg_interval| (zero sorry, CatAD)}
+GTE $M_Z = M_W\sqrt{13/10}$ lies in $(91600,91660)\,\mathrm{MeV}$
+(uses \lstinline|sqrt_thirteen_ten_bounds|).
+Module: \texttt{Universality/EWBosonNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|sin2_theta_W_threshold_interval| (zero sorry, CatAD)}
+Threshold-corrected $\sin^2\theta_W$ in $[0.23128,0.23131]$ at GTE inputs
+(uses \lstinline|higgs_threshold_log_bound|,
+\lstinline|sin2_threshold_value_bounds|).
+Module: \texttt{Universality/EWBosonNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|fn_washout_sum_bounds| (zero sorry, CatAD)}
+Three-generation FN washout sum $S=1+\exp(-2\pi/3)+\exp(-2\pi)\in[1.124,1.126]$
+(uses \lstinline|exp_neg_two_pi_over_three_bounds|,
+\lstinline|exp_neg_two_pi_bounds|).
+Module: \texttt{MassRelations/SeesawNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|b5_seesaw_weight_bounds|, \lstinline|b11_seesaw_weight_bounds|, \lstinline|b19_seesaw_weight_bounds| (zero sorry, CatAL)}
+Integer 9th-power certificates $178<5^{29/9}<179$, $2267<11^{29/9}<2268$,
+$13195<19^{29/9}<13196$.
+Module: \texttt{MassRelations/SeesawNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|gte_delta_m21_sq_bounds|, \lstinline|gte_delta_m31_sq_bounds| (zero sorry, CatAD)}
+GTE neutrino splittings $\Delta m^2_{21}\in[7.36,7.38]\times10^{-5}\,\mathrm{eV}^2$,
+$\Delta m^2_{31}\in[2.509,2.513]\times10^{-3}\,\mathrm{eV}^2$ at $\Sigma m_\nu=59.4\,\mathrm{meV}$
+(uses \lstinline|gte_delta_m21_sq_interval|,
+\lstinline|gte_delta_m31_sq_interval|).
+Module: \texttt{MassRelations/SeesawNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|mr_gut_geV_bounds| (zero sorry, CatAD)}
+Common seesaw scale $M_{R,\mathrm{GUT}}\in[1.89,1.91]\times10^{16}\,\mathrm{GeV}$
+from $E_D=v_H/29$ and $C=\Sigma m_\nu/\sum b_i^{29/9}$
+(uses \lstinline|mr_gut_geV_interval|).
+Module: \texttt{MassRelations/SeesawNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|mr1_mr_gut_ratio_bounds| (zero sorry, CatAD)}
+Pati--Salam ratio $M_{R1}/M_{R,\mathrm{GUT}}=\exp(-\pi)/(19/5)^{29/9}\in[5.828,5.863]\times10^{-4}$
+(uses \lstinline|exp_neg_pi_bounds|,
+\lstinline|mr1_mr_gut_ratio_interval|).
+Module: \texttt{MassRelations/SeesawNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|bps_kink_is_half_instanton|, \lstinline|bps_per_tape_action| (zero sorry, CatAL)}
+BPS half-instanton $S_{\rm kink}=\tfrac12(2\pi/|Z_7|)$ and per-tape action
+$S_1=\pi/N_c=\pi/3$ from $|Z_7|$ cancellation.
+$T_{11}=0$ is definitionally certified (\lstinline|phi_mdl_kink_bps_saturation := rfl|; zero axioms).
+Module: \texttt{Physics/FKTTCoupling.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|per_tape_bps_action_eq_pi_over_Nc|, \lstinline|per_tape_bps_action_bound| (zero sorry, CatAL)}
+Per-tape BPS action $S_1=\pi/3$ and $S_1\in[1.047,1.048]$.
+Module: \texttt{Physics/FKTTCoupling.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|kink_top_coupling_eq_eps_FN|, \lstinline|kink_top_coupling_bounds| (zero sorry, CatAL)}
+Kink--top Yukawa $g_{\rm kink\text{-}top}=\exp(-S_1)=\varepsilon_{\rm FN}=\exp(-\pi/3)$
+with $g_{\rm kink\text{-}top}\in[0.3508,0.3510]$ (zero axioms; unconditional CatAL).
+Module: \texttt{Physics/FKTTCoupling.lean}.
+\end{keybox}
+
 \subsection[QEC Stabilizer Code]{QEC Stabilizer Code Interpretation of the
   \texorpdfstring{$[\mathbf{D}]$}{[D]}-Measure
   (\texttt{Spacetime/QECStabilizer.lean})}\label{subsec:qec-stabilizer}
@@ -8347,6 +8541,21 @@ Theorem & Module & Physical content \\
 \texttt{leptogenesis\_\allowbreak kink\_\allowbreak overlap\_\allowbreak catad}
   & Gravity.YukawaOverlapExponent
   & $f_1\times f_2 = 1/3025 = 1/(5^2\cdot 11^2)$ (\CatAD; \CatAL\ conditional on sech bridge) \\[1pt]
+\texttt{eta\_\allowbreak B\_\allowbreak PDG\_\allowbreak in\_\allowbreak GTE\_\allowbreak bracket}
+  & Gravity.YukawaOverlapExponent
+  & Planck $\eta_B$ in GTE sech--asymptotic interval $[5.62,6.36]\times 10^{-10}$ (\CatAL\ conditional) \\[1pt]
+\texttt{eta\_\allowbreak B\_\allowbreak loop\_\allowbreak bracket}
+  & Gravity.YukawaOverlapExponent
+  & Planck $\eta_B$ in loop-function interval $[6.06,6.36]\times 10^{-10}$ (\CatAL\ conditional) \\[1pt]
+\texttt{pmns\_\allowbreak atm\_\allowbreak nlo\_\allowbreak formula}
+  & MassRelations.PMNSNLOCorrection
+  & $\sin^2\theta_{23}^{\mathrm{NLO}} = b_{R2}b_{R3}/|F_{21}|^2 = 209/441$ (\CatAL) \\[1pt]
+\texttt{two\_\allowbreak b\_\allowbreak R2\_\allowbreak eq\_\allowbreak F21\_\allowbreak succ}
+  & MassRelations.PMNSNLOCorrection
+  & $2 b_{R2} = |F_{21}|+1 = 22$ (\CatAL) \\[1pt]
+\texttt{ngen\_\allowbreak eq\_\allowbreak nfam\_\allowbreak minus\_\allowbreak two}
+  & MassRelations.PMNSNLOCorrection
+  & $N_{\mathrm{gen}} = N_{\mathrm{fam}}-2 = 3$ (\CatAL) \\[1pt]
 \midrule
 \multicolumn{3}{@{}l}{\textit{FGCI and Frobenius chain (\CatAL)}} \\[2pt]
 \texttt{fgci\_\allowbreak unique\_\allowbreak at\_\allowbreak nc}

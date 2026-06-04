@@ -9,6 +9,7 @@ import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Positivity
 import UgpLean.MassRelations.KoideClosedForm
 import UgpLean.MassRelations.KoideNewtonFlow
+import UgpLean.Universality.GUTStructure
 
 /-!
 # UgpLean.MassRelations.PhysicalMasses — End-to-End Physical-Mass Bridge
@@ -228,6 +229,57 @@ theorem predicted_leptons_fixed_by_newton_flow (m_e m_mu : ℝ) :
   apply KoideNewtonFlow.newton_flow_fixes_null_cone
   rw [KoideNewtonFlow.q_eq_koideQuadratic]
   exact koide_identity_holds_on_physical m_e m_mu
+
+/-! ## PDG scale inputs and six-quark cascade bundle -/
+
+open GUTStructure
+
+/-- PDG 2024 electron mass (MeV) as a positive real scale input. -/
+noncomputable def pdg_m_e_mev : ℝ := (51099895 : ℚ) / 100000000
+
+/-- PDG 2024 muon mass (MeV) as a positive real scale input. -/
+noncomputable def pdg_m_mu_mev : ℝ := (1056583755 : ℚ) / 10000000
+
+theorem pdg_m_e_pos : 0 < pdg_m_e_mev := by unfold pdg_m_e_mev; norm_num
+
+theorem pdg_m_mu_pos : 0 < pdg_m_mu_mev := by unfold pdg_m_mu_mev; norm_num
+
+/-- **six_quark_tt_vv_cascade_bundle** (CatAL): TT and VV formulas hold on PDG-scaled
+    predictions for all three generations, with positive predicted masses. -/
+theorem six_quark_tt_vv_cascade_bundle :
+    (∀ g : Nat, g < 3 →
+      Real.log (predictedUpType pdg_m_e_mev pdg_m_mu_mev g / predictedLepton pdg_m_e_mev pdg_m_mu_mev g) =
+        (π / 6) * (2^(g+1) : ℕ) + π / 8) ∧
+    (∀ g : Nat, g < 3 →
+      Real.log (predictedDownType pdg_m_e_mev pdg_m_mu_mev g) =
+        (13 / 9 : ℝ) * Real.log (predictedUpType pdg_m_e_mev pdg_m_mu_mev g) +
+        (-7 / 6 : ℝ) * Real.log (predictedLepton pdg_m_e_mev pdg_m_mu_mev g) +
+        (-5 / 14 : ℝ)) ∧
+    (∀ g : Nat, g < 3 → 0 < predictedUpType pdg_m_e_mev pdg_m_mu_mev g) ∧
+    (∀ g : Nat, g < 3 → 0 < predictedDownType pdg_m_e_mev pdg_m_mu_mev g) := by
+  refine ⟨?tt, ?vv, ?up, ?down⟩
+  · intro g hg
+    exact TT_formula_holds_on_physical pdg_m_e_pos pdg_m_mu_pos g
+  · intro g _
+    exact VV_formula_holds_on_physical pdg_m_e_mev pdg_m_mu_mev g
+  · intro g hg
+    exact predictedUpType_pos pdg_m_e_pos pdg_m_mu_pos g
+  · intro g _
+    exact predictedDownType_pos pdg_m_e_mev pdg_m_mu_mev g
+
+/-- Bottom-quark prediction at generation 3 (index 2) from the VV cascade. -/
+noncomputable def predicted_m_bottom_mev : ℝ :=
+  predictedDownType pdg_m_e_mev pdg_m_mu_mev 2
+
+theorem predicted_m_bottom_pos : 0 < predicted_m_bottom_mev :=
+  predictedDownType_pos pdg_m_e_mev pdg_m_mu_mev 2
+
+theorem predicted_m_bottom_vv_holds :
+    Real.log predicted_m_bottom_mev =
+      (13 / 9 : ℝ) * Real.log (predictedUpType pdg_m_e_mev pdg_m_mu_mev 2) +
+      (-7 / 6 : ℝ) * Real.log (koidePredictedMTau pdg_m_e_mev pdg_m_mu_mev) +
+      (-5 / 14 : ℝ) :=
+  VV_formula_holds_on_physical pdg_m_e_mev pdg_m_mu_mev 2
 
 end
 

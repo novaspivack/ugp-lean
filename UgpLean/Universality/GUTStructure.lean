@@ -1975,6 +1975,16 @@ theorem neff_t_factors :
 theorem top_bottom_ratio_q : (b_top : ℚ) / b_b = 337920 / 8191 := by
   norm_num [b_top, b_b, EWBosonStructure.c_higgs, n_gen, n_fam]
 
+/-- **top_bottom_mass_ratio_approx** (CatAL):
+    The orbit ratio b_top/b_b ≈ 41.255, tracking m_t/m_b to sub-per-mille accuracy. -/
+theorem top_bottom_mass_ratio_approx :
+    |(b_top : ℚ) / b_b - 41.255| < (1 : ℚ) / 1000 := by
+  norm_num [b_top, b_b, EWBosonStructure.c_higgs, n_gen, n_fam]
+
+/-- **top_bottom_orbit_ratio** (CatAL): alias of the exact rational orbit ratio. -/
+theorem top_bottom_orbit_ratio : (b_top : ℚ) / b_b = 337920 / 8191 :=
+  top_bottom_ratio_q
+
 /-- **bb_bs_product_not_square** (CatAL):
     The product b_b × b_s = 8191 × 186 = 1,523,526 is not a perfect square.
 

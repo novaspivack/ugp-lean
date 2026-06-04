@@ -2,6 +2,9 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.NumberTheory.Real.GoldenRatio
 import UgpLean.MassRelations.ClebschGordan
+import UgpLean.MassRelations.PhysicalMasses
+import UgpLean.MassRelations.QuarkMassNumericalCerts
+import UgpLean.Universality.GUTStructure
 
 /-!
 # UgpLean.MassRelations.DownRational — VV formula
@@ -309,5 +312,37 @@ theorem VV_from_GUT_group_theory :
     beta_d  = -(1 + 1 / (2 * (3 : ℚ))) ∧
     gamma_d = -(dim_45_SU5_val : ℚ) / dim_126_SO10_val :=
   ⟨alpha_d_from_GUT_rank, beta_d_from_GUT_hypercharge, gamma_d_from_GUT_dims⟩
+
+/-! ## §9. Bottom quark from VV cascade at PDG lepton anchors -/
+
+open UgpLean.MassRelations.PhysicalMasses
+open GUTStructure
+
+/-- **bottom_quark_vv_cascade** (CatAL): the generation-3 down-type mass from TT+VV
+    satisfies the certified VV log identity at PDG (m_e, m_μ) anchors. -/
+theorem bottom_quark_vv_cascade :
+    Real.log PhysicalMasses.predicted_m_bottom_mev =
+      (13 / 9 : ℝ) * Real.log (PhysicalMasses.predictedUpType
+        PhysicalMasses.pdg_m_e_mev PhysicalMasses.pdg_m_mu_mev 2) +
+      (-7 / 6 : ℝ) * Real.log (PhysicalMasses.koidePredictedMTau
+        PhysicalMasses.pdg_m_e_mev PhysicalMasses.pdg_m_mu_mev) +
+      (-5 / 14 : ℝ) :=
+  PhysicalMasses.predicted_m_bottom_vv_holds
+
+/-- **bottom_quark_neff_value** (CatAL): b_b = 8191 from the GTE orbit capstone. -/
+theorem bottom_quark_neff_value : b_b = 8191 :=
+  neff_b_value
+
+/-- **bottom_mass_orbit_ratio** (CatAL): b_top/b_b tracks m_t/m_b at 0.072% (rational bound). -/
+theorem bottom_mass_orbit_ratio :
+    |(b_top : ℚ) / b_b - 41.255| < (1 : ℚ) / 1000 :=
+  top_bottom_mass_ratio_approx
+
+/-- GTE bottom-quark mass (MeV-scale) from the VV cascade at generation 2. -/
+noncomputable def m_b_GTE_MeV : ℝ := PhysicalMasses.predicted_m_bottom_mev
+
+/-- **m_b_pdg_interval** (CatAD): GTE m_b in the PDG 2024 MS-bar interval. -/
+theorem m_b_pdg_interval : (4175 : ℝ) < m_b_GTE_MeV ∧ m_b_GTE_MeV < (4191 : ℝ) := by
+  simpa [m_b_GTE_MeV] using QuarkMassNumericalCerts.m_b_pdg_interval
 
 end UgpLean.MassRelations.DownRational
