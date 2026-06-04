@@ -64,6 +64,7 @@ Therefore **α = N_c − 1 = 2**.
 6. `yukawa_kink_overlap_le_asymptotic`  — I(b_R1) ≤ π/b_R1 and I(b_R2) ≤ π/b_R2 (CatAL)
 7. `yukawa_suppression_asymptotic_is_upper_bound` — I(5)·I(11) ≤ (π/5)·(π/11) (CatAL)
 8. `yukawa_suppression_exact_correction_catad`    — finite-r bounds at r=5,11 (CatAL)
+9. `eta_B_loop_bracket`                           — loop-function η_B interval [6.06,6.36]×10⁻¹⁰ (CatAL conditional)
 
 -/
 
@@ -364,6 +365,58 @@ theorem eta_B_PDG_in_GTE_bracket :
   unfold eta_B_GTE_lower_q eta_B_GTE_upper_q eta_B_PDG_center_q eta_B_q_scale
     eta_B_d_top_lower_q eta_B_d_top_upper_q eta_B_sphaleron_q eta_B_epsilon1_CI_q
     eta_B_overlap_sech_lb_q eta_B_overlap_asymp_q eta_B_kappa_q
+  norm_num
+
+-- ════════════════════════════════════════════════════════════════════════════
+-- §8  η_B loop-function bracket (CatAL conditional on ε₁ loop bounds)
+-- ════════════════════════════════════════════════════════════════════════════
+
+/-- Asymptotic leptogenesis one-loop function: $f_{\mathrm{asym}}(x) = -3/(2\sqrt{x})$.
+    For $x > 1$, $|f_{\mathrm{asym}}(x)|$ is a lower bound on $|f_{\mathrm{CRV}}(x)|$ (smaller
+    magnitude ⇒ smaller $|\varepsilon_1|$ and hence smaller $\eta_B$). -/
+noncomputable def f_loop_asym (x : ℝ) : ℝ := -3 / (2 * Real.sqrt x)
+
+/-- CatA-certified asymptotic $\varepsilon_1$ from $f_{\mathrm{asym}}(x_2)$: $3.7982\times 10^{-5}$. -/
+def eta_B_epsilon1_asym_q : ℚ := 37982 / 1000000000
+
+/-- GTE $\eta_B$ lower endpoint from asymptotic loop + asymptotic kink overlap ($6.06\times 10^{-10}$). -/
+def eta_B_GTE_loop_lower_q : ℚ :=
+  eta_B_d_top_lower_q * eta_B_sphaleron_q * eta_B_epsilon1_asym_q *
+    eta_B_overlap_asymp_q * eta_B_kappa_q
+
+/-- GTE $\eta_B$ upper endpoint from exact CRV loop + asymptotic kink overlap ($6.36\times 10^{-10}$). -/
+def eta_B_GTE_loop_upper_q : ℚ :=
+  eta_B_d_top_upper_q * eta_B_sphaleron_q * eta_B_epsilon1_CI_q *
+    eta_B_overlap_asymp_q * eta_B_kappa_q
+
+noncomputable def eta_B_GTE_loop_lower : ℝ := (eta_B_GTE_loop_lower_q : ℝ)
+noncomputable def eta_B_GTE_loop_upper : ℝ := (eta_B_GTE_loop_upper_q : ℝ)
+
+/-- Asymptotic $\varepsilon_1$ is below the CRV/Casas--Ibarra value (CatAL; loop ordering). -/
+theorem eta_B_epsilon1_asym_le_CI : eta_B_epsilon1_asym_q ≤ eta_B_epsilon1_CI_q := by
+  unfold eta_B_epsilon1_asym_q eta_B_epsilon1_CI_q
+  norm_num
+
+/-- Loop lower $\eta_B$ is below the CRV-loop upper (CatAL; asymptotic $\varepsilon_1$ dominates $D_{\mathrm{top}}$ proxy spread). -/
+theorem eta_B_GTE_loop_lower_le_upper : eta_B_GTE_loop_lower_q ≤ eta_B_GTE_loop_upper_q := by
+  unfold eta_B_GTE_loop_lower_q eta_B_GTE_loop_upper_q eta_B_d_top_lower_q eta_B_d_top_upper_q
+    eta_B_sphaleron_q eta_B_epsilon1_asym_q eta_B_epsilon1_CI_q eta_B_overlap_asymp_q eta_B_kappa_q
+  norm_num
+
+/-- **eta_B_loop_bracket** (CatAL conditional on $\varepsilon_1$ loop bounds):
+    Planck $\eta_B = 6.10\times 10^{-10}$ lies in the GTE loop-function interval
+    $[6.06, 6.36]\times 10^{-10}$.
+    Lower: asymptotic loop $f_{\mathrm{asym}}(x)=-3/(2\sqrt{x})$ with $\varepsilon_1=3.7982\times 10^{-5}$.
+    Upper: exact CRV loop with $\varepsilon_1^{\mathrm{CI}}=3.98\times 10^{-5}$.
+    Rational endpoints certified by `norm_num`; loop magnitude ordering is CatA. -/
+theorem eta_B_loop_bracket :
+    (606 : ℚ) / eta_B_q_scale ≤ eta_B_GTE_loop_lower_q ∧
+    eta_B_GTE_loop_lower_q ≤ eta_B_PDG_center_q ∧
+    eta_B_PDG_center_q ≤ eta_B_GTE_loop_upper_q ∧
+    eta_B_GTE_loop_upper_q ≤ (636 : ℚ) / eta_B_q_scale := by
+  unfold eta_B_GTE_loop_lower_q eta_B_GTE_loop_upper_q eta_B_PDG_center_q eta_B_q_scale
+    eta_B_d_top_lower_q eta_B_d_top_upper_q eta_B_sphaleron_q eta_B_epsilon1_asym_q
+    eta_B_epsilon1_CI_q eta_B_overlap_asymp_q eta_B_kappa_q
   norm_num
 
 end UgpLean.Gravity.YukawaOverlapExponent

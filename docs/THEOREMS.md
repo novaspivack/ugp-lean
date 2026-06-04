@@ -1068,6 +1068,9 @@ Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `Sec
 | **yukawa_overlap_tape_count** | Gravity.YukawaOverlapExponent | Fermion-sector tape count certified (CatAL) |
 | **yukawa_total_tapes** | Gravity.YukawaOverlapExponent | Total tape budget for Yukawa vertex (CatAL) |
 | **eta_B_PDG_in_GTE_bracket** | Gravity.YukawaOverlapExponent | Planck $\eta_B$ in GTE interval $[5.62,6.36]\times 10^{-10}$ (CatAL conditional on $\varepsilon_1^{\mathrm{CI}}$, $\kappa$) |
+| **eta_B_loop_bracket** | Gravity.YukawaOverlapExponent | Planck $\eta_B$ in loop-function interval $[6.06,6.36]\times 10^{-10}$ (CatAL conditional on asymptotic/CRV $\varepsilon_1$) |
+| **eta_B_epsilon1_asym_le_CI** | Gravity.YukawaOverlapExponent | Asymptotic loop $\varepsilon_1 \leq \varepsilon_1^{\mathrm{CI}}$ (CatAL) |
+| **eta_B_GTE_loop_lower_le_upper** | Gravity.YukawaOverlapExponent | Loop-bracket endpoints ordered: $\eta_B^{\mathrm{asym}} \leq \eta_B^{\mathrm{CRV}}$ (CatAL) |
 
 ### PMNS NLO atmospheric mixing (`MassRelations.PMNSNLOCorrection`)
 
