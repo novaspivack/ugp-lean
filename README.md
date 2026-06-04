@@ -17,7 +17,7 @@
 
 This repository is part of the **Reflexive Reality** research program by [Nova Spivack](https://www.novaspivack.com/).
 
-**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, quantum gravity completion, three-tape CMCA, self-reference, and W₁ Wasserstein distance scaffold (fully CatAL, zero sorry). **301 modules, zero sorry on the core proof path** (two pre-existing sorry placeholders in `GTE/AnalyticArchitecture` are outside the core path; see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list). **221** net-new certified theorems added in this release. Sech overlap finite-$r$ bounds: **0 sorry** in `PhiMDLFluctuationSpectrum` and `SechOverlapIntegralBounds`; **2 CatA axioms** in `SechOverlapIntegralBounds_bridge.lean` document the mesh→integral bridge.
+**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, quantum gravity completion, three-tape CMCA, self-reference, and W₁ Wasserstein distance scaffold (fully CatAL, zero sorry). **302 modules, zero sorry on the core proof path** (two pre-existing sorry placeholders in `GTE/AnalyticArchitecture` are outside the core path; see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list). **221** net-new certified theorems added in this release. Sech overlap finite-$r$ bounds: **0 sorry** in `PhiMDLFluctuationSpectrum` and `SechOverlapIntegralBounds`; **2 CatA axioms** in `SechOverlapIntegralBounds_bridge.lean` document the mesh→integral bridge.
 
 | Link | Description |
 |------|-------------|
@@ -40,7 +40,7 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 
 ---
 
-## Module structure (301 modules; **17 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
+## Module structure (302 modules; **17 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
 
 | Layer | Count | Modules |
 |-------|-------|---------|

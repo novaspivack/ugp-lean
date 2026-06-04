@@ -27,6 +27,7 @@ import UgpLean.MassRelations.CKMTheta23
 import UgpLean.MassRelations.CKMMixing
 import UgpLean.MassRelations.CKMCPPhase
 import UgpLean.MassRelations.NeutrinoMassRatio
+import UgpLean.MassRelations.SeesawNumericalCerts
 import UgpLean.MassRelations.NeutrinoVacuumSectorL2
 import UgpLean.MassRelations.NeutrinoSector
 import UgpLean.MassRelations.HiggsQuartic

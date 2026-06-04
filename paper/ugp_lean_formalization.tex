@@ -7887,6 +7887,41 @@ Threshold-corrected $\sin^2\theta_W$ in $[0.23128,0.23131]$ at GTE inputs
 Module: \texttt{Universality/EWBosonNumericalCerts.lean}.
 \end{keybox}
 
+\begin{keybox}{\lstinline|fn_washout_sum_bounds| (zero sorry, CatAD)}
+Three-generation FN washout sum $S=1+\exp(-2\pi/3)+\exp(-2\pi)\in[1.124,1.126]$
+(uses \lstinline|exp_neg_two_pi_over_three_bounds|,
+\lstinline|exp_neg_two_pi_bounds|).
+Module: \texttt{MassRelations/SeesawNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|b5_seesaw_weight_bounds|, \lstinline|b11_seesaw_weight_bounds|, \lstinline|b19_seesaw_weight_bounds| (zero sorry, CatAL)}
+Integer 9th-power certificates $178<5^{29/9}<179$, $2267<11^{29/9}<2268$,
+$13195<19^{29/9}<13196$.
+Module: \texttt{MassRelations/SeesawNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|gte_delta_m21_sq_bounds|, \lstinline|gte_delta_m31_sq_bounds| (zero sorry, CatAD)}
+GTE neutrino splittings $\Delta m^2_{21}\in[7.36,7.38]\times10^{-5}\,\mathrm{eV}^2$,
+$\Delta m^2_{31}\in[2.509,2.513]\times10^{-3}\,\mathrm{eV}^2$ at $\Sigma m_\nu=59.4\,\mathrm{meV}$
+(uses \lstinline|gte_delta_m21_sq_interval|,
+\lstinline|gte_delta_m31_sq_interval|).
+Module: \texttt{MassRelations/SeesawNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|mr_gut_geV_bounds| (zero sorry, CatAD)}
+Common seesaw scale $M_{R,\mathrm{GUT}}\in[1.89,1.91]\times10^{16}\,\mathrm{GeV}$
+from $E_D=v_H/29$ and $C=\Sigma m_\nu/\sum b_i^{29/9}$
+(uses \lstinline|mr_gut_geV_interval|).
+Module: \texttt{MassRelations/SeesawNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|mr1_mr_gut_ratio_bounds| (zero sorry, CatAD)}
+Pati--Salam ratio $M_{R1}/M_{R,\mathrm{GUT}}=\exp(-\pi)/(19/5)^{29/9}\in[5.828,5.863]\times10^{-4}$
+(uses \lstinline|exp_neg_pi_bounds|,
+\lstinline|mr1_mr_gut_ratio_interval|).
+Module: \texttt{MassRelations/SeesawNumericalCerts.lean}.
+\end{keybox}
+
 \subsection[QEC Stabilizer Code]{QEC Stabilizer Code Interpretation of the
   \texorpdfstring{$[\mathbf{D}]$}{[D]}-Measure
   (\texttt{Spacetime/QECStabilizer.lean})}\label{subsec:qec-stabilizer}

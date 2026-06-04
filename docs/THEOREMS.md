@@ -1198,6 +1198,20 @@ Interval axioms for `Real.exp`/`Real.log` factors used by quark and EW numerical
 | **m_Z_pdg_interval** | Universality.EWBosonNumericalCerts | $M_Z\in(91600,91660)\,\mathrm{MeV}$ (uses **sqrt_thirteen_ten_bounds**) | CatAD |
 | **sin2_theta_W_threshold_interval** | Universality.EWBosonNumericalCerts | $\sin^2\theta_W\in[0.23128,0.23131]$ (uses **higgs_threshold_log_bound**, **sin2_threshold_value_bounds**) | CatAD |
 
+### Seesaw and leptogenesis numerical certificates (`MassRelations.SeesawNumericalCerts`)
+
+| Theorem | Module | Statement | Cat |
+|---------|--------|-----------|-----|
+| **fn_washout_sum_bounds** | MassRelations.SeesawNumericalCerts | $S=1+\exp(-2\pi/3)+\exp(-2\pi)\in[1.124,1.126]$ (uses **exp_neg_two_pi_over_three_bounds**, **exp_neg_two_pi_bounds**) | CatAD |
+| **b5_seesaw_weight_bounds** | MassRelations.SeesawNumericalCerts | $178<5^{29/9}<179$ (integer 9th-power, **norm_num**) | CatAL |
+| **b11_seesaw_weight_bounds** | MassRelations.SeesawNumericalCerts | $2267<11^{29/9}<2268$ | CatAL |
+| **b19_seesaw_weight_bounds** | MassRelations.SeesawNumericalCerts | $13195<19^{29/9}<13196$ | CatAL |
+| **gte_delta_m21_sq_bounds** | MassRelations.SeesawNumericalCerts | $\Delta m^2_{21}\in[7.36,7.38]\times10^{-5}\,\mathrm{eV}^2$ (uses **gte_delta_m21_sq_interval**) | CatAD |
+| **gte_delta_m31_sq_bounds** | MassRelations.SeesawNumericalCerts | $\Delta m^2_{31}\in[2.509,2.513]\times10^{-3}\,\mathrm{eV}^2$ (uses **gte_delta_m31_sq_interval**) | CatAD |
+| **mr_gut_geV_bounds** | MassRelations.SeesawNumericalCerts | $M_{R,\mathrm{GUT}}\in[1.89,1.91]\times10^{16}\,\mathrm{GeV}$ (uses **mr_gut_geV_interval**) | CatAD |
+| **mr1_mr_gut_ratio_bounds** | MassRelations.SeesawNumericalCerts | $M_{R1}/M_{R,\mathrm{GUT}}\in[5.828,5.863]\times10^{-4}$ (uses **exp_neg_pi_bounds**, **mr1_mr_gut_ratio_interval**) | CatAD |
+| **seesaw_leptogenesis_cert_bundle** | MassRelations.SeesawNumericalCerts | Conjunction of all five target interval certificates | CatAD |
+
 ### GUTStructure additions (`Universality.GUTStructure` §35)
 
 | Theorem | Module | Statement |
@@ -1208,7 +1222,7 @@ Interval axioms for `Real.exp`/`Real.log` factors used by quark and EW numerical
 | **z7_symmetry_forces_equal_sector_action** | Universality.GUTStructure | Equal distribution forced: S_per = q_dark/|Z₇\*| = 2/6 = 1/3 = 1/N_c (CatAL) |
 | **d_top_derivation_chain_catal** | Universality.GUTStructure | Master CatAL assembly: BPS S₀/T=1 + q_dark=2 + |Z₇\*|=6 + Z₇ transitivity → D_top = exp(−1/N_c) (CatAL) |
 
-**Recent additions catalog count:** 61 named flagship theorems plus 40 interval-bound lemmas and 25 UCL margin/delta certificates documented in the module list above (**221** total net-new names).
+**Recent additions catalog count:** 70 named flagship theorems plus 40 interval-bound lemmas and 25 UCL margin/delta certificates documented in the module list above (**230** total net-new names).
 
 ## External Citations (Not Formalized)
 
