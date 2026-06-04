@@ -7793,6 +7793,60 @@ prediction $139.57\,\mathrm{MeV}$ vs.\ PDG $139.5703\,\mathrm{MeV}$.
 Module: \texttt{MassRelations/PionMassFromGOR.lean}.
 \end{keybox}
 
+\begin{keybox}{\lstinline|m_u_pdg_interval| (zero sorry, CatAD)}
+Up-type $m_u$ from the TT cascade at PDG $(m_e,m_\mu)$ anchors lies in the
+PDG 2024 interval $[2.09,2.23]\,\mathrm{MeV}$.
+Uses \lstinline|tt_exp_g0_bounds| from \texttt{TranscendentalMassBounds.lean}.
+Module: \texttt{MassRelations/QuarkMassNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|m_d_pdg_interval|, \lstinline|m_s_pdg_interval| (zero sorry, CatAD)}
+Down-type $m_d$ and $m_s$ from the VV cascade at PDG anchors lie in certified
+PDG bands (uses \lstinline|m_d_predicted_interval|,
+\lstinline|m_s_predicted_interval|).
+Module: \texttt{MassRelations/QuarkMassNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|m_c_pdg_interval|, \lstinline|m_t_pdg_interval| (zero sorry, CatAD)}
+Up-type $m_c$ and $m_t$ PDG intervals (uses \lstinline|m_c_predicted_interval|,
+\lstinline|m_t_predicted_interval|, \lstinline|tt_exp_g1_bounds|,
+\lstinline|tt_exp_g2_bounds|).
+Module: \texttt{MassRelations/QuarkMassNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|m_b_pdg_interval| (zero sorry, CatAD)}
+Bottom quark mass in $[4175,4191]\,\mathrm{MeV}$ at PDG anchors
+(uses \lstinline|m_b_predicted_interval|, \lstinline|vv_gamma_exp_bounds|,
+\lstinline|koide_tau_mass_bounds|).
+Certified in \texttt{QuarkMassNumericalCerts.lean} and
+\texttt{MassRelations/DownRational.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|m_W_pdg_interval| (zero sorry, CatAL)}
+GTE electroweak scale $M_W=80364\,\mathrm{MeV}$ lies in the PDG 2024 interval
+$(80351,80377)\,\mathrm{MeV}$.
+Module: \texttt{Universality/EWBosonNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|m_Z_gte_from_wolfenberg| (zero sorry, CatAL)}
+$M_Z = M_W/\sqrt{1-\sin^2\theta_W} = M_W\sqrt{13/10}$ (definitional from GTE
+Wolfenberg $\cos^2\theta_W=3/13$).
+Module: \texttt{Universality/EWBosonNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|m_Z_pdg_interval| (zero sorry, CatAD)}
+GTE $M_Z = M_W\sqrt{13/10}$ lies in $(91600,91660)\,\mathrm{MeV}$
+(uses \lstinline|sqrt_thirteen_ten_bounds|).
+Module: \texttt{Universality/EWBosonNumericalCerts.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|sin2_theta_W_threshold_interval| (zero sorry, CatAD)}
+Threshold-corrected $\sin^2\theta_W$ in $[0.23128,0.23131]$ at GTE inputs
+(uses \lstinline|higgs_threshold_log_bound|,
+\lstinline|sin2_threshold_value_bounds|).
+Module: \texttt{Universality/EWBosonNumericalCerts.lean}.
+\end{keybox}
+
 \subsection[QEC Stabilizer Code]{QEC Stabilizer Code Interpretation of the
   \texorpdfstring{$[\mathbf{D}]$}{[D]}-Measure
   (\texttt{Spacetime/QECStabilizer.lean})}\label{subsec:qec-stabilizer}

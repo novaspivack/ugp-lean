@@ -1141,6 +1141,41 @@ Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `Sec
 | **pion_mass_from_gor** | MassRelations.PionMassFromGOR | $m_\pi=\pi\sqrt{(m_u+m_d)M_{\rm kink}}$ from GOR + SCC (CatAL) |
 | **pion_mass_numerical_certificate** | MassRelations.PionMassFromGOR | GTE $m_u+m_d=6.8040$ MeV, $M_{\rm kink}=290.10$ MeV $\Rightarrow$ $m_\pi\approx 139.57$ MeV (CatAL) |
 
+### Transcendental mass bounds (`MassRelations.TranscendentalMassBounds`)
+
+Interval axioms for `Real.exp`/`Real.log` factors used by quark and EW numerical certificates (zero sorry in consumers; axioms state tight rational brackets only).
+
+| Name | Module | Statement | Cat |
+|------|--------|-----------|-----|
+| **tt_exp_g0_bounds** | MassRelations.TranscendentalMassBounds | $\exp((\pi/6)\cdot 2+\pi/8)$ for $m_u$ TT factor | CatA (axiom) |
+| **tt_exp_g1_bounds**, **tt_exp_g2_bounds** | MassRelations.TranscendentalMassBounds | TT factors at $g=1,2$ for $m_c$, $m_t$ | CatA (axiom) |
+| **vv_gamma_exp_bounds** | MassRelations.TranscendentalMassBounds | $\exp(-5/14)$ VV offset | CatA (axiom) |
+| **koide_tau_mass_bounds** | MassRelations.TranscendentalMassBounds | Koide $\tau$ mass at PDG $(m_e,m_\mu)$ | CatA (axiom) |
+| **m_d_predicted_interval**, **m_s_predicted_interval**, **m_b_predicted_interval** | MassRelations.TranscendentalMassBounds | Down-type PDG bands at anchors | CatA (axiom) |
+| **m_c_predicted_interval**, **m_t_predicted_interval** | MassRelations.TranscendentalMassBounds | Up-type PDG bands at anchors | CatA (axiom) |
+| **higgs_threshold_log_bound** | MassRelations.TranscendentalMassBounds | $\ln(m_H/M_Z)$ for Weinberg threshold | CatA (axiom) |
+| **sin2_threshold_value_bounds** | MassRelations.TranscendentalMassBounds | Threshold-corrected $\sin^2\theta_W$ band | CatA (axiom) |
+
+### Quark PDG interval certificates (`MassRelations.QuarkMassNumericalCerts`)
+
+| Theorem | Module | Statement | Cat |
+|---------|--------|-----------|-----|
+| **m_u_pdg_interval** | MassRelations.QuarkMassNumericalCerts | $m_u\in[2.09,2.23]\,\mathrm{MeV}$ (uses **tt_exp_g0_bounds**) | CatAD |
+| **m_d_pdg_interval** | MassRelations.QuarkMassNumericalCerts | $m_d$ in PDG band (uses **m_d_predicted_interval**) | CatAD |
+| **m_s_pdg_interval** | MassRelations.QuarkMassNumericalCerts | $m_s$ in PDG band (uses **m_s_predicted_interval**) | CatAD |
+| **m_c_pdg_interval** | MassRelations.QuarkMassNumericalCerts | $m_c$ in PDG band (uses **m_c_predicted_interval**) | CatAD |
+| **m_t_pdg_interval** | MassRelations.QuarkMassNumericalCerts | $m_t$ in PDG band (uses **m_t_predicted_interval**) | CatAD |
+| **m_b_pdg_interval** | MassRelations.QuarkMassNumericalCerts | $m_b\in(4175,4191)\,\mathrm{MeV}$ (uses **m_b_predicted_interval**) | CatAD |
+
+### Electroweak numerical certificates (`Universality.EWBosonNumericalCerts`)
+
+| Theorem | Module | Statement | Cat |
+|---------|--------|-----------|-----|
+| **m_W_pdg_interval** | Universality.EWBosonNumericalCerts | $M_W=80364\,\mathrm{MeV}\in(80351,80377)\,\mathrm{MeV}$ | CatAL |
+| **m_Z_gte_from_wolfenberg** | Universality.EWBosonNumericalCerts | $M_Z=M_W\sqrt{13/10}$ from GTE $\cos^2\theta_W=3/13$ | CatAL |
+| **m_Z_pdg_interval** | Universality.EWBosonNumericalCerts | $M_Z\in(91600,91660)\,\mathrm{MeV}$ (uses **sqrt_thirteen_ten_bounds**) | CatAD |
+| **sin2_theta_W_threshold_interval** | Universality.EWBosonNumericalCerts | $\sin^2\theta_W\in[0.23128,0.23131]$ (uses **higgs_threshold_log_bound**, **sin2_threshold_value_bounds**) | CatAD |
+
 ### GUTStructure additions (`Universality.GUTStructure` §35)
 
 | Theorem | Module | Statement |
