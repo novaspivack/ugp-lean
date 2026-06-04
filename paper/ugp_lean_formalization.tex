@@ -7780,6 +7780,19 @@ $\omega$-meson mass from KSRF with GTE coupling $g_\omega^2 = N_{\rm gen}\,c_Z =
 Module: \texttt{MassRelations/MesonMasses.lean}; uses \lstinline|fpi_from_scc|.
 \end{keybox}
 
+\begin{keybox}{\lstinline|pion_mass_from_gor| (zero sorry)}
+GOR pion mass with GTE chiral condensate $\langle\bar\psi\psi\rangle_{\rm GTE}=-M_{\rm kink}^3$
+(\lstinline|chiral_condensate_kink_identification|) and $f_\pi=M_{\rm kink}/\pi$
+(\lstinline|fpi_from_scc|):
+\[
+  m_\pi = \pi\sqrt{(m_u+m_d)\,M_{\rm kink}}.
+\]
+Numerical certificate \lstinline|pion_mass_numerical_certificate| bounds the GTE
+quark sum $m_u+m_d=6.8040\,\mathrm{MeV}$ and $M_{\rm kink}=290.10\,\mathrm{MeV}$
+prediction $139.57\,\mathrm{MeV}$ vs.\ PDG $139.5703\,\mathrm{MeV}$.
+Module: \texttt{MassRelations/PionMassFromGOR.lean}.
+\end{keybox}
+
 \subsection[QEC Stabilizer Code]{QEC Stabilizer Code Interpretation of the
   \texorpdfstring{$[\mathbf{D}]$}{[D]}-Measure
   (\texttt{Spacetime/QECStabilizer.lean})}\label{subsec:qec-stabilizer}

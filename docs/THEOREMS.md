@@ -1137,6 +1137,9 @@ Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `Sec
 | **g_omega_sq_eq_ngen_times_cz** | MassRelations.MesonMasses | $g_\omega^2=N_{\rm gen}\,c_Z=36$ (CatAL) |
 | **m_omega_ksrf_formula** | MassRelations.MesonMasses | $m_\omega=\sqrt{72}\,f_\pi$ from KSRF (CatAL) |
 | **m_omega_pdg_agreement** | MassRelations.MesonMasses | $|783.55\,\mathrm{MeV}-782.65\,\mathrm{MeV}|<1\,\mathrm{MeV}$ rational proxy (CatAL) |
+| **chiral_condensate_kink_identification** | MassRelations.PionMassFromGOR | $|\langle\bar\psi\psi\rangle_{\rm GTE}|=M_{\rm kink}^3$ (CatAL) |
+| **pion_mass_from_gor** | MassRelations.PionMassFromGOR | $m_\pi=\pi\sqrt{(m_u+m_d)M_{\rm kink}}$ from GOR + SCC (CatAL) |
+| **pion_mass_numerical_certificate** | MassRelations.PionMassFromGOR | GTE $m_u+m_d=6.8040$ MeV, $M_{\rm kink}=290.10$ MeV $\Rightarrow$ $m_\pi\approx 139.57$ MeV (CatAL) |
 
 ### GUTStructure additions (`Universality.GUTStructure` §35)
 
