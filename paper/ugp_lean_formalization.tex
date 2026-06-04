@@ -7922,10 +7922,10 @@ Pati--Salam ratio $M_{R1}/M_{R,\mathrm{GUT}}=\exp(-\pi)/(19/5)^{29/9}\in[5.828,5
 Module: \texttt{MassRelations/SeesawNumericalCerts.lean}.
 \end{keybox}
 
-\begin{keybox}{\lstinline|bps_kink_is_half_instanton|, \lstinline|bps_per_tape_action| (zero sorry, CatAD-conditional)}
+\begin{keybox}{\lstinline|bps_kink_is_half_instanton|, \lstinline|bps_per_tape_action| (zero sorry, CatAL)}
 BPS half-instanton $S_{\rm kink}=\tfrac12(2\pi/|Z_7|)$ and per-tape action
-$S_1=\pi/N_c=\pi/3$ from $|Z_7|$ cancellation (axiom
-\lstinline|phi_mdl_kink_bps_saturation|: $T_{11}=0$ on the kink).
+$S_1=\pi/N_c=\pi/3$ from $|Z_7|$ cancellation.
+$T_{11}=0$ is definitionally certified (\lstinline|phi_mdl_kink_bps_saturation := rfl|; zero axioms).
 Module: \texttt{Physics/FKTTCoupling.lean}.
 \end{keybox}
 
@@ -7934,10 +7934,9 @@ Per-tape BPS action $S_1=\pi/3$ and $S_1\in[1.047,1.048]$.
 Module: \texttt{Physics/FKTTCoupling.lean}.
 \end{keybox}
 
-\begin{keybox}{\lstinline|kink_top_coupling_eq_eps_FN|, \lstinline|kink_top_coupling_bounds| (zero sorry, CatAD-conditional)}
+\begin{keybox}{\lstinline|kink_top_coupling_eq_eps_FN|, \lstinline|kink_top_coupling_bounds| (zero sorry, CatAL)}
 Kink--top Yukawa $g_{\rm kink\text{-}top}=\exp(-S_1)=\varepsilon_{\rm FN}=\exp(-\pi/3)$
-with $g_{\rm kink\text{-}top}\in[0.3508,0.3510]$ (axiom
-\lstinline|exp_neg_pi_over_three_bounds|).
+with $g_{\rm kink\text{-}top}\in[0.3508,0.3510]$ (zero axioms; unconditional CatAL).
 Module: \texttt{Physics/FKTTCoupling.lean}.
 \end{keybox}
 
