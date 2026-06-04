@@ -7780,6 +7780,33 @@ $\omega$-meson mass from KSRF with GTE coupling $g_\omega^2 = N_{\rm gen}\,c_Z =
 Module: \texttt{MassRelations/MesonMasses.lean}; uses \lstinline|fpi_from_scc|.
 \end{keybox}
 
+\begin{keybox}{\lstinline|g_rho_sq_eq_casimir_orbit| (zero sorry)}
+$\rho$-meson isospin coupling squared from GTE orbit counting:
+\[
+  g_\rho^2 = C(b_0,N_{\rm gen}) = \binom{7}{3} = 35.
+\]
+Module: \texttt{MassRelations/MesonMasses.lean}; uses \lstinline|Z7_order|, \lstinline|n_gen|.
+\end{keybox}
+
+\begin{keybox}{\lstinline|g_omega_rho_coupling_gap| (zero sorry)}
+Coupling gap between $\omega$ and $\rho$ vector mesons:
+\[
+  g_\omega^2 - g_\rho^2 = N_{\rm gen}\,c_Z - C(b_0,N_{\rm gen}) = 36 - 35 = 1.
+\]
+Module: \texttt{MassRelations/MesonMasses.lean}.
+\end{keybox}
+
+\begin{keybox}{\lstinline|m_rho_ksrf_formula| (zero sorry)}
+$\rho$-meson mass from KSRF with $g_\rho^2 = 35$:
+\[
+  m_\rho = \sqrt{2\,g_\rho^2}\,f_\pi = \sqrt{70}\,f_\pi \approx 772.57\,\mathrm{MeV}
+  \quad (\text{GTE SCC; PDG }775.26\,\mathrm{MeV}).
+\]
+Numerical certificate \lstinline|m_rho_ksrf_scc_value| bounds the prediction within
+$0.1\,\mathrm{MeV}$ of $772.57\,\mathrm{MeV}$.
+Module: \texttt{MassRelations/MesonMasses.lean}; uses \lstinline|fpi_from_scc|.
+\end{keybox}
+
 \begin{keybox}{\lstinline|pion_mass_from_gor| (zero sorry)}
 GOR pion mass with GTE chiral condensate $\langle\bar\psi\psi\rangle_{\rm GTE}=-M_{\rm kink}^3$
 (\lstinline|chiral_condensate_kink_identification|) and $f_\pi=M_{\rm kink}/\pi$

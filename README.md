@@ -67,7 +67,7 @@ Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, Asympt
 
 ## Recent additions
 
-**221 net-new theorems** (zero sorry on all listed results except 2 disclosed **CatA** axioms in `SechOverlapIntegralBounds_bridge.lean`; full inventory in `docs/THEOREMS.md` §Recent additions):
+**225 net-new theorems** (zero sorry on all listed results except 2 disclosed **CatA** axioms in `SechOverlapIntegralBounds_bridge.lean`; full inventory in `docs/THEOREMS.md` §Recent additions):
 
 | Area | Module | Highlights |
 |------|--------|------------|
