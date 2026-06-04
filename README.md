@@ -56,7 +56,7 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 | **SelfRef** | 2 | LawvereKleene, RiceHalting |
 
 | **Substrate** | +2 | **PhiMDLFluctuationSpectrum** (Pöschl–Teller, sech integrals; 0 sorry), **SechOverlapIntegralBounds** (+ `_cosh`, `_r5bins`, `_bridge`, `_r11cert`; 0 sorry in main module; 2 CatA axioms in `_bridge`) |
-| **Gravity** | +1 | **YukawaOverlapExponent** (DPP tape counting; $\alpha=N_c-1=2$; leptogenesis overlap **CatAL conditional** on sech bridge axioms; **eta_B_PDG_in_GTE_bracket** Planck bracket CatAL-conditional) |
+| **Gravity** | +1 | **YukawaOverlapExponent** (DPP tape counting; $\alpha=N_c-1=2$; sech bracket **CatAL-conditional** on bridge axioms; **eta_B_PDG_in_GTE_bracket** Planck bracket CatAL-conditional) + **FKTTCoupling** (kink–top BPS action; **η_B = 6.109×10⁻¹⁰ CatAL unconditional**; `kink_top_coupling_eq_eps_FN`, zero sorry, zero axioms; `phi_mdl_kink_bps_saturation := rfl`) |
 | **MassRelations** | +1 | **PMNSNLOCorrection** ($\sin^2\theta_{23}^{\mathrm{NLO}}=209/441$; $2b_{R2}=|F_{21}|+1$; CatAL arithmetic) |
 | **QFT** | 2 | **GaugedMassGap**, **ChiralSymmetryBreaking** |
 
@@ -76,7 +76,7 @@ Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, Asympt
 | **Quarter-Lock** | `QuarterLock` | `thm_quarter_lock_catal`: $k_M=-\varphi/2+7/2048$ |
 | **PMNS** | `MassRelations/NeutrinoSector` | $\sin^2\theta_{12}=4/13$, $\sin^2\theta_{23}=19/42$, $\sin\theta_{13}=11/73$, $\delta_{\rm CP}=8\pi/7$, $J<0$ |
 | **Higgs quartic** | `MassRelations/HiggsQuartic` | $\lambda=\dfrac{\varphi}{4\pi}(1+({\rm IPT}-1)/27)$; $0.12<\lambda<0.14$ |
-| **Yukawa vertex / η_B** | `Substrate/PhiMDLFluctuationSpectrum`, `Substrate/SechOverlapIntegralBounds_*`, `Gravity/YukawaOverlapExponent` | Pöschl–Teller + $\int\mathrm{sech}^3=\pi/2$; $\alpha=2$ CatAD; $f_1 f_2=1/3025$ suppression. **η_B / leptogenesis overlap: CatAL conditional** (2 CatA axioms for sech overlap mesh→integral bridge; full CatAL requires `AntitoneOn.sum_le_integral_Ico` proof) |
+| **Yukawa vertex / η_B** | `Substrate/PhiMDLFluctuationSpectrum`, `Substrate/SechOverlapIntegralBounds_*`, `Gravity/YukawaOverlapExponent`, `Physics/FKTTCoupling` | Pöschl–Teller + $\int\mathrm{sech}^3=\pi/2$; $\alpha=2$ CatAD; $f_1 f_2=1/3025$ suppression (sech bracket CatAL-conditional; 2 CatA axioms for mesh→integral bridge). **FKTT route: η_B = 6.109×10⁻¹⁰ (+0.15σ vs PDG) CatAL unconditional** — `kink_top_coupling_eq_eps_FN`, `fktt_coupling_bundle`, `bps_per_tape_action_eq_pi_over_Nc` (all zero sorry, zero axioms); T₁₁=0 by `rfl` (definitional BPS saturation). |
 | **FGCI** | `Universality/FrobeniusChain` | $F(3)=G(3)=73$ unique at $N_c=3$; chain $\{7,73\}$; $b_{L2}=2N_c|Z_7|$ |
 | **Dark baryon** | `Universality/GUTStructure` | $q_{\rm dark}/6=1/N_c$; dilution $2/6=1/3$; $D_{\rm top}=\exp(-1/N_c)$ via Z₇ transitivity |
 | **Quark \& EW intervals** | `MassRelations/TranscendentalMassBounds`, `QuarkMassNumericalCerts`, `Universality/EWBosonNumericalCerts` | Six-quark PDG bands (CatAD); $M_W$ CatAL; $M_Z$, $\sin^2\theta_W$ threshold CatAD |
