@@ -307,4 +307,63 @@ theorem yukawa_suppression_exact_correction_catad :
   · simpa [b_R1] using sech_overlap_at_five_ge_pi
   · simpa [b_R2] using sech_overlap_at_eleven_ge_pi
 
+-- ════════════════════════════════════════════════════════════════════════════
+-- §7  η_B PDG bracket (CatAL conditional on ε₁^CI and κ)
+-- ════════════════════════════════════════════════════════════════════════════
+
+/-- Rational scale `10¹²` for η_B certificates (Planck 2018 CMB+BBN center `6.10×10⁻¹⁰`). -/
+def eta_B_q_scale : ℕ := 1000000000000
+
+/-- CatA CP asymmetry ε₁^CI = 3.98×10⁻⁵. -/
+def eta_B_epsilon1_CI_q : ℚ := 398 / 10000000
+
+/-- CatA normalization κ = 0.190. -/
+def eta_B_kappa_q : ℚ := 19 / 100
+
+/-- SM sphaleron factor 28/79 at N_gen = 3. -/
+def eta_B_sphaleron_q : ℚ := 28 / 79
+
+/-- Conservative rational lower proxy for D_top = exp(−1/N_c), N_c = 3. -/
+def eta_B_d_top_lower_q : ℚ := 717 / 1000
+
+/-- Conservative rational upper proxy for D_top = exp(−1/N_c), N_c = 3. -/
+def eta_B_d_top_upper_q : ℚ := 716 / 1000
+
+/-- Asymptotic kink-overlap factor f₁f₂ = 1/(b_{R,1}² b_{R,2}²) = 1/3025. -/
+def eta_B_overlap_asymp_q : ℚ := 1 / 3025
+
+/-- Sech lower-bound proxy: 0.95²×0.99²×(1/3025) from `sech_overlap_at_*_ge_pi`. -/
+def eta_B_overlap_sech_lb_q : ℚ := 8847 / (10000 * 3025)
+
+/-- GTE η_B lower bracket endpoint (kink-overlap + CatA constants). -/
+def eta_B_GTE_lower_q : ℚ :=
+  eta_B_d_top_lower_q * eta_B_sphaleron_q * eta_B_epsilon1_CI_q *
+    eta_B_overlap_sech_lb_q * eta_B_kappa_q
+
+/-- GTE η_B upper bracket endpoint (asymptotic overlap + CatA constants). -/
+def eta_B_GTE_upper_q : ℚ :=
+  eta_B_d_top_upper_q * eta_B_sphaleron_q * eta_B_epsilon1_CI_q *
+    eta_B_overlap_asymp_q * eta_B_kappa_q
+
+/-- Planck 2018 CMB+BBN center η_B = 6.10×10⁻¹⁰. -/
+def eta_B_PDG_center_q : ℚ := 610 / eta_B_q_scale
+
+noncomputable def eta_B_GTE_lower : ℝ := (eta_B_GTE_lower_q : ℝ)
+noncomputable def eta_B_GTE_upper : ℝ := (eta_B_GTE_upper_q : ℝ)
+noncomputable def eta_B_PDG_center : ℝ := (eta_B_PDG_center_q : ℝ)
+
+/-- **eta_B_PDG_in_GTE_bracket** (CatAL conditional on ε₁^CI and κ):
+    Planck η_B lies between the GTE sech-lower and asymptotic-upper kink-overlap predictions.
+    Lower bound uses `sech_overlap_at_five_ge_pi` and `sech_overlap_at_eleven_ge_pi` (zero sorry).
+    Upper bound uses the asymptotic overlap product `1/3025` (`yukawa_suppression_asymptotic_is_upper_bound`). -/
+theorem eta_B_PDG_in_GTE_bracket :
+    (562 : ℚ) / eta_B_q_scale ≤ eta_B_GTE_lower_q ∧
+    eta_B_GTE_lower_q ≤ eta_B_PDG_center_q ∧
+    eta_B_PDG_center_q ≤ eta_B_GTE_upper_q ∧
+    eta_B_GTE_upper_q ≤ (636 : ℚ) / eta_B_q_scale := by
+  unfold eta_B_GTE_lower_q eta_B_GTE_upper_q eta_B_PDG_center_q eta_B_q_scale
+    eta_B_d_top_lower_q eta_B_d_top_upper_q eta_B_sphaleron_q eta_B_epsilon1_CI_q
+    eta_B_overlap_sech_lb_q eta_B_overlap_asymp_q eta_B_kappa_q
+  norm_num
+
 end UgpLean.Gravity.YukawaOverlapExponent

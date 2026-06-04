@@ -20,6 +20,7 @@ import UgpLean.MassRelations.KoideGenerationCyclicSymmetry
 import UgpLean.MassRelations.KoideSectorAngle
 import UgpLean.MassRelations.PhysicalMasses
 import UgpLean.MassRelations.MesonMasses
+import UgpLean.MassRelations.PMNSNLOCorrection
 import UgpLean.MassRelations.PionMassFromGOR
 import UgpLean.MassRelations.SeesawIndex
 import UgpLean.MassRelations.CKMTheta23

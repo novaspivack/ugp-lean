@@ -56,7 +56,8 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 | **SelfRef** | 2 | LawvereKleene, RiceHalting |
 
 | **Substrate** | +2 | **PhiMDLFluctuationSpectrum** (Pöschl–Teller, sech integrals; 0 sorry), **SechOverlapIntegralBounds** (+ `_cosh`, `_r5bins`, `_bridge`, `_r11cert`; 0 sorry in main module; 2 CatA axioms in `_bridge`) |
-| **Gravity** | +1 | **YukawaOverlapExponent** (DPP tape counting; $\alpha=N_c-1=2$; leptogenesis overlap **CatAL conditional** on sech bridge axioms) |
+| **Gravity** | +1 | **YukawaOverlapExponent** (DPP tape counting; $\alpha=N_c-1=2$; leptogenesis overlap **CatAL conditional** on sech bridge axioms; **eta_B_PDG_in_GTE_bracket** Planck bracket CatAL-conditional) |
+| **MassRelations** | +1 | **PMNSNLOCorrection** ($\sin^2\theta_{23}^{\mathrm{NLO}}=209/441$; $2b_{R2}=|F_{21}|+1$; CatAL arithmetic) |
 | **QFT** | 2 | **GaugedMassGap**, **ChiralSymmetryBreaking** |
 
 Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity, PositiveRootTheorem, GaloisProtection, TwoLoopCoefficient), **GaloisStructure** (2), **CyclotomicCompleteness** (2), **PSC** (1: RCCInfiniteFamilies), **TE22** (1: ScanCertificate), **Papers** (2), **Instance** (1), **Conjectures** — per the formalization paper: `Phase4.GaloisProtection`, `TwoLoopCoefficient`, modules under `GaloisStructure.*` and `CyclotomicCompleteness.*`, and `TE22` carry fully mechanized statements where the paper claims zero sorry; `Papers` and `Instance` are chiefly citable stubs and bridges; `Conjectures` records resolved and open claims; `Phase4` also mixes stubs (e.g. UCL, PR1 presentation) with the precision theorems above.
@@ -67,7 +68,7 @@ Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, Asympt
 
 ## Recent additions
 
-**225 net-new theorems** (zero sorry on all listed results except 2 disclosed **CatA** axioms in `SechOverlapIntegralBounds_bridge.lean`; full inventory in `docs/THEOREMS.md` §Recent additions):
+**229 net-new theorems** (zero sorry on all listed results except 2 disclosed **CatA** axioms in `SechOverlapIntegralBounds_bridge.lean`; full inventory in `docs/THEOREMS.md` §Recent additions):
 
 | Area | Module | Highlights |
 |------|--------|------------|

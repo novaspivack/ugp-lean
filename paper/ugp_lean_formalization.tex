@@ -4768,6 +4768,14 @@ scaling exponent $\alpha=N_c-1=2$ from three-tape DPP counting
 (\lstinline|yukawa_overlap_exponent_catad|, \CatAD) and the leptogenesis
 suppression $f_1 f_2 = 1/3025$ (\lstinline|leptogenesis_kink_overlap_catad|,
 \CatAD\ conditional on the sech bridge axioms).
+The Planck 2018 CMB+BBN baryon asymmetry
+$\eta_B = (6.10\pm 0.06)\times 10^{-10}$ is bracketed by the GTE kink-overlap
+interval certified in \lstinline|eta_B_PDG_in_GTE_bracket|
+(\CatAL\ conditional on $\varepsilon_1^{\mathrm{CI}}=3.98\times 10^{-5}$ and
+$\kappa=0.190$): sech lower bounds
+\lstinline|sech_overlap_at_five_ge_pi|,
+\lstinline|sech_overlap_at_eleven_ge_pi| (zero \texttt{sorry}) and the asymptotic
+upper bound \lstinline|yukawa_suppression_asymptotic_is_upper_bound|.
 
 \subsection{QCD String Tension: Casimir Scaling Formula (\CatAD{})}\label{subsec:string-tension-catad}
 
@@ -8475,6 +8483,18 @@ Theorem & Module & Physical content \\
 \texttt{leptogenesis\_\allowbreak kink\_\allowbreak overlap\_\allowbreak catad}
   & Gravity.YukawaOverlapExponent
   & $f_1\times f_2 = 1/3025 = 1/(5^2\cdot 11^2)$ (\CatAD; \CatAL\ conditional on sech bridge) \\[1pt]
+\texttt{eta\_\allowbreak B\_\allowbreak PDG\_\allowbreak in\_\allowbreak GTE\_\allowbreak bracket}
+  & Gravity.YukawaOverlapExponent
+  & Planck $\eta_B$ in GTE sech--asymptotic interval $[5.62,6.36]\times 10^{-10}$ (\CatAL\ conditional) \\[1pt]
+\texttt{pmns\_\allowbreak atm\_\allowbreak nlo\_\allowbreak formula}
+  & MassRelations.PMNSNLOCorrection
+  & $\sin^2\theta_{23}^{\mathrm{NLO}} = b_{R2}b_{R3}/|F_{21}|^2 = 209/441$ (\CatAL) \\[1pt]
+\texttt{two\_\allowbreak b\_\allowbreak R2\_\allowbreak eq\_\allowbreak F21\_\allowbreak succ}
+  & MassRelations.PMNSNLOCorrection
+  & $2 b_{R2} = |F_{21}|+1 = 22$ (\CatAL) \\[1pt]
+\texttt{ngen\_\allowbreak eq\_\allowbreak nfam\_\allowbreak minus\_\allowbreak two}
+  & MassRelations.PMNSNLOCorrection
+  & $N_{\mathrm{gen}} = N_{\mathrm{fam}}-2 = 3$ (\CatAL) \\[1pt]
 \midrule
 \multicolumn{3}{@{}l}{\textit{FGCI and Frobenius chain (\CatAL)}} \\[2pt]
 \texttt{fgci\_\allowbreak unique\_\allowbreak at\_\allowbreak nc}

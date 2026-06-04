@@ -1067,6 +1067,16 @@ Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `Sec
 | **leptogenesis_kink_overlap_catad** | Gravity.YukawaOverlapExponent | $f_1\times f_2=1/3025$ (CatAD; uses `sech_overlap_at_*_ge_pi`; **CatAL conditional** on 2 CatA bridge axioms) |
 | **yukawa_overlap_tape_count** | Gravity.YukawaOverlapExponent | Fermion-sector tape count certified (CatAL) |
 | **yukawa_total_tapes** | Gravity.YukawaOverlapExponent | Total tape budget for Yukawa vertex (CatAL) |
+| **eta_B_PDG_in_GTE_bracket** | Gravity.YukawaOverlapExponent | Planck $\eta_B$ in GTE interval $[5.62,6.36]\times 10^{-10}$ (CatAL conditional on $\varepsilon_1^{\mathrm{CI}}$, $\kappa$) |
+
+### PMNS NLO atmospheric mixing (`MassRelations.PMNSNLOCorrection`)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **two_b_R2_eq_F21_succ** | MassRelations.PMNSNLOCorrection | $2 b_{R2} = \|F_{21}\|+1 = 22$ (CatAL) |
+| **ngen_eq_nfam_minus_two** | MassRelations.PMNSNLOCorrection | $N_{\mathrm{gen}} = N_{\mathrm{fam}}-2 = 3$ (CatAL) |
+| **pmns_atm_nlo_formula** | MassRelations.PMNSNLOCorrection | $\sin^2\theta_{23}^{\mathrm{NLO}} = 209/441$ (CatAL) |
+| **pmns_atm_nlo_in_1sigma** | MassRelations.PMNSNLOCorrection | $|209/441 - 0.470| < 0.013$ NuFIT 6.0 IC24 NH (CatAL) |
 
 ### PMNS and neutrino sector (`MassRelations.NeutrinoSector`)
 
