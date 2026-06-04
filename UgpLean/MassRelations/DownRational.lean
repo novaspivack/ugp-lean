@@ -3,6 +3,7 @@ import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.NumberTheory.Real.GoldenRatio
 import UgpLean.MassRelations.ClebschGordan
 import UgpLean.MassRelations.PhysicalMasses
+import UgpLean.MassRelations.QuarkMassNumericalCerts
 import UgpLean.Universality.GUTStructure
 
 /-!
@@ -337,7 +338,11 @@ theorem bottom_mass_orbit_ratio :
     |(b_top : ℚ) / b_b - 41.255| < (1 : ℚ) / 1000 :=
   top_bottom_mass_ratio_approx
 
-/-- Rational proxy for m_b = 4184.2 MeV in the VV+TT chain (interval certificate). -/
-theorem bottom_mass_gte_value_interval : (4180 : ℚ) < (4185 : ℚ) := by norm_num
+/-- GTE bottom-quark mass (MeV-scale) from the VV cascade at generation 2. -/
+noncomputable def m_b_GTE_MeV : ℝ := PhysicalMasses.predicted_m_bottom_mev
+
+/-- **m_b_pdg_interval** (CatAD): GTE m_b in the PDG 2024 MS-bar interval. -/
+theorem m_b_pdg_interval : (4175 : ℝ) < m_b_GTE_MeV ∧ m_b_GTE_MeV < (4191 : ℝ) := by
+  simpa [m_b_GTE_MeV] using QuarkMassNumericalCerts.m_b_pdg_interval
 
 end UgpLean.MassRelations.DownRational

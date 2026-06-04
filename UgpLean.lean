@@ -104,6 +104,9 @@ import UgpLean.MassRelations.CKMTheta23
 import UgpLean.MassRelations.CKMMixing
 import UgpLean.MassRelations.CKMCPPhase
 import UgpLean.MassRelations.NeutrinoMassRatio
+import UgpLean.MassRelations.TranscendentalMassBounds
+import UgpLean.MassRelations.QuarkMassNumericalCerts
+import UgpLean.Universality.EWBosonNumericalCerts
 import UgpLean.MassRelations
 import UgpLean.Phase4.GaloisProtection
 import UgpLean.Phase4.TwoLoopCoefficient
