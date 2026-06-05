@@ -52,6 +52,19 @@
   \NovaZenodo@hrefhub}%
 }
 %
+% CC license line — appears in front matter.
+\providecommand{\NovaCCLicense}{%
+  \par\smallskip
+  \begingroup\centering\footnotesize
+  \textcopyright\ Nova Spivack 2026.
+  Licensed under
+  \href{https://creativecommons.org/licenses/by-nc-nd/4.0/}%
+       {Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International
+        (CC~BY-NC-ND~4.0)}.
+  \par
+  \endgroup\smallskip
+}
+%
 % After \maketitle — canonical visible placement (first page, under title block).
 \providecommand{\NovaZenodoAfterTitle}{%
   \par\smallskip
@@ -66,6 +79,7 @@
   \par
   \endgroup
   \smallskip
+  \NovaCCLicense
 }
 %
 % End of abstract — optional; use when --abstract-doi-line is passed to zpo doi inject.
