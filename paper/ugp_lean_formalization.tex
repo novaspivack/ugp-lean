@@ -138,9 +138,9 @@
 \begin{abstract}
 We present \textbf{ugp-lean}, a \lean{}~4 formalization of the
 Universal Generative Principle (\ugp{}) against Mathlib, comprising
-296~\lean{} modules across seventeen layers (extended development branch covering
+303~\lean{} modules across seventeen layers (canonical library covering
 spacetime, QFT, and hadronic physics) with a strict zero-sorry,
-zero-custom-axiom policy on the core proof path (75 global custom
+zero-custom-axiom policy on the core proof path (97 global custom
 named axioms across all modules; core physics proof path remains
 zero-axiom).
 The \ugp{} is a deterministic arithmetic framework on integer ridges
@@ -166,7 +166,7 @@ $\sin^2\theta_W = 3/13$, $\lambda_{\rm CKM} = 9/40$, $D=4$,
 $Q = w^*/3$ for all SM fermions, and $\beta_0 = 23/3$ for QCD.
 GTE is certified as the terminal $F_{\rm PSC}$ coalgebra in the PSCSys
 category (zero sorry, zero custom axioms).
-\emph{Physical extension (development branch)}: spacetime causal structure
+\emph{Physical extension (canonical library)}: spacetime causal structure
 with machine-certified spectral dimension $d_s = 4$ in the thermodynamic
 limit; the Algebraic Lifting Theorem connecting beable-level results to
 physical observables; a QFT mass gap lower bound in the colour-singlet
@@ -287,7 +287,7 @@ results:
   structure and $D_5$ renormalization, with zero axioms and zero
   \texttt{sorry} beyond Lean's foundational set.
 \item \textbf{Mass relations and physical spectrum} (\S\ref{sec:massrelations}):
-  The \texttt{MassRelations} layer (23 modules) covers
+  The \texttt{MassRelations} layer (39 modules) covers
   (i) the Koide closed form and $S_3$-balance arithmetic identities
   (\texttt{KoideClosedForm}, \texttt{KoideAngle}, \texttt{KoideNewtonFlow},
   \texttt{KoideS3DiscreteIdentities}, \texttt{ClaimCBridge});
@@ -325,7 +325,7 @@ results:
 \S\ref{sec:quarterlock} treats the Quarter-Lock, Elegant Kernel, and UCL unconditional closure.
 \S\ref{sec:massrelations} presents the mass relations layer.
 \S\ref{sec:universality} addresses universality and self-reference.
-\S\ref{sec:spacetime} covers the spacetime and causal-structure formalization (development branch).
+\S\ref{sec:spacetime} covers the spacetime and causal-structure formalization (canonical library).
 \S\ref{sec:coupling-hierarchy} presents the coupling hierarchy and
 $\alpha_{\rm EM}$ derivation modules.
 \S\ref{sec:lextended} describes the two-sector substrate encoding.
@@ -426,7 +426,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 296~\lean{} modules across seventeen layers
+The artifact is organized into 303~\lean{} modules across seventeen layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -463,7 +463,7 @@ The artifact is organized into 296~\lean{} modules across seventeen layers
    FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure,
    KLFullClosure, PentagonConstraint, RiccatiFixedPoint};
 \node[layer, fill=teal!8,   below=of struc] (mass)
-  {\textbf{MassRelations}~(23)\quad KoideClosedForm, KoideNewtonFlow,
+  {\textbf{MassRelations}~(39)\quad KoideClosedForm, KoideNewtonFlow,
    BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential,
    FroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational,
    UpLeptonCyclotomic, Z2OrbifoldDepth,
@@ -523,13 +523,13 @@ The artifact is organized into 296~\lean{} modules across seventeen layers
    \textbf{StressEnergyTensor}, \textbf{AsyncLiftingTheorem},
    \textbf{GravitonFockSpace},
    SpectralDimension, SpectralDimensionDegree, \textbf{HeatKernelFourier}
-   (+ 3 Spectral sub-modules; dev branch, zero sorry unless noted)};
+   (+ 3 Spectral sub-modules; canonical library, zero sorry unless noted)};
 \node[layer, fill=brown!6,  below=of space] (subs)
   {\textbf{Substrate}~(12)\quad Substrate, LExtended, LagrangianLorentzScalar,
    NoetherAngularMomentum, PSCPILorentzMain, PSCPreservingTransformation,
    PSCStructureLorentzPreserved, CoherenceMeasure, CoherenceMeasureUniqueness,
    QECStabilizer, TransputationStateSelector,
-   \textbf{WindingCoinDecoupling} (dev branch, zero sorry)};
+   \textbf{WindingCoinDecoupling} (canonical library, zero sorry)};
 
 \draw[arr] (core.south)  -- (comp.north);
 \draw[arr] (comp.south)  -- (class.north);
@@ -629,7 +629,7 @@ full soft-constraint $D$-minimization over all 14 scan constraints; the
 Layer~I survivor structure and $N_{\mathrm{gen}} = 3$ consequence are
 machine-certified.
 
-\medskip\noindent\textbf{Documented axioms (75 global named axioms).}
+\medskip\noindent\textbf{Documented axioms (97 global named axioms).}
 Two theorems in \texttt{GTE.AnalyticArchitecture} are declared as
 \texttt{axiom} rather than \texttt{sorry}: \texttt{dickman\_equidistribution\_in\_APs}
 and \texttt{crt\_equidistribution\_within\_regime}, both citing
@@ -646,7 +646,7 @@ $\{\mathtt{propext},\mathtt{Classical.choice},\mathtt{Quot.sound}\}$.
 An audit discharged several previously declared axioms in
 \texttt{VEVProof/GoldstoneEntropyCorrection.lean} as proved theorems;
 see \S\ref{sec:audit-capstones} for details.
-The library currently holds \textbf{75} global custom named axioms,
+The library currently holds \textbf{97} global custom named axioms,
 primarily in \texttt{GUTStructure}, \texttt{FrobeniusChain},
 \texttt{NeutrinoSector}, \texttt{SechOverlapIntegralBounds\_bridge}, and related
 modules (see Table~\ref{tab:axiom-inventory} and \S\ref{subsec:epic-083c}).
@@ -1397,8 +1397,7 @@ companion lab notes.
 \label{sec:coxeter_biconditional}
 % ═══════════════════════════════════════════════════════════════
 
-The new module \texttt{CyclotomicCompleteness.CoxeterBiconditional} (graduated
-from sandbox, SPEC\_042\_CYX Track~1) formalises the arithmetic backbone of the
+The module \texttt{CyclotomicCompleteness.CoxeterBiconditional} formalises the arithmetic backbone of the
 biconditional criterion: a root system's Toda masses lie in
 $\mathbb{Q}(\zeta_{120})$ iff its Coxeter number $h$ divides~$60$.
 
@@ -1468,8 +1467,7 @@ $\mathbb{Q}(\zeta_{120})$ filter.
 \label{sec:cyclotomic_containment}
 % ═══════════════════════════════════════════════════════════════
 
-The module \texttt{CyclotomicCompleteness.CyclotomicContainment} (SPEC\_042\_CYX
-Track~C) proves the field-theoretic content of the Coxeter--conductor theorem:
+The module \texttt{CyclotomicCompleteness.CyclotomicContainment} proves the field-theoretic content of the Coxeter--conductor theorem:
 for every $h \mid 60$, the cyclotomic field $\mathbb{Q}(\zeta_{2h})$ embeds
 as a $\mathbb{Q}$-algebra into $\mathbb{Q}(\zeta_{120})$.  All theorems have
 zero \texttt{sorry} and use only Mathlib's \texttt{IsCyclotomicExtension},
@@ -1718,7 +1716,7 @@ zero axioms)}
 
 The module \texttt{BraidAtlas.DarkBraidAtlas} collects and cross-certifies the
 machine-checked structural facts about the mirror branch (dark sector) established
-across MBA rounds 1--5.  It imports
+across five prior formalization passes.  It imports
 \texttt{MirrorWindingNumber}, \texttt{EWBosons}, \texttt{EWBosonRHNConnection},
 \texttt{RHNGapTheorem}, and \texttt{DarkQuarkCharge}, re-exporting their results
 as a single coherent certificate.
@@ -2839,7 +2837,7 @@ the unconditional UCL$_2$ block is
 \section[Mass Relations]{Mass Relations and Physical Spectrum}\label{sec:massrelations}
 % ═══════════════════════════════════════════════════════════════
 
-The \texttt{MassRelations} layer (30 modules on the development branch, including
+The \texttt{MassRelations} layer (39 modules in the canonical library, including
 \texttt{NeutrinoSector} and \texttt{HiggsQuartic}) formalizes the
 passage from the \ugp{} ridge arithmetic to physical fermion mass
 ratios, covering the Koide closed form, the SU(3) flavour geometry,
@@ -4078,7 +4076,7 @@ initial tape.  This axiom reflects Cook's theorem and underlies
 % ═══════════════════════════════════════════════════════════════
 
 Module: \texttt{Universality/PhiMDLUniversality.lean}
-(development branch; zero \texttt{sorry} on all theorems listed below;
+(canonical library; zero \texttt{sorry} on all theorems listed below;
 standard axioms only for all algebraic and simulation results).
 
 This module certifies that the $\Phi_{\rm MDL}$ field (the Z$_7$-symmetric
@@ -4708,13 +4706,13 @@ to the GTE identification lemma.
 This section documents the \texttt{QFT} namespace modules, which certify
 quantum field theory claims derived from the GTE $\Phi_{\mathrm{MDL}}$ substrate.
 
-\subsection{QFT-Level Mass Gap (\texttt{GaugedMassGap.lean}, Rank 72d)}\label{subsec:gauged-mass-gap}
+\subsection{QFT-Level Mass Gap (\texttt{GaugedMassGap.lean})}\label{subsec:gauged-mass-gap}
 
 The \texttt{GaugedMassGap} module formalises the QFT-level mass-gap statement
 for the $\mathbb{Z}_3$-gauged $\Phi_{\mathrm{MDL}}$ theory in the color-singlet sector.
 The lightest non-vacuum excitation is the kink--antikink threshold $2 M_{\mathrm{kink}}$,
 conditional on three inherited inputs: the PSC-admissible state mass gap
-(\lstinline|gte_mass_gap|, Rank~42), the 2D string tension $\sigma_{2\mathrm{D}} > 0$,
+(\lstinline|gte_mass_gap|), the 2D string tension $\sigma_{2\mathrm{D}} > 0$,
 and the BPS kink mass $M_{\mathrm{kink}} = 8m/N^2$.
 
 \begin{theorem}[\lstinline|qft_gauged_mass_gap_lower_bound|, zero \texttt{sorry}]
@@ -4732,7 +4730,7 @@ witnesses $\Delta = 8/49 \leq 1$ in $\Phi_{\mathrm{MDL}}$ natural energy units.
 \begin{theorem}[\lstinline|confined_massive_color_singlet|, zero \texttt{sorry}]
 The color-singlet sector has a positive kink--antikink threshold \emph{and} no
 PSC-admissible free quark states: confinement and mass gap simultaneously.
-Composes Rank 72d with Rank 25-CCF.
+Composes the QFT mass gap with the color-confinement framework.
 \end{theorem}
 
 All theorems are zero \texttt{sorry}, zero custom axioms.
@@ -4816,7 +4814,7 @@ confirmation is the \CatAD{} certifier.  A Lean proof of the Casimir-scaling
 bound $\sigma_R \propto C_R$ for the $\Phi_{\mathrm{MDL}}$ kink substrate is
 a future target.
 
-\subsection{Chiral Symmetry Breaking (\texttt{ChiralSymmetryBreaking.lean}, Rank 145)}\label{subsec:chiral-ssb}
+\subsection{Chiral Symmetry Breaking (\texttt{ChiralSymmetryBreaking.lean})}\label{subsec:chiral-ssb}
 
 The \texttt{ChiralSymmetryBreaking} module certifies that the GTE pion is a
 pseudo-Nambu-Goldstone boson (PNGB) arising from spontaneous chiral symmetry
@@ -4849,7 +4847,7 @@ conjunction; zero \texttt{sorry}, zero axioms.
 
 \begin{theorem}[\lstinline|gte_pion_pseudo_ngb_canonical|, zero \texttt{sorry}]
 The canonical GTE instance with $B_0^{\mathrm{NLO}} = 2727\,\mathrm{MeV}$
-(from Rank 134) and GTE quark masses $m_u = 2.16\,\mathrm{MeV}$,
+and GTE quark masses $m_u = 2.16\,\mathrm{MeV}$,
 $m_d = 4.67\,\mathrm{MeV}$ satisfies all four PNGB properties.
 \end{theorem}
 
@@ -4912,7 +4910,7 @@ mesoscopic form of the SM generation--orbit correspondence is machine-certified
 with no free parameters.
 \end{theorem}
 
-Commit: \texttt{ba37554}. $\CatAL$ (mesoscopic form); the spatial Rule~110 glider
+$\CatAL$ (mesoscopic form); the spatial Rule~110 glider
 species per generation (2-ZGM hard form) remains open pending additional CA-dynamics
 input.
 
@@ -4983,7 +4981,7 @@ SM orbit.  No 2-dimensional or $>$3-dimensional assignment is consistent.
 
 The \texttt{ChiralityEigenstates} module (159 lines, 5 items) proves four
 machine-certified facts about the spatial parity structure of $f_{\rm MDL}$ and the SM
-generation orbit (commit \texttt{cb4191b}, zero \texttt{sorry}, zero named axioms;
+generation orbit (zero \texttt{sorry}, zero named axioms;
 all proofs by \lstinline|native_decide| or \lstinline|decide|).
 
 Spatial parity $P$ acts on the 5-cell ring by reversing cell order:
@@ -5015,7 +5013,7 @@ the SM generation orbit is structurally left-handed.
 \subsection{Weak Isospin Identification (\texttt{WeakIsospin})}\label{subsec:weak-isospin}
 
 The \texttt{WeakIsospin} module formalizes the identification of weak isospin
-as $\mathbb{Z}_7$ species-winding arithmetic (Rank 94c, CatAL; zero sorry,
+as $\mathbb{Z}_7$ species-winding arithmetic (CatAL; zero sorry,
 all proofs by \lstinline|decide|).
 
 In the GTE framework, weak isospin is not carried by a gauge $\mathrm{SU}(2)_L$
@@ -5061,7 +5059,7 @@ $W$-boson winding values $W_B(W^+)=3$, $W_B(W^-)=4$.
 \subsection{V--A Chiral Mismatch (\texttt{ChiralPairVA})}\label{subsec:chiral-pair-va}
 
 The \texttt{ChiralPairVA} module formalizes the discrete V--A chirality structure of
-f$_{\rm MDL}$ under the two-layer (Rule~110 + Rule~124) chiral CA pair (Rank~133, CatAL;
+f$_{\rm MDL}$ under the two-layer (Rule~110 + Rule~124) chiral CA pair (CatAL;
 all proofs by \lstinline|native_decide|, \lstinline|decide|, or \lstinline|norm_num|,
 zero \texttt{sorry}).
 
@@ -5136,7 +5134,7 @@ satisfy $c_Z = 12$, $c_H = 13$, $c_H = c_Z + 1$ (machine-checked by
 \lstinline|native_decide|).
 \end{theorem}
 
-Commit: \texttt{5c002a5}. $\CatAL$ (colorless arm); the gluon ($W_B=0$,
+$\CatAL$ (colorless arm); the gluon ($W_B=0$,
 colored) arm has separate status.
 
 \subsection{SM Orbit Causal Isolation (\texttt{SMOrbitCausalIsolation})}\label{subsec:sm-orbit-causal}
@@ -5179,7 +5177,7 @@ results, this axiom discharges the remaining hypothesis in
 \subsection{EW Absolute Scale Prediction
   (\texttt{Universality/EWScalePrediction.lean})}\label{subsec:ew-scale-prediction}
 
-Module: \texttt{Universality/EWScalePrediction.lean} (Rank 158-EWS, zero
+Module: \texttt{Universality/EWScalePrediction.lean} (zero
 \lstinline|sorry|, zero custom axioms).
 Chains the Schwinger--SM vacuum-scale identity and tree-level $W/Z$ mass ratios
 to existing \texttt{GUTStructure} CatAL anchors
@@ -5204,7 +5202,7 @@ $(m_W^{\rm 1\text{-loop}} - m_W^{\rm tree})/(m_W^{\rm PDG} - m_W^{\rm tree}) > 9
 \subsection{Two-Role Structural Principle
   (\texttt{Universality/TwoRoleTheorem.lean})}\label{subsec:two-role-theorem}
 
-Module: \texttt{Universality/TwoRoleTheorem.lean} (Rank 070-94, zero
+Module: \texttt{Universality/TwoRoleTheorem.lean} (zero
 \lstinline|sorry|, zero custom axioms).
 
 \begin{theorem}[\lstinline|two_role_structural_separation|, zero \texttt{sorry}]
@@ -5220,8 +5218,8 @@ distinct structural roles that cannot be collapsed into a single mechanism.
 \subsection{Event-Triggered Coupling Escape\linebreak
   (\texttt{\small Universality/DynamicalCouplingBridge.lean})}\label{subsec:dynamical-coupling-bridge}
 
-Module: \texttt{Universality/DynamicalCouplingBridge.lean} (Rank 070-137,
-zero \lstinline|sorry|, \textbf{one named axiom}
+Module: \texttt{Universality/DynamicalCouplingBridge.lean} (zero
+\lstinline|sorry|, \textbf{one named axiom}
 \lstinline|discrete_w_vertex_interpretation| for the EW charged-current identification).
 
 Formalizes the arithmetic resonance escape from \texttt{CouplingNoGo.lean}:
@@ -5300,7 +5298,7 @@ disclosed explicitly.
 \subsection{Klein--Gordon Lorentz Invariance\linebreak
   (\texttt{\small Universality/LorentzInvariance.lean})}\label{subsec:lorentz-invariance}
 
-Module: \texttt{Universality/LorentzInvariance.lean} (Rank 073-LOR3, zero
+Module: \texttt{Universality/LorentzInvariance.lean} (zero
 \lstinline|sorry|, zero custom axioms).
 
 \begin{theorem}[\lstinline|kg_dispersion_lorentz_invariant|, zero \texttt{sorry}]
@@ -5320,7 +5318,7 @@ dispersion relation; foundation for Lemma~1
 \subsection{Born Rule from MDL-Minimality
   (\texttt{Universality/BornRuleMDL.lean})}\label{subsec:born-rule-mdl}
 
-Module: \texttt{Universality/BornRuleMDL.lean} (Rank 76-BORN, zero
+Module: \texttt{Universality/BornRuleMDL.lean} (zero
 \lstinline|sorry|, zero custom axioms).
 Extends the MDL/$[\mathbf{D}]$ selection chain toward winding-sector Born
 weights $P(k) \propto |\varphi_k|^2$.
@@ -5333,7 +5331,7 @@ $\mathbb{Z}_7$ winding sectors.
 \end{theorem}
 
 The full unconditional theorem---deriving \lstinline|BeableAmplitudeHypothesis|
-from second quantization rather than assuming it---remains open (Rank 77-2QUANT).
+from second quantization rather than assuming it---remains open.
 Supporting theorems: \lstinline|mdl_selects_minimum_description|,
 \lstinline|sector_born_weight_partition|, \lstinline|born_rule_is_d5_constraint|
 (D5 = Born consistency in the $[\mathbf{D}]$ constraint bundle).
@@ -5344,7 +5342,7 @@ Born-rule sector weights as the fifth $[\mathbf{D}]$ defining constraint.
 \subsection{Fock-Space Kink Quantization
   (\texttt{Universality/FockSpaceKink.lean})}\label{subsec:fock-space-kink}
 
-Module: \texttt{Universality/FockSpaceKink.lean} (Rank 77-2QUANT, zero
+Module: \texttt{Universality/FockSpaceKink.lean} (zero
 \lstinline|sorry|, zero custom axioms).
 
 Algebraic Fock-space layer over four GTE-orbit $\Phi_{\mathrm{MDL}}$ kink modes
@@ -5440,7 +5438,7 @@ space yields equal Born sector weights from kink superselection.
 \subsection{Excitation-Level Coupling
   (\texttt{Universality/ExcitationCoupling.lean})}\label{subsec:excitation-coupling}
 
-Module: \texttt{Universality/ExcitationCoupling.lean} (Rank 070-124, zero
+Module: \texttt{Universality/ExcitationCoupling.lean} (zero
 \lstinline|sorry|, zero custom axioms).
 Formal excitation-state algebra for inter-layer coupling at glider-frame events,
 extending the Class~B escape (\S\ref{subsec:dynamical-coupling-bridge}).
@@ -5458,8 +5456,8 @@ obstruction by sparse event triggering.
 \subsection{'t Hooft Effect-Measure Bridge\linebreak
   (\texttt{\small Universality/ThooftEffectMeasureBridge.lean})}\label{subsec:thooft-effect-measure}
 
-Module: \texttt{Universality/ThooftEffectMeasureBridge.lean} (Rank 070-97B,
-zero \lstinline|sorry|, zero custom axioms; \textbf{partial CatAL}).
+Module: \texttt{Universality/ThooftEffectMeasureBridge.lean} (zero
+\lstinline|sorry|, zero custom axioms; \textbf{partial CatAL}).
 
 Certifies the algebraic core at the $\mathbb{Z}_7$ winding-sector
 coarse-graining level: sector probabilities from
@@ -5476,12 +5474,12 @@ measure on $\mathbb{Z}_7$ satisfying normalization and non-negativity
 Physical meaning: 't~Hooft coarse-graining of beable superpositions yields
 effect-measure-compatible sector probabilities at the winding-sector level;
 full matrix \texttt{EffectMeasure} instantiation is completed in
-\S\ref{subsec:psc-effect-measure} (Rank 070-97B2).
+\S\ref{subsec:psc-effect-measure}.
 
 \subsection{PSC + f\textsubscript{MDL} $\Rightarrow$ Effect Measure
   (\texttt{Universality/PSCEffectMeasure.lean})}\label{subsec:psc-effect-measure}
 
-Module: \texttt{Universality/PSCEffectMeasure.lean} (Rank 070-97B2-LEAN,
+Module: \texttt{Universality/PSCEffectMeasure.lean} (
 zero \lstinline|sorry|, \textbf{conditional CatAL}: zero private axioms plus
 one imported axiom \lstinline|re_trace_psd_mul_psd_nonneg| from nems-lean,
 discharged via \texttt{PSCEffectMeasureGeneric.lean}, commit 648cba7).
@@ -5514,12 +5512,11 @@ Supporting theorems: \lstinline|pureBornEffectMeasure|,
 Physical meaning: PSC plus MDL-minimal amplitudes constructively yield a
 full matrix effect measure compatible with Born sector probabilities.
 
-\subsection{MDL Algebraic Derivability Criterion and T96-02 CA-Level Closure
+\subsection{MDL Algebraic Derivability Criterion and CA-Level Closure
   (\texttt{Universality/MDLDerivabilityCriterion.lean})}\label{subsec:mdl-derivability}
 
-Module: \texttt{Universality/MDLDerivabilityCriterion.lean} (T96-02-STEPFOUR,
-\textbf{CLOSED CatAL}, zero \lstinline|sorry| throughout; commits
-\texttt{9007574}, \texttt{e38b26a} in \texttt{ugp-lean}).
+Module: \texttt{Universality/MDLDerivabilityCriterion.lean}
+(\textbf{CLOSED CatAL}, zero \lstinline|sorry| throughout).
 
 Formalizes the K-complexity description-length penalty when a cyclic substructure
 $\mathbb{Z}_M$ is \emph{not} embeddable in the multiplicative group
@@ -5540,14 +5537,14 @@ $\mathbb{Z}_3 \hookrightarrow \mathrm{GF}(7)^\times$ (Sylow-3 subgroup exists).
 \end{theorem}
 
 \begin{theorem}[\lstinline|mdl_z7z3_beats_z7z2|, CatAL, zero \texttt{sorry}]
-CA-orbit competitor elimination (T96-02 Component C):
+CA-orbit competitor elimination:
 $\mathbb{Z}_7\times\mathbb{Z}_3$ beats $\mathbb{Z}_7\times\mathbb{Z}_2$ on
 CA-orbit data grounds---orbit class B ($Q_\chi=2$) is misclassified as vacuum
 under the $\mathbb{Z}_2$ projection, incurring $\geq 7$ bits data penalty with
 zero model-cost difference.
 \end{theorem}
 
-\paragraph{T96-02 CA-level closure.}
+\paragraph{MDL CA-level closure.}
 The following three theorems close the final gap (CA-level K-theory bridge):
 
 \begin{theorem}[\lstinline|z5_fmdl_no_psc_kink_orbits|, CatAL, \lstinline|native_decide|]
@@ -5567,7 +5564,7 @@ in the $\mathbb{Z}_5$ CA requiring external specification of 3 generations.
 \end{theorem}
 
 \begin{theorem}[\lstinline|mdl_ca_rule_coding_closed|, CatAL, zero \texttt{sorry}]
-Master T96-02 CA-level closure: there exists an explicit $K_{\mathrm{data}}$
+MDL CA-level closure: there exists an explicit $K_{\mathrm{data}}$
 function such that $K_{\mathrm{data}}(7,3)=0$, $K_{\mathrm{data}}(5,3)=6$, and
 $\mathtt{structureSpecCost}(7,3)+K_{\mathrm{data}}(7,3) <
 \mathtt{structureSpecCost}(5,3)+K_{\mathrm{data}}(5,3)$.
@@ -5596,8 +5593,7 @@ explicitly.
 Four modules establish the spectral dimension of the \gte{} causal graph.
 
 \begin{keybox}{Headline result: $d_s = 4$ in the thermodynamic limit}
-\textbf{Module \texttt{Spectral/ThermodynamicLimit.lean}} (development branch,
-commit \texttt{c285401}).
+\textbf{Module \texttt{Spectral/ThermodynamicLimit.lean}} (canonical library).
 Main theorem: \lstinline|causal_graph_spectral_dim_thermodynamic_limit|.
 Proves that the log-ratio $\log K_n / \log n \to -2$ (equivalently,
 $d_s = 4$) in the joint thermodynamic limit for the degree-normalized
@@ -5631,7 +5627,7 @@ open gap on the fixed-lattice statement.
 \subsection{Causal invariance and Minkowski structure
   (\texttt{CausalInvariance.lean})}\label{subsec:causal-invariance}
 
-Module: \texttt{Spacetime/CausalInvariance.lean} (development branch, zero sorry).
+Module: \texttt{Spacetime/CausalInvariance.lean} (canonical library, zero sorry).
 
 \begin{keybox}{SR from causal structure}
 The AFCA causal graph satisfies Lamport consistent causal order.
@@ -5665,8 +5661,8 @@ bijection on all causal nodes (collapsing the $y,z$ dimensions) remains open.
 \subsection{Chiral Mirror Speed Symmetry\linebreak
   (\texttt{\small Spacetime/ChiralMirrorSpeedSymmetry.lean})}\label{subsec:chiral-mirror-speed}
 
-Module: \texttt{Spacetime/ChiralMirrorSpeedSymmetry.lean} (Rank 070-115,
-CatAL, zero \lstinline|sorry|, zero custom axioms).
+Module: \texttt{Spacetime/ChiralMirrorSpeedSymmetry.lean} (CatAL,
+zero \lstinline|sorry|, zero custom axioms).
 
 Rule~124 is the spatial mirror of Rule~110 at the $\mathrm{Fin}\,2$ lookup
 level: $R_{124}(l,c,r) = R_{110}(r,c,l)$.
@@ -5695,7 +5691,7 @@ opposite propagation speeds $|v| = 2/3$ enforced by mirror-rule duality.
 \subsection{Orbit Depth = Ether Temporal Period
   (\texttt{Spacetime/OrbitDepthEtherPeriod.lean})}\label{subsec:orbit-depth-ether}
 
-Module: \texttt{Spacetime/OrbitDepthEtherPeriod.lean} (Rank 070-110, CatAL,
+Module: \texttt{Spacetime/OrbitDepthEtherPeriod.lean} (CatAL,
 zero \lstinline|sorry|, zero custom axioms).
 
 Two independent routes to the integer~7, both grounded in the GTE mod-7 ring:
@@ -5722,10 +5718,9 @@ vacuum decay depth and Cook-ether temporal return period.
 \subsection{Algebraic Lifting Theorem
   (\texttt{LiftingTheorem.lean})}\label{subsec:lifting-theorem}
 
-Module: \texttt{Spacetime/LiftingTheorem.lean} (development branch,
-commit \texttt{f83ae77}, zero sorry).
+Module: \texttt{Spacetime/LiftingTheorem.lean} (canonical library, zero sorry).
 Companion: \texttt{Spacetime/SpatiallyExtendedLifting.lean}
-(commit \texttt{a38d804}; axioms: \texttt{propext},
+(axioms: \texttt{propext},
 \texttt{Classical.choice}, \texttt{Quot.sound} only, no \texttt{sorryAx}).
 
 \begin{keybox}{The Algebraic Lifting Theorem}
@@ -5745,7 +5740,7 @@ Key theorems:
 \item \lstinline|no_fourth_generation_physical| — the no-fourth-generation result
   is a genuine machine-verified theorem: exhausts all PSC-admissible orbit
   classes using \lstinline|psc_admissible_iff_orbit| and shows no fourth-generation
-  orbit class exists (commit \texttt{f83ae77}).
+  orbit class exists.
 \item \lstinline|no_exotic_physical_generation| — rules out any physically
   observable generation not in $\{\mathrm{gen}_1, \mathrm{gen}_2, \mathrm{gen}_3\}$.
 \item \lstinline|smatrix_framework_exists| — genuine 5-conjunct bundle:
@@ -5782,7 +5777,7 @@ Meson and baryon existence are unconditional on this result.
 \subsection{Geodesic Theorem (\texttt{GeodesicTheorem.lean})}\label{subsec:geodesic-theorem}
 
 Modules: \texttt{Spacetime/GeodesicTheorem.lean} and \texttt{Spacetime/CentroidMeasure.lean}
-(development branch, zero sorry).
+(canonical library, zero sorry).
 These modules establish the formal predicate structure for the GTE geodesic theorem,
 the P34 $[\mathbf{D}]$-weighted centroid (point-localization model), and physical
 corollaries.  Vacuum timelike geodesic motion with well-defined centroid is proved
@@ -5953,7 +5948,7 @@ Module: \texttt{Universality/PSCOrbitWindows.lean} (zero \lstinline|sorry|).
 \item \lstinline|gen_beables_four_two_equal_windows| --- four two-equal windows per
   generation beable; vacuum has five all-equal windows.
 \item \lstinline|two_equal_orbits_not_psc_selected| --- two-equal $F_{21}$ orbit
-  representatives are disjoint from PSC generic windows (OQ-G1-LEAN2).
+  representatives are disjoint from PSC generic windows (open question: LEAN formalization of generic-window separation).
 \end{itemize}
 
 \subsection{Graviton Fock Space
@@ -5975,7 +5970,7 @@ $\alpha_g(M_{\rm Pl})=1$ at the GTE Planck scale
 % ═══════════════════════════════════════════════════════════════
 
 Module: \texttt{Universality/SylowIndexCouplingHierarchy.lean}
-(development branch; \texttt{lake build UgpLean.Universality.SylowIndexCouplingHierarchy}
+(canonical library; \texttt{lake build UgpLean.Universality.SylowIndexCouplingHierarchy}
 passes in approximately 4 seconds; zero sorry on all theorems listed here).
 
 \subsection{Fine structure constant — §§5d–5h}\label{subsec:alpha-em-sections}
@@ -6010,7 +6005,7 @@ Theorem & § & What it certifies \\
 \bottomrule
 \end{tabular}
 \caption{New theorems in \texttt{SylowIndexCouplingHierarchy.lean} §5d–5h
-  (zero sorry, development branch).}
+  (canonical library, zero sorry).}
 \label{tab:sylow-aem-sections}
 \end{table}
 
@@ -6060,7 +6055,7 @@ assumption; one step-4 gap remains before full unconditional certification.
   and Mass Gap — §§5i–9}\label{subsec:session6-physics}
 
 Module: \texttt{Universality/SylowIndexCouplingHierarchy.lean}
-(development branch; all theorems zero sorry; standard axioms only:
+(canonical library; all theorems zero sorry; standard axioms only:
 \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}).
 
 $F_{21} = \mathbb{Z}_7 \rtimes \mathbb{Z}_3$ is the order-21 Frobenius group
@@ -6111,7 +6106,7 @@ the \gte{} substrate.
 \bottomrule
 \end{tabular}
 \caption{New theorems in \texttt{SylowIndexCouplingHierarchy.lean} §5i–§7
-  (all zero sorry, development branch).
+  (all zero sorry, canonical library).
   §5r certifies the JP\,=\,1$^-$ vector meson nonet mechanism (structural CatAL);
   the 3.2\% RMS numerical mass bound remains CatA.}
 \label{tab:sylow-session6}
@@ -6153,7 +6148,7 @@ Selected physical significance:
 % ═══════════════════════════════════════════════════════════════
 
 Module: \texttt{Universality/GaugeInvariance.lean}
-(development branch; \texttt{lake build UgpLean.Universality.GaugeInvariance}).
+(canonical library; \texttt{lake build UgpLean.Universality.GaugeInvariance}).
 Zero sorry.
 
 \subsection*{Purpose}
@@ -6212,7 +6207,7 @@ certified in \texttt{SylowIndexCouplingHierarchy.lean} §5p–§5q.
   (\texttt{Substrate/LExtended.lean})}\label{sec:lextended}
 % ═══════════════════════════════════════════════════════════════
 
-Module: \texttt{Substrate/LExtended.lean} (development branch, zero sorry).
+Module: \texttt{Substrate/LExtended.lean} (canonical library, zero sorry).
 This is the structural Lean encoding of the two-sector Lagrangian
 \begin{equation}\label{eq:l-extended}
 \begin{split}
@@ -6237,7 +6232,7 @@ Wilsonian EFT level, with separate $\mathbb{Z}_3$ (confining) and $\mathrm{U}(1)
   (\texttt{QFT/GaugedMassGap.lean})}\label{sec:qft-mass-gap}
 % ═══════════════════════════════════════════════════════════════
 
-Module: \texttt{QFT/GaugedMassGap.lean} (development branch, zero sorry,
+Module: \texttt{QFT/GaugedMassGap.lean} (canonical library, zero sorry,
 zero new custom axioms; \lstinline|#print axioms| returns
 \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound} only
 for the unconditional theorems).
@@ -6262,7 +6257,7 @@ Yang-Mills programme.
 Supporting conditional theorems: \lstinline|qft_mass_gap_pos|,
 \lstinline|qft_and_beable_mass_gaps|, \lstinline|kink_pair_threshold_pos|.
 
-\subsection{Unconditional theorems (Rank 72d)}\label{subsec:qft-mass-gap-unconditional}
+\subsection{Unconditional theorems}\label{subsec:qft-mass-gap-unconditional}
 
 \begin{keybox}{Unconditional mass gap}
 \textbf{Theorems \lstinline|qft_gauged_mass_gap_unconditional|
@@ -6318,7 +6313,7 @@ and existential axioms across \texttt{GaugeMDL}, \texttt{CCImpossibilityBundle},
 \texttt{GUTStructure}, and \texttt{PMDLGravityTheorems}, and
 \lstinline|adj_mem_periodicCausalNeighbors| in \texttt{SpectralDimensionDegree}
 (proved via complete case analysis).
-The verified global named-axiom total is \textbf{75}.
+The verified global named-axiom total is \textbf{97}.
 
 The following named axioms are proved theorems (zero sorry):
 \begin{itemize}[nosep]
@@ -6351,20 +6346,20 @@ Additionally proved as theorems (zero sorry):
 Module & Scope & Custom axioms \\
 \midrule
 \texttt{GTE.AnalyticArchitecture}     & Dickman / CRT equidistribution & 2 \\
-Rule110-lean pin \texttt{13811a3}     & ChiralGliderDynamics / Rank 85c & (cross-repo) \\
+Rule110-lean (cross-repo)             & ChiralGliderDynamics & (cross-repo) \\
 \hline
 \texttt{Substrate.SechOverlap\allowbreak IntegralBounds\_bridge} & Mesh-to-integral bridge for $r\in\{5,11\}$ & 2 \\
 \texttt{Universality.GUTStructure}    & Native\_decide certs and SM structure & 43 \\
 \texttt{Universality.FrobeniusChain}  & FGCI uniqueness and chain closure & 4 \\
 \texttt{MassRelations.NeutrinoSector} & PMNS angles, CP phase, seesaw & 5 \\
 \texttt{Gravity.YukawaOverlapExponent} & DPP tape-counting, Yukawa scaling & 4 \\
-Other modules                         & Bridge and auxiliary axioms & 17 \\
+Other modules                         & Bridge and auxiliary axioms & 39 \\
 \hline
-\textbf{Global named custom axioms}   & \textbf{total} & \textbf{75} \\
+\textbf{Global named custom axioms}   & \textbf{total} & \textbf{97} \\
 \bottomrule
 \end{tabular}
 \caption{Custom named-axiom inventory. Each row lists the module, physical scope,
-  and axiom count. The global verified total is \textbf{75}; the core physics
+  and axiom count. The global verified total is \textbf{97}; the core physics
   proof path (charged leptons, couplings, generation count) uses only standard
   Lean/Mathlib axioms. \lstinline|causal\_path\_exists| is proved as a theorem
   (forward-causal pairs only) and is no longer a module-local axiom.}
@@ -6396,7 +6391,7 @@ Zero sorry.
 \subsection{Anomaly cancellation and renormalizability
   (\texttt{Spacetime/AnomalyRenormalizability.lean})}\label{subsec:anomaly-renorm}
 
-Module: development branch, zero sorry.
+Module: \texttt{Spacetime/AnomalyRenormalizability.lean} (canonical library, zero sorry).
 
 \begin{itemize}[nosep]
 \item \lstinline|sm_per_generation_charge_neutrality| — per-generation
@@ -6417,7 +6412,7 @@ Module: development branch, zero sorry.
 \subsection{Algebraic Descent Theorem
   (\texttt{Universality/\allowbreak AlgebraicDescentTheorem.lean})}\label{subsec:algebraic-descent}
 
-Module: development branch, zero sorry.
+Module: \texttt{Universality/AlgebraicDescentTheorem.lean} (canonical library, zero sorry).
 
 \begin{keybox}{Algebraic Descent}
 \textbf{Theorem \lstinline|algebraic_descent_theorem|.}
@@ -6448,8 +6443,8 @@ strong CP, generation structure) hold for the Rule~110 CA at every finite $M$.
 \subsection{Algebraic Necessity Theorem
   (\texttt{Universality/\allowbreak AlgebraicNecessityTheorem.lean})}\label{subsec:algebraic-necessity}
 
-Module: \texttt{Universality/AlgebraicNecessityTheorem.lean} (Rank 075-ALGEC-NECESSITY,
-zero \lstinline|sorry|, zero custom axioms).
+Module: \texttt{Universality/AlgebraicNecessityTheorem.lean} (zero
+\lstinline|sorry|, zero custom axioms).
 
 \begin{keybox}{\lstinline|algebraic_necessity_theorem| (zero \texttt{sorry})}
 $F_{21} = \mathbb{Z}_7 \rtimes \mathbb{Z}_3$ is the unique non-abelian group of
@@ -6502,7 +6497,7 @@ is Wolfram Class~4: reflection-invariance lemmas are zero \lstinline|sorry|;
 \subsection{Stress--Energy Tensor for \texorpdfstring{$\Phi_{\rm MDL}$}{PhiMDL}
   (\texttt{Spacetime/\allowbreak StressEnergyTensor.lean})}\label{subsec:stress-energy}
 
-Module: \texttt{Spacetime/StressEnergyTensor.lean} (Rank 075-GR, zero \lstinline|sorry|).
+Module: \texttt{Spacetime/StressEnergyTensor.lean} (zero \lstinline|sorry|).
 
 \begin{itemize}[nosep]
 \item \lstinline|phimdl_tmunu_symmetric| --- Klein--Gordon $T_{\mu\nu}$ symmetric
@@ -6516,7 +6511,7 @@ Module: \texttt{Spacetime/StressEnergyTensor.lean} (Rank 075-GR, zero \lstinline
 \subsection{Async Lifting Equals Sync Lifting
   (\texttt{Spacetime/\allowbreak AsyncLiftingTheorem.lean})}\label{subsec:async-lifting}
 
-Module: \texttt{Spacetime/AsyncLiftingTheorem.lean} (Rank 075-ALT, zero \lstinline|sorry|).
+Module: \texttt{Spacetime/AsyncLiftingTheorem.lean} (zero \lstinline|sorry|).
 
 \begin{keybox}{\lstinline|async_algebraic_lifting_theorem| (zero \texttt{sorry})}
 Asynchronous (local-cell) evaluation of $\mathtt{DWeight}$ and PSC-admissibility
@@ -6527,7 +6522,7 @@ agrees with synchronous global evaluation on every beable configuration;
 \subsection{Fourier Heat-Kernel Scaffolding
   (\texttt{Spacetime/\allowbreak Spectral/\allowbreak HeatKernelFourier.lean})}\label{subsec:heat-kernel-fourier}
 
-Module: \texttt{Spacetime/Spectral/HeatKernelFourier.lean} (Rank 13-LSD).
+Module: \texttt{Spacetime/Spectral/HeatKernelFourier.lean}.
 
 Certified: \lstinline|cayley_eigenvalue_at_zero_eq_degree| (zero \lstinline|sorry|).
 Three documented analytical \lstinline|sorry| placeholders remain in the
@@ -6540,7 +6535,7 @@ character-sum/Gaussian-limit chain
 \subsection{$\mathbb{Z}_7$ Winding--Coin Decoupling
   (\texttt{Substrate/\allowbreak WindingCoinDecoupling.lean})}\label{subsec:winding-coin}
 
-Module: \texttt{Substrate/WindingCoinDecoupling.lean} (Rank 074-3D, zero \lstinline|sorry|).
+Module: \texttt{Substrate/WindingCoinDecoupling.lean} (canonical library, zero \lstinline|sorry|).
 
 \begin{keybox}{\lstinline|diagonal_coin_decouples_sectors| (zero \texttt{sorry})}
 PSC-preserving transformations commuting with $\mathbb{Z}_7$ winding are
@@ -6552,7 +6547,7 @@ diagonal in the winding basis; domain-wall junction tension
 \subsection{C2 Coherence Measure Uniqueness
   (\texttt{Substrate/\allowbreak CoherenceMeasureUniqueness.lean})}\label{subsec:c2-coherence-uniqueness}
 
-Module: \texttt{Substrate/CoherenceMeasureUniqueness.lean} (Rank 074-C2, zero \lstinline|sorry|
+Module: \texttt{Substrate/CoherenceMeasureUniqueness.lean} (zero \lstinline|sorry|
 on the C2/Gibbs closure chain).
 
 \begin{itemize}[nosep]
@@ -6634,7 +6629,7 @@ Theorem & Module & Physical role \\
   & $Z_7$ vs.\ $Z_3$ sub-orbit disjointness for two-equal states \\[1pt]
 \texttt{two\_\allowbreak equal\_\allowbreak orbits\_\allowbreak not\_\allowbreak psc\_\allowbreak selected}
   & PSCOrbit\allowbreak Windows
-  & Two-equal $F_{21}$ orbits not PSC-selected (OQ-G1-LEAN2) \\[1pt]
+  & Two-equal $F_{21}$ orbits not PSC-selected \\[1pt]
 \texttt{gravitational\_\allowbreak coupling\_\allowbreak at\_\allowbreak planck\_\allowbreak is\_\allowbreak one}
   & GravitonFock\allowbreak Space
   & $\alpha_g(M_{\rm Pl})=1$; GTE Planck mass self-consistency \\[1pt]
@@ -6844,11 +6839,11 @@ Theorem & Module & Physical role \\
 \label{tab:new-theorem-inventory-079}
 \end{table}
 
-\subsection{Theorem inventory: OQ-079 gravity force law and entanglement}\label{subsec:new-theorem-inventory-oq1-oq3}
+\subsection{Theorem inventory: gravity force law and entanglement}\label{subsec:new-theorem-inventory-oq1-oq3}
 
-The following modules and theorems were added following the closure of
-OQ-079-1 (Newtonian gravity force law, CatAD) and the partial closure of
-OQ-079-3 (Page-Wootters Born rule and Bell inequality, CatAD/CatA).
+The following modules and theorems establish the
+Newtonian gravity force law (CatAD) and the partial formalization of
+the Page-Wootters Born rule and Bell inequality (CatAD/CatA).
 
 \begin{table}[h]
 \centering\footnotesize
@@ -6939,8 +6934,8 @@ Theorem / Axiom & Module & Physical content \\
   & $V_{\ZS}(\Phi)\geq 0$ everywhere; potential energy non-negative (zero sorry) \\
 \bottomrule
 \end{tabular}
-\caption{Theorems and named axioms from OQ-079-1 (gravity force law), OQ-079-3
-(Born rule + Bell inequality), and the L1$\to$L2 bridge (gaps G1--G4).
+\caption{Theorems and named axioms covering the gravity force law, the
+Page-Wootters Born rule and Bell inequality (CatAD/CatA), and the L1$\to$L2 bridge.
 Theorems marked (axiom) are named axioms documenting CatAD or CatA results pending full
 Lean formalization. Theorems without (axiom) are zero sorry.}
 \label{tab:new-theorem-inventory-oq1-oq3}
@@ -7508,7 +7503,7 @@ independent of the Hubble scale $H_0$:
    = \frac{g^2}{16\pi^2}\cdot\frac{112}{3}\cdot\left(\frac{m_{\rm kink}}{M_{\rm Pl}}\right)^2. \]
 The $H_0^2$ factors cancel exactly.  This is the metric-free core of the
 holographic non-renormalization theorem (G22+G42); the absolute-magnitude
-identification $L = M_{\rm Pl}/H_0$ remains gated on OQ-QG-1.
+identification $L = M_{\rm Pl}/H_0$ remains an open question pending quantum gravity input.
 \end{theorem}
 
 \subsection{Proper-time rate from Rule~110 ether (\texttt{Gravity/EtherProperTimeRate.lean})}\label{subsec:ether-proper-time-rate}
@@ -7658,7 +7653,7 @@ sector at $\CatAD$.
   lower bound, zero sorry).
   Honest scope: conservative floor for all non-vacuum PSC states; per-generation
   UCL cascade masses remain external (P01).
-\item \textbf{\texttt{Spacetime/OrbitMassHierarchy.lean}} (Rank 79-MASSES, zero sorry):
+\item \textbf{\texttt{Spacetime/OrbitMassHierarchy.lean}} (zero sorry):
   extends \texttt{MassGap.lean} with per-sector, per-generation mass lower bounds
   across all three SM fermion sectors.  The inductive type \lstinline|SmSector|
   ($= \{\text{lepton}, \text{upQuark}, \text{downQuark}\}$, identified by $k$-occupation
@@ -7944,7 +7939,7 @@ Module: \texttt{Physics/FKTTCoupling.lean}.
   \texorpdfstring{$[\mathbf{D}]$}{[D]}-Measure
   (\texttt{Spacetime/QECStabilizer.lean})}\label{subsec:qec-stabilizer}
 
-Module: \texttt{Spacetime/QECStabilizer.lean} (development branch,
+Module: \texttt{Spacetime/QECStabilizer.lean} (canonical library,
 zero sorry; one use of \lstinline|native_decide| for the vacuum
 fixed-point computation).
 
@@ -8032,21 +8027,21 @@ Six additive \lstinline|certified_*| theorems aggregate prior results without
 \subsection{[D]-Weighted SR Formula
   (\texttt{Spacetime/DWeightSRFormula.lean})}\label{subsec:dweight-sr-formula}
 
-Module: \texttt{Spacetime/DWeightSRFormula.lean} (Rank 63-DMDL, zero
+Module: \texttt{Spacetime/DWeightSRFormula.lean} (zero
 \lstinline|sorry|, axioms: \lstinline|propext|, \lstinline|Classical.choice|,
 \lstinline|Quot.sound| only).
 
 This module formalises the algebraic framework for the D2 [D]-weighted average
 of the MDL transit time $\tau_c$ reproducing the SR Lorentz factor
 $\gamma(v) = 1/\sqrt{1-v^2/c^2}$.  It combines the QEC projector structure
-(Rank 38-QEC, \texttt{QECStabilizer.lean}) with the SR proper-time ratio
-identity (Rank 37-LCI, \texttt{CausalInvariance.lean}).
+(\texttt{QECStabilizer.lean}) with the SR proper-time ratio
+identity (\texttt{CausalInvariance.lean}).
 
 The central claim: for a PSC-admissible beable at velocity $v < c$, the
 [D]-weighted average $\langle\tau_c\rangle_D(\text{excitation}) /
 \langle\tau_c\rangle_D(\text{vacuum}) = (1-\varepsilon_0(M))\,\gamma(v)$,
 where $\varepsilon_0(M) = \pi^2/(3M^2)$ is the CA lattice-discretisation
-correction (Rank 68-KGGTE).  In the continuum limit $M\to\infty$ this gives
+correction.  In the continuum limit $M\to\infty$ this gives
 exact SR; computationally, at $M=7$ and $\beta=0.798$, the corrected
 residual is $1.2$--$1.8\%$.
 
@@ -8082,15 +8077,15 @@ gives $\tau_c$ ratio $= 1.569\pm0.003$, $\gamma=1.659$, raw error $5.4\%$
 Non-canonical patterns fail (structural $\tau_c$ bias 55--105\%), confirming
 DWeight selects the physical PSC-admissible beable.  All three null tests pass
 (N1: uniform weights, N2: scrambled velocity, N3: ether control).  The
-continuum companion (Rank 67-KGS, Klein--Gordon substrate) achieves
+continuum companion (Klein--Gordon substrate) achieves
 $0.069\%$ mean error across $\beta\in[0.05,0.90]$.
 
-% ── Rank 070-107 substrate infrastructure ──
+% ── Substrate infrastructure ──
 
 \subsection{Substrate Typeclass
   (\texttt{Substrate/Substrate.lean})}\label{subsec:substrate-typeclass}
 
-Module: \texttt{Substrate/Substrate.lean} (Rank 070-107 Phase~1, zero
+Module: \texttt{Substrate/Substrate.lean} (zero
 \lstinline|sorry|, zero custom axioms).
 
 Defines the GTE-Möbius substrate triple $(\mathtt{config}, [\mathbf{D}], \mathtt{psc\_consistent})$:
@@ -8111,13 +8106,13 @@ Presentation-Invariance arguments.
 \subsection[PSC-Preserving Transformations (\texttt{PSCPreservingTransformation.lean})]{PSC-Preserving Transformations
   (\texttt{Substrate/\allowbreak PSCPreservingTransformation.lean})}\label{subsec:psc-preserving-transformation}
 
-Module: \texttt{Substrate/PSCPreservingTransformation.lean} (Rank 070-107
-Phase~1--2, zero \lstinline|sorry|, zero custom axioms).
+Module: \texttt{Substrate/PSCPreservingTransformation.lean} (zero
+\lstinline|sorry|, zero custom axioms).
 
 Defines Layer-I PSC structure preservation via four predicates
 (\lstinline|PreservesRC|, \lstinline|PreservesNMStar|, \lstinline|PreservesTV|,
 \lstinline|PreservesSA|) bundled as \lstinline|IsPSCPreserving|.
-Phase~1 uses conservative stubs; Phase~2 supplies real RC content on
+Conservative stubs are refined with real RC content on
 \texttt{KGConfig} in \texttt{PSCStructureLorentzPreserved.lean}.
 
 \begin{theorem}[\lstinline|id_is_psc_preserving|, zero \texttt{sorry}]
@@ -8131,8 +8126,8 @@ symmetry group under which $[\mathbf{D}]$ must be invariant (D2).
 \subsection{Coherence Measure D2
   (\texttt{Substrate/CoherenceMeasure.lean})}\label{subsec:coherence-measure-d2}
 
-Module: \texttt{Substrate/CoherenceMeasure.lean} (Rank 070-107 Phase~1,
-zero \lstinline|sorry|, \textbf{one named axiom} \lstinline|d2_universal|).
+Module: \texttt{Substrate/CoherenceMeasure.lean} (zero
+\lstinline|sorry|, \textbf{one named axiom} \lstinline|d2_universal|).
 
 Encodes P34~\S6 D2 (Presentation Invariance at configuration space):
 any PSC-preserving map leaves $[\mathbf{D}]$ invariant.
@@ -8149,8 +8144,8 @@ Sanity check \lstinline|d2_universal_id| certifies invariance under the identity
 \subsection[$\Phi_{\mathrm{MDL}}$ Lagrangian Lorentz Scalarity (\texttt{LagrangianLorentzScalar.lean})]{$\Phi_{\mathrm{MDL}}$ Lagrangian Lorentz Scalarity
   (\texttt{Substrate/\allowbreak LagrangianLorentzScalar.lean})}\label{subsec:lagrangian-lorentz-scalar}
 
-Module: \texttt{Substrate/LagrangianLorentzScalar.lean} (Rank 070-107
-Phase~2 Lemma~1, zero \lstinline|sorry|, zero custom axioms).
+Module: \texttt{Substrate/LagrangianLorentzScalar.lean} (zero
+\lstinline|sorry|, zero custom axioms).
 Builds on \texttt{Universality/LorentzInvariance.lean}
 (\S\ref{subsec:lorentz-invariance}).
 
@@ -8168,9 +8163,9 @@ the scalar field value.
 \subsection{PSC Structure Preserved Under Lorentz Boosts
   (\texttt{Substrate/PSCStructureLorentzPreserved.lean})}\label{subsec:psc-structure-lorentz}
 
-Module: \texttt{Substrate/PSCStructureLorentzPreserved.lean} (Rank 070-107
-Phase~2 Lemma~2, zero \lstinline|sorry|, zero custom axioms).
-RC is proved; NM$^*$/TV/SA remain Phase~3 stubs (\texttt{True}).
+Module: \texttt{Substrate/PSCStructureLorentzPreserved.lean} (zero
+\lstinline|sorry|, zero custom axioms).
+RC is proved; NM$^*$/TV/SA remain formal stubs (\texttt{True}).
 
 \begin{theorem}[\lstinline|lorentz_boost_preserves_psc|, zero \texttt{sorry}]
 A Lorentz boost \lstinline|lorentzBoostActConfig| is PSC-preserving on
@@ -8185,8 +8180,8 @@ continuum substrate; RG $\beta$-functions built from $\mathcal{L}$ are Lorentz s
 \subsection[SO(3) Noether Angular Momentum (\texttt{NoetherAngularMomentum.lean})]{SO(3) Noether Angular Momentum
   (\texttt{Substrate/\allowbreak NoetherAngularMomentum.lean})}\label{subsec:noether-angular-momentum}
 
-Module: \texttt{Substrate/NoetherAngularMomentum.lean} (Rank 280-NTH
-Phase~2, zero \lstinline|sorry|, \textbf{one PDE axiom}
+Module: \texttt{Substrate/NoetherAngularMomentum.lean} (zero
+\lstinline|sorry|, \textbf{one PDE axiom}
 \lstinline|kg_angular_momentum_time_conserved|).
 
 Certifies that the continuum $\Phi_{\mathrm{MDL}}$ Klein--Gordon Lagrangian
@@ -8220,7 +8215,7 @@ conservation $dL^i/dt=0$ on KG equations of motion uses axiom
 \subsection{PSC Presentation Invariance $\Rightarrow$ $[\mathbf{D}]$ Lorentz Equivariance
   (\texttt{Substrate/PSCPILorentzMain.lean})}\label{subsec:pscpi-lorentz-main}
 
-Module: \texttt{Substrate/PSCPILorentzMain.lean} (development branch, zero
+Module: \texttt{Substrate/PSCPILorentzMain.lean} (canonical library, zero
 \lstinline|sorry|, one project axiom \lstinline|d2_universal| from P34~\S6 D2
 Presentation Invariance, formalized in \texttt{Substrate/CoherenceMeasure.lean}).
 
@@ -8282,14 +8277,14 @@ Certified predicates and theorems:
 \subsection{Multi-particle Hilbert space
   (\texttt{Spacetime/MultiParticleHilbert.lean})}\label{subsec:multiparticle-hilbert}
 
-Module: \texttt{Spacetime/MultiParticleHilbert.lean} (Rank 244-MPH, zero
+Module: \texttt{Spacetime/MultiParticleHilbert.lean} (zero
 \lstinline|sorry|, zero custom axioms except those inherited from
 \lstinline|QECStabilizer.lean|).
 
 This module formalizes the algebraic layer of the GTE multi-particle
 Hilbert space, built from the QEC code subspace
 $\{\mathrm{vac}, \mathrm{gen}_1, \mathrm{gen}_2, \mathrm{gen}_3\}$ certified
-in \texttt{QECStabilizer.lean} (Rank 38-QEC).
+in \texttt{QECStabilizer.lean}.
 
 \begin{itemize}[nosep]
 \item \lstinline|code_word_cardinality| — $|\mathrm{CodeWord}| = 4$
@@ -8332,7 +8327,7 @@ Theorem & Module & Substrate $\leftrightarrow$ Phenomenology \\
 \texttt{trace\_\allowbreak identifiability}               & GTE/Evolution & Gen-2 trace fixes $n, b_1, c_1$ \\
 \bottomrule
 \end{tabular}
-\caption{Cross-repository bridge theorems (development branch).}
+\caption{Cross-repository bridge theorems (canonical library).}
 \label{tab:cross-repo}
 \end{table}
 
@@ -9482,7 +9477,7 @@ physical spacetime and QFT.  Highlights:
 spectral dimension $d_s = 4$ in the thermodynamic limit
 (\lstinline|causal_graph_spectral_dim_thermodynamic_limit|, one documented Mathlib-gap sorry);
 the Algebraic Lifting Theorem connecting beable-level results to physical
-observables (\lstinline|algebraic_lifting_theorem|, zero sorry, commit \texttt{f83ae77});
+observables (\lstinline|algebraic_lifting_theorem|, zero sorry);
 meson and baryon existence in 3D
 (\lstinline|meson_bound_state_exists|, \lstinline|baryon_bound_state_exists|,
 zero sorry conditional on \lstinline|causal_path_exists|);
@@ -9607,14 +9602,12 @@ The following bounds were derived analytically and hand-written directly in \lea
   two \CatA{} axioms (\texttt{sech\_overlap\_at\_five\_ge\_certified},
   \texttt{sech\_overlap\_at\_eleven\_ge\_certified}) documenting the
   mesh\textrightarrow{}integral bridge; the aggregate bounds $596903/10^6$ and $282771/10^6$
-  were confirmed numerically by \texttt{eta\_b\_exact\_sech\_overlap.py}
-  (graduated to \texttt{papers/47\_gte\_cosmology/scripts/}).  The main
+  were confirmed numerically by \texttt{eta\_b\_exact\_sech\_overlap.py}.  The main
   \texttt{SechOverlapIntegralBounds.lean} and \texttt{PhiMDLFluctuationSpectrum.lean}
-  are zero sorry; a full Riemann-sum interval certificate is tracked as open item
-  OQ-083C-EPS1-CatAL.
+  are zero sorry; a full Riemann-sum interval certificate remains open (CatAL pending Mathlib interval arithmetic support).
 
 \item \texttt{SechOverlapIntegralBounds.lean} (per-cell product lemmas) ---
-  partially scaffolded by \texttt{gen\_sech\_overlap\_bounds.py} but currently
+  generated using \texttt{gen\_sech\_overlap\_bounds.py}; all bounds
   hand-certified in the main module.
 \end{itemize}
 
