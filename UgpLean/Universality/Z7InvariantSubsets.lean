@@ -1,5 +1,5 @@
 /-
-  Z7InvariantSubsets.lean — EPIC_085
+  Z7InvariantSubsets.lean — Invariant Subset Uniqueness for the GTE polynomial.
 
   Invariant Subset Uniqueness Theorem for the GTE polynomial p(L,C,R) over GF(7).
 

@@ -138,7 +138,7 @@
 \begin{abstract}
 We present \textbf{ugp-lean}, a \lean{}~4 formalization of the
 Universal Generative Principle (\ugp{}) against Mathlib, comprising
-303~\lean{} modules across seventeen layers (canonical library covering
+304~\lean{} modules across seventeen layers (canonical library covering
 spacetime, QFT, and hadronic physics) with a strict zero-sorry,
 zero-custom-axiom policy on the core proof path (97 global custom
 named axioms across all modules; core physics proof path remains
@@ -426,7 +426,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 303~\lean{} modules across seventeen layers
+The artifact is organized into 304~\lean{} modules across seventeen layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -483,7 +483,7 @@ The artifact is organized into 303~\lean{} modules across seventeen layers
   {\textbf{IPT}~(1) \textit{migrated to ugp-physics-lean}:
    InformationProfitThreshold};
 \node[layer, fill=purple!8, below=of ipt]   (univ)
-  {\textbf{Universality}~(64)\quad Rule110, UWCA, UWCASimulation,
+  {\textbf{Universality}~(65)\quad Rule110, UWCA, UWCASimulation,
    UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge,
    CUP4TotalParity, CUP11ModSeven, CUP3DUniqueness, CUP3DPSCUnification,
    CUP3DPhysicalIncompleteness, TwoLayerConfluence, GTECompilation, GTEUniqueness,
@@ -491,6 +491,7 @@ The artifact is organized into 303~\lean{} modules across seventeen layers
    HypothesisB, HypothesisBCChain, PSCUniversality, CookRule110Ref,
    OrbitPerturbationCatalog, Z7ChargeConjugation, DimensionalSliceUniqueness,
    Z5TransitivityUniqueness, GTPNeutralDiscrimination, \textbf{Z7ZeroSectorDiscriminant},
+   \textbf{Z7InvariantSubsets},
    SMOrbitCausalIsolation,
    EWBosonStructure, EWChiralBridge, \textbf{GUTStructure}, LawvereZone,
    CasimirMasslessEther, \textbf{ChiralPairVA}, \textbf{CouplingNoGo}, \textbf{ChiralityEigenstates},
@@ -5136,6 +5137,35 @@ satisfy $c_Z = 12$, $c_H = 13$, $c_H = c_Z + 1$ (machine-checked by
 
 $\CatAL$ (colorless arm); the gluon ($W_B=0$,
 colored) arm has separate status.
+
+\subsection{Invariant Subset Uniqueness (\texttt{Z7InvariantSubsets})}\label{subsec:z7-invariant-subsets}
+
+The \texttt{Z7InvariantSubsets} module formalizes invariant-subset classification for
+the full GTE polynomial $p(L,C,R) = C + R - CR - LCR$ over $\mathbb{Z}/7\mathbb{Z}$
+(Object~0: no $f_{\rm MDL}$ orbit-position filtering).
+
+\begin{theorem}[\lstinline|p_poly_invariant_subsets_classification|, zero \texttt{sorry}]
+The only subsets $S \subseteq \mathbb{Z}_7$ closed under $p$ (i.e.\ $p(S\times S\times S)\subseteq S$)
+are $\emptyset$, $\{0\}$, $\{0,1\}$, and $\mathbb{Z}_7$ itself.
+Proved by \lstinline|native_decide| over all $\binom{7}{k}$ candidate subsets.
+\end{theorem}
+
+\begin{theorem}[\lstinline|rule110_unique_proper_invariant_subca|, zero \texttt{sorry}]
+Among non-empty proper subsets of $\mathbb{Z}_7$ closed under $p$, only $\{0\}$ and
+$\{0,1\}$ remain.  The binary sublayer $\{0,1\}$ is the unique maximal proper
+invariant sub-cellular automaton, matching Rule~110 on the binary sector.
+\end{theorem}
+
+\begin{theorem}[QNR binary floor, zero \texttt{sorry}]
+$N_{\rm fam} = 5$ is a quadratic non-residue mod~7
+(\lstinline|five_is_qnr_mod7|); the fixed-point equation $k^2+k-1\equiv 0\pmod 7$
+has no solution (\lstinline|kink_fixed_point_eq_no_solution|,
+\lstinline|no_intermediate_fixed_point|).
+The master certificate \lstinline|nfam_qnr_explains_binary_floor| combines these
+arithmetical facts with \lstinline|p_poly_invariant_subsets_classification|,
+supplying an algebraic explanation for why $\{0,1\}$ is the unique non-trivial
+invariant sub-CA of the unrestricted GTE polynomial.
+\end{theorem}
 
 \subsection{SM Orbit Causal Isolation (\texttt{SMOrbitCausalIsolation})}\label{subsec:sm-orbit-causal}
 
