@@ -1015,11 +1015,26 @@ All theorems zero sorry (CatAL).
 | **gte_polynomial_five_labelled_roles** | Universality.FiveRolesPolynomial | Structural: exactly five distinct labelled-triple roles at `K_extra = 0` |
 | **gte_polynomial_three_roles_k_zero** | Gravity.PMDLGravityTheorems | Sub-bundle: Roles 1 (Rule 110) + 3 (gravity mass hierarchy) only |
 
+### GTE polynomial invariant subsets (`Universality.Z7InvariantSubsets`)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **p_poly_agrees_fmdl_on_binary** | Universality.Z7InvariantSubsets | On $\{0,1\}^3$, raw polynomial $p(L,C,R)$ equals $f_{\rm MDL}$ (CatAL; `decide`) |
+| **p_poly_binary_restriction_closed** | Universality.Z7InvariantSubsets | $p$ maps $\{0,1\}^3$ into $\{0,1\}$ (CatAL; `decide`) |
+| **p_poly_invariant_subsets_classification** | Universality.Z7InvariantSubsets | Closed subsets of $\mathbb{Z}_7$ under $p$ are exactly $\emptyset$, $\{0\}$, $\{0,1\}$, $\mathbb{Z}_7$ (CatAL; `native_decide`) |
+| **p_poly_invariant_subsets** | Universality.Z7InvariantSubsets | Prop formulation of invariant-subset classification (CatAL) |
+| **rule110_unique_proper_invariant_subca** | Universality.Z7InvariantSubsets | Unique maximal proper invariant sub-CA is $\{0,1\}$ (Rule 110 binary layer) (CatAL; `native_decide`) |
+| **five_is_qnr_mod7** | Universality.Z7InvariantSubsets | $5 = N_{\rm fam}$ is a quadratic non-residue mod 7 (CatAL; `decide`) |
+| **kink_fixed_point_eq_no_solution** | Universality.Z7InvariantSubsets | $k^2+k-1\equiv 0$ has no solution in $\mathbb{Z}_7$ (CatAL; `decide`) |
+| **no_intermediate_fixed_point** | Universality.Z7InvariantSubsets | Equivalent no-solution form for $k^2+k-1$ (CatAL; `decide`) |
+| **seven_mod_five** | Universality.Z7InvariantSubsets | $7 \equiv 2 \pmod 5$ (CatAL; `decide`) |
+| **nfam_qnr_explains_binary_floor** | Universality.Z7InvariantSubsets | QNR status of $N_{\rm fam}$ plus invariant-subset classification explains binary floor (CatAL; structural) |
+
 ---
 
 ## Frontier Closures — Recent additions
 
-**Scope:** 221 net-new `theorem`/`lemma` names across 22 Lean modules (zero sorry on listed results; two pre-existing `axiom` stubs in `GUTStructure.EWChiralBridge` unchanged; two **CatA** axioms in `SechOverlapIntegralBounds_bridge.lean` for the mesh→integral bridge). Cat levels: **CatAL** unless noted **CatAD** or **CatA**.
+**Scope:** 231 net-new `theorem`/`lemma` names across 23 Lean modules (zero sorry on listed results; two pre-existing `axiom` stubs in `GUTStructure.EWChiralBridge` unchanged; two **CatA** axioms in `SechOverlapIntegralBounds_bridge.lean` for the mesh→integral bridge). Cat levels: **CatAL** unless noted **CatAD** or **CatA**.
 
 ### Φ_MDL fluctuation spectrum and Yukawa vertex (`Substrate.PhiMDLFluctuationSpectrum`)
 
@@ -1236,7 +1251,7 @@ Interval axioms for `Real.exp`/`Real.log` factors used by quark and EW numerical
 | **z7_symmetry_forces_equal_sector_action** | Universality.GUTStructure | Equal distribution forced: S_per = q_dark/|Z₇\*| = 2/6 = 1/3 = 1/N_c (CatAL) |
 | **d_top_derivation_chain_catal** | Universality.GUTStructure | Master CatAL assembly: BPS S₀/T=1 + q_dark=2 + |Z₇\*|=6 + Z₇ transitivity → D_top = exp(−1/N_c) (CatAL) |
 
-**Recent additions catalog count:** 70 named flagship theorems plus 40 interval-bound lemmas and 25 UCL margin/delta certificates documented in the module list above (**230** total net-new names).
+**Recent additions catalog count:** 70 named flagship theorems plus 40 interval-bound lemmas and 25 UCL margin/delta certificates plus 10 GTE-polynomial invariant-subset theorems documented in the module list above (**240** total net-new names).
 
 ## External Citations (Not Formalized)
 

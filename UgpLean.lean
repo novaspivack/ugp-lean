@@ -133,6 +133,7 @@ import UgpLean.Universality.ZGMMesInvariant
 import UgpLean.Universality.LawvereZone
 import UgpLean.Universality.PSCUniversality
 import UgpLean.Universality.CUP3DUniqueness
+import UgpLean.Universality.Z7InvariantSubsets
 import UgpLean.Universality.CUP3DPSCUnification
 import UgpLean.Universality.CUP3DPhysicalIncompleteness
 import UgpLean.Universality.CookRule110Ref
