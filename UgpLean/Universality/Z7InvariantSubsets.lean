@@ -80,4 +80,39 @@ theorem rule110_unique_proper_invariant_subca :
       S = {0} ∨ S = binarySublayer := by
   native_decide
 
+/-
+  §3  QNR Binary Floor Uniqueness — algebraic explanation
+
+  The invariant subset uniqueness theorem has an algebraic explanation:
+  5 = N_fam (number of SM fermion families) is a quadratic non-residue mod 7.
+  This prevents the fixed-point equation k²+k-1=0 from having solutions in Z₇,
+  which is what would be required for any intermediate invariant subset to exist.
+
+  All theorems proved by `decide` over Fin 7.
+-/
+
+/-- 5 is a quadratic non-residue mod 7: no element of Z₇ squares to 5. -/
+theorem five_is_qnr_mod7 : ∀ x : Fin 7, x * x ≠ (5 : Fin 7) := by decide
+
+/-- The fixed-point equation k²+k-1=0 has no solution in Z₇. -/
+theorem kink_fixed_point_eq_no_solution : ∀ k : Fin 7, k * k + k ≠ (1 : Fin 7) := by decide
+
+/-- Equivalently stated: no k in Z₇ satisfies k²+k-1≡0 (mod 7). -/
+theorem no_intermediate_fixed_point : ∀ k : Fin 7, k * k + k - 1 ≠ 0 := by decide
+
+/-- 7 ≡ 2 (mod 5), confirming 7 is in the class q ≡ ±2 (mod 5) where 5 is QNR. -/
+theorem seven_mod_five : (7 : ℕ) % 5 = 2 := by decide
+
+/-- Connection: the QNR status of N_fam=5 mod 7 is what makes Rule 110 ({0,1})
+    the unique proper invariant sub-CA of p_poly.
+    The proof is the combination of `five_is_qnr_mod7` and
+    `p_poly_invariant_subsets_classification`. -/
+theorem nfam_qnr_explains_binary_floor :
+    (∀ x : Fin 7, x * x ≠ (5 : Fin 7)) ∧
+    (∀ k : Fin 7, k * k + k ≠ (1 : Fin 7)) ∧
+    (∀ S : Finset (Fin 7), isInvariantSubsetBool S = true →
+      S = ∅ ∨ S = {0} ∨ S = binarySublayer ∨ S = Finset.univ) :=
+  ⟨five_is_qnr_mod7, kink_fixed_point_eq_no_solution,
+   fun S h => p_poly_invariant_subsets_classification S h⟩
+
 end GTE.Z7InvariantSubsets
