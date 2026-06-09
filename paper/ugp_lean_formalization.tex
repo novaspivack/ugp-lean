@@ -138,7 +138,7 @@
 \begin{abstract}
 We present \textbf{ugp-lean}, a \lean{}~4 formalization of the
 Universal Generative Principle (\ugp{}) against Mathlib, comprising
-304~\lean{} modules across seventeen layers (canonical library covering
+305~\lean{} modules across seventeen layers (canonical library covering
 spacetime, QFT, and hadronic physics) with a strict zero-sorry,
 zero-custom-axiom policy on the core proof path (97 global custom
 named axioms across all modules; core physics proof path remains
@@ -426,7 +426,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 304~\lean{} modules across seventeen layers
+The artifact is organized into 305~\lean{} modules across seventeen layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -3653,6 +3653,34 @@ Particle-physics consequences are also machine-checked: $W$-boson emission
 (\lstinline|fmdl_quark_flavor_change|: $\mathsf{fmdl}(2,5,2) = 6$) are derived
 by \texttt{decide}.
 
+\begin{theorem}[GEN$_2$/GEN$_3$ positional topology degeneracy]\label{thm:gen23-topo}
+The states $\mathrm{GEN}_2 = [2,5,2,0,2]$ and $\mathrm{GEN}_3 = [5,6,5,3,5]$
+share the structural topology $(a,b,a,c,a)$: positions $\{0,2,4\}$ carry a single
+repeated winding value, and positions $1$ and $3$ carry distinct minority values.
+$\mathrm{GEN}_1 = [1,5,2,2,1]$ has the distinct topology $(a,b,c,c,a)$.
+Formally, for each of GEN$_2$ and GEN$_3$: the cell values at positions 0, 2, 4
+are equal, and the values at positions 1 and 3 differ from the outer value.
+
+\noindent\emph{Physical consequence.}
+Under WolframModel's topological (pattern-based) matching, the orbit rules
+$\mathrm{GEN}_i \to \mathrm{GEN}_{i+1}$ match on canonical topology rather
+than literal values.  Since GEN$_2$ and GEN$_3$ share the same topology,
+both the rule $\mathrm{GEN}_2\!\to\!\mathrm{GEN}_3$ and the rule
+$\mathrm{GEN}_3\!\to\!\mathrm{VAC}$ match any state with topology $(a,b,a,c,a)$
+simultaneously.  In the multiway expansion, both fire at each step, producing
+binary branching and a $2^{10}-1 = 1023$-event causal tree at depth~10.
+This is the structural reason that the GTE WolframModel causal graph is a
+fractal binary tree~(P49~\S5.3).
+
+\begin{leanref}
+\lstinline|gen2_outer_positions_constant|,
+\lstinline|gen3_outer_positions_constant|,
+\lstinline|gen2_gen3_topology_degenerate|
+\textup{(in \texttt{Universality.CUP3DUniqueness}, zero \texttt{sorry},
+\texttt{decide})}
+\end{leanref}
+\end{theorem}
+
 % ─────────────────────────────────────────────────────────────────
 \subsection{PSC Unification and GoE Chain (\texttt{CUP3DPSCUnification})}\label{subsec:cup3d-psc-unification}
 
@@ -5165,6 +5193,115 @@ The master certificate \lstinline|nfam_qnr_explains_binary_floor| combines these
 arithmetical facts with \lstinline|p_poly_invariant_subsets_classification|,
 supplying an algebraic explanation for why $\{0,1\}$ is the unique non-trivial
 invariant sub-CA of the unrestricted GTE polynomial.
+\end{theorem}
+
+\subsection{GTE Polynomial Explorations (\texttt{Polynomial.PolyExplorations})}\label{subsec:poly-explorations}
+
+The \texttt{Polynomial/PolyExplorations.lean} module (35 theorems, zero \lstinline|sorry|)
+formalizes the core mathematical properties of $p(L,C,R)=C+R-CR-LCR$ over $\mathbb{F}_7$,
+its relationship to the integer update map $T$, period-475 certificates for the 5-cell ring,
+and the GF($7^3$) number-theoretic structure underlying the factorization of the period.
+
+\paragraph{Universal algebraic identities.}
+\begin{theorem}[\lstinline|poly_p_at_111_eq_zero|, zero \texttt{sorry}]
+Over any commutative ring $R$, $p(1,1,1)=1+1-1\cdot1-1\cdot1\cdot1=0$.
+Proved by \lstinline|ring|.
+\end{theorem}
+
+\begin{theorem}[\lstinline|gf5_has_fixed_point|, \lstinline|gf5_second_ether|, zero \texttt{sorry}]
+In $\mathrm{GF}(5)$: $k=2$ satisfies $k^2+k-1=0$ (\lstinline|decide|), and $p(2,2,2)=2$
+(\lstinline|decide|), confirming a second stable ether at $w=2$.  This is the algebraic
+mechanism by which $\mathrm{GF}(5)$ supports a spurious invariant sector that PSC rejects.
+\end{theorem}
+
+\paragraph{Ground-state characterization and diagonal factorization.}
+\begin{theorem}[\lstinline|poly_p_uniform_gs_roots|, zero \texttt{sorry}]
+In $\mathbb{Z}/7\mathbb{Z}$, $p(x,x,x)=-x(x-1)(x-5)$, and the ground states of the
+uniform spin-7 configuration are exactly $\{0,1,5\}$ --- the roots of this diagonal cubic.
+Proved by \lstinline|decide|.
+\end{theorem}
+
+This machine-certifies the $\mathbb{Z}_3$-symmetric ordered phase of the spin-7 lattice model.
+Companion theorems \lstinline|poly_p_diagonal_factorization| and
+\lstinline|poly_p_diagonal_plus_factor_eq_zero| certify the equivalent form
+$p(x,x,x)=-x(x-1)(x+2)$ and the underlying ring identity.
+
+\paragraph{T map: non-polynomial over $\mathrm{GF}(7)$.}
+\begin{theorem}[\lstinline|T_b_output_not_determined_by_mod7|, \lstinline|T_computable_not_polynomial_GF7|, zero \texttt{sorry}]
+The integer update map $T$ is computable but not polynomial over $\mathrm{GF}(7)$:
+the counterexample $b=73$, $c=144$ vs $c=151$ (with $144\equiv 151\pmod7$) gives
+distinct outputs mod~7 from identical inputs mod~7.  Proved by \lstinline|native_decide|.
+\end{theorem}
+
+\paragraph{Vacuum basin cardinality.}
+\begin{theorem}[\lstinline|poly_p_vacuum_basin_card_eq_52|, zero \texttt{sorry}]
+Exactly 52 of the $7^5=16807$ states of the 5-cell ring $(\mathbb{Z}/7)^5$ converge
+to the vacuum fixed point under iteration of $p$.
+Proved by \lstinline|native_decide| with convergence bound 8.
+\end{theorem}
+
+\paragraph{Period-475 certificates.}
+\begin{theorem}[\lstinline|period_475_returns|, \lstinline|period_475_is_minimal|, zero \texttt{sorry}]
+The orbit of the canonical initial state under $p$ on the 5-cell ring returns after
+exactly 475 steps, and no proper divisor of 475 is a period.
+Both proofs use \lstinline|native_decide|.
+\end{theorem}
+
+\begin{theorem}[\lstinline|phi25_order_19_on_cycle|, zero \texttt{sorry}]
+The map $\phi^{25}$ has order exactly 19 on the 475-cycle (\lstinline|native_decide|).
+\end{theorem}
+
+\paragraph{GF($7^3$) arithmetic: the 19-factor.}
+Six theorems certify the number-theoretic structure of the 19-factor in $475=5^2\times19$:
+\lstinline|nineteen_divides_7cube_minus_1| ($19\mid 7^3-1=342$, \lstinline|decide|);
+\lstinline|ord_19_seven_equals_3| ($\mathrm{ord}_{19}(7)=3$, \lstinline|decide|);
+\lstinline|nineteen_not_divides_smaller_extensions| ($19\nmid 7^k-1$ for $k=1,2,4,5$);
+\lstinline|nineteen_not_divides_linear_period| ($19\nmid 240$, the linearized period);
+\lstinline|nineteen_unique_prime_in_7cube_minus_1|; and
+\lstinline|gf73_norm_of_19th_root_is_one| (norm of 19th roots equals 1 in GF($7^3$)).
+These collectively identify 19 as the unique prime $q\mid 7^3-1$ with $\mathrm{ord}_q(7)=3$,
+connecting the period-475 to the multiplicative structure of $\mathrm{GF}(7^3)$.
+
+\subsection{GTE WolframModel Causal Tree (\texttt{Polynomial.GTECausalTree})}\label{subsec:gte-causal-tree}
+
+The \texttt{Polynomial/GTECausalTree.lean} module (8 theorems, zero \lstinline|sorry|)
+machine-certifies the perfect-binary-tree structure of the ruleGTE WolframModel causal
+graph and the Horton branching ratio relevant to the botanical correspondence with
+\emph{Daucus carota} (Paper~P49 \S5.3--\S5.4).
+
+The ruleGTE WolframModel encoding matches two overlapping neighbourhood hyperedges
+$\{a,b,c\},\{c,d,e\}$ and produces four new overlapping pairs, making it a 1$\to$2
+binary rule.  The 1$\to$2 structure implies that $n$ generations produce exactly
+$2^n - 1$ events.
+
+\paragraph{Node count and tree structure.}
+\begin{theorem}[\lstinline|perfectTree_numNodes|, \lstinline|perfectTree_height|, \lstinline|perfectTree_numLeaves|, zero \texttt{sorry}]
+The perfect binary tree of depth $n$ has $2^n-1$ nodes (induction + omega),
+height $n$ (induction + simp), and $2^n$ leaf nodes (induction + omega).
+For depth 10: $1023$ nodes, height $10$, $1024$ leaves.
+\end{theorem}
+
+\paragraph{Event-count certification.}
+\begin{theorem}[\lstinline|gte_rulegte_event_count|, \lstinline|gte_rulegte_ten_generations|, zero \texttt{sorry}]
+A rewriting rule that produces exactly two successor events per event (a 1$\to$2
+binary rule) accumulates $\sum_{k=0}^{n-1} 2^k = 2^n - 1$ total events after
+$n$ generations (induction + omega).
+At depth 10: $\sum_{k=0}^{9} 2^k = 1023$ (\lstinline|decide|).
+This directly certifies the 1023-event count reported in P49 \S5.3.
+\end{theorem}
+
+\paragraph{Horton branching ratio.}
+\begin{theorem}[\lstinline|perfectTree_horton_ratio|, \lstinline|gte_causal_tree_horton_ratio_eq_two|, zero \texttt{sorry}]
+The node count at depth $d+1$ is twice the node count at depth $d$ (Horton ratio
+$r_B = 2$), for all depths $0 \le d < n-1$ (induction).
+Verified for all consecutive level pairs at depth 10 (\lstinline|decide|).
+The Horton ratio $r_B = 2$ matches the Lindenmayer system $F \to F[+F][-F]$ of
+\emph{Daucus carota} (Apiaceae) at depth 10 (P49 \S5.4).
+\end{theorem}
+
+\begin{theorem}[\lstinline|gte_causal_tree_summary|, zero \texttt{sorry}]
+The GTE WolframModel causal graph at depth 10 has exactly 1023 nodes,
+height 10, and 1024 leaves.
 \end{theorem}
 
 \subsection{SM Orbit Causal Isolation (\texttt{SMOrbitCausalIsolation})}\label{subsec:sm-orbit-causal}

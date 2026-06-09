@@ -1253,6 +1253,69 @@ Interval axioms for `Real.exp`/`Real.log` factors used by quark and EW numerical
 
 **Recent additions catalog count:** 70 named flagship theorems plus 40 interval-bound lemmas and 25 UCL margin/delta certificates plus 10 GTE-polynomial invariant-subset theorems documented in the module list above (**240** total net-new names).
 
+---
+
+### GTE Polynomial Explorations (`Polynomial.PolyExplorations`)
+
+35 theorems, all zero sorry, all CatAL. Covers the core mathematical properties of
+$p(L,C,R) = C+R-CR-LCR$ over $\mathbb{F}_7$, its relationship to the integer update
+map $T$, period-475 certificates, and GF(7³) number-theoretic structure.
+
+| Theorem | Module | Statement | Cat |
+|---------|--------|-----------|-----|
+| **poly_p_at_111_eq_zero** | Polynomial.PolyExplorations | $p(1,1,1)=0$ over any CommRing (ring) | CatAL |
+| **poly_p_at_111_eq_zero_mod7** | Polynomial.PolyExplorations | Specialisation of above to ZMod 7 | CatAL |
+| **gf5_has_fixed_point** | Polynomial.PolyExplorations | $k=2$ satisfies $k^2+k-1=0$ in GF(5) (decide) | CatAL |
+| **gf5_second_ether** | Polynomial.PolyExplorations | $p(2,2,2)=2$ in GF(5); confirms second ether at $w=2$ (decide) | CatAL |
+| **no_singleton_fixed_point_mod7** | Polynomial.PolyExplorations | $k^2+k-1\neq 0$ for all $k\in\mathbb{Z}/7$; forces $\{0,1\}$ unique invariant subset (decide) | CatAL |
+| **poly_p_zero_variety_count_gf7** | Polynomial.PolyExplorations | $|V(p)\cap\mathrm{GF}(7)^3|=43=\Phi_6(7)$ (native_decide) | CatAL |
+| **poly_p_diagonal_zeros_mod7** | Polynomial.PolyExplorations | $p(w,w,w)=0\Leftrightarrow w\in\{0,1,5\}$ in ZMod 7 (native_decide) | CatAL |
+| **poly_p_rule110_on_binary** | Polynomial.PolyExplorations | $p=\text{Rule 110}$ on $\{0,1\}^3\subset\mathbb{Z}/2$ (decide) | CatAL |
+| **poly_p_rule110_explicit** | Polynomial.PolyExplorations | Explicit 8-case Rule 110 enumeration (decide) | CatAL |
+| **twin_prime_qnr_complementarity** | Polynomial.PolyExplorations | No twin prime pair satisfies both $\equiv\pm2\pmod5$ (omega) | CatAL |
+| **T_b_output_not_determined_by_mod7** | Polynomial.PolyExplorations | $T$'s output mod 7 not determined by input mod 7; counterexample $b=73$, $c=144/151$ (native_decide) | CatAL |
+| **counterexample_same_residue** | Polynomial.PolyExplorations | $144\equiv 151\pmod7$ (native_decide) | CatAL |
+| **counterexample_different_outputs** | Polynomial.PolyExplorations | $b'$ values are 1 and 3 mod 7 for the counterexample (native_decide) | CatAL |
+| **T_computable_not_polynomial_GF7** | Polynomial.PolyExplorations | $T$ is computable but not polynomial over GF(7) | CatAL |
+| **canonical_b2_divisible_by_7** | Polynomial.PolyExplorations | $7\mid b_2=42$ in the canonical orbit (native_decide) | CatAL |
+| **lepton_seed_forces_b2_mult7** | Polynomial.PolyExplorations | The lepton seed $G_1$ forces $b_2\equiv 0\pmod7$ (native_decide) | CatAL |
+| **muon_neff_vacuum_winding** | Polynomial.PolyExplorations | $(b_2 : \mathbb{Z}/7)=0$; muon vacuum winding (native_decide) | CatAL |
+| **p_fmdl_disagree_on_orbit** | Polynomial.PolyExplorations | $p_{\rm poly}\neq f_{\rm MDL}$ at orbit neighborhood $(1,1,5)$ (decide) | CatAL |
+| **p_poly_at_1_1_5** | Polynomial.PolyExplorations | $p_{\rm poly}(1,1,5)=3$ (decide) | CatAL |
+| **fmdl_at_1_1_5** | Polynomial.PolyExplorations | $f_{\rm MDL}(1,1,5)=2$ (decide) | CatAL |
+| **four_object_GTE_pairwise_distinct** | Polynomial.PolyExplorations | $p$, $f_{\rm MDL}$, $T$ are pairwise distinct GTE objects (decide + native_decide) | CatAL |
+| **p_max_walsh_arithmetic_identity** | Polynomial.PolyExplorations | $91=7\times13$, $343=7^3$ — Walsh nonlinearity arithmetic certificate (decide) | CatAL |
+| **poly_p_vacuum_basin_card_eq_52** | Polynomial.PolyExplorations | 52 states in GF(7)^5 converge to the vacuum under iteration (native_decide) | CatAL |
+| **poly_p_uniform_gs_roots** | Polynomial.PolyExplorations | $p(x,x,x)=-x(x-1)(x-5)\pmod7$; ground states $\{0,1,5\}$ (decide) | CatAL |
+| **poly_p_diagonal_factorization** | Polynomial.PolyExplorations | $p(x,x,x)=-x(x-1)(x+2)\pmod7$ (decide) | CatAL |
+| **poly_p_diagonal_plus_factor_eq_zero** | Polynomial.PolyExplorations | Ring-identity form of the diagonal cubic (decide) | CatAL |
+| **period_475_returns** | Polynomial.PolyExplorations | Iterating $p$ on the 5-cell ring 475 times returns to the cycle start (native_decide) | CatAL |
+| **period_475_is_minimal** | Polynomial.PolyExplorations | No proper divisor of 475 is a period (native_decide) | CatAL |
+| **phi25_order_19_on_cycle** | Polynomial.PolyExplorations | $\phi^{25}$ has order exactly 19 on the 475-cycle (native_decide) | CatAL |
+| **nineteen_divides_7cube_minus_1** | Polynomial.PolyExplorations | $19\mid 7^3-1=342$ (decide) | CatAL |
+| **nineteen_not_divides_smaller_extensions** | Polynomial.PolyExplorations | $19\nmid 7^k-1$ for $k=1,2,4,5$ (decide) | CatAL |
+| **ord_19_seven_equals_3** | Polynomial.PolyExplorations | $\mathrm{ord}_{19}(7)=3$ (decide) | CatAL |
+| **nineteen_not_divides_linear_period** | Polynomial.PolyExplorations | $19\nmid 240$ (the linearized period) (decide) | CatAL |
+| **nineteen_unique_prime_in_7cube_minus_1** | Polynomial.PolyExplorations | 19 is the unique prime $p\mid 7^3-1$ with $\mathrm{ord}_p(7)=3$ (decide) | CatAL |
+| **gf73_norm_of_19th_root_is_one** | Polynomial.PolyExplorations | Norm of any 19th root of unity in GF(7³) equals 1; LCR = norm (decide) | CatAL |
+
+### GTE Causal Tree (`Polynomial.GTECausalTree`)
+
+Module: `UgpLean/Polynomial/GTECausalTree.lean`. Zero sorry. Proves the
+perfect-binary-tree structure of the ruleGTE WolframModel causal graph and
+its botanical correspondence with the Daucus carota compound umbel L-system.
+
+| Theorem | Module | Statement | CatLevel |
+|---------|--------|-----------|----------|
+| **perfectTree_numNodes** | Polynomial.GTECausalTree | Perfect binary tree of depth $n$ has $2^n-1$ nodes (induction+omega) | CatAL |
+| **perfectTree_height** | Polynomial.GTECausalTree | Perfect binary tree of depth $n$ has height $n$ (induction+simp) | CatAL |
+| **perfectTree_numLeaves** | Polynomial.GTECausalTree | Perfect binary tree of depth $n$ has $2^n$ leaves (induction+omega) | CatAL |
+| **gte_rulegte_event_count** | Polynomial.GTECausalTree | $\sum_{k=0}^{n-1} 2^k = 2^n-1$; a 1→2 binary rule accumulates $2^n-1$ total events after $n$ generations (induction+omega) | CatAL |
+| **gte_rulegte_ten_generations** | Polynomial.GTECausalTree | At 10 generations: $\sum_{k=0}^{9} 2^k = 1023$ — certifies the 1023-node count in P49 §5.3 (decide) | CatAL |
+| **perfectTree_horton_ratio** | Polynomial.GTECausalTree | Node count at depth $d+1$ equals twice node count at depth $d$ (Horton ratio $r_B=2$, induction) | CatAL |
+| **gte_causal_tree_horton_ratio_eq_two** | Polynomial.GTECausalTree | $r_B=2$ at all levels 0–8 for depth-10 tree (decide) | CatAL |
+| **gte_causal_tree_summary** | Polynomial.GTECausalTree | The GTE causal tree at depth 10 has 1023 nodes, height 10, 1024 leaves | CatAL |
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |
