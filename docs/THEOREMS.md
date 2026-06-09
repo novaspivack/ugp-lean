@@ -1336,6 +1336,18 @@ its botanical correspondence with the Daucus carota compound umbel L-system.
 | **gte_causal_tree_horton_ratio_eq_two** | Polynomial.GTECausalTree | $r_B=2$ at all levels 0–8 for depth-10 tree (decide) | CatAL |
 | **gte_causal_tree_summary** | Polynomial.GTECausalTree | The GTE causal tree at depth 10 has 1023 nodes, height 10, 1024 leaves | CatAL |
 
+### MDL Three-Level Unification (`Polynomial.MDLThreeLevelUnification`)
+
+Module: `UgpLean/Polynomial/MDLThreeLevelUnification.lean`. Zero sorry. Cross-module
+CatAL bundle proving that the MDL principle $\Ptop(X) = \arg\min K(x \mid \mathrm{PSC})$
+operates at three nested levels: theory selection ($p$ from rule space), field dynamics
+($\PHIMDL$ via PMDL), and quantum event adjudication (Born rule via transputation).
+
+| Theorem | Module | Statement | CatLevel |
+|---------|--------|-----------|----------|
+| **mdl_three_level_unification** | Polynomial.MDLThreeLevelUnification | Cross-module CatAL bundle: Level 0→1 (MDL theory selection via `mdl_ca_rule_coding_closed`), Level 1→2 (SRRG φ bridge via `gte_poly_srrg_bridge`), PSC link ($p \to f_\mathrm{MDL}$ via `psc_projection_gives_fmdl`), Level 2→3 (unique measurement orbit via `fmdl_orbit_is_unique_psc_trajectory`) | CatAL |
+| **mdl_level23_closed_choice_forces_transputation** | Polynomial.MDLThreeLevelUnification | Wrapper: PSC + closed choice force transputation (imports `closed_choice_forces_transputation` from transputation-lean, re-exported in ugp-lean context) | CatAL |
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |
