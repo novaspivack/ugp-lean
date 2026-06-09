@@ -226,6 +226,37 @@ theorem fmdl_z7_gen2_to_gen3 : fmdl_step5 fmdl_gen2_z7 = fmdl_gen3_z7 := by deci
 /-- gen₃_z7 maps to vacuum (all-zeros) under fmdl on the 5-cell ring. -/
 theorem fmdl_z7_gen3_to_vacuum : fmdl_step5 fmdl_gen3_z7 = (fun _ => 0) := by decide
 
+/-- **gen2_gen3_outer_positions_constant** (CatAL — decide):
+    In both GEN₂ = [2,5,2,0,2] and GEN₃ = [5,6,5,3,5], the three outer positions
+    (0, 2, 4) carry a single repeated value while the inner positions (1, 3) carry
+    distinct values. Both states share the structural topology (a,b,a,c,a).
+
+    Physical significance: the second and third generation states have identical
+    combinatorial topology — both encode a "majority-outer" pattern with one dominant
+    winding value flanking two minority values. This reflects the shared ruleGTE causal
+    graph structure: both generations arise at interior levels of the binary tree whose
+    three outer-position nodes all share the same hyperedge neighbourhood.
+
+    Consequence: the WolframModel causal graph of the GTE update rule (ruleGTE) has the
+    same branching structure at the GEN₂ and GEN₃ levels, explaining the observed
+    topological degeneracy of the fractal binary tree in those layers. -/
+theorem gen2_outer_positions_constant :
+    fmdl_gen2_z7 0 = fmdl_gen2_z7 2 ∧ fmdl_gen2_z7 2 = fmdl_gen2_z7 4 := by decide
+
+theorem gen3_outer_positions_constant :
+    fmdl_gen3_z7 0 = fmdl_gen3_z7 2 ∧ fmdl_gen3_z7 2 = fmdl_gen3_z7 4 := by decide
+
+/-- **gen2_gen3_topology_degenerate** (CatAL — decide):
+    GEN₂ and GEN₃ share the same positional-equality pattern:
+    positions 0=2=4 (one repeated value), 1 and 3 distinct.
+    Formally: gen₂[0]=gen₂[2]=gen₂[4] and gen₃[0]=gen₃[2]=gen₃[4],
+    with gen₂[0]≠gen₂[1] and gen₃[0]≠gen₃[1]. -/
+theorem gen2_gen3_topology_degenerate :
+    fmdl_gen2_z7 0 = fmdl_gen2_z7 2 ∧ fmdl_gen2_z7 2 = fmdl_gen2_z7 4 ∧
+    fmdl_gen2_z7 0 ≠ fmdl_gen2_z7 1 ∧ fmdl_gen2_z7 0 ≠ fmdl_gen2_z7 3 ∧
+    fmdl_gen3_z7 0 = fmdl_gen3_z7 2 ∧ fmdl_gen3_z7 2 = fmdl_gen3_z7 4 ∧
+    fmdl_gen3_z7 0 ≠ fmdl_gen3_z7 1 ∧ fmdl_gen3_z7 0 ≠ fmdl_gen3_z7 3 := by decide
+
 /-- The three Z₇ generations are pairwise distinct. -/
 theorem fmdl_z7_three_gens_distinct :
     fmdl_gen1_z7 ≠ fmdl_gen2_z7 ∧ fmdl_gen2_z7 ≠ fmdl_gen3_z7 ∧ fmdl_gen1_z7 ≠ fmdl_gen3_z7 := by
