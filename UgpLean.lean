@@ -136,6 +136,7 @@ import UgpLean.Universality.CUP3DUniqueness
 import UgpLean.Universality.Z7InvariantSubsets
 import UgpLean.Polynomial.PolyExplorations
 import UgpLean.Polynomial.GoldenQuadratic
+import UgpLean.Polynomial.DynamicalZeta
 import UgpLean.Polynomial.EisensteinIdentities
 import UgpLean.Polynomial.MDLThreeLevelUnification
 import UgpLean.Polynomial.GTECausalTree
