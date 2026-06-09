@@ -1257,9 +1257,10 @@ Interval axioms for `Real.exp`/`Real.log` factors used by quark and EW numerical
 
 ### GTE Polynomial Explorations (`Polynomial.PolyExplorations`)
 
-35 theorems, all zero sorry, all CatAL. Covers the core mathematical properties of
+39 theorems, all zero sorry, all CatAL. Covers the core mathematical properties of
 $p(L,C,R) = C+R-CR-LCR$ over $\mathbb{F}_7$, its relationship to the integer update
-map $T$, period-475 certificates, and GF(7³) number-theoretic structure.
+map $T$, period-475 certificates, GF(7³) number-theoretic structure, GF(7) arithmetic
+coprocessor gates, PSC-projection characterisation of $f_{\rm MDL}$, and KL divergence.
 
 | Theorem | Module | Statement | Cat |
 |---------|--------|-----------|-----|
@@ -1300,6 +1301,23 @@ map $T$, period-475 certificates, and GF(7³) number-theoretic structure.
 | **gf73_norm_of_19th_root_is_one** | Polynomial.PolyExplorations | Norm of any 19th root of unity in GF(7³) equals 1; LCR = norm (decide) | CatAL |
 | **p_addition_via_L6** | Polynomial.PolyExplorations | $p(6,a,b)=a+b\pmod7$ for all $a,b\in\mathbb{Z}/7$ — 1-gate GF(7) addition (decide) | CatAL |
 | **p_multiplication_from_two_gates** | Polynomial.PolyExplorations | $a\cdot b = p(6,a,b)-p(0,a,b)\pmod7$ — 2-gate GF(7) multiplication; 49/49 pairs verified (decide) | CatAL |
+| **kl_divergence_fmdl_p_nonzero** | Polynomial.PolyExplorations | $\exists\,(L,C,R)$ with $p(L,C,R)\neq f_{\rm MDL}(L,C,R)$ — certifies strictly positive KL divergence between Objects 0 and 1; witness $(1,1,5)$ (decide) | CatAL |
+| **psc_projection_gives_fmdl** | Polynomial.PolyExplorations | Bundle: $f_{\rm MDL}=0$ on all free (non-fixed) PSC neighborhoods ∧ $p=f_{\rm MDL}$ on binary sublayer $\{0,1\}^3$ (decide) | CatAL |
+| **fmdl_psc_projection_of_p** | Polynomial.PolyExplorations | $f_{\rm MDL}(L,C,R)=0$ whenever $(L,C,R)$ is not a fixed PSC neighborhood (corollary of `fmdl_zero_on_free_neighborhoods`) | CatAL |
+| **fmdl_psc_projection_binary** | Polynomial.PolyExplorations | $f_{\rm MDL}(L,C,R)=p(L,C,R)$ when all of $L,C,R\in\{0,1\}$ (binary sublayer) (decide) | CatAL |
+
+### CUP3DUniqueness — R11 additions (`Universality.CUP3DUniqueness`)
+
+New theorems proved in Round 11 (all zero sorry, CatAL).
+
+| Theorem | Module | Statement | Cat |
+|---------|--------|-----------|-----|
+| **gen2_outer_positions_constant** | Universality.CUP3DUniqueness | GEN₂ outer positions equal: $v_0=v_2=v_4$ in the 5-cell orbit ring (decide) | CatAL |
+| **gen3_outer_positions_constant** | Universality.CUP3DUniqueness | GEN₃ outer positions equal: $v_0=v_2=v_4$ in the 5-cell orbit ring (decide) | CatAL |
+| **gen2_gen3_topology_degenerate** | Universality.CUP3DUniqueness | GEN₂ and GEN₃ share $(a,b,a,c,a)$ topology: outer positions equal, inner positions distinct from each other and from outer (decide) | CatAL |
+| **fmdl_orbit_is_unique_psc_trajectory** | Universality.CUP3DUniqueness | $\mathrm{GEN}_1\to\mathrm{GEN}_2\to\mathrm{GEN}_3\to\mathrm{VAC}$ is the uniquely forced 3-step trajectory from $\mathrm{GEN}_1$ under $\mathsf{fmdl\_step5}$; step-uniqueness at each stage and Garden-of-Eden property of $\mathrm{GEN}_1$ included (decide + prior theorems) | CatAL |
+| **mdl_three_level_orbit_bundle** | Universality.CUP3DUniqueness | Level 1→2 bundle: $\mathsf{fmdl\_step5}(\mathrm{GEN}_1)=\mathrm{GEN}_2$, $\mathsf{fmdl\_step5}(\mathrm{GEN}_2)=\mathrm{GEN}_3$, $\mathsf{fmdl\_step5}(\mathrm{GEN}_3)=\mathrm{VAC}$ | CatAL |
+| **mdl_three_level_polynomial_bundle** | Universality.CUP3DUniqueness | Partial OP4 bundle: orbit steps (via `mdl_three_level_orbit_bundle`) ∧ SRRG $\varphi$ diagonal fixed point $p_{\mathbb{R}}(\varphi,\varphi,\varphi)=\varphi$ (via `gte_poly_srrg_bridge`) | CatAL |
 
 ### GTE Causal Tree (`Polynomial.GTECausalTree`)
 
