@@ -386,6 +386,14 @@ Physical motivation: The Z₇-sum sequence 4→4→3→0 across the generation c
 - `orbit_sum_trajectory_invariant` — for any orbit-admissible f: z7_sum trajectory of orbit images is 4→3→0 (rw+decide, CatAL)
 - `orbit_sum_full_trajectory` — complete 4-step trajectory 4→4→3→0 for all orbit-admissible f (CatAL)
 
+**GEN2/GEN3 Topological Degeneracy (CUP3DUniqueness R14; 3 theorems, 0 sorry)**
+
+Physical motivation: The WolframModel causal graph of the GTE update rule (ruleGTE) exhibits binary branching, with GEN2 and GEN3 states arising at interior levels of the fractal binary tree. Both states share the structural topology (a,b,a,c,a): positions {0,2,4} carry one repeated winding value, positions {1,3} carry distinct minority values. This topological degeneracy explains the symmetric branching structure of the ruleGTE causal graph at those levels, and provides the formal GTE-side mechanism for the botanical L-system isomorphism (R14, 2026-06-08).
+
+- `gen2_outer_positions_constant` — fmdl_gen2_z7[0]=fmdl_gen2_z7[2]=fmdl_gen2_z7[4] (decide, CatAL)
+- `gen3_outer_positions_constant` — fmdl_gen3_z7[0]=fmdl_gen3_z7[2]=fmdl_gen3_z7[4] (decide, CatAL)
+- `gen2_gen3_topology_degenerate` — both GEN2 and GEN3 have identical positional-equality pattern (a,b,a,c,a); outer positions equal, inner positions distinct (decide, CatAL)
+
 **Z₅ Ring Equivariance of fmdl (CUP3DUniqueness §10; 1 definition + 1 theorem, 0 sorry)**
 
 Physical motivation: The five SM particle families [e⁻, u, d, νR, νL] in the 5-cell ring are related by Z₅ rotational symmetry. PSC Presentation Invariance (PI) requires that observable quantities be invariant under bijections preserving physical structure; the Z₅ cyclic rotation group acts on the 5-cell ring, and fmdl treats all 5 positions identically. This is the exact discrete gauge symmetry of the ring geometry derived from PI. Note: fmdl is NOT equivariant under Z₇ additive shifts (2030 counterexamples); Z₅ rotational symmetry is the correct and complete ring gauge symmetry.
