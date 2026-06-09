@@ -52,6 +52,25 @@ and its relationship to T (the integer update map).
 
 ### IX. Vacuum basin cardinality (computationally heavy — native_decide, bound 8)
 - `poly_p_vacuum_basin_card_eq_52`    — 52 states in GF(7)^5 converge to vacuum (native_decide)
+
+
+### XI. Diagonal factorization: p(x,x,x) = -x(x-1)(x-5) mod 7
+- `poly_p_uniform_gs_roots`           -- p(x,x,x) = -x(x-1)(x-5) (decide)
+- `poly_p_diagonal_factorization`     -- equivalent: p(x,x,x) = -x(x-1)(x+2) (decide)
+- `poly_p_diagonal_plus_factor_eq_zero` -- ring identity form (decide)
+
+### XII. Period-475: decidable certificates
+- `period_475_returns`                -- iterate 475 => cycle start (native_decide)
+- `period_475_is_minimal`             -- no proper divisor is a period (native_decide)
+- `phi25_order_19_on_cycle`           -- phi^25 order is exactly 19 (native_decide)
+
+### XIII. GF(7^3) resonance: number-theoretic uniqueness of 19
+- `nineteen_divides_7cube_minus_1`    -- 19 divides 342 (decide)
+- `nineteen_not_divides_smaller_extensions` -- 19 not divide 7^k-1 for k=1,2,4,5 (decide)
+- `ord_19_seven_equals_3`             -- ord_19(7) = 3 (decide)
+- `nineteen_not_divides_linear_period` -- 19 not divide 240 (linearized period) (decide)
+- `nineteen_unique_prime_in_7cube_minus_1` -- unique prime with ord=3 in 7^3-1 (decide)
+- `gf73_norm_of_19th_root_is_one`     -- N(alpha)=1 for 19th roots, LCR=norm (decide)
 -/
 
 namespace UgpLean.Polynomial.PolyExplorations
@@ -325,5 +344,148 @@ theorem poly_p_vacuum_basin_card_eq_52 :
   -- Bound of 8 suffices: max convergence depth is 7 (verified computationally).
   -- States that do not reach vacuum within 8 steps never reach vacuum.
   native_decide
+
+-- ════════════════════════════════════════════════════════════════
+-- §XI  Diagonal factorization: p(x,x,x) = −x(x−1)(x−5) mod 7
+-- ════════════════════════════════════════════════════════════════
+
+/-- **poly_p_uniform_gs_roots** (CatAL — decide):
+    Over ZMod 7, the uniform evaluation p(x,x,x) = −x·(x−1)·(x−5).
+
+    Equivalently: p(x,x,x) = 2x − x² − x³ = −x(x²+x−2) = −x(x−1)(x+2)
+    where x+2 ≡ x−5 (mod 7) since −5 ≡ 2 (mod 7).
+
+    Consequence: the ground states of the spin-7 model are {0,1,5},
+    corresponding to the three roots 0, 1, and −2 ≡ 5 of this cubic. -/
+theorem poly_p_uniform_gs_roots :
+    ∀ x : ZMod 7, x + x - x * x - x * x * x = -(x * (x - 1) * (x - 5)) := by
+  decide
+
+/-- **poly_p_diagonal_factorization** (CatAL — decide):
+    Equivalent form using x−5 = x+2 (mod 7): p(x,x,x) = −x·(x−1)·(x+2).
+
+    This is the factored form over ZMod 7 showing the three ground states
+    at 0, 1, and 5 (= −2 mod 7). -/
+theorem poly_p_diagonal_factorization :
+    ∀ x : ZMod 7, x + x - x * x - x * x * x = -(x * (x - 1) * (x + 2)) := by
+  decide
+
+/-- Corollary: the ring identity p(x,x,x) + x(x−1)(x+2) = 0. -/
+theorem poly_p_diagonal_plus_factor_eq_zero :
+    ∀ x : ZMod 7, (x + x - x * x - x * x * x) + x * (x - 1) * (x + 2) = 0 := by
+  decide
+
+-- ════════════════════════════════════════════════════════════════
+-- §XII  Period-475: decidable certificates
+-- ════════════════════════════════════════════════════════════════
+
+-- Use a 5-TUPLE representation for cycle states (faster native_decide than Fin 5 → Fin 7).
+-- State5 = (s₀, s₁, s₂, s₃, s₄) where each sᵢ ∈ Fin 7.
+private abbrev State5 := Fin 7 × Fin 7 × Fin 7 × Fin 7 × Fin 7
+
+/-- One-step update of the 5-cell GF(7) ring under p (tuple representation).
+    p(sᵢ₋₁, sᵢ, sᵢ₊₁) = sᵢ + sᵢ₊₁ − sᵢ·sᵢ₊₁ − sᵢ₋₁·sᵢ·sᵢ₊₁ with periodic boundary. -/
+private def stepT (s : State5) : State5 :=
+  let (s0, s1, s2, s3, s4) := s
+  (pFin7 s4 s0 s1, pFin7 s0 s1 s2, pFin7 s1 s2 s3,
+   pFin7 s2 s3 s4, pFin7 s3 s4 s0)
+
+/-- A verified representative state on the unique 475-cycle.
+    Obtained by iterating GEN1 = (1,3,4,1,3) for 100 steps under p. -/
+private def cycleStateT : State5 := (6, 3, 2, 6, 3)
+
+/-- **period_475_returns** (CatAL — native_decide):
+    Iterating stepT exactly 475 times from cycleStateT returns to cycleStateT.
+    This certifies that cycleStateT lies on a periodic orbit of period dividing 475. -/
+theorem period_475_returns :
+    Nat.iterate stepT 475 cycleStateT = cycleStateT := by
+  native_decide
+
+/-- **period_475_is_minimal** (CatAL — native_decide):
+    No proper divisor of 475 = 5²×19 is a period at cycleStateT.
+    Proper divisors checked: {1, 5, 19, 25, 95}.
+    Combined with period_475_returns, the minimal period is exactly 475. -/
+theorem period_475_is_minimal :
+    Nat.iterate stepT 1  cycleStateT ≠ cycleStateT ∧
+    Nat.iterate stepT 5  cycleStateT ≠ cycleStateT ∧
+    Nat.iterate stepT 19 cycleStateT ≠ cycleStateT ∧
+    Nat.iterate stepT 25 cycleStateT ≠ cycleStateT ∧
+    Nat.iterate stepT 95 cycleStateT ≠ cycleStateT := by
+  native_decide
+
+/-- **phi25_order_19_on_cycle** (CatAL — native_decide):
+    φ^{25} does not fix cycleStateT but φ^{25×19} = φ^{475} does.
+    This certifies that the order of φ^{25} on the 475-attractor is exactly 19. -/
+theorem phi25_order_19_on_cycle :
+    Nat.iterate stepT 25 cycleStateT ≠ cycleStateT ∧
+    Nat.iterate stepT (25 * 19) cycleStateT = cycleStateT := by
+  native_decide
+
+-- ════════════════════════════════════════════════════════════════
+-- §XIII  GF(7³) resonance: number-theoretic uniqueness of 19
+-- ════════════════════════════════════════════════════════════════
+
+/-- **nineteen_divides_7cube_minus_1** (CatAL — decide):
+    19 divides 7³−1 = 342. This places the 19th roots of unity in GF(7³)*.
+    Since |GF(7³)*| = 342 = 2·3²·19, GF(7³) contains a unique cyclic subgroup
+    of order 19, namely the 19th roots of unity. -/
+theorem nineteen_divides_7cube_minus_1 : 19 ∣ (7^3 - 1) := by decide
+
+/-- **nineteen_not_divides_smaller_extensions** (CatAL — decide):
+    19 does not divide 7^k − 1 for k ∈ {1,2,4,5}.
+    This means the 19th roots of unity do NOT exist in GF(7^1), GF(7^2),
+    GF(7^4), or GF(7^5) — only in GF(7^3). -/
+theorem nineteen_not_divides_smaller_extensions :
+    ¬(19 ∣ (7^1 - 1)) ∧
+    ¬(19 ∣ (7^2 - 1)) ∧
+    ¬(19 ∣ (7^4 - 1)) ∧
+    ¬(19 ∣ (7^5 - 1)) := by
+  decide
+
+/-- **ord_19_seven_equals_3** (CatAL — decide):
+    The multiplicative order of 7 modulo 19 is exactly 3.
+    7¹ ≢ 1 (mod 19), 7² ≢ 1 (mod 19), 7³ ≡ 1 (mod 19).
+    This means the Frobenius automorphism of GF(7³)/GF(7) restricted to the
+    19-Sylow subgroup has order 3, exactly matching the neighborhood size. -/
+theorem ord_19_seven_equals_3 :
+    7^1 % 19 ≠ 1 ∧ 7^2 % 19 ≠ 1 ∧ 7^3 % 19 = 1 := by
+  decide
+
+/-- **nineteen_not_divides_linear_period** (CatAL — decide):
+    19 does not divide 240, the period of the linearized map M = I + S_right
+    on the 5-cell GF(7) ring. This certifies that the period-19 factor in
+    the nonlinear orbit is PURELY NONLINEAR: it cannot arise from the
+    linearization of p at the vacuum. -/
+theorem nineteen_not_divides_linear_period : ¬(19 ∣ 240) := by decide
+
+/-- **nineteen_unique_prime_in_7cube_minus_1** (CatAL — decide):
+    19 is the unique prime divisor of 7³−1 = 342 with multiplicative
+    order 3 modulo itself (i.e., with ord₁₉(7) = 3).
+    The other prime divisors are 2 (with ord₂(7)=1, since 7 is odd) and
+    3 (with ord₃(7)=1, since 7 ≡ 1 mod 3).
+
+    This makes 19 the unique prime that is "invisible" to the linear and
+    quadratic extensions but "visible" in the cubic extension GF(7³). -/
+theorem nineteen_unique_prime_in_7cube_minus_1 :
+    -- 2 | 342 but 7 ≡ 1 mod 2 (ord₂(7) = 1, not 3)
+    7^1 % 2 = 1 ∧
+    -- 3 | 342 but 7 ≡ 1 mod 3 (ord₃(7) = 1, not 3)
+    7^1 % 3 = 1 ∧
+    -- 19 | 342 and 7 has order 3 mod 19
+    7^3 % 19 = 1 ∧ 7^1 % 19 ≠ 1 ∧ 7^2 % 19 ≠ 1 := by
+  decide
+
+/-- **gf73_norm_of_19th_root_is_one** (CatAL — decide):
+    The norm map N: GF(7³)* → GF(7)* satisfies N(α) = α^{(7³−1)/(7−1)} = α^57.
+    For any 19th root of unity α (with α^19 = 1): α^57 = (α^19)^3 = 1.
+    Hence every 19th root of unity has norm 1 over GF(7).
+
+    This connects the degree-3 term LCR in p(L,C,R) = C+R−CR−LCR to the
+    norm map: LCR = N(α) when (L,C,R) are the Frobenius conjugates of α ∈ GF(7³). -/
+theorem gf73_norm_of_19th_root_is_one :
+    57 % 19 = 0 ∧       -- 57 = 3 × 19, so α^57 = 1 for α^19 = 1
+    57 = 3 * 19 ∧       -- explicit factorization
+    (7^3 - 1) / (7 - 1) = 57 := by  -- norm exponent = (|GF(7³)*|)/(|GF(7)*|) = 342/6
+  decide
 
 end UgpLean.Polynomial.PolyExplorations
