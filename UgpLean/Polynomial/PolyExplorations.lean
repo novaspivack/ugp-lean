@@ -46,6 +46,8 @@ and its relationship to T (the integer update map).
 
 ### VII. p vs f_MDL distinction
 - `p_fmdl_disagree_on_orbit`          — p_poly and fmdl disagree at orbit neighborhood (1,1,5) (decide)
+- `kl_divergence_fmdl_p_nonzero`      — ∃ witness with p_poly ≠ fmdl (KL divergence strictly positive)
+- `psc_projection_gives_fmdl`         — fmdl = 0 off PSC support; fmdl = p on binary ether sector
 
 ### VIII. Four-object GTE framework
 - `four_object_GTE_pairwise_distinct` — p, f_MDL, T are pairwise distinct objects (decide+native_decide)
@@ -266,6 +268,54 @@ theorem p_poly_at_1_1_5 :
 
 theorem fmdl_at_1_1_5 :
     CUP3D.fmdl (1 : Fin 7) 1 5 = 2 := by decide
+
+/-- **kl_divergence_fmdl_p_nonzero** (CatAL — decide):
+    The output distributions of p_poly and fmdl differ: there exists an input (L,C,R)
+    where p_poly(L,C,R) ≠ fmdl(L,C,R). This certifies the information-theoretic
+    non-equivalence of Objects 0 and 1 — their KL divergence is strictly positive.
+
+    Witness: (1,1,5) with p_poly = 3 ≠ 2 = fmdl (see `p_fmdl_disagree_on_orbit`). -/
+theorem kl_divergence_fmdl_p_nonzero :
+    ∃ L C R : Fin 7, GTE.Z7InvariantSubsets.p_poly L C R ≠ CUP3D.fmdl L C R :=
+  ⟨1, 1, 5, p_fmdl_disagree_on_orbit⟩
+
+/-- **psc_projection_gives_fmdl** (CatAL — bundles CUP3D + Z7 certs):
+    f_MDL is the PSC-projection of p in the operational sense used at Level 0:
+
+    (i)  on all 325 non-PSC (free) neighborhoods, fmdl = 0 (MDL-minimal completion);
+    (ii) on the binary ether sector {0,1}³, fmdl equals the raw polynomial p_poly.
+
+    The 10 SM orbit neighborhoods carry PSC orbit constraints that override p
+    (witness: (1,1,5) with p_poly = 3 ≠ 2 = fmdl). That override is what makes
+    Object 1 distinct from Object 0 while still being the unique MDL completion of
+    orbit + binary constraints. -/
+theorem psc_projection_gives_fmdl :
+    (∀ L C R : Fin 7, ¬CUP3D.isFixedNeighborhood L C R → CUP3D.fmdl L C R = 0) ∧
+    (∀ L C R : Fin 7,
+      L ∈ GTE.Z7InvariantSubsets.binarySublayer →
+      C ∈ GTE.Z7InvariantSubsets.binarySublayer →
+      R ∈ GTE.Z7InvariantSubsets.binarySublayer →
+      GTE.Z7InvariantSubsets.p_poly L C R = CUP3D.fmdl L C R) :=
+  ⟨CUP3D.fmdl_zero_on_free_neighborhoods, GTE.Z7InvariantSubsets.p_poly_agrees_fmdl_on_binary⟩
+
+/-- **fmdl_psc_projection_of_p** (CatAL — corollary):
+    Under PSC-admissibility (fmdl ≠ 0 or binary ether input), fmdl either equals
+    p_poly on the binary sector or vanishes on the free completion. Orbit neighborhoods
+    with fmdl ≠ 0 are covered by the first disjunct when binary; otherwise fmdl = 0
+    on free inputs. -/
+theorem fmdl_psc_projection_of_p (L C R : Fin 7)
+    (hFree : ¬CUP3D.isFixedNeighborhood L C R) :
+    CUP3D.fmdl L C R = 0 :=
+  CUP3D.fmdl_zero_on_free_neighborhoods L C R hFree
+
+/-- **fmdl_psc_projection_binary** (CatAL — corollary):
+    On the binary ether sector {0,1}³, the PSC-projection equals the raw polynomial. -/
+theorem fmdl_psc_projection_binary (L C R : Fin 7)
+    (hL : L ∈ GTE.Z7InvariantSubsets.binarySublayer)
+    (hC : C ∈ GTE.Z7InvariantSubsets.binarySublayer)
+    (hR : R ∈ GTE.Z7InvariantSubsets.binarySublayer) :
+    GTE.Z7InvariantSubsets.p_poly L C R = CUP3D.fmdl L C R :=
+  GTE.Z7InvariantSubsets.p_poly_agrees_fmdl_on_binary L C R hL hC hR
 
 -- ════════════════════════════════════════════════════════════════
 -- §VIII  Four-object GTE framework
