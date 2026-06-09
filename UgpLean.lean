@@ -157,6 +157,7 @@ import UgpLean.Framework.GTEFinalCoalgebra
 import UgpLean.Framework.PhiMDLBridge
 import UgpLean.Framework.MDLTower
 import UgpLean.Universality.NgenUniversalityPartial
+import UgpLean.Universality.NgenThreeMechanismsUnified
 import UgpLean.Framework.GTECategoryStructure
 import UgpLean.Framework.CMCAContinuumLimit
 import UgpLean.Framework.CMCAMDLMinimality
