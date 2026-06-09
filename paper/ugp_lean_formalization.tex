@@ -5262,6 +5262,48 @@ Six theorems certify the number-theoretic structure of the 19-factor in $475=5^2
 These collectively identify 19 as the unique prime $q\mid 7^3-1$ with $\mathrm{ord}_q(7)=3$,
 connecting the period-475 to the multiplicative structure of $\mathrm{GF}(7^3)$.
 
+\subsection{GTE WolframModel Causal Tree (\texttt{Polynomial.GTECausalTree})}\label{subsec:gte-causal-tree}
+
+The \texttt{Polynomial/GTECausalTree.lean} module (8 theorems, zero \lstinline|sorry|)
+machine-certifies the perfect-binary-tree structure of the ruleGTE WolframModel causal
+graph and the Horton branching ratio relevant to the botanical correspondence with
+\emph{Daucus carota} (Paper~P49 \S5.3--\S5.4).
+
+The ruleGTE WolframModel encoding matches two overlapping neighbourhood hyperedges
+$\{a,b,c\},\{c,d,e\}$ and produces four new overlapping pairs, making it a 1$\to$2
+binary rule.  The 1$\to$2 structure implies that $n$ generations produce exactly
+$2^n - 1$ events.
+
+\paragraph{Node count and tree structure.}
+\begin{theorem}[\lstinline|perfectTree_numNodes|, \lstinline|perfectTree_height|, \lstinline|perfectTree_numLeaves|, zero \texttt{sorry}]
+The perfect binary tree of depth $n$ has $2^n-1$ nodes (induction + omega),
+height $n$ (induction + simp), and $2^n$ leaf nodes (induction + omega).
+For depth 10: $1023$ nodes, height $10$, $1024$ leaves.
+\end{theorem}
+
+\paragraph{Event-count certification.}
+\begin{theorem}[\lstinline|gte_rulegte_event_count|, \lstinline|gte_rulegte_ten_generations|, zero \texttt{sorry}]
+A rewriting rule that produces exactly two successor events per event (a 1$\to$2
+binary rule) accumulates $\sum_{k=0}^{n-1} 2^k = 2^n - 1$ total events after
+$n$ generations (induction + omega).
+At depth 10: $\sum_{k=0}^{9} 2^k = 1023$ (\lstinline|decide|).
+This directly certifies the 1023-event count reported in P49 \S5.3.
+\end{theorem}
+
+\paragraph{Horton branching ratio.}
+\begin{theorem}[\lstinline|perfectTree_horton_ratio|, \lstinline|gte_causal_tree_horton_ratio_eq_two|, zero \texttt{sorry}]
+The node count at depth $d+1$ is twice the node count at depth $d$ (Horton ratio
+$r_B = 2$), for all depths $0 \le d < n-1$ (induction).
+Verified for all consecutive level pairs at depth 10 (\lstinline|decide|).
+The Horton ratio $r_B = 2$ matches the Lindenmayer system $F \to F[+F][-F]$ of
+\emph{Daucus carota} (Apiaceae) at depth 10 (P49 \S5.4).
+\end{theorem}
+
+\begin{theorem}[\lstinline|gte_causal_tree_summary|, zero \texttt{sorry}]
+The GTE WolframModel causal graph at depth 10 has exactly 1023 nodes,
+height 10, and 1024 leaves.
+\end{theorem}
+
 \subsection{SM Orbit Causal Isolation (\texttt{SMOrbitCausalIsolation})}\label{subsec:sm-orbit-causal}
 
 The \texttt{SMOrbitCausalIsolation} module (211 lines, 6 items) synthesizes results

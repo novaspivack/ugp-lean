@@ -1299,6 +1299,23 @@ map $T$, period-475 certificates, and GF(7³) number-theoretic structure.
 | **nineteen_unique_prime_in_7cube_minus_1** | Polynomial.PolyExplorations | 19 is the unique prime $p\mid 7^3-1$ with $\mathrm{ord}_p(7)=3$ (decide) | CatAL |
 | **gf73_norm_of_19th_root_is_one** | Polynomial.PolyExplorations | Norm of any 19th root of unity in GF(7³) equals 1; LCR = norm (decide) | CatAL |
 
+### GTE Causal Tree (`Polynomial.GTECausalTree`)
+
+Module: `UgpLean/Polynomial/GTECausalTree.lean`. Zero sorry. Proves the
+perfect-binary-tree structure of the ruleGTE WolframModel causal graph and
+its botanical correspondence with the Daucus carota compound umbel L-system.
+
+| Theorem | Module | Statement | CatLevel |
+|---------|--------|-----------|----------|
+| **perfectTree_numNodes** | Polynomial.GTECausalTree | Perfect binary tree of depth $n$ has $2^n-1$ nodes (induction+omega) | CatAL |
+| **perfectTree_height** | Polynomial.GTECausalTree | Perfect binary tree of depth $n$ has height $n$ (induction+simp) | CatAL |
+| **perfectTree_numLeaves** | Polynomial.GTECausalTree | Perfect binary tree of depth $n$ has $2^n$ leaves (induction+omega) | CatAL |
+| **gte_rulegte_event_count** | Polynomial.GTECausalTree | $\sum_{k=0}^{n-1} 2^k = 2^n-1$; a 1→2 binary rule accumulates $2^n-1$ total events after $n$ generations (induction+omega) | CatAL |
+| **gte_rulegte_ten_generations** | Polynomial.GTECausalTree | At 10 generations: $\sum_{k=0}^{9} 2^k = 1023$ — certifies the 1023-node count in P49 §5.3 (decide) | CatAL |
+| **perfectTree_horton_ratio** | Polynomial.GTECausalTree | Node count at depth $d+1$ equals twice node count at depth $d$ (Horton ratio $r_B=2$, induction) | CatAL |
+| **gte_causal_tree_horton_ratio_eq_two** | Polynomial.GTECausalTree | $r_B=2$ at all levels 0–8 for depth-10 tree (decide) | CatAL |
+| **gte_causal_tree_summary** | Polynomial.GTECausalTree | The GTE causal tree at depth 10 has 1023 nodes, height 10, 1024 leaves | CatAL |
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |

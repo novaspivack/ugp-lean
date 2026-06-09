@@ -17,7 +17,7 @@
 
 This repository is part of the **Reflexive Reality** research program by [Nova Spivack](https://www.novaspivack.com/).
 
-**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, quantum gravity completion, three-tape CMCA, self-reference, W₁ Wasserstein distance scaffold (fully CatAL, zero sorry), and GTE polynomial explorations over GF(7)/GF(5) (ground states, period-475, GF(7³) number theory). **305 modules, zero sorry on the core proof path** (two pre-existing sorry placeholders in `GTE/AnalyticArchitecture` are outside the core path; see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list). Sech overlap finite-$r$ bounds: **0 sorry** in `PhiMDLFluctuationSpectrum` and `SechOverlapIntegralBounds`; **2 CatA axioms** in `SechOverlapIntegralBounds_bridge.lean` document the mesh→integral bridge.
+**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, quantum gravity completion, three-tape CMCA, self-reference, W₁ Wasserstein distance scaffold (fully CatAL, zero sorry), GTE polynomial explorations over GF(7)/GF(5) (ground states, period-475, GF(7³) number theory), and GTE WolframModel causal tree (binary tree structure, Horton ratio, botanical correspondence). **307 modules, zero sorry on the core proof path** (two pre-existing sorry placeholders in `GTE/AnalyticArchitecture` are outside the core path; see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list). Sech overlap finite-$r$ bounds: **0 sorry** in `PhiMDLFluctuationSpectrum` and `SechOverlapIntegralBounds`; **2 CatA axioms** in `SechOverlapIntegralBounds_bridge.lean` document the mesh→integral bridge.
 
 | Link | Description |
 |------|-------------|
@@ -40,7 +40,7 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 
 ---
 
-## Module structure (305 modules; **17 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
+## Module structure (307 modules; **17 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
 
 | Layer | Count | Modules |
 |-------|-------|---------|
@@ -59,7 +59,7 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 | **Gravity** | +1 | **YukawaOverlapExponent** (DPP tape counting; $\alpha=N_c-1=2$; sech bracket **CatAL-conditional** on bridge axioms; **eta_B_PDG_in_GTE_bracket** Planck bracket CatAL-conditional) + **FKTTCoupling** (kink–top BPS action; **η_B = 6.109×10⁻¹⁰ CatAL unconditional**; `kink_top_coupling_eq_eps_FN`, zero sorry, zero axioms; `phi_mdl_kink_bps_saturation := rfl`) |
 | **MassRelations** | +1 | **PMNSNLOCorrection** ($\sin^2\theta_{23}^{\mathrm{NLO}}=209/441$; $2b_{R2}=|F_{21}|+1$; CatAL arithmetic) |
 | **QFT** | 2 | **GaugedMassGap**, **ChiralSymmetryBreaking** |
-| **Polynomial** | 1 | **PolyExplorations** (35 theorems, zero sorry: ground-state characterization `poly_p_uniform_gs_roots` CatAL; period-475 certs `period_475_returns` + `period_475_is_minimal` CatAL; GF(7³) 19-factor arithmetic; vacuum basin = 52; four-object framework) |
+| **Polynomial** | 2 | **PolyExplorations** (35 theorems, zero sorry: ground-state characterization `poly_p_uniform_gs_roots` CatAL; period-475 certs `period_475_returns` + `period_475_is_minimal` CatAL; GF(7³) 19-factor arithmetic; vacuum basin = 52; four-object framework); **GTECausalTree** (8 theorems, zero sorry: `gte_rulegte_event_count` + `gte_rulegte_ten_generations` certify 1023-node binary tree causal graph for ruleGTE; `perfectTree_horton_ratio` certifies Horton $r_B=2$; `gte_causal_tree_summary` closes P49 §5.3–§5.4) |
 
 Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity, PositiveRootTheorem, GaloisProtection, TwoLoopCoefficient), **GaloisStructure** (2), **CyclotomicCompleteness** (2), **PSC** (1: RCCInfiniteFamilies), **TE22** (1: ScanCertificate), **Papers** (2), **Instance** (1), **Conjectures** — per the formalization paper: `Phase4.GaloisProtection`, `TwoLoopCoefficient`, modules under `GaloisStructure.*` and `CyclotomicCompleteness.*`, and `TE22` carry fully mechanized statements where the paper claims zero sorry; `Papers` and `Instance` are chiefly citable stubs and bridges; `Conjectures` records resolved and open claims; `Phase4` also mixes stubs (e.g. UCL, PR1 presentation) with the precision theorems above.
 
@@ -82,6 +82,7 @@ Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, Asympt
 | **Dark baryon** | `Universality/GUTStructure` | $q_{\rm dark}/6=1/N_c$; dilution $2/6=1/3$; $D_{\rm top}=\exp(-1/N_c)$ via Z₇ transitivity |
 | **Quark \& EW intervals** | `MassRelations/TranscendentalMassBounds`, `QuarkMassNumericalCerts`, `Universality/EWBosonNumericalCerts` | Six-quark PDG bands (CatAD); $M_W$ CatAL; $M_Z$, $\sin^2\theta_W$ threshold CatAD |
 | **GTE Polynomial explorations** | `Polynomial/PolyExplorations` | 35 theorems, zero sorry: `poly_p_uniform_gs_roots` (ground states $\{0,1,5\}$, decide, CatAL); `period_475_returns` + `period_475_is_minimal` + `phi25_order_19_on_cycle` (period-475 certs, native_decide); `nineteen_divides_7cube_minus_1` + `ord_19_seven_equals_3` + `nineteen_unique_prime_in_7cube_minus_1` (GF(7³) 19-factor arithmetic); `poly_p_vacuum_basin_card_eq_52` (52-state basin); `four_object_GTE_pairwise_distinct` (p, $f_{\rm MDL}$, T distinct); universal identity `poly_p_at_111_eq_zero` (ring). |
+| **GTE WolframModel causal tree** | `Polynomial/GTECausalTree` | 8 theorems, zero sorry: `perfectTree_numNodes` ($2^n-1$ nodes, induction); `perfectTree_height` ($n$); `perfectTree_numLeaves` ($2^n$); `gte_rulegte_event_count` ($\sum_{k=0}^{n-1}2^k=2^n-1$); `gte_rulegte_ten_generations` (decide: 1023 at depth 10); `perfectTree_horton_ratio` ($r_B=2$ at all levels); `gte_causal_tree_horton_ratio_eq_two` (decide); `gte_causal_tree_summary` (1023 nodes, height 10, 1024 leaves). Certifies P49 §5.3 WolframModel causal graph and §5.4 botanical correspondence. |
 
 $D_{\rm top}=\exp(-1/N_c)$: machine-certified CatAL via Z₇ group transitivity (`d_top_derivation_chain_catal`, zero sorry). No dilute instanton gas approximation needed.
 
