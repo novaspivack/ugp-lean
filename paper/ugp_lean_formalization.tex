@@ -3681,6 +3681,19 @@ fractal binary tree~(P49~\S5.3).
 \end{leanref}
 \end{theorem}
 
+\paragraph{Measurement orbit uniqueness and three-level bundles.}
+\begin{theorem}[\lstinline|fmdl_orbit_is_unique_psc_trajectory|, zero \texttt{sorry}]
+The orbit $\mathrm{GEN}_1\to\mathrm{GEN}_2\to\mathrm{GEN}_3\to\mathrm{VAC}$ is the
+uniquely forced 3-step trajectory from $\mathrm{GEN}_1$ under the deterministic
+$\mathsf{fmdl\_step5}$ map. Step-uniqueness at each stage and the Garden-of-Eden property
+of $\mathrm{GEN}_1$ are included. (All by \texttt{decide} or previous theorems; zero \texttt{sorry}.)
+\end{theorem}
+
+\noindent Two partial bundle theorems certify pieces of the Three-Level MDL Unification
+(P51~\S5): \lstinline|mdl_three_level_orbit_bundle| (Level~1$\to$2 orbit steps, \CatAL) and
+\lstinline|mdl_three_level_polynomial_bundle| (orbit + SRRG $\varphi$ diagonal fixed point, \CatAL).
+The full cross-module unification is open (OQ-087-22).
+
 % ─────────────────────────────────────────────────────────────────
 \subsection{PSC Unification and GoE Chain (\texttt{CUP3DPSCUnification})}\label{subsec:cup3d-psc-unification}
 
@@ -5280,6 +5293,20 @@ addition in one gate (Lean-certified), multiplication in two gates (Lean-certifi
 The Walsh nonlinearity $\mathrm{NL}(p)=36/49\approx0.7347$ (\lstinline|thm:walshNL|, P49)
 exceeds AES S-box nonlinearity and is determined by the GTE Higgs branch capacity $c_H=13$.
 These properties make $p$ a cryptographically characterized S-box with provably derived nonlinearity.
+
+\paragraph{KL divergence and PSC-projection bundle.}
+\begin{theorem}[\lstinline|kl_divergence_fmdl_p_nonzero|, zero \texttt{sorry}]
+There exists a triple $(L,C,R)$ such that $p(L,C,R)\neq f_{\mathrm{MDL}}(L,C,R)$, certifying
+strictly positive KL divergence between Objects~0 ($p$) and~1 ($f_{\mathrm{MDL}}$).
+Witness: $(1,1,5)$ with $p(1,1,5)=3\neq 2=f_{\mathrm{MDL}}(1,1,5)$. Proved by \lstinline|decide|.
+\end{theorem}
+
+\noindent The \lstinline|psc_projection_gives_fmdl| bundle certifies the full PSC-projection
+characterisation of $f_{\mathrm{MDL}}$: (1)~$f_{\mathrm{MDL}}(L,C,R)=0$ for every free
+(non-fixed-point) PSC neighbourhood, and (2)~$f_{\mathrm{MDL}}=p$ on the binary sublayer
+$\{0,1\}^3$.  Together these two parts state that $f_{\mathrm{MDL}}$ is the unique map
+obtained by zeroing $p$ outside the PSC-orbit sector (Objects~0 and~1 coincide on binary;
+diverge only on the non-binary PSC interior).
 
 \subsection{GTE WolframModel Causal Tree (\texttt{Polynomial.GTECausalTree})}\label{subsec:gte-causal-tree}
 
