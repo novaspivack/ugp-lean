@@ -376,6 +376,37 @@ theorem poly_p_diagonal_plus_factor_eq_zero :
   decide
 
 -- ════════════════════════════════════════════════════════════════
+-- §XI-B  p-Gate arithmetic: GF(7) operations in 1–2 gates
+-- ════════════════════════════════════════════════════════════════
+
+/-- **p_addition_via_L6** (CatAL — decide, zero sorry):
+    Setting L = 6 ≡ −1 (mod 7) makes p a pure two-body addition gate:
+      p(6, a, b) = a + b − a·b − 6·a·b = a + b − 7·a·b ≡ a + b  (mod 7).
+    Thus p(6, a, b) = a + b mod 7 in a single gate evaluation.
+
+    Application: GF(7) addition is realised by one p-gate with L-input fixed to 6.
+    This gives a 1-gate GF(7) arithmetic coprocessor for addition. -/
+theorem p_addition_via_L6 :
+    ∀ a b : ZMod 7, a + b - a * b - 6 * a * b = a + b := by decide
+
+/-- **p_multiplication_from_two_gates** (CatAL — decide, zero sorry):
+    GF(7) multiplication a·b is recoverable from two p-gate evaluations:
+      a·b = p(6, a, b) − p(0, a, b)
+          = (a + b) − (a + b − a·b)
+          = a·b.
+    Equivalently: p(0, a, b) = a + b − a·b, so a·b = p(6,a,b) − p(0,a,b).
+
+    Verification: a·b = (a + b − a·b − 6·a·b) − (a + b − a·b) = −6·a·b = a·b (mod 7).
+
+    Application: GF(7) multiplication is realised by two p-gate evaluations.
+    Together with `p_addition_via_L6`, this gives a complete GF(7) field arithmetic
+    coprocessor using only p-gates: add=1 gate, multiply=2 gates, both exhaustively
+    verified over all 49 input pairs. -/
+theorem p_multiplication_from_two_gates :
+    ∀ a b : ZMod 7,
+    a * b = (a + b - a * b - 6 * a * b) - (a + b - a * b - 0 * a * b) := by decide
+
+-- ════════════════════════════════════════════════════════════════
 -- §XII  Period-475: decidable certificates
 -- ════════════════════════════════════════════════════════════════
 
