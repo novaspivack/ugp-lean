@@ -134,6 +134,7 @@ import UgpLean.Universality.LawvereZone
 import UgpLean.Universality.PSCUniversality
 import UgpLean.Universality.CUP3DUniqueness
 import UgpLean.Universality.Z7InvariantSubsets
+import UgpLean.Polynomial.PolyExplorations
 import UgpLean.Universality.CUP3DPSCUnification
 import UgpLean.Universality.CUP3DPhysicalIncompleteness
 import UgpLean.Universality.CookRule110Ref
@@ -330,6 +331,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Universality.FrobeniusChain` — FGCI: Frobenius chain `n⁴−n²+1` = cascade `n⁴−(n²+1)/2−n` iff `n=3`; `{7,73}` tower; `b_gen2=2·N_c·|Z₇|`; zero sorry (2026-06-02)
 - `UgpLean.Universality.BellViolationGTE` — EPIC_080 G44: `gte_poly_qutrit_values`, `gte_hgrav_diagonal_nontrivial`, `gte_hgrav_has_nonzero_entries`, `z7_qutrit_poly_nondegenerate`, `gte_poly_double_role`; axioms `gte_bell_violation_at_half_coupling`, `gte_bell_threshold` (CatA named); GTE gravitational coupling generates Bell-violating entanglement; zero sorry (2026-05-29)
 - `UgpLean.Universality.FiveRolesPolynomial` — EPIC_080/083B: `gte_polynomial_five_roles_k_extra_zero` (Single-Source Principle master bundle), `labelled_triple_role_count` (5 roles, decide-proved), `gte_polynomial_five_roles_certified`, `gte_polynomial_five_labelled_roles`; exactly five distinct K_extra=0 labelled-triple roles of the GTE polynomial; CatAL, zero sorry (2026-06-01)
+- `UgpLean.Polynomial.PolyExplorations` — EPIC_087: `poly_p_at_111_eq_zero` (p(1,1,1)=0 over any CommRing, ring), `gf5_has_fixed_point` / `gf5_second_ether` (GF(5) second ether, decide), `no_singleton_fixed_point_mod7` (k²+k−1≠0 in ZMod 7, decide), `poly_p_zero_variety_count_gf7` (|V(p) ∩ GF(7)³| = 43 = Φ₆(7), native_decide), `poly_p_diagonal_zeros_mod7` ({0,1,5} are diagonal zeros, native_decide), `poly_p_rule110_on_binary` (p = Rule 110 over ZMod 2, decide), `twin_prime_qnr_complementarity` (no twin prime pair both ≡±2 mod 5, omega), `T_b_output_not_determined_by_mod7` (T not polynomial over GF(7), native_decide), `T_computable_not_polynomial_GF7` (T computable but not poly/GF(7), exact), `canonical_b2_divisible_by_7` / `lepton_seed_forces_b2_mult7` / `muon_neff_vacuum_winding` (muon N_eff ≡ 0 mod 7, native_decide), `p_fmdl_disagree_on_orbit` / `four_object_GTE_pairwise_distinct` (p, f_MDL, T pairwise distinct, decide+native_decide), `poly_p_vacuum_basin_card_eq_52` (52 states converge to vacuum in GF(7)^5, native_decide); all CatAL, zero sorry (2026-06-08)
 - `UgpLean.Universality.ParticlesComputationSpacetimeTrinity` — 083B-PCT: `particles_computation_spacetime_trinity`, `particles_computation_spacetime_trinity_certified`; one Φ_MDL kink bundles particle identity, Rule 110 computation, and spacetime geodesic (Role 3 cross-ref `psc_orbit_is_curvature_geodesic`); CatAL, zero sorry (2026-06-01)
 - `UgpLean.Papers.*`             — Paper25, UGPMain (citable stubs)
 
