@@ -1298,6 +1298,8 @@ map $T$, period-475 certificates, and GF(7³) number-theoretic structure.
 | **nineteen_not_divides_linear_period** | Polynomial.PolyExplorations | $19\nmid 240$ (the linearized period) (decide) | CatAL |
 | **nineteen_unique_prime_in_7cube_minus_1** | Polynomial.PolyExplorations | 19 is the unique prime $p\mid 7^3-1$ with $\mathrm{ord}_p(7)=3$ (decide) | CatAL |
 | **gf73_norm_of_19th_root_is_one** | Polynomial.PolyExplorations | Norm of any 19th root of unity in GF(7³) equals 1; LCR = norm (decide) | CatAL |
+| **p_addition_via_L6** | Polynomial.PolyExplorations | $p(6,a,b)=a+b\pmod7$ for all $a,b\in\mathbb{Z}/7$ — 1-gate GF(7) addition (decide) | CatAL |
+| **p_multiplication_from_two_gates** | Polynomial.PolyExplorations | $a\cdot b = p(6,a,b)-p(0,a,b)\pmod7$ — 2-gate GF(7) multiplication; 49/49 pairs verified (decide) | CatAL |
 
 ### GTE Causal Tree (`Polynomial.GTECausalTree`)
 
