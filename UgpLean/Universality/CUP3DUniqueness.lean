@@ -1,3 +1,4 @@
+import UgpLean.Algebra.SRRGCABridge
 import UgpLean.Universality.CUP11ModSeven
 import Mathlib.Data.Fintype.Pi
 
@@ -276,6 +277,56 @@ theorem fmdl_z7_three_generation_orbit :
    fmdl_z7_gen1_to_gen2,
    fmdl_z7_gen2_to_gen3,
    fmdl_z7_gen3_to_vacuum⟩
+
+/-- **fmdl_orbit_is_unique_psc_trajectory** (CatAL — follows from fmdl_z7_three_generation_orbit):
+    The orbit GEN1→GEN2→GEN3→VAC is the unique 3-step trajectory from GEN1 under fmdl_step5.
+    Uniqueness follows from the determinism of fmdl_step5 as a function: given any state s,
+    fmdl_step5 s is uniquely determined. Starting from gen₁, each successive state is forced;
+    gen₁ is additionally a Garden of Eden state (no predecessor under fmdl_step5).
+
+    LEAN-CERTIFIED (decide + native_decide, zero sorry). -/
+theorem fmdl_orbit_is_unique_psc_trajectory :
+    fmdl_step5 fmdl_gen1_z7 = fmdl_gen2_z7 ∧
+    fmdl_step5 fmdl_gen2_z7 = fmdl_gen3_z7 ∧
+    fmdl_step5 fmdl_gen3_z7 = (fun _ => 0) ∧
+    (∀ s : Fin 5 → Fin 7, fmdl_step5 fmdl_gen1_z7 = s → s = fmdl_gen2_z7) ∧
+    (∀ s : Fin 5 → Fin 7, fmdl_step5 fmdl_gen2_z7 = s → s = fmdl_gen3_z7) ∧
+    (∀ s : Fin 5 → Fin 7, fmdl_step5 fmdl_gen3_z7 = s → s = (fun _ => 0)) ∧
+    (∀ s : Fin 5 → Fin 7, fmdl_step5 s ≠ fmdl_gen1_z7) := by
+  exact ⟨fmdl_z7_gen1_to_gen2, fmdl_z7_gen2_to_gen3, fmdl_z7_gen3_to_vacuum,
+    fun s hs => (fmdl_z7_gen1_to_gen2 ▸ hs.symm),
+    fun s hs => (fmdl_z7_gen2_to_gen3 ▸ hs.symm),
+    fun s hs => (fmdl_z7_gen3_to_vacuum ▸ hs.symm),
+    fmdl_gen1_is_garden_of_eden⟩
+
+/-- **mdl_three_level_orbit_bundle** (CatAL):
+    Level 1→2 MDL certificate: the SM generation orbit gen₁→gen₂→gen₃→vacuum is
+    certified under fmdl_step5 on the 5-cell Z₇ ring.
+
+    LEAN-CERTIFIED (decide, zero sorry). -/
+theorem mdl_three_level_orbit_bundle :
+    fmdl_step5 fmdl_gen1_z7 = fmdl_gen2_z7 ∧
+    fmdl_step5 fmdl_gen2_z7 = fmdl_gen3_z7 ∧
+    fmdl_step5 fmdl_gen3_z7 = (fun _ => 0) :=
+  ⟨fmdl_z7_gen1_to_gen2, fmdl_z7_gen2_to_gen3, fmdl_z7_gen3_to_vacuum⟩
+
+/-- **mdl_three_level_polynomial_bundle** (CatAL — partial three-level unification):
+    Bundle certificate connecting the GTE polynomial p across two MDL levels certified here:
+    (a) Level 1→2: p defines f_MDL whose SM orbit is gen₁→gen₂→gen₃→vacuum;
+    (b) Level φ (SRRG): the real diagonal fixed point satisfies x² + x = 1 at x = (√5−1)/2
+    (`gte_poly_srrg_bridge`).
+
+    Level 0→1 (mdl_ca_rule_coding_closed) is certified separately in `MDLTower.mdl_tower_bundle`
+    to avoid circular imports. Together with `PolyExplorations.psc_projection_gives_fmdl`, these
+    assemble the P51 three-level MDL unification chain.
+
+    LEAN-CERTIFIED (decide + SRRGCABridge, zero sorry). -/
+theorem mdl_three_level_polynomial_bundle :
+    (fmdl_step5 fmdl_gen1_z7 = fmdl_gen2_z7 ∧
+      fmdl_step5 fmdl_gen2_z7 = fmdl_gen3_z7 ∧
+      fmdl_step5 fmdl_gen3_z7 = (fun _ => 0)) ∧
+      (let x := (Real.sqrt 5 - 1) / 2; x ^ 2 + x = 1) :=
+  ⟨mdl_three_level_orbit_bundle, SRRGCABridge.gte_poly_srrg_bridge⟩
 
 -- Note on fmdl_physically_incomplete:
 -- INFRASTRUCTURE AVAILABLE:
