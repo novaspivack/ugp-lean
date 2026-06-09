@@ -216,10 +216,6 @@ private lemma isSquare_five_iff_legendre_one
     exact hq5 this
   exact (legendreSym.eq_one_iff' (p := q) h5).symm
 
-private lemma isSquare_fin5_iff (r : Fin 5) (hr : r ≠ 0) :
-    IsSquare (r : ZMod 5) ↔ r = 1 ∨ r = 4 := by
-  fin_cases r <;> simp_all [IsSquare, Fin.ext_iff] <;> decide
-
 private lemma isSquare_mod_five_iff_residue {q : ℕ} (hq0 : (q : ZMod 5) ≠ 0) :
     IsSquare (q : ZMod 5) ↔ q % 5 = 1 ∨ q % 5 = 4 := by
   rw [← ZMod.natCast_mod q 5]
