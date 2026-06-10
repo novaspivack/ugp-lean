@@ -20,7 +20,6 @@ namespace UgpLean.Polynomial.BiquadraticCompositum
 
 open UgpLean.Polynomial.GoldenQuadratic
 open UgpLean.Polynomial.EisensteinIdentities
-open UgpLean.MassRelations.HiggsQuartic
 
 instance : Fact (Nat.Prime 3) := ⟨by decide⟩
 
@@ -28,11 +27,14 @@ def n_fam : ℕ := 5
 
 def biquadraticConductor : ℕ := 15
 
-theorem biquadratic_conductor_identity :
-    biquadraticConductor = n_gen * n_fam ∧
+abbrev biquadraticConductorProp : Prop :=
+  biquadraticConductor = UgpLean.MassRelations.HiggsQuartic.n_gen * n_fam ∧
     biquadraticConductor = 3 * 5 ∧
-    n_gen = 3 ∧ n_fam = 5 := by
-  unfold biquadraticConductor n_gen n_fam
+    UgpLean.MassRelations.HiggsQuartic.n_gen = 3 ∧ n_fam = 5
+
+theorem biquadratic_conductor_identity : biquadraticConductorProp := by
+  simp only [biquadraticConductorProp, biquadraticConductor, n_fam,
+    UgpLean.MassRelations.HiggsQuartic.n_gen]
   norm_num
 
 -- ════════════════════════════════════════════════════════════════
@@ -134,8 +136,9 @@ private lemma isSquare_mod_three_iff_residue {q : ℕ} (hq0 : (q : ZMod 3) ≠ 0
 
 private lemma chi4_mul_neg_one_pow_div_two {q : ℕ} [Fact q.Prime] (hq2 : q ≠ 2) :
     (ZMod.χ₄ q : ℤ) * (-1 : ℤ) ^ (q / 2) = 1 := by
-  have hq1 : q % 2 = 1 := by omega
-  rw [ZMod.χ₄_eq_neg_one_pow hq1, ← pow_two, sq_neg_one, one_pow]
+  have hq1 : q % 2 = 1 := (Nat.Prime.mod_two_eq_one_iff_ne_two Fact.out).mpr hq2
+  rw [ZMod.χ₄_eq_neg_one_pow hq1, ← pow_add, show q / 2 + q / 2 = 2 * (q / 2) by omega]
+  rw [pow_mul, show (-1 : ℤ) ^ 2 = 1 by decide, one_pow]
 
 private lemma legendreSym_q_neg_three_eq_legendreSym_three_q
     {q : ℕ} [Fact q.Prime] (hq3 : q ≠ 3) (hq2 : q ≠ 2) :
@@ -194,55 +197,65 @@ theorem residue_complete_split_mod15 (r : Fin 15) :
 -- §3  Φ₆ stability on the GTE ladder
 -- ════════════════════════════════════════════════════════════════
 
-theorem phi6_ladder_values :
-    phi6 2 = 3 ∧
-    phi6 3 = 7 ∧
-    phi6 4 = 13 ∧
-    phi6 5 = 21 ∧
-    phi6 7 = 43 ∧
-    phi6 9 = 73 ∧
-    phi6 6 = 31 ∧
-    phi6 8 = 57 := by
-  unfold phi6
+abbrev phi6LadderValues : Prop :=
+  phi6 2 = 3 ∧ phi6 3 = 7 ∧ phi6 4 = 13 ∧ phi6 5 = 21 ∧ phi6 7 = 43 ∧ phi6 9 = 73 ∧
+    phi6 6 = 31 ∧ phi6 8 = 57
+
+theorem phi6_ladder_values : phi6LadderValues := by
+  simp only [phi6LadderValues, phi6]
   norm_num
 
-theorem phi6_ladder_prime_residues :
-    (7 : ℕ) % 15 = 7 ∧
-    (13 : ℕ) % 15 = 13 ∧
-    (43 : ℕ) % 15 = 13 ∧
-    (73 : ℕ) % 15 = 13 ∧
-    (31 : ℕ) % 15 = 1 ∧
-    (57 : ℕ) % 15 = 12 := by
+abbrev phi6LadderPrimeResidues : Prop :=
+  (7 : ℕ) % 15 = 7 ∧
+  (13 : ℕ) % 15 = 13 ∧
+  (43 : ℕ) % 15 = 13 ∧
+  (73 : ℕ) % 15 = 13 ∧
+  (31 : ℕ) % 15 = 1 ∧
+  (57 : ℕ) % 15 = 12
+
+theorem phi6_ladder_prime_residues : phi6LadderPrimeResidues := by
+  simp only [phi6LadderPrimeResidues]
   norm_num
 
-theorem phi6_ladder_rungs_in_alphabet_class :
-    ((7 : ℕ) % 15 = 7 ∨ (7 : ℕ) % 15 = 13) ∧
-    ((13 : ℕ) % 15 = 7 ∨ (13 : ℕ) % 15 = 13) ∧
-    ((43 : ℕ) % 15 = 7 ∨ (43 : ℕ) % 15 = 13) ∧
-    ((73 : ℕ) % 15 = 7 ∨ (73 : ℕ) % 15 = 13) := by
+abbrev phi6LadderRungsInAlphabetClass : Prop :=
+  ((7 : ℕ) % 15 = 7 ∨ (7 : ℕ) % 15 = 13) ∧
+  ((13 : ℕ) % 15 = 7 ∨ (13 : ℕ) % 15 = 13) ∧
+  ((43 : ℕ) % 15 = 7 ∨ (43 : ℕ) % 15 = 13) ∧
+  ((73 : ℕ) % 15 = 7 ∨ (73 : ℕ) % 15 = 13)
+
+theorem phi6_ladder_rungs_in_alphabet_class : phi6LadderRungsInAlphabetClass := by
+  simp only [phi6LadderRungsInAlphabetClass]
   norm_num
 
-theorem phi6_gap_six_not_alphabet :
-    (31 : ℕ) % 15 = 1 ∧
-    ¬ ((31 : ℕ) % 15 = 7 ∨ (31 : ℕ) % 15 = 13) := by
+abbrev phi6GapSixNotAlphabet : Prop :=
+  (31 : ℕ) % 15 = 1 ∧
+  ¬ ((31 : ℕ) % 15 = 7 ∨ (31 : ℕ) % 15 = 13)
+
+theorem phi6_gap_six_not_alphabet : phi6GapSixNotAlphabet := by
+  simp only [phi6GapSixNotAlphabet]
   norm_num
 
-theorem phi6_gap_eight_composite :
-    57 = 3 * 19 ∧ ¬ Nat.Prime 57 := by
+abbrev phi6GapEightComposite : Prop :=
+  57 = 3 * 19 ∧ ¬ Nat.Prime 57
+
+theorem phi6_gap_eight_composite : phi6GapEightComposite := by
+  simp only [phi6GapEightComposite]
   constructor
   · norm_num
   · decide
 
-theorem phi6_residue_mod5_table :
-    phi6 2 % 5 = 3 ∧
-    phi6 3 % 5 = 2 ∧
-    phi6 4 % 5 = 3 ∧
-    phi6 5 % 5 = 1 ∧
-    phi6 6 % 5 = 1 ∧
-    phi6 7 % 5 = 3 ∧
-    phi6 8 % 5 = 2 ∧
-    phi6 9 % 5 = 3 := by
-  unfold phi6
+abbrev phi6ResidueMod5Table : Prop :=
+  phi6 2 % 5 = 3 ∧
+  phi6 3 % 5 = 2 ∧
+  phi6 4 % 5 = 3 ∧
+  phi6 5 % 5 = 1 ∧
+  phi6 6 % 5 = 1 ∧
+  phi6 7 % 5 = 3 ∧
+  phi6 8 % 5 = 2 ∧
+  phi6 9 % 5 = 3
+
+theorem phi6_residue_mod5_table : phi6ResidueMod5Table := by
+  simp only [phi6ResidueMod5Table, phi6]
   norm_num
 
 private theorem phi6_mod5_inert_of_residue {r : ℕ} (hr2 : r = 2 ∨ r = 3 ∨ r = 4) :
@@ -252,30 +265,34 @@ private theorem phi6_mod5_inert_of_residue {r : ℕ} (hr2 : r = 2 ∨ r = 3 ∨ 
   · subst h3; decide
   · subst h4; decide
 
-theorem phi6_ladder_mod5_inert :
-    phi6 2 % 5 = 3 ∧
-    phi6 3 % 5 = 2 ∧
-    phi6 4 % 5 = 3 ∧
-    phi6 7 % 5 = 3 ∧
-    phi6 9 % 5 = 3 ∧
-    phi6 2 % 5 ≠ 1 ∧ phi6 2 % 5 ≠ 4 ∧
-    phi6 3 % 5 ≠ 1 ∧ phi6 3 % 5 ≠ 4 ∧
-    phi6 4 % 5 ≠ 1 ∧ phi6 4 % 5 ≠ 4 ∧
-    phi6 7 % 5 ≠ 1 ∧ phi6 7 % 5 ≠ 4 ∧
-    phi6 9 % 5 ≠ 1 ∧ phi6 9 % 5 ≠ 4 := by
-  unfold phi6
+abbrev phi6LadderMod5Inert : Prop :=
+  phi6 2 % 5 = 3 ∧
+  phi6 3 % 5 = 2 ∧
+  phi6 4 % 5 = 3 ∧
+  phi6 7 % 5 = 3 ∧
+  phi6 9 % 5 = 3 ∧
+  phi6 2 % 5 ≠ 1 ∧ phi6 2 % 5 ≠ 4 ∧
+  phi6 3 % 5 ≠ 1 ∧ phi6 3 % 5 ≠ 4 ∧
+  phi6 4 % 5 ≠ 1 ∧ phi6 4 % 5 ≠ 4 ∧
+  phi6 7 % 5 ≠ 1 ∧ phi6 7 % 5 ≠ 4 ∧
+  phi6 9 % 5 ≠ 1 ∧ phi6 9 % 5 ≠ 4
+
+theorem phi6_ladder_mod5_inert : phi6LadderMod5Inert := by
+  simp only [phi6LadderMod5Inert, phi6]
   norm_num
 
-theorem phi6_stability_class_lemma :
-    phi6_ladder_values ∧
-    phi6_ladder_prime_residues ∧
-    phi6_ladder_rungs_in_alphabet_class ∧
-    phi6_gap_six_not_alphabet ∧
-    phi6_gap_eight_composite ∧
-    phi6_residue_mod5_table ∧
-    phi6_ladder_mod5_inert ∧
-    (Nat.Prime 7 ∧ Nat.Prime 13 ∧ Nat.Prime 43 ∧ Nat.Prime 73) ∧
-    (Nat.Prime 31 ∧ ¬ Nat.Prime 21) := by
+abbrev phi6StabilityProp : Prop :=
+  phi6LadderValues ∧
+    phi6LadderPrimeResidues ∧
+    phi6LadderRungsInAlphabetClass ∧
+    phi6GapSixNotAlphabet ∧
+    phi6GapEightComposite ∧
+    phi6ResidueMod5Table ∧
+    phi6LadderMod5Inert ∧
+    ((Nat.Prime 7) ∧ (Nat.Prime 13) ∧ (Nat.Prime 43) ∧ (Nat.Prime 73)) ∧
+    ((Nat.Prime 31) ∧ (¬ Nat.Prime 21))
+
+theorem phi6_stability_class_lemma : phi6StabilityProp := by
   refine ⟨phi6_ladder_values, phi6_ladder_prime_residues, phi6_ladder_rungs_in_alphabet_class,
     phi6_gap_six_not_alphabet, phi6_gap_eight_composite, phi6_residue_mod5_table,
     phi6_ladder_mod5_inert, ?_, ?_⟩
@@ -294,8 +311,8 @@ private theorem mod15_complete_split_residue {q : ℕ} (h : q % 15 = 1 ∨ q % 1
     q % 3 = 1 ∧ (q % 5 = 1 ∨ q % 5 = 4) := by
   rcases h with h1 | h4 <;> omega
 
-theorem biquadratic_compositum_alphabet_class :
-    biquadratic_conductor_identity ∧
+abbrev biquadraticAlphabetProp : Prop :=
+  biquadraticConductorProp ∧
     (∀ r : Fin 15,
       (r.val % 3 = 1 ∧ (r.val % 5 = 2 ∨ r.val % 5 = 3)) ↔
         r.val % 15 = 7 ∨ r.val % 15 = 13) ∧
@@ -315,7 +332,9 @@ theorem biquadratic_compositum_alphabet_class :
         (IsSquare ((-3 : ℤ) : ZMod q) ↔ q % 3 = 1)) ∧
     (∀ {q : ℕ} [Fact q.Prime], q ≠ 5 → q ≠ 2 →
       ((∃ x : ZMod q, x ^ 2 + x = 1) ↔ IsSquare (5 : ZMod q)) ∧
-        (IsSquare (5 : ZMod q) ↔ q % 5 = 1 ∨ q % 5 = 4)) := by
+        (IsSquare (5 : ZMod q) ↔ q % 5 = 1 ∨ q % 5 = 4))
+
+theorem biquadratic_compositum_alphabet_class : biquadraticAlphabetProp := by
   refine ⟨biquadratic_conductor_identity, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro r; exact residue_alphabet_class_mod15 r
   · intro r; exact residue_complete_split_mod15 r
@@ -328,18 +347,18 @@ theorem biquadratic_compositum_alphabet_class :
       have his : IsSquare (5 : ZMod q) :=
         (master_quadratic_split_iff_qr5 (q := q) hq5 hq2).1.mp ⟨x, hx⟩
       have : q % 5 = 1 ∨ q % 5 = 4 :=
-        (master_quadratic_split_iff_qr5 (q := q) hq5 hq2).2.mpr his
+        (master_quadratic_split_iff_qr5 (q := q) hq5 hq2).2.mp his
       omega
-    exact ⟨⟨_, (master_eisenstein_split_iff_mod3 (q := q) hq3 hq2).1.mpr heis⟩, hnoroot⟩
+    exact ⟨(master_eisenstein_split_iff_mod3 (q := q) hq3 hq2).1.mpr heis, hnoroot⟩
   · intro q _ hq3 hq5 hq2 hmod
     have hsplit := mod15_complete_split_residue hmod
     have heis := (master_eisenstein_split_iff_mod3 (q := q) hq3 hq2).2.mpr hsplit.1
     rcases hsplit.2 with h5 | h5
-    · have hs := (master_quadratic_split_iff_qr5 (q := q) hq5 hq2).2.mp (Or.inl h5)
-      exact ⟨⟨_, (master_eisenstein_split_iff_mod3 (q := q) hq3 hq2).1.mpr heis⟩,
+    · have hs := (master_quadratic_split_iff_qr5 (q := q) hq5 hq2).2.mpr (Or.inl h5)
+      exact ⟨(master_eisenstein_split_iff_mod3 (q := q) hq3 hq2).1.mpr heis,
         (master_quadratic_split_iff_qr5 (q := q) hq5 hq2).1.mpr hs⟩
-    · have hs := (master_quadratic_split_iff_qr5 (q := q) hq5 hq2).2.mp (Or.inr h5)
-      exact ⟨⟨_, (master_eisenstein_split_iff_mod3 (q := q) hq3 hq2).1.mpr heis⟩,
+    · have hs := (master_quadratic_split_iff_qr5 (q := q) hq5 hq2).2.mpr (Or.inr h5)
+      exact ⟨(master_eisenstein_split_iff_mod3 (q := q) hq3 hq2).1.mpr heis,
         (master_quadratic_split_iff_qr5 (q := q) hq5 hq2).1.mpr hs⟩
   · intro q _ hq3 hq2
     exact master_eisenstein_split_iff_mod3 hq3 hq2
