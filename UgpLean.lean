@@ -315,6 +315,7 @@ import UgpLean.Physics.ZSevenVacuumSelection
 import UgpLean.Physics.KinkVacuumPolarization
 import UgpLean.Physics.KinkFormFactor
 import UgpLean.Physics.CCOneJumpResidual
+import UgpLean.Universality.NgenBracketOrientation
 import UgpLean.Physics.KinkPoleMassSpectralCore
 import UgpLean.Physics.BurnsideCosetCharges
 import UgpLean.Universality.HeatKernelContactTerms
