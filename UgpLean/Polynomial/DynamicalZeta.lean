@@ -61,7 +61,7 @@ private def finAddNat {n : ℕ} [NeZero n] (i : Fin n) (k : ℕ) : Fin n :=
 
 private def fin7OfZMod (x : ZMod 7) : Fin 7 := ⟨x.val, x.val_lt⟩
 
-private def zmod7OfFin (x : Fin 7) : ZMod 7 := x
+def zmod7OfFin (x : Fin 7) : ZMod 7 := x
 
 /-- GTE polynomial on `Fin 7`. -/
 def poly_p_fin7 (L C R : Fin 7) : Fin 7 :=
@@ -142,7 +142,7 @@ private lemma finAddNat_succ {n : ℕ} [NeZero n] (i : Fin n) (k : ℕ) :
   simp only [finAddNat, ringRight, Fin.ext_iff]
   exact nat_mod_add_succ i.val k n (NeZero.pos n)
 
-private lemma ringRight_iterate_eq_finAddNat {n : ℕ} [NeZero n] (k : ℕ) (i : Fin n) :
+lemma ringRight_iterate_eq_finAddNat {n : ℕ} [NeZero n] (k : ℕ) (i : Fin n) :
     ringRight (n := n)^[k] i = finAddNat i k := by
   induction k with
   | zero =>
@@ -151,7 +151,14 @@ private lemma ringRight_iterate_eq_finAddNat {n : ℕ} [NeZero n] (k : ℕ) (i :
   | succ k ih =>
     rw [Function.iterate_succ_apply', ih, finAddNat_succ]
 
-private lemma ringRight_steps_to {n : ℕ} [NeZero n] (i₀ j : Fin n) :
+/-- After `n` steps, `ringRight` returns to the starting cell. -/
+theorem ringRight_iterate_period {n : ℕ} [NeZero n] (i : Fin n) :
+    ringRight (n := n)^[n] i = i := by
+  rw [ringRight_iterate_eq_finAddNat]
+  apply Fin.ext
+  simp [finAddNat, Nat.add_mod, Nat.mod_eq_of_lt i.isLt, Nat.mod_self]
+
+lemma ringRight_steps_to {n : ℕ} [NeZero n] (i₀ j : Fin n) :
     ringRight (n := n)^[(j.val + n - i₀.val) % n] i₀ = j := by
   rw [ringRight_iterate_eq_finAddNat]
   apply Fin.ext
@@ -174,7 +181,7 @@ private lemma ringLeft_ringRight_cancel {n : ℕ} [NeZero n] (i : Fin n) :
     exact Nat.mod_eq_of_lt (Nat.sub_lt (NeZero.pos n) Nat.zero_lt_one)
   · exact absurd hgt (Nat.not_lt_of_le i.isLt)
 
-private lemma ringLeft_ringRight_iterate {n : ℕ} [NeZero n] (k : ℕ) (i : Fin n) :
+lemma ringLeft_ringRight_iterate {n : ℕ} [NeZero n] (k : ℕ) (i : Fin n) :
     ringLeft (ringRight (n := n)^[k + 1] i) = ringRight (n := n)^[k] i := by
   rw [Function.iterate_succ_apply', ringLeft_ringRight_cancel]
 
