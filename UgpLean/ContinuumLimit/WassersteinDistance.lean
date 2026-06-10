@@ -18,7 +18,7 @@ import Mathlib.Topology.Algebra.Monoid.FunOnFinite
 import Mathlib.Tactic.Linarith
 
 /-!
-# Wasserstein Distance and Ollivier-Ricci Curvature (EPIC_083)
+# Wasserstein Distance and Ollivier-Ricci Curvature
 
 Finite-metric-space W₁ Wasserstein distance and Ollivier-Ricci curvature scaffold
 for the Gorard discrete-gravity programme.

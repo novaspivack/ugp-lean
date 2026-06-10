@@ -80,7 +80,7 @@ Non-trivial algebraic link:
  gcd(dim_45_SU5, dim_126_SO10) = 9 = dim(SU(3)_C adjoint) + dim(U(1)_Y)
 
 Suggesting α and γ arise from the same EFT integration in the SU(5) → SO(10)
-breaking chain. See Lab Notes 22 for full dialectical derivation.
+breaking chain.
 -/
 
 /-- The "9" in the VV α denominator equals the number of gauge bosons

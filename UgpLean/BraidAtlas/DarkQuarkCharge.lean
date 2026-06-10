@@ -2,13 +2,13 @@ import UgpLean.BraidAtlas.MirrorWindingNumber
 import UgpLean.BraidAtlas.DarkBraidAtlas
 
 /-!
-# UgpLean.BraidAtlas.DarkQuarkCharge — Dark Quarks are Electrically Neutral (MBA-6)
+# UgpLean.BraidAtlas.DarkQuarkCharge — Dark Quarks are Electrically Neutral
 
-**MBA-6 result (2026-05-17):** Dark quarks carry Q_EM = 0.
+**Result:** Dark quarks carry Q_EM = 0.
 
 ## Resolution
 
-Two competing arguments were considered in MBA-6:
+Two competing arguments were considered:
 
 - **Arg A:** Standard quark winding W_g ∈ {+2, −1} → Q = +2/3, −1/3 (SM colour-triplet structure)
 - **Arg B:** Y_mirror = 0 for ALL mirror-branch particles (P17 universal statement) → Q = 0
@@ -18,7 +18,7 @@ This applies universally to ALL mirror-branch particles — leptons, quarks, and
 
 ## Physical reasoning
 
-The key chain (identical to the lepton case — MBA-1/MBA-5):
+The key chain (identical to the lepton case):
 
   (i)   Mirror orbit (b₂'=24, q₂'=42, c₁'=2137) carries NO SM gauge charges by P17
   (ii)  Y_mirror = 0 (no SM hypercharge), T₃_mirror = 0 (no SM SU(2)_L isospin)
@@ -38,7 +38,7 @@ NOT an SM gauge transformation.  Therefore it does NOT map SM gauge charges to m
 The mirror-branch particles are gauge singlets with respect to the SM gauge group.
 
 This Lean module makes the quark case EXPLICITLY CERTIFIED, complementing the
-already-proved lepton case (DarkBraidAtlas.dark_lepton_q_em_zero, MBA-1/MBA-5).
+already-proved lepton case (DarkBraidAtlas.dark_lepton_q_em_zero).
 
 ## Status
 
@@ -48,8 +48,8 @@ Proofs identical to the lepton case — same axiom applies universally.
 ## References
 
 - P17 (Canonical Braid Atlas v2.0): universal mirror duality, §mirror_dm
-- MBA-1/MBA-5 lab notes (2026-05-16): lepton case proved
-- MBA-6 lab notes (2026-05-17): quark case resolved — Arg B wins
+- lepton case proved
+- quark case resolved — Arg B wins
 -/
 
 namespace UgpLean.BraidAtlas.DarkQuarkCharge
@@ -60,7 +60,7 @@ open UgpLean UgpLean.BraidAtlas DarkBraidAtlas
 -- §1  Dark quark electric charge Q_EM = 0
 -- ════════════════════════════════════════════════════════════════
 
-/-- **Dark quarks carry Q_EM = 0 (MBA-6, Argument B, zero axioms).**
+/-- **Dark quarks carry Q_EM = 0 (Argument B, zero axioms).**
 
     The mirror branch carries no SM gauge charges (P17 universal statement).
     Therefore Y_mirror = 0 and T₃_mirror = 0 for ALL mirror-branch particles,
@@ -115,7 +115,7 @@ theorem dark_quark_charge_zero_all_gens : ∀ _ : Fin 3, W_g_mirror = 0 :=
 -- §3  Full dark sector charge certificate (leptons AND quarks)
 -- ════════════════════════════════════════════════════════════════
 
-/-- **Complete dark sector Q_EM = 0 certificate: leptons AND quarks (MBA-6).**
+/-- **Complete dark sector Q_EM = 0 certificate: leptons AND quarks.**
 
     This conjunction certifies that BOTH dark leptons AND dark quarks
     are electrically neutral.  This is the full dark sector charge certificate.
@@ -127,10 +127,10 @@ theorem dark_quark_charge_zero_all_gens : ∀ _ : Fin 3, W_g_mirror = 0 :=
     Note: The conjunction `W_g_mirror = 0 ∧ W_g_mirror = 0` is logically redundant
     (both conjuncts are the same proposition), but semantically meaningful: the left
     conjunct stands for the lepton sector, the right for the quark sector.
-    This records that the MBA-6 quark case has been explicitly certified. -/
+    This records that the quark case has been explicitly certified. -/
 theorem dark_sector_all_neutral :
-    W_g_mirror = 0 ∧     -- dark singlet leptons (all 3 gen): Q_EM = 0 [MBA-5]
-    W_g_mirror = 0 :=    -- dark quarks (all gen, up and down): Q_EM = 0 [MBA-6]
+    W_g_mirror = 0 ∧     -- dark singlet leptons (all 3 gen): Q_EM = 0
+    W_g_mirror = 0 :=    -- dark quarks (all gen, up and down): Q_EM = 0
   ⟨mirror_winding_number_zero, mirror_winding_number_zero⟩
 
 -- ════════════════════════════════════════════════════════════════
@@ -164,12 +164,12 @@ theorem dark_down_quark_differs_from_sm_down :
   simp [windingNumber, mirror_winding_number_zero]
 
 -- ════════════════════════════════════════════════════════════════
--- §5  MBA-6 composite certificate (zero sorry, zero axioms)
+-- §5  Dark-quark composite certificate (zero sorry, zero axioms)
 -- ════════════════════════════════════════════════════════════════
 
-/-- **MBA-6 complete certificate (zero sorry, zero axioms).**
+/-- **Dark-quark complete certificate (zero sorry, zero axioms).**
 
-    Bundles all MBA-6 results:
+    Bundles the dark-quark results:
 
     (1) Dark quarks Q_EM = 0 (primary result)
     (2) Generation independence (all 3 gen of dark quarks)

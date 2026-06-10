@@ -7,7 +7,7 @@ import UgpLean.Spacetime.PhiMDLKinkQuantumNumbers
 import Mathlib.Tactic
 
 /-!
-# G38: Φ_MDL Wightman Axioms — Structural CatAD Certificate (EPIC_080)
+# G38: Φ_MDL Wightman Axioms — Structural CatAD Certificate
 
 Constructive QFT for Φ_MDL in 4D requires a rigorous Wightman (or Osterwalder–Schrader)
 construction. Standard Yang–Mills/QCD has not satisfied OS axioms in 4D; this is a

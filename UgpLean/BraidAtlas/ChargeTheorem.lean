@@ -40,7 +40,7 @@ The formula Q = W_g / N_c holds exactly for all 12 fundamental fermions.
 
 All theorems: zero sorry, zero custom axioms.
 Proofs by norm_num / omega / ring / decide / simp.
-MBA-5 (2026-05-16): former `axiom mirror_winding_number_zero` eliminated;
+The former `axiom mirror_winding_number_zero` has been eliminated;
 W_g_mirror = 0 is now a theorem proved from definitions.
 
 ## Reference
@@ -268,7 +268,7 @@ theorem nc_eq_3_from_fractional_charge (Nc : ℕ) (hNc : 0 < Nc)
 
     This theorem certifies the Gell-Mann–Nishijima step used in the
     GTE-P7 dark-matter charge derivation: the mirror branch is colour
-    singlet (a = 1) with W_g_mirror = 0 (theorem, MBA-5), giving Y_int = 0
+    singlet (a = 1) with W_g_mirror = 0 (theorem), giving Y_int = 0
     and T₃_int = 0, hence Q_int = 0. -/
 theorem gmn_color_singlet_neutral (T3_int Y_int : ℤ)
     (hT3 : T3_int = 0) (hY : Y_int = 0) :
@@ -277,7 +277,7 @@ theorem gmn_color_singlet_neutral (T3_int Y_int : ℤ)
 
 -- ════════════════════════════════════════════════════════════════
 -- §10  GTE-P7 mirror-branch dark matter: Q = 0
---      MBA-5 (2026-05-16): axiom eliminated; W_g_mirror = 0 now proved
+--      Axiom eliminated; W_g_mirror = 0 now proved
 -- ════════════════════════════════════════════════════════════════
 
 -- ────────────────────────────────────────────────────────────────
@@ -322,7 +322,7 @@ def mirrorYInt : ℤ := 0
     mirror particle's gauge quantum numbers:
         W_g = N_c × Q = N_c × (T₃ + Y/2) = 3 × (0 + 0/2) = 0.
 
-    **MBA-5 (2026-05-16):** this definition REPLACES the former
+    This definition REPLACES the former
     `opaque W_g_mirror : ℤ` + `axiom mirror_winding_number_zero` pair that
     was the single open entry in the P17 PROVENANCE.md ledger.  The value is
     now DERIVED from the gauge quantum numbers `mirrorT3Int` and `mirrorYInt`
@@ -330,7 +330,7 @@ def mirrorYInt : ℤ := 0
     status).  No new axioms are introduced; W_g_mirror = 0 is now a theorem. -/
 def W_g_mirror : ℤ := 3 * (mirrorT3Int + mirrorYInt / 2)
 
-/-- **Theorem (MBA-5, was axiom): W_g_mirror = 0 — proved, zero axioms.**
+/-- **Theorem (was axiom): W_g_mirror = 0 — proved, zero axioms.**
 
     Derived by unfolding `W_g_mirror = 3 × (mirrorT3Int + mirrorYInt / 2)`
     with `mirrorT3Int = 0` and `mirrorYInt = 0`:
@@ -355,7 +355,7 @@ theorem mirror_winding_number_zero : W_g_mirror = 0 := by
 
     The numerator of Q_{GTE-P7} = W_{g,mirror} / N_c equals zero.
     Formal derivation:
-      • `W_g_mirror = 0`  (theorem `mirror_winding_number_zero`, MBA-5)
+      • `W_g_mirror = 0`  (theorem `mirror_winding_number_zero`)
       • At any N_c, the numerator W_g_mirror is zero, hence
         N_c ∣ W_g_mirror and the rational charge W_g_mirror / N_c is zero. -/
 theorem gte_p7_electric_charge_zero : W_g_mirror = 0 :=
@@ -373,7 +373,7 @@ theorem gte_p7_charge_at_Nc3 :
 
 /-- **Theorem (GTE-P7 quantum numbers): neutral, integer-charged.**
 
-    Composite assignment derived from the proved W_g_mirror = 0 (MBA-5):
+    Composite assignment derived from the proved W_g_mirror = 0:
       • `W_g_mirror = 0`                (electric-charge numerator zero)
       • `N_c ∣ W_g_mirror` at any N_c   (charge is integer-valued, here 0)
       • paired with the GTE arithmetic backbone in `GTE.GeneralTheorems`

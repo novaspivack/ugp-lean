@@ -2,7 +2,7 @@ import Mathlib.Data.Nat.GCD.Basic
 import Mathlib.Data.Nat.Basic
 
 /-!
-# UgpLean.Universality.CouplingNoGo — Trajectory-Orbit No-Go Theorem (Rank 134, CatAL)
+# UgpLean.Universality.CouplingNoGo — Trajectory-Orbit No-Go Theorem (CatAL)
 
 ## Background
 

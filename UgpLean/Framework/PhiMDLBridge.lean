@@ -4,7 +4,7 @@ import UgpLean.Universality.CUP3DUniqueness
 import Mathlib.Data.Matrix.Mul
 
 /-!
-# UgpLean.Framework.PhiMDLBridge — Rank 287-FCA-SRRG-LEAN (CatAL conditional)
+# UgpLean.Framework.PhiMDLBridge (CatAL conditional)
 
 Lean certification that the Φ_MDL lattice-refinement continuum is the SRRG fixed point
 on the GTE-compatible subspace `T_GTE`, and carries emergent SO(1,3) symmetry.

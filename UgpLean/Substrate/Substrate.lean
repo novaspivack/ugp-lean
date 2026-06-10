@@ -1,11 +1,11 @@
 import Mathlib.Data.Real.Basic
 
 /-!
-# GTE-Möbius Substrate — Rank 070-107 Phase 1
+# GTE-Möbius Substrate
 
 Defines the substrate triple `(config, coherence, psc_consistent)` for P34's
 GTE-Möbius substrate specification. This is Phase 1 infrastructure for the
-PSC/PI → [D] Lorentz-equivariance proof chain (Rank 070-107).
+PSC/PI → [D] Lorentz-equivariance proof chain.
 
 ## Scope (Phase 1)
 

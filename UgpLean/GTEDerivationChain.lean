@@ -12,7 +12,7 @@ open UgpLean.OQ26Arithmetic
 
 /-- The GTE derivation chain for quantum gravity: all key CatAL certifications
     in the logical order PSC → GTE → QGR. This is a summary theorem that
-    collects the machine-certified results from EPIC_078.
+    collects the machine-certified gravity-sector results.
 
     NOT CERTIFIED (blocked by Lorentzian library):
     - G_μν = 8πG T_μν derivation

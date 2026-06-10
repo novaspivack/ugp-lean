@@ -3,7 +3,7 @@ import UgpLean.Universality.MDLDerivabilityCriterion
 import Mathlib.Data.Nat.Log
 
 /-!
-# UgpLean.Framework.CMCAMDLMinimality — Rank 074-UNIDM2 (CatAL conditional)
+# UgpLean.Framework.CMCAMDLMinimality (CatAL conditional)
 
 Lean certification that the **two-layer chiral AFCA (CMCA)** is the MDL-minimal
 Level-1 discrete CA construction carrying all five GTE structural features.

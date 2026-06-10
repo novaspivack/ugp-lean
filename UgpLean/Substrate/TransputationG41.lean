@@ -5,7 +5,7 @@ import UgpLean.Substrate.CoherenceMeasureUniqueness
 import UgpLean.Universality.PhiMDLThermalState
 
 /-!
-# Transputation → Full QM — EPIC_080 Rank G41 (CLOSED CatAD)
+# Transputation → Full QM (CatAD)
 
 P43 transputation ($\mathbb{P}^\top$) is **CLOSED CatAD**: global $[D]$-record uniqueness on the
 sector-probability layer follows from G40 (`c2_algebraic_global_uniqueness`, zero sorry) via

@@ -3,14 +3,14 @@ import UgpLean.Spacetime.ChiralGliderDynamics
 import UgpLean.Spacetime.CausalInvariance
 
 /-!
-# Chiral Mirror Speed Symmetry (Rank 070-115, CatAL)
+# Chiral Mirror Speed Symmetry (CatAL)
 
 Rule 124 is the spatial mirror of Rule 110: `rule124Fin2 l c r = rule110Fin2 r c l`.
 The Cook A-glider on the period-14 ether advances `|Δx| = 2` per `Δt = 3` outer steps,
 so `|v| = 2/3`. Mirror duality maps rightward Rule-110 propagation to leftward Rule-124
 propagation with the same speed magnitude.
 
-Computational confirmation (Rank 070-111, CatA): `v_R = +2/3`, `v_L = −2/3` exactly on
+Computational confirmation (CatA): `v_R = +2/3`, `v_L = −2/3` exactly on
 the decoupled two-layer system (`rule110_rule124_chiral_pair.py`, P28 canonical run).
 
 ## Main theorems (zero sorry)
@@ -45,7 +45,7 @@ theorem mirror_rule_opposite_signed_speeds :
     chiralLeftSpeed = -(2 / 3) := by
   native_decide
 
-/-- **Rank 070-115 — mirror-rule duality implies speed symmetry** (CatAL).
+/-- **Mirror-rule duality implies speed symmetry** (CatAL).
 
     (1) Rule 124 is the spatial mirror of Rule 110 at the Fin-2 lookup level.
     (2) A-glider period kinematics: `Δt = 3`, `|Δx| = 2`, hence `3·|Δx| ≤ 2·Δt` (tight `c = 2/3` cone).
@@ -53,7 +53,7 @@ theorem mirror_rule_opposite_signed_speeds :
         on the two decoupled layers (`chiralRightSpeed = −chiralLeftSpeed`).
 
     Layer decoupling (`chiral_pair_no_cross_layer_edges`) is certified separately in
-    `ChiralPairDecoupling.lean` (Rank 14-LCD). -/
+    `ChiralPairDecoupling.lean`. -/
 theorem mirror_rule_speed_symmetry :
     (∀ l c r : Fin 2, rule124Fin2 l c r = rule110Fin2 r c l) ∧
     ChiralPairCausalSpeed = 2 / 3 ∧

@@ -4,7 +4,7 @@ import Mathlib.Data.Finset.Card
 import Mathlib.Data.Fintype.Basic
 
 /-!
-# UgpLean.Universality.WeakIsospin — Z₇ Winding Origin of Weak Isospin (Rank 94c-ISOSPIN)
+# UgpLean.Universality.WeakIsospin — Z₇ Winding Origin of Weak Isospin
 
 ## Physical content
 
@@ -236,7 +236,7 @@ theorem w_boson_winding_values :
 -- §7  Combined weak isospin identification theorem (CatAL)
 -- ════════════════════════════════════════════════════════════════
 
-/-- **Weak isospin identification theorem (Rank 94c-ISOSPIN, CatAL)**:
+/-- **Weak isospin identification theorem (CatAL)**:
 
     The GTE Z₇ species winding number W_B encodes weak isospin.  Formally:
 

@@ -15,7 +15,7 @@ set_option maxRecDepth 65536
 set_option maxHeartbeats 4000000
 
 /-!
-# PSC + f_MDL ⇒ EffectMeasure — Rank 070-97B2 (B2 bridge)
+# PSC + f_MDL ⇒ EffectMeasure
 
 Constructive bridge: given `BeableAmplitudeHypothesis`, the rank-1 Born density
 `ρ_α = |α⟩⟨α|` induces an `EffectMeasureProxy` via `μ_α(E) = Re Tr(ρ_α E)`.

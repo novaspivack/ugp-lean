@@ -5,7 +5,7 @@ import UgpLean.Gravity.MinimalCoupling
 import UgpLean.Gravity.CurvedBackgroundPreconditions
 
 /-!
-# Wald Entropy Chain and MDL Initial State (EPIC_078 Rank 078-LC9)
+# Wald Entropy Chain and MDL Initial State
 
 Certifies the algebraic chain from LC1 (ξ = 0, MDL-minimal coupling) to the
 Ryu–Takayanagi formula precondition, and the algebraic properties of the
@@ -19,7 +19,7 @@ MDL-selected cosmological initial state:
    spatially flat sections k = 0 are MDL-minimal.
 
 Full Wald entropy and replica-trick derivations require the Lorentzian geometry
-library (blocked, Rank 078-LC5). This module certifies the **key algebraic
+library (blocked). This module certifies the **key algebraic
 preconditions** only.
 
 ## Status
@@ -123,9 +123,9 @@ theorem mdl_initial_state_master_bundle (m : ℝ) :
   exact ⟨z7_potential_zero_at_vacuum m, (mdl_selects_flat_cosmology).1,
     (mdl_selects_flat_cosmology).2⟩
 
-/-- **epic_078_wald_chain_and_initial_state** (CatAL):
-    Master bundle for Rank 078-LC9: Wald precondition chain + MDL initial state. -/
-theorem epic_078_wald_chain_and_initial_state (m : ℝ) :
+/-- **wald_chain_and_initial_state_bundle** (CatAL):
+    Master bundle: Wald precondition chain + MDL initial state. -/
+theorem wald_chain_and_initial_state_bundle (m : ℝ) :
     phimdlCurvatureCoupling = 0 ∧
       matterWaldCurvatureContribution = 0 ∧
       z7Potential m 0 = 0 ∧

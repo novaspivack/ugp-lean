@@ -88,8 +88,9 @@
   literate={→}{$\to$}1 {←}{$\leftarrow$}1 {∀}{$\forall$}1 {∃}{$\exists$}1
            {∧}{$\wedge$}1 {∨}{$\vee$}1 {¬}{$\neg$}1 {≤}{$\le$}1
            {≥}{$\ge$}1 {≠}{$\ne$}1 {∈}{$\in$}1 {ℕ}{$\mathbb{N}$}1
-           {ℚ}{$\mathbb{Q}$}1 {ℤ}{$\mathbb{Z}$}1 {₁}{$_1$}1 {₂}{$_2$}1
-           {₃}{$_3$}1
+           {ℚ}{$\mathbb{Q}$}1 {ℤ}{$\mathbb{Z}$}1 {ℝ}{$\mathbb{R}$}1
+           {κ}{$\kappa$}1 {⟨}{$\langle$}1 {⟩}{$\rangle$}1
+           {₁}{$_1$}1 {₂}{$_2$}1 {₃}{$_3$}1
 }
 \lstset{language=Lean4}
 
@@ -1389,9 +1390,8 @@ $\pm 1, \pm \tfrac{1}{2}, \pm \tfrac{1}{4}, \pm \tfrac{1}{8}$, then concludes
 irreducibility from \texttt{Polynomial.irreducible\_of\_degree\_le\_three\_of\_not\_isRoot}.
 The dimension claim uses
 \texttt{finrank\_quotient\_span\_eq\_natDegree} on the
-quotient form $\mathbb{Q}[X]/\langle p\rangle$, which avoids the
-\texttt{AdjoinRoot} typeclass-synthesis obstruction noted in the
-companion lab notes.
+quotient form $\mathbb{Q}[X]/\langle p\rangle$, which avoids an
+\texttt{AdjoinRoot} typeclass-synthesis obstruction.
 
 % ═══════════════════════════════════════════════════════════════
 \subsection{Coxeter--Conductor Biconditional (\texttt{CoxeterBiconditional})}
@@ -4840,7 +4840,7 @@ the $SU(3)$ group structure of $F_{21}$ (no free parameters).
 An $L=16$, $\beta=6.0$ vectorized checkerboard Metropolis simulation with $N=80$
 measurements gives $\sigma_{\rm phys} = 0.18930 \pm 0.00245\,\mathrm{GeV}^2$,
 matching the GTE prediction at $-0.05\%$ ($-0.04\sigma$).
-(\texttt{g13\_sigma\_casimir\_stiffness.py}; commit fe2609e6.)
+(\texttt{g13\_sigma\_casimir\_stiffness.py}.)
 All neighboring Casimir ratios are excluded at $>8\sigma$; the formula is unique
 in the GTE atom pool.
 
@@ -5350,6 +5350,50 @@ The GTE WolframModel causal graph at depth 10 has exactly 1023 nodes,
 height 10, and 1024 leaves.
 \end{theorem}
 
+\subsection{MDL Three-Level Unification (\texttt{Polynomial.MDLThreeLevelUnification})}\label{subsec:mdl-three-level}
+
+The \texttt{Polynomial/MDLThreeLevelUnification.lean} module (2 theorems, zero
+\lstinline|sorry|) is a cross-module bundle certifying that the MDL principle
+$P^\top(X) = \arg\min K(x \mid \mathrm{PSC\ constraints})$ operates at three
+nested physical levels, with the GTE polynomial $p$ as the connecting object
+(Paper~P51): theory selection (the rule $p$ from the $\mathbb{Z}_N \times
+\mathbb{Z}_M$ CA rule space), field dynamics (the SRRG self-referential fixed
+point), and quantum event adjudication (the PSC-projected measurement orbit).
+
+\begin{theorem}[\lstinline|mdl_three_level_unification|, zero \texttt{sorry}]
+The three-level bundle holds:
+\begin{enumerate}[nosep]
+\item \textbf{Theory selection.} MDL selects the
+  $\mathbb{Z}_7\times\mathbb{Z}_3$ CA substrate over
+  $\mathbb{Z}_5\times\mathbb{Z}_3$: there is a data-penalty assignment
+  $K_{\mathrm{data}}$ with
+  $\mathrm{structureSpecCost}(7,3) + K_{\mathrm{data}}(7,3) <
+   \mathrm{structureSpecCost}(5,3) + K_{\mathrm{data}}(5,3)$
+  (\lstinline|mdl_ca_rule_coding_closed|).
+\item \textbf{Field dynamics.} The diagonal self-referential fixed point
+  satisfies the master quadratic $x^2 + x = 1$ at
+  $x = (\sqrt{5}-1)/2$ (\lstinline|gte_poly_srrg_bridge|).
+\item \textbf{PSC cross-link.} The PSC-projection of $p$ defines
+  $f_{\mathrm{MDL}}$: non-fixed neighbourhoods project to $0$, and $p$
+  agrees with $f_{\mathrm{MDL}}$ on the binary sublayer
+  (\lstinline|psc_projection_gives_fmdl|).
+\item \textbf{Measurement orbit.} The PSC-projection orbit
+  ${\rm gen}_1 \to {\rm gen}_2 \to {\rm gen}_3 \to {\rm vacuum}$ is the
+  unique PSC trajectory under \lstinline|fmdl_step5|
+  (\lstinline|fmdl_orbit_is_unique_psc_trajectory|).
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[\lstinline|mdl_level23_closed_choice_forces_transputation|, zero \texttt{sorry}]
+Under PSC closure and record-divergent choice, an internal adjudicator
+(transputation) is forced.  This is a direct wrapper of the
+\texttt{transputation-lean} theorem
+\lstinline|closed_choice_forces_transputation|, re-exported in the
+\texttt{ugp-lean} context so that the measurement-level transition of the
+three-level unification carries a machine-checked adjudication-forcing
+certificate (hypothesis-bearing via the imported premise bundle).
+\end{theorem}
+
 \subsection{SM Orbit Causal Isolation (\texttt{SMOrbitCausalIsolation})}\label{subsec:sm-orbit-causal}
 
 The \texttt{SMOrbitCausalIsolation} module (211 lines, 6 items) synthesizes results
@@ -5695,7 +5739,7 @@ full matrix \texttt{EffectMeasure} instantiation is completed in
 Module: \texttt{Universality/PSCEffectMeasure.lean} (
 zero \lstinline|sorry|, \textbf{conditional CatAL}: zero private axioms plus
 one imported axiom \lstinline|re_trace_psd_mul_psd_nonneg| from nems-lean,
-discharged via \texttt{PSCEffectMeasureGeneric.lean}, commit 648cba7).
+discharged via \texttt{PSCEffectMeasureGeneric.lean}).
 
 Constructive B2 bridge: given \lstinline|BeableAmplitudeHypothesis|, the
 rank-one Born density $\rho_\alpha = |\alpha\rangle\langle\alpha|$ on
@@ -5704,7 +5748,7 @@ $\mu_\alpha(E) = \mathrm{Re}\,\mathrm{Tr}(\rho_\alpha E)$.
 The module previously carried seven private kernel-workaround axioms for matrix
 operations at dimension $7^5$ (PSD/trace lemmas, opaque sector projectors,
 effect-one normalization); all have been discharged via parametric proofs over
-\texttt{Fin n} in \texttt{PSCEffectMeasureGeneric.lean} (commit 648cba7).
+\texttt{Fin n} in \texttt{PSCEffectMeasureGeneric.lean}.
 
 \begin{theorem}[\lstinline|psc_fmdl_implies_effect_measure|, conditional CatAL, zero \texttt{sorry}]
 For every \lstinline|BeableAmplitudeHypothesis| $h$, there exists
@@ -6265,7 +6309,7 @@ Honest scope: axiom S1 (orbit-space phase closure) is a conditional
 assumption; one step-4 gap remains before full unconditional certification.
 
 \subsection{$F_{21}$ Physics, Hadron Spectroscopy,
-  and Mass Gap — §§5i–9}\label{subsec:session6-physics}
+  and Mass Gap — §§5i–9}\label{subsec:f21-physics}
 
 Module: \texttt{Universality/SylowIndexCouplingHierarchy.lean}
 (canonical library; all theorems zero sorry; standard axioms only:
@@ -6322,7 +6366,7 @@ the \gte{} substrate.
   (all zero sorry, canonical library).
   §5r certifies the JP\,=\,1$^-$ vector meson nonet mechanism (structural CatAL);
   the 3.2\% RMS numerical mass bound remains CatA.}
-\label{tab:sylow-session6}
+\label{tab:sylow-f21}
 \end{table}
 
 Selected physical significance:
@@ -6982,8 +7026,10 @@ formalization, covering holographic state counting, the single-polynomial
 charge map with tape-role asymmetry, SU(3) gluon structure, baryon number, chiral
 reflection symmetry, SRRG--CA bridge, Gorard vacuum Ricci-flatness, and the
 $\mathfrak{so}(1,3)$ commutation algebra.  Companion infrastructure for Minkowski
-space and spinor exchange lives in \texttt{ugp-physics-lean}
-(\lstinline|UgpPhysicsLean.Lorentzian|).
+space and spinor exchange now lives in \texttt{ugp-lean} as
+\lstinline|UgpLean.Gravity| (\lstinline|MinkowskiSpace|, \lstinline|SpinorRep|,
+\lstinline|WaldEntropy|); these modules were moved from \texttt{ugp-physics-lean}
+to eliminate the cyclic Lake dependency between the two repositories.
 
 \begin{table}[h]
 \centering\footnotesize
@@ -8552,7 +8598,7 @@ are deferred and documented separately.
 \subsection{Theorem inventory: foundational completions}\label{subsec:new-theorem-inventory-083}
 
 The following theorems span four modules:
-\texttt{Gravity/Z7AnomalyFree.lean} (G08 session) formalises the $\mathbb{Z}_7$ global
+\texttt{Gravity/Z7AnomalyFree.lean} formalises the $\mathbb{Z}_7$ global
 scalar anomaly-free argument at the Lebesgue-measure level;
 \texttt{ContinuumLimit/GorardVacuumW1Bridge.lean} closes the Gorard ORIC
 axiom for all adjacent vacuum edges via an explicit Wasserstein-1 calculation;
@@ -8841,6 +8887,246 @@ equal sector distribution from $\mathbb{Z}_7$ group transitivity
 \texttt{z7\_symmetry\_forces\_equal\_sector\_action}).
 The equal-sector-distribution step follows from $\mathbb{Z}_7$ group transitivity
 alone --- no dilute instanton gas approximation is required.
+
+% ═══════════════════════════════════════════════════════════════
+\subsection{New algebraic certificates (EPIC\_088)}\label{subsec:epic-088}
+% ═══════════════════════════════════════════════════════════════
+
+These certificates arise from the EPIC\_088 breakthrough-search programme,
+spanning GTE polynomial structure, the gauge-coupling sector,
+cosmological constant structure, and the $N_{\mathrm{gen}}$
+bracket-orientation theorem.
+This section covers \textbf{69} net-new zero-\texttt{sorry} theorems across twelve
+modules, plus one module with partial certifications awaiting kernel-budget
+resolution.
+The wave formalises the diagonal fixed-point structure of the GTE polynomial,
+the Eisenstein and cyclotomic arithmetic of the GTE integer constants, the full
+dynamical-zeta classification of the seven-ring orbit, the $\mathbb{Z}_7$
+vacuum-selection mechanism with its gauge-coupling hierarchy, the algebraic
+cores of the kink-sector physical observables, and the biquadratic-compositum
+unification of the two master rings.
+
+\paragraph{Golden quadratic and diagonal fixed points
+  (\texttt{Polynomial/\allowbreak GoldenQuadratic}).}
+Nine \CatAL\ theorems certify the diagonal self-consistency structure
+$p(x,x,x)-x = -x(x^2+x-1)$ over any commutative ring
+(\texttt{gte\_diagonal\_quadratic\_factorization}),
+the rootlessness of $m(x)=x^2+x-1$ in $\mathbb{F}_7$ via the
+$N_{\mathrm{fam}}=5$ quadratic-non-residue condition
+(\texttt{disc5\_dichotomy\_gf7}),
+the SRRG--floor duality bundle unifying $1/\varphi$ (archimedean fiber) with
+the Rule~110 binary floor (\texttt{golden\_floor\_duality\_bundle}),
+7-adic inertness through all $7^k$
+(\texttt{master\_quadratic\_no\_root\_mod\_seven\_pow}),
+the all-prime dichotomy via quadratic reciprocity
+(\texttt{master\_quadratic\_split\_iff\_qr5}),
+singleton-invariance classification
+(\texttt{golden\_singleton\_invariant\_iff\_diag\_fixed}),
+the $q{=}5$ ramification deriving the $\mathbb{F}_5$ ballistic pathology
+(\texttt{second\_floor\_iff\_ramified}),
+Frobenius swap of the two $\mathbb{F}_{49}$ roots
+(\texttt{gf49\_golden\_roots\_frobenius\_swap}),
+and the Pisano period $\pi(7)=16$
+(\texttt{pisano\_seven\_eq\_sixteen}).
+
+\paragraph{Eisenstein arithmetic and $F_{21}$ residue field
+  (\texttt{Polynomial/\allowbreak EisensteinIdentities}).}
+Seven \CatAL\ theorems certify $c_H = \Phi_3(N_{\mathrm{gen}}) =
+\Phi_6(N_{\mathrm{gen}}{+}1) = 13$
+(\texttt{c\_H\_eq\_phi3\_ngen}),
+the Eisenstein norm-product $|F_{21}|=\Phi_6(2)\Phi_6(3)$
+(\texttt{f21\_order\_eisenstein\_norm\_product}),
+the residue-field isomorphism $F_{21}\cong(\mathbb{Z}[\omega]/(3{+}\omega))^+
+\rtimes\mu_3$ via an explicit \texttt{decide}-verified group model
+(\texttt{f21\_eisenstein\_residue\_model}),
+$p$-torus semi-invariance
+(\texttt{poly\_p\_torus\_equivariance}),
+the $\Phi_6(q)$-count orbit decomposition $|V(p)\cap\mathbb{F}_7^3|=43$
+with unique ether point (\texttt{poly\_p\_variety\_orbit\_decomposition\_gf7}),
+and the four-identity $\Phi_6$ ladder web including the cyclotomic uniqueness
+$\Phi_3(n)=(n^3{-}1)/2\iff n=3$ at $N_{\mathrm{gen}}=3$
+(\texttt{phi6\_identity\_bundle}, \texttt{cH\_phi3\_unique\_at\_ngen}).
+
+\paragraph{Dynamical zeta and period-475 orbit
+  (\texttt{Polynomial/\allowbreak DynamicalZeta}).}
+Nineteen \CatAL\ theorems certify the vacuum-uniqueness chain
+$\mathrm{Fix}(T_n)=\{0^n\}$ for all $n\ge 1$ via local factorisation, the
+golden Möbius 8-cycle on $\mathbb{P}^1(\mathbb{F}_7)$, and pole-within-6
+refutation (\texttt{vacuum\_unique\_temporal\_fixed\_point\_ring} together with
+the supporting \texttt{fixed\_point\_local\_factorization},
+\texttt{golden\_moebius\_single\_eight\_cycle\_gf7},
+\texttt{fibonacci\_matrix\_order\_sixteen\_gf7}, and related theorems);
+the prime-ring shift-equivariance dichotomy
+(\texttt{prime\_ring\_cycle\_dichotomy\_bundle});
+the period-475 spectral facts $T^{95}=\sigma^3$ exact, return-map order~19,
+zero per-cell mean, and $\sigma$-invariant gauge-observable period~95
+(\texttt{t95\_eq\_sigma3\_on\_period475\_cycle},
+\texttt{period475\_drift\_cancelled\_return\_order\_nineteen},
+\texttt{period475\_gauge\_observable\_e1\_period\_95} and companions).
+Five named results carry \textbf{PARTIAL} status pending kernel-budget
+resolution: the de~Bruijn trace identity, spatial zeta, full $e_{2..5}$ gauge
+observables, and linearisation charpoly fold.
+
+\paragraph{$\mathbb{Z}_7$ vacuum selection and gauge-coupling hierarchy
+  (\texttt{Physics/\allowbreak ZSevenVacuumSelection},
+  \texttt{Universality/\allowbreak SylowIndexCouplingHierarchy}).}
+Fourteen \CatAL\ theorems certify the vacuum-selection mechanism and
+coupling-hierarchy arithmetic.
+\texttt{ZSevenVacuumSelection} formalises: $V_{\mathrm{coupling}}$
+$\mathbb{Z}_7$-shift-breaking (\texttt{vcoupling\_breaks\_z7\_shift}),
+strict $\chi$-kinetic inequivalence across all seven vacua
+(\texttt{z7\_vacua\_chi\_kinetic\_inequivalent}),
+unique bias minimum at $k{=}0$ (\texttt{wall\_bias\_minimum\_unique}),
+ground-state $\mathbb{Z}_3$-orbit transversal
+(\texttt{gs\_set\_is\_z3\_orbit\_transversal}),
+BPS-window discriminator (\texttt{vcoup\_periodic\_profile\_fails\_bps\_window}),
+compact-completion minimum at $k{=}0$
+(\texttt{compact\_completion\_minimum\_at\_k0}),
+inward Coleman--Weinberg direction (\texttt{scalar\_cw\_step\_inward}),
+seam-discontinuity witness, and boundary-sensitivity positivity.
+\texttt{SylowIndexCouplingHierarchy} certifies the Sylow-family
+neighbor-null establishing $e^2=7/2$ as uniquely closest
+(\texttt{sylow\_family\_pdg\_match\_unique\_closest}) and the thermal
+leading-order dominance $3e^2>g^2$
+(\texttt{thermal\_leading\_inward\_dominance}).
+
+\paragraph{Kink physics algebraic cores
+  (\texttt{Physics/\allowbreak KinkVacuumPolarization},
+  \texttt{KinkFormFactor}, \texttt{BurnsideCosetCharges},
+  \texttt{Universality/\allowbreak HeatKernelContactTerms},
+  \texttt{LambdaGTEThreshold}).}
+Eleven \CatAL\ theorems certify the arithmetic and inequality skeletons of
+five kink-sector physical observables.
+\texttt{KinkVacuumPolarization}: Cartan-weight $t_{\mathrm{kink}}=3$ computation,
+continuity identity $\hat{b}=-4=7-11$ linking to the $\mathbb{Z}_7$ order,
+rational-log constant $c^{S^1,\mathrm{tree}}=8\ln(8/7)$, and positivity
+inequality $m_\phi<e^{\gamma/2}\Lambda_{\mathrm{GTE}}$
+(\texttt{kink\_vacuum\_polarization\_algebraic\_core} bundle).
+\texttt{KinkFormFactor}: sech-profile moment bundle including the $r_{\mathrm{top}}/r_{\mathrm{born}}=\sqrt{3}$ ratio and BA-SHAPE autocorrelation, plus the
+dissolution Born floor $b\le 2.51/2.53$ (tree/pole readings)
+(\texttt{sech\_form\_factor\_moment\_bundle}, \texttt{kink\_dissolution\_born\_floor}).
+\texttt{BurnsideCosetCharges}: coset-charge spectrum $t_V=3$,
+$c_{\mathrm{coset}}=-1$ rational root-system skeleton.
+\texttt{HeatKernelContactTerms}: contact-term difference $(N^2{-}3)/(24N)=1/12$
+at $N=3$, $\mathfrak{su}(N)$ trace and Killing identities.
+\texttt{LambdaGTEThreshold}: $\Lambda_{\mathrm{GTE}}=(8/7)m_\tau$, multiplier
+minimality (7 is the least $\mathbb{Z}_7$-neutral chain length), $\mathbb{Z}_7$
+coset residues $=\{\pm1,\pm2,\pm3\}$, and slope-continuity $7=11-4$.
+One module carries \textbf{PARTIAL} status: \texttt{KinkPoleMassSpectralCore}
+certifies the Pöschl--Teller autocorrelation at $s{=}0$, Levinson identity,
+spectral sum rule, dim-reg channel value, and $\Gamma(-3/2)=4\sqrt{\pi}/3$
+as definitional values; full Mathlib integral proofs are deferred.
+
+\paragraph{Ground-space rigidity for arbitrary ring length
+  (\texttt{Polynomial/\allowbreak SpinSevenGroundSpace}).}
+Eight \CatAL\ theorems (zero sorry, zero custom axioms) certify the spin-7
+ring ground-space rigidity theorem for \emph{every} ring length $n \ge 3$:
+the cyclic zero-energy configurations of the spin-7 chain --- assignments
+$(s_0,\dots,s_{n-1}) \in \mathbb{F}_7^n$ with $p(s_{i-1},s_i,s_{i+1}) = 0$
+at every site --- are exactly the three uniform assemblies
+$\{0^n, 1^n, 5^n\}$
+(\texttt{gte\_ring\_ground\_states\_uniform\_general}).
+The zero-energy condition $p=0$ is distinct from the temporal fixed-point
+condition $p = s_i$ classified in \texttt{DynamicalZeta}; the two conditions
+induce different pair digraphs and different rigidity sets
+($\{0^n,1^n,5^n\}$ versus the vacuum-only $\{0^n\}$).
+The proof is structural rather than per-length: a zero-energy window
+determines its right cell from the left pair, so zero-energy triples define
+a deterministic successor function on the $43$ active pair states of
+$\mathbb{F}_7\times\mathbb{F}_7$; \texttt{native\_decide} certifies that the
+only directed cycles of this pair digraph are the three uniform self-loops
+$(0,0)$, $(1,1)$, $(5,5)$
+(\texttt{zero\_energy\_active\_pair\_only\_uniform\_cycles}).
+A cyclic length-$n$ configuration induces a closed walk of length $n$; the
+minimal-period bound $\mathrm{minimalPeriod} \le |\mathbb{F}_7^2| = 49$
+pigeonholes the return into the certified window, forcing one of the three
+uniform loops, and any zero cell propagates around the ring to the vacuum
+$0^n$ (\texttt{zero\_energy\_any\_zero\_forces\_all\_zero}).
+The converse --- each uniform ground assembly has zero energy at every
+site --- and the per-length corollaries for $3 \le n \le 7$ are packaged in
+\texttt{gte\_ring\_ground\_states\_uniform\_bundle} and
+\texttt{gte\_ring\_ground\_states\_uniform}, both delegating to the general
+theorem.
+
+\paragraph{Retrospective closures: biquadratic compositum and AGL chiral
+  $\mathbb{Z}_2$
+  (\texttt{Polynomial/\allowbreak BiquadraticCompositum},
+   \texttt{Polynomial/\allowbreak AGL17ChiralZ2}).}
+Two additional modules certify synthesis results unifying the two master
+rings.
+\texttt{BiquadraticCompositum} (15~\CatAL): establishes
+$\mathrm{cond}(K)=15=N_{\mathrm{gen}}\cdot N_{\mathrm{fam}}$ for
+$K=\mathbb{Q}(\sqrt{-3},\sqrt{5})$ (\texttt{biquadratic\_conductor\_identity})
+and the Artin-class characterisation --- $q\equiv 7,13\pmod{15}$ iff $q$
+splits in $\mathbb{Z}[\omega]$ (color-sector condition) and is inert in
+$\mathbb{Z}[\varphi]$ (floor-protection condition) --- with minimal class
+prime $7$ and second class prime $c_H=13$ certified by \texttt{decide}.
+\texttt{AGL17ChiralZ2} (7~\CatAL): certifies $|{\rm AGL}(1,7)|=42$
+(\texttt{agl17\_order}), the spatial reflection $s=(6,0)$ of order~2 that
+swaps Rule~110 and Rule~124 on all binary inputs with zero mismatches
+(\texttt{reflection\_swaps\_rules\_verified}), the commuting $\mathbb{Z}_3$
+color action, and the free-orbit cardinality $42=|{\rm AGL}(1,7)|$ as the
+arithmetic mechanism for the unique torus partition of $V(p)$.
+
+Cross-certifications from companion libraries are documented in
+\cref{subsec:cross-repo-certs}: the \texttt{nems-lean} and
+\texttt{transputation-lean} diagonal completeness, no-convergence-modulus,
+and many-one degree theorems (\CatAL) are incorporated there.
+
+\paragraph{CC one-jump residual and $N_{\mathrm{gen}}$ bracket-orientation
+  (\texttt{Physics/\allowbreak CCOneJumpResidual},
+   \texttt{Universality/\allowbreak NgenBracketOrientation}).}
+Two further modules certify the cosmological-constant residual structure
+and the generation-count orientation theorem.
+\texttt{CCOneJumpResidual} (6~\CatAL\ + 1~\textbf{PARTIAL}):
+certifies the census annotation of the realised-ledger residual
+$D_{\mathrm{res}} := (\ln 2/\pi)\cdot L_{\mathrm{PSC}}$ as the left-c.e.\
+computable upper bracket endpoint
+(\texttt{d\_res\_census\_annotation}),
+the strict bracket non-emptiness
+$\Omega_{\mathrm{holo}} < \Omega_{\mathrm{census}}$ with the Planck~2018
+central value strictly in the interior
+(\texttt{omega\_lambda\_bracket\_strict},
+ \texttt{bracket\_strict\_interiority}),
+the no-computable-modulus theorem via reduction to the RT non-computability
+core
+(\texttt{no\_computable\_gte\_rt\_convergence\_modulus}),
+and the falsifiability horizon
+$\sigma^* \in (2.9{\times}10^{-4},\, 4.3{\times}10^{-4})$ requiring
+factor-five improvement over current Planck precision
+(\texttt{sigma\_star\_falsifiability\_horizon}).
+The halting-weighted residual form
+(\texttt{d\_res\_halting\_ledger\_factorization\_core})
+carries \textbf{PARTIAL} status: a finite \texttt{toyLedger} witness is
+certified; the full infinite Form Theorem and $\deg_T = 0'$
+identification are deferred.
+\texttt{NgenBracketOrientation} (5~\CatAL\ + 2~\CatAL~$|$~H1):
+the orientation-flip theorem certifies that the admissible ledger interval
+$[\mathrm{floor}(N),\, \mathrm{census}(N)]$ is empty for all $N \ge 4$
+and non-empty for $N \le 3$
+(\texttt{ngen\_bracket\_orientation\_flip},
+ \texttt{ngen\_bracket\_orientation\_excluded\_from\_four});
+the GTE-atom inequality $14\ln(2000/3) > 9\pi^2$ provides the bracket
+non-emptiness corollary in the atom form
+$2|\mathbb{Z}_7|\ln(D^2 N_{\mathrm{fam}}^3 / N_{\mathrm{gen}}) >
+N_{\mathrm{gen}}^2\pi^2$ at $D{=}4$, $N_{\mathrm{fam}}{=}5$,
+$N_{\mathrm{gen}}{=}3$
+(\texttt{cc\_floor\_orientation\_atom\_inequality},
+ \texttt{cc\_floor\_orientation\_gte\_atom\_form},
+ \texttt{cc\_floor\_orientation\_bracket\_non\_empty});
+and the PI-free pincer combines the PSC Layer~I lower bound
+$N_{\mathrm{gen}} \ge 3$ with the bracket-orientation upper bound
+$N_{\mathrm{gen}} \le 3$ to force $N_{\mathrm{gen}} = 3$ without invoking
+Presentation Invariance, conditional on named hypothesis H1
+(\texttt{ngen\_pincer\_from\_layer1\_and\_orientation},
+ \texttt{ngen\_pincer\_pi\_free\_bundle},
+ \CatAL~$|$~H1).
+The orientation hypothesis H1 is analytically discharged: the floor half
+follows from the Floor Orientation Theorem (the realised ledger cannot
+undercut the MDL-minimal carrier price) and the census half from capacity
+bounds, so the pincer holds unconditionally within the record-ledger
+premise bundle of the One-Jump Residual Theorem.
+
 
 % ═══════════════════════════════════════════════════════════════
 \section{The Mirror-Dual Conjecture}\label{sec:mirror}

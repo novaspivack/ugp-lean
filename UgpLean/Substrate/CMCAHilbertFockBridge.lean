@@ -9,7 +9,7 @@ import UgpLean.Spacetime.MultiParticleHilbert
 import Mathlib.Tactic
 
 /-!
-# G22: CMCA Hilbert Space → Φ_MDL Fock Space Bridge (EPIC_080)
+# G22: CMCA Hilbert Space → Φ_MDL Fock Space Bridge
 
 CatAD structural bridge between finite-tape CMCA ('t Hooft) Hilbert data and the
 Φ_MDL kink Fock space of P42 §5.1.

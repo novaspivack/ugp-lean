@@ -5,15 +5,15 @@ import UgpLean.Spacetime.ColorConfinement
 namespace GTE.Spacetime.SpatialExtension
 
 /-!
-# Spatially Extended Composite Lifting Theorem (Rank 55-3DLT)
+# Spatially Extended Composite Lifting Theorem
 
-Generalizes the 1D ring Composition Theorem (Rank 22-CPT) to spatially separated
+Generalizes the 1D ring Composition Theorem to spatially separated
 composites in the 3+1D f_MDL causal graph. Two PSC-admissible color-charged beables
 at distinct causal nodes, connected by a vacuum inter-particle field along a causal
 path, form a PSC-admissible color-neutral physical bound state — the GTE meson
 configuration.
 
-This theorem closes independently of Rank 17-GEO (Geodesic Theorem): only causal
+This theorem closes independently of the Geodesic Theorem: only causal
 path *existence* and adjacency along the path are required to identify the
 inter-particle vacuum region; geodesic uniqueness is not used.
 
@@ -118,7 +118,7 @@ theorem vacuum_path_psc_admissible
 
 /-- Intermediate nodes on any causal path satisfy vacuum PSC-admissibility.
 
-    In the deep-vacuum meson-thread model (Rank 55-3DLT), inter-particle lattice
+    In the deep-vacuum meson-thread model, inter-particle lattice
     sites host the constant vacuum beable `fmdl_vacuum5`; the proof applies
     `vacuum_psc_admissible` at each intermediate node. The conclusion is intentionally
     constant — not accidental vacuity. -/
@@ -129,7 +129,7 @@ theorem interParticleVacuumField_all
   exact vacuum_psc_admissible
 
 /-- Every causal path is a vacuum path: inter-particle region carries vacuum beables
-    at all intermediate nodes (deep-vacuum thread; Rank 55-3DLT). -/
+    at all intermediate nodes (deep-vacuum thread). -/
 theorem causal_path_is_vacuum_path
     (start finish : CausalNode L T)
     (path : List (CausalNode L T))
@@ -399,7 +399,7 @@ private lemma spacelike_path_exists {L T : ℕ}
     ⟨px, hpx⟩
     (causal_path_trans ⟨py, hpy⟩ ⟨pz, hpz⟩)
 
-/-! ### Light-cone adjacency and minimal geodesic paths (Rank 076-GEO M4) -/
+/-! ### Light-cone adjacency and minimal geodesic paths -/
 
 /-- ℓ₁ spatial distance between two 3D lattice positions. -/
 def spatialL1 {L : ℕ} (a b : Fin L × Fin L × Fin L) : ℕ :=
@@ -596,7 +596,7 @@ private lemma spatialL1_eq_zero_iff {L : ℕ} (a b : Fin L × Fin L × Fin L) :
     subst h
     simp [spatialL1]
 
-/-- Minimal-hop causal path between forward-causal endpoints (Rank 076-GEO M4).
+/-- Minimal-hop causal path between forward-causal endpoints.
 
     Hop count is `max(spatialL1, Δt)`; path length is that plus one.
     When `spatialL1 > Δt`, a spacelike preamble at the start time is used;
@@ -690,7 +690,7 @@ private lemma minimal_geodesic_path_spec {L T : ℕ}
           obtain ⟨path, hp, hlen⟩ := ih cur' hle' hm'
           refine ⟨cur :: path, is_causal_path_cons_step (timelike_adj_fwd cur ht) hp, by simp [hlen]⟩
 
-/-- **Minimal causal path for forward-causal pairs** (Rank 076-GEO M4, CatAL).
+/-- **Minimal causal path for forward-causal pairs** (CatAL).
 
     Constructs a length-minimal causal path between `start` and `finish` when
     `start.1 ≤ finish.1`.  Hop count is `max(spatialL1, Δt)`.
@@ -760,7 +760,7 @@ theorem causal_path_length_ge_max {L T : ℕ}
   simp only [causalReachMetric] at hlen
   exact hlen
 
-/-- **Causal path existence for forward-causal pairs** (Rank 143-PATH-AXIOM).
+/-- **Causal path existence for forward-causal pairs**.
 
     For any two causal nodes `a` and `b` with `a.1 ≤ b.1` (forward or equal time),
     a causal path from `a` to `b` exists.
@@ -819,7 +819,7 @@ theorem composition_from_spatial_extension
 -- §6  Main theorem: Spatially Extended Composite Lifting
 -- ─────────────────────────────────────────────────────────────────────────────
 
-/-- **Spatially Extended Composite Lifting Theorem** (Rank 55-3DLT).
+/-- **Spatially Extended Composite Lifting Theorem**.
 
     Two PSC-admissible color-charged beables at distinct causal-graph nodes,
     connected by a vacuum inter-particle field and satisfying total color
@@ -832,7 +832,7 @@ theorem composition_from_spatial_extension
     4. Color neutrality (hypothesis).
     5. Conclude `PhysicalBoundState` via `composition_from_spatial_extension`.
 
-    Independent of Rank 17-GEO: uses causal path adjacency only, not geodesic
+    Independent of the Geodesic Theorem: uses causal path adjacency only, not geodesic
     uniqueness.
 
     Status: CatAL — zero sorry, zero custom axioms. -/
@@ -957,7 +957,7 @@ theorem spatial_composition_lifts
   ⟨particle_lifts_independently c.beableA h_spatial.1 hP,
    particle_lifts_independently c.beableB h_spatial.2.1 hP⟩
 
-/-- **PSCPreserving for spatial composites** (Rank 076-GEO-CATAL M4, CatAL).
+/-- **PSCPreserving for spatial composites** (CatAL).
 
     PSC-admissible spatial composites remain PSC-admissible on both constituents
     after one `fmdl_step5` evolution step.  Component-wise application of

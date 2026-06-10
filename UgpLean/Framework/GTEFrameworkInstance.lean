@@ -267,7 +267,7 @@ instance GTEDiagonalCapable : DiagonalCapable GTEFramework where
 -- ────────────────────────────────────────────────────────────────────────────
 
 /-- **C3 TPC Completeness — real proof via NEMS `transputation_classification`**
-    (SPEC_236_GTF, Rank 236-GTF).
+.
 
     Under GTE's PSCBundle and DiagonalCapable instance, `transputation_classification`
     forces GTE into the non-categorical, transputational branch:

@@ -5,7 +5,7 @@ import UgpLean.Spacetime.ColorConfinement
 namespace GTE.Universality.AlgebraicDescent
 
 /-!
-# The Algebraic Descent Theorem (Rank 135-ALDESC)
+# The Algebraic Descent Theorem
 
 **Theorem:** Algebraic properties of Φ_MDL that depend only on the F_21 = Z₇ ⋊ Z₃
 internal symmetry structure hold for the discrete model f_MDL = Φ_MDL|_{M,binary}
@@ -27,10 +27,10 @@ results (Ranks 15–25, 108–117) and shows they carry no resolution parameter.
 | `psc_admissibility_preserved_by_digitization` | CatAL — identity map preserves predicate |
 | `psc_admissibility_no_resolution_parameter` | CatAL — exposes definition, zero sorry |
 | `f21_orbit_structure_m_independent` | CatAL — cites SylowIndex constants |
-| `confinement_m_independent` | CatAL — cites Rank 25-CCF |
-| `three_generations_m_independent` | CatAL — cites Rank 21-3GP via LiftingTheorem |
-| `asymptotic_freedom_m_independent` | CatAL — cites Rank 117-AFRGCHECK |
-| `strong_cp_m_independent` | CatAL — cites Rank 109-STRONGCP |
+| `confinement_m_independent` | CatAL — cites `no_psc_admissible_single_quark` |
+| `three_generations_m_independent` | CatAL — cites `three_generations_physical` via LiftingTheorem |
+| `asymptotic_freedom_m_independent` | CatAL — cites the F₂₁ one-loop β certificate |
+| `strong_cp_m_independent` | CatAL — cites `f21_theta_term_vanishes` |
 | `casimirs_m_independent` | CatAL — cites Rank 108 Frobenius Casimirs |
 | `algebraic_descent_theorem` | CatAL — bundles cited theorems, zero sorry |
 | `sr_accuracy_depends_on_M` | CatAL — Nyquist denominator M-dependent, positive |
@@ -97,11 +97,11 @@ theorem f21_orbit_structure_m_independent :
   ⟨rfl, rfl⟩
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- §3  Color confinement is M-independent (Rank 25-CCF)
+-- §3  Color confinement is M-independent
 -- ─────────────────────────────────────────────────────────────────────────────
 
 /-- Color confinement at the algebraic level: no PSC-admissible beable is a
-    single-quark state. Cites `no_psc_admissible_single_quark` (Rank 25-CCF,
+    single-quark state. Cites `no_psc_admissible_single_quark` (
     CatAL, native_decide over 7⁵ states). The proof uses only `PSCAdmissible`
     on `(Fin 5 → Fin 7)` — no resolution parameter. -/
 theorem confinement_m_independent (b : Fin 5 → Fin 7) (h : PSCAdmissible b) :
@@ -109,18 +109,18 @@ theorem confinement_m_independent (b : Fin 5 → Fin 7) (h : PSCAdmissible b) :
   no_psc_admissible_single_quark b h
 
 /-- No [D]-weighted physical beable is a free single quark — confinement at
-    Compton scale, obtained by composing Rank 25-CCF with D2. -/
+    Compton scale, obtained by composing the confinement certificate with D2. -/
 theorem confinement_m_independent_physical (b : Fin 5 → Fin 7) (h : DWeight b > 0) :
     ¬SingleQuarkBeable b :=
   no_physical_single_quark b h
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- §4  Three generations is M-independent (Rank 21-3GP)
+-- §4  Three generations is M-independent
 -- ─────────────────────────────────────────────────────────────────────────────
 
 /-- Three distinct non-vacuum PSC-admissible generation seeds with nonzero
     [D]-weight, forming the period-3 orbit gen₁ → gen₂ → gen₃ → vacuum.
-    Cites `three_generations_physical` (Rank 21-3GP, CatAL). -/
+    Cites `three_generations_physical` (CatAL). -/
 theorem three_generations_m_independent :
     ∃ g1 g2 g3 : Fin 5 → Fin 7,
       g1 ≠ g2 ∧ g2 ≠ g3 ∧ g1 ≠ g3 ∧
@@ -129,7 +129,7 @@ theorem three_generations_m_independent :
   three_generations_physical
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- §5  Asymptotic freedom b₀ = 7 is M-independent (Rank 117-AFRGCHECK)
+-- §5  Asymptotic freedom b₀ = 7 is M-independent
 -- ─────────────────────────────────────────────────────────────────────────────
 
 /-- The one-loop QCD β-function coefficient b₀ = 7 from F_21 representation
@@ -148,11 +148,11 @@ theorem asymptotic_freedom_positive :
   f21_substrate_asymptotic_freedom
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- §6  Strong CP θ = 0 is M-independent (Rank 109-STRONGCP)
+-- §6  Strong CP θ = 0 is M-independent
 -- ─────────────────────────────────────────────────────────────────────────────
 
 /-- Strong CP resolution: F_21 gauge theory has no topological θ term.
-    Cites `f21_theta_term_vanishes` (Rank 109-STRONGCP, CatAL).
+    Cites `f21_theta_term_vanishes` (CatAL).
 
     The homotopy argument π₃(F_21) = 0 for the finite group F_21 is documented
     in SylowIndexCouplingHierarchy §5k; the Lean certificate covers the
@@ -166,7 +166,7 @@ theorem strong_cp_m_independent :
   f21_theta_term_vanishes
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- §7  Casimir invariants are M-independent (Rank 108)
+-- §7  Casimir invariants are M-independent
 -- ─────────────────────────────────────────────────────────────────────────────
 
 /-- SU(3) Casimir invariants from the F_21 faithful 3-irrep.
@@ -183,7 +183,7 @@ theorem casimirs_m_independent :
 -- §8  Main theorem: The Algebraic Descent Theorem
 -- ─────────────────────────────────────────────────────────────────────────────
 
-/-- **The Algebraic Descent Theorem (Rank 135-ALDESC)**
+/-- **The Algebraic Descent Theorem**
 
     The digitization map preserves all F_21 algebraic structure because:
     (A) Z₇ labels are `Fin 7` in both discrete and continuous descriptions;

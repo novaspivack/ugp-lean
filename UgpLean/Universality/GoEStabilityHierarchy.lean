@@ -218,7 +218,7 @@ theorem fmdl_gen1_all_rotations_no_predecessor :
   native_decide
 
 -- ════════════════════════════════════════════════════════════════
--- §7  GTP-3 Uniqueness — SM orbit as unique GoE-rooted 3-chain (Rank 23)
+-- §7  GTP-3 Uniqueness — SM orbit as unique GoE-rooted 3-chain
 -- ════════════════════════════════════════════════════════════════
 
 /-!
@@ -299,7 +299,7 @@ theorem fmdl_no_gtp4 :
   native_decide
 
 -- ════════════════════════════════════════════════════════════════
--- §8  CA-Level Lepton Universality (Rank 26)
+-- §8  CA-Level Lepton Universality
 -- ════════════════════════════════════════════════════════════════
 
 /-!
@@ -368,7 +368,7 @@ theorem fmdl_no_generation_shortcut :
    fun s hs => (fmdl_gen2_unique_predecessor s).mp hs⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §9  GTP-3 Z₇-Sum Trajectory Uniqueness (Rank 38)
+-- §9  GTP-3 Z₇-Sum Trajectory Uniqueness
 -- ════════════════════════════════════════════════════════════════
 
 

@@ -5,7 +5,7 @@ import Mathlib.Tactic
 import UgpLean.Substrate.GEQECCode
 
 /-!
-# GTE Generation Orbit Vectors as RS Codewords (EPIC_078 / OQ-QG-9)
+# GTE Generation Orbit Vectors as RS Codewords
 
 Certifies that the three GTE generation orbit vectors over GF(7), evaluated at the
 PSC-admissible winding classes `{0, 2, 3, 4, 6}`, are codewords of the `[5, 3, 3]₇`

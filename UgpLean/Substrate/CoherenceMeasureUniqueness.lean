@@ -12,7 +12,7 @@ import UgpLean.Universality.GUTStructure
 import UgpLean.Universality.PhiMDLThermalState
 
 /-!
-# Coherence Measure Uniqueness — Rank C2-LEAN-CONDITIONAL (EPIC_074)
+# Coherence Measure Uniqueness — Rank C2-LEAN-CONDITIONAL
 
 Lean certification of the P34 Conjecture C2 **structural reduction** on the Φ_MDL substrate:
 

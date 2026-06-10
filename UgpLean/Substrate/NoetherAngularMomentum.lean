@@ -3,7 +3,7 @@ import UgpLean.Algebra.PolynomialContinuumBridge
 import Mathlib.LinearAlgebra.CrossProduct
 
 /-!
-# Noether Angular Momentum — Rank 280-NTH Phase 2 (CatAL)
+# Noether Angular Momentum (CatAL)
 
 Lean certification that the continuum Φ_MDL Klein–Gordon Lagrangian carries a conserved
 angular-momentum 3-vector via Noether's theorem for the SO(3) rotation subgroup of O(1,3).
@@ -378,7 +378,7 @@ theorem noether_so3_angular_momentum_conserved (sr : SpatialRotation) (cfg : KGC
     And.intro (stress_energy_symmetric cfg 1 2) <|
       And.intro (noether_current_vanishes_on_killing cfg) (angular_momentum_cross_product x cfg)
 
-/-- **phimdl_angular_momentum_conserved** (CatAD structural, EPIC_080 G35):
+/-- **phimdl_angular_momentum_conserved** (CatAD structural):
 
     The Φ_MDL Lagrangian ℒ = ½(∂Φ)² − V_{Z₇}(Φ) is rotationally invariant because
     V_{Z₇}(Φ) = (m²/49)(1 − cos(7Φ)) depends only on the scalar field Φ, not on spatial

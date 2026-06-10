@@ -2,7 +2,7 @@ import UgpLean.Universality.GUTStructure
 import Mathlib.Analysis.Real.Pi.Bounds
 
 /-!
-# UgpLean.Universality.EWScalePrediction — EW Absolute Scale from GTE (Rank 158-EWS)
+# UgpLean.Universality.EWScalePrediction — EW Absolute Scale from GTE
 
 Certifies the Schwinger–SM vacuum-scale identity and tree-level W/Z mass ratios in units
 of the Higgs VEV, chained to existing GUTStructure CatAL anchors:

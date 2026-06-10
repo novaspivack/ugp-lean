@@ -3,7 +3,7 @@ import Mathlib.Data.Finset.Basic
 import UgpLean.Universality.PhiMDLThermalState
 
 /-!
-# GTE QEC Reed–Solomon Code Identification (EPIC_078 SPEC_078_006)
+# GTE QEC Reed–Solomon Code Identification
 
 Certifies that the PSC-admissible Z₇ winding sectors `{0,2,3,4,6} ⊂ GF(7)` are exactly
 the five evaluation points of a `[7,5,3]₇` Reed–Solomon code: length `n = |GF(7)| = 7`,

@@ -20,7 +20,7 @@ Each non-vacuum generation beable carries exactly one **generic-sector** 3-cell 
 Two-equal F₂₁-orbit canonical representatives on Z₇³ are disjoint from the PSC
 generic windows. Hence degenerate F₂₁ orbits are not PSC-selected for the
 log|F₂₁| MDL weight — they receive the Z₃-reduced log|Z₇| contribution instead
-(OQ-G1-MECHANISM-FORMAL, CatAD; disjointness in `Z3SubOrbitDisjointness`).
+.
 -/
 
 /-- A 3-cell window is generic-sector: all three components distinct. -/

@@ -4,7 +4,7 @@ import Mathlib.Tactic
 import UgpLean.QFT.GaugedMassGap
 
 /-!
-# Chiral Symmetry Breaking in the GTE Φ_MDL Substrate (Rank 145-CHIRALSSB)
+# Chiral Symmetry Breaking in the GTE Φ_MDL Substrate
 
 This module formalises the structural claim that the GTE pion is a
 pseudo-Nambu-Goldstone boson (PNGB) arising from spontaneous chiral symmetry
@@ -25,7 +25,7 @@ the structural content:
    exactly 3 Goldstone bosons.
 4. `gte_pion_is_pseudo_ngb`: Conjunction certifying all PNGB properties.
 
-## Categorisation (Rank 145-CHIRALSSB, CatAL)
+## Categorisation (CatAL)
 
 Zero sorry, zero axioms beyond `[propext, Classical.choice, Quot.sound]`.
 The physical GOR formula enters as a definitional equation, not an axiom:
@@ -55,7 +55,7 @@ noncomputable def gor_kaon_mass (B0 m_u m_s : ℝ) : ℝ :=
 
 /-! ## Theorem 1: Chiral limit — pion is massless -/
 
-/-- **Chiral limit: the pion is an exact Goldstone boson (Rank 145-CHIRALSSB, CatAL).**
+/-- **Chiral limit: the pion is an exact Goldstone boson (CatAL).**
 
     When both light quark masses vanish (chiral limit m_u = m_d = 0),
     the GOR pion mass is exactly zero.  This is the defining signature of
@@ -127,7 +127,7 @@ theorem su3_equal_mass_pion_kaon_degenerate (B0 m : ℝ) (hB0 : 0 < B0) (hm : 0 
 
 /-! ## Main conjunction: GTE pion is a pseudo-NGB -/
 
-/-- **GTE pion is a pseudo-Nambu-Goldstone boson (Rank 145-CHIRALSSB, CatAL).**
+/-- **GTE pion is a pseudo-Nambu-Goldstone boson (CatAL).**
 
     This theorem is the conjunction of all four PNGB properties:
     (A) Chiral limit m_π → 0 (exact NGB at m_q = 0).
@@ -155,23 +155,23 @@ theorem gte_pion_is_pseudo_ngb (B0 m_u m_d : ℝ)
 
 /-! ## GTE canonical instance -/
 
-/-- GTE canonical chiral condensate B₀_NLO = 2727 MeV (from Rank 134-NLO-B0). -/
+/-- GTE canonical chiral condensate B₀_NLO = 2727 MeV. -/
 noncomputable def B0_NLO_MeV : ℝ := 2727
 
-/-- GTE up-quark mass = 2.16 MeV (from Rank 128-QUARKMASS). -/
+/-- GTE up-quark mass = 2.16 MeV. -/
 noncomputable def m_u_GTE_MeV : ℝ := 2.16
 
-/-- GTE down-quark mass = 4.67 MeV (from Rank 128-QUARKMASS). -/
+/-- GTE down-quark mass = 4.67 MeV. -/
 noncomputable def m_d_GTE_MeV : ℝ := 4.67
 
-/-- GTE strange-quark mass = 93.40 MeV (from Rank 128-QUARKMASS). -/
+/-- GTE strange-quark mass = 93.40 MeV. -/
 noncomputable def m_s_GTE_MeV : ℝ := 93.40
 
-/-- GTE canonical pion mass = √(2727 × 6.83) MeV (from Rank 144-PIMASSFP). -/
+/-- GTE canonical pion mass = √(2727 × 6.83) MeV. -/
 noncomputable def pion_mass_GTE_MeV : ℝ :=
   gor_pion_mass B0_NLO_MeV m_u_GTE_MeV m_d_GTE_MeV
 
-/-- B₀_NLO > 0 (from Rank 134-NLO-B0, CatA). -/
+/-- B₀_NLO > 0 (CatA). -/
 theorem B0_NLO_pos : (0 : ℝ) < B0_NLO_MeV := by
   unfold B0_NLO_MeV; norm_num
 

@@ -12,7 +12,7 @@ import UgpLean.Universality.BornRuleMDL
 set_option maxHeartbeats 4000000
 
 /-!
-Parametric matrix lemmas for `PSCEffectMeasure` (Rank 070-97B2-AXIOM-CLOSURE).
+Parametric matrix lemmas for `PSCEffectMeasure`.
 
 All proofs are over abstract `Fin n`, avoiding concrete `7⁵` kernel elaboration.
 -/

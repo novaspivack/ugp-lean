@@ -8,7 +8,7 @@ namespace GTE.Lifting
 /-!
 # The Algebraic Lifting Theorem
 
-The central theorem of EPIC_072: properties proved at the algebraic beable level
+The central lifting theorem: properties proved at the algebraic beable level
 (tractable) automatically extend to physical-scale [D]-weighted observables.
 
 ## Mathematical content
@@ -39,7 +39,7 @@ the physical proofs.
 
 - **Finding 3:** `AllowedVertex` (§11) is the substrate PSC vertex catalog; Silver
   Closure is `UgpPhysicsLean.VertexTheorem`; CA bridge is
-  `Z7ChargeConjugation.p22_vertex_table_is_ca_transparent`. Rank 93-VXCATALOG is
+  `Z7ChargeConjugation.p22_vertex_table_is_ca_transparent`. The vertex-catalog result is
   CatA lab simulation only — not a Lean module.
 - **Finding 4:** Zone-based `PSCAdmissible` complements seed arithmetic in
   `UgpPhysicsLean.PSCOrbitCertificate` (b=73, c=823); shared root
@@ -135,7 +135,7 @@ theorem psc_admissible_iff_orbit (v : Fin 5 → Fin 7) :
     · exact gen2_psc_admissible
     · exact gen3_psc_admissible
 
-/-- **PSC orbit closure** (Rank 17-GEO / 076-GEO-CATAL, CatAL).
+/-- **PSC orbit closure** (CatAL).
 
     The f_MDL period-3 orbit {vacuum, gen₁, gen₂, gen₃} is closed under `fmdl_step5`.
     PSC-admissible beables evolve to PSC-admissible successors.
@@ -209,8 +209,8 @@ theorem d2_axiom (beable : Fin 5 → Fin 7) :
     - Charge formula (P22)
     - Generation hierarchy (gen₁/gen₂/gen₃ orbit, P22/P34)
     - Vertex catalog (P28)
-    - C1 uniqueness / final coalgebra (Rank 282-C1F)
-    - GoE stability hierarchy (Rank 12-LCG)
+    - C1 uniqueness / final coalgebra
+    - GoE stability hierarchy
 
     None of these require Compton-scale simulation. The algebraic proofs suffice. -/
 theorem algebraic_lifting_theorem
@@ -374,7 +374,7 @@ private theorem centeredZ7_bounds (w : Fin 7) :
     -3 ≤ GUTStructure.centeredZ7 w ∧ GUTStructure.centeredZ7 w ≤ 3 := by
   fin_cases w <;> simp [GUTStructure.centeredZ7]
 
-/-- **Charge quantization at physical scale** (Rank 20-CQP).
+/-- **Charge quantization at physical scale**.
 
     Every component of a [D]-weighted physical beable has winding w whose centered
     representative `centeredZ7 w ∈ {−3,…,3}` is an integer, establishing charge
@@ -387,7 +387,7 @@ private theorem centeredZ7_bounds (w : Fin 7) :
     2. `algebraic_lifting_theorem` lifts the component-wise integer bound from all
        PSC-admissible beables to all [D]-weighted physical beables.
 
-    Status: Rank 20-CQP — CatAL, zero sorry. -/
+    Status: CatAL, zero sorry. -/
 theorem charge_quantization_physical
     (beable : Fin 5 → Fin 7)
     (h_weighted : DWeight beable > 0) :
@@ -398,7 +398,7 @@ theorem charge_quantization_physical
     (fun b _ => centeredZ7_bounds (b i))
     beable h_weighted
 
-/-- **Three physical generations** (Rank 21-3GP).
+/-- **Three physical generations**.
 
     There exist exactly three distinct non-vacuum beables forming the orbit
     gen₁ → gen₂ → gen₃ → vacuum under `fmdl_step5`, each carrying nonzero
@@ -414,7 +414,7 @@ theorem charge_quantization_physical
 
     Together these establish N_gen = 3 at Compton scale with zero sorry.
 
-    Status: Rank 21-3GP — CatAL, zero sorry. -/
+    Status: CatAL, zero sorry. -/
 theorem three_generations_physical :
     ∃ g1 g2 g3 : Fin 5 → Fin 7,
         g1 ≠ g2 ∧ g2 ≠ g3 ∧ g1 ≠ g3 ∧
@@ -468,7 +468,7 @@ theorem composition_theorem
 -- §9  Garden-of-Eden Physical Stability
 -- ─────────────────────────────────────────────────────────────────────────────
 
-/-- **Garden-of-Eden physical stability** (Rank 23-GSP).
+/-- **Garden-of-Eden physical stability**.
 
     If a beable has no f_MDL predecessor at all (Garden of Eden), then no
     [D]-weighted physical state can decay into it: absolute physical stability.
@@ -481,7 +481,7 @@ theorem composition_theorem
     3. The GoE condition for gen₁ is certified by `fmdl_gen1_is_garden_of_eden`
        (CUP3D, native_decide, 7^5 cases, zero sorry).
 
-    Status: Rank 23-GSP — CatAL, zero sorry. -/
+    Status: CatAL, zero sorry. -/
 theorem goe_physical_stability
     (beable : Fin 5 → Fin 7)
     (h_goe : ∀ s : Fin 5 → Fin 7, fmdl_step5 s ≠ beable)
@@ -492,7 +492,7 @@ theorem goe_physical_stability
     (fun b _ => h_goe b)
     s hs
 
-/-- Corollary (Rank 23-GSP): gen₁ is absolutely physically stable.
+/-- Corollary: gen₁ is absolutely physically stable.
 
     `fmdl_gen1_is_garden_of_eden` (CUP3D, zero sorry) certifies that no Z₇^5 state
     maps to gen₁ under fmdl_step5.  By `goe_physical_stability`, no [D]-weighted
@@ -545,11 +545,11 @@ theorem decomposability_theorem
   ⟨hP component_a h_vertex.1, hP component_b h_vertex.2⟩
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- §11  The Scattering Existence Theorem (Rank 16-ESC)
+-- §11  The Scattering Existence Theorem
 -- ─────────────────────────────────────────────────────────────────────────────
 
 /-!
-## §11 — Scattering Existence (Rank 16-ESC)
+## §11 — Scattering Existence
 
 Every algebraically allowed SM scattering process exists at physical scale.
 This follows from: vertex catalog (CatAL) + Composition + Decomposition + Lifting.
@@ -578,7 +578,7 @@ theorem psc_admissible_orbit_certificate_link :
       b = fmdl_vacuum5 ∨ b = fmdl_gen1_z7 ∨ b = fmdl_gen2_z7 ∨ b = fmdl_gen3_z7 :=
   fun b h => (psc_admissible_iff_orbit b).mp h
 
-/-- Scattering Existence Theorem (Rank 16-ESC).
+/-- Scattering Existence Theorem.
     For every allowed vertex in the algebraic catalog, the corresponding physical
     scattering process exists at Compton scale.
 
@@ -614,11 +614,11 @@ theorem scattering_existence
     | Decomposability | `decomposability_theorem` | 24-DCT |
 
     Supporting corollaries in this module:
-    - `three_generations_physical` (Rank 21-3GP)
+    - `three_generations_physical`
     - `no_fourth_generation_physical` / `no_exotic_physical_generation`
-    - `algebraic_lifting_theorem` (Rank 15-ALT)
+    - `algebraic_lifting_theorem`
 
-    Color confinement (Rank 25-CCF) is proved in `ColorConfinement.lean` via
+    Color confinement is proved in `ColorConfinement.lean` via
     `no_physical_single_quark` to avoid a circular import; it composes with this
     bundle downstream in `AlgebraicDescentTheorem.lean`.
 
@@ -627,34 +627,34 @@ theorem scattering_existence
 
     Status: CatAL — zero sorry. -/
 theorem smatrix_framework_exists :
-    -- Pillar 1 (Rank 16-ESC): allowed vertices yield physical scattering outputs
+    -- Pillar 1: allowed vertices yield physical scattering outputs
     (∀ (composite component_a component_b : Fin 5 → Fin 7)
       (h_vertex : AllowedVertex composite component_a component_b)
       (P : (Fin 5 → Fin 7) → Prop)
       (hP : ∀ b : Fin 5 → Fin 7, PSCAdmissible b → P b),
       P component_a ∧ P component_b) ∧
-    -- Pillar 2 (Rank 22-CPT): PSC-admissible composites inherit algebraic properties
+    -- Pillar 2: PSC-admissible composites inherit algebraic properties
     (∀ (beable1 beable2 composite : Fin 5 → Fin 7)
       (_h1 : PSCAdmissible beable1) (_h2 : PSCAdmissible beable2)
       (h_composite : PSCAdmissible composite)
       (P : (Fin 5 → Fin 7) → Prop)
       (hP : ∀ b : Fin 5 → Fin 7, PSCAdmissible b → P b),
       P composite) ∧
-    -- Pillar 3 (Rank 24-DCT): decomposability extracts component properties
+    -- Pillar 3: decomposability extracts component properties
     (∀ (composite component_a component_b : Fin 5 → Fin 7)
       (_h_composite : PSCAdmissible composite)
       (h_vertex : PSCAdmissible component_a ∧ PSCAdmissible component_b)
       (P : (Fin 5 → Fin 7) → Prop)
       (hP : ∀ b : Fin 5 → Fin 7, PSCAdmissible b → P b),
       P component_a ∧ P component_b) ∧
-    -- Pillar 4 (Rank 19-ABT corollary): no exotic [D]-weighted generation
+    -- Pillar 4: no exotic [D]-weighted generation
     (¬∃ b : Fin 5 → Fin 7,
       DWeight b > 0 ∧
       b ≠ fmdl_vacuum5 ∧
       b ≠ fmdl_gen1_z7 ∧
       b ≠ fmdl_gen2_z7 ∧
       b ≠ fmdl_gen3_z7) ∧
-    -- Pillar 5 (Rank 21-3GP): three physical generations exist
+    -- Pillar 5: three physical generations exist
     (∃ g1 g2 g3 : Fin 5 → Fin 7,
       g1 ≠ g2 ∧ g2 ≠ g3 ∧ g1 ≠ g3 ∧
       fmdl_step5 g1 = g2 ∧ fmdl_step5 g2 = g3 ∧ fmdl_step5 g3 = fmdl_vacuum5 ∧

@@ -4,7 +4,7 @@ import UgpLean.Substrate.PSCStructureLorentzPreserved
 import UgpLean.Universality.Z7ChargeConjugation
 
 /-!
-# C2 Coherence Uniqueness — EPIC_080 Rank G40
+# C2 Coherence Uniqueness
 
 Thin re-export layer documenting what is certified today for P43 C2 / P34 Conjecture C2.
 

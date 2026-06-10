@@ -7,9 +7,9 @@ namespace GTE.Spacetime.AsyncLifting
 open GTE.Lifting GTE.Spacetime.Confinement
 
 /-!
-# Asynchronous Lifting Theorem (Rank 32-ALT2, EPIC_075)
+# Asynchronous Lifting Theorem
 
-The Algebraic Lifting Theorem (Rank 15-ALT, `LiftingTheorem.lean`) was stated
+The Algebraic Lifting Theorem (`LiftingTheorem.lean`) was stated
 for the synchronous CA setting where all cells update simultaneously.  The CMCA
 uses an asynchronous τ_c clock: each cell fires and applies the f_MDL update
 rule independently when its inner clock ticks.
@@ -83,7 +83,7 @@ the present theorem handles the algebraic lifting side.
 | `async_dweight_is_local` | ✅ CatAL — zero sorry |
 | Full CMCA coordination predicates | CatD — requires full CMCA formalization |
 
-Overall rank 32-ALT2: **CatAL for local state predicates** (established here);
+Overall: **CatAL for local state predicates** (established here);
 CatD for full timing-dependent predicates (deferred to CMCA formalization).
 
 ## Paper target
@@ -112,10 +112,10 @@ theorem async_psc_admissible_is_local (b : Fin 5 → Fin 7) :
   Iff.rfl
 
 /-!
-## Main theorem: Asynchronous Lifting Theorem (Rank 32-ALT2)
+## Main theorem: Asynchronous Lifting Theorem
 -/
 
-/-- **Asynchronous Lifting Theorem (Rank 32-ALT2, CatAL).**
+/-- **Asynchronous Lifting Theorem (CatAL).**
 
     The Algebraic Lifting Theorem extends to asynchronous CMCA evolution:
     any predicate P on beable state that holds for all PSC-admissible beables

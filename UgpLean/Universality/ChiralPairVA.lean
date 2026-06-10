@@ -3,7 +3,7 @@ import Mathlib.Data.Finset.Basic
 import Mathlib.Tactic
 
 /-!
-# UgpLean.Universality.ChiralPairVA — V-A Chirality Mismatch Theorem (Rank 133, CatAL)
+# UgpLean.Universality.ChiralPairVA — V-A Chirality Mismatch Theorem (CatAL)
 
 ## Background
 

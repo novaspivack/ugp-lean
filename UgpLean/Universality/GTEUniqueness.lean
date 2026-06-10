@@ -224,7 +224,7 @@ theorem gte_uniqueness_complete :
   ⟨sigma_gte_is_lawful, sigma_gte_is_minimal, gte_uniqueness_up_to_bisimulation⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §5 GTE Uniqueness → Isomorphism (Rank 20)
+-- §5 GTE Uniqueness → Isomorphism
 -- ════════════════════════════════════════════════════════════════
 
 /-- Any minimal lawful UWCA program has the same tile count as sigma_gte (= 1).

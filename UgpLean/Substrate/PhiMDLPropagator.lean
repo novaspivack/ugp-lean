@@ -24,7 +24,7 @@ determined by the Z₇ structure.
 
 - P42: Φ_MDL field theory (Lagrangian, BPS kinks, kink mass CatAL).
 - P46: generating functional Z[J] and universal propagator.
-- Epic EPIC_080, Rank G27 (tree-level CatAD, 2026-05-29).
+- Tree-level propagator: CatAD.
 -/
 
 namespace UgpLean.PhiMDL

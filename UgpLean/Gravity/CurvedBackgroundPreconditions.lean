@@ -2,7 +2,7 @@ import UgpLean.Gravity.MinimalCoupling
 import UgpLean.Algebra.RSCodeOrbit
 
 /-!
-# Curved-Background Functional Completeness Preconditions (EPIC_078 Rank 078-LC6)
+# Curved-Background Functional Completeness Preconditions
 
 Certifies the Lean-supportable preconditions for Functional Completeness on curved
 Φ_MDL backgrounds **without** the Lorentzian geometry library:
@@ -13,7 +13,7 @@ Certifies the Lean-supportable preconditions for Functional Completeness on curv
    curvature-scale parameter.
 3. **RS Singleton bound** — the GTE `[5, 3, 3]₇` code is MDS (MDL-minimal for its
    parameters), connecting the orbit=codeword structure to MDL minimality.
-4. **Master bundle** — packages (1)–(3) as `epic_078_functional_completeness_lean_support`.
+4. **Master bundle** — packages (1)–(3) as `functional_completeness_preconditions_bundle`.
 
 Related CatAL certificates (imported, not re-proved here):
 - `minimal_coupling_is_mdl_minimal` — MDL selects ξ = 0 over any ξ ≠ 0
@@ -108,8 +108,8 @@ theorem phimdl_rs_code_evaluation_structure :
 -- §4  Master bundle: Functional Completeness Lean support
 -- ════════════════════════════════════════════════════════════════
 
-/-- **epic_078_functional_completeness_lean_support** (CatAL):
-    Master bundle: Lean support for EPIC_078 Functional Completeness criteria
+/-- **functional_completeness_preconditions_bundle** (CatAL):
+    Master bundle: Lean support for the functional-completeness criteria
     certifiable without the Lorentzian geometry library:
 
     (1) ξ = 0 MDL-minimal — `minimal_coupling_is_mdl_minimal` (LC1)
@@ -118,7 +118,7 @@ theorem phimdl_rs_code_evaluation_structure :
     (4) RS orbit = codewords — `gte_orbit_vectors_are_rs_codewords`
     (5) RT Wald precondition — `phimdl_wald_entropy_precondition` (this file)
     (6) Flat cosmology MDL-minimal — `mdl_selects_flat_cosmology` (this file) -/
-theorem epic_078_functional_completeness_lean_support :
+theorem functional_completeness_preconditions_bundle :
     phimdlCurvatureCoupling = 0 ∧
       spatialCurvatureDescriptionLength 0 < spatialCurvatureDescriptionLength 1 ∧
       (5 : ℕ) - 3 + 1 = 3 := by

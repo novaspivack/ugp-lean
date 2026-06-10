@@ -65,7 +65,7 @@ def toTopoCharge (k : KinkQuantumNumbers) : Option (Fin 4) :=
 
 end KinkQuantumNumbers
 
-/-- **Main certification (Rank 69d):** the four GTE orbit kink labels are pairwise distinct. -/
+/-- **Main certification:** the four GTE orbit kink labels are pairwise distinct. -/
 theorem phimdl_kink_quantum_numbers_distinct :
     KinkQuantumNumbers.vacuum ≠ KinkQuantumNumbers.gen1 ∧
     KinkQuantumNumbers.vacuum ≠ KinkQuantumNumbers.gen2 ∧

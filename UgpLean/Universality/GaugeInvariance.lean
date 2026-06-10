@@ -3,7 +3,7 @@ import Mathlib.Data.Real.Basic
 import Mathlib.Data.ZMod.Basic
 
 /-!
-# Z₃ Gauge Invariance of the Φ_MDL Coupling (Rank 69e-GAUGE, CatAL)
+# Z₃ Gauge Invariance of the Φ_MDL Coupling (CatAL)
 
 Certifies the **algebraic Z₃ gauge invariance** of the corrected Φ_MDL Lagrangian:
 
@@ -32,7 +32,7 @@ Related CatAL certifications in `SylowIndexCouplingHierarchy.lean`:
 - §5q: `epsilon_coupling_f21`, `rank137_epsder_closure` (ε = N₇/N₃² = 7/9)
 
 ## Lean module
-`UgpLean.Universality.GaugeInvariance` (EPIC_077, OQ-C, Rank 69e-GAUGE → CatAL)
+`UgpLean.Universality.GaugeInvariance`
 Zero sorry.
 -/
 
@@ -145,7 +145,7 @@ theorem dmu_coefficient_forced_neg_one
 -- §4  Master Bundle
 -- ─────────────────────────────────────────────────────────────────────────
 
-/-- Master Z₃ gauge invariance certificate for the Φ_MDL coupling (Rank 69e-GAUGE CatAL).
+/-- Master Z₃ gauge invariance certificate for the Φ_MDL coupling (CatAL).
 
     Bundles:
     (1) Gauge invariance of D_μχ under Z₃ transformation (ring identity)

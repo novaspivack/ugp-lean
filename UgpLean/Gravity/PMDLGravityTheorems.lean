@@ -5,7 +5,7 @@ import UgpLean.Gravity.PSCQECWaldConnections
 import UgpLean.Universality.PhiMDLUniversality
 
 /-!
-# PMDL Gravity Theorems (EPIC_079)
+# PMDL Gravity Theorems
 
 Machine certification of the GTE polynomial's gravitational role on PSC-admissible
 winding classes over GF(7):
@@ -15,7 +15,7 @@ winding classes over GF(7):
 3. **MDL cubic uniqueness** — exactly one cubic `f(w) = aw + bw² + cw³` matches the hierarchy.
 4. **Unified polynomial** — Role 1 (Rule 110) via `rule110_z7_poly_rep`; Role 3 (gravity mass).
 
-Role 2 (gauge winding conservation at SM vertices) is numerically CatA in EPIC_079;
+Role 2 (gauge winding conservation at SM vertices) is numerically CatA;
 formal Lean integration deferred to a future module.
 
 ## Status
@@ -164,7 +164,7 @@ theorem gte_polynomial_rule110_on_binary (L C R : ZMod 7)
     - **Role 1 (spatial):** on binary tape cells, `p` equals Rule 110 (`rule110_z7_poly_rep`).
     - **Role 3 (gravity):** on PSC diagonal inputs, `p(w,w,w)` gives the mass hierarchy.
 
-    Role 2 (gauge: SM vertex winding conservation) is established numerically in EPIC_079;
+    Role 2 (gauge: SM vertex winding conservation) is established numerically;
     Lean formalization is deferred pending a dedicated gauge-conservation module. -/
 theorem gte_polynomial_three_roles_k_zero :
     (∀ (l c r : ZMod 7),
@@ -417,7 +417,7 @@ theorem gte_G_eff_G_N_ratio (G_eff G_N M_PMDL M_kink : ℝ)
     The hierarchy is C (equivalence principle) → B (linearized GR) → A (computational).
     All three give F = G_eff·M/r² in the non-relativistic limit.
 
-    Status: CatAD — analytic derivation complete (LAB_NOTE_079_OQ1_GRAVITY_FORCE_LAW.md).
+    Status: CatAD — analytic derivation complete.
     CatAL would require Lean formalization of geodesic equation + Poisson kernel. -/
 axiom tau_c_three_mechanisms_equivalent :
     -- All three produce the same Newtonian force law in the b >> σ_AL limit

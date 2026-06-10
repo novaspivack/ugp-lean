@@ -43,7 +43,7 @@ potential around the GTE BPS kink profile Φ_kink(x) = (4/7) arctan(exp(m_φ x))
 
 ## References
 
-- P42 Φ_MDL field theory; EPIC_083C loop-correction and Yukawa-vertex sessions (2026-06-01).
+- P42 Φ_MDL field theory; loop-correction and Yukawa-vertex analyses.
 -/
 
 namespace UgpLean.Substrate.PhiMDLFluctuationSpectrum

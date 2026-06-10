@@ -25,7 +25,7 @@ or `rule` parameter; edges are determined purely by node coordinates.
 
 **Consequence**: the 3D f_MDL causal graph connectivity is isomorphic to a
 ℤ^4-periodic lattice (for large L, T with periodic boundary conditions), enabling
-the spectral dimension proof (Rank 13-LSD: d_s = 4 exactly).
+the spectral dimension proof (d_s = 4 exactly).
 
 ## Theorems in this file
 
@@ -153,7 +153,7 @@ Boundary nodes have fewer neighbors (no wrap-around in this non-periodic definit
 The coordination number 13 is characteristic of a 3+1D Minkowski-like lattice.
 
 Exact certification of the degree 13 for interior nodes requires finite enumeration
-over `Fin L` neighbors and is deferred to Rank 13-LSD infrastructure.
+over `Fin L` neighbors and is deferred to the spectral-dimension infrastructure.
 -/
 
 /-- Structural placeholder: interior node degree in the 3D f_MDL causal graph is 13. -/

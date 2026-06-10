@@ -230,7 +230,7 @@ theorem texture_reproduces_Nc_plus_theta :
 -- ─────────────────────────────────────────────────────────────────────
 
 /-!
-The leptogenesis CP-asymmetry computation (rank 080-CKM-LEPTOGEN, script
+The leptogenesis CP-asymmetry computation (script
 `papers/21_neutrino_masses/scripts/gte_leptogenesis_fn.py`) evaluates the
 Covi–Roulet–Vissani asymmetry on the 3×3 Dirac Yukawa with the descending FN
 charge vectors

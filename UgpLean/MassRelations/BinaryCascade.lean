@@ -31,7 +31,6 @@ that the cascade **mathematically reproduces TT**.
 
 - The recurrence and its closed-form solution: PROVED (this module).
 - Physical realisation: open research (no Lean theorem yet).
-- (Lab Notes 23, to be written) catalogues physics-mechanism candidates.
 
 -/
 

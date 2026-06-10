@@ -304,7 +304,7 @@ theorem gamma_d_from_GUT_dims :
  β_d = −(1 + Y(Q_L)) [SM hypercharge]
  γ_d = −dim(45 of SU(N_c+2)) / dim(126 of SO(2N_c+4)) [Higgs dims]
 
- This is the physical derivation sought since .
+ This is the sought physical derivation.
  The N_c formulas (VV_unified_from_N_c, §7) are the same identities
  expressed compactly in terms of the single integer N_c = 3. -/
 theorem VV_from_GUT_group_theory :

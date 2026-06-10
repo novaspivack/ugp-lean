@@ -5,7 +5,7 @@ import UgpLean.Universality.BellViolationGTE
 import UgpLean.Algebra.BaryonNumber
 
 /-!
-# Five Labelled-Triple Roles of the GTE Polynomial (EPIC_080)
+# Five Labelled-Triple Roles of the GTE Polynomial
 
 The 3-tape clocked machine exposes exactly five distinct labelled-triple roles for
 `p(w_x, w_y, w_z) = C + R - CR - LCR` at description-length cost `K_extra = 0`.

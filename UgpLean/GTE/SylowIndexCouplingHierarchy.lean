@@ -56,8 +56,8 @@ low-energy spin-3/2 multiplet. ✓
 
 ## References
 
-- Rank 106-HADMULT: established 3⊗3⊗3 = 10 ⊕ 2·8 ⊕ 1 in GTE (PROVISIONAL CatA)
-- Rank 123-OCTET2: this file (PROVISIONAL CatA)
+- Established: 3⊗3⊗3 = 10 ⊕ 2·8 ⊕ 1 in GTE (PROVISIONAL CatA)
+- This file: octet structure (PROVISIONAL CatA)
 - PSC orbit QR(7): UGP Paper P01
 -/
 

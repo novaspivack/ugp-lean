@@ -6,7 +6,7 @@ import UgpLean.Universality.CUP3DUniqueness
 /-!
 # UgpLean.Framework.GTEOptimalityInstance
 
-**Stages 3–4 of Rank 282-C1F (C1 Final Coalgebra).**
+**Optimality stages of the C1 Final Coalgebra construction.**
 
 Wires GTE's already-certified MDL minimality (CUP-12, zero sorry) into a
 `NemS.Optimality.TheorySpace.PSCOptimal` instance and proves Semantic Terminality.
@@ -80,7 +80,7 @@ def z7CAFailsPSC (f : Fin 7 → Fin 7 → Fin 7 → Fin 7) : Prop :=
     The space of Z₇ CA functions, equipped with MDL complexity, orbit-agreement
     record equivalence, micro-parameter extension, and PSC violation predicate.
 
-    This is the theory space in which f_MDL is PSC-Optimal (Stage 3, Rank 282-C1F). -/
+    This is the theory space in which f_MDL is PSC-Optimal (Stage 3). -/
 def GTETheorySpace : TheorySpace where
   Theory           := Fin 7 → Fin 7 → Fin 7 → Fin 7
   K                := z7CAComplexity
@@ -158,7 +158,7 @@ theorem gte_psc_optimal : TheorySpace.PSCOptimal GTETheorySpace fmdl := by
 /-- **GTEOptimalityInstance** (CatAL, zero sorry):
     f_MDL is the PSC-Optimal theory in the GTE Theory Space.
 
-    **Stage 3 certificate for Rank 282-C1F** (C1 Final Coalgebra).
+    **Optimality certificate for the C1 Final Coalgebra construction.**
 
     Physical content: among all Z₇ CA functions that respect the SM generation
     orbit constraints (the 18 isFixedNeighborhood equalities), f_MDL minimizes
@@ -214,7 +214,7 @@ theorem gte_semantic_terminality
   Or.inr ⟨h_ext, gte_psc_optimal T' h_ext⟩
 
 -- ────────────────────────────────────────────────────────────────────────────
--- §2.7  PSCSys objects: GTECompatibleSpace and GTEPSCSubstrate (Stage 1–2 of Rank 282-C1F)
+-- §2.7  PSCSys objects: GTECompatibleSpace and GTEPSCSubstrate
 -- ────────────────────────────────────────────────────────────────────────────
 
 open NemS.Category
@@ -244,14 +244,14 @@ def GTECompatibleSpace : PSCCompatibleSpace where
     The GTE Möbius substrate as an object in the PSCSys category.
 
     - Theory: `fmdl` (the Z₇ MDL-minimal CA function)
-    - Optimality: `gte_psc_optimal` (Stage 3, Rank 282-C1F, zero sorry)
+    - Optimality: `gte_psc_optimal` (Stage 3, zero sorry)
     - Orbit-admissibility: `fmdl` agrees with itself on all fixed neighborhoods (`rfl`)
 
     This is GTE's canonical object in PSCSys — the one claimed to be terminal (C1). -/
 def GTEPSCSubstrate : PSCSubstrate GTECompatibleSpace :=
   ⟨fmdl, gte_psc_optimal, fun _ _ _ _ => rfl⟩
 
--- c1_final_coalgebra is proved in GTEFinalCoalgebra.lean (Stages 5–7, Rank 282-C1F).
+-- c1_final_coalgebra is proved in GTEFinalCoalgebra.lean (Stages 5–7).
 -- Import UgpLean.Framework.GTEFinalCoalgebra to access:
 --   c1_final_coalgebra_derived : PSCSubstrate.IsTerminal GTEPSCSubstrate  (CatAD, one sorry)
 --   c1_final_coalgebra         : alias for c1_final_coalgebra_derived

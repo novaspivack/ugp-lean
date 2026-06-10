@@ -7,7 +7,7 @@ import UgpLean.MassRelations.TranscendentalMassBounds
 import UgpLean.Universality.EWScalePrediction
 
 /-!
-# Seesaw and leptogenesis numerical certificates (EPIC_083D batch)
+# Seesaw and leptogenesis numerical certificates
 
 Certifies four CatAL/CatAD targets from the η_B investigation:
 
@@ -222,7 +222,7 @@ theorem mr1_mr_gut_ratio_bounds :
   rw [mr1MrGutRatio_def_eq_axiom]
   exact mr1_mr_gut_ratio_interval
 
-/-- Structural bundle: all four EPIC_083D numerical certificates. -/
+/-- Structural bundle: all four seesaw/leptogenesis numerical certificates. -/
 theorem seesaw_leptogenesis_cert_bundle :
     (1124 : ℝ) / 1000 ≤ fnWashoutSum ∧ fnWashoutSum ≤ (1126 : ℝ) / 1000 ∧
     (736 : ℝ) / 10000000 ≤ gteDeltaM21Sq ∧ gteDeltaM21Sq ≤ (738 : ℝ) / 10000000 ∧

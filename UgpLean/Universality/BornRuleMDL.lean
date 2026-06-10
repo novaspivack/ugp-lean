@@ -7,7 +7,7 @@ import UgpLean.Universality.GUTStructure
 import UgpLean.Framework.GTEOptimalityInstance
 
 /-!
-# Born Rule from MDL-Minimality — Rank 76-BORN (EPIC_073 / EPIC_074)
+# Born Rule from MDL-Minimality
 
 Extends the MDL / [D] selection chain (`jpspin_mdl_selects_half`, CUP-12 uniqueness,
 `gte_psc_optimal`) toward winding-sector Born weights P(k) ∝ |φ_k|².

@@ -9,7 +9,7 @@ import UgpLean.Universality.BornRuleMDL
 import UgpLean.Universality.BeableWindingPartitionInstance
 
 /-!
-# Transputation State Selector — Rank 76-TPSEL (EPIC_074)
+# Transputation State Selector
 
 Operational form of transputation $\mathbb{P}^\top$ on P34's $[D]$-class axioms:
 

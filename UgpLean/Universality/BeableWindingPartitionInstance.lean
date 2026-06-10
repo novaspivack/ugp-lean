@@ -7,7 +7,7 @@ import UgpLean.Universality.BornRuleMDL
 
 /-!
 # Beable Z₇ Winding Partition — Ranks 77-2QUANT-CANON and 76-BORN-UNCOND
-(EPIC_073 / EPIC_074)
+
 
 Concrete `BeableWindingPartition` on the certified `Fin (7^5)` beable index space, and
 unconditional discharge of `BeableAmplitudeHypothesis` for arbitrary normalized sector
@@ -37,7 +37,7 @@ discharged by the canonical witness `((1/√7 : ℝ) : ℂ)`. The *physical cont
 attributed to Coleman 1975 / Mandelstam 1975 / Rajaraman 1982 §8 — that the
 *specific* physical Φ_MDL kink state's sector amplitudes equal a specific function
 of the kink mass-density profile — is a strictly stronger claim (the MDL
-state-selection problem, Rank 76-MDL-IDENT) and is **not** what the Lean existential
+state-selection problem) and is **not** what the Lean existential
 encoded.
 
 The Born rule itself — the squared-modulus map from amplitudes to probabilities —
@@ -147,7 +147,7 @@ theorem born_rule_from_structural_beable_amplitude (k : Fin 7) :
     it unconditionally. It does **not** by itself carry the full physical content
     of canonical Z₇-KG kink quantization (Coleman 1975 / Mandelstam 1975 /
     Rajaraman 1982 §8); that stronger physical content concerns which *specific*
-    quantum state the physical universe realises (Rank 76-MDL-IDENT) and is *not*
+    quantum state the physical universe realises and is *not*
     captured by this existential. Discharging the existential constructively
     eliminates the previously declared axiom and makes
     `BeableWindingPartitionInstance` zero-axiom CatAL. -/
@@ -255,7 +255,7 @@ theorem second_quantization_open_refuted :
     ¬ BornRuleMDL.second_quantization_open :=
   fun h => h ⟨fun _ => physicalBeableAmplitude, trivial⟩
 
-/-! ### Rank 76-BORN-UNCOND: unconditional Born rule for any normalized state -/
+/-! ### Unconditional Born rule for any normalized state -/
 
 /-- Sector probability of the lifted amplitude state equals the squared modulus of
     the input sector coefficient. This is the per-sector Born equality that justifies
@@ -291,7 +291,7 @@ theorem fock_lift_sector_prob_eq (coeffs : Fin 7 → ℂ)
       nsmul_eq_mul]
   field_simp [beablesPerWindingSector]
 
-/-- **born_rule_unconditional** (Rank 76-BORN-UNCOND, CatAL, zero axioms):
+/-- **born_rule_unconditional** (CatAL):
 
     For any normalised sector coefficient vector `coeffs : Fin 7 → ℂ` (with
     `Σ_k |coeffs k|² = 1`), there exists a `BeableAmplitudeHypothesis` whose
@@ -304,7 +304,7 @@ theorem fock_lift_sector_prob_eq (coeffs : Fin 7 → ℂ)
     is required.
 
     The residual question — *which* coefficient vector the physical Φ_MDL universe
-    realises — is a separate state-selection question tracked as Rank 76-MDL-IDENT. -/
+    realises — is a separate, open state-selection question. -/
 theorem born_rule_unconditional (coeffs : Fin 7 → ℂ)
     (hnorm : (Finset.univ : Finset (Fin 7)).sum
       (fun w => Complex.normSq (coeffs w)) = 1) :
@@ -340,12 +340,12 @@ theorem born_rule_unconditional_master_bundle :
   intro coeffs hnorm
   exact born_rule_unconditional coeffs hnorm
 
-/-! ### Rank 76-MDL-IDENT (open):
+/-! ### State selection (open):
     *Which* coefficient vector does the physical Φ_MDL universe realise?
     Identifying `|coeffs k|² = (1/K_k) / Σ_j (1/K_j)` for the unique PSC-MDL
     selected physical state — separate from the Born rule itself. -/
 
-/-- Placeholder open predicate for Rank 76-MDL-IDENT (state-selection question). -/
+/-- Placeholder open predicate for the state-selection question. -/
 def mdl_state_identification_open : Prop :=
   ¬ ∃ (_psc_mdl_amplitudes : Fin 7 → ℂ), True
 

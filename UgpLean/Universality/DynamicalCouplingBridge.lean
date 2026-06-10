@@ -2,13 +2,13 @@ import UgpLean.Universality.CouplingNoGo
 import Mathlib.Data.Nat.GCD.Basic
 
 /-!
-# UgpLean.Universality.DynamicalCouplingBridge — Event-Triggered Coupling Escape (Rank 070-137)
+# UgpLean.Universality.DynamicalCouplingBridge — Event-Triggered Coupling Escape
 
 ## Background
 
 `CouplingNoGo.lean` certifies that **CA-local per-cell** coupling depending on ether-phase
 values introduces an effective period-7 modulation incommensurable with the period-3 C₂
-glider (`lcm(3,7)=21`, and `21 ∤ 3`).  Rank 070-122 established computationally that
+glider (`lcm(3,7)=21`, and `21 ∤ 3`).  Computational analysis established that
 **event-triggered front injection** at multiples of `lcm(N_gen, T_ether) = lcm(3,7) = 21`
 preserves glider coherence while transferring cross-layer excitation.
 
@@ -16,7 +16,7 @@ This module formalizes the **arithmetic resonance escape**: coupling restricted 
 orbit-resonant times satisfies both the glider period and ether-orbit divisibility,
 contradicting the cell-level no-go's implicit per-step coupling assumption.
 
-## Key theorems (Rank 070-137)
+## Key theorems
 
 - `coupling_no_go_cell_level`     : cites CouplingNoGo — lcm(3,7)=21, 21 ∤ 3
 - `event_triggered_coupling_period`: lcm(N_gen, T_ether)=21; 3∣21 and 7∣21
@@ -126,7 +126,7 @@ theorem orbit_resonance_iff_event_period_divides (t : ℕ) :
     times `t = k · lcm(N_gen, T_ether)` models a discrete three-body charged-current vertex:
     a Rule 110 right-mover, a Rule 124 left-mover, and a vacuum perturbation injected at the
     tracked glider front — the CA analogue of an off-shell W-boson exchange at EW scale,
-    directionally asymmetric (110→124) and consistent with V−A chirality (Rank 070-133).
+    directionally asymmetric (110→124) and consistent with V−A chirality.
     This identification is not derivable from ℕ arithmetic alone. -/
 axiom discrete_w_vertex_interpretation :
     event_triggered_period = Nat.lcm N_gen T_ether ∧

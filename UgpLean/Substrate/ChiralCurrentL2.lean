@@ -4,7 +4,7 @@ import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Tactic
 
 /-!
-# Level 2 chiral current from Φ_MDL domain-wall topology (EPIC_080 G16)
+# Level 2 chiral current from Φ_MDL domain-wall topology
 
 ## Continuum structure (CatAD, structural Lean certificate)
 

@@ -4,7 +4,7 @@ import UgpLean.Universality.AlgebraicDescentTheorem
 import UgpLean.Universality.FMDLClassification
 
 /-!
-# Algebraic Necessity Theorem (Rank 075-ALGEC-NECESSITY)
+# Algebraic Necessity Theorem
 
 **Main result:** The internal symmetry group of any gauge QFT satisfying the GTE sector
 constraints is necessarily F₂₁ = Z₇ ⋊ Z₃.
@@ -129,7 +129,7 @@ theorem b0_uniquely_forces_n7 :
 -- §3  Main bundle: Algebraic Necessity Theorem
 -- ─────────────────────────────────────────────────────────────────────────────
 
-/-- **Algebraic Necessity Theorem** (Rank 075-ALGEC-NECESSITY).
+/-- **Algebraic Necessity Theorem**.
 
     Any gauge QFT satisfying the three GTE sector constraints:
       (i)  N_gen = 3 fermion generations (|Z₃| = 3, from PSC orbit, CatAL),

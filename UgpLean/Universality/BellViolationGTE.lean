@@ -4,7 +4,7 @@ import Mathlib.Data.Fin.Basic
 import UgpLean.Gravity.PMDLGravityTheorems
 
 /-!
-# Bell Inequality Violation from the GTE Polynomial — EPIC_079 (OQ-079-3)
+# Bell Inequality Violation from the GTE Polynomial
 
 Machine-certified algebraic structure underlying the Bell-CHSH violation
 observed in the three-tape CMCA model.

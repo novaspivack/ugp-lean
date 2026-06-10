@@ -21,7 +21,7 @@ no other sector has three particles sharing identical (a,b) with unit c-steps.
 - `ew_triples_distinct`: W⁺, Z, H⁰ GTE triples are pairwise distinct.
 - `ew_boson_structure`: combined theorem packaging all of the above.
 
-## §5 — Goldstone Cascade Formula (Rank 53, CatAL)
+## §5 — Goldstone Cascade Formula (CatAL)
 
 - `d_higgs`, `d_z`, `d_w`: broken SU(2)_L generator ranks (0, 1, 2 respectively)
 - `goldstone_cascade_higgs`: c_H = c_H − d_H (d_H = 0; Higgs is the scalar remnant)
@@ -174,7 +174,7 @@ theorem ew_boson_structure :
   simp [c_w_plus, c_z_boson, c_higgs, w_plus_triple, z_triple, higgs_triple]
 
 -- ════════════════════════════════════════════════════════════════
--- §5  Goldstone cascade formula: c_P = c_H − d_P (Rank 53, CatAL)
+-- §5  Goldstone cascade formula: c_P = c_H − d_P (CatAL)
 -- ════════════════════════════════════════════════════════════════
 
 /-!

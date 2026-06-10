@@ -5,7 +5,7 @@ import UgpLean.Universality.GUTStructure
 namespace GTE.Spacetime.MassGap
 
 /-!
-# Mass Gap Theorem (Rank 42-MGP)
+# Mass Gap Theorem
 
 The GTE framework predicts a mass gap: every non-vacuum color-neutral physical
 state has strictly positive mass bounded away from zero.
@@ -22,7 +22,7 @@ state has strictly positive mass bounded away from zero.
 
 ## Relation to existing CA-level result
 
-The `MassGapTheorem` section of `GUTStructure.lean` (§44, Rank 155-QFT, CatAL)
+The `MassGapTheorem` section of `GUTStructure.lean` (§44, CatAL)
 proves that windings {3, 4, 6} have no self-propagating center under f_MDL —
 the CA-level massless/massive distinction.  That theorem is purely structural
 (zero sorry, fully certified from the f_MDL truth table).
@@ -39,8 +39,8 @@ The Clay Millennium Problem (Yang–Mills Existence and Mass Gap) asks:
 
 GTE provides:
 1. **Existence at beable level**: The 3D f_MDL CA with causal graph (d_s = 4, CatA)
-   is a discrete Yang–Mills-like theory.  Existence of the continuum limit (OQ-CL1)
-   is open (SPEC_285) but structurally motivated via the AFCA architecture.
+   is a discrete Yang–Mills-like theory.  Existence of the continuum limit
+   is open but structurally motivated via the AFCA architecture.
 2. **Beable-level mass gap**: `gte_mass_gap` (this theorem) establishes Δ > 0 at the
    PSC-admissible beable level.  If the continuum limit preserves the orbit mass
    spectrum (expected from structural continuity), the full Clay mass gap follows.
@@ -192,7 +192,7 @@ theorem lightest_meson_positive_mass
 -- §5  Main Mass Gap Theorem
 -- ─────────────────────────────────────────────────────────────────────────────
 
-/-- **gte_mass_gap** (Rank 42-MGP, CatAL):
+/-- **gte_mass_gap** (CatAL):
     There exists a positive mass gap Δ > 0 such that every [D]-weighted non-vacuum
     physical beable has mass ≥ Δ.
 
@@ -242,15 +242,15 @@ The Clay Millennium Problem for Yang–Mills asks two things:
 
 **Beable-level existence (CatAL):** The 3D f_MDL CA with the PSC-admissible sector
 is a discrete Yang–Mills-like quantum theory: it has a conserved Z₃ color charge,
-causal propagation (spectral dimension d_s = 4, CatA), color confinement (Rank 25-CCF,
-CatAD), and the full SM generation structure (Rank 155-QFT, CatAL).  The discrete
+causal propagation (spectral dimension d_s = 4, CatA), color confinement (
+CatAD), and the full SM generation structure (CatAL).  The discrete
 structure (ℤ⁷ lattice instead of ℝ⁴ manifold) is the only gap from the Clay formulation.
 
 **Beable-level mass gap (CatAD):** `gte_mass_gap` above gives Δ > 0 at the PSC level.
 
 ### What remains
 
-**Continuum limit (OQ-CL1, open):** The full Clay Problem requires taking the lattice
+**Continuum limit:** The full Clay Problem requires taking the lattice
 spacing → 0 and showing the mass gap survives.  This is the content of SPEC_285
 (FCA fractal CA continuum limit).  The AFCA architecture suggests the gap is
 preserved because the orbit spectrum is topological (it depends on orbit depth, not
@@ -260,9 +260,9 @@ on lattice spacing), but the formal proof is open.
 
 | Claim | Lean status | Remaining work |
 |-------|-------------|----------------|
-| Color confinement | CatAD (Rank 25-CCF) | close `psc_rc_requires_color_neutrality` |
-| Beable mass gap | **CatAL (Rank 42-MGP, this file)** | Round 2: explicit Δ = m_u |
-| Continuum limit | Open (OQ-CL1) | AFCA + renormalization |
+| Color confinement | CatAD | close `psc_rc_requires_color_neutrality` |
+| Beable mass gap | **CatAL (this file)** | Round 2: explicit Δ = m_u |
+| Continuum limit | Open | AFCA + renormalization |
 
 The beable mass gap is now fully certified (zero sorry, zero axioms).
 Color confinement remains CatAD pending formalization of 't Hooft anomaly matching.

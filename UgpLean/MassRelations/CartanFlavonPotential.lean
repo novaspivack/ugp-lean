@@ -24,10 +24,10 @@ This module proves:
 - The Z_6 symmetry of `cos(6·φ_1)` is the SU(3) Weyl-chamber rotation
  symmetry, **directly linked to Claim A**'s A_2 root-system geometry
  (chamber opening angle = π/3 = 2π/6).
-- The Z_16 symmetry of `cos(16·φ_2)` has three candidate physical origins
- (catalogued in Lab Notes 25); leading candidate: SO(10) 16-spinor
+- The Z_16 symmetry of `cos(16·φ_2)` has three candidate physical origins;
+ leading candidate: SO(10) 16-spinor
  R-symmetry, which would link Claim C to the same SO(10) structure as
- VV's coefficients .
+ VV's coefficients.
 
 ## What this module formalises
 
@@ -38,7 +38,7 @@ This module proves:
 
 ## What remains open
 
-- The physical origin of the Z_16 symmetry (Lab Notes 25 §6.2).
+- The physical origin of the Z_16 symmetry.
 - Construction of a UV Lagrangian from which V(φ_1, φ_2) emerges as
  the effective flavon potential after gauge / R-symmetry breaking.
 -/
@@ -106,7 +106,7 @@ theorem cartanFlavonPotential_min_at_FN_vevs (a b : ℝ) :
   rw [h1, h2]
   ring
 
-/-- **Direct identification:** the FN flavon-VEV log values from 
+/-- **Direct identification:** the FN flavon-VEV log values from
  (`log(ε_1) = -π/3`, `log(ε_2) = -π/8`) are precisely the Round-22
  Cartan-invariant potential's global-minimum coordinates. -/
 theorem fn_vevs_are_potential_minima (a b : ℝ) :

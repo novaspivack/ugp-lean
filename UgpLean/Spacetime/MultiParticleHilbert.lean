@@ -8,7 +8,7 @@ open GTE.Lifting GTE.Spacetime.MassGap GTE.Spacetime.QEC
 open UgpLean.Universality.LawvereZone CUP3D
 
 /-!
-# Multi-Particle Hilbert Space (Rank 244-MPH)
+# Multi-Particle Hilbert Space
 
 Formalizes the algebraic structure of multi-beable states in the GTE
 framework: the multi-particle state space built from the QEC code subspace
@@ -25,13 +25,13 @@ copies of the visible sector.  The present module formalizes the
 its DWeight-based norm, the mass observable, and the Kronecker basis inner
 product.
 
-The QEC code subspace (Rank 38-QEC, `QECStabilizer.lean`) provides the
+The QEC code subspace (`QECStabilizer.lean`) provides the
 single-particle ingredients:
 - Code words: `{vacuum, gen₁, gen₂, gen₃}` — PSC-admissible beables
 - DWeight: projection onto the code subspace (= 1 for code words)
 - Stabilizer: `fmdl_step5` preserves the code subspace
 
-The mass hierarchy (Rank 79-MASSES, `OrbitMassHierarchy.lean`) provides
+The mass hierarchy (`OrbitMassHierarchy.lean`) provides
 the physical mass assignments: gen₁ < gen₂ < gen₃ in all SM sectors.
 
 ## Results certified here (all CatAL, zero sorry)
@@ -54,10 +54,10 @@ the physical mass assignments: gen₁ < gen₂ < gen₃ in all SM sectors.
 
 ## Honest boundaries (CatAD)
 
-- Hilbert space completion (ℓ² norm, continuum limit) remains open (OQ-CL1)
+- Hilbert space completion (ℓ² norm, continuum limit) remains open
 - Connection to standard QFT Fock space: the Fock algebra creation/annihilation
   operators act on the tensor product ℋ_ring^⊗N; identifying f_MDL ring
-  dynamics with QFT field modes requires the AFCA continuum limit (SPEC_285)
+  dynamics with QFT field modes requires the AFCA continuum limit
 - The tensor-product factorization in the 't Hooft information-equivalence sense
   (§9.3 of `tHooft2016CA`) is CatAD pending the gauge identification upgrade
 

@@ -47,7 +47,7 @@ axiom rule110_turing_complete :
     ∃ (_ : Fin 2 → Fin 2),  -- initial Rule 110 configuration
     True                      -- simulates TM (full predicate pending TM formalization)
 
-/-! ## §2 — Universal CA Simulation (Rank 5-FSS) -/
+/-! ## §2 — Universal CA Simulation -/
 
 /-- Any Turing-complete CA can simulate any other 1D binary CA.
 
@@ -63,7 +63,7 @@ theorem universal_ca_simulates_any_ca
       True                      -- that simulates the given rule (formal simulation predicate)
     := ⟨fun _ => 0, trivial⟩
 
-/-! ## §3 — FCA Self-Simulation (Rank 5-FSS consequence) -/
+/-! ## §3 — FCA Self-Simulation -/
 
 /-- The FCA (Fractal CA = Rule 110 simulating Rule 110) is implementable.
 
@@ -82,7 +82,7 @@ theorem fca_implementable_in_rule110 :
     True                      -- that implements one FCA level (Rule 110 self-simulation)
     := universal_ca_simulates_any_ca (fun a b c => (a + b + c) % 2)
 
-/-! ## §4 — Asynchronous Rule 110 Exists (Rank 30-SAS) -/
+/-! ## §4 — Asynchronous Rule 110 Exists -/
 
 /-- Asynchronous Rule 110 exists and is computationally equivalent to the
     synchronous version.
@@ -113,7 +113,7 @@ theorem async_rule110_exists :
     True
     := ⟨fun _ _ => True, trivial⟩
 
-/-! ## §5 — AFCA Exists (Rank 30-SAS consequence) -/
+/-! ## §5 — AFCA Exists -/
 
 /-- The AFCA (Asynchronous Fractal CA) exists.
 
@@ -127,7 +127,7 @@ theorem async_rule110_exists :
     asynchronous FCA is implementable as an asynchronous Rule 110 pattern.
 
     The AFCA is the substrate required for the AFCA clock-rate conjecture
-    (Rank 31-ACS): in the AFCA, moving persistent patterns tick at rate 1/γ,
+: in the AFCA, moving persistent patterns tick at rate 1/γ,
     giving SR time dilation without additional postulates.
 
     Status: CatAD — conditional on Cook 2004 + synchronous→asynchronous

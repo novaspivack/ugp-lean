@@ -14,9 +14,9 @@ Physical interpretation: this is the discrete analog of ∇_μ G^μν = 0
 (contracted Bianchi identity = conservation of the Einstein tensor).
 It confirms that the Rule 110 causal graph respects general covariance
 at the discrete level — a necessary condition for the Gorard chain
-convergence to a smooth Lorentzian manifold (OQ-QG-1 step 2).
+convergence to a smooth Lorentzian manifold.
 
-Computational verification: 078-GCL-BIANCHI (CatA, 2026-05-28).
+Computational verification: 078-GCL-BIANCHI (CatA).
 Commit: 95b78101. All triangle sums = 0.000000 to machine precision.
 
 ## Proof strategy
@@ -61,7 +61,7 @@ theorem discrete_bianchi_vacuum {n : ℕ} (κ : Fin n → ℝ)
 /-!
 ## Ollivier-Ricci curvature: matter sector
 
-Computation (078-GCL-BIANCHI, commit 95b78101) established that for
+Computation established that for
 the L=14, T=14 Rule 110 causal graph, all closed-loop κ sums vanish:
 
   κ_SD ≈ +0.773   (matter edge, positive curvature)
@@ -106,7 +106,7 @@ The Rule 110 causal graph satisfies:
 
 This is the discrete contracted Bianchi identity ∇_μ G^μν = 0.
 It is a necessary condition for the Gorard chain convergence to the
-Riemann tensor (OQ-QG-1, step 2 of 3).
+Riemann tensor.
 -/
 theorem rule110_discrete_bianchi_identity :
     -- Vacuum Bianchi (CatAL): finset sum of all-zero curvatures = 0

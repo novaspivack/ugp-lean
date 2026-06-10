@@ -252,7 +252,7 @@ theorem neutrino_sector_catad_characterization :
 -- ════════════════════════════════════════════════════════════════
 
 /-!
-## GTE leptogenesis K-factor (rank 080-CKM-LEPTOGEN)
+## GTE leptogenesis K-factor
 
 The washout K-factor for the lightest right-handed neutrino N₁ is
   K₁ = Y_ν₁² M_Pl / (1.66 √g* M_R)

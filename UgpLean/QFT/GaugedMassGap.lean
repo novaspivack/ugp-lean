@@ -11,7 +11,7 @@ quantum field theory in the color-neutral (color-singlet) sector.  The statement
 is **conditional** on three inherited inputs:
 
 1. The PSC-admissible-state mass gap (`gte_mass_gap` in `Spacetime.MassGap`,
-   Rank 42-MGP, CatAL, zero sorry, zero axioms).
+   CatAL, zero sorry, zero axioms).
 2. Z₃ confinement: the 2D string tension `σ_2D > 0`, established analytically
    from the transfer-matrix eigenvalue ratio
    `σ_2D = log[(e^β + 2 e^{-β/2}) / (e^β - e^{-β/2})]`.
@@ -36,7 +36,7 @@ lemmas.  No new axioms are introduced.
 
 The connection between this lower bound and the spectral mass gap of the full
 Wightman/Haag–Kastler formulation of the continuum Z₃-gauged Φ_MDL theory is
-the same continuum-limit open question (OQ-CL1) that bridges the beable-level
+the same continuum-limit open question that bridges the beable-level
 `gte_mass_gap` to the Clay Millennium Problem statement.  It is **not** a
 hidden sorry of this theorem: the conditional theorem here is fully proved
 within its hypotheses.
@@ -99,11 +99,11 @@ theorem kink_pair_threshold_pos (P : Z3GaugedPhiMDLData) :
 
 end Z3GaugedPhiMDLData
 
-/-- **QFT-level mass gap: positive lower bound (Rank 72-MG-KG, CatAL).**
+/-- **QFT-level mass gap: positive lower bound (CatAL).**
 
 Given the inherited canonical inputs (Z₃ string tension `σ_2D > 0`, BPS kink
 mass `M_kink = 8 m / N² > 0`, and the implicit beable-level mass gap
-`gte_mass_gap` from Rank 42-MGP), the lightest non-vacuum color-singlet
+`gte_mass_gap`), the lightest non-vacuum color-singlet
 excitation in the Z₃-gauged Φ_MDL quantum field theory has positive mass at
 least `2 M_kink`.
 
@@ -113,13 +113,13 @@ is a strict positivity statement.  Zero sorry, zero axioms.
 
 The connection from this lower bound to the Wightman / Haag–Kastler spectral
 gap of the full continuum theory remains the open continuum-limit question
-(OQ-CL1) shared with Rank 42-MGP and the Clay Millennium Problem; it is not
+shared with the beable mass-gap theorem and the Clay Millennium Problem; it is not
 a hidden sorry of this theorem. -/
 theorem qft_gauged_mass_gap_lower_bound (P : Z3GaugedPhiMDLData) :
     ∃ Δ : ℝ, 0 < Δ ∧ Δ = P.kink_pair_threshold :=
   ⟨P.kink_pair_threshold, P.kink_pair_threshold_pos, rfl⟩
 
-/-- **QFT-level mass gap: existence (Rank 72-MG-KG, CatAL).**
+/-- **QFT-level mass gap: existence (CatAL).**
 
 A simpler corollary stating that the QFT mass gap is positive. -/
 theorem qft_gauged_mass_gap_pos (P : Z3GaugedPhiMDLData) :
@@ -152,14 +152,14 @@ The canonical Φ_MDL gen-1 / gen-3 instance with `N = 7`, `m = 1/2` and
 
 which produces an instance witnessing the existence of the QFT-level mass gap.
 For the simpler Z₃-only matter sector at the lattice scale used in the
-numerical CatA evidence, the inherited values from Rank 97c-GI / Rank 92-PHOMASS
+numerical CatA evidence, the inherited analytic values
 give `σ_2D = 0.1460` and `M_kink_lat = 3 κ / 2 = 0.15` at `κ = 0.10`, so
 `kink_pair_threshold = 0.30` lattice units (≈ 0.6 GeV physical via the
 Rank 97b sim-to-fm calibration `0.100 fm/sim`).
 -/
 
 /-!
-## Rank 72d-LEAN-UNCONDITIONAL: hypothesis discharge
+## Hypothesis discharge
 
 The conditional theorem `qft_gauged_mass_gap_pos` takes `Z3GaugedPhiMDLData P`
 bundling three inherited inputs.  Each hypothesis is discharged below as a
@@ -173,18 +173,18 @@ def N7 : ℕ := 7
 
 theorem N7_gt_one : 1 < N7 := by decide
 
-/-- BPS kink energy scale E_kink = 8 / N₇² > 0 (Rank 97c-GI / Rank 92-PHOMASS). -/
+/-- BPS kink energy scale E_kink = 8 / N₇² > 0. -/
 theorem kink_energy_positive : (8 : ℚ) / 49 > 0 := by norm_num
 
 /-- BPS kink mass M_kink = 8 / N₇² > 0 in natural Φ_MDL units (m = 1). -/
 theorem kink_mass_positive : (8 : ℚ) / (7 ^ 2 : ℕ) > 0 := by norm_num
 
-/-- Beable-level mass gap is strictly positive (Rank 42-MGP, CatAL). -/
+/-- Beable-level mass gap is strictly positive (CatAL). -/
 theorem beable_mass_gap_positive : ∃ Δ : ℚ, Δ > 0 := by
   obtain ⟨Δ, hΔ, _⟩ := GTE.Spacetime.MassGap.gte_mass_gap
   exact ⟨Δ, hΔ⟩
 
-/-- Canonical 2D Z₃ string tension σ_2D = 146/1000 > 0 (Rank 97c-GI analytic value). -/
+/-- Canonical 2D Z₃ string tension σ_2D = 146/1000 > 0 (analytic value). -/
 theorem sigma_2d_canonical_positive : (0 : ℝ) < (146 / 1000 : ℝ) := by norm_num
 
 /-- Canonical inherited data for N = N₇, m = 1/2, σ_2D = 0.146, M_kink = 4/49. -/
@@ -200,7 +200,7 @@ noncomputable def canonicalZ3GaugedPhiMDLData : Z3GaugedPhiMDLData where
     simp only [N7]
     norm_num
 
-/-- **Unconditional QFT mass gap (Rank 72d-LEAN-UNCONDITIONAL, CatAL).**
+/-- **Unconditional QFT mass gap (CatAL).**
 
 All three hypotheses of `Z3GaugedPhiMDLData` are discharged by
 `sigma_2d_canonical_positive`, `canonicalZ3GaugedPhiMDLData.M_kink_pos`, and
@@ -226,7 +226,7 @@ theorem qft_gauged_mass_gap_hypotheses_derived :
 /-- **Confinement + mass gap conjunction** (CatAL bridge).
 
     The color-singlet sector has a positive QFT kink–antikink threshold and no
-    PSC-admissible free quark states. Combines Rank 72-MG-KG with Rank 25-CCF. -/
+    PSC-admissible free quark states. Combines the QFT mass gap with color confinement. -/
 theorem confined_massive_color_singlet (P : Z3GaugedPhiMDLData) :
     0 < P.kink_pair_threshold ∧
     ∀ b : Fin 5 → Fin 7, GTE.Lifting.PSCAdmissible b → ¬GTE.Spacetime.Confinement.SingleQuarkBeable b :=

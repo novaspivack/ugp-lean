@@ -226,7 +226,7 @@ theorem f21_su3_continuum_master :
    f21_matrix_span_dimension_eq_nine⟩
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- G12: F₂₁↪SU(3) holonomy bridge — master bundle (EPIC_080 080-G12)
+-- G12: F₂₁↪SU(3) holonomy bridge — master bundle
 -- ─────────────────────────────────────────────────────────────────────────────
 
 /-- **F21-SU3-FAITHFUL-BUNDLE** (CatAL): the faithful 3-irrep embedding of

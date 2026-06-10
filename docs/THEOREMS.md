@@ -1348,6 +1348,191 @@ operates at three nested levels: theory selection ($p$ from rule space), field d
 | **mdl_three_level_unification** | Polynomial.MDLThreeLevelUnification | Cross-module CatAL bundle: Level 0→1 (MDL theory selection via `mdl_ca_rule_coding_closed`), Level 1→2 (SRRG φ bridge via `gte_poly_srrg_bridge`), PSC link ($p \to f_\mathrm{MDL}$ via `psc_projection_gives_fmdl`), Level 2→3 (unique measurement orbit via `fmdl_orbit_is_unique_psc_trajectory`) | CatAL |
 | **mdl_level23_closed_choice_forces_transputation** | Polynomial.MDLThreeLevelUnification | Wrapper: PSC + closed choice force transputation (imports `closed_choice_forces_transputation` from transputation-lean, re-exported in ugp-lean context) | CatAL |
 
+---
+
+## Frontier Closures — Second Wave
+
+**Scope:** 80 net-new zero-`sorry` theorems (plus two conditional CatAL\|H1) across fourteen modules, plus two PARTIAL modules. Cat levels: **CatAL** unless noted **PARTIAL** or **CatAL\|H1**. Covers: golden-quadratic diagonal fixed-point structure, Eisenstein arithmetic of GTE constants, seven-ring dynamical-zeta orbit classification, Z₇ vacuum-selection mechanism with gauge-coupling hierarchy, kink-sector physics algebraic cores, biquadratic-compositum unification of the two master rings, the CC one-jump residual algebraic core, and the N_gen bracket-orientation theorem.
+
+---
+
+### Golden quadratic and diagonal fixed points (`Polynomial.GoldenQuadratic`)
+
+Nine CatAL theorems. Module: `UgpLean/Polynomial/GoldenQuadratic.lean`. Zero sorry.
+
+| Theorem | Statement |
+|---------|-----------|
+| **gte_diagonal_quadratic_factorization** | $p(x,x,x)-x = -x(x^2+x-1)$ over any commutative ring (`ring`) |
+| **disc5_dichotomy_gf7** | $x^2+x-1$ rootless in $\mathbb{F}_7$ iff $5$ is QNR mod 7; diagonal fixed points of $p$ over $\mathbb{F}_7$ = $\{0\}$ |
+| **golden_floor_duality_bundle** | SRRG fixed-point equation and singleton-invariance equation are the same ℤ-quadratic; ℝ root $1/\varphi$, $\mathbb{F}_7$ rootless |
+| **master_quadratic_no_root_mod_seven_pow** | $\forall k\ge 1$, $x^2+x\ne 1$ in $\mathbb{Z}/7^k\mathbb{Z}$ (7-adic floor inertness) |
+| **master_quadratic_split_iff_qr5** | For odd prime $q\ne 5$: $\exists x,\, x^2+x=1$ in $\mathbb{Z}/q$ iff $q\equiv\pm1\pmod5$ (quadratic reciprocity) |
+| **golden_singleton_invariant_iff_diag_fixed** | $\{k\}$ is $p$-invariant iff $k=0$ or $k^2+k-1=0$ (universal ring) |
+| **second_floor_iff_ramified** | $\{0,k\}$ is $p$-invariant iff $3k=1$ iff $q=5$ — GF(5) ballistic ramification derived |
+| **gf49_golden_roots_frobenius_swap** | $\mathbb{F}_{49}$ has exactly two roots; Frobenius $x\mapsto x^7$ swaps them |
+| **pisano_seven_eq_sixteen** | Fibonacci period mod 7 = 16 (`native_decide`) |
+
+---
+
+### Eisenstein arithmetic and $F_{21}$ residue field (`Polynomial.EisensteinIdentities`)
+
+Seven CatAL theorems. Module: `UgpLean/Polynomial/EisensteinIdentities.lean`. Zero sorry.
+
+| Theorem | Statement |
+|---------|-----------|
+| **c_H_eq_phi3_ngen** | $c_H = \Phi_3(N_{\rm gen}) = \Phi_6(N_{\rm gen}+1) = 13$ (`norm_num`) |
+| **f21_order_eisenstein_norm_product** | $|F_{21}| = \Phi_6(2)\cdot\Phi_6(3) = 21$ (Eisenstein norm multiplicativity) |
+| **f21_eisenstein_residue_model** | $F_{21}\cong(\mathbb{Z}[\omega]/(3+\omega))^+\rtimes\mu_3$ as Fin 7 × Fin 3 with action ×4 vs ×2 (`decide` on 441 products) |
+| **poly_p_torus_equivariance** | $p(uL+u-1,\,u^{-1}C,\,u^{-1}R)=u^{-1}p(L,C,R)$ for all units $u$ (CommRing + GF(7) check) |
+| **poly_p_variety_orbit_decomposition_gf7** | $V(p)\cap\mathbb{F}_7^3 = \{(-1,0,0)\}\sqcup$ (7 free $\mathbb{F}_7^*$-orbits of size 6); unique ether point (`decide` at 343 states) |
+| **phi6_identity_bundle** | Four identities I1–I4 for $\Phi_6$/$\Phi_3$/$\Phi_{12}$ + instances $91=7\cdot 13$, $21=3\cdot 7$, $73=\Phi_{12}(3)$ |
+| **cH_phi3_unique_at_ngen** | $(n^3-1)/2=\Phi_3(n)\iff n=3$ — $c_H$'s cyclotomic membership forced by $N_{\rm gen}=3$ |
+
+---
+
+### Dynamical zeta and period-475 orbit (`Polynomial.DynamicalZeta`)
+
+19 CatAL + 5 PARTIAL. Module: `UgpLean/Polynomial/DynamicalZeta.lean`. Key theorems:
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **fixed_point_local_factorization** | $p(a,b,c)-b = c(1-b(1+a))$ over any commutative ring | CatAL |
+| **vacuum_unique_temporal_fixed_point_ring** | $\mathrm{Fix}(T_n)=\{0^n\}$ for all $n\ge 1$ via Möbius chain + pole-within-6 | CatAL |
+| **golden_moebius_single_eight_cycle_gf7** | Möbius $\mu(x)=(1+x)^{-1}$ acts as a single 8-cycle on $\mathbb{P}^1(\mathbb{F}_7)$ | CatAL |
+| **fibonacci_matrix_order_sixteen_gf7** | Fibonacci matrix has order 16 in GL₂(F₇) | CatAL |
+| **prime_ring_cycle_dichotomy_bundle** | Shift-equivariant map on prime-$n$ ring: σ-fixed iff uniform; orbits are all size 1 or $n$ | CatAL |
+| **t95_eq_sigma3_on_period475_cycle** | $T^{95}=\sigma^3$ exactly on the period-475 attractor (`native_decide`) | CatAL |
+| **period475_drift_cancelled_return_order_nineteen** | Return map $\sigma^3\circ T^5=T^{100}$ has order exactly 19 on the cycle | CatAL |
+| **period475_gauge_observable_e1_period_95** | σ-invariant sum $e_1$ has period 95 on the cycle | CatAL |
+| **debruijn_fixed_matrix_trace_one** | De Bruijn fixed-point matrix trace bundle; full `tr(M₁ⁿ)=1` PARTIAL | PARTIAL |
+| **seven_ring_cycle_spectrum** | Cycle-length arithmetic + dichotomy; 7⁷ orbit partition PARTIAL | PARTIAL |
+
+---
+
+### Z₇ vacuum selection and gauge-coupling hierarchy (`Physics.ZSevenVacuumSelection`, `Universality.SylowIndexCouplingHierarchy`)
+
+14 CatAL theorems across two modules. Zero sorry.
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **vcoupling_breaks_z7_shift** | ZSevenVacuumSelection | $V_{\rm coupling}=\varepsilon|\phi|^2(D_\mu\chi)^2$ not invariant under $\mathbb{Z}_7$ shift |
+| **z7_vacua_chi_kinetic_inequivalent** | ZSevenVacuumSelection | $\chi$-kinetic normalisations $Z_k$ strictly monotone in $k$; $Z_6/Z_0>46$ at $\varepsilon=7/9$ |
+| **wall_bias_minimum_unique** | ZSevenVacuumSelection | Unique wall-bias minimum at $k=0$ for $\varepsilon,X>0$ |
+| **gs_set_is_z3_orbit_transversal** | ZSevenVacuumSelection | $\{0,1,5\}$ contains exactly one element of each $\langle\times 2\rangle$ orbit |
+| **vcoup_periodic_profile_fails_bps_window** | ZSevenVacuumSelection | Periodic profile outside BPS window; $\phi^2$ profile inside |
+| **compact_completion_minimum_at_k0** | ZSevenVacuumSelection | $1-\cos(2\pi k/7)$ has unique minimum at $k=0$ |
+| **scalar_cw_step_inward** | ZSevenVacuumSelection | $G(r)>0$ for $r>1$ — scalar CW step inward |
+| **z7_coupling_seam_discontinuity** | ZSevenVacuumSelection | $1+8\pi^2\cdot(7/9)>56$ seam-ratio witness |
+| **boundary_sensitivity_coefficient_positive** | ZSevenVacuumSelection | Counterterm-boundary pull outward ($\pi$ bounds + `linarith`) |
+| **sylow_family_pdg_match_unique_closest** | SylowIndexCouplingHierarchy | $7/2$ uniquely closest to the PDG running value in the Sylow rational family |
+| **thermal_leading_inward_dominance** | SylowIndexCouplingHierarchy | $3e^2 > g^2$ at derived couplings (`norm_num`) |
+
+---
+
+### Kink physics algebraic cores (`Physics.KinkVacuumPolarization`, `KinkFormFactor`, `BurnsideCosetCharges`, `Universality.HeatKernelContactTerms`, `LambdaGTEThreshold`)
+
+11 CatAL + 1 PARTIAL across six modules.
+
+| Theorem | Module | Statement | Cat |
+|---------|--------|-----------|-----|
+| **kink_vacuum_polarization_algebraic_core** | KinkVacuumPolarization | Bundle: $t_{\rm kink}=3$, $\hat{b}=-4$, $c^{S^1,\rm tree}=8\ln(8/7)$, positivity | CatAL |
+| **kink_cartan_charge_trepresentation** | KinkVacuumPolarization | $H_A$ weights $\{0,\pm1/2\}$, $\Sigma q^2=1/2$, $t_{\rm kink}=3$ | CatAL |
+| **b_hat_continuity_identity** | KinkVacuumPolarization | $\hat{b}=-4=7-11$; ties `b0_eq_z7_order` | CatAL |
+| **c_kink_s1tree_rational_log** | KinkVacuumPolarization | $c^{S^1,\rm tree}=8\ln(8/7)$ at $\Lambda/m_\phi=8/7$ | CatAL |
+| **kink_positivity_inequality** | KinkVacuumPolarization | $m_\phi<e^{\gamma/2}\Lambda_{\rm GTE}$ on tree reading | CatAL |
+| **sech_form_factor_moment_bundle** | KinkFormFactor | Born/topological $r_{\rm rms}$ ratio $\sqrt{3}$, BA-SHAPE; sech moments | CatAL |
+| **kink_dissolution_born_floor** | KinkFormFactor | $b\le 2.51/2.53$ (tree/pole) from Born-floor rational chain | CatAL |
+| **burnside_coset_charge_spectrum** | BurnsideCosetCharges | Coset charges $\{\pm1/2,\pm1/2,\pm1\}$, $t_V=3$, $c_{\rm coset}=-1$ | CatAL |
+| **heat_kernel_contact_term_rationals** | HeatKernelContactTerms | $(N^2-3)/(24N)=1/12$ at $N=3$; $\mathfrak{su}(N)$ trace/Killing skeleton | CatAL |
+| **lambda_gte_threshold_identity** | LambdaGTEThreshold | $\Lambda_{\rm GTE}=(8/7)m_\tau$; multiplier 7; $\mathbb{Z}_7$ coset residues; $7=11-4$ | CatAL |
+| **kink_pole_mass_spectral_core** | KinkPoleMassSpectralCore | PT autocorrelation, Levinson, sum rule, dim-reg channel, $\Gamma(-3/2)=4\sqrt{\pi}/3$ as definitional values; full integrals PARTIAL | PARTIAL |
+
+---
+
+### Spin-7 ring ground-space rigidity (`Polynomial.SpinSevenGroundSpace`)
+
+Eight CatAL theorems. Module: `UgpLean/Polynomial/SpinSevenGroundSpace.lean`. Zero sorry, zero custom axioms.
+
+Certifies that for **every** ring length $n \ge 3$ the cyclic zero-energy configurations of the spin-7 chain — assignments $(s_0,\dots,s_{n-1}) \in \mathbb{F}_7^n$ with $p(s_{i-1},s_i,s_{i+1}) = 0$ at every site — are exactly the three uniform assemblies $\{0^n, 1^n, 5^n\}$. The zero-energy condition $p=0$ is distinct from the temporal fixed-point condition $p = s_i$ classified in `DynamicalZeta` (rigidity set $\{0^n\}$). Proof technique: zero-energy windows determine the right cell from the left pair, defining a deterministic successor function on the 43 active pair states of $\mathbb{F}_7^2$; `native_decide` certifies the only directed cycles are the three uniform self-loops; a cyclic configuration induces a closed walk, the minimal-period bound $\le 49$ pigeonholes the return, and zero cells propagate to the vacuum ring.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **gte_ring_ground_states_uniform_general** | Ground-space rigidity for all $n\ge 3$: every cyclic zero-energy configuration is uniform with value in $\{0,1,5\}$ | CatAL |
+| **gte_ring_ground_states_uniform_bundle** | Characterisation bundle: rigidity + converse (each uniform ground assembly is zero-energy at every site) for all $n\ge 3$ | CatAL |
+| **gte_ring_ground_states_uniform** | Bounded-length corollary ($3\le n\le 7$), delegating to the general theorem | CatAL |
+| **uniform_ground_ring_satisfies_zero_energy** | Converse direction: uniform rings at $c\in\{0,1,5\}$ satisfy the zero-energy window at every site | CatAL |
+| **zero_energy_active_pair_only_uniform_cycles** | The 43-vertex zero-energy pair digraph has exactly the three uniform self-loops as directed cycles (`native_decide`) | CatAL |
+| **zero_energy_zero_center_forces_zero_right** | A zero-energy cell with centre 0 forces its right neighbour to 0 (local factorisation over $\mathbb{Z}/7$) | CatAL |
+| **zero_energy_any_zero_forces_all_zero** | Zero propagation: any vanishing cell on a zero-energy ring forces the vacuum ring $0^n$ | CatAL |
+| **ground_spin_values_card** | $\|\{0,1,5\}\| = 3$ | CatAL |
+
+---
+
+### Retrospective synthesis: biquadratic compositum and AGL chiral Z₂ (`Polynomial.BiquadraticCompositum`, `Polynomial.AGL17ChiralZ2`)
+
+22 CatAL theorems. Zero sorry, zero custom axioms.
+
+#### Biquadratic compositum (`Polynomial.BiquadraticCompositum`)
+
+Module: `UgpLean/Polynomial/BiquadraticCompositum.lean`.
+
+| Theorem | Statement |
+|---------|-----------|
+| **biquadratic_conductor_identity** | $\mathrm{cond}(K)=15=N_{\rm gen}\cdot N_{\rm fam}=3\cdot 5$ (`norm_num`) |
+| **alphabet_class_characterization** | $q\equiv 7,13\pmod{15}\iff$ split in $\mathbb{Z}[\omega]$ AND inert in $\mathbb{Z}[\varphi]$ (`decide`) |
+| **minimal_class_prime_is_seven** | Least prime in the alphabet class is 7 (`decide`) |
+| **second_class_prime_is_cH** | Second class prime is 13 = $c_H$ (`decide`) |
+| Plus 11 supporting norm_num/decide certificates | Φ₆-stability lemma, gap adjudication (31 splits, 57 composite), corpus-atom null |
+
+#### AGL(1,7) chiral Z₂ (`Polynomial.AGL17ChiralZ2`)
+
+Module: `UgpLean/Polynomial/AGL17ChiralZ2.lean`.
+
+| Theorem | Statement |
+|---------|-----------|
+| **agl17_order** | $|{\rm AGL}(1,7)| = 6\cdot 7 = 42$ (`native_decide`) |
+| **reflection_order_two** | Spatial reflection $s=(6,0)$ has order 2 |
+| **reflection_swaps_rules** | Rule 110 $\circ\, s =$ Rule 124 on $\{0,1\}^3$; 0 mismatches over all 343 inputs |
+| **color_commutes_reflection** | Color action $x\mapsto 2x$ commutes with $s=(6,0)$ |
+| **free_orbit_card_42** | Free AGL(1,7) orbit on V(p) has cardinality 42 = $|{\rm AGL}(1,7)|$ |
+| Plus 2 supporting decide certificates | ZMod 7 units card = 6; color action order 3 |
+
+---
+
+### CC one-jump residual (`Physics.CCOneJumpResidual`)
+
+6 CatAL + 1 PARTIAL. Module: `UgpLean/Physics/CCOneJumpResidual.lean`. Zero sorry on CatAL theorems.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **d_res_census_annotation** | $D_{\rm res} := (\ln 2/\pi)\cdot L_{\rm PSC}$ annotated as the census-capacity upper bracket endpoint of the realised-ledger residual; all prior PSC epoch theorems survive | CatAL |
+| **omega_lambda_bracket_strict** | $3\pi/14 < (\ln 2/3\pi)\cdot\log_2(2000/3)$ — holographic floor strictly below census endpoint; bracket non-empty | CatAL |
+| **bracket_strict_interiority** | Planck 2018 central value strictly inside the bracket $(3\pi/14,\,\Omega_{\rm census})$ | CatAL |
+| **no_computable_gte_rt_convergence_modulus** | No computable modulus of convergence for the realised-ledger stage approximants; reduction to `asr_rt_not_computable` (Theorem C pattern) | CatAL |
+| **sigma_star_falsifiability_horizon** | $\sigma^*\in(2.9\times10^{-4},\,4.3\times10^{-4})$; refutation requires $>5\times$ current Planck precision | CatAL |
+| **cc_one_jump_residual_algebraic_core** | Master bundle: census annotation, bracket, no-modulus, σ* horizon | CatAL |
+| **d_res_halting_ledger_factorization_core** | Left-c.e. structural core + finite `toyLedger` witness; full infinite Form Theorem and deg_T = 0′ identification deferred | PARTIAL |
+
+---
+
+### $N_{\rm gen}$ bracket-orientation (`Universality.NgenBracketOrientation`)
+
+5 CatAL + 2 CatAL\|H1. Module: `UgpLean/Universality/NgenBracketOrientation.lean`. Zero sorry. Hypothesis H1 analytically discharged within the record-ledger premise bundle (see note below).
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **ngen_bracket_orientation_flip** | Admissible ledger interval $[{\rm floor}(N),{\rm census}(N)]$ non-empty iff $N\le 3$; $N\ge 4$ excluded by separation certificate | CatAL |
+| **ngen_bracket_orientation_excluded_from_four** | $\forall N\ge 4,\; {\rm census}(N) < {\rm floor}(N)$ — bracket inverted, no admissible dark-energy fraction | CatAL |
+| **cc_floor_orientation_atom_inequality** | $14\cdot\ln(2000/3)>9\pi^2$ via rational witness; GTE-atom form $2|Z_7|\ln(D^2 N_{\rm fam}^3/N_{\rm gen})>N_{\rm gen}^2\pi^2$ at $D=4,N_{\rm fam}=5,N_{\rm gen}=3$ | CatAL |
+| **cc_floor_orientation_gte_atom_form** | GTE-atom identity form of the floor inequality at the GTE parameter values | CatAL |
+| **cc_floor_orientation_bracket_non_empty** | Atom inequality implies $\Omega_{\rm holo}<\Omega_{\Lambda,\rm GTE}$ (bracket non-emptiness corollary) | CatAL |
+| **ngen_pincer_from_layer1_and_orientation** | PSC Layer I ($N_{\rm gen}\ge 3$) + bracket-orientation exclusion ($N_{\rm gen}\le 3$) implies $N_{\rm gen}=3$ without Presentation Invariance; conditional on H1 | CatAL\|H1 |
+| **ngen_pincer_pi_free_bundle** | Layer-I interface + orientation exclusion + $N_{\rm gen}=3$ as bundled PI-free theorem | CatAL\|H1 |
+
+**Note on H1:** The orientation hypothesis H1 (`BracketOrientationHypothesis`) is analytically discharged by the Floor Orientation Theorem (floor half: realised ledger cannot undercut the MDL-minimal carrier price; census half: information-capacity bound). The pincer is unconditional within the record-ledger premise bundle of the One-Jump Residual Theorem.
+
+---
+
 ## External Citations (Not Formalized)
 
 | ID | Claim | Source |

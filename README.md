@@ -17,7 +17,7 @@
 
 This repository is part of the **Reflexive Reality** research program by [Nova Spivack](https://www.novaspivack.com/).
 
-**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, quantum gravity completion, three-tape CMCA, self-reference, W₁ Wasserstein distance scaffold (fully CatAL, zero sorry), GTE polynomial explorations over GF(7)/GF(5) (ground states, period-475, GF(7³) number theory), GTE WolframModel causal tree (binary tree structure, Horton ratio, botanical correspondence), and Three-Level MDL Unification (cross-module bundle: theory selection, SRRG φ bridge, PSC projection, orbit uniqueness). **308 modules, zero sorry on the core proof path** (two pre-existing sorry placeholders in `GTE/AnalyticArchitecture` are outside the core path; see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list). Sech overlap finite-$r$ bounds: **0 sorry** in `PhiMDLFluctuationSpectrum` and `SechOverlapIntegralBounds`; **2 CatA axioms** in `SechOverlapIntegralBounds_bridge.lean` document the mesh→integral bridge.
+**What this formalizes:** Machine-checked Lean 4 formalization of the Universal Generative Principle (UGP) — ridge sieve, GTE orbit, Quarter-Lock, UCL Elegant Kernel, mass relations, Turing universality (including UWCA history-lane reversibility), meta-law ML-9 finite entropy companions, GTE-NEMS framework instantiation, quantum gravity completion, three-tape CMCA, self-reference, W₁ Wasserstein distance scaffold (fully zero sorry), GTE polynomial explorations over GF(7)/GF(5) (ground states, period-475, GF(7³) number theory), GTE WolframModel causal tree (binary tree structure, Horton ratio, botanical correspondence), Three-Level MDL Unification (cross-module bundle: theory selection, SRRG φ bridge, PSC projection, orbit uniqueness), golden-quadratic duality and Eisenstein arithmetic, dynamical zeta/vacuum uniqueness, spin-7 ring ground-space rigidity for arbitrary ring length n ≥ 3, biquadratic-compositum unification of the two master rings, AGL(1,7) chiral Z₂ symmetry, Z₇ vacuum-selection and kink physics, the CC one-jump residual algebraic core, and the N_gen bracket-orientation exclusion. **326 modules, zero sorry on the core proof path** (two pre-existing sorry placeholders in `GTE/AnalyticArchitecture` are outside the core path; see `paper/ugp_lean_formalization.tex` for the canonical layer diagram and module list). Sech overlap finite-$r$ bounds: **0 sorry** in `PhiMDLFluctuationSpectrum` and `SechOverlapIntegralBounds`; **2 CatA axioms** in `SechOverlapIntegralBounds_bridge.lean` document the mesh→integral bridge. The newest module groups (GoldenQuadratic, EisensteinIdentities, DynamicalZeta, SpinSevenGroundSpace, BiquadraticCompositum, AGL17ChiralZ2, ZSevenVacuumSelection, KinkVacuumPolarization, KinkFormFactor, KinkPoleMassSpectralCore, BurnsideCosetCharges, HeatKernelContactTerms, LambdaGTEThreshold, CCOneJumpResidual, NgenBracketOrientation) are in this sandbox; graduation to canonical ugp-lean is pending the standard graduation protocol.
 
 | Link | Description |
 |------|-------------|
@@ -40,18 +40,18 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 
 ---
 
-## Module structure (308 modules; **17 layers** in `paper/ugp_lean_formalization.tex` §Architecture)
+## Module structure (326 modules; **17 layers** in `paper/ugp_lean_formalization.tex` §Architecture; 18 sandbox-only modules pending graduation)
 
 | Layer | Count | Modules |
 |-------|-------|---------|
 | **Core** | 7 | RidgeDefs, MirrorDefs, TripleDefs, SievePredicates, Disconfirmation, RidgeRigidity, MirrorAlgebra |
 | **Compute** | 6 | PrimeLock, Sieve, SieveExtended, SieveBelow10, ExclusionFilters, DecidablePredicates |
 | **Classification** | 6 | Bounds, TheoremA, TheoremB, RSUC, FormalRSUC, MonotonicStrengthening |
-| **GTE** | 24 | Evolution, Orbit, UpdateMap, GeneralTheorems, MersenneGcd, MersenneLadder, PrimeFactorAnalysis, ResonantFactory, MirrorDualConjecture, MirrorShift, UGPPrimes, InertPrimes, AnalyticArchitecture, DSIExport, StructuralTheorems, UniquenessCertificates, GTESimulation, EntropyNonMonotone, FiberBundle, LinearResponse, ScaleConnection, GTBGenerationPrimes, NcColorArithmetic, **NuclearPairing** |
+| **GTE** | 25 | Evolution, Orbit, UpdateMap, GeneralTheorems, MersenneGcd, MersenneLadder, PrimeFactorAnalysis, ResonantFactory, MirrorDualConjecture, MirrorShift, UGPPrimes, InertPrimes, AnalyticArchitecture, DSIExport, StructuralTheorems, UniquenessCertificates, GTESimulation, EntropyNonMonotone, FiberBundle, LinearResponse, ScaleConnection, GTBGenerationPrimes, NcColorArithmetic, **NuclearPairing**, **SylowIndexCouplingHierarchy** |
 | **Structural** | 30 | QuarterLock, LModelDerivation; *ElegantKernel/*: ChiralityFeature, D5StructuralAxiom, FibonacciHessian, KGen2, MuTriple, PentagonalUniqueness; *KGen.lean* deprecated (not imported); *ElegantKernel/Unconditional/*: CyclotomicChain, D5Renormalization, FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure, KLFullClosure, PentagonConstraint, RiccatiFixedPoint, **MasterCertification**, **UCLMassOrdering**, **UCLKoide**, **UCLLogBounds**, **UCLMassOrderingSBounds**, **UCLMassOrderingCoeffBounds**, **UCLMassOrderingBounds**, **UCLMassOrderingBridge**, **UCLMassOrderingCerts**, **UCLMassOrderingInterval**, **UCLMassOrderingDelta**, **UCLCalibration** |
 | **MassRelations** | 30 | *MassRelations* [umbrella], KoideClosedForm, KoideNewtonFlow, KoideAngle, KoideS3DiscreteIdentities, BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential, FroggattNielsen, NeutrinoFroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational, UpLeptonCyclotomic, Z2OrbifoldDepth, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex, VVMechanism, VVAllCoefficientsFromNc, CKMTheta23, CKMMixing, NeutrinoMassRatio, **NeutrinoSector**, **HiggsQuartic**, **TranscendentalMassBounds**, **QuarkMassNumericalCerts**, **PionMassFromGOR** |
 | **BraidAtlas** | 13 | ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation, CoxeterConductor, CoxeterConductorTowerLaw, EWBosons, MirrorWindingNumber, EWBosonRHNConnection, **RHNGapTheorem**, **DarkBraidAtlas**, **DarkQuarkCharge**, **DarkGaugeCoupling** |
-| **Universality** | 45 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, CUP4TotalParity, CUP11ModSeven, CUP3DUniqueness, CUP3DPSCUnification, CUP3DPhysicalIncompleteness, TwoLayerConfluence, GTECompilation, GTEUniqueness, GoEHierarchy, **GoEStabilityHierarchy**, **ZGMMesInvariant**, GTEInfTapeEncoding, GTEComputability, HypothesisB, HypothesisBCChain, PSCUniversality, CookRule110Ref, **OrbitPerturbationCatalog**, **Z7ChargeConjugation**, **Z5TransitivityUniqueness**, **DimensionalSliceUniqueness**, **GTPNeutralDiscrimination**, **Z7ZeroSectorDiscriminant**, **Z7InvariantSubsets**, **SMOrbitCausalIsolation**, **EWBosonStructure**, **EWChiralBridge**, **GUTStructure**, **CasimirMasslessEther**, **LawvereZone**, **ChiralPairVA**, **CouplingNoGo**, **ChiralityEigenstates**, **WeakIsospin**, **PhiMDLUniversality**, **ParticlesComputationSpacetimeTrinity**, **FrobeniusChain**, **EWBosonNumericalCerts** |
+| **Universality** | 46 | Rule110, UWCA, UWCASimulation, UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge, CUP4TotalParity, CUP11ModSeven, CUP3DUniqueness, CUP3DPSCUnification, CUP3DPhysicalIncompleteness, TwoLayerConfluence, GTECompilation, GTEUniqueness, GoEHierarchy, **GoEStabilityHierarchy**, **ZGMMesInvariant**, GTEInfTapeEncoding, GTEComputability, HypothesisB, HypothesisBCChain, PSCUniversality, CookRule110Ref, **OrbitPerturbationCatalog**, **Z7ChargeConjugation**, **Z5TransitivityUniqueness**, **DimensionalSliceUniqueness**, **GTPNeutralDiscrimination**, **Z7ZeroSectorDiscriminant**, **Z7InvariantSubsets**, **SMOrbitCausalIsolation**, **EWBosonStructure**, **EWChiralBridge**, **GUTStructure**, **CasimirMasslessEther**, **LawvereZone**, **ChiralPairVA**, **CouplingNoGo**, **ChiralityEigenstates**, **WeakIsospin**, **PhiMDLUniversality**, **ParticlesComputationSpacetimeTrinity**, **FrobeniusChain**, **EWBosonNumericalCerts**, **SylowIndexCouplingHierarchy** |
 | **Framework** | 3 | **GTEFrameworkInstance**, **GTEOptimalityInstance**, **GTEFinalCoalgebra** |
 | **SelfRef** | 2 | LawvereKleene, RiceHalting |
 
@@ -59,7 +59,8 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 | **Gravity** | +1 | **YukawaOverlapExponent** (DPP tape counting; $\alpha=N_c-1=2$; sech bracket **CatAL-conditional** on bridge axioms; **eta_B_PDG_in_GTE_bracket** Planck bracket CatAL-conditional) + **FKTTCoupling** (kink–top BPS action; **η_B = 6.109×10⁻¹⁰ CatAL unconditional**; `kink_top_coupling_eq_eps_FN`, zero sorry, zero axioms; `phi_mdl_kink_bps_saturation := rfl`) |
 | **MassRelations** | +1 | **PMNSNLOCorrection** ($\sin^2\theta_{23}^{\mathrm{NLO}}=209/441$; $2b_{R2}=|F_{21}|+1$; CatAL arithmetic) |
 | **QFT** | 2 | **GaugedMassGap**, **ChiralSymmetryBreaking** |
-| **Polynomial** | 3 | **PolyExplorations** (39 theorems, zero sorry: ground-state characterization `poly_p_uniform_gs_roots` CatAL; period-475 certs `period_475_returns` + `period_475_is_minimal` CatAL; GF(7³) 19-factor arithmetic; vacuum basin = 52; four-object framework; GF(7) arithmetic coprocessor `p_addition_via_L6` + `p_multiplication_from_two_gates`; PSC-projection bundle `psc_projection_gives_fmdl`; KL divergence certificate `kl_divergence_fmdl_p_nonzero`); **GTECausalTree** (8 theorems, zero sorry: `gte_rulegte_event_count` + `gte_rulegte_ten_generations` certify 1023-node binary tree causal graph for ruleGTE; `perfectTree_horton_ratio` certifies Horton $r_B=2$; `gte_causal_tree_summary` closes P49 §5.3–§5.4); **MDLThreeLevelUnification** (2 theorems, zero sorry: `mdl_three_level_unification` — cross-module CatAL bundle for Three-Level MDL Unification at theory selection, field dynamics, and event adjudication levels; `mdl_level23_closed_choice_forces_transputation` — PSC + closed choice force transputation, re-exported from transputation-lean) |
+| **Polynomial** | 9 | **PolyExplorations** (39 theorems, zero sorry: ground-state characterization `poly_p_uniform_gs_roots` CatAL; period-475 certs `period_475_returns` + `period_475_is_minimal` CatAL; GF(7³) 19-factor arithmetic; vacuum basin = 52; four-object framework; GF(7) arithmetic coprocessor `p_addition_via_L6` + `p_multiplication_from_two_gates`; PSC-projection bundle `psc_projection_gives_fmdl`; KL divergence certificate `kl_divergence_fmdl_p_nonzero`); **GTECausalTree** (8 theorems, zero sorry: `gte_rulegte_event_count` + `gte_rulegte_ten_generations` certify 1023-node binary tree causal graph for ruleGTE; `perfectTree_horton_ratio` certifies Horton $r_B=2$; `gte_causal_tree_summary` closes P49 §5.3–§5.4); **MDLThreeLevelUnification** (2 theorems, zero sorry: `mdl_three_level_unification` — cross-module CatAL bundle for Three-Level MDL Unification at theory selection, field dynamics, and event adjudication levels; `mdl_level23_closed_choice_forces_transputation` — PSC + closed choice force transputation, re-exported from transputation-lean); **GoldenQuadratic** (`gte_diagonal_quadratic_factorization` — p(x,x,x)−x = −x(x²+x−1); `golden_floor_duality_bundle` — unifies SRRG and binary-floor derivation chains under one ℤ-quadratic; zero sorry); **EisensteinIdentities** (`f21_eisenstein_residue_model` — F₂₁ ≅ (ℤ[ω]/(3+ω))⁺⋊μ₃; Φ₆ ladder identity web; zero sorry); **DynamicalZeta** (`vacuum_unique_temporal_fixed_point_ring` — Fix(T_n) = {vacuum} for all ring sizes n; `period475_drift_cancelled_return_order_nineteen` — σ³∘T⁵ = T¹⁰⁰ of order 19 on period-475 attractor; Artin–Mazur ζ factorizations; zero sorry); **SpinSevenGroundSpace** (`gte_ring_ground_states_uniform_general` — ground-space rigidity for ALL ring lengths n ≥ 3: cyclic zero-energy rings are exactly {0ⁿ, 1ⁿ, 5ⁿ}; pair-state digraph + native_decide cycle classification + minimal-period pigeonhole; zero sorry); **BiquadraticCompositum** (cond(K) = 15 = N_gen·N_fam for K = ℚ(√−3, √5); Artin-class characterisation q ≡ 7, 13 (mod 15); zero sorry); **AGL17ChiralZ2** (\|AGL(1,7)\| = 42; reflection s = (6,0) swaps Rule 110 ↔ Rule 124 with zero mismatches; commuting ℤ₃ color action; zero sorry) |
+| **Physics** | 7 | **ZSevenVacuumSelection** (`vcoupling_breaks_z7_shift` + `wall_bias_minimum_unique` — V_coupling breaks Z₇-label shift symmetry; bias minimum at k=0; `compact_completion_minimum_at_k0`; zero sorry; defect-cosmology vacuum-selection certificates); **KinkVacuumPolarization** (one-loop kink vacuum-polarization spectrum; sub-threshold certificate for quantum kink mass computation; zero sorry); **KinkFormFactor** (kink charge-distribution form factor; dissolution constant Λ_diss measurement; zero sorry); **KinkPoleMassSpectralCore** (Pöschl–Teller spectral skeleton; Levinson identity; PARTIAL — full Mathlib integrals deferred); **BurnsideCosetCharges** (coset-charge spectrum t_V = 3, c_coset = −1; zero sorry); **CCOneJumpResidual** (D_res left-c.e. census bracket; no-computable-modulus; σ* falsifiability horizon; zero sorry + 1 PARTIAL); **FKTTCoupling** (kink–top BPS action; η_B = 6.109×10⁻¹⁰ CatAL unconditional; zero sorry) |
 
 Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity, PositiveRootTheorem, GaloisProtection, TwoLoopCoefficient), **GaloisStructure** (2), **CyclotomicCompleteness** (2), **PSC** (1: RCCInfiniteFamilies), **TE22** (1: ScanCertificate), **Papers** (2), **Instance** (1), **Conjectures** — per the formalization paper: `Phase4.GaloisProtection`, `TwoLoopCoefficient`, modules under `GaloisStructure.*` and `CyclotomicCompleteness.*`, and `TE22` carry fully mechanized statements where the paper claims zero sorry; `Papers` and `Instance` are chiefly citable stubs and bridges; `Conjectures` records resolved and open claims; `Phase4` also mixes stubs (e.g. UCL, PR1 presentation) with the precision theorems above.
 
@@ -85,6 +86,27 @@ Additional modules — **Phase4** (8: DeltaUGP, GaugeCouplings, UCL, PR1, Asympt
 | **GTE WolframModel causal tree** | `Polynomial/GTECausalTree` | 8 theorems, zero sorry: `perfectTree_numNodes` ($2^n-1$ nodes, induction); `perfectTree_height` ($n$); `perfectTree_numLeaves` ($2^n$); `gte_rulegte_event_count` ($\sum_{k=0}^{n-1}2^k=2^n-1$); `gte_rulegte_ten_generations` (decide: 1023 at depth 10); `perfectTree_horton_ratio` ($r_B=2$ at all levels); `gte_causal_tree_horton_ratio_eq_two` (decide); `gte_causal_tree_summary` (1023 nodes, height 10, 1024 leaves). Certifies P49 §5.3 WolframModel causal graph and §5.4 botanical correspondence. |
 
 $D_{\rm top}=\exp(-1/N_c)$: machine-certified CatAL via Z₇ group transitivity (`d_top_derivation_chain_catal`, zero sorry). No dilute instanton gas approximation needed.
+
+**New modules (sandbox; graduation to canonical ugp-lean pending)**
+
+| Area | Module | Highlights |
+|------|--------|------------|
+| **Golden Quadratic** | `Polynomial/GoldenQuadratic` | `gte_diagonal_quadratic_factorization` — diagonal factorization p(x,x,x)−x = −x(x²+x−1) over ℤ; `golden_floor_duality_bundle` — SRRG ℝ-root 1/φ and Rule 110 GF(7) rootlessness as the archimedean and 7-adic fibers of one ℤ-quadratic (zero sorry) |
+| **Spin-7 Ground-Space Rigidity** | `Polynomial/SpinSevenGroundSpace` | `gte_ring_ground_states_uniform_general` — for EVERY ring length n ≥ 3, the cyclic zero-energy configurations (p = 0 at every site) are exactly {0ⁿ, 1ⁿ, 5ⁿ}; structural proof via the deterministic zero-energy pair digraph on the 43 active states of GF(7)², native_decide cycle classification (only uniform self-loops), minimal-period pigeonhole ≤ 49, and zero-cell propagation to the vacuum ring; per-length n = 3..7 corollaries delegate to the general theorem (8 theorems, zero sorry, zero custom axioms) |
+| **Biquadratic Compositum** | `Polynomial/BiquadraticCompositum` | cond(K) = 15 = N_gen·N_fam for K = ℚ(√−3, √5); Artin-class characterisation — q ≡ 7, 13 (mod 15) iff q splits in ℤ[ω] and is inert in ℤ[φ]; minimal class prime 7, second class prime c_H = 13 (15 theorems, zero sorry) |
+| **AGL(1,7) Chiral Z₂** | `Polynomial/AGL17ChiralZ2` | \|AGL(1,7)\| = 42; spatial reflection s = (6,0) of order 2 swaps Rule 110 ↔ Rule 124 on all binary inputs with zero mismatches; commuting ℤ₃ color action; free-orbit cardinality 42 (7 theorems, zero sorry) |
+| **Eisenstein Identities** | `Polynomial/EisensteinIdentities` | `f21_eisenstein_residue_model` — F₂₁ ≅ (ℤ[ω]/(3+ω))⁺⋊μ₃ as a concrete Eisenstein residue-field isomorphism; Φ₆ ladder identity web unifying GTE constants {7, 13, 73, 91} under one cyclotomic roof (zero sorry) |
+| **Dynamical Zeta** | `Polynomial/DynamicalZeta` | `vacuum_unique_temporal_fixed_point_ring` — Fix(T_n) = {vacuum} for every ring size n, proved via the golden Fibonacci–Möbius map; `period475_drift_cancelled_return_order_nineteen` — σ³∘T⁵ = T¹⁰⁰ of order 19 on the period-475 attractor; Artin–Mazur ζ factorizations (zero sorry) |
+| **Z₇ Vacuum Selection** | `Physics/ZSevenVacuumSelection` | `vcoupling_breaks_z7_shift` — V_coupling breaks Z₇-label shift symmetry; `wall_bias_minimum_unique` — bias minimum at k=0; `compact_completion_minimum_at_k0`; machine-certified defect-cosmology vacuum-selection certificates (zero sorry) |
+| **Kink Vacuum Polarization** | `Physics/KinkVacuumPolarization` | One-loop kink vacuum-polarization diagram; sub-threshold spectral certificate underpinning the quantum kink mass computation (zero sorry) |
+| **Kink Form Factor** | `Physics/KinkFormFactor` | Kink charge-distribution form-factor measurement; dissolution constant Λ_diss from substrate-regulated lattice approach; precision broadening parameter b = 1.189 ± 0.049 (zero sorry) |
+| **Sylow Index Coupling Hierarchy** | `GTE/SylowIndexCouplingHierarchy`, `Universality/SylowIndexCouplingHierarchy` | Arithmetic derivation of the gauge coupling hierarchy from Sylow indices of the F₂₁ group; two-layer certification (GTE arithmetic and universality layers; zero sorry) |
+| **Kink Pole-Mass Spectral Core** | `Physics/KinkPoleMassSpectralCore` | Pöschl–Teller autocorrelation at s = 0, Levinson identity, spectral sum rule, dim-reg channel value, Γ(−3/2) = 4√π/3 as definitional values (PARTIAL — full Mathlib integral proofs deferred) |
+| **Burnside Coset Charges** | `Physics/BurnsideCosetCharges` | Coset-charge spectrum {±1/2, ±1/2, ±1}, t_V = 3, c_coset = −1 rational root-system skeleton (zero sorry) |
+| **Heat-Kernel Contact Terms** | `Universality/HeatKernelContactTerms` | Contact-term difference (N²−3)/(24N) = 1/12 at N = 3; su(N) trace and Killing identities (zero sorry) |
+| **Λ_GTE Threshold** | `Universality/LambdaGTEThreshold` | Λ_GTE = (8/7)·m_τ; multiplier minimality (7 is the least Z₇-neutral chain length); Z₇ coset residues {±1, ±2, ±3}; slope continuity 7 = 11 − 4 (zero sorry) |
+| **CC One-Jump Residual** | `Physics/CCOneJumpResidual` | D_res census annotation as left-c.e. bracket endpoint; strict bracket interiority of the Planck 2018 central value; no-computable-convergence-modulus theorem; σ* ∈ (2.9×10⁻⁴, 4.3×10⁻⁴) falsifiability horizon (6 CatAL + 1 PARTIAL) |
+| **N_gen Bracket Orientation** | `Universality/NgenBracketOrientation` | Orientation-flip theorem: the admissible ledger interval [floor(N), census(N)] is empty for all N ≥ 4 and non-empty for N ≤ 3; GTE-atom inequality 14·ln(2000/3) > 9π²; PI-free pincer forcing N_gen = 3 (5 CatAL + 2 CatAL\|H1) |
 
 ---
 
@@ -184,7 +206,7 @@ Physical motivation: The vacuum (all-zeros in Z₇⁵) is the unique fixed point
 - `fmdl_no_nontrivial_cycles` — every state terminates at vacuum in ≤7 steps; no periodic orbit of period ≥2
 - `fmdl_vacuum_is_unique_attractor` — complete 3-part statement: vacuum is fixed + universal attractor + unique fixed point (native_decide)
 
-**Measurement Orbit Uniqueness and Three-Level MDL Bundles — R11 (CUP3DUniqueness; 6 theorems, 0 sorry)**
+**Measurement Orbit Uniqueness and Three-Level MDL Bundles (CUP3DUniqueness; 6 theorems, 0 sorry)**
 
 Physical motivation: The SM generation orbit GEN₁→GEN₂→GEN₃→VAC is not just one valid trajectory among many — it is the *only* PSC-admissible 3-step trajectory from GEN₁. This certifies the discrete measurement mechanism of P51: each generation corresponds to a unique forced step in the fmdl orbit. GEN₂ and GEN₃ share positional-equality topology (a,b,a,c,a), distinguishing the two intermediate states algebraically.
 
@@ -398,9 +420,9 @@ Physical motivation: The Z₇-sum sequence 4→4→3→0 across the generation c
 - `orbit_sum_trajectory_invariant` — for any orbit-admissible f: z7_sum trajectory of orbit images is 4→3→0 (rw+decide, CatAL)
 - `orbit_sum_full_trajectory` — complete 4-step trajectory 4→4→3→0 for all orbit-admissible f (CatAL)
 
-**GEN2/GEN3 Topological Degeneracy (CUP3DUniqueness R14; 3 theorems, 0 sorry)**
+**GEN2/GEN3 Topological Degeneracy (CUP3DUniqueness; 3 theorems, 0 sorry)**
 
-Physical motivation: The WolframModel causal graph of the GTE update rule (ruleGTE) exhibits binary branching, with GEN2 and GEN3 states arising at interior levels of the fractal binary tree. Both states share the structural topology (a,b,a,c,a): positions {0,2,4} carry one repeated winding value, positions {1,3} carry distinct minority values. This topological degeneracy explains the symmetric branching structure of the ruleGTE causal graph at those levels, and provides the formal GTE-side mechanism for the botanical L-system isomorphism (R14, 2026-06-08).
+Physical motivation: The WolframModel causal graph of the GTE update rule (ruleGTE) exhibits binary branching, with GEN2 and GEN3 states arising at interior levels of the fractal binary tree. Both states share the structural topology (a,b,a,c,a): positions {0,2,4} carry one repeated winding value, positions {1,3} carry distinct minority values. This topological degeneracy explains the symmetric branching structure of the ruleGTE causal graph at those levels, and provides the formal GTE-side mechanism for the botanical L-system isomorphism.
 
 - `gen2_outer_positions_constant` — fmdl_gen2_z7[0]=fmdl_gen2_z7[2]=fmdl_gen2_z7[4] (decide, CatAL)
 - `gen3_outer_positions_constant` — fmdl_gen3_z7[0]=fmdl_gen3_z7[2]=fmdl_gen3_z7[4] (decide, CatAL)
@@ -438,18 +460,18 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `fmdl_count_decomposition` — fmdl_nonzero_count = b_higgs + (c_higgs − b_higgs) + 1 = 3+10+1 (norm_num, CatAL)
 - `fmdl_count_ngen_nfam` — fmdl_nonzero_count = n_gen + 2·n_fam + 1 = 3+10+1 (norm_num, CatAL)
 
-*§13: Z₅ ring contribution — running shift physical naming (Ranks 57 & 58, CatAL)*
+*§13: Z₅ ring contribution — running shift physical naming (CatAL)*
 - `running_shift_is_z5_ring` — c_H − 2^N_gen = N_fam (alias of §5; explicit Z₅ ring naming, CatAL)
 - `z5_ring_contributes_nfam_to_denominator` — c_H = 2^N_gen + N_fam (norm_num, CatAL)
 - `gte_family_capacity_identity` — N_gen + N_fam = 2^N_gen (alias of §2; GUT orbit-filling naming, CatAL)
 
-*§14: CKM matrix count theorem (Rank 68, CatAL)*
+*§14: CKM matrix count theorem (CatAL)*
 - `ckm_dof_count` / `ckm_real_dimension` — N_gen² = 9 (norm_num; CKM matrix real d.o.f. = dim U(N_gen), CatAL)
 - `gut_capacity_times_ring` / `gte_generation_capacity` — 2^N_gen × N_fam = 40 (norm_num; GUT-orbit × family-ring capacity, CatAL)
 - `wolfenstein_lambda_formula` / `wolfenstein_density_formula` — (N_gen:ℚ)²/(2^N_gen×N_fam) = 9/40 (norm_num; Wolfenstein λ arithmetic, CatAL)
 - `wolfenstein_lambda_value` — (9:ℚ)/40 = 225/1000 (norm_num; exact decimal 0.225, 0.000% vs PDG, CatAL)
 
-*§15: CKM quark N_eff structural formulas and R_b = sin²θ_W(GUT) (Rank 67, CatAL)*
+*§15: CKM quark N_eff structural formulas and R_b = sin²θ_W(GUT) (CatAL)*
 - `b_u`, `b_d`, `b_c`, `b_s`, `b_b` — GTE quark N_eff definitions (9, 5, 275, 186, 8191)
 - `neff_u_eq_ngen_sq` — b_u = N_gen² = 9 (norm_num; up quark G1 seed, CatAL)
 - `neff_d_eq_nfam` — b_d = N_fam = 5 (norm_num; down quark at Z₅ boundary, CatAL)
@@ -460,7 +482,7 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `ckm_unitarity_triangle_radius_eq_gut_weinberg` — R_b = N_gen/2^N_gen = 3/8 = sin²θ_W(GUT) ★★★★★ (alias of gut_weinberg_angle_pow2; cross-sector identity, CatAL)
 - `ckm_from_gte_arithmetic` — **Combined CKM theorem**: N_gen²=9 ∧ 2^N_gen×N_fam=40 ∧ λ=9/40 ∧ R_b=3/8 (norm_num, CatAL)
 
-*§16: SM generation N-value sum b_sum = 390 — all SM structural numbers in one object (Rank 49, CatAL)*
+*§16: SM generation N-value sum b_sum = 390 — all SM structural numbers in one object (CatAL)*
 - `b_gen1`, `b_gen2`, `b_gen3`, `b_sum` — GTE generation b-values (73, 42, 275) and their sum
 - `b_sum_value` — b_sum = 390 (norm_num, CatAL)
 - `b_sum_is_product` — b_sum = 2 · N_gen · N_fam · c_H (norm_num; all four SM structural numbers as factors, CatAL)
@@ -471,7 +493,7 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `nw_plus_chiggs_eq_pow2` — N_gen + c_H = 2⁴ (norm_num; 3+13=16=2⁴, the ridge subtraction constant, CatAL)
 - `b_sum_structure` — **Combined b_sum theorem**: all 6 arithmetic identities (norm_num, CatAL)
 
-*§17: Z₂ longitudinal mode universality — MDL-minimal universal Z₂ rule (Rank 43, CatAL arithmetic)*
+*§17: Z₂ longitudinal mode universality — MDL-minimal universal Z₂ rule (CatAL arithmetic)*
 - `rule124Output`, `rule124Minterms` — Rule 124 rule table and minterm set {2,3,4,5,6}
 - `rule124_minterms_card` — Rule 124 has exactly 5 ones (native_decide, CatAL)
 - `rule124_output_iff_minterm` — Rule 124 output ↔ in {2,3,4,5,6} (native_decide, CatAL)
@@ -479,20 +501,20 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `rule110_and_124_joint_mdl_count` — Rule 110 and Rule 124 share MDL count = 5 (native_decide, CatAL; arithmetic component of conditional universality theorem)
 - `rule110_preferred_by_sublayer_consistency` — Rule 110 minterms ≠ Rule 124 minterms (native_decide; arithmetic basis for sublayer-consistency selection of Rule 110, CatAL)
 
-*§18: Coupling ratio duality — sin²θ_W = 3/13 ⟺ r = α₁⁻¹/α₂⁻¹ = 2 (Rank 54, CatAL algebra)*
+*§18: Coupling ratio duality — sin²θ_W = 3/13 ⟺ r = α₁⁻¹/α₂⁻¹ = 2 (CatAL algebra)*
 - `weinberg_at_r2` — N_gen/(N_gen + N_fam × 2) = 3/13 (norm_num; EW scale formula at coupling ratio r=2, CatAL)
 - `weinberg_at_r1_gut` — N_gen/(N_gen + N_fam × 1) = 3/8 (norm_num; GUT scale formula at r=1, alias of §3, CatAL)
 - `beta_function_diff_two_nfam` — 2 × N_fam = 10 (norm_num; β-function differential arithmetic b₁−b₂=2N_fam, CatAL)
 - `universal_coupling_ratio_cancellation` — (N_gen/N_fam)×(2N_fam/N_gen) = 2 (norm_num; universal residue after N_gen/N_fam cancellation, CatAL)
 - `coupling_ratio_duality` — **Combined duality theorem**: all four identities (r=2→3/13, r=1→3/8, β-diff=10, universal residue=2; norm_num, CatAL)
 
-*§19: smGen1 as SU(5) projector — Z₅ ring partition (Rank 55, CatAL counting)*
+*§19: smGen1 as SU(5) projector — Z₅ ring partition (CatAL counting)*
 - `sm_gen1` — Fin 5 → Fin 2 := ![1,1,0,0,1] (GTE first-generation binary pattern)
 - `sm_gen1_active_count` — active positions (value=1) count = N_gen = 3 (decide, CatAL; matches SU(5) colored sector)
 - `sm_gen1_inactive_count` — inactive positions (value=0) count = N_fam−N_gen = 2 (decide, CatAL; matches SU(5) leptonic sector)
 - `sm_gen1_partition_matches_su5` — **Combined partition theorem**: active=3, inactive=2, 3+2=5 (decide; smGen1 as SU(5) projector, CatAL)
 
-*§20: Mersenne prime structure, top quark formula, CP irrationality (Rank 67C + B-53, CatAL)*
+*§20: Mersenne prime structure, top quark formula, CP irrationality (CatAL)*
 - `b_top` — b_t = 2^(c_H−2) × N_gen × N_fam × (2N_fam+1) = 337920 (def; top quark N_eff)
 - `neff_b_value` — b_b = 8191 (rfl, CatAL)
 - `neff_b_is_prime` — Nat.Prime b_b (norm_num; 8191 is Mersenne prime, CatAL)
@@ -507,7 +529,7 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `tan_gamma_numerator_not_square` — ¬∃ k:ℕ, k²=b_b×b_s×n_gen² (norm_num+linarith; 3702²<13711734<3703², CatAL; implies tan(γ) irrational)
 - `cp_violation_irrationality_chain` — **Combined CP irrationality certificate**: b_b prime ∧ gcd=1 ∧ b_b×b_s non-square ∧ b_b×b_s×N_gen² non-square (exact ⟨...⟩; CatAL — CP violation is arithmetically irreducible)
 
-*§21: Joint Selection Theorem — N_fam = 5 uniquely selected by Mersenne c_H AND Z₅ transitivity (Rank 67C-bis, CatAL)*
+*§21: Joint Selection Theorem — N_fam = 5 uniquely selected by Mersenne c_H AND Z₅ transitivity (CatAL)*
 - `mersenne_ch_prime_p2` — 2^7−1=127 is prime at N_fam=2 (norm_num, CatAL)
 - `mersenne_ch_not_prime_p3` — 2^9−1=511 not prime at N_fam=3 (norm_num, CatAL; 511=7×73)
 - `mersenne_ch_prime_p5` — 2^13−1=8191 is prime at N_fam=5 (alias of neff_b_is_prime, CatAL)
@@ -517,10 +539,10 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `mersenne_ch_not_prime_p17` — 2^37−1 not prime at N_fam=17 (norm_num; 223×616318177, CatAL)
 - `mersenne_ch_not_prime_p19` — 2^41−1 not prime at N_fam=19 (norm_num, CatAL)
 - `mersenne_ch_not_prime_p23` — 2^49−1 not prime at N_fam=23 (norm_num; 127×4432676798593, CatAL)
-- `joint_selection_theorem` — **Main theorem**: among primes ≤ 23, N_fam=5 is the UNIQUE prime satisfying BOTH (i) Mersenne prime c_H AND (ii) Z₅ full weight-3 transitivity under Rule 110. Combines the full Mersenne landscape (9 cases) + transitivity exclusion of p=2 and p=7. CatAL upgrade of the CatAD Joint Selection result from Rank 67C-bis. (norm_num + Z5TransitivityUniqueness, zero sorry)
+- `joint_selection_theorem` — **Main theorem**: among primes ≤ 23, N_fam=5 is the UNIQUE prime satisfying BOTH (i) Mersenne prime c_H AND (ii) Z₅ full weight-3 transitivity under Rule 110. Combines the full Mersenne landscape (9 cases) + transitivity exclusion of p=2 and p=7. CatAL upgrade of the CatAD Joint Selection result. (norm_num + Z5TransitivityUniqueness, zero sorry)
 - `double_mersenne_exponent_identity` — N_fam=5 and c_H=13 are BOTH Mersenne prime exponents; pivot: c_H−2·N_fam=N_gen (3 arithmetic facts, norm_num, CatAL)
 
-*§23: GTE Master Formula — all SM EW parameters from N_gen = 3 alone (Rank 70, CatAL capstone ★★★★★)*
+*§23: GTE Master Formula — all SM EW parameters from N_gen = 3 alone (CatAL capstone ★★★★★)*
 - `gte_generating_triple` — N_fam = 2^N_gen−N_gen ∧ c_H = 2^(N_gen+1)−N_gen ∧ c_H = N_gen+2·N_fam (norm_num; arithmetic cascade from N_gen alone, CatAL)
 - `gte_master_formula_gut_weinberg` — sin²θ_W(GUT) = N_gen/2^N_gen = 3/8 (alias of gut_weinberg_angle_pow2; capstone form, CatAL)
 - `gte_master_formula_ew_weinberg` — sin²θ_W(EW) = N_gen/c_H = 3/13 (alias of weinberg_angle_closure; capstone form, CatAL)
@@ -531,7 +553,7 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `ngen_3_mersenne_uniqueness` — Nat.Prime (2^N_fam−1) ∧ Nat.Prime (2^c_H−1) (norm_num; double Mersenne window; N_fam=5 and c_H=13 are Mersenne prime exponents, CatAL)
 - `gte_master_formula_complete` ★★★★★ — **CAPSTONE THEOREM**: N_fam=2^N_gen−N_gen ∧ c_H=2^(N_gen+1)−N_gen ∧ sin²θ_W(GUT)=3/8 ∧ sin²θ_W(EW)=3/13 ∧ λ=9/40 ∧ N_gen+N_fam=2^N_gen; all four SM EW parameters from N_gen=3 alone; four independent real predictions, zero free parameters (norm_num, zero sorry, zero new axioms; CatAL)
 
-*§24: Weinberg Angle Three-Tier Prediction — k=N_gen orbit-average term (Rank 76, CatAL; upgraded from CatA)*
+*§24: Weinberg Angle Three-Tier Prediction — k=N_gen orbit-average term (CatAL; upgraded from CatA)*
 - `weinberg_residual_correction` — (λ_formula)^N_gen / (2·c_H) = 729/1664000; k=N_gen term of the binomial orbit-average expansion; C(3,3)=1 (norm_num, CatAL)
 - `weinberg_residual_as_orbit_average` — (9/40)³ / (2·13) = 729/1664000; pure-numeric form (norm_num, CatAL)
 - `weinberg_two_term_prediction` — N_gen/c_H + (9/40)^N_gen/(2·c_H) = 384729/1664000; complete two-term Weinberg prediction, 0.09 PDG σ (norm_num, CatAL)
@@ -542,7 +564,7 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `parity_restriction_explicit` — ∀ l c r : Fin 7, ca_parity l c r = (r,c,l); the Parity Restriction Theorem as an explicit standalone Lean theorem (rfl from definition, zero axioms, CatAL)
 - `weinberg_physical_bridge` — 4-conjunct theorem: (A) Parity Restriction, (B) U(1)_Y count = N_gen = 3, (C) SU(2)_L count = 2·N_fam = 10, (D) sin²θ_W = 3/13; explicitly cites `EWChiralBridge.doublet_partner_is_left_chiral` and `EWChiralBridge.u1y_couples_both_chiralities` as imported P22 bridge axioms (zero sorry; full CatAL pending P22 EWStructure formalization, CatAL conditional)
 
-*§27: Bidirectional UGP–Rule 110–SM Unification Summary (Rank 85, CatAL capstone ★★★★★)*
+*§27: Bidirectional UGP–Rule 110–SM Unification Summary (CatAL capstone ★★★★★)*
 - `ugp_arith_forces_rule110` — Arrow A1/A3-R: ∀ r : Fin 256, SM orbit conditions ↔ r=110; CUP-4 alias in unification context (alias of cup1_orbit_uniquely_selects_rule110, CatAL)
 - `sm_selects_gte_triple` — Arrow A2-R: n_gen=3 ∧ n_fam=5 ∧ c_H=13; SM structural constants = GTE generating triple (rfl, CatAL)
 - `gte_predicts_ew_mixing` — Arrow A2: sin²θ_W(EW)=3/13 ∧ sin²θ_W(GUT)=3/8; both Weinberg angles from N_gen alone (aliases of §12/§3, CatAL)
@@ -555,13 +577,13 @@ Physical motivation: The GTE structural constants N_gen = 3 (Rule 110 orbit dept
 - `z7_free_neighborhood_count` — Exactly 325 = 343 − 18 neighborhoods are free; MDL zeros all 325, uniquely selecting f_MDL (native_decide, CatAL)
 - `mdl_robustness_z7` ★★★★ — **MDL ROBUSTNESS**: Any orbit-admissible MDL-minimal Z₇ CA function must equal fmdl, regardless of orbit depth (naming alias of Z7ChargeConjugation.fmdl_mdl_uniqueness; zero sorry, CatAL). Combined with CatA computation: 15 orbit-constrained Z₇ neighborhoods (5 cells × 3 generations, no repeats), disjoint from 8 binary neighborhoods; total 23 constrained, 320 free.
 
-*§29: Z₂ Longitudinal Universality Structural Chain (Rank 89, CatAL)*
+*§29: Z₂ Longitudinal Universality Structural Chain (CatAL)*
 - `n_rule110_minterms` — Hamming weight (minterm count) of Rule 110 = 5 (def; equals MDL description length of Rule 110 as a Z₂ CA rule)
 - `rule110_minterms_eq_five` — n_rule110_minterms = 5 (rfl, CatAL)
 - `z_boson_cvalue_equals_mdl_plus_z7` ★★★ — **c-VALUE MDL IDENTITY**: n_rule110_minterms + 7 = c_Z = 12; the Z boson GTE c-value equals the Z₇ modulus (7 free Z₂ CA bits) plus the Rule 110 minterm count (5); arithmetic certification of the structural chain c_Z = 7 + MDL(Rule 110) = 12 (norm_num, CatAL)
 - `z_boson_mdl_class4_chain` — **THREE-CONJUNCT CHAIN**: (1) n_rule110_minterms=5 ∧ (2) 5+7=c_Z ∧ (3) c_Z=c_H−1; the arithmetic backbone of the Z₂ longitudinal universality CatAD result — c_Z=12 forces MDL(rule_Z)=5, landing at the isolated Class 4 resonance in the qualifying Z₂ CA rule space (norm_num, zero sorry, CatAL)
 
-*§30: Mersenne Cascade Discriminator — 12→2 Doublet-Paired Candidates (Rank 80 Round 02, CatAL)*
+*§30: Mersenne Cascade Discriminator — 12→2 Doublet-Paired Candidates (CatAL)*
 - `bt_is_composite` — ¬ Nat.Prime b_top (b_t = 337920 is composite; top quark N_eff not Mersenne prime; norm_num, CatAL)
 - `bb_not_eq_bt` — b_b ≠ b_top (Mersenne G3 endpoint 8191 ≠ top G3 endpoint 337920; norm_num, CatAL)
 - `bb_mersenne_bt_not` ★★★★ — **ARITHMETIC ASYMMETRY**: b_b = Mersenne prime M₁₃ ∧ b_t = composite; the down cascade (c_d=42=b_L2) terminates with G3 = 8191 (Mersenne prime) while the up cascade (c_u=275=b_L3) terminates with G3 = 337920 (composite); this asymmetry is the arithmetic basis of the cascade discriminator (exact, CatAL)
@@ -596,7 +618,7 @@ Physical motivation: The three EW bosons with defined GTE triples — W⁺(5,3,1
 - `ew_triples_distinct` — W⁺, Z, H⁰ triples pairwise distinct (differ only in c) (decide, CatAL)
 - `ew_boson_structure` — **Combined theorem**: all 5 structural facts in one conjunction (decide, CatAL)
 
-*§5: Goldstone cascade formula — c_P = c_H − d_P (Rank 53, CatAL)*
+*§5: Goldstone cascade formula — c_P = c_H − d_P (CatAL)*
 - `d_higgs`, `d_z`, `d_w` — broken SU(2)_L generator ranks (0, 1, 2)
 - `goldstone_cascade_higgs` — c_H = c_H − 0 (simp; Higgs is scalar remnant, d_H=0, CatAL)
 - `goldstone_cascade_z` — c_Z = c_H − 1 = 12 (simp; Z absorbs 1 neutral Goldstone mode, CatAL)
@@ -618,13 +640,13 @@ Three-constraint Lean certification that p=2 is the unique valid cascade period 
 - `fmdl_cascade_period_two_unique` — gcd(2,N_gen)=1 ∧ ∀ p≥2 coprime to N_gen, 2≤p (joint statement; CatAL)
 - `cascade_period_minimum_is_two` ★ — (gcd(2,N_gen)=1) ∧ (MDL(2)=10) ∧ (MDL minimality) — **three-constraint selection theorem** (norm_num + omega, CatAL)
 
-Both T(2,3) parameters are now GTE-derived at CatAL level: q=N_gen=3 (`fmdl_ngen_equals_three`, CatAL) and p=2 (§31, CatAL). Rank 93 upgraded: CatD+ → CatAD → **CatAL**.
+Both T(2,3) parameters are now GTE-derived at CatAL level: q=N_gen=3 (`fmdl_ngen_equals_three`, CatAL) and p=2 (§31, CatAL); the topology selection is upgraded CatD+ → CatAD → **CatAL**.
 
 ---
 
 **SU(2)_L Charge Assignment from Z₇ Color-Subgroup Structure (GUTStructure.lean §33; 6 theorems + 2 definitions, 0 sorry)**
 
-The 2→1 step in the quark G1 seed derivation (Rank 99): the charge assignment (up-type ↔ N_eff=N_gen²=9; down-type ↔ N_eff=N_fam=5) is derived from the Z₃ multiplicative subgroup structure of Z₇*. The Z₃ subgroup {1,2,4} (generated by 2, since 2³≡1 mod 7) identifies w(u)=2 as in the color subgroup and w(d)=6 as in the coset {3,5,6}. Z₇ alignment: N_gen² mod 7 = 9 mod 7 = 2 = w(u) (canonical aligned); N_fam mod 7 = 5 ≠ w(u) (charge-swap excluded). Combined with §26 (MDL doublet-pairing, ∞→12) and §30 (Mersenne discriminator, 12→2), this closes the full three-step quark G1 seed selection at CatAD with CatAL arithmetic support.
+The 2→1 step in the quark G1 seed derivation: the charge assignment (up-type ↔ N_eff=N_gen²=9; down-type ↔ N_eff=N_fam=5) is derived from the Z₃ multiplicative subgroup structure of Z₇*. The Z₃ subgroup {1,2,4} (generated by 2, since 2³≡1 mod 7) identifies w(u)=2 as in the color subgroup and w(d)=6 as in the coset {3,5,6}. Z₇ alignment: N_gen² mod 7 = 9 mod 7 = 2 = w(u) (canonical aligned); N_fam mod 7 = 5 ≠ w(u) (charge-swap excluded). Combined with §26 (MDL doublet-pairing, ∞→12) and §30 (Mersenne discriminator, 12→2), this closes the full three-step quark G1 seed selection at CatAD with CatAL arithmetic support.
 
 - `z7_color_subgroup_closed` — {1,2,4} closed under multiplication mod 7 (decides, CatAL)
 - `z7_color_subgroup_generator` — 2³ % 7 = 1, establishing the Z₃ subgroup (norm_num, CatAL)
@@ -634,7 +656,7 @@ The 2→1 step in the quark G1 seed derivation (Rank 99): the charge assignment 
 - `neff_d_z7_not_aligned` — N_fam mod 7 ≠ w(u) (norm_num, CatAL)
 - `su2l_charge_assignment_z7_discriminator` ★★★★ — joint: (N_gen² mod 7 = w_u) ∧ (N_fam mod 7 ≠ w_u) ∧ (w_u ∈ {1,2,4}) ∧ (w_d ∉ {1,2,4}); canonical selected, charge-swap excluded (CatAL)
 
-Rank 99 result: Step 3 (2→1) upgraded from unexplained postulate to GTE-motivated CatAD derivation with full CatAL arithmetic certificate. Enables Rank 100 native_decide capstone.
+Step 3 (2→1) is thereby upgraded from unexplained postulate to GTE-motivated CatAD derivation with full CatAL arithmetic certificate, enabling the six-quark native_decide capstone.
 
 ---
 
@@ -672,7 +694,7 @@ The capstone certification packaging the complete GTE quark N_eff spectrum. Asse
 - `quark_g1_canonical_assignment` ★★★ — Z₇ arithmetic fingerprint: b_u % 7 = 2 (aligned with w(u)=2), b_d % 7 = 5, b_u ≠ b_d; charge-swap candidate excluded (norm_num, CatAL)
 - `quark_neff_all_distinct` ★★★ — all six quark b-values mutually distinct: b_u≠b_d, b_u≠b_b, b_u≠b_top, b_d≠b_b, b_d≠b_top, b_b≠b_top (norm_num, CatAL)
 
-Rank 100 result: all six quark N_eff values GTE-derived and machine-certified at CatAL level for the arithmetic content.
+All six quark N_eff values are GTE-derived and machine-certified at CatAL level for the arithmetic content.
 
 ---
 
@@ -680,7 +702,7 @@ Rank 100 result: all six quark N_eff values GTE-derived and machine-certified at
 
 Three results, Lean-certified via native_decide:
 
-*§1 — Rank 46: CA Masslessness Criterion*
+*§1 — CA Masslessness Criterion*
 
 Physical motivation: The criterion fmdl(0,k,0)=k — whether a Z₇ value k survives stably in a vacuum neighborhood — selects exactly k∈{0,1} from Z₇. This gives a CA-level masslessness/massiveness partition matching the SM: Z₇=0 (photon/EM vacuum) and Z₇=1 (neutrino-weight sector) are CA-massless; Z₇∈{2,3,4,5,6} (all SM massive particles) decay to vacuum. The Z₇=1 CA-masslessness is at the winding-sector level; GTE gives neutrinos tiny mass at a deeper level.
 
@@ -688,7 +710,7 @@ Physical motivation: The criterion fmdl(0,k,0)=k — whether a Z₇ value k surv
 - `fmdl_massless_unique` — exactly one non-zero CA-massless value: k=1 (native_decide, CatAL)
 - `fmdl_massive_decay` — ∀ k ≠ 0,1: fmdl 0 k 0 = 0 (native_decide, CatAL)
 
-*§2 — Rank 48: (u,γ,u)→W⁺ CA-Level Electroweak Vertex*
+*§2 — (u,γ,u)→W⁺ CA-Level Electroweak Vertex*
 
 Physical motivation: The orbit neighborhood fmdl(2,0,2)=3 defines a CA-level EW vertex: two u-quarks flanking a photon produce a W⁺. Sourced from the gen₂ orbit [2,5,2,0,2] where position 3 (photon-slot) evolves to W⁺ in gen₃. Photon transparency: 34/36 = 94.44% of matter-matter configurations.
 
@@ -696,7 +718,7 @@ Physical motivation: The orbit neighborhood fmdl(2,0,2)=3 defines a CA-level EW 
 - `nu_photon_nu_absorption` — fmdl 1 0 1 = 1 (native_decide, CatAL)
 - `photon_absorption_events` — exactly 2 absorption events among 36 matter pairs (native_decide, CatAL)
 
-*§3 — Rank 50: Rule 110 Ether Z₇ Winding = 1 (Neutrino Sector Background)*
+*§3 — Rule 110 Ether Z₇ Winding = 1 (Neutrino Sector Background)*
 
 Physical motivation: The Rule 110 ether (period-14 background [0,1,0,1,1,1,0,0,0,1,1,1,0,1]) has Z₇ sum mod 7 = 1 (neutrino-sector winding), not 0 (EM vacuum winding). The ether is the neutrino-sector propagation medium; matter (gliders) propagates through the neutrino background. The EM vacuum is the separate Z₇=0 fixed point.
 
@@ -707,7 +729,7 @@ Physical motivation: The Rule 110 ether (period-14 background [0,1,0,1,1,1,0,0,0
 - `ether_not_em_vacuum` — ether_period ≠ replicate 14 0 (native_decide)
 - `casimir_sector_structure` — **Combined theorem**: masslessness criterion + EW vertex + ether winding (native_decide, CatAL)
 
-*§39 — WPlusDecay: W⁺ Decay Lemma (Rank 145-WDT, CatAL)*
+*§39 — WPlusDecay: W⁺ Decay Lemma (CatAL)*
 
 Physical motivation: The W⁺ boson (Z₇=3) is a virtual mediator in the GTE CA. Combined with the W⁺ creation theorem (`CUP3D.fmdl_w_emission`), this section certifies the complete CA lifecycle: W⁺ is created from a (u,vac,u) triple in one step and immediately decays to vacuum in the next. This is the Fermi contact interaction at the CA scale (E ≪ M_W).
 
@@ -722,7 +744,7 @@ Physical motivation: The CA masslessness criterion implies a left-right asymmetr
 - `helicity_minus_decays` — fmdl 0 6 0 = 0 (native_decide, CatAL)
 - `helicity_parity_violation` — fmdl 0 1 0 = 1 ∧ fmdl 0 6 0 = 0 ∧ fmdl 0 1 0 ≠ fmdl 0 6 0 (native_decide, CatAL)
 
-**CA-Level Chirality and Parity (ChiralityEigenstates.lean, Rank 12; 5 theorems, 0 sorry)**
+**CA-Level Chirality and Parity (ChiralityEigenstates.lean; 5 theorems, 0 sorry)**
 
 Spatial parity `P` on the 5-cell ring reverses cell order: `fmdl_mirror v i = v (4 − i)`. Four machine-certified results (native_decide / decide, zero sorry, zero named axioms):
 
@@ -732,7 +754,7 @@ Spatial parity `P` on the 5-cell ring reverses cell order: `fmdl_mirror v i = v 
 - `gen3_p_covariant` — fmdl_step5 (fmdl_mirror gen₃) = fmdl_mirror (fmdl_step5 gen₃) (native_decide, CatAL)
 - `sm_orbit_is_left_handed` — combined theorem: all four properties simultaneously (zero sorry)
 
-**Weak Isospin Identification (WeakIsospin.lean, Rank 94c; 10+ theorems, 0 sorry)**
+**Weak Isospin Identification (WeakIsospin.lean; 10+ theorems, 0 sorry)**
 
 Formalizes the identification of weak isospin as $\mathbb{Z}_7$ species-winding arithmetic. Key results (all proved by `decide`, zero sorry, zero custom axioms):
 
@@ -753,7 +775,7 @@ Formalizes the identification of weak isospin as $\mathbb{Z}_7$ species-winding 
 
 ---
 
-**Z₇ Winding–Charge Equivalence (GUTStructure.lean §50 `WindingChargeEquivalence`, Rank 189-WCT; 4 theorems, 0 sorry)**
+**Z₇ Winding–Charge Equivalence (GUTStructure.lean §50 `WindingChargeEquivalence`; 4 theorems, 0 sorry)**
 
 Formal certification that Z₇ winding conservation is equivalent to electric charge conservation for all SM color-singlet particles. The GTE charge formula 3Q = w* (§49) maps integer charges injectively to Z₇ classes, making Z₇ an arithmetic encoding of U(1)_EM at the observable-particle level. All proofs by `norm_num`.
 
@@ -764,7 +786,7 @@ Formal certification that Z₇ winding conservation is equivalent to electric ch
 
 ---
 
-**CA Ether Dispersion Relation E = v_CA × k (GUTStructure.lean §58 `EtherDispersion`, Rank 212-CEK Thread 2; 9 theorems + 2 defs, 0 sorry)**
+**CA Ether Dispersion Relation E = v_CA × k (GUTStructure.lean §58 `EtherDispersion` Thread 2; 9 theorems + 2 defs, 0 sorry)**
 
 Formal certification of the CA ether dispersion relation E(k) = v_CA × k evaluated at the Brillouin zone boundary. v_CA = 2/3 is grounded directly in Cook's Rule 110 glider catalog: the A glider (Cook Figure 5) has period (Δt=3, Δx=2), giving speed v_CA = Δx/Δt = 2/3. This is the first CatAL connection between the Cook glider catalog data and the neutrino mass formula. Added `import Rule110.CookGliderCatalog` to GUTStructure.lean. Build: ✔ [3300/3300] in 10s (5 extra from CookGliderCatalog import chain).
 
@@ -782,7 +804,7 @@ Formal certification of the CA ether dispersion relation E(k) = v_CA × k evalua
 
 **Spacetime Layer — Geodesic, Centroid, Mass Gap, Spatial Lifting, QEC Stabilizer (zero sorry on listed theorems)**
 
-*Rank 17-GEO — Geodesic Theorem + P34 Centroid (`GeodesicTheorem.lean`, `CentroidMeasure.lean`)*
+*Geodesic Theorem + P34 Centroid (`GeodesicTheorem.lean`, `CentroidMeasure.lean`)*
 
 - `causal_sequence_exists` — timelike causal sequence with DWeight preservation and fixed spatial position (CatAL)
 - `geodesic_preferred_direction` — well-defined `[D]`-weighted centroid at every step; spatial centroid invariant along timelike worldline (CatAL)
@@ -790,12 +812,12 @@ Formal certification of the CA ether dispersion relation E(k) = v_CA × k evalua
 - `d2_orbit_closed_iter` / `beable_spatial_propagation` — D2 orbit closure and spatial propagation (CatAL)
 - `geodesic_theorem` — full D2 preferred-direction via distributed measure (CatAD; structural)
 
-*Rank 42-MGP — Mass Gap (`MassGap.lean`)*
+*Mass Gap (`MassGap.lean`)*
 
 - `gte_mass_gap` — positive mass gap Δ > 0 for all physical non-vacuum beables (CatAL, zero axioms)
 - `gte_mass_formula_physical` — Δ ≥ 1.8 MeV (PDG conservative up-quark lower bound); `smGenMass` (CatAL)
 
-*Rank 79-MASSES — Orbit Generation Mass Hierarchy (`OrbitMassHierarchy.lean`)*
+*Orbit Generation Mass Hierarchy (`OrbitMassHierarchy.lean`)*
 
 - `orbit_generation_ordering` — ∀ s : SmSector, gen₃ mass lb > gen₂ mass lb > gen₁ mass lb > 0; closes OA-1 (physical generation ordering from cascade depth); all three SM sectors (lepton/upQuark/downQuark) (CatAL)
 - `cross_sector_gen1_ordering` — down-quark gen₁ lb > up-quark gen₁ lb > lepton gen₁ lb > 0 (CatAL)
@@ -808,12 +830,12 @@ Formal certification of the CA ether dispersion relation E(k) = v_CA × k evalua
  - `mkink_from_scc` — BPS kink mass M_kink = (8/49)·m_τ = 290.10 MeV; proved by `rfl` (CatAL)
  - `fpi_from_scc` — pion decay constant f_π = M_kink/π = 92.34 MeV (+0.30% vs PDG 92.07, 2.6× precision improvement, no free parameters); definitional equality in ℝ via `Real.pi`, proved by `rfl` (CatAL)
 
-*Rank 55-3DLT — Spatially Extended Lifting (`SpatiallyExtendedLifting.lean`)*
+*Spatially Extended Lifting (`SpatiallyExtendedLifting.lean`)*
 
 - `causal_path_exists` — causal path existence for forward-causal pairs (theorem, not axiom; CatAL)
 - `spatially_extended_composite_lifting` / `meson_bound_state_exists` — 3D meson existence (CatAL)
 
-*Rank 38-QEC — QEC Stabilizer Code (`QECStabilizer.lean`)*
+*QEC Stabilizer Code (`QECStabilizer.lean`)*
 
 - `qec_gte_is_stabilizer_code` — the [D]-measure defines a QEC structure: code subspace = PSC-admissible beables; fmdl_step5 is the stabilizer; DWeight = 0 is the syndrome; mass gap bounds error energy (CatAL, zero sorry)
 - `qec_orbit_closure` — fmdl_step5 maps every code word to a code word (vacuum is fixed point; gen₁→gen₂→gen₃→vacuum; CatAL)
@@ -822,11 +844,11 @@ Formal certification of the CA ether dispersion relation E(k) = v_CA × k evalua
 - `qec_generation_mass_advance` — generation mass index (GTE_mass) is a logical observable: fmdl_step5 advances mass monotonically along non-vacuum orbit (CatAL)
 - `qec_mass_gap_error_energy` — error energy bounded below by Δ ≥ 1.8 MeV (from gte_mass_gap; CatAL)
 
-*Rank 28-QGR — Quantum Gravity (`QuantumGravity.lean`)*
+*Quantum Gravity (`QuantumGravity.lean`)*
 
 - Beable-level QGR evidence structure; geometry CatA, particles CatAL, dynamics CatAD-strong (centroid CatAL partial)
 
-*Rank 63-DMDL — [D]-Weighted SR Formula (`DWeightSRFormula.lean`)*
+*[D]-Weighted SR Formula (`DWeightSRFormula.lean`)*
 
 - Algebraic framework for the [D]-average of τ_c reproducing γ(v) = 1/√(1−v²/c²)
 - `dmdl_dweight_positive`: every PSC-admissible beable has DWeight > 0 (CatAL)
@@ -840,7 +862,7 @@ Formal certification of the CA ether dispersion relation E(k) = v_CA × k evalua
 - `dmdl_qec_sr_bundle`: full bundle — DWeight projector + SR formula (CatAL, zero sorry, propext+choice+Quot only)
 - Computational (CatA): τ_c_ratio = 1.569±0.003, γ = 1.659, corrected error 1.2–1.8% at β=0.798, M=7
 
-*Rank 244-MPH — Multi-Particle Hilbert Space (`MultiParticleHilbert.lean`)*
+*Multi-Particle Hilbert Space (`MultiParticleHilbert.lean`)*
 
 - Multi-particle state space built from QEC code subspace {vac, gen₁, gen₂, gen₃}
 - `code_word_cardinality`: 4 code words (bijection with Fin 4, CatAL)
@@ -885,7 +907,7 @@ The same 19-bit polynomial `p(L,C,R) = C+R−CR−LCR` serves five physical role
 
 **Algebraic Necessity, Gravity Sector, QCA/QEC (zero sorry on listed theorems)**
 
-*Rank 075-ALGEC — Algebraic Necessity (`Universality/AlgebraicNecessityTheorem.lean`)*
+*Algebraic Necessity (`Universality/AlgebraicNecessityTheorem.lean`)*
 
 - `algebraic_necessity_theorem` — F₂₁ = Z₇ ⋊ Z₃ is the unique non-abelian group of order 21; N_gen = 3 uniquely forced (CatAL)
 - `b0_uniquely_forces_n7` — one-loop QCD b₀ = |Z₇| = 7 forces the Z₇ orbit period (CatAL)
@@ -902,7 +924,7 @@ The same 19-bit polynomial `p(L,C,R) = C+R−CR−LCR` serves five physical role
 - `psc_admissible_implies_color_neutral` — PSC-admissible beables exclude free single-quark color carriers (CatAL)
 - `z3_invariant_entropy_closes_hierarchy` — bundles numeric identity, PSC confinement, two-equal orbit non-selection, and Z₃ sub-orbit disjointness (CatAL)
 
-*Rank 075-GR — Stress–Energy & Async Lifting (`StressEnergyTensor.lean`, `AsyncLiftingTheorem.lean`)*
+*Stress–Energy & Async Lifting (`StressEnergyTensor.lean`, `AsyncLiftingTheorem.lean`)*
 
 - `phimdl_tmunu_symmetric` / `phimdl_tmunu_vacuum_zero` — Klein–Gordon T_μν symmetry and vacuum cancellation (CatAL)
 - `phimdl_gravity_sector_prerequisites` — emergent-gravity prerequisite bundle (CatAL)
@@ -914,12 +936,12 @@ The same 19-bit polynomial `p(L,C,R) = C+R−CR−LCR` serves five physical role
 - `gte_geodesic_theorem_orbital` — PSC orbit persistence under f_MDL iteration (CatAL)
 - `timelike_adjacent_is_geodesic_path` / `d2_geodesic_step_is_geodesic_path` — single-step geodesic identification (CatAL)
 
-*Rank 074-3D — Winding–Coin Decoupling (`Substrate/WindingCoinDecoupling.lean`)*
+*Winding–Coin Decoupling (`Substrate/WindingCoinDecoupling.lean`)*
 
 - `diagonal_coin_decouples_sectors` — PSC maps commuting with Z₇ winding are diagonal (CatAL)
 - `phimdl_domain_wall_junction_tension_exact` — domain-wall junction tension from BPS action (CatAL)
 
-*Rank 074-C2 — Coherence Measure Uniqueness (`Substrate/CoherenceMeasureUniqueness.lean`)*
+*Coherence Measure Uniqueness (`Substrate/CoherenceMeasureUniqueness.lean`)*
 
 - `c2_uniqueness_structural_bundle` — MDL-unique [D] under architectural restrictions (CatAL)
 - `c2_thermal_closure_bundle` — Gibbs free-energy gap selects canonical sector distribution; KL sorrys closed (CatAL)
@@ -929,12 +951,12 @@ The same 19-bit polynomial `p(L,C,R) = C+R−CR−LCR` serves five physical role
 - `no_class4_outer_totalistic_z7_3d` — no outer-totalistic Z₇ VN6 rule is Wolfram Class 4 (1 axiom `chirality_necessary_for_class4`)
 - `no_finite_ca_exact_lorentz_replica` / `cmca_continuum_limit_is_phimdl` — no-CA-replica theorem; Φ_MDL is unique exact-Lorentz limit (CatAL)
 
-*Rank 38-QEC — Updated QEC bundle (`Spacetime/QECStabilizer.lean`)*
+*Updated QEC bundle (`Spacetime/QECStabilizer.lean`)*
 
 - `dweight_pos_of_admissible` / `dweight_pos_iff_admissible` — DWeight projector ↔ PSC code subspace (CatAL)
 - `qec_gte_is_stabilizer_code` — full 38-QEC dictionary bundle (CatAL)
 
-*Rank 13-LSD — Fourier heat-kernel scaffolding (`Spacetime/Spectral/HeatKernelFourier.lean`)*
+*Fourier heat-kernel scaffolding (`Spacetime/Spectral/HeatKernelFourier.lean`)*
 
 - `cayley_eigenvalue_at_zero_eq_degree` — zero sorry; 3 documented analytical sorrys in Gaussian-limit chain
 
@@ -973,6 +995,7 @@ The same 19-bit polynomial `p(L,C,R) = C+R−CR−LCR` serves five physical role
 - `UgpLean.ContinuumLimit.WassersteinDistance` — Full W₁ Wasserstein metric scaffold: non-negativity, Kantorovich dual lower bound, triangle inequality via glued coupling, zero-iff-equal, infimum attained, coupling set compact (all zero sorry, CatAL; graduated)
 - `UgpLean.Universality.MDLDerivabilityCriterion` (§5 extended) — **T96-02 CA-level closure CatAL**: `z5_fmdl_no_psc_kink_orbits` (GTE polynomial over GF(5) with winding-based PSC predicate, `native_decide`, 3125 states); `mdl_total_z7z3_strictly_beats_z5z3` (total MDL gap 3+0 < 5+6, `decide`); `mdl_ca_rule_coding_closed` (explicit K_data witness, master closure); non-circular MDL derivation Z₇×Z₃ fully machine-certified without SM input
 
-### Lorentzian ([ugp-physics-lean](https://github.com/novaspivack/ugp-physics-lean))
-- `UgpPhysicsLean.Lorentzian.MinkowskiSpace` — Minkowski metric, LorentzGroup (CatAL)
-- `UgpPhysicsLean.Lorentzian.SpinorRep` — Spinor \(2\pi\) rotation = \(-1\); spin-statistics axiom (CatAL + 1 named axiom)
+### Lorentzian (now in UgpLean.Gravity)
+- `UgpLean.Gravity.MinkowskiSpace` — Minkowski metric η = diag(−1,+1,+1,+1), LorentzGroup SO(1,3); `lorentz_identity`, `lorentz_closed_mul` (CatAL)
+- `UgpLean.Gravity.SpinorRep` — Spinor 2π rotation = −1; spin-statistics axiom; `rotation2pi_sq_eq_one`, `spin_statistics_from_topology`, `gte_spin_statistics` (CatAL + 1 named topological axiom)
+- `UgpLean.Gravity.WaldEntropy` — Wald entropy formula for diffeomorphism-invariant Lagrangians; MDL-minimal coupling ξ=0 → S = Area/(4G); `phimdl_wald_entropy_is_area_over_4G` (3 sorries pending Mathlib manifold integrals; Stage 3 stub)

@@ -179,7 +179,7 @@ theorem omega_lambda_simplified :
   have hlog2 : Real.log 2 ≠ 0 := Real.log_ne_zero_of_pos_of_ne_one (by norm_num) (by norm_num)
   field_simp [hlog2]
 
-private lemma omega_lambda_gte_gt : (0.68977 : ℝ) < Omega_Lambda_GTE := by
+lemma omega_lambda_gte_gt : (0.68977 : ℝ) < Omega_Lambda_GTE := by
   rw [omega_lambda_simplified]
   have hL := log_two_thousand_div_three_gt
   have hpi := Real.pi_lt_d6
@@ -191,7 +191,7 @@ private lemma omega_lambda_gte_gt : (0.68977 : ℝ) < Omega_Lambda_GTE := by
     _ < Real.log (2000 / 3) / (3 * Real.pi) :=
       div_lt_div_of_pos_right hL (mul_pos (by norm_num) Real.pi_pos)
 
-private lemma omega_lambda_gte_lt : Omega_Lambda_GTE < (0.6902 : ℝ) := by
+lemma omega_lambda_gte_lt : Omega_Lambda_GTE < (0.6902 : ℝ) := by
   rw [omega_lambda_simplified]
   have hL := log_two_thousand_div_three_lt
   have hpi := Real.pi_gt_d6

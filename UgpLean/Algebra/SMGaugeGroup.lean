@@ -4,7 +4,7 @@ import UgpLean.Algebra.F21SU3Embedding
 import UgpLean.Algebra.GaugeMDL
 
 /-!
-# Standard Model Gauge Group from Z₇ Winding Structure (EPIC_080 G23)
+# Standard Model Gauge Group from Z₇ Winding Structure
 
 Bundles the three independent Z₇-derived gauge identification channels into a
 single zero-`sorry` structural certificate for

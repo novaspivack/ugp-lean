@@ -7,7 +7,7 @@ open GTE.Spacetime.QEC GTE.Spacetime.CausalInvariance
 open GTE.Lifting GTE.Spacetime.MassGap
 
 /-!
-# [D]-Weighted SR Formula (Rank 63-DMDL)
+# [D]-Weighted SR Formula
 
 The D2 [D]-weighted average of the MDL transit time τ_c reproduces the SR
 Lorentz factor γ(v) = 1/√(1 − v²/c²) for PSC-admissible beable states.
@@ -28,7 +28,7 @@ line satisfies `(c² − v²)/c² = 1 − (v/c)²`.
 2. For a worldline at velocity v < c, the proper-time ratio is `1 − (v/c)²`.
 3. Together: the [D]-average of proper time is reduced by the Lorentz factor.
 
-## Computational evidence (CatA, 2026-05-24)
+## Computational evidence (CatA)
 
 True AFCA (M=7, L=300) canonical A-glider (v=0.532, β=0.798):
 - τ_c ratio (glider/ether) = 1.569 ± 0.003 across N_trans ∈ {100,200,300,400}
@@ -38,7 +38,7 @@ True AFCA (M=7, L=300) canonical A-glider (v=0.532, β=0.798):
 - Null N1 (uniform weights): ratio ≈ 1.001 ≠ γ (DWeight essential)
 - Null N2 (scrambled v): 46.8% error (correct velocity required)
 - Null N3 (ether control): ratio = 1.001 ± 0.1% (no signal without glider)
-- Full-β companion (Rank 67-KGS, KG substrate): 0.069% mean error across β∈[0.05,0.90]
+- Full-β companion (KG substrate): 0.069% mean error across β∈[0.05,0.90]
 
 ## Lean status
 
@@ -108,7 +108,7 @@ theorem dmdl_time_dilation_nonzero (v c : ℚ)
 -- §3  Combined [D]-weight SR formula
 -- ─────────────────────────────────────────────────────────────────────────────
 
-/-- **[D]-Weighted SR Formula** (Rank 63-DMDL, CatAL).
+/-- **[D]-Weighted SR Formula** (CatAL).
 
     For a PSC-admissible beable `b` moving at subluminal velocity v < c:
     (1) The [D]-measure assigns positive weight: `DWeight b > 0`.
@@ -165,7 +165,7 @@ theorem dmdl_lorentz_factor_algebraic (v c : ℚ) (hv : 0 ≤ v) (hvc : v < c)
     **Scope:** This is the algebraic backbone.  The AFCA identification
     (τ_exc = τ_c(glider), τ_vac = τ_c(ether)) is CatA at β=0.798 with
     1.2% lattice-corrected residual.  The exact identity holds in the
-    continuum KG substrate (Rank 67-KGS: 0.069% error across full β range). -/
+    continuum KG substrate (0.069% error across full β range). -/
 theorem dmdl_tau_c_ratio_structure (τ_vac τ_exc c v : ℚ)
     (hτv : 0 < τ_vac) (hτe : 0 < τ_exc)
     (hv : 0 ≤ v) (hvc : v < c) (hc : 0 < c)
@@ -212,7 +212,7 @@ theorem dmdl_tau_c_ratio_structure (τ_vac τ_exc c v : ℚ)
 
     Computational realisation at β=0.798, M=7, N_trans∈{100,200,300,400}:
     τ_c_ratio = 1.569 ± 0.003, γ = 1.659, corrected error 1.2–1.8%.
-    Full-velocity companion (Rank 67-KGS): 0.069% mean error across β∈[0.05,0.90].
+    Full-velocity companion: 0.069% mean error across β∈[0.05,0.90].
 
     ## Status: CatAL — zero sorry. -/
 theorem dmdl_qec_sr_bundle (v c : ℚ) (hv : 0 ≤ v) (hvc : v < c) (hc : 0 < c) :

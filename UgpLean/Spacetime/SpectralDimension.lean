@@ -349,7 +349,7 @@ theorem causal_graph_periodic_translation_invariant (hL : 2 ≤ L) (hT : 1 ≤ T
   · exact Or.inr (causalAdjPeriodic_shift (L := L) (T := T) (δt := δt) (δx := δx)
       (δy := δy) (δz := δz) (n1 := m) (n2 := n) hmn)
 
-/-- **The ℤ^4 torus isomorphism (Rank 13-LSD).**
+/-- **The ℤ^4 torus isomorphism.**
     The periodic causal graph `CausalGraphPeriodic L T` is isomorphic as a simple graph
     to the Cayley graph Cay(G₄, S₄) where G₄ = (ℤ/(T+1)ℤ) × (ℤ/Lℤ)³ and S₄ is
     the 20-element generating set defined above.

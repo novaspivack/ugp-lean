@@ -294,7 +294,7 @@ theorem fmdl_w_preimage_characterization :
 theorem fmdl_zero_is_conj_closed : z7_conj 0 = 0 := by decide
 
 -- ════════════════════════════════════════════════════════════════
--- §5  SM Quark–W-Boson Charged-Current Vertex Theorem (Rank 39)
+-- §5  SM Quark–W-Boson Charged-Current Vertex Theorem
 -- ════════════════════════════════════════════════════════════════
 
 -- SM particle winding number constants (Z₇ assignments, per P28 §5–§6)
@@ -370,7 +370,7 @@ theorem sm_cp_vertex_asymmetry :
     exact sm_w_minus_absence t.1 t.2.1 t.2.2 ht
 
 -- ════════════════════════════════════════════════════════════════
--- §6  MDL-CP Uniqueness Structure (Rank 33)
+-- §6  MDL-CP Uniqueness Structure
 --
 --  The MDL-minimal orbit-admissible function (fmdl) is the unique
 --  CA function satisfying: (1) vacuum-transparency, (2) Z₇=4 exclusion,
@@ -585,7 +585,7 @@ theorem ca_w_plus_is_emission_not_absorption :
 
     Cross-reference (Finding 3): complements Silver Closure in
     `UgpPhysicsLean.VertexTheorem` and substrate `AllowedVertex` in
-    `LiftingTheorem`; Rank 93-VXCATALOG is CatA lab simulation, not Lean.
+    `LiftingTheorem`; the vertex-catalog result is CatA lab simulation, not Lean.
 
     LEAN-CERTIFIED (decide, zero sorry). -/
 theorem p22_vertex_table_is_ca_transparent :

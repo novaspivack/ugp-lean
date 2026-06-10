@@ -7,7 +7,7 @@ open GTE.Lifting GTE.Spacetime.MassGap CUP3D
 open UgpLean.Universality.LawvereZone CUP3D
 
 /-!
-# The [D]-Measure as a QEC Stabilizer Code (Rank 38-QEC)
+# The [D]-Measure as a QEC Stabilizer Code
 
 The GTE [D]-measure — the density weight function `DWeight : (Fin 5 → Fin 7) → ℝ` —
 has a natural quantum error correcting code (QEC) interpretation.  The PSC-admissible
@@ -174,7 +174,7 @@ theorem qec_code_iff_no_error (b : Fin 5 → Fin 7) :
   (qec_dweight_projector b).symm
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- §5b  D1–D4 on DWeight (Rank 38-QEC stabilizer bundle inputs)
+-- §5b  D1–D4 on DWeight (stabilizer bundle inputs)
 -- ─────────────────────────────────────────────────────────────────────────────
 
 /-- **D1 (code exclusion):** PSC-inadmissible beables have zero [D]-weight. -/
@@ -217,7 +217,7 @@ theorem dweight_decode_projection (b : Fin 5 → Fin 7) :
   · intro h; exact if_pos h
   · intro h; exact if_neg h
 
-/-- **Rank 38-QEC stabilizer bundle (D1, D2, D4 discrete; zero sorry).
+/-- **QEC stabilizer bundle (D1, D2, D4 discrete; zero sorry).
 
     The [D] step-function is the syndrome projector onto PSC-admissible beables:
     inadmissible states carry weight 0; admissible states carry weight 1; and
@@ -295,7 +295,7 @@ theorem qec_mass_gap_error_energy :
 -- §9  Main QEC Theorem
 -- ─────────────────────────────────────────────────────────────────────────────
 
-/-- **QEC Stabilizer Code Theorem** (Rank 38-QEC, CatAL).
+/-- **QEC Stabilizer Code Theorem** (CatAL).
 
     The GTE [D]-measure (`DWeight`) defines a complete quantum error correcting
     code structure on the space of Z₇^5 beable configurations.  Four properties

@@ -2,7 +2,7 @@ import UgpLean.Universality.CUP3DUniqueness
 import UgpLean.Universality.GUTStructure
 
 /-!
-# Two-Role Structural Theorem — Cogwheel vs GTE Cascade (Rank 070-94)
+# Two-Role Structural Theorem — Cogwheel vs GTE Cascade
 -/
 
 namespace GTE.Universality.TwoRoleTheorem
