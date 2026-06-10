@@ -138,6 +138,7 @@ import UgpLean.Polynomial.PolyExplorations
 import UgpLean.Polynomial.GoldenQuadratic
 import UgpLean.Polynomial.DynamicalZeta
 import UgpLean.Polynomial.EisensteinIdentities
+import UgpLean.Polynomial.SpinSevenGroundSpace
 import UgpLean.Polynomial.MDLThreeLevelUnification
 import UgpLean.Polynomial.GTECausalTree
 import UgpLean.Universality.CUP3DPSCUnification
@@ -268,6 +269,9 @@ import UgpLean.Gravity.TemporalVoxelCC
 import UgpLean.Gravity.EtherProperTimeRate
 import UgpLean.Gravity.PhiMDLProperTimeBridge
 import UgpLean.Gravity.GorardRicciFlatVacuum
+import UgpLean.Gravity.MinkowskiSpace
+import UgpLean.Gravity.SpinorRep
+import UgpLean.Gravity.WaldEntropy
 import UgpLean.Gravity.FermionicStatistics
 import UgpLean.Gravity.LorentzGroupSO13
 import UgpLean.Gravity.PSCEpochSelection
@@ -308,6 +312,10 @@ import UgpLean.Physics.FKTTCoupling
 import UgpLean.Physics.ZSevenVacuumSelection
 import UgpLean.Physics.KinkVacuumPolarization
 import UgpLean.Physics.KinkFormFactor
+import UgpLean.Physics.KinkPoleMassSpectralCore
+import UgpLean.Physics.BurnsideCosetCharges
+import UgpLean.Universality.HeatKernelContactTerms
+import UgpLean.Universality.LambdaGTEThreshold
 import UgpLean.Universality.PhiMDLUniversality
 import UgpLean.Universality.BellViolationGTE
 import UgpLean.Universality.FiveRolesPolynomial

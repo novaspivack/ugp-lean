@@ -3,6 +3,7 @@ import Mathlib.Data.Real.Basic
 import Mathlib.Topology.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 import Mathlib.Analysis.Asymptotics.AsymptoticEquivalent
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import UgpLean.Substrate.PhiMDLFluctuationSpectrum
@@ -161,6 +162,75 @@ theorem sech_form_factor_moment_bundle (m : ℝ) (hm : 0 < m) :
   · exact sech_top_born_rms_ratio m hm
   · unfold sechAutocorrShape
     rfl
+
+-- ─────────────────────────────────────────────────────────────────────────
+-- LT-088-46: dissolution Born-floor hard upper bound
+-- ─────────────────────────────────────────────────────────────────────────
+
+/-- PDG tau mass (MeV) used in the Born-floor chain. -/
+def mPhiMeV : ℚ := 177686 / 100
+
+/-- Tree-reading kink mass `M = 290.10` MeV. -/
+def kinkMassTreeMeV : ℚ := 29010 / 100
+
+/-- Pole-reading kink mass `M = 281` MeV. -/
+def kinkMassPoleMeV : ℚ := 281
+
+/-- Certified rational lower bound on `Λ_diss` from the Watson elastic Born floor (MeV). -/
+def lambdaDissBornFloorTreeMeV : ℚ := 708
+
+def lambdaDissBornFloorPoleMeV : ℚ := 703
+
+/-- Certified hard upper bounds on broadening `b = m_φ/Λ_diss`. -/
+def bornFloorBMaxTree : ℚ := 251 / 100
+
+def bornFloorBMaxPole : ℚ := 253 / 100
+
+/-- Pure-ZZ floor `Λ_diss ≥ 2M` upper bound on `b`. -/
+def zzFloorBMaxTree : ℚ := 30625 / 10000
+
+def zzFloorBMaxPole : ℚ := 88843 / 28100
+
+theorem m_phi_mev_pos : 0 < mPhiMeV := by
+  unfold mPhiMeV
+  norm_num
+
+theorem lambda_diss_born_floor_tree_pos : 0 < lambdaDissBornFloorTreeMeV := by
+  unfold lambdaDissBornFloorTreeMeV
+  norm_num
+
+theorem lambda_diss_born_floor_pole_pos : 0 < lambdaDissBornFloorPoleMeV := by
+  unfold lambdaDissBornFloorPoleMeV
+  norm_num
+
+theorem born_floor_bmax_tree_cert :
+    mPhiMeV / lambdaDissBornFloorTreeMeV ≤ bornFloorBMaxTree := by
+  unfold mPhiMeV lambdaDissBornFloorTreeMeV bornFloorBMaxTree
+  norm_num
+
+theorem born_floor_bmax_pole_cert :
+    mPhiMeV / lambdaDissBornFloorPoleMeV ≤ bornFloorBMaxPole := by
+  unfold mPhiMeV lambdaDissBornFloorPoleMeV bornFloorBMaxPole
+  norm_num
+
+theorem zz_floor_bmax_tree_cert :
+    mPhiMeV / (2 * kinkMassTreeMeV) ≤ zzFloorBMaxTree := by
+  unfold mPhiMeV kinkMassTreeMeV zzFloorBMaxTree
+  norm_num
+
+theorem zz_floor_bmax_pole_cert :
+    mPhiMeV / (2 * kinkMassPoleMeV) ≤ zzFloorBMaxPole := by
+  unfold mPhiMeV kinkMassPoleMeV zzFloorBMaxPole
+  norm_num
+
+/-- **kink_dissolution_born_floor** (CatAL): Watson elastic Born floor hard bounds on `b`. -/
+theorem kink_dissolution_born_floor :
+    mPhiMeV / lambdaDissBornFloorTreeMeV ≤ bornFloorBMaxTree ∧
+      mPhiMeV / lambdaDissBornFloorPoleMeV ≤ bornFloorBMaxPole ∧
+        mPhiMeV / (2 * kinkMassTreeMeV) ≤ zzFloorBMaxTree ∧
+          mPhiMeV / (2 * kinkMassPoleMeV) ≤ zzFloorBMaxPole := by
+  refine ⟨born_floor_bmax_tree_cert, born_floor_bmax_pole_cert, zz_floor_bmax_tree_cert,
+    zz_floor_bmax_pole_cert⟩
 
 end
 
