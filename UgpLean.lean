@@ -314,6 +314,7 @@ import UgpLean.Physics.FKTTCoupling
 import UgpLean.Physics.ZSevenVacuumSelection
 import UgpLean.Physics.KinkVacuumPolarization
 import UgpLean.Physics.KinkFormFactor
+import UgpLean.Physics.CCOneJumpResidual
 import UgpLean.Physics.KinkPoleMassSpectralCore
 import UgpLean.Physics.BurnsideCosetCharges
 import UgpLean.Universality.HeatKernelContactTerms
