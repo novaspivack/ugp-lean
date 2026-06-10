@@ -141,6 +141,7 @@ import UgpLean.Polynomial.EisensteinIdentities
 import UgpLean.Polynomial.BiquadraticCompositum
 import UgpLean.Polynomial.AGL17ChiralZ2
 import UgpLean.Polynomial.SpinSevenGroundSpace
+import UgpLean.Polynomial.SpinSevenWallSpectroscopy
 import UgpLean.Polynomial.MDLThreeLevelUnification
 import UgpLean.Polynomial.GTECausalTree
 import UgpLean.Universality.CUP3DPSCUnification
@@ -318,6 +319,7 @@ import UgpLean.Physics.CCOneJumpResidual
 import UgpLean.Universality.NgenBracketOrientation
 import UgpLean.Physics.KinkPoleMassSpectralCore
 import UgpLean.Physics.BurnsideCosetCharges
+import UgpLean.Physics.CMCAPhysicalPoint
 import UgpLean.Universality.HeatKernelContactTerms
 import UgpLean.Universality.LambdaGTEThreshold
 import UgpLean.Universality.PhiMDLUniversality

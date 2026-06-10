@@ -1468,6 +1468,42 @@ Certifies that for **every** ring length $n \ge 3$ the cyclic zero-energy config
 
 ---
 
+### Spin-7 directed wall spectroscopy (`Polynomial.SpinSevenWallSpectroscopy`)
+
+Twelve CatAL theorems. Module: `UgpLean/Polynomial/SpinSevenWallSpectroscopy.lean`. Zero sorry, zero custom axioms.
+
+Certifies the directed minimal-interface energies of the 49-node spin-7 pair digraph — edge `(a,b) \to (b,c)` weighted by the local triple energy $p(a,b,c)$ — together with bump (closed-excursion) energies and the half-integer gap exponent $(E_w(0\to1)+E_w(1\to0))/2 = 3/2$. Bounded Bellman–Ford search (48 rounds) on `Fin 49` distance tables; individual entries closed by `native_decide`.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **spin7_directed_wall_energies** | Master bundle: directed wall table, composite hub identity, bump table, half-integer gap | CatAL |
+| **directed_wall_energy_table** | $E_w(1\to0)=1$, $E_w(0\to1)=2$, $E_w(5\to0)=2$, $E_w(0\to5)=4$, $E_w(1\to5)=4$, $E_w(5\to1)=4$; $E_w(5\to1)=E_w(5\to0)+E_w(0\to1)$ | CatAL |
+| **loop_bump_energy_table** | $E_{\rm loop}(0)=2$, $E_{\rm loop}(1)=3$, $E_{\rm loop}(5)=4$ | CatAL |
+| **directed_wall_half_integer_gap** | $(E_w(0\to1)+E_w(1\to0))/2 = 3/2$ as exact rational arithmetic | CatAL |
+| Plus 8 supporting `native_decide` certificates | Individual wall/bump entries and composite identity | CatAL |
+
+---
+
+### CMCA physical-point dictionary (`Physics.CMCAPhysicalPoint`)
+
+Eight CatAL theorems (one conditional on `MDLSaturationSpacingHypothesis`). Module: `UgpLean/Physics/CMCAPhysicalPoint.lean`. Zero sorry, zero custom axioms.
+
+Given the seven-kink threshold $\Lambda = 7M$, SCC kink mass $M = (8/49)m_\varphi$ (`mkink_from_scc`), and the named CatB premise `MDLSaturationSpacingHypothesis` ($a\cdot\Lambda = 1$ with positivity), certifies $aM = 1/7$, $am_\varphi = 7/8$, and $\xi^* = 1/(aM) = 7 = |Z_7|$.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **cmca_physical_point_dictionary** | From $\Lambda = 7M$, $M = (8/49)m_\varphi$, and `MDLSaturationSpacingHypothesis`: $aM = 1/7 \land am_\varphi = 7/8 \land \xi^* = 7$ | CatAL \| H |
+| **cmca_physical_point_tree_reading** | Tree-reading witness $a = 1/\Lambda$ reproduces the dictionary at $M = M_{\rm kink}^{\rm SCC}$ | CatAL |
+| **a_times_M_eq_one_seventh** | $aM = 1/7$ from $a\Lambda = 1$ and $\Lambda = 7M$ | CatAL |
+| **a_times_mphi_eq_seven_eighths** | $am_\varphi = 7/8$ from $M = (8/49)m_\varphi$ | CatAL |
+| **xi_star_eq_seven** | $\xi^* = 1/(aM) = 7$ | CatAL |
+| **xi_star_eq_z7_order** | $\xi^* = |Z_7|$ | CatAL |
+| **mdl_saturation_tree_reading** | Consistent instance of `MDLSaturationSpacingHypothesis` at $a = 1/(7M)$ | CatAL |
+
+**Premise structure:** `MDLSaturationSpacingHypothesis` — assumes only $a > 0$, $\Lambda > 0$, and $a\cdot\Lambda = 1$; threshold identification $\Lambda = 7M$ is supplied separately.
+
+---
+
 ### Retrospective synthesis: biquadratic compositum and AGL chiral Z₂ (`Polynomial.BiquadraticCompositum`, `Polynomial.AGL17ChiralZ2`)
 
 22 CatAL theorems. Zero sorry, zero custom axioms.
