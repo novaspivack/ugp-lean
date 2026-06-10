@@ -2246,4 +2246,43 @@ theorem vector_meson_nonet_jp1 :
     (1 : ℚ) / 4 - (-3 / 4) ≠ 0 := by
   exact ⟨by norm_num, by norm_num, by norm_num, by norm_num⟩
 
+-- ─────────────────────────────────────────────────────────────────────────
+-- §5s  RG vacuum-selection arithmetic (LT-088-34..36)
+-- ─────────────────────────────────────────────────────────────────────────
+
+/-- PDG-matched conservative `e²` anchor at Λ_GTE: `188/50 = 3.76`. -/
+def pdgMatchedESquared : ℚ := 188 / 50
+
+/-- Sylow rational family for the color-sector `e²` neighbor-null test. -/
+def sylowRationalFamily : List ℚ :=
+  [7, 7 / 3, 7 / 6, 3 / 2, 5 / 2, 9 / 2, 21 / 2]
+
+theorem pdg_matched_e_squared_val : pdgMatchedESquared = 188 / 50 := rfl
+
+theorem color_coupling_squared_val : colorCouplingSquared = 7 / 2 := by
+  unfold colorCouplingSquared
+  norm_num
+
+/-- **sylow_family_pdg_match_unique_closest** (CatAL — norm_num):
+    `7/2` is strictly closest to `188/50` among the Sylow rational family. -/
+theorem sylow_family_pdg_match_unique_closest :
+    |(7 / 2 : ℚ) - pdgMatchedESquared| < |7 - pdgMatchedESquared| ∧
+    |(7 / 2 : ℚ) - pdgMatchedESquared| < |7 / 3 - pdgMatchedESquared| ∧
+    |(7 / 2 : ℚ) - pdgMatchedESquared| < |7 / 6 - pdgMatchedESquared| ∧
+    |(7 / 2 : ℚ) - pdgMatchedESquared| < |3 / 2 - pdgMatchedESquared| ∧
+    |(7 / 2 : ℚ) - pdgMatchedESquared| < |5 / 2 - pdgMatchedESquared| ∧
+    |(7 / 2 : ℚ) - pdgMatchedESquared| < |9 / 2 - pdgMatchedESquared| ∧
+    |(7 / 2 : ℚ) - pdgMatchedESquared| < |21 / 2 - pdgMatchedESquared| := by
+  unfold pdgMatchedESquared
+  norm_num
+
+/-- **thermal_leading_inward_dominance** (CatAL — norm_num):
+    At the Villain color coupling `e² = 7/2`, the thermal leading coefficient `3e²`
+    exceeds `m_τ²` in GeV² units (`3·(7/2) = 21/2 > 3.157`). -/
+theorem thermal_leading_inward_dominance :
+    let eSquared : ℚ := 7 / 2
+    let tauMassGeV : ℚ := 1776860000 / 1000000000
+    3 * eSquared > tauMassGeV ^ 2 := by
+  norm_num
+
 end UgpLean.Universality.SylowIndexCoupling

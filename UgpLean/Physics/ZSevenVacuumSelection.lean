@@ -444,6 +444,96 @@ theorem z7_coupling_seam_discontinuity :
   rw [← couplingSeamRatio_eq_alt]
   exact coupling_seam_ratio_gt_56
 
+-- ─────────────────────────────────────────────────────────────────────────
+-- LT-088-35: boundary-sensitivity coefficient positive
+-- ─────────────────────────────────────────────────────────────────────────
+
+/-- Villain color coupling `e² = 7/2` from the Sylow hierarchy. -/
+def colorESquared : ℝ := (7 : ℝ) / 2
+
+/-- χ-sector mass parameter at the SCC identification `g = m_τ` (GeV). -/
+def chiMassGeV : ℝ := (1776860000 : ℝ) / 1000000000
+
+/-- Kinetic normalization at vacuum label `k = 1`. -/
+def z1KineticNorm : ℝ := chiKineticNorm ⟨1, by decide⟩
+
+/-- Boundary-sensitivity coefficient `3e⁴(Z₁²−1) + g⁴(Z₁⁻²−1)`. -/
+def boundarySensitivityCoeff : ℝ :=
+  3 * colorESquared ^ 2 * (z1KineticNorm ^ 2 - 1) +
+    chiMassGeV ^ 4 * ((z1KineticNorm ^ 2)⁻¹ - 1)
+
+theorem z1_kinetic_norm_gt_one : (1 : ℝ) < z1KineticNorm := by
+  unfold z1KineticNorm chiKineticNorm vacuumAngle gteEpsilon
+  have hπ : (0 : ℝ) < π := Real.pi_pos
+  have hangle : 0 < 2 * π / 7 := by nlinarith [hπ, Real.pi_gt_d6]
+  nlinarith [gteEpsilon_pos, hangle, Real.pi_gt_d6]
+
+theorem z1_kinetic_norm_gt_two : (2 : ℝ) < z1KineticNorm := by
+  unfold z1KineticNorm chiKineticNorm vacuumAngle gteEpsilon
+  have hπ_lo := Real.pi_gt_d6
+  have hπ_hi := Real.pi_lt_d6
+  nlinarith [gteEpsilon_pos, hπ_lo, hπ_hi]
+
+theorem z1_kinetic_norm_lt_three : z1KineticNorm < (3 : ℝ) := by
+  unfold z1KineticNorm chiKineticNorm vacuumAngle gteEpsilon
+  have hπ_hi := Real.pi_lt_d6
+  have hπ_lo := Real.pi_gt_d6
+  nlinarith [sq_pos_of_ne_zero Real.pi_ne_zero, hπ_hi, hπ_lo]
+
+theorem z1_kinetic_norm_pos : 0 < z1KineticNorm := by
+  linarith [z1_kinetic_norm_gt_one]
+
+theorem z1_sq_minus_one_pos : 0 < z1KineticNorm ^ 2 - 1 := by
+  nlinarith [z1_kinetic_norm_gt_one]
+
+theorem z1_inv_sq_lt_one : (z1KineticNorm ^ 2)⁻¹ < 1 := by
+  have hz2 : 1 < z1KineticNorm ^ 2 := by nlinarith [z1_kinetic_norm_gt_one]
+  exact inv_lt_one_of_one_lt₀ hz2
+
+theorem z1_inv_sq_minus_one_neg : (z1KineticNorm ^ 2)⁻¹ - 1 < 0 := by
+  linarith [z1_inv_sq_lt_one]
+
+theorem color_e_fourth_pos : 0 < colorESquared ^ 4 := by
+  unfold colorESquared
+  positivity
+
+theorem chi_mass_fourth_pos : 0 < chiMassGeV ^ 4 := by
+  unfold chiMassGeV
+  positivity
+
+theorem chi_mass_fourth_gt_nine : (9 : ℝ) < chiMassGeV ^ 4 := by
+  unfold chiMassGeV
+  norm_num
+
+theorem chi_mass_fourth_lt_ten : chiMassGeV ^ 4 < (10 : ℝ) := by
+  unfold chiMassGeV
+  norm_num
+
+theorem z1_inv_sq_pos : 0 < (z1KineticNorm ^ 2)⁻¹ := by
+  positivity [z1_kinetic_norm_pos]
+
+theorem z1_inv_sq_minus_one_gt_neg_one : (-1 : ℝ) < (z1KineticNorm ^ 2)⁻¹ - 1 := by
+  linarith [z1_inv_sq_pos]
+
+theorem color_term_lower_bound :
+    (40 : ℝ) < 3 * colorESquared ^ 2 * (z1KineticNorm ^ 2 - 1) := by
+  unfold colorESquared
+  have hz : (3 : ℝ) < z1KineticNorm ^ 2 - 1 := by nlinarith [z1_kinetic_norm_gt_two]
+  nlinarith [hz]
+
+theorem chi_term_lower_bound :
+    (-10 : ℝ) < chiMassGeV ^ 4 * ((z1KineticNorm ^ 2)⁻¹ - 1) := by
+  have hfac := z1_inv_sq_minus_one_gt_neg_one
+  have hneg := z1_inv_sq_minus_one_neg
+  nlinarith [chi_mass_fourth_lt_ten, hfac, hneg]
+
+/-- **boundary_sensitivity_coefficient_positive** (CatAL):
+    `3e⁴(Z₁²−1) + g⁴(Z₁⁻²−1) > 0` at `e² = 7/2`, `g = m_τ`, `Z₁ = 1 + 2(7/9)(2π/7)²`. -/
+theorem boundary_sensitivity_coefficient_positive :
+    0 < boundarySensitivityCoeff := by
+  unfold boundarySensitivityCoeff
+  linarith [color_term_lower_bound, chi_term_lower_bound]
+
 end
 
 end UgpLean.Physics.ZSevenVacuumSelection
