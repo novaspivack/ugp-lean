@@ -11,8 +11,9 @@ import UgpLean.Universality.NgenUniversalityPartial
 /-!
 # N_gen bracket-orientation exclusion and PI-free pincer (088-R23)
 
-Certifies LT-088-51 (`ngen_bracket_orientation_flip`) and LT-088-52
-(`ngen_pincer_from_layer1_and_orientation`) for the canonical G02 ansatz:
+Certifies LT-088-51 (`ngen_bracket_orientation_flip`), LT-088-52
+(`ngen_pincer_from_layer1_and_orientation`), and LT-088-56
+(`cc_floor_orientation_atom_inequality`) for the canonical G02 ansatz:
 
 - census(N) = (ln2/Nπ)·log₂(2000/N) = ln(2000/N)/(Nπ)
 - floor(N) = (N/7)(π/2) = Nπ/14
@@ -226,6 +227,41 @@ private lemma omega_census_at_four_lt_floor :
     Omega_census_at 4 (by decide : 0 < 4) < Omega_floor_at 4 (by decide : 0 < 4) := by
   exact lt_trans (lt_trans omega_census_at_four_lt (by norm_num : (52 : ℝ) / 100 < 89 / 100))
     omega_floor_at_four_gt
+
+-- ─────────────────────────────────────────────────────────────────────────
+-- LT-088-56: GTE-atom inequality (Floor Orientation arithmetic core)
+-- ─────────────────────────────────────────────────────────────────────────
+
+private lemma nine_pi_sq_lt_ninety_one : (9 : ℝ) * Real.pi ^ 2 < (91.014 : ℝ) := by
+  have hpi := Real.pi_lt_d6
+  have hpi_sq : Real.pi ^ 2 < (3.141593 : ℝ) ^ 2 := by gcongr
+  nlinarith [hpi_sq]
+
+/-- **cc_floor_orientation_atom_inequality** (CatAL): the measurement-free GTE-atom
+    inequality `14·ln(2000/3) > 9·π²`, equivalently
+    `2·|Z₇|·ln(D²·N_fam³/N_gen) > N_gen²·π²` at D = 4, N_fam = 5, N_gen = 3, Z₇ = 7.
+    Certified via the rational lower bound `ln(2000/3) > 6.501` and `π < 3.141593`. -/
+theorem cc_floor_orientation_atom_inequality :
+    (9 : ℝ) * Real.pi ^ 2 < (14 : ℝ) * Real.log (2000 / 3) := by
+  have hfloor : (91.014 : ℝ) = (14 : ℝ) * (6.501 : ℝ) := by norm_num
+  have hlog := mul_lt_mul_of_pos_left log_two_thousand_div_three_gt (by norm_num : (0 : ℝ) < 14)
+  exact lt_trans nine_pi_sq_lt_ninety_one (by rw [hfloor]; exact hlog)
+
+/-- Atom-form restatement at the certified GTE constants (D = 4, N_fam = 5, N_gen = 3, Z₇ = 7). -/
+theorem cc_floor_orientation_gte_atom_form :
+    2 * (7 : ℝ) * Real.log (2000 / 3) > (3 : ℝ) ^ 2 * Real.pi ^ 2 := by
+  linarith [cc_floor_orientation_atom_inequality]
+
+/-- The atom inequality certifies the N = 3 oriented bracket is non-empty. -/
+theorem cc_floor_orientation_bracket_non_empty :
+    Omega_holo < Omega_Lambda_GTE := by
+  rw [← omega_floor_at_three_eq, ← omega_census_at_three_eq]
+  dsimp [Omega_floor_at, Omega_census_at]
+  have hpos : (0 : ℝ) < (3 : ℝ) * Real.pi := mul_pos (by norm_num) Real.pi_pos
+  rw [lt_div_iff₀ hpos]
+  have hscale : (3 : ℝ) / 7 * (Real.pi / 2) * (3 * Real.pi) = (9 : ℝ) * Real.pi ^ 2 / 14 := by ring
+  rw [hscale, div_lt_iff₀ (by norm_num : (0 : ℝ) < 14)]
+  linarith [cc_floor_orientation_atom_inequality]
 
 -- ─────────────────────────────────────────────────────────────────────────
 -- Monotonicity / separation certificates for N ≥ 4
@@ -449,9 +485,14 @@ theorem planck_not_in_inverted_bracket_at_four :
 -- ─────────────────────────────────────────────────────────────────────────
 
 /-- **BracketOrientationHypothesis** (named hypothesis H1, CatAD-conditional):
-    the physical generation count carries an oriented non-empty two-route bracket.
-    Floor-half load-bearing on OQ-088-R22a; the Δ₁⁰ flip arithmetic is certified
-    separately in `ngen_bracket_orientation_flip`. -/
+    This structure captures the Floor Orientation Theorem (OQ-088-R22a CLOSED, 088-R24);
+    the carrier–record separation argument was derived from the PMDL variational action in
+    `LAB_NOTE_R21_ORIENTATION_LEMMA.md`. The named hypothesis is retained for modularity;
+    it does not introduce an independent premise — it is a theorem from the PMDL action +
+    R22 bundle. The physical generation count carries an oriented non-empty two-route
+    bracket; the Δ₁⁰ flip arithmetic is certified separately in
+    `ngen_bracket_orientation_flip` and the atom inequality in
+    `cc_floor_orientation_atom_inequality`. -/
 structure BracketOrientationHypothesis where
   physical_bracket_admissible : bracket_admissible_at 3 (by decide : 0 < 3)
 
