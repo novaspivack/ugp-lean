@@ -1352,7 +1352,7 @@ operates at three nested levels: theory selection ($p$ from rule space), field d
 
 ## Frontier Closures — Second Wave
 
-**Scope:** 72 net-new zero-`sorry` theorems (plus two conditional CatAL\|H1) across thirteen modules, plus three PARTIAL modules. Cat levels: **CatAL** unless noted **PARTIAL** or **CatAL\|H1**. Covers: golden-quadratic diagonal fixed-point structure, Eisenstein arithmetic of GTE constants, seven-ring dynamical-zeta orbit classification, Z₇ vacuum-selection mechanism with gauge-coupling hierarchy, kink-sector physics algebraic cores, biquadratic-compositum unification of the two master rings, the CC one-jump residual algebraic core, and the N_gen bracket-orientation theorem.
+**Scope:** 80 net-new zero-`sorry` theorems (plus two conditional CatAL\|H1) across fourteen modules, plus two PARTIAL modules. Cat levels: **CatAL** unless noted **PARTIAL** or **CatAL\|H1**. Covers: golden-quadratic diagonal fixed-point structure, Eisenstein arithmetic of GTE constants, seven-ring dynamical-zeta orbit classification, Z₇ vacuum-selection mechanism with gauge-coupling hierarchy, kink-sector physics algebraic cores, biquadratic-compositum unification of the two master rings, the CC one-jump residual algebraic core, and the N_gen bracket-orientation theorem.
 
 ---
 
@@ -1431,7 +1431,7 @@ Seven CatAL theorems. Module: `UgpLean/Polynomial/EisensteinIdentities.lean`. Ze
 
 ### Kink physics algebraic cores (`Physics.KinkVacuumPolarization`, `KinkFormFactor`, `BurnsideCosetCharges`, `Universality.HeatKernelContactTerms`, `LambdaGTEThreshold`)
 
-11 CatAL + 2 PARTIAL across seven modules.
+11 CatAL + 1 PARTIAL across six modules.
 
 | Theorem | Module | Statement | Cat |
 |---------|--------|-----------|-----|
@@ -1446,7 +1446,25 @@ Seven CatAL theorems. Module: `UgpLean/Polynomial/EisensteinIdentities.lean`. Ze
 | **heat_kernel_contact_term_rationals** | HeatKernelContactTerms | $(N^2-3)/(24N)=1/12$ at $N=3$; $\mathfrak{su}(N)$ trace/Killing skeleton | CatAL |
 | **lambda_gte_threshold_identity** | LambdaGTEThreshold | $\Lambda_{\rm GTE}=(8/7)m_\tau$; multiplier 7; $\mathbb{Z}_7$ coset residues; $7=11-4$ | CatAL |
 | **kink_pole_mass_spectral_core** | KinkPoleMassSpectralCore | PT autocorrelation, Levinson, sum rule, dim-reg channel, $\Gamma(-3/2)=4\sqrt{\pi}/3$ as definitional values; full integrals PARTIAL | PARTIAL |
-| **gte_ring_ground_states_uniform** | SpinSevenGroundSpace | Ground-state set $\{0^n,1^n,5^n\}$ for $3\le n\le 7$ (`native_decide`); $n\ge 8$ blocked at $7^8$ | PARTIAL |
+
+---
+
+### Spin-7 ring ground-space rigidity (`Polynomial.SpinSevenGroundSpace`)
+
+Eight CatAL theorems. Module: `UgpLean/Polynomial/SpinSevenGroundSpace.lean`. Zero sorry, zero custom axioms.
+
+Certifies that for **every** ring length $n \ge 3$ the cyclic zero-energy configurations of the spin-7 chain — assignments $(s_0,\dots,s_{n-1}) \in \mathbb{F}_7^n$ with $p(s_{i-1},s_i,s_{i+1}) = 0$ at every site — are exactly the three uniform assemblies $\{0^n, 1^n, 5^n\}$. The zero-energy condition $p=0$ is distinct from the temporal fixed-point condition $p = s_i$ classified in `DynamicalZeta` (rigidity set $\{0^n\}$). Proof technique: zero-energy windows determine the right cell from the left pair, defining a deterministic successor function on the 43 active pair states of $\mathbb{F}_7^2$; `native_decide` certifies the only directed cycles are the three uniform self-loops; a cyclic configuration induces a closed walk, the minimal-period bound $\le 49$ pigeonholes the return, and zero cells propagate to the vacuum ring.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **gte_ring_ground_states_uniform_general** | Ground-space rigidity for all $n\ge 3$: every cyclic zero-energy configuration is uniform with value in $\{0,1,5\}$ | CatAL |
+| **gte_ring_ground_states_uniform_bundle** | Characterisation bundle: rigidity + converse (each uniform ground assembly is zero-energy at every site) for all $n\ge 3$ | CatAL |
+| **gte_ring_ground_states_uniform** | Bounded-length corollary ($3\le n\le 7$), delegating to the general theorem | CatAL |
+| **uniform_ground_ring_satisfies_zero_energy** | Converse direction: uniform rings at $c\in\{0,1,5\}$ satisfy the zero-energy window at every site | CatAL |
+| **zero_energy_active_pair_only_uniform_cycles** | The 43-vertex zero-energy pair digraph has exactly the three uniform self-loops as directed cycles (`native_decide`) | CatAL |
+| **zero_energy_zero_center_forces_zero_right** | A zero-energy cell with centre 0 forces its right neighbour to 0 (local factorisation over $\mathbb{Z}/7$) | CatAL |
+| **zero_energy_any_zero_forces_all_zero** | Zero propagation: any vanishing cell on a zero-energy ring forces the vacuum ring $0^n$ | CatAL |
+| **ground_spin_values_card** | $\|\{0,1,5\}\| = 3$ | CatAL |
 
 ---
 
@@ -1492,7 +1510,7 @@ Module: `UgpLean/Polynomial/AGL17ChiralZ2.lean`.
 | **bracket_strict_interiority** | Planck 2018 central value strictly inside the bracket $(3\pi/14,\,\Omega_{\rm census})$ | CatAL |
 | **no_computable_gte_rt_convergence_modulus** | No computable modulus of convergence for the realised-ledger stage approximants; reduction to `asr_rt_not_computable` (Theorem C pattern) | CatAL |
 | **sigma_star_falsifiability_horizon** | $\sigma^*\in(2.9\times10^{-4},\,4.3\times10^{-4})$; refutation requires $>5\times$ current Planck precision | CatAL |
-| **cc_one_jump_residual_algebraic_core** | Master bundle for LT-088-47..50: census annotation, bracket, no-modulus, σ* horizon | CatAL |
+| **cc_one_jump_residual_algebraic_core** | Master bundle: census annotation, bracket, no-modulus, σ* horizon | CatAL |
 | **d_res_halting_ledger_factorization_core** | Left-c.e. structural core + finite `toyLedger` witness; full infinite Form Theorem and deg_T = 0′ identification deferred | PARTIAL |
 
 ---
