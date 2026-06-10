@@ -29,9 +29,6 @@ require mathlib from git
 require «Rule110» from git
   "https://github.com/novaspivack/rule110-lean.git" @ "13811a3"
 
-require «ugp-physics-lean» from git
-  "https://github.com/novaspivack/ugp-physics-lean.git" @ "3d39c9f"
-
 @[default_target]
 lean_lib «UgpLean» where
   -- Ridge, Sieve, Triple, QuarterLock, Classification, RSUC

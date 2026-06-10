@@ -6982,8 +6982,10 @@ formalization, covering holographic state counting, the single-polynomial
 charge map with tape-role asymmetry, SU(3) gluon structure, baryon number, chiral
 reflection symmetry, SRRG--CA bridge, Gorard vacuum Ricci-flatness, and the
 $\mathfrak{so}(1,3)$ commutation algebra.  Companion infrastructure for Minkowski
-space and spinor exchange lives in \texttt{ugp-physics-lean}
-(\lstinline|UgpPhysicsLean.Lorentzian|).
+space and spinor exchange now lives in \texttt{ugp-lean} as
+\lstinline|UgpLean.Gravity| (\lstinline|MinkowskiSpace|, \lstinline|SpinorRep|,
+\lstinline|WaldEntropy|); these modules were moved from \texttt{ugp-physics-lean}
+to eliminate the cyclic Lake dependency between the two repositories.
 
 \begin{table}[h]
 \centering\footnotesize
@@ -8841,6 +8843,166 @@ equal sector distribution from $\mathbb{Z}_7$ group transitivity
 \texttt{z7\_symmetry\_forces\_equal\_sector\_action}).
 The equal-sector-distribution step follows from $\mathbb{Z}_7$ group transitivity
 alone --- no dilute instanton gas approximation is required.
+
+% ═══════════════════════════════════════════════════════════════
+\subsection{New algebraic certificates (second wave)}\label{subsec:epic-088}
+% ═══════════════════════════════════════════════════════════════
+
+This section covers \textbf{61} net-new zero-\texttt{sorry} theorems across eleven
+modules, plus two modules with partial certifications awaiting kernel-budget
+resolution.
+The wave formalises the diagonal fixed-point structure of the GTE polynomial,
+the Eisenstein and cyclotomic arithmetic of the GTE integer constants, the full
+dynamical-zeta classification of the seven-ring orbit, the $\mathbb{Z}_7$
+vacuum-selection mechanism with its gauge-coupling hierarchy, the algebraic
+cores of the kink-sector physical observables, and the biquadratic-compositum
+unification of the two master rings.
+
+\paragraph{Golden quadratic and diagonal fixed points
+  (\texttt{Polynomial/\allowbreak GoldenQuadratic}).}
+Nine \CatAL\ theorems certify the diagonal self-consistency structure
+$p(x,x,x)-x = -x(x^2+x-1)$ over any commutative ring
+(\texttt{gte\_diagonal\_quadratic\_factorization}),
+the rootlessness of $m(x)=x^2+x-1$ in $\mathbb{F}_7$ via the
+$N_{\mathrm{fam}}=5$ quadratic-non-residue condition
+(\texttt{disc5\_dichotomy\_gf7}),
+the SRRG--floor duality bundle unifying $1/\varphi$ (archimedean fiber) with
+the Rule~110 binary floor (\texttt{golden\_floor\_duality\_bundle}),
+7-adic inertness through all $7^k$
+(\texttt{master\_quadratic\_no\_root\_mod\_seven\_pow}),
+the all-prime dichotomy via quadratic reciprocity
+(\texttt{master\_quadratic\_split\_iff\_qr5}),
+singleton-invariance classification
+(\texttt{golden\_singleton\_invariant\_iff\_diag\_fixed}),
+the $q{=}5$ ramification deriving the $\mathbb{F}_5$ ballistic pathology
+(\texttt{second\_floor\_iff\_ramified}),
+Frobenius swap of the two $\mathbb{F}_{49}$ roots
+(\texttt{gf49\_golden\_roots\_frobenius\_swap}),
+and the Pisano period $\pi(7)=16$
+(\texttt{pisano\_seven\_eq\_sixteen}).
+
+\paragraph{Eisenstein arithmetic and $F_{21}$ residue field
+  (\texttt{Polynomial/\allowbreak EisensteinIdentities}).}
+Seven \CatAL\ theorems certify $c_H = \Phi_3(N_{\mathrm{gen}}) =
+\Phi_6(N_{\mathrm{gen}}{+}1) = 13$
+(\texttt{c\_H\_eq\_phi3\_ngen}),
+the Eisenstein norm-product $|F_{21}|=\Phi_6(2)\Phi_6(3)$
+(\texttt{f21\_order\_eisenstein\_norm\_product}),
+the residue-field isomorphism $F_{21}\cong(\mathbb{Z}[\omega]/(3{+}\omega))^+
+\rtimes\mu_3$ via an explicit \texttt{decide}-verified group model
+(\texttt{f21\_eisenstein\_residue\_model}),
+$p$-torus semi-invariance
+(\texttt{poly\_p\_torus\_equivariance}),
+the $\Phi_6(q)$-count orbit decomposition $|V(p)\cap\mathbb{F}_7^3|=43$
+with unique ether point (\texttt{poly\_p\_variety\_orbit\_decomposition\_gf7}),
+and the four-identity $\Phi_6$ ladder web including the cyclotomic uniqueness
+$\Phi_3(n)=(n^3{-}1)/2\iff n=3$ at $N_{\mathrm{gen}}=3$
+(\texttt{phi6\_identity\_bundle}, \texttt{cH\_phi3\_unique\_at\_ngen}).
+
+\paragraph{Dynamical zeta and period-475 orbit
+  (\texttt{Polynomial/\allowbreak DynamicalZeta}).}
+Nineteen \CatAL\ theorems certify the vacuum-uniqueness chain
+$\mathrm{Fix}(T_n)=\{0^n\}$ for all $n\ge 1$ via local factorisation, the
+golden Möbius 8-cycle on $\mathbb{P}^1(\mathbb{F}_7)$, and pole-within-6
+refutation (\texttt{vacuum\_unique\_temporal\_fixed\_point\_ring} together with
+the supporting \texttt{fixed\_point\_local\_factorization},
+\texttt{golden\_moebius\_single\_eight\_cycle\_gf7},
+\texttt{fibonacci\_matrix\_order\_sixteen\_gf7}, and related theorems);
+the prime-ring shift-equivariance dichotomy
+(\texttt{prime\_ring\_cycle\_dichotomy\_bundle});
+the period-475 spectral facts $T^{95}=\sigma^3$ exact, return-map order~19,
+zero per-cell mean, and $\sigma$-invariant gauge-observable period~95
+(\texttt{t95\_eq\_sigma3\_on\_period475\_cycle},
+\texttt{period475\_drift\_cancelled\_return\_order\_nineteen},
+\texttt{period475\_gauge\_observable\_e1\_period\_95} and companions).
+Five named results carry \textbf{PARTIAL} status pending kernel-budget
+resolution: the de~Bruijn trace identity, spatial zeta, full $e_{2..5}$ gauge
+observables, and linearisation charpoly fold.
+
+\paragraph{$\mathbb{Z}_7$ vacuum selection and gauge-coupling hierarchy
+  (\texttt{Physics/\allowbreak ZSevenVacuumSelection},
+  \texttt{Universality/\allowbreak SylowIndexCouplingHierarchy}).}
+Fourteen \CatAL\ theorems certify the vacuum-selection mechanism and
+coupling-hierarchy arithmetic.
+\texttt{ZSevenVacuumSelection} formalises: $V_{\mathrm{coupling}}$
+$\mathbb{Z}_7$-shift-breaking (\texttt{vcoupling\_breaks\_z7\_shift}),
+strict $\chi$-kinetic inequivalence across all seven vacua
+(\texttt{z7\_vacua\_chi\_kinetic\_inequivalent}),
+unique bias minimum at $k{=}0$ (\texttt{wall\_bias\_minimum\_unique}),
+ground-state $\mathbb{Z}_3$-orbit transversal
+(\texttt{gs\_set\_is\_z3\_orbit\_transversal}),
+BPS-window discriminator (\texttt{vcoup\_periodic\_profile\_fails\_bps\_window}),
+compact-completion minimum at $k{=}0$
+(\texttt{compact\_completion\_minimum\_at\_k0}),
+inward Coleman--Weinberg direction (\texttt{scalar\_cw\_step\_inward}),
+seam-discontinuity witness, and boundary-sensitivity positivity.
+\texttt{SylowIndexCouplingHierarchy} certifies the Sylow-family
+neighbor-null establishing $e^2=7/2$ as uniquely closest
+(\texttt{sylow\_family\_pdg\_match\_unique\_closest}) and the thermal
+leading-order dominance $3e^2>g^2$
+(\texttt{thermal\_leading\_inward\_dominance}).
+
+\paragraph{Kink physics algebraic cores
+  (\texttt{Physics/\allowbreak KinkVacuumPolarization},
+  \texttt{KinkFormFactor}, \texttt{BurnsideCosetCharges},
+  \texttt{Universality/\allowbreak HeatKernelContactTerms},
+  \texttt{LambdaGTEThreshold}).}
+Eleven \CatAL\ theorems certify the arithmetic and inequality skeletons of
+five kink-sector physical observables.
+\texttt{KinkVacuumPolarization}: Cartan-weight $t_{\mathrm{kink}}=3$ computation,
+continuity identity $\hat{b}=-4=7-11$ linking to the $\mathbb{Z}_7$ order,
+rational-log constant $c^{S^1,\mathrm{tree}}=8\ln(8/7)$, and positivity
+inequality $m_\phi<e^{\gamma/2}\Lambda_{\mathrm{GTE}}$
+(\texttt{kink\_vacuum\_polarization\_algebraic\_core} bundle).
+\texttt{KinkFormFactor}: sech-profile moment bundle including the $r_{\mathrm{top}}/r_{\mathrm{born}}=\sqrt{3}$ ratio and BA-SHAPE autocorrelation, plus the
+dissolution Born floor $b\le 2.51/2.53$ (tree/pole readings)
+(\texttt{sech\_form\_factor\_moment\_bundle}, \texttt{kink\_dissolution\_born\_floor}).
+\texttt{BurnsideCosetCharges}: coset-charge spectrum $t_V=3$,
+$c_{\mathrm{coset}}=-1$ rational root-system skeleton.
+\texttt{HeatKernelContactTerms}: contact-term difference $(N^2{-}3)/(24N)=1/12$
+at $N=3$, $\mathfrak{su}(N)$ trace and Killing identities.
+\texttt{LambdaGTEThreshold}: $\Lambda_{\mathrm{GTE}}=(8/7)m_\tau$, multiplier
+minimality (7 is the least $\mathbb{Z}_7$-neutral chain length), $\mathbb{Z}_7$
+coset residues $=\{\pm1,\pm2,\pm3\}$, and slope-continuity $7=11-4$.
+Two modules carry \textbf{PARTIAL} status: \texttt{KinkPoleMassSpectralCore}
+certifies the Pöschl--Teller autocorrelation at $s{=}0$, Levinson identity,
+spectral sum rule, dim-reg channel value, and $\Gamma(-3/2)=4\sqrt{\pi}/3$
+as definitional values; full Mathlib integral proofs are deferred.
+\texttt{Polynomial/SpinSevenGroundSpace} certifies the spin-7 ring
+ground-state set $\{0^n,1^n,5^n\}$ for $3\le n\le 7$ via per-length
+\texttt{native\_decide}; the arbitrary-$n$ statement is blocked at the
+$7^8$ kernel budget.
+
+\paragraph{Retrospective closures: biquadratic compositum and AGL chiral
+  $\mathbb{Z}_2$
+  (\texttt{Polynomial/\allowbreak BiquadraticCompositum},
+   \texttt{Polynomial/\allowbreak AGL17ChiralZ2}).}
+Two additional modules certify synthesis results from the wave-retrospective
+session.
+\texttt{BiquadraticCompositum} (15~\CatAL): establishes
+$\mathrm{cond}(K)=15=N_{\mathrm{gen}}\cdot N_{\mathrm{fam}}$ for
+$K=\mathbb{Q}(\sqrt{-3},\sqrt{5})$ (\texttt{biquadratic\_conductor\_identity})
+and the Artin-class characterisation --- $q\equiv 7,13\pmod{15}$ iff $q$
+splits in $\mathbb{Z}[\omega]$ (color-sector condition) and is inert in
+$\mathbb{Z}[\varphi]$ (floor-protection condition) --- with minimal class
+prime $7$ and second class prime $c_H=13$ certified by \texttt{decide}.
+\texttt{AGL17ChiralZ2} (7~\CatAL): certifies $|{\rm AGL}(1,7)|=42$
+(\texttt{agl17\_order}), the spatial reflection $s=(6,0)$ of order~2 that
+swaps Rule~110 and Rule~124 on all binary inputs with zero mismatches
+(\texttt{reflection\_swaps\_rules\_verified}), the commuting $\mathbb{Z}_3$
+color action, and the free-orbit cardinality $42=|{\rm AGL}(1,7)|$ as the
+arithmetic mechanism for the unique torus partition of $V(p)$.
+
+Cross-certifications from companion libraries are documented in
+\cref{subsec:cross-repo-certs}: the \texttt{nems-lean} and
+\texttt{transputation-lean} diagonal completeness, no-convergence-modulus,
+and many-one degree theorems (\CatAL) are incorporated there.
+
+% TODO (next formalization-paper update pass): insert documentation for
+% remaining retrospective targets when certified — particularly the
+% Φ₆ stability / BPS kink ground-state corrections and any biquadratic
+% or AGL extensions. Add a new \paragraph after the
+% "Retrospective closures" paragraph above, following the same pattern.
 
 % ═══════════════════════════════════════════════════════════════
 \section{The Mirror-Dual Conjecture}\label{sec:mirror}

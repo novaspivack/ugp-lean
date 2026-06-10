@@ -138,6 +138,8 @@ import UgpLean.Polynomial.PolyExplorations
 import UgpLean.Polynomial.GoldenQuadratic
 import UgpLean.Polynomial.DynamicalZeta
 import UgpLean.Polynomial.EisensteinIdentities
+import UgpLean.Polynomial.BiquadraticCompositum
+import UgpLean.Polynomial.AGL17ChiralZ2
 import UgpLean.Polynomial.SpinSevenGroundSpace
 import UgpLean.Polynomial.MDLThreeLevelUnification
 import UgpLean.Polynomial.GTECausalTree

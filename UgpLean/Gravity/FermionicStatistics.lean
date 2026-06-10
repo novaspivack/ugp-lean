@@ -8,7 +8,7 @@
     Level 3 (gte_fermionic_sectors_get_minus_phase):  CatAL — zero sorry
       (uses spin_statistics_half_integer theorem from ugp-physics-lean/SpinorRep.lean)
 
-  1 imported axiom (canonical home: ugp-physics-lean/SpinorRep.lean):
+  1 imported axiom (canonical home: UgpLean.Gravity.SpinorRep):
     spinor_exchange_equals_2pi_rotation — topological fact: exchange = 2π rotation
     Derived chain: spinor_exchange_equals_2pi_rotation (axiom)
       + spinor_rotation_2pi_phase (theorem, zero sorry)
@@ -40,7 +40,7 @@
 
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.Finset.Basic
-import UgpPhysicsLean.Lorentzian.SpinorRep
+import UgpLean.Gravity.SpinorRep
 import UgpLean.Substrate.GEQECCode
 import UgpLean.Algebra.CyclotomicZ7Galois
 import UgpLean.BraidAtlas.WindingToBraidRep

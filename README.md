@@ -986,6 +986,7 @@ The same 19-bit polynomial `p(L,C,R) = C+R−CR−LCR` serves five physical role
 - `UgpLean.ContinuumLimit.WassersteinDistance` — Full W₁ Wasserstein metric scaffold: non-negativity, Kantorovich dual lower bound, triangle inequality via glued coupling, zero-iff-equal, infimum attained, coupling set compact (all zero sorry, CatAL; graduated)
 - `UgpLean.Universality.MDLDerivabilityCriterion` (§5 extended) — **T96-02 CA-level closure CatAL**: `z5_fmdl_no_psc_kink_orbits` (GTE polynomial over GF(5) with winding-based PSC predicate, `native_decide`, 3125 states); `mdl_total_z7z3_strictly_beats_z5z3` (total MDL gap 3+0 < 5+6, `decide`); `mdl_ca_rule_coding_closed` (explicit K_data witness, master closure); non-circular MDL derivation Z₇×Z₃ fully machine-certified without SM input
 
-### Lorentzian ([ugp-physics-lean](https://github.com/novaspivack/ugp-physics-lean))
-- `UgpPhysicsLean.Lorentzian.MinkowskiSpace` — Minkowski metric, LorentzGroup (CatAL)
-- `UgpPhysicsLean.Lorentzian.SpinorRep` — Spinor \(2\pi\) rotation = \(-1\); spin-statistics axiom (CatAL + 1 named axiom)
+### Lorentzian (now in UgpLean.Gravity)
+- `UgpLean.Gravity.MinkowskiSpace` — Minkowski metric η = diag(−1,+1,+1,+1), LorentzGroup SO(1,3); `lorentz_identity`, `lorentz_closed_mul` (CatAL)
+- `UgpLean.Gravity.SpinorRep` — Spinor 2π rotation = −1; spin-statistics axiom; `rotation2pi_sq_eq_one`, `spin_statistics_from_topology`, `gte_spin_statistics` (CatAL + 1 named topological axiom)
+- `UgpLean.Gravity.WaldEntropy` — Wald entropy formula for diffeomorphism-invariant Lagrangians; MDL-minimal coupling ξ=0 → S = Area/(4G); `phimdl_wald_entropy_is_area_over_4G` (3 sorries pending Mathlib manifold integrals; Stage 3 stub)
