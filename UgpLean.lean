@@ -306,6 +306,8 @@ import UgpLean.QFT.GaugedMassGap
 import UgpLean.QFT.ChiralSymmetryBreaking
 import UgpLean.Physics.FKTTCoupling
 import UgpLean.Physics.ZSevenVacuumSelection
+import UgpLean.Physics.KinkVacuumPolarization
+import UgpLean.Physics.KinkFormFactor
 import UgpLean.Universality.PhiMDLUniversality
 import UgpLean.Universality.BellViolationGTE
 import UgpLean.Universality.FiveRolesPolynomial
