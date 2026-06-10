@@ -8845,9 +8845,13 @@ The equal-sector-distribution step follows from $\mathbb{Z}_7$ group transitivit
 alone --- no dilute instanton gas approximation is required.
 
 % ═══════════════════════════════════════════════════════════════
-\subsection{New algebraic certificates (second wave)}\label{subsec:epic-088}
+\subsection{New algebraic certificates (EPIC\_088)}\label{subsec:epic-088}
 % ═══════════════════════════════════════════════════════════════
 
+These certificates arise from the EPIC\_088 breakthrough-search programme,
+spanning GTE polynomial structure, the gauge-coupling sector,
+cosmological constant structure, and the $N_{\mathrm{gen}}$
+bracket-orientation theorem.
 This section covers \textbf{61} net-new zero-\texttt{sorry} theorems across eleven
 modules, plus two modules with partial certifications awaiting kernel-budget
 resolution.
@@ -8998,11 +9002,61 @@ Cross-certifications from companion libraries are documented in
 \texttt{transputation-lean} diagonal completeness, no-convergence-modulus,
 and many-one degree theorems (\CatAL) are incorporated there.
 
-% TODO (next formalization-paper update pass): insert documentation for
-% remaining retrospective targets when certified — particularly the
-% Φ₆ stability / BPS kink ground-state corrections and any biquadratic
-% or AGL extensions. Add a new \paragraph after the
-% "Retrospective closures" paragraph above, following the same pattern.
+\paragraph{CC one-jump residual and $N_{\mathrm{gen}}$ bracket-orientation
+  (\texttt{Physics/\allowbreak CCOneJumpResidual},
+   \texttt{Universality/\allowbreak NgenBracketOrientation}).}
+Two further modules certify the cosmological-constant residual structure
+and the generation-count orientation theorem.
+\texttt{CCOneJumpResidual} (6~\CatAL\ + 1~\textbf{PARTIAL}):
+certifies the census annotation of the realised-ledger residual
+$D_{\mathrm{res}} := (\ln 2/\pi)\cdot L_{\mathrm{PSC}}$ as the left-c.e.\
+computable upper bracket endpoint
+(\texttt{d\_res\_census\_annotation}),
+the strict bracket non-emptiness
+$\Omega_{\mathrm{holo}} < \Omega_{\mathrm{census}}$ with the Planck~2018
+central value strictly in the interior
+(\texttt{omega\_lambda\_bracket\_strict},
+ \texttt{bracket\_strict\_interiority}),
+the no-computable-modulus theorem via reduction to the RT non-computability
+core
+(\texttt{no\_computable\_gte\_rt\_convergence\_modulus}),
+and the falsifiability horizon
+$\sigma^* \in (2.9{\times}10^{-4},\, 4.3{\times}10^{-4})$ requiring
+factor-five improvement over current Planck precision
+(\texttt{sigma\_star\_falsifiability\_horizon}).
+The halting-weighted residual form
+(\texttt{d\_res\_halting\_ledger\_factorization\_core})
+carries \textbf{PARTIAL} status: a finite \texttt{toyLedger} witness is
+certified; the full infinite Form Theorem and $\deg_T = 0'$
+identification are deferred.
+\texttt{NgenBracketOrientation} (5~\CatAL\ + 2~\CatAL~$|$~H1):
+the orientation-flip theorem certifies that the admissible ledger interval
+$[\mathrm{floor}(N),\, \mathrm{census}(N)]$ is empty for all $N \ge 4$
+and non-empty for $N \le 3$
+(\texttt{ngen\_bracket\_orientation\_flip},
+ \texttt{ngen\_bracket\_orientation\_excluded\_from\_four});
+the GTE-atom inequality $14\ln(2000/3) > 9\pi^2$ provides the bracket
+non-emptiness corollary in the atom form
+$2|\mathbb{Z}_7|\ln(D^2 N_{\mathrm{fam}}^3 / N_{\mathrm{gen}}) >
+N_{\mathrm{gen}}^2\pi^2$ at $D{=}4$, $N_{\mathrm{fam}}{=}5$,
+$N_{\mathrm{gen}}{=}3$
+(\texttt{cc\_floor\_orientation\_atom\_inequality},
+ \texttt{cc\_floor\_orientation\_gte\_atom\_form},
+ \texttt{cc\_floor\_orientation\_bracket\_non\_empty});
+and the PI-free pincer combines the PSC Layer~I lower bound
+$N_{\mathrm{gen}} \ge 3$ with the bracket-orientation upper bound
+$N_{\mathrm{gen}} \le 3$ to force $N_{\mathrm{gen}} = 3$ without invoking
+Presentation Invariance, conditional on named hypothesis H1
+(\texttt{ngen\_pincer\_from\_layer1\_and\_orientation},
+ \texttt{ngen\_pincer\_pi\_free\_bundle},
+ \CatAL~$|$~H1).
+The orientation hypothesis H1 is analytically discharged: the floor half
+follows from the Floor Orientation Theorem (the realised ledger cannot
+undercut the MDL-minimal carrier price) and the census half from capacity
+bounds, so the pincer holds unconditionally within the record-ledger
+premise bundle of the One-Jump Residual Theorem.
+
+% Wave 2 complete. Add new modules here on next pass.
 
 % ═══════════════════════════════════════════════════════════════
 \section{The Mirror-Dual Conjecture}\label{sec:mirror}

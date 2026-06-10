@@ -1352,7 +1352,7 @@ operates at three nested levels: theory selection ($p$ from rule space), field d
 
 ## Frontier Closures — Second Wave
 
-**Scope:** 61 net-new zero-`sorry` theorems across eleven modules, plus two PARTIAL modules. Cat levels: **CatAL** unless noted **PARTIAL**. Covers: golden-quadratic diagonal fixed-point structure, Eisenstein arithmetic of GTE constants, seven-ring dynamical-zeta orbit classification, Z₇ vacuum-selection mechanism with gauge-coupling hierarchy, kink-sector physics algebraic cores, and biquadratic-compositum unification.
+**Scope:** 72 net-new zero-`sorry` theorems (plus two conditional CatAL\|H1) across thirteen modules, plus three PARTIAL modules. Cat levels: **CatAL** unless noted **PARTIAL** or **CatAL\|H1**. Covers: golden-quadratic diagonal fixed-point structure, Eisenstein arithmetic of GTE constants, seven-ring dynamical-zeta orbit classification, Z₇ vacuum-selection mechanism with gauge-coupling hierarchy, kink-sector physics algebraic cores, biquadratic-compositum unification of the two master rings, the CC one-jump residual algebraic core, and the N_gen bracket-orientation theorem.
 
 ---
 
@@ -1478,6 +1478,40 @@ Module: `UgpLean/Polynomial/AGL17ChiralZ2.lean`.
 | **color_commutes_reflection** | Color action $x\mapsto 2x$ commutes with $s=(6,0)$ |
 | **free_orbit_card_42** | Free AGL(1,7) orbit on V(p) has cardinality 42 = $|{\rm AGL}(1,7)|$ |
 | Plus 2 supporting decide certificates | ZMod 7 units card = 6; color action order 3 |
+
+---
+
+### CC one-jump residual (`Physics.CCOneJumpResidual`)
+
+6 CatAL + 1 PARTIAL. Module: `UgpLean/Physics/CCOneJumpResidual.lean`. Zero sorry on CatAL theorems.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **d_res_census_annotation** | $D_{\rm res} := (\ln 2/\pi)\cdot L_{\rm PSC}$ annotated as the census-capacity upper bracket endpoint of the realised-ledger residual; all prior PSC epoch theorems survive | CatAL |
+| **omega_lambda_bracket_strict** | $3\pi/14 < (\ln 2/3\pi)\cdot\log_2(2000/3)$ — holographic floor strictly below census endpoint; bracket non-empty | CatAL |
+| **bracket_strict_interiority** | Planck 2018 central value strictly inside the bracket $(3\pi/14,\,\Omega_{\rm census})$ | CatAL |
+| **no_computable_gte_rt_convergence_modulus** | No computable modulus of convergence for the realised-ledger stage approximants; reduction to `asr_rt_not_computable` (Theorem C pattern) | CatAL |
+| **sigma_star_falsifiability_horizon** | $\sigma^*\in(2.9\times10^{-4},\,4.3\times10^{-4})$; refutation requires $>5\times$ current Planck precision | CatAL |
+| **cc_one_jump_residual_algebraic_core** | Master bundle for LT-088-47..50: census annotation, bracket, no-modulus, σ* horizon | CatAL |
+| **d_res_halting_ledger_factorization_core** | Left-c.e. structural core + finite `toyLedger` witness; full infinite Form Theorem and deg_T = 0′ identification deferred | PARTIAL |
+
+---
+
+### $N_{\rm gen}$ bracket-orientation (`Universality.NgenBracketOrientation`)
+
+5 CatAL + 2 CatAL\|H1. Module: `UgpLean/Universality/NgenBracketOrientation.lean`. Zero sorry. Hypothesis H1 analytically discharged within the record-ledger premise bundle (see note below).
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **ngen_bracket_orientation_flip** | Admissible ledger interval $[{\rm floor}(N),{\rm census}(N)]$ non-empty iff $N\le 3$; $N\ge 4$ excluded by separation certificate | CatAL |
+| **ngen_bracket_orientation_excluded_from_four** | $\forall N\ge 4,\; {\rm census}(N) < {\rm floor}(N)$ — bracket inverted, no admissible dark-energy fraction | CatAL |
+| **cc_floor_orientation_atom_inequality** | $14\cdot\ln(2000/3)>9\pi^2$ via rational witness; GTE-atom form $2|Z_7|\ln(D^2 N_{\rm fam}^3/N_{\rm gen})>N_{\rm gen}^2\pi^2$ at $D=4,N_{\rm fam}=5,N_{\rm gen}=3$ | CatAL |
+| **cc_floor_orientation_gte_atom_form** | GTE-atom identity form of the floor inequality at the GTE parameter values | CatAL |
+| **cc_floor_orientation_bracket_non_empty** | Atom inequality implies $\Omega_{\rm holo}<\Omega_{\Lambda,\rm GTE}$ (bracket non-emptiness corollary) | CatAL |
+| **ngen_pincer_from_layer1_and_orientation** | PSC Layer I ($N_{\rm gen}\ge 3$) + bracket-orientation exclusion ($N_{\rm gen}\le 3$) implies $N_{\rm gen}=3$ without Presentation Invariance; conditional on H1 | CatAL\|H1 |
+| **ngen_pincer_pi_free_bundle** | Layer-I interface + orientation exclusion + $N_{\rm gen}=3$ as bundled PI-free theorem | CatAL\|H1 |
+
+**Note on H1:** The orientation hypothesis H1 (`BracketOrientationHypothesis`) is analytically discharged by the Floor Orientation Theorem (floor half: realised ledger cannot undercut the MDL-minimal carrier price; census half: information-capacity bound). The pincer is unconditional within the record-ledger premise bundle of the One-Jump Residual Theorem.
 
 ---
 
