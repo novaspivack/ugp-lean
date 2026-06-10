@@ -3,7 +3,7 @@ import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Fintype.Prod
 
 /-!
-# UgpLean.Universality.ChiralityEigenstates — CA-Level Chirality and Parity (Rank 12, CatAL)
+# UgpLean.Universality.ChiralityEigenstates — CA-Level Chirality and Parity (CatAL)
 
 This module proves four machine-certified facts about the spatial parity structure of
 `fmdl` and the SM generation orbit.  All proofs are `native_decide` or `decide` (zero sorry,

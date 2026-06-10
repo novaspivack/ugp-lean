@@ -6,7 +6,7 @@ import UgpLean.Universality.BornRuleMDL
 set_option maxRecDepth 4096
 
 /-!
-# 't Hooft Coarse-Graining → EffectMeasure Axioms — Rank 070-97B (B1 Lean bridge)
+# 't Hooft Coarse-Graining → EffectMeasure Axioms
 
 Computational B1 (070-97B, CatA partial) verified that winding-sector Born weights
 `μ(P_k) = Σ_{s: W(s)=k} |α_s|²` satisfy EffectMeasure axioms on random superpositions

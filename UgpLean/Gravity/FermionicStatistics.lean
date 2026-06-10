@@ -14,7 +14,7 @@
       + spinor_rotation_2pi_phase (theorem, zero sorry)
       → spin_statistics_from_topology (theorem, zero sorry)
       → spin_statistics_half_integer (theorem, zero sorry)
-    Formal π₁(SO(3)) = ℤ/2ℤ proof deferred (EPIC_078 LC5 Stage 3).
+    Formal π₁(SO(3)) = ℤ/2ℤ proof deferred.
     All other steps CatAL, zero sorry.
 
   RESULT (CatAL + 1 imported axiom):

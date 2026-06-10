@@ -7,10 +7,10 @@ import UgpLean.Universality.MDLDerivabilityCriterion
 import UgpLean.Universality.SylowIndexCouplingHierarchy
 
 /-!
-# Extended Two-Sector Lagrangian `L_extended` (Rank 98-TWOSECTOR / R4-RO-4)
+# Extended Two-Sector Lagrangian `L_extended`
 
-Formalizes the **minimal two-sector gauge architecture** required by Task 98-T1-COEX
-and used throughout T98-1..T98-5:
+Formalizes the **minimal two-sector gauge architecture** required by the
+two-sector coexistence analysis:
 
 ```
 L_extended = L_φ + L_color + L_EM + L_cross
@@ -151,7 +151,7 @@ def z3ColorSectorOrder : ℕ := 3
 /-- Villain β_color = 2/7 from orbit period / Sylow index (G2 coupling skeleton). -/
 def mdlBetaColor : ℚ := villainBetaColor
 
-/-- EM configuration count N₃·N₇ = 21 (T98-5 Berry charge denominator source). -/
+/-- EM configuration count N₃·N₇ = 21 (Berry charge denominator source). -/
 def emSectorConfigurationCount : ℕ := emConfigurationCount
 
 /-- Tree-level α denominator (N₃·N₇)² = 441. -/

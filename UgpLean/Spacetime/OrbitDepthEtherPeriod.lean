@@ -4,7 +4,7 @@ import UgpLean.Substrate.LExtended
 import Rule110
 
 /-!
-# Orbit Depth = Ether Temporal Period via Z₇ Structure (Rank 070-110, CatAL)
+# Orbit Depth = Ether Temporal Period via Z₇ Structure (CatAL)
 
 Two independent routes to the integer **7**, both grounded in the GTE mod-7 ring:
 
@@ -15,7 +15,7 @@ Two independent routes to the integer **7**, both grounded in the GTE mod-7 ring
 
 Both equal `z7SubstratePeriod = 7 = |ℤ₇|`.
 
-Computational confirmation (Rank 95 CatA, EPIC_073 2026-05-25):
+Computational confirmation (CatA):
 `research-sandbox/epic073_rank070_110_orbit_depth_ether_period.py`.
 
 ## Main theorems (zero sorry)
@@ -70,7 +70,7 @@ theorem z7_substrate_period_matches_order :
   unfold z7SubstratePeriod z7Order
   rfl
 
-/-- **Rank 070-110 — structural Z₇ identity** (CatAL).
+/-- **Structural Z₇ identity** (CatAL).
 
     The f_MDL maximum decay depth on Z₇⁵, the Rule 110 ether temporal period, and the
     GTE substrate period all equal 7 — the order of the fundamental mod-7 ring.

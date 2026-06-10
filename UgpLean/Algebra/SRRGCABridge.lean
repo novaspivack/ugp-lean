@@ -4,7 +4,7 @@ import Mathlib.NumberTheory.Real.GoldenRatio
 import UgpLean.VEVProof.EWGoldstoneManifold
 
 /-!
-# SRRG–CA Bridge (OQ-079-17 / EPIC_080 Rank 080-MDLSRRG-LEAN)
+# SRRG–CA Bridge
 
 The CA diagonal self-referential fixed-point equation `p(x,x,x) = x` reduces to
 `x² + x - 1 = 0`; its positive root is `1/φ = (√5 - 1)/2`.
@@ -133,7 +133,7 @@ theorem L_EW_log_decomposition :
 
 /-! ## G39 — FCA attractor diagonal fixed point equals SRRG fixed point (CatAL) -/
 
-/-- **fca_attractor_diagonal_fp_equals_srrg_fp** (CatAL, EPIC_080 G39 partial closure):
+/-- **fca_attractor_diagonal_fp_equals_srrg_fp** (CatAL):
 The GTE polynomial `p(x,x,x) = 2x − x² − x³` does not depend on lattice resolution `M`.
 By M-independence of the GTE algebraic structure (Algebraic Descent Theorem, P35 §6),
 the diagonal fixed-point equation `p(x*,x*,x*) = x*` — equivalently `x*² + x* = 1` —
@@ -186,7 +186,7 @@ theorem srrg_mdl_bridge_master :
       ring
     simpa [hs] using h⟩
 
-/-! ## MDL K_CMCA / SRRG β-function equivalence (EPIC_080 Rank 080-MDLSRRG-LEAN)
+/-! ## MDL K_CMCA / SRRG β-function equivalence
 
 **Algebraic SRRG = MDL bridge (CatAL):**
 
@@ -241,7 +241,7 @@ theorem kCMCA_nonneg (g : ℝ) (hg : 0 < g) (hle : g ≤ srrgFixedPoint) :
   · simp [kCMCA_at_srrg_fp]
   · exact le_of_lt (kCMCA_pos_of_lt_srrg_fp g hg hlt)
 
-/-- **srrg_beta_zero_iff_kCMCA_minimum** (CatAL, EPIC_080 Rank 080-MDLSRRG-LEAN):
+/-- **srrg_beta_zero_iff_kCMCA_minimum** (CatAL):
 
     For g > 0: β_SRRG(g) = 0 ↔ K_CMCA(g) = 0.
 

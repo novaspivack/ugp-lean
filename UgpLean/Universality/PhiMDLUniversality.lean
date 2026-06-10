@@ -7,7 +7,7 @@ import Rule110
 import UgpLean.Universality.GTEComputability
 
 /-!
-# UgpLean.Universality.PhiMDLUniversality — Rank 81-EANALOG
+# UgpLean.Universality.PhiMDLUniversality
 
 **Turing universality of the smooth Φ_MDL (Z₇-KG) field via two independent routes,
 plus a Route 1 audit (final coalgebra path) at §R1.**

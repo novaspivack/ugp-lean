@@ -3,7 +3,7 @@ import UgpLean.BraidAtlas.EWBosons
 import UgpLean.BraidAtlas.EWBosonRHNConnection
 import UgpLean.BraidAtlas.RHNGapTheorem
 import UgpLean.Phase4.GaugeCouplings
--- MBA-6 (2026-05-17): dark quark charge certificate (Arg B resolved)
+-- Dark quark charge certificate (Argument B resolved)
 -- Note: DarkQuarkCharge.lean imports DarkBraidAtlas, so re-export via open below
 
 /-!
@@ -16,7 +16,7 @@ derived from the mirror branch of the GTE cascade.
 
 | Fact | Value | Grade | Source |
 |------|-------|-------|--------|
-| Dark singlet lepton Q_EM | 0 (all 3 gen.) | A | MirrorWindingNumber.lean (MBA-5) |
+| Dark singlet lepton Q_EM | 0 (all 3 gen.) | A | MirrorWindingNumber.lean |
 | RHN b₁' | 5 | A | (N_c²+1)/2 = 5 for N_c=3; branch-invariant |
 | RHN b₂' = q₁'(mirror) | 29 | A | q1FromQ2(q₂_mirror=42) = 42−13 = 29 |
 | Mirror orbit q₁' ≠ SM q₁ | 29 ≠ 11 | A | norm_num |
@@ -28,7 +28,7 @@ derived from the mirror branch of the GTE cascade.
 | Fact | Value | Status |
 |------|-------|--------|
 | RHN b₃' | 37 | Cat D — arithmetic certified (RHNGapTheorem.lean); structural derivation open |
-| Dark quark Q_EM | 0 | **CERTIFIED — DarkQuarkCharge.lean (MBA-6, 2026-05-17)** — Arg B wins (P17 universal Y_mirror=0) |
+| Dark quark Q_EM | 0 | **CERTIFIED — DarkQuarkCharge.lean** — Argument B wins (P17 universal Y_mirror=0) |
 | Dark gauge boson masses | open | Requires dark EW VEV (not derived) |
 | Dark neutrino absolute masses | open | Requires dark seesaw VEV |
 | q₁'(mirror)=b₂'(RHN) structural identity [no dark W' boson — DSEW-1] | 29=29 | CERTIFIED — EWBosonRHNConnection.lean |
@@ -36,12 +36,12 @@ derived from the mirror branch of the GTE cascade.
 ## References
 
 - P17 (Canonical Braid Atlas v2.0): mirror branch, §mirror_dm
-- MBA-1 lab notes (2026-05-16): W_g=0, Q=0 for dark singlet leptons
-- MBA-2 lab notes (2026-05-17): b₂'=29 Lean-certified, branch-sensitivity confirmed
-- MBA-3 lab notes (2026-05-17): b₃'=37 (Cat D), R_dark=0.2080
-- MBA-4 lab notes (2026-05-17): full Mirror Braid Atlas table compiled
-- MBA-5 lab notes (2026-05-16): `mirror_winding_number_zero` axiom eliminated
-- MBA-6 lab notes (2026-05-17): dark quark Q=0 (Arg B wins, DarkQuarkCharge.lean)
+- W_g=0, Q=0 for dark singlet leptons
+- b₂'=29 Lean-certified, branch-sensitivity confirmed
+- b₃'=37 (Cat D), R_dark=0.2080
+- full Mirror Braid Atlas table compiled
+- `mirror_winding_number_zero` axiom eliminated
+- dark quark Q=0 (Arg B wins, DarkQuarkCharge.lean)
 -/
 
 namespace DarkBraidAtlas
@@ -52,7 +52,7 @@ open UgpLean UgpLean.BraidAtlas
 -- §1  Dark singlet lepton charge — Q_EM = 0
 -- ════════════════════════════════════════════════════════════════
 
-/-- **Dark singlet lepton Q_EM = 0 (MBA-5, zero axioms).**
+/-- **Dark singlet lepton Q_EM = 0 (zero axioms).**
 
     The mirror GTE orbit (1, 73, 2137) is a gauge singlet: T₃ = 0, Y = 0,
     hence W_g = N_c × (T₃ + Y/2) = 0 by the Gell-Mann–Nishijima formula.
@@ -60,7 +60,7 @@ open UgpLean UgpLean.BraidAtlas
     Re-exported from `ChargeTheorem.mirror_winding_number_zero` for
     convenience (see MirrorWindingNumber.lean for the full certificate).
 
-    Grade: [A] (proved, zero sorry, zero axioms; MBA-5). -/
+    Grade: [A] (proved, zero sorry, zero axioms). -/
 theorem dark_lepton_q_em_zero : W_g_mirror = 0 :=
   mirror_winding_number_zero
 
@@ -87,12 +87,12 @@ theorem dark_rhn_b1 : (N_c ^ 2 + 1) / 2 = 5 := by
 /-- **b₂'(RHN) = q₁'(mirror) = 29 — Lean-certified (zero sorry).**
 
     The mirror orbit quotient q₁'(mirror) = q1FromQ2(q₂_mirror) = 42 − 13 = 29.
-    This equals b₂'(RHN) in the mirror neutrino sector (MBA-2 result).
+    This equals b₂'(RHN) in the mirror neutrino sector.
 
     Proof: `q₂_mirror = 42` (the mirror survivor pair's larger component)
     and `q1FromQ2 q = q - ugp1_g = q - 13`, so q1FromQ2 42 = 29.
 
-    Grade: [A] (proved, zero sorry; MBA-2). -/
+    Grade: [A] (proved, zero sorry). -/
 theorem dark_rhn_b2 : q1FromQ2 q₂_mirror = 29 := by
   unfold q1FromQ2 q₂_mirror ugp1_g; native_decide
 
@@ -106,7 +106,7 @@ theorem dark_rhn_b2_arithmetic : (42 : ℕ) - 13 = 29 := by norm_num
 /-- **Mirror b₂'(RHN) ≠ SM b₂(RHN).**
 
     The SM RHN has b₂(RHN) = q₁(canonical) = 11 (the canonical orbit quotient).
-    The mirror RHN has b₂'(RHN) = 29.  This inequality is the central MBA-2 result:
+    The mirror RHN has b₂'(RHN) = 29.  This inequality is the central branch-sensitivity result:
     b₂ is branch-sensitive, NOT branch-invariant.
 
     Grade: [A] (norm_num, zero sorry). -/
@@ -118,7 +118,7 @@ theorem dark_rhn_b2_exceeds_sm_b2 : (11 : ℕ) < 29 := by norm_num
 /-- **SM b₁(RHN) = mirror b₁'(RHN) = 5 (branch-invariant).**
 
     The b₁ value is the same in both branches; only b₂ changes.
-    This is the branch-sensitivity result at the heart of MBA-2. -/
+    This is the heart of the branch-sensitivity analysis. -/
 theorem dark_rhn_b1_eq_sm_rhn_b1 : (N_c ^ 2 + 1) / 2 = (N_c ^ 2 + 1) / 2 := rfl
 
 -- ════════════════════════════════════════════════════════════════
@@ -127,7 +127,7 @@ theorem dark_rhn_b1_eq_sm_rhn_b1 : (N_c ^ 2 + 1) / 2 = (N_c ^ 2 + 1) / 2 := rfl
 
 /-- The mirror orbit quotient q₁' = 29 equals the GTE quotient of the
     mirror c₁ = 2137 by b₁ = 73.  This gives a third independent proof
-    that b₂'(RHN) = 29 (the first being MBA-2 via the survivor pair formula,
+    that b₂'(RHN) = 29 (the first via the survivor pair formula,
     the second being the arithmetic fact 42 − 13 = 29). -/
 theorem dark_rhn_b2_via_gte_quotient : gteQuotient 2137 73 = 29 :=
   UgpLean.BraidAtlas.MirrorWindingNumber.mirror_orbit_q1_eq_29
@@ -186,9 +186,9 @@ theorem dark_ew_cW_differs_from_sm : q1FromQ2 q₂_mirror ≠ q1FromQ2 q₂_cano
 
     Bundles all certified facts about the mirror branch:
 
-    (1) Dark singlet leptons: Q_EM = 0 (MBA-5, grade A)
+    (1) Dark singlet leptons: Q_EM = 0 (grade A)
     (2) b₁'(RHN) = 5 (branch-invariant, grade A)
-    (3) b₂'(RHN) = q₁'(mirror) = 29 (MBA-2, grade A)
+    (3) b₂'(RHN) = q₁'(mirror) = 29 (grade A)
     (4) b₂' ≠ b₂_SM (branch-sensitivity, grade A)
     (5) q₁'(mirror) = b₂'(RHN) = 29 (arithmetic identity, grade A; former label "c(W')" deprecated per DSEW-1)
     (6) Mirror orbit q₁' certified via GTE quotient: 2137 / 73 = 29
@@ -223,7 +223,7 @@ theorem dark_braid_atlas_certificate :
 The following facts from the Mirror Braid Atlas have NOT been Lean-certified.
 They are listed here for completeness and to prevent accidental use as proved facts.
 
-### Dark quark electric charge Q_EM — CERTIFIED (MBA-6, 2026-05-17)
+### Dark quark electric charge Q_EM — CERTIFIED
 
 **Argument B resolved.** `DarkQuarkCharge.lean` certifies `dark_quark_charge_zero : W_g_mirror = 0`
 (zero sorry, zero axioms). The P17 universal statement (Y_mirror = 0 for ALL mirror-branch
@@ -240,13 +240,13 @@ The arithmetic identity `b₃ = b₂ + (N_c² − 1) = 29 + 8 = 37` is Lean-cert
 
 The arithmetic is certified.  The STRUCTURAL status is still Cat D: P17 assigns b₃=19
 from GTE integer structure without an explicit formula `b₃ = b₂ + (N_c²−1)`.  The gap
-was identified post-hoc in MBA-3 (2026-05-17).
+was identified post-hoc.
 
 To upgrade to Cat A: prove `b₃ = q₂ − b₁_RHN` from GTE cascade derivation rules.
 See `RHNGapTheorem.lean` §5 for the precise structural requirement.
 R_dark = 0.2080 remains Cat D until that derivation is completed.
 
-### Dark quark electric charge Q_EM — MBA-6 OPEN
+### Dark quark electric charge Q_EM — resolution of competing arguments
 
 Two competing arguments:
 - Arg A: standard quark winding W_g ∈ {+2, −1} → Q = +2/3, −1/3 (3-strand topology)
@@ -262,7 +262,7 @@ The R_dark ratio (= 0.2080, predicted from b-values {5, 29, 37}) gives the
 mass-squared ratio, not absolute masses.
 -/
 
--- Dark quark Q_EM = 0 CERTIFIED (MBA-6, 2026-05-17): see DarkQuarkCharge.lean.
+-- Dark quark Q_EM = 0 CERTIFIED: see DarkQuarkCharge.lean.
 -- The arithmetic identity b₃' = b₂' + 8 = 37 is Lean-certified as a NUMERICAL
 -- OBSERVATION in RHNGapTheorem.lean (rhn_b3_gap_numerical_mirror, zero sorry).
 -- The structural derivation (b₃' follows from GTE cascade) remains open (Cat D).

@@ -11,7 +11,7 @@ import UgpLean.Gravity.PMDLGravityTheorems
 import UgpLean.Universality.CUP3DUniqueness
 
 /-!
-# UgpLean.Polynomial.PolyExplorations — EPIC_087 Lean Targets
+# UgpLean.Polynomial.PolyExplorations
 
 Formalizes the core mathematical properties of the GTE polynomial
   p(L,C,R) = C + R − C·R − L·C·R

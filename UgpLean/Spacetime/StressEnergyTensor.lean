@@ -6,7 +6,7 @@ import UgpLean.Framework.PhiMDLBridge
 namespace UgpLean.Spacetime.StressEnergyTensor
 
 /-!
-# Φ_MDL Stress-Energy Tensor — Rank 075-TMUNU (CatAL / CatAD)
+# Φ_MDL Stress-Energy Tensor (CatAL / CatAD)
 
 Lean certification of the Φ_MDL Klein–Gordon stress-energy tensor
 `T_{μν} = ∂_μΦ ∂_νΦ − η_{μν} ℒ` and the gravity-sector prerequisite bundle

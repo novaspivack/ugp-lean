@@ -2,7 +2,7 @@ import UgpLean.Substrate.Substrate
 import UgpLean.Substrate.LagrangianLorentzScalar
 
 /-!
-# PSC-Preserving Transformations — Rank 070-107 Phase 1–2
+# PSC-Preserving Transformations
 
 Defines when a configuration map preserves the Layer-I PSC structure
 (RC, NM*, TV, SA).

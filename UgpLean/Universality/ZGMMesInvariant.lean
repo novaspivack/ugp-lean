@@ -5,7 +5,7 @@ import UgpLean.Universality.GoEStabilityHierarchy
 # UgpLean.Universality.ZGMMesInvariant — Mesoscopic Glider-to-Fermion Invariant (2-ZGM-MES)
 
 This file establishes the canonical structural invariant for the mesoscopic
-glider-to-fermion correspondence problem (Rank 2-ZGM-MES).
+glider-to-fermion correspondence problem.
 
 ## Problem statement
 

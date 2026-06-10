@@ -19,10 +19,10 @@ All components are CatAL with zero sorry. This file adds no axioms.
 /-- **Unified physical exclusion** (CatAL bridge).
 
     Every physically weighted beable satisfies simultaneously:
-    1. PSC-admissibility (`d2_axiom`, Rank 15-ALT)
-    2. Color confinement — no single free quark (`no_psc_admissible_single_quark`, Rank 25-CCF)
-    3. Positive mass gap (`gte_mass_gap`, Rank 42-MGP)
-    4. Anomaly freedom (`physical_anomaly_cancellation`, Rank 26-ANO)
+    1. PSC-admissibility (`d2_axiom`)
+    2. Color confinement — no single free quark (`no_psc_admissible_single_quark`)
+    3. Positive mass gap (`gte_mass_gap`)
+    4. Anomaly freedom (`physical_anomaly_cancellation`)
 
     Status: CatAL — zero sorry, zero axioms. -/
 theorem unified_physical_exclusion :

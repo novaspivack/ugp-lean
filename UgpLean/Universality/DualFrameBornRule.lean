@@ -5,7 +5,7 @@ import Mathlib.LinearAlgebra.Matrix.Hermitian
 import Mathlib.Data.Matrix.Mul
 
 /-!
-# Dual-Frame Born Rule — Rank 074-PHIBORN2b-LEAN (EPIC_074)
+# Dual-Frame Born Rule
 
 Pure linear-algebra certification of the canonical dual frame for a positive-definite
 Gram matrix.

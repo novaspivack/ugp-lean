@@ -7,7 +7,7 @@ open GTE.Spacetime
 namespace GTE.Spacetime.ChiralPair
 
 /-!
-# Chiral Pair Causal Decoupling Theorem (Rank 14-LCD)
+# Chiral Pair Causal Decoupling Theorem
 
 Proves that the causal graphs of the Rule 110 and Rule 124 layers are disjoint
 (no cross-layer edges), so a random walk started in one layer stays in that layer.
@@ -31,7 +31,7 @@ kinematics of Rule 110 on the period-14 ether (Cook 2004, Figure 5).
 - `rule124Fin2_truth_table` — Rule 124 lookup on Fin 2 neighborhoods (zero sorry)
 - `chiralPhysicalBit_xor` — physical bit is XOR of layers (zero sorry)
 - `chiral_pair_spectral_dim_unchanged` — spectral dimension is unchanged (placeholder pending
-  Rank 13-LSD spectral dimension formalization)
+  the spectral dimension formalization)
 -/
 
 /-- Neighborhood index for binary (L, C, R) triples: `4·L + 2·C + R`. -/
@@ -92,7 +92,7 @@ def ChiralNode (L T : ℕ) := ChiralLayer × CausalNode L T
 def ChiralPairAdj (L T : ℕ) (n1 n2 : ChiralNode L T) : Prop :=
   n1.1 = n2.1 ∧ CausalAdj L T n1.2 n2.2
 
-/-- **Chiral pair causal decoupling** (Rank 14-LCD, CatAL).
+/-- **Chiral pair causal decoupling** (CatAL).
 
     Nodes in different layers of the chiral pair are never causally adjacent.
     The proof is immediate from the definition: `ChiralPairAdj` requires
@@ -106,7 +106,7 @@ theorem chiral_pair_no_cross_layer_edges
   intro h
   exact h_diff_layer h.1
 
-/-- **Chiral pair walk layer invariance** (Rank 14-LCD, CatAL).
+/-- **Chiral pair walk layer invariance** (CatAL).
 
     A random walk starting in layer `layer` stays in `layer` after each step.
     Proof: `ChiralPairAdj n1 n2` requires `n1.1 = n2.1`, so `n2.1 = n1.1 = layer`.
@@ -126,9 +126,9 @@ theorem chiral_pair_walk_layer_invariant
     Physical reasoning: `chiral_pair_walk_layer_invariant` establishes that
     random walks never cross layers, so the return probability `P(t)` for a
     walk on the chiral pair graph equals `P(t)` for the single-layer graph.
-    Therefore `d_s(chiral pair) = d_s(single layer) = 4` (Rank 13-LSD).
+    Therefore `d_s(chiral pair) = d_s(single layer) = 4`.
 
-    Placeholder: formal spectral dimension equality awaits the Rank 13-LSD
+    Placeholder: formal spectral dimension equality awaits the full
     spectral dimension framework.  The walk-invariance certificate above is
     the key ingredient; the remaining step is a ratio identity between return
     probabilities, which follows once `SpectralDimension` is defined. -/

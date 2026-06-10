@@ -9,11 +9,10 @@ import UgpLean.Universality.GUTStructure
 import UgpLean.Universality.NgenUniversalityPartial
 
 /-!
-# N_gen bracket-orientation exclusion and PI-free pincer (088-R23)
+# N_gen bracket-orientation exclusion and PI-free pincer
 
-Certifies LT-088-51 (`ngen_bracket_orientation_flip`), LT-088-52
-(`ngen_pincer_from_layer1_and_orientation`), and LT-088-56
-(`cc_floor_orientation_atom_inequality`) for the canonical G02 ansatz:
+Certifies `ngen_bracket_orientation_flip`, `ngen_pincer_from_layer1_and_orientation`,
+and `cc_floor_orientation_atom_inequality` for the canonical census ansatz:
 
 - census(N) = (ln2/Nπ)·log₂(2000/N) = ln(2000/N)/(Nπ)
 - floor(N) = (N/7)(π/2) = Nπ/14
@@ -229,7 +228,7 @@ private lemma omega_census_at_four_lt_floor :
     omega_floor_at_four_gt
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-56: GTE-atom inequality (Floor Orientation arithmetic core)
+-- GTE-atom inequality (Floor Orientation arithmetic core)
 -- ─────────────────────────────────────────────────────────────────────────
 
 private lemma nine_pi_sq_lt_ninety_one : (9 : ℝ) * Real.pi ^ 2 < (91.014 : ℝ) := by
@@ -362,7 +361,7 @@ private lemma bracket_excluded_from_four (N : ℕ) (hN : 4 ≤ N) (hpos : 0 < N)
       exact lt_trans (lt_of_le_of_lt hcensus omega_census_at_four_lt_floor) hfloor
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-51: bracket-orientation flip
+-- bracket-orientation flip
 -- ─────────────────────────────────────────────────────────────────────────
 
 /-- **bracket_admissible_at_three** (CatAL): the N = 3 oriented bracket is non-empty. -/
@@ -485,11 +484,11 @@ theorem planck_not_in_inverted_bracket_at_four :
 -- ─────────────────────────────────────────────────────────────────────────
 
 /-- **BracketOrientationHypothesis** (named hypothesis H1, CatAD-conditional):
-    This structure captures the Floor Orientation Theorem (OQ-088-R22a CLOSED, 088-R24);
-    the carrier–record separation argument was derived from the PMDL variational action in
-    `LAB_NOTE_R21_ORIENTATION_LEMMA.md`. The named hypothesis is retained for modularity;
-    it does not introduce an independent premise — it is a theorem from the PMDL action +
-    R22 bundle. The physical generation count carries an oriented non-empty two-route
+    This structure captures the Floor Orientation Theorem;
+    the carrier–record separation argument is derived from the PMDL variational
+    action. The named hypothesis is retained for modularity;
+    it does not introduce an independent premise — it is a theorem from the PMDL-action
+    premise bundle. The physical generation count carries an oriented non-empty two-route
     bracket; the Δ₁⁰ flip arithmetic is certified separately in
     `ngen_bracket_orientation_flip` and the atom inequality in
     `cc_floor_orientation_atom_inequality`. -/
@@ -501,7 +500,7 @@ def bracket_orientation_h1_consistent : BracketOrientationHypothesis :=
   { physical_bracket_admissible := bracket_admissible_at_three }
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-52: PI-free pincer (Layer I ≥ 3 + orientation ≤ 3)
+-- PI-free pincer (Layer I ≥ 3 + orientation ≤ 3)
 -- ─────────────────────────────────────────────────────────────────────────
 
 /-- PSC Layer I forces `N_gen ≥ 3` on every admissible universe (interface lemma). -/

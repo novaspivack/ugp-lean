@@ -7,12 +7,12 @@ import UgpLean.Universality.BornRuleMDL
 import UgpLean.Spacetime.QECStabilizer
 
 /-!
-# [D] D1–D5 ↔ QEC Stabilizer Bridge — Rank 38-QEC (EPIC_074)
+# [D] D1–D5 ↔ QEC Stabilizer Bridge
 
 Maps P34 §6 **D1–D5** coherence-measure axioms to quantum error correcting code (QEC)
 structure, and certifies the discrete **DWeight** step-function instantiation.
 
-## Assessment (Rank 38-QEC)
+## Assessment
 
 | Constraint | P34 content | QEC stabilizer analogue | Lean status |
 |---|---|---|---|
@@ -184,7 +184,7 @@ inductive DConstraintQECRole where
   | measurement_layer   : DConstraintQECRole  -- D5
   deriving DecidableEq, Repr
 
-/-- Canonical classification of D1–D5 against QEC roles (Rank 38-QEC). -/
+/-- Canonical classification of D1–D5 against QEC roles. -/
 def d_constraint_qec_role : Fin 5 → DConstraintQECRole
   | 0 => .stabilizer_axiom    -- D1
   | 1 => .stabilizer_axiom    -- D2
@@ -208,7 +208,7 @@ theorem n_stabilizer_mapped_eq_three : n_stabilizer_mapped_constraints = 3 := rf
 -- §8  Main bundle — discrete DWeight QEC + D1–D5 classification
 -- ─────────────────────────────────────────────────────────────────────────────
 
-/-- **Rank 38-QEC master bundle (CatAL, zero sorry).
+/-- **QEC stabilizer master bundle (CatAL, zero sorry).
 
     Packages:
     (1) Full discrete QEC stabilizer code on Z₇⁵ beables (`qec_gte_is_stabilizer_code`).
@@ -262,7 +262,7 @@ theorem dweight_qec_d1_d5_bundle :
     The witness `dweight_decode` is nearest-codeword decoding at the step-function level:
     PSC-admissible records are unchanged; syndrome-zero errors project to the vacuum
     code word. Abstract substrate transputation (`transputation_state_selector_bundle`)
-    carries the continuum argmin_ρ D(ρ|w) formulation (Rank 76-TPSEL). -/
+    carries the continuum argmin_ρ D(ρ|w) formulation. -/
 theorem qec_syndrome_decoding_via_transputation :
     ∃ selector : (Fin 5 → Fin 7) → (Fin 5 → Fin 7),
       ∀ beable : Fin 5 → Fin 7,

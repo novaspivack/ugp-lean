@@ -500,7 +500,7 @@ theorem cup11b_z7_sum4_conserving_characterization :
 -- ════════════════════════════════════════════════════════════════
 
 -- ────────────────────────────────────────────────────────────────
--- §7a  Decay depth: SM orbit profile and global maximum (Rank 30)
+-- §7a  Decay depth: SM orbit profile and global maximum
 -- ────────────────────────────────────────────────────────────────
 
 /-- **fmdl_orbit_depth_profile**: SM orbit states reach vacuum in exactly 1, 2, 3 steps.
@@ -575,7 +575,7 @@ theorem fmdl_max_depth_is_7 :
   ⟨⟨depth7_witness, fmdl_depth7_witness_exact.1⟩, fun v => fmdl_universal_7step_convergence v⟩
 
 -- ────────────────────────────────────────────────────────────────
--- §7b  Z₇ vs Z₂ algebraic structure theorems (Rank 31)
+-- §7b  Z₇ vs Z₂ algebraic structure theorems
 -- ────────────────────────────────────────────────────────────────
 
 /-- The mod-2 reduction φ: Z₇ → Z₂, defined by φ(x) = x mod 2.
@@ -645,7 +645,7 @@ theorem z7_z2_incompatible_additive :
     exact absurd heq (by omega)
 
 -- ────────────────────────────────────────────────────────────────
--- §7c  Vacuum fixed-point uniqueness — No False Vacua (Rank 22)
+-- §7c  Vacuum fixed-point uniqueness — No False Vacua
 -- ────────────────────────────────────────────────────────────────
 
 /-- **fmdl_unique_fixed_point** (No False Vacua theorem):
@@ -700,7 +700,7 @@ theorem fmdl_vacuum_is_unique_attractor :
   ⟨by native_decide, fmdl_universal_7step_convergence, fmdl_unique_fixed_point⟩
 
 -- ────────────────────────────────────────────────────────────────
--- §7d  Photon as CA Ether — unique uniform fixed point (Rank 41)
+-- §7d  Photon as CA Ether — unique uniform fixed point
 -- ────────────────────────────────────────────────────────────────
 
 /-- **fmdl_nonzero_diagonal_all_zero**: for every non-vacuum winding k ≠ 0, the uniform
@@ -733,7 +733,7 @@ theorem fmdl_nonzero_diagonal_all_zero :
     generates particle identity by iterating the GTE triple evolution; the one particle
     that IS the vacuum medium has zero mass and zero description length. This provides
     the structural reason behind the photon's GTE-triple absence established in
-    GTPNeutralDiscrimination.lean (Rank 11): γ is `fixed_zero` not by accident but
+    GTPNeutralDiscrimination.lean: γ is `fixed_zero` not by accident but
     because it is the unique element that the CA background reproduces unchanged.
 
     Note on MDL-minimality: the result has two cases.
@@ -781,7 +781,7 @@ theorem fmdl_uniform_fp_uniqueness_count :
   decide
 
 -- ════════════════════════════════════════════════════════════════
--- §8  Z₇ Sum Conservation Landscape (Rank 27)
+-- §8  Z₇ Sum Conservation Landscape
 -- ════════════════════════════════════════════════════════════════
 
 /-!
@@ -891,7 +891,7 @@ theorem z7_conservation_landscape_summary :
    z7_gen3_not_sum_conserving, z7_vacuum_sum_conserved⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §9  Orbit-Admissible Function Sum Trajectory Invariance (Rank 40)
+-- §9  Orbit-Admissible Function Sum Trajectory Invariance
 -- ════════════════════════════════════════════════════════════════
 
 /-- **apply_f_ring**: apply a Z₇ CA function f on the 5-cell ring with periodic
@@ -982,7 +982,7 @@ theorem orbit_sum_full_trajectory :
   exact ⟨by decide, h.1, h.2.1, h.2.2⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §10  Z₅ ring equivariance of fmdl_step5 (Rank 28, CatAL)
+-- §10  Z₅ ring equivariance of fmdl_step5 (CatAL)
 -- ════════════════════════════════════════════════════════════════
 
 /-- Cyclic rotation of a 5-cell Z₇ ring by k positions.

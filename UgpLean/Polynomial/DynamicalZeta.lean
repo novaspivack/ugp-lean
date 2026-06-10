@@ -16,7 +16,7 @@ open UgpLean.Polynomial.GoldenQuadratic
 open UgpLean.Polynomial.PolyExplorations
 
 -- ════════════════════════════════════════════════════════════════
--- §1  Local fixed-point factorization (LT-088-29)
+-- §1  Local fixed-point factorization
 -- ════════════════════════════════════════════════════════════════
 
 /-- **fixed_point_local_factorization** (CatAL — ring):
@@ -206,7 +206,7 @@ private theorem vacuum_unique_ring_n6 :
       ∀ i, s i = 0 := by native_decide
 
 -- ════════════════════════════════════════════════════════════════
--- §3  Golden Möbius map on P¹(GF(7)) (LT-088-30)
+-- §3  Golden Möbius map on P¹(GF(7))
 -- ════════════════════════════════════════════════════════════════
 
 /-- Projective line `P¹(GF(7))`: affine points `0,…,6` and the point at infinity. -/
@@ -269,7 +269,7 @@ theorem fibonacci_matrix_order_sixteen_gf7 :
   native_decide
 
 -- ════════════════════════════════════════════════════════════════
--- §4  De Bruijn spatial fixed-point digraph (LT-088-33)
+-- §4  De Bruijn spatial fixed-point digraph
 -- ════════════════════════════════════════════════════════════════
 
 private abbrev DeBruijnVertex := Fin 7 × Fin 7
@@ -299,14 +299,14 @@ theorem debruijn_only_vacuum_cycle :
       ∀ len : Fin 50, 1 < len.val → ¬ onDeBruijnCycle v len.val) := by
   native_decide
 
-/-- **debruijn_vacuum_succ_list** (LT-088-33, CatAL):
+/-- **debruijn_vacuum_succ_list** (CatAL):
     The vacuum vertex `(0,0)` has successor list `[0]`. -/
 theorem debruijn_vacuum_succ_list :
     deBruijnSuccList (0, 0) = [⟨0, by decide⟩] := by
   native_decide
 
 -- ════════════════════════════════════════════════════════════════
--- §5  Vacuum uniqueness for all ring lengths (LT-088-7)
+-- §5  Vacuum uniqueness for all ring lengths
 -- ════════════════════════════════════════════════════════════════
 
 private def moebiusGF7 (x : ZMod 7) : ZMod 7 := (1 + x)⁻¹
@@ -519,7 +519,7 @@ theorem vacuum_unique_temporal_fixed_point_ring {n : ℕ} [NeZero n]
       · intro i; exact vacuum_unique_ring_n6 s hfix i
 
 -- ════════════════════════════════════════════════════════════════
--- §6  Prime-ring cycle dichotomy (LT-088-31)
+-- §6  Prime-ring cycle dichotomy
 -- ════════════════════════════════════════════════════════════════
 
 /-- **sigma_fixed_implies_uniform_prime** (CatAL):
@@ -584,7 +584,7 @@ theorem sigma_orbit_prime_dichotomy {n : ℕ} [Fact n.Prime] {α : Type*} (σ : 
     rw [hmin_eq] at hm_dvd
     exact Nat.not_lt_of_le (Nat.le_of_dvd hmpos hm_dvd) hmlt
 
-/-- **prime_ring_cycle_dichotomy** (LT-088-31, CatAL):
+/-- **prime_ring_cycle_dichotomy** (CatAL):
     For prime `n`, shift-fixed ring configurations are uniform; the only uniform
     temporal fixed point of `p` is the vacuum. -/
 theorem prime_ring_cycle_dichotomy {n : ℕ} [Fact n.Prime]
@@ -594,7 +594,7 @@ theorem prime_ring_cycle_dichotomy {n : ℕ} [Fact n.Prime]
   exact prime_ring_no_nontrivial_uniform_fixed
 
 -- ════════════════════════════════════════════════════════════════
--- §7  Period-475 attractor equivariance (LT-088-32)
+-- §7  Period-475 attractor equivariance
 -- ════════════════════════════════════════════════════════════════
 
 private abbrev State5 := Fin 7 × Fin 7 × Fin 7 × Fin 7 × Fin 7
@@ -655,7 +655,7 @@ theorem ord_19_seven_eq_three_cert :
   exact ⟨h3, h1, h2⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §8  Period-475 return map and gauge sector (LT-088-37, LT-088-39)
+-- §8  Period-475 return map and gauge sector
 -- Heavy native_decide certificates — build cost attributable here.
 -- ════════════════════════════════════════════════════════════════
 
@@ -695,7 +695,7 @@ theorem period475_gauge_observables_period_95 :
   period475_gauge_observable_e1_period_95
 
 -- ════════════════════════════════════════════════════════════════
--- §9  Return-map linearization no-19 (LT-088-38)
+-- §9  Return-map linearization no-19
 -- Precomputed charpoly coefficients + algebraic order bound.
 -- ════════════════════════════════════════════════════════════════
 
@@ -753,10 +753,10 @@ theorem period475_linearization_no_19 :
   · exact zmod7_order_19_implies_order_15
 
 -- ════════════════════════════════════════════════════════════════
--- §10  Prime-ring T-cycle dichotomy completion (LT-088-31)
+-- §10  Prime-ring T-cycle dichotomy completion
 -- ════════════════════════════════════════════════════════════════
 
-/-- **prime_ring_cycle_dichotomy_bundle** (LT-088-31, CatAL):
+/-- **prime_ring_cycle_dichotomy_bundle** (CatAL):
     Prime-ring shift dichotomy bundle: shift-fixed configurations are uniform; the
     only uniform temporal fixed point is the vacuum; σ-orbits on a prime period have
     size `1` or `n`. -/
@@ -773,7 +773,7 @@ theorem prime_ring_cycle_dichotomy_bundle {n : ℕ} [Fact n.Prime] {α : Type*}
   · intro s hσ; obtain ⟨c, hc⟩ := sigma_fixed_implies_uniform_prime s hσ; exact ⟨c, hc⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §11  De Bruijn zeta completion (LT-088-33)
+-- §11  De Bruijn zeta completion
 -- ════════════════════════════════════════════════════════════════
 
 /-- **debruijn_fixed_matrix_trace_one** (CatAL):
@@ -798,7 +798,7 @@ theorem debruijn_spatial_zeta_trivial :
   debruijn_fixed_matrix_trace_one
 
 -- ════════════════════════════════════════════════════════════════
--- §12  Seven-ring cycle spectrum (LT-088-8)
+-- §12  Seven-ring cycle spectrum
 -- Dichotomy bundle + certified cycle-length arithmetic; full 7⁷ partition blocked.
 -- ════════════════════════════════════════════════════════════════
 
@@ -810,7 +810,7 @@ theorem seven_ring_nontrivial_cycle_lengths_certified :
     14 > 1 ∧ 21 > 1 ∧ 49 > 1 ∧ 189 > 1 ∧ 602 > 1 := by
   decide
 
-/-- **seven_ring_cycle_spectrum** (LT-088-8, PARTIAL — dichotomy + arithmetic):
+/-- **seven_ring_cycle_spectrum** (PARTIAL — dichotomy + arithmetic):
     Prime-ring σ-orbit dichotomy and no-uniform-ground-state certificate constrain
     nontrivial cycle lengths; the certified spectrum `{14,21,49,189,602}` is
     arithmetic-only here (orbit partition at 7⁷ states blocked by kernel cost). -/

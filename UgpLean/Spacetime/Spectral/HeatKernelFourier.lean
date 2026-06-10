@@ -320,7 +320,7 @@ theorem discrete_torus_gaussian_limit :
         Filter.atTop (nhds C) :=
   discrete_torus_gaussian_limit_axiom
 
-/-- **Assembled Fourier-route asymptotic** for Rank 13-LSD. Combines the three
+/-- **Assembled Fourier-route asymptotic** for the spectral-dimension theorem. Combines the three
     steps above; this is the active proof target for the heat-kernel gap. -/
 theorem causal_graph_heat_kernel_diffusive_asymptotic_fourier :
     ∃ C : ℝ, 0 < C ∧

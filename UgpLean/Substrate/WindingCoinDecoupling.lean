@@ -8,7 +8,7 @@ import Mathlib.LinearAlgebra.Matrix.Defs
 /-!
 # Z₇ Winding-Coin Decoupling and Domain-Wall Junction Tension
 
-Lean certification of EPIC_074 ranks **074-QCA-WINDING-COIN** and **074-VORTEX-3D**.
+Lean certification of the QCA winding–coin decoupling and 3D vortex structure results.
 
 ## Winding operator centralizer (074-QCA-WINDING-COIN)
 

@@ -4,7 +4,7 @@ import UgpLean.Spacetime.CausalGraph
 namespace GTE.Spacetime.Centroid
 
 /-!
-# D-Measure Centroid (P34 [D] — Rank 17-GEO)
+# D-Measure Centroid (P34 [D])
 
 Formalizes the `[D]`-weighted spatial centroid `⟨x⟩_D` for physical beables.
 
@@ -32,7 +32,7 @@ multiple nodes, replace `DWeightAt` by the physical density
 `DWeight(b, n) = Σ_{realizations} [D](b, realization at n)` and retain the
 same centroid API.  The theorems in this file are the base case (delta
 distribution); curvature-corrected deviation requires Ollivier–Ricci
-computation (P36 / EPIC_073 Cluster J).
+computation (P36).
 
 ## Certification
 

@@ -424,7 +424,7 @@ theorem nu_dirac_denom_as_quad_minus_delta :
   unfold nuDiracDenom; decide
 
 /-- The two decompositions coincide: N_c³ + strand_count = 4N_c² − δ at N_c = 3.
- This structural over-determination is the key identity of . -/
+ This structural over-determination is the key identity. -/
 theorem nu_dirac_denom_both_decompositions :
     (3^3 + (3^2 - 1) / 4 : ℕ) = 4 * 3^2 - 7 := by
   decide
@@ -441,7 +441,7 @@ theorem nu_seesaw_exponent_as_denom_over_nc2 :
  (i) the numerator of the seesaw exponent: nuSeesawExponent = 29/9
  (ii) the denominator of the Dirac Yukawa scale: E_D = v_H / 29
 
- Furthermore, 29 admits TWO independent decompositions in N_c and 
+ Furthermore, 29 admits TWO independent decompositions in N_c and
  constants, demonstrating that the mechanism is over-determined rather
  than fitted. -/
 theorem neutrino_seesaw_structural_closure :

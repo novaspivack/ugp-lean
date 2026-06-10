@@ -4,7 +4,7 @@ import UgpLean.Universality.GUTStructure
 namespace GTE.Spacetime.Confinement
 
 /-!
-# Color Confinement from PSC + Absence Theorem (Rank 25-CCF)
+# Color Confinement from PSC + Absence Theorem
 
 Color confinement — the empirical fact that no free color-charged particle exists
 in nature — is derived here from two structural pillars of the UGP framework:
@@ -144,7 +144,7 @@ def SingleQuarkBeable (b : Fin 5 → Fin 7) : Prop :=
 instance (b : Fin 5 → Fin 7) : Decidable (SingleQuarkBeable b) := by
   unfold SingleQuarkBeable; infer_instance
 
-/-- **Route B — Color Confinement** (Rank 25-CCF, CatAL).
+/-- **Route B — Color Confinement** (CatAL).
 
     No PSC-admissible beable is a single-quark beable.
 
@@ -346,18 +346,17 @@ with the GTE spectrum.
 
 2. **Lightest composite positive mass**: show that the lightest color-neutral composite
    (meson [w, -w] for the lightest color-charged w) inherits positive mass from its
-   partons.  This requires the 3D f_MDL Hamiltonian (Rank 6-MPD, blocked on 2-ZGM).
+   partons.  This requires the 3D f_MDL Hamiltonian (blocked on 2-ZGM).
 
 3. **OR**: a direct orbit-structure argument that any nonzero-winding composite has
    positive mass, bypassing the Hamiltonian route.
 
 4. **AFCA clock rate mechanism**: the AFCA clock rate gives mass via m ∝ 1/(clock period),
-   providing a physical mechanism.  Formalization of this connection is open (Rank 31-ACS).
+   providing a physical mechanism.  Formalization of this connection is open.
 
 ### Status
 
 **Mass gap**: CatD — long-term research target.
-Rank 42-MGP tracks this in the ranked ideas (RANKED_IDEAS.md).
 
 The Route B confinement proof establishes that no massless free-quark state exists
 in the PSC-certified orbit.  Combined with the empirical CatA mass cascade, the mass

@@ -5,7 +5,7 @@ import UgpLean.GTE.GeneralTheorems
 /-!
 # UgpLean.BraidAtlas.MirrorWindingNumber — Structural Derivation of W_g_mirror = 0
 
-**MBA-5 result (2026-05-16):** This module provides the structural Lean theorems
+This module provides the structural Lean theorems
 supporting the elimination of the `mirror_winding_number_zero` axiom from P17.
 
 The axiom (formerly in `BraidAtlas.ChargeTheorem`) has been replaced by a definition:
@@ -51,7 +51,7 @@ All theorems: zero sorry, zero axioms.
 
 ## Reference
 
-P17 (Canonical Braid Atlas v2.0), §subsec:mirror_dm; MBA-5 lab notes (2026-05-16).
+P17 (Canonical Braid Atlas v2.0), §subsec:mirror_dm.
 -/
 
 namespace UgpLean.BraidAtlas.MirrorWindingNumber
@@ -177,7 +177,7 @@ theorem mirror_winding_generation_independent :
 -- §5  Conjunction: full structural certificate (zero sorry)
 -- ════════════════════════════════════════════════════════════════
 
-/-- **Complete structural certificate for MBA-5 (zero sorry, zero axioms).**
+/-- **Complete structural certificate for the axiom elimination (zero sorry, zero axioms).**
 
     Bundles all structural facts supporting the elimination of the
     `mirror_winding_number_zero` axiom:

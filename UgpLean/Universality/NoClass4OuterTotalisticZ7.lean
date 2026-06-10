@@ -7,7 +7,7 @@ namespace GTE.Universality
 /-!
 # No Class 4 Phase in Outer-Totalistic Z₇ 3D von Neumann Rules
 
-Formal Lean target for OQ-3DALG-6 (EPIC_074 Rank 074-3D-NOCLASS4-THM).
+Formal Lean target for OQ-3DALG-6.
 
 ## Empirical result (CatA, 510 trials)
 
@@ -44,7 +44,7 @@ Script: `research-sandbox/cmca_3d_lambda_search.py`,
 | `no_class4_outer_totalistic_z7_3d` | zero sorry, 1 named axiom `chirality_necessary_for_class4` |
 
 Full Wolfram-class lattice dynamics (`vonNeumannStep3D`, damage-spreading) remain
-open infrastructure (OQ-3DALG-6).
+open infrastructure.
 -/
 
 /-- Outer-totalistic Z₇ vN-6 rule: a function `(center, neighbor_sum) ↦ output`
@@ -136,7 +136,7 @@ axiom chirality_necessary_for_class4
     IsChiralOuterTotalistic rule
 
 /--
-**Target theorem (OQ-3DALG-6):** no outer-totalistic Z₇ vN-6 rule exhibits
+**Target theorem:** no outer-totalistic Z₇ vN-6 rule exhibits
 Class 4 (edge-of-chaos) dynamics on the 3D von Neumann neighborhood.
 
 Proof: Class 4 ⇒ chirality (`chirality_necessary_for_class4`, Wuensche 1999 +

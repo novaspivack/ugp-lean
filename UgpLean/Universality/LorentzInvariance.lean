@@ -9,12 +9,12 @@ import Mathlib.LinearAlgebra.Matrix.BilinearForm
 import Mathlib.LinearAlgebra.Matrix.ToLin
 
 /-!
-# UgpLean.Universality.LorentzInvariance — Rank 073-LOR3 (CatAL)
+# UgpLean.Universality.LorentzInvariance (CatAL)
 
 Lean certification that the Klein–Gordon mass-shell condition
 `η(p,p) = −m²` (equivalently `ω² = |k|² + m²` in natural units) is preserved
 under the Lorentz group O(1,3), establishing Poincaré invariance of the
-continuum Φ_MDL dispersion relation from Rank 073-LOR1.
+continuum Φ_MDL dispersion relation.
 
 ## Main theorems (zero sorry)
 

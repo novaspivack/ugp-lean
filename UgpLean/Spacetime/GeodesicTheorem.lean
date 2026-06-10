@@ -7,7 +7,7 @@ import UgpLean.Spacetime.SpatiallyExtendedLifting
 namespace GTE.Spacetime.Geodesic
 
 /-!
-# The Geodesic Theorem (Rank 17-GEO)
+# The Geodesic Theorem
 
 **Statement:** In the 3D f_MDL curved spacetime, [D]-weighted physical observables
 `⟨x⟩_D` follow geodesics of the causal graph.
@@ -221,7 +221,7 @@ theorem DWeightNode_psc_invariant
 -- §4  Main theorem: ⟨x⟩_D follows the geodesic
 -- ─────────────────────────────────────────────────────────────────────────────
 
-/-- **Geodesic Theorem (Rank 17-GEO).**
+/-- **Geodesic Theorem.**
 
     The `[D]`-weighted centroid `⟨x⟩_D` of a PSC-admissible beable traces the
     geodesic of the 3D f_MDL causal graph.
@@ -432,7 +432,7 @@ theorem d2_orbit_closed_under_step (b : Fin 5 → Fin 7) (h : DWeight b > 0) :
 -- §10  D2 geodesic step (CatAL orbit-closure + causal adjacency)
 -- ─────────────────────────────────────────────────────────────────────────────
 
-/-- **D2 Geodesic Step** (Rank 17-GEO, partial CatAL).
+/-- **D2 Geodesic Step** (partial CatAL).
 
     Given a physical beable `b` (DWeight b > 0) at a non-terminal causal node `n`
     (timestep `t < T`), there exists a causally adjacent successor node `n'` such that:
@@ -463,7 +463,7 @@ theorem d2_orbit_closed_under_step (b : Fin 5 → Fin 7) (h : DWeight b > 0) :
     — requires the P34 `[D]` measure formalization.  Until then, `geodesic_theorem`
     remains CatAD and this theorem provides the two CatAL sub-components.
 
-    Status: CatAL for (a) and (b) individually; overall Rank 17-GEO CatAD until
+    Status: CatAL for (a) and (b) individually; overall CatAD until
     P34 `[D]` measure provides the trajectory identification. -/
 theorem d2_geodesic_step
     (n : CausalNode L T) (b : Fin 5 → Fin 7)
@@ -646,7 +646,7 @@ theorem causal_sequence_exists
 -- §14  D-measure centroid and preferred direction (CatAL)
 -- ─────────────────────────────────────────────────────────────────────────────
 
-/-- **Geodesic preferred direction** (Rank 17-GEO, CatAL).
+/-- **Geodesic preferred direction** (CatAL).
 
     For any physical beable `b` at causal node `n`, there exists a timelike
     causal sequence `seq` such that at every step `k`:
@@ -667,7 +667,7 @@ theorem causal_sequence_exists
       sequence + spatial centroid invariance under f_MDL evolution.
     - **CatAD (remaining gap):** curvature-corrected centroid shift toward
       regions of higher `[D]` density requires the full P34 orbit-superposition
-      measure and Ollivier–Ricci curvature (P36 / EPIC_073 Cluster J).
+      measure and Ollivier–Ricci curvature (P36).
       In matter regions (κ > 0), the geodesic deviates from the straight
       timelike worldline; proving that deviation requires the distributed
       `DWeight(b, n)` not yet formalized.
@@ -709,7 +709,7 @@ theorem geodesic_preferred_direction
 -- §15  Ehrenfest chain (Pass 4 — explicit names, 38-QEC wired)
 -- ─────────────────────────────────────────────────────────────────────────────
 
-/-- **PSC-admissibility preserved under f_MDL step** (Rank 17-GEO, CatAL).
+/-- **PSC-admissibility preserved under f_MDL step** (CatAL).
 
     Alias of `psc_admissible_orbit_closure`; restated for the Ehrenfest argument.
     PSC-admissible beables evolve to PSC-admissible beables under `fmdl_step5`.
@@ -734,7 +734,7 @@ theorem psc_admissible_preserved_iter (b : Fin 5 → Fin 7) (h : PSCAdmissible b
     intros b h
     exact ih (fmdl_step5 b) (psc_admissible_preserved_by_fmdl_step b h)
 
-/-- **Discrete Ehrenfest theorem** (Rank 17-GEO, CatAL).
+/-- **Discrete Ehrenfest theorem** (CatAL).
 
     The `[D]`-weighted centroid support of a physical beable ensemble evolves
     along the PSC-admissible orbit: positive `DWeight` is preserved under one
@@ -748,7 +748,7 @@ theorem dweight_centroid_follows_orbit (b : Fin 5 → Fin 7) (h : DWeight b > 0)
     DWeight (fmdl_step5 b) > 0 :=
   dweight_pos_of_admissible _ (psc_admissible_preserved_by_fmdl_step b (d2_axiom b h))
 
-/-- **Discrete equivalence principle** (Rank 17-GEO, CatAL).
+/-- **Discrete equivalence principle** (CatAL).
 
     All beables with nonzero `[D]`-weight remain in the physical sector under
     arbitrarily many f_MDL steps.  This is the iterated Ehrenfest content:
@@ -759,7 +759,7 @@ theorem gte_discrete_equivalence_principle (b : Fin 5 → Fin 7) (h : DWeight b 
     DWeight (fmdl_step5^[n] b) > 0 :=
   d2_orbit_closed_iter b h n
 
-/-- **Orbital geodesic theorem** (Rank 17-GEO, CatAL partial).
+/-- **Orbital geodesic theorem** (CatAL partial).
 
     Physical beables (`DWeight > 0`) remain PSC-admissible under arbitrary
     f_MDL iteration.  Combined with `causal_sequence_exists` and
@@ -797,7 +797,7 @@ theorem timelike_adjacent_is_geodesic_path
     simp
     exact Or.inr (Or.inl h)
 
-/-- **f_MDL step traces a geodesic edge** (Rank 17-GEO, CatAL partial).
+/-- **f_MDL step traces a geodesic edge** (CatAL partial).
 
     Given a physical beable at causal node `n` with time remaining, the
     timelike successor `(t+1, x, y, z)` is causally adjacent and forms a
@@ -843,7 +843,7 @@ def IsPSCAdmissiblePath
     (state_at : CausalNode L T → Fin 5 → Fin 7) : Prop :=
   ∀ n ∈ path, PSCAdmissible (state_at n)
 
-/-- **Distributed Ehrenfest theorem** (Rank 076-GEO-CATAL, CatAL).
+/-- **Distributed Ehrenfest theorem** (CatAL).
 
     Along any PSC-admissible causal path, the path [D]-weight is strictly positive.
 
@@ -875,7 +875,7 @@ theorem orbit_forms_psc_geodesic_path
   intro k
   exact psc_admissible_preserved_iter b0 h_psc k.val
 
-/-- **Full geodesic theorem — discrete orbital part** (Rank 17-GEO, CatAL).
+/-- **Full geodesic theorem — discrete orbital part** (CatAL).
 
     Alias of `gte_discrete_equivalence_principle`: physical beables remain in the
     positive-[D] sector under arbitrary f_MDL iteration.  The spatial geodesic
@@ -891,10 +891,10 @@ theorem geodesic_theorem_v2 (b : Fin 5 → Fin 7) (h : DWeight b > 0) (n : ℕ) 
 noncomputable def dweightSpatialComposite (c : SpatiallyExtendedComposite L T) : ℝ :=
   DWeight c.beableA * DWeight c.beableB
 
-/-- **Spatially extended geodesic support** (Rank 076-GEO-CATAL, CatAL).
+/-- **Spatially extended geodesic support** (CatAL).
 
     A PSC-admissible spatially extended composite has positive path [D]-weight at
-    both constituent nodes.  Connects Rank 55-3DLT spatial lifting to the geodesic
+    both constituent nodes.  Connects spatially-extended lifting to the geodesic
     certification chain without requiring geodesic uniqueness.
 
     Status: CatAL — zero sorry. -/
@@ -906,7 +906,7 @@ theorem geodesic_extended_composite
     at h_admissible ⊢
   exact mul_pos h_admissible.2.2.1 h_admissible.2.2.2.1
 
-/-- **Geodesic certification bundle** (Rank 076-GEO-CATAL, CatAL partial).
+/-- **Geodesic certification bundle** (CatAL partial).
 
     Packages the CatAL-certified components achieved so far:
 
@@ -1006,7 +1006,7 @@ theorem timelike_adjacent_is_true_geodesic
   ⟨timelike_adjacent_is_geodesic_path L T n n' h,
    fun path' h_path' => timelike_path_is_length_minimal L T n n' h path' h_path'⟩
 
-/-- **Geodesic theorem — flat vacuum** (Rank 17-GEO, CatAL, Pass 6).
+/-- **Geodesic theorem — flat vacuum** (CatAL).
 
     A PSC-admissible beable at causal node `n` (time < T) propagates along a
     TRUE geodesic in one f_MDL step: the successor node is causally adjacent,
@@ -1173,7 +1173,7 @@ end LatticeGeodesicLemmas
 section SpatialGeodesicGeneral
 variable {L T : ℕ}
 
-/-- **Geodesic theorem — general spatial displacement** (Rank 076-GEO M4, CatAL).
+/-- **Geodesic theorem — general spatial displacement** (CatAL).
 
     Between forward-causal endpoints, a true geodesic path exists with constant
     PSC-admissible state — no fixed spatial-worldline hypothesis.
@@ -1218,7 +1218,7 @@ theorem geodesic_theorem_catal_general
 
 end SpatialGeodesicGeneral
 
-/-- **Curved spacetime geodesic existence** (Rank 076-GEO-CATAL M4, CatAL).
+/-- **Curved spacetime geodesic existence** (CatAL).
 
     In the ℤ⁴ causal graph, between forward-causal endpoints on a fixed spatial
     worldline there exists a length-minimal causal path carrying constant
@@ -1242,7 +1242,7 @@ theorem psc_orbit_is_curvature_geodesic
     timelike_worldline_true_geodesic n_start n_end hWorldline hFwd
   exact ⟨path, hgeo, const_psc_is_admissible_path L T path b h_psc⟩
 
-/-- **Full geodesic theorem — curved spacetime** (Rank 076-GEO-CATAL, CatAL conditional).
+/-- **Full geodesic theorem — curved spacetime** (CatAL conditional).
 
     A PSC-admissible beable has a true geodesic between any two causally connected
     nodes that is PSC-admissible and carries positive distributed [D]-weight.
@@ -1277,7 +1277,7 @@ theorem geodesic_theorem_catal
 /-- **τ_c accumulation weight** at a causal node.
 
     In the Chiral Minkowski CA (P41), each cell carries an inner Rule-110 τ_c clock
-    that gates outer f_MDL updates.  Along geodesics, τ_c/τ_ether → γ_SR (Rank 48-GEO,
+    that gates outer f_MDL updates.  Along geodesics, τ_c/τ_ether → γ_SR (
     CatA empirical: ratio ≈ 1.39, p = 4.2×10⁻⁷³).
 
     CatAL model: PSC-admissible beables sit on the geodesic (minimum clock rate,
@@ -1332,7 +1332,7 @@ theorem total_tau_c_psc_path_eq_length
     push_cast
     ring
 
-/-- **PSC path τ_c is minimal** (Rank 076-GEO-CATAL M4, CatAL).
+/-- **PSC path τ_c is minimal** (CatAL).
 
     Alias: on a PSC-admissible path, total τ_c equals the node count. -/
 theorem psc_path_tau_c_is_minimal
@@ -1380,7 +1380,7 @@ theorem total_tau_c_const_psc_eq_length
   total_tau_c_psc_path_eq_length L T path (fun _ => b)
     (fun _ _ => h)
 
-/-- **True geodesics minimize τ_c for PSC-admissible paths** (Rank 48-GEO / 076-GEO-CATAL M4, CatAL).
+/-- **True geodesics minimize τ_c for PSC-admissible paths** (CatAL).
 
     Among causal paths between the same endpoints, a true geodesic whose nodes are all
     PSC-admissible minimizes total τ_c accumulation (CMCA inner-clock mechanism).
@@ -1412,7 +1412,7 @@ theorem tau_c_prefers_geodesic (L T : ℕ)
     When every node carries the same PSC-admissible beable, total τ_c equals path
     length, so τ_c-minimization coincides with graph-length minimization.
 
-    This is the flat-vacuum special case of Rank 48-GEO (γ_SR ratio). -/
+    This is the flat-vacuum special case of the γ_SR clock-ratio mechanism. -/
 theorem tau_c_prefers_geodesic_const_psc
     (n_start n_end : CausalNode L T) (b : Fin 5 → Fin 7) (h_psc : PSCAdmissible b)
     (path_geo : List (CausalNode L T))
@@ -1423,7 +1423,7 @@ theorem tau_c_prefers_geodesic_const_psc
   tau_c_prefers_geodesic L T n_start n_end (fun _ => b) path_geo h_geo
     (fun _ _ => h_psc) path' h_path'
 
-/-- **Distributed [D]-centroid tracks the geodesic via τ_c** (Rank 076-GEO-CATAL M4, CatAL).
+/-- **Distributed [D]-centroid tracks the geodesic via τ_c** (CatAL).
 
     Among causal paths between the same endpoints with PSC-admissible state on the
     true geodesic, total τ_c on the geodesic is minimal — the discrete quantum
@@ -1503,7 +1503,7 @@ theorem psc_orbit_is_geodesic_via_tau_c
 /-- **Full geodesic theorem — τ_c route** (CatAL, timelike worldline).
 
     Packages the DWeight → PSC → minimum-τ_c → geodesic chain.  Equivalent to
-    `geodesic_theorem_catal`; documents the Rank 48-GEO physical mechanism
+    `geodesic_theorem_catal`; documents the γ_SR clock-ratio physical mechanism
     explicitly in the proof certificate.
 
     Status: CatAL — zero sorry (Pass 8). -/

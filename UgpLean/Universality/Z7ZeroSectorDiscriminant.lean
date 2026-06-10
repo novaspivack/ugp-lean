@@ -16,7 +16,7 @@ with Z₇ winding W_B = 0. Six SM particles (or groups) share this property:
 
 Gluons also have W_B=0 but carry non-zero Z₃ color charge (F₂₁ Berry holonomy);
 their discrimination via the color criterion is noted but remains PROVISIONAL pending
-full F₂₁ Berry holonomy Lean certification (Rank 121-BERRY21).
+full F₂₁ Berry holonomy Lean certification.
 
 ## The discriminant hierarchy
 
@@ -215,7 +215,7 @@ theorem photon_label_distinct_from_gtp :
       assigns each colorless W_B=0 particle a distinct non-negative integer label.
 
     **Note on gluons:** Gluons have W_B=0 but Q_χ ≠ 0 (Z₃ color from F₂₁ Berry
-    holonomy, Rank 121-BERRY21, PROVISIONAL-STRONG). The color discriminant
+    holonomy, PROVISIONAL-STRONG). The color discriminant
     Q_χ ≠ 0 → gluon is not CatAL; gluon identification is excluded from
     this theorem.
 

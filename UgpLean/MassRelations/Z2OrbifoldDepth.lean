@@ -34,7 +34,7 @@ numbers `2^n_g - 1` with `n_g = 4 + 6·2^(g-2)` for g ≥ 2. This is also a
 2^g cascade structure, but with a different exponential-base scaling than
 the FN charges. The two structures (FN charges and Mersenne ridge levels)
 are likely DUAL aspects of the same underlying binary-doubling mechanism,
-but the exact map remains an open structural question (Lab Notes 25 §3).
+but the exact map remains an open structural question.
 -/
 
 namespace UgpLean.MassRelations.Z2OrbifoldDepth

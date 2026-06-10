@@ -114,10 +114,10 @@ theorem seeley_dewitt_entropy_formula :
 /-!
 ## Formal derivation gap — gated on OQ-QG-1-Z₂-EFT (NOT on full OQ-QG-1)
 
-**Key structural observation (G33 EPIC_080 assessment):**
+**Key structural observation:**
 
-The EFT bridge axiom (OQ-QG-1-Z₂-EFT) is **strictly weaker** than the full
-geometric continuum limit (OQ-QG-1). The distinction matters for closing G33:
+The EFT bridge axiom is **strictly weaker** than the full
+geometric continuum limit. The distinction matters for closing G33:
 
 | Requirement | OQ-QG-1-Z₂-EFT | Full OQ-QG-1 |
 |---|---|---|

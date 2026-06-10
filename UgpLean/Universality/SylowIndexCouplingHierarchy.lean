@@ -13,7 +13,7 @@ import UgpLean.GTE.NcColorArithmetic
 import UgpLean.Spacetime.PhiMDLKinkQuantumNumbers
 
 /-!
-# Sylow-Index Coupling Hierarchy (Rank 98-TWOSECTOR / T98-5)
+# Sylow-Index Coupling Hierarchy
 
 Certifies the **non-circular arithmetic skeleton** of the Z₇×Z₃ MDL-minimal coupling
 hierarchy: Sylow index in `(ℤ/7ℤ)ˣ`, color coupling `g_c² = N₇ / index`, Villain
@@ -34,7 +34,7 @@ Sylow-3 index `2`) and certified embeddability from `MDLDerivabilityCriterion` /
   `(S1)` faithful `Z_{N₃·N₇}` gauge-phase closure + `(S2)` minimal non-zero charge
   among the Berry `(k, N)` candidate family (`em_charge_mdl_minimal_unique_via_crt`).
 - **CatAD (documented open):** Continuum / emergent-gauge derivation of
-  `α_EM = π/441` precision (T98-5-αEM): Route A cascade match ✅ CatAL (§5e);
+  `α_EM = π/441` precision: Route A cascade match ✅ CatAL (§5e);
   Route B interval match residual (§5d `emCorrectionRouteB`).
 -/
 
@@ -185,7 +185,7 @@ theorem beta_em_over_beta_color_eq :
     betaEmOverBetaColor =
       (couplingHierarchyNumerator : ℝ) / (couplingHierarchyDenomFactor * Real.pi ^ 2) := rfl
 
-/-- SM-compatible hierarchy window used in T98-5 (hadronic-to-EW span). -/
+/-- SM-compatible hierarchy window (hadronic-to-EW span). -/
 def smCouplingRatioLower : ℝ := 15
 def smCouplingRatioUpper : ℝ := 55
 
@@ -220,7 +220,7 @@ theorem alpha_em_tree_level_eq :
   refine ⟨rfl, em_charge_denominator_eq.2⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §4b  Berry EM charge hook (T98-5 FN-2 — Rank 99-T1 analytic input)
+-- §4b  Berry EM charge hook (analytic input)
 -- ════════════════════════════════════════════════════════════════
 
 /-- Berry holonomy EM coupling: `e = 2π / (N₃·N₇)` from Z₇ winding + Z₃ color structure. -/
@@ -240,7 +240,7 @@ theorem em_charge_berry_from_sector_orders :
   rw [em_configuration_count_eq.1]
   norm_cast
 
-/-- MDL-minimal EM phase witness forced by Berry connection normalization (Rank 99-T1). -/
+/-- MDL-minimal EM phase witness forced by Berry connection normalization. -/
 def EmChargeMdlMinimal (e : ℝ) : Sort 0 :=
   0 < e ∧ e = 2 * Real.pi / emConfigurationCount
 
@@ -544,13 +544,14 @@ def EmChargeMdlMinimalUnique (e : ℝ) : Sort 0 :=
 theorem em_charge_mdl_minimal_unique (e : ℝ) : EmChargeMdlMinimalUnique e :=
   em_charge_mdl_minimal_globally_unique e
 
-/-- **Target lemma (T98-5-αEM, not proved):** emergent/lattice-corrected fine-structure
-    constant matches experiment after Rank 99 normalization. -/
+/-- **Target lemma (not proved):** emergent/lattice-corrected fine-structure
+    constant matches experiment after the SU(2)_L charge-assignment normalization. -/
 def AlphaEmPhysicalMatch (α pred : ℝ) : Sort 0 :=
   0 < α ∧ 0 < pred ∧
     |pred - α| / α < (1 : ℝ) / 100
 
-/-- Record of what T98-5-αEM must close (dependency-gated on Rank 99). -/
+/-- Record of what the α_EM physical match must close (dependency-gated on the
+    charge-assignment normalization). -/
 structure AlphaEmDerivationGap where
   tree_level : alphaEmTreeLevel = Real.pi / emChargeDenominator
   configs : emConfigurationCount = z3ColorOrder * z7OrbitPeriod
@@ -560,12 +561,12 @@ theorem alpha_em_derivation_gap_record :
   ⟨⟨alpha_em_tree_level_eq.1, em_configuration_count_eq.1⟩, trivial⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §5b  Substrate-field uniqueness (T98-5-αEM-SUBSTRATE-UNIQUE / R-CC4)
+-- §5b  Substrate-field uniqueness
 -- ════════════════════════════════════════════════════════════════
 
 /-! ### Substrate-field uniqueness for the composability bridge
 
-Resolves the R-CC4 residual sub-question from the T98-5-αEM composability
+Resolves the residual substrate-uniqueness sub-question from the α_EM composability
 audit (`000_INF_CM_ALPHA_CLOSURE_AUDIT.md` §6.3 ADV-3 / §8 CC-4):
 
 > Is the GTE substrate a single CRT-combined `Z_{N_FULL}`-symmetric field,
@@ -651,7 +652,7 @@ theorem substrate_field_unique_provisional :
   ⟨substrateFieldUniqueWitness⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §5c  Strict substrate uniqueness (T98-5-αEM-LEAN-STRICT-UNIQUE)
+-- §5c  Strict substrate uniqueness
 -- ════════════════════════════════════════════════════════════════
 
 /-! ### Competitor hypothesis enumeration + discriminating tests
@@ -854,7 +855,7 @@ def substrate_field_unique_strict_certified : SubstrateFieldUniqueStrictCertifie
   h_d_fails := by decide
 
 -- ════════════════════════════════════════════════════════════════
--- §5d  Kink species count → Wilsonian log lever (T98-5-αEM-B3-LEAN)
+-- §5d  Kink species count → Wilsonian log lever
 -- ════════════════════════════════════════════════════════════════
 
 /-! ### B-3 structural scale identification (non-circular)
@@ -931,7 +932,7 @@ theorem em_correction_route_b_eq :
   rw [wilsonian_scale_ratio_eq_z7.1]
 
 -- ════════════════════════════════════════════════════════════════
--- §5e  α_EM physical match (T98-5-αEM — cascade Route A exact)
+-- §5e  α_EM physical match (cascade Route A exact)
 -- ════════════════════════════════════════════════════════════════
 
 /-! ### Composability bridge: α_tree × C(M) = α_GTE
@@ -1001,7 +1002,7 @@ theorem alpha_em_physical_match_cascade :
   · rw [hprod]
     simp [alphaEmGte, abs_zero]
 
-/-- Certified packaging of T98-5-αEM cascade closure (Route A, CatAL exact). -/
+/-- Certified packaging of the α_EM cascade closure (Route A, CatAL exact). -/
 structure AlphaEmPhysicalMatchCascadeCertified where
   tree_level : alphaEmTreeLevel = Real.pi / emChargeDenominator
   correction : emCorrectionCascade = (441 : ℝ) / (137 * Real.pi)
@@ -1023,7 +1024,7 @@ def alpha_em_route_b_interval_match_open : Prop :=
   ¬ AlphaEmPhysicalMatch alphaEmGte (alphaEmTreeLevel * emCorrectionRouteB)
 
 -- ════════════════════════════════════════════════════════════════
--- §5f  Route B interval match (T98-5-αEM-LEAN-ROUTEB — R-1 closure)
+-- §5f  Route B interval match
 -- ════════════════════════════════════════════════════════════════
 
 /-! ### Route B interval match closure
@@ -1188,7 +1189,7 @@ def alpha_em_physical_match_route_b_certified : AlphaEmPhysicalMatchRouteBCertif
   kink_lever := kink_species_count_to_log_lever
 
 -- ════════════════════════════════════════════════════════════════
--- §5g  Prime-pair topological forcing (T98-5-αEM-LEAN-PRIMEFORCING — R-2 closure)
+-- §5g  Prime-pair topological forcing
 -- ════════════════════════════════════════════════════════════════
 
 /-! ### Topological forcing of (N₇, N₃) = (7, 3)
@@ -1268,7 +1269,7 @@ theorem prime_pair_seven_three_topologically_forced : PrimePairForcingCertified 
   color_beats_z2 := UgpLean.Universality.MDLDerivability.mdl_z7z3_beats_z7z2_certified
 
 -- ════════════════════════════════════════════════════════════════
--- §5h  MDL T1 bit-cost Lean lemma (T98-5-αEM-MDL-T1-LEAN — R-3 closure)
+-- §5h  MDL T1 bit-cost Lean lemma
 -- ════════════════════════════════════════════════════════════════
 
 /-! ### MDL T1 bit-cost discrimination among substrate hypotheses
@@ -1404,7 +1405,7 @@ def substrate_mdl_t1_certified : SubstrateMdlT1Certified where
   h_d_decomp := substrate_mdl_bit_cost_h_d_decomp
 
 -- ═══════════════════════════════════════════════════════════════════════
--- §5i  F_21 = Z₇ ⋊ Z₃ Frobenius Substrate Identification (Rank 112-FROBENIUS)
+-- §5i  F_21 = Z₇ ⋊ Z₃ Frobenius Substrate Identification
 -- ═══════════════════════════════════════════════════════════════════════
 -- Certifies the semidirect-product re-identification of the Φ_MDL substrate
 -- as F_21 = Z₇ ⋊ Z₃, the unique non-abelian group of order 21 = 3·7,
@@ -1546,7 +1547,7 @@ theorem frobenius_adjoint_8_branching : 1 + 1 + 3 + 3 = (8 : ℕ) := by norm_num
 theorem frobenius_composite_state_count : 7 * 3 = (21 : ℕ) := by norm_num
 
 /-- CatAL anchor invariance summary: packages the three key facts needed to verify
-    that F_21 re-identification leaves the T98-5-αEM derivation intact.
+    that F_21 re-identification leaves the α_EM derivation intact.
     The α_EM derivation uses only F_21^ab = Z₃ (not the full group structure),
     so the direct→semidirect re-identification is transparent to it. -/
 structure FrobeniusCatALAnchorInvariance where
@@ -1566,7 +1567,7 @@ def frobenius_catAL_anchor_invariance : FrobeniusCatALAnchorInvariance where
   det_unity            := by decide
 
 -- ─────────────────────────────────────────────────────────────────────────
--- §5j  A′_μ Second Cartan Coupling Equality (Rank 118-APRIME)
+-- §5j  A′_μ Second Cartan Coupling Equality
 -- ─────────────────────────────────────────────────────────────────────────
 -- Certifies the minimal extension of Φ_MDL by a second Cartan gauge field.
 --
@@ -1608,7 +1609,7 @@ theorem frobenius_cartan_rank_two :
     (2 : ℕ) = 2 := rfl
 
 -- ─────────────────────────────────────────────────────────────────────────
--- §5k  F_21 θ Term Vanishing — Strong CP Resolution (Rank 109-STRONGCP)
+-- §5k  F_21 θ Term Vanishing — Strong CP Resolution
 -- ─────────────────────────────────────────────────────────────────────────
 -- Certifies that the F_21 gauge sector has no topological θ term and that
 -- the effective θ_QCD = 0 is forced by the F_21 ⊂ SU(3) group structure.
@@ -1688,7 +1689,7 @@ theorem f21_theta_term_vanishes :
   exact ⟨by decide, by decide, by norm_num, by decide, by decide⟩
 
 -- ─────────────────────────────────────────────────────────────────────────
--- §6  F_21 Substrate One-Loop β Coefficient (Rank 117-AFRGCHECK)
+-- §6  F_21 Substrate One-Loop β Coefficient
 -- ─────────────────────────────────────────────────────────────────────────
 -- Certifies the arithmetic skeleton of the QCD one-loop β function
 -- derived from the F_21 = Z₇ ⋊ Z₃ substrate representation theory.
@@ -1731,7 +1732,7 @@ theorem f21_substrate_asymptotic_freedom :
     0 < (11 * Nc - 2 * Nf) / 3 := by decide
 
 -- ─────────────────────────────────────────────────────────────────────────
--- §7  F_21 Substrate Two-Loop β Coefficient b₁ (Rank 119-TWOLOOP)
+-- §7  F_21 Substrate Two-Loop β Coefficient b₁
 -- ─────────────────────────────────────────────────────────────────────────
 -- Certifies the two-loop β coefficient for F_21 → SU(3) gauge theory.
 --
@@ -1781,7 +1782,7 @@ theorem f21_substrate_beta_both_forced :
     (34 * Nc ^ 2 - (13 * Nc ^ 2 - 3) * (Nf / Nc)) / 3 = 26 := by decide
 
 -- ─────────────────────────────────────────────────────────────────────────
--- §5l  Hadron Multiplet Structure from GTE Kink Composites (Rank 106-HADMULT)
+-- §5l  Hadron Multiplet Structure from GTE Kink Composites
 -- ─────────────────────────────────────────────────────────────────────────
 -- Certifies Clebsch–Gordan dimension checks, colour neutrality, quark/baryon
 -- charges, and the Gell-Mann–Okubo formula in the equal-mass limit.
@@ -1831,7 +1832,7 @@ theorem delta_pp_charge : (2 : ℚ) / 3 + 2 / 3 + 2 / 3 = 2 := by norm_num
 theorem gmo_equal_mass_limit : 2 * ((3 : ℕ) + 3) = 3 * 3 + 3 := by norm_num
 
 -- ─────────────────────────────────────────────────────────────────────────
--- §5m  F_21 Non-Abelian Berry Holonomy Structure (Rank 121-BERRY21)
+-- §5m  F_21 Non-Abelian Berry Holonomy Structure
 -- ─────────────────────────────────────────────────────────────────────────
 -- Confirms Case A: F_21 semidirect product is non-trivial, so ρ(a) and ρ(b)
 -- do not commute; the SU(3) Berry holonomy activates all 8 adjoint generators.
@@ -1843,7 +1844,7 @@ theorem frobenius_holonomy_nonabelian : (2 : ZMod 7) ≠ 1 := by decide
 theorem frobenius_berry_holonomy_is_su3 : (1 : ℕ) + 1 + 3 + 3 = 8 := by norm_num
 
 -- ─────────────────────────────────────────────────────────────────────────
--- §5n  Fradkin–Shenker Conditions for Z₃-Gauged Φ_MDL (Rank 107-HIGGTEN)
+-- §5n  Fradkin–Shenker Conditions for Z₃-Gauged Φ_MDL
 -- ─────────────────────────────────────────────────────────────────────────
 -- All three Fradkin–Shenker conditions hold: matter in the Z₃ fundamental,
 -- bounded cosine potentials, compact Z₃ gauge group. Higgs and confined phases
@@ -1866,11 +1867,10 @@ theorem fradkin_shenker_condition3 : Fintype.card (ZMod 3) = 3 := by decide
 theorem fradkin_shenker_applies_to_phimdl : 3 = 3 ∧ True ∧ 3 = 3 := by simp
 
 -- ─────────────────────────────────────────────────────────────────────────
--- §5o  JP = 1/2 for GTE Kinks via [D]/MDL Selection (Rank 125-JPSPIN)
+-- §5o  JP = 1/2 for GTE Kinks via [D]/MDL Selection
 -- ─────────────────────────────────────────────────────────────────────────
 -- JP = 1/2 for GTE kinks via [D]/MDL selection
--- Rank 125-JPSPIN (CatAL, 2026-05-23)
--- Source: lab notes 308_LAB_JPSPIN_ROUND01.md
+-- (CatAL)
 
 -- Step 1: Bounded Fock space dimension for F_21 kinks
 -- The F_21 3-irrep has dimension 3 (R, G, B colour states)
@@ -1950,7 +1950,7 @@ theorem gluon_sector_coupling_nontrivial : 0 < villainBetaColor := by
   unfold villainBetaColor; norm_num
 
 -- ─────────────────────────────────────────────────────────────────────────
--- §5p  V_coupling Uniqueness — Rank 136-VCOUP (CatAL, 2026-05-24)
+-- §5p  V_coupling Uniqueness (CatAL)
 -- ─────────────────────────────────────────────────────────────────────────
 -- Claim: V_coupling = ε|φ|²(D_μχ)² is the UNIQUE dimension-4 gauge-invariant
 -- Lorentz-scalar operator coupling the Z₇ field φ and Z₃-gauged field χ
@@ -1963,7 +1963,6 @@ theorem gluon_sector_coupling_nontrivial : 0 < villainBetaColor := by
 --   D_μχ = ∂_μχ − A_μ  (gauge-covariant derivative)
 --
 -- Z₃ gauge transformation: χ → χ + ε(x), A_μ → A_μ + ∂_με(x)
--- Lab notes: 321_LAB_VCOUP_UNIQUENESS.md
 
 /-- D_μχ = ∂_μχ − A_μ is invariant under Z₃ gauge transformation
     χ → χ + ε, A_μ → A_μ + ∂_με.
@@ -2060,9 +2059,9 @@ theorem rank136_vcoup_uniqueness :
   · exact ⟨0, 1, by norm_num⟩
 
 -- ─────────────────────────────────────────────────────────────────────────
--- §5q  F_21 Bilinear Coupling Constant ε = N₇/N₃² (Rank 137-EPSDER, CatAL)
+-- §5q  F_21 Bilinear Coupling Constant ε = N₇/N₃² (CatAL)
 -- ─────────────────────────────────────────────────────────────────────────
--- From Rank 137-EPSDER (commit 334649fd):
+-- Derivation:
 --   F_21 3-irrep: ρ(a) = diag(ω, ω², ω⁴), ρ(b) = cyclic permutation (Frobenius)
 --   ‖[ρ(a),ρ(b)]‖²_F = N₇ = 7  (from Σ cos(2πk/7) = −1/2)
 --   ‖ρ(a)‖²_F = ‖ρ(b)‖²_F = N₃ = 3
@@ -2120,11 +2119,11 @@ theorem epsilon_coupling_f21 :
   unfold gteCouplingEpsilon f21CommutatorNormSq f21IrrepNormSq z7OrbitPeriod z3ColorOrder
   norm_num
 
-/-- BPS-allowed coupling range lower bound (N₇−N₃)/N₃² = 4/9 (Rank 97-COUPLEDKINK). -/
+/-- BPS-allowed coupling range lower bound (N₇−N₃)/N₃² = 4/9. -/
 def bpsCouplingLower : ℚ :=
   ((z7OrbitPeriod - z3ColorOrder) : ℚ) / (z3ColorOrder * z3ColorOrder)
 
-/-- BPS-allowed coupling range upper bound 4/5 = 0.800 (Rank 97-COUPLEDKINK). -/
+/-- BPS-allowed coupling range upper bound 4/5 = 0.800. -/
 def bpsCouplingUpper : ℚ := 4 / 5
 
 theorem bps_coupling_bounds_eq :
@@ -2132,7 +2131,7 @@ theorem bps_coupling_bounds_eq :
   unfold bpsCouplingLower bpsCouplingUpper z7OrbitPeriod z3ColorOrder
   norm_num
 
-/-- ε = 7/9 lies in the BPS-allowed range [4/9, 4/5] (Rank 97-COUPLEDKINK). -/
+/-- ε = 7/9 lies in the BPS-allowed range [4/9, 4/5]. -/
 theorem epsilon_in_bps_range :
     bpsCouplingLower < gteCouplingEpsilon ∧ gteCouplingEpsilon < bpsCouplingUpper := by
   unfold bpsCouplingLower bpsCouplingUpper gteCouplingEpsilon
@@ -2153,7 +2152,7 @@ theorem f21_bilinear_coupling_selects_squared_ratio :
 /-- The GTE coupling constant is uniquely determined as ε = N₇/N₃² = 7/9.
     N₇ = 7 from F_21 order-21 Z₇ component; N₃ = 3 from F_21^ab = Z₃ abelianization.
     ε lies in the BPS-allowed range from Rank 97 and matches the bilinear structure
-    of V_coupling certified in Rank 136-VCOUP. -/
+    of V_coupling certified above. -/
 theorem rank137_eps_is_seven_ninths :
     gteCouplingEpsilon = 7 / 9 ∧
     (0 : ℚ) < gteCouplingEpsilon ∧ gteCouplingEpsilon < 1 ∧
@@ -2164,7 +2163,7 @@ theorem rank137_eps_is_seven_ninths :
     f21CommutatorNormSq f21IrrepNormSq z7OrbitPeriod z3ColorOrder
   norm_num
 
-/-- Certified packaging of Rank 137-EPSDER F_21 coupling constant closure. -/
+/-- Certified packaging of the F_21 coupling constant closure. -/
 structure F21CouplingConstantCertified where
   commutator_norm_sq : (f21CommutatorNormSq : ℚ) = 7
   irrep_norm_sq : (f21IrrepNormSq : ℚ) = 3
@@ -2180,7 +2179,7 @@ def f21_coupling_constant_certified : F21CouplingConstantCertified where
   bilinear_structure := epsilon_coupling_f21.1
 
 -- ─────────────────────────────────────────────────────────────────────────
--- §5r  Vector Meson Nonet JP=1⁻ — Rank 126-VECMESON (CatAL, 2026-05-27)
+-- §5r  Vector Meson Nonet JP=1⁻ (CatAL)
 -- ─────────────────────────────────────────────────────────────────────────
 -- Certifies the group-theoretic mechanism: F_21 Berry hyperfine splitting
 -- distinguishes JP=1⁻ vector mesons from JP=0⁻ pseudoscalar mesons.
@@ -2236,7 +2235,7 @@ theorem vector_meson_adjoint_split :
 -- structurally distinct from the pseudoscalar nonet by the unit spin-triplet gap,
 -- with the Berry off-diagonal coupling partition summing to 1.
 -- Packages Steps 1–7 into a single certified closure.
-/-- Vector meson nonet JP=1⁻ structural certification (Rank 126-VECMESON):
+/-- Vector meson nonet JP=1⁻ structural certification:
     9 states, unit spin-triplet gap, complete Berry coupling partition,
     and non-zero spectroscopic distinction from the pseudoscalar nonet. -/
 theorem vector_meson_nonet_jp1 :
@@ -2247,7 +2246,7 @@ theorem vector_meson_nonet_jp1 :
   exact ⟨by norm_num, by norm_num, by norm_num, by norm_num⟩
 
 -- ─────────────────────────────────────────────────────────────────────────
--- §5s  RG vacuum-selection arithmetic (LT-088-34..36)
+-- §5s  RG vacuum-selection arithmetic
 -- ─────────────────────────────────────────────────────────────────────────
 
 /-- PDG-matched conservative `e²` anchor at Λ_GTE: `188/50 = 3.76`. -/

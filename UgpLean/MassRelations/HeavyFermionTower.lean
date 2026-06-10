@@ -25,7 +25,7 @@ This action is the negative of the FN-doubled prediction, with charges
 ## What this module proves
 
 The heavy-fermion-tower instanton action, applied to log-Yukawa-ratio,
-gives **identical** predictions to the FN-doubled model from .
+gives **identical** predictions to the FN-doubled model.
 
 This is the EFT-DUALITY between the perturbative-FN and non-perturbative-
 tower formulations: they are TWO FORMULATIONS OF THE SAME UV PHYSICS, not

@@ -7,7 +7,7 @@ import Mathlib.Analysis.Real.Pi.Bounds
 /-!
 # UgpLean.Framework.GTEFinalCoalgebra
 
-**Stages 5–7 of Rank 282-C1F (C1 Final Coalgebra).**
+**Concluding stages of the C1 Final Coalgebra construction.**
 
 Derives `IsTerminal GTEPSCSubstrate` in the PSCSys thin category, completing the
 proof that GTE is the final F_PSC coalgebra.
@@ -62,7 +62,7 @@ holds by `rfl` since `FPSC = 𝟭 PSCSys` (identity functor).
 
 **Overall C1 status**: **CatAL** — GTE is the final F_PSC coalgebra, zero sorry, zero axiom.
 
-**FCA lattice-refinement corollary (Rank 287-FCA-C1LEAN):** C1 uniqueness of f_MDL
+**FCA lattice-refinement corollary:** C1 uniqueness of f_MDL
 (`c1_final_coalgebra_derived`) selects the PSC-optimal CA; its continuum limit is the
 Φ_MDL Klein–Gordon field (CatAD: 68-KGGTE, 073-LOR4). Fully computationally active (FCA)
 architecture follows from Φ_MDL lattice refinement at spacing a = 1/M: the Lorentz
@@ -281,7 +281,7 @@ theorem c1_lambek_isomorphism :
     (FPSC GTECompatibleSpace).obj GTEPSCSubstrate = GTEPSCSubstrate := rfl
 
 -- ────────────────────────────────────────────────────────────────────────────
--- §5  FCA lattice-refinement corollary (Rank 287-FCA-C1LEAN)
+-- §5  FCA lattice-refinement corollary
 -- ────────────────────────────────────────────────────────────────────────────
 
 /-- **phimdl_lorentz_correction** — Lorentz residual at Φ_MDL lattice spacing a = 1/M.

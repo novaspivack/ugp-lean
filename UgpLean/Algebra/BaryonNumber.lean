@@ -8,7 +8,7 @@
 -- Conservation: ∂_μ J^μ_B = 0 via Bianchi identity + quark-sector closure.
 --
 -- Derivation chain:
--- (1) Three-tape CMCA → N_tapes = 3 spatial dimensions [CatA, EPIC_079]
+-- (1) Three-tape CMCA → N_tapes = 3 spatial dimensions [CatA]
 -- (2) Color-neutral baryons = Z3-orbit singlets → 3 quark kinks per baryon [CatAL]
 -- (3) B_per_quark = 1/N_tapes = 1/3 [from three-tape architecture]
 -- (4) Quark identification {2,6} = PSC sectors with fractional electric charge [CatAL]

@@ -51,7 +51,7 @@ def lambdaGTEOverMphiTree : ℝ := (8 : ℝ) / 7
 def cKinkS1Tree : ℝ := 8 * log lambdaGTEOverMphiTree
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-43 (i): Cartan charge sum
+-- Cartan charge sum
 -- ─────────────────────────────────────────────────────────────────────────
 
 theorem cartan_ha_weights :
@@ -77,7 +77,7 @@ theorem kink_cartan_charge_trepresentation :
     norm_num, cartan_charge_squared_sum_per_flavor, rfl⟩
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-43 (ii): slope-continuity identity
+-- slope-continuity identity
 -- ─────────────────────────────────────────────────────────────────────────
 
 theorem b_hat_kink_eq_neg_four : bHatKink = -4 := by
@@ -99,7 +99,7 @@ theorem b_hat_continuity_identity :
   · exact b0_eq_z7_order
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-43 (iii): tree S1 rational-log instance
+-- tree S1 rational-log instance
 -- ─────────────────────────────────────────────────────────────────────────
 
 theorem lambda_gte_over_mphi_tree_pos : 0 < lambdaGTEOverMphiTree := by
@@ -119,7 +119,7 @@ theorem c_kink_s1tree_rational_log :
   exact ⟨rfl, rfl⟩
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-43 (iv): sign-positivity inequality
+-- sign-positivity inequality
 -- ─────────────────────────────────────────────────────────────────────────
 
 theorem euler_gamma_pos : 0 < eulerMascheroniConstant :=
@@ -153,7 +153,7 @@ theorem kink_positivity_inequality (m_phi Lambda : ℝ) (hm : 0 < m_phi)
       unfold lambdaGTEOverMphiTree
       ring
 
-/-- Bundle of the four LT-088-43 certificates. -/
+/-- Bundle of the four kink vacuum-polarization certificates. -/
 theorem kink_vacuum_polarization_algebraic_core :
     tKink = 3 ∧
       bHatKink = -4 ∧

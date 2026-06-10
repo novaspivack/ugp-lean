@@ -7,7 +7,7 @@ import Mathlib.Order.Filter.AtTopBot.Field
 import Mathlib.Topology.Instances.Real.Lemmas
 
 /-!
-# UgpLean.Framework.CMCAContinuumLimit — Rank 074-UNIDM3 (CatAL conditional)
+# UgpLean.Framework.CMCAContinuumLimit (CatAL conditional)
 
 Lean certification that the M→∞ continuum limit of the two-layer chiral AFCA
 (CMCA) is the Φ_MDL terminal object of the GTE Level-1 category.

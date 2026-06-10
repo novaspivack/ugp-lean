@@ -14,7 +14,7 @@ The graviton Fock space `H_grav` is constructed by analogy with the kink Fock sp
 The physical Hilbert space:
   `H_phys = H_Φ_MDL ⊗ H_grav`
 
-where `H_Φ_MDL` is the kink Fock space (`FockSpaceKink`, Rank 77-2QUANT, CatAL)
+where `H_Φ_MDL` is the kink Fock space (`FockSpaceKink`, CatAL)
 and `H_grav` is the graviton Fock space defined here.
 
 The coupling constants are determined entirely by the GTE hierarchy formula:

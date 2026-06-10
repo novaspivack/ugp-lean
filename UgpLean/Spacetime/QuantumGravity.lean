@@ -7,7 +7,7 @@ import UgpLean.Spacetime.MassGap
 namespace GTE.Spacetime.QuantumGravity
 
 /-!
-# Quantum Gravity at the Beable Level (Rank 28-QGR)
+# Quantum Gravity at the Beable Level
 
 The GTE framework provides the first beable-level description of quantum gravity:
 a single substrate (3D f_MDL CA) from which both spacetime geometry AND SM particle
@@ -20,19 +20,19 @@ Classical approaches to quantum gravity attempt to quantize general relativity �
 hard open problem with no agreed solution. GTE circumvents this problem entirely:
 the CA substrate already has both sectors built in:
 
-1. **Gravitational geometry** (causal graph curvature, Rank 12-LCG + 7-3DC)
-   - The 3D f_MDL causal graph has spectral dimension dₛ = 4 (CatA, Rank 7-3DC)
+1. **Gravitational geometry** (causal graph curvature)
+   - The 3D f_MDL causal graph has spectral dimension dₛ = 4 (CatA)
    - Ollivier-Ricci curvature is zero in vacuum, positive at matter sites (CatAL,
      `vacuum_ollivier_ricci_flatness` + `gorard_matter_step_kappa_positive`, GUTStructure.lean)
-   - Particles follow geodesics of the causal graph (CatAD, Rank 17-GEO)
+   - Particles follow geodesics of the causal graph (CatAD)
 
 2. **Quantum particle content** (Z₇ orbit states, CatAL)
    - SM generations emerge from Z₇ orbit structure (gen₁/gen₂/gen₃ = {1,2,4}, {3,5,6}, {0})
-   - Color confinement is PSC-forced (CatAL, Rank 25-CCF, `no_psc_admissible_single_quark`)
-   - Mass gap exists at beable level (CatAL, Rank 42-MGP, `gte_mass_formula_physical`, zero sorry)
+   - Color confinement is PSC-forced (CatAL)
+   - Mass gap exists at beable level (CatAL)
 
 3. **Quantum dynamics** (Hilbert space from P37, Algebraic Lifting Theorem)
-   - The Lifting Theorem (CatAL, Rank 15-ALT) promotes all beable results to
+   - The Lifting Theorem (CatAL) promotes all beable results to
      [D]-weighted physical observables
    - No additional quantization procedure is needed: the CA orbit states ARE the
      quantum states; [D]-weighting IS the measure
@@ -48,21 +48,21 @@ causal graph. There is no classical/quantum divide at the substrate level.
 
 | Component                          | Status | Evidence                                   |
 |------------------------------------|--------|--------------------------------------------|
-| 3+1D spacetime geometry (dₛ = 4)  | CatA   | Rank 7-3DC numerical; Rank 13-LSD Lean     |
+| 3+1D spacetime geometry (dₛ = 4)  | CatA   | numerical + Lean spectral structure        |
 | SM particle orbit structure        | CatAL  | GUTStructure.lean, Z₇ orbit theorems       |
-| Color confinement                  | CatAL  | `no_psc_admissible_single_quark` (Rank 25) |
+| Color confinement                  | CatAL  | `no_psc_admissible_single_quark` |
 | Ollivier-Ricci curvature (κ_EE=0) | CatAL  | `vacuum_ollivier_ricci_flatness`           |
 | Gorard matter curvature (κ_SD>0)  | CatAL  | `gorard_matter_step_kappa_positive`        |
-| D2 orbit closure (1 step)         | CatAL  | `d2_orbit_closed_under_step` (Rank 17-GEO) |
-| D2 orbit closure (k steps)        | CatAL  | `d2_orbit_closed_iter` (Rank 17-GEO)       |
-| D2 geodesic step (causal adj.)    | CatAL  | `d2_geodesic_step` (Rank 17-GEO)           |
-| Beable spatial propagation        | CatAL  | `beable_spatial_propagation` (Rank 17-GEO) |
-| Causal geodesic sequence          | CatAL  | `causal_sequence_exists` (Rank 17-GEO)     |
+| D2 orbit closure (1 step)         | CatAL  | `d2_orbit_closed_under_step` |
+| D2 orbit closure (k steps)        | CatAL  | `d2_orbit_closed_iter`       |
+| D2 geodesic step (causal adj.)    | CatAL  | `d2_geodesic_step`           |
+| Beable spatial propagation        | CatAL  | `beable_spatial_propagation` |
+| Causal geodesic sequence          | CatAL  | `causal_sequence_exists`     |
 | P34 point-localization centroid   | CatAL  | `centroid_well_defined` (CentroidMeasure.lean) |
-| Geodesic preferred direction      | CatAL  | `geodesic_preferred_direction` (Rank 17-GEO)   |
+| Geodesic preferred direction      | CatAL  | `geodesic_preferred_direction`   |
 | Full geodesic trajectory (⟨x⟩_D)  | CatAD  | GeodesicTheorem.lean — P34 distributed [D] gap |
-| Mass gap existence                 | CatAL  | MassGap.lean (Rank 42-MGP)                 |
-| Algebraic Lifting Theorem          | CatAL  | LiftingTheorem.lean (Rank 15-ALT)          |
+| Mass gap existence                 | CatAL  | MassGap.lean                 |
+| Algebraic Lifting Theorem          | CatAL  | LiftingTheorem.lean          |
 
 Overall: **CatAD** — all components CatA/CatAL except the full curvature-corrected
 geodesic trajectory (⟨x⟩_D under distributed P34 [D] measure) which is CatAD.
@@ -105,7 +105,7 @@ They aggregate results from across the Spacetime module without repeating proofs
 
 /-- Evidence record: geometry sector (causal graph + curvature). -/
 structure GeometryEvidence where
-  /-- Spectral dimension is 4 (CatA numerical, Rank 7-3DC; CatAL structure Rank 13-LSD). -/
+  /-- Spectral dimension is 4 (CatA numerical; CatAL structure). -/
   spectral_dim_approx_4 : True
   /-- Causal graph is rule-independent: connectivity depends only on lattice, not f_MDL state. -/
   causal_graph_rule_independent : True
@@ -144,7 +144,7 @@ structure ParticleEvidence where
     CatAD remaining gap: curvature-corrected ⟨x⟩_D under distributed orbit-superposition
     P34 [D] measure; full Einstein-equation derivation from causal graph (OQ-GR1 open;
     τ_c back-reaction tested in three rounds — all NEGATIVE; Ollivier–Ricci prescription
-    deferred to EPIC_073 Cluster J). -/
+    open). -/
 structure DynamicsEvidence where
   /-- [D]-weighted centroid ⟨x⟩_D follows geodesics (CatAD overall; D2 sub-components CatAL).
       Vacuum timelike trajectory + point-localization centroid: CatAL (`geodesic_preferred_direction`).
@@ -192,11 +192,11 @@ MassGap is CatAL (zero sorry, zero axioms) and all other cited components are Ca
     emerge from the single rule f_MDL on a single 3D lattice.
 
     Evidence:
-    (a) Geometry: dₛ = 4.15 ≈ 4 (Rank 7-3DC, CatA); causal graph rule-independent
-        (Rank 12-LCG, zero sorry); vacuum κ_EE = 0 and matter κ_SD > 0 (CatAL).
+    (a) Geometry: dₛ = 4.15 ≈ 4 (CatA); causal graph rule-independent
+        (zero sorry); vacuum κ_EE = 0 and matter κ_SD > 0 (CatAL).
     (b) Particles: Z₇ orbit structure → SM generations (CatAL); color confinement
-        PSC-forced (Rank 25-CCF, CatAL); mass gap (Rank 42-MGP, CatAL, `gte_mass_formula_physical`).
-    (c) Dynamics: [D]-weighted observables follow causal-graph geodesics (Rank 17-GEO,
+        PSC-forced (CatAL); mass gap (CatAL).
+    (c) Dynamics: [D]-weighted observables follow causal-graph geodesics (
         CatAD, D2 argument); D2 orbit closure and causal-step sub-theorems are CatAL
         (`d2_orbit_closed_under_step`, `d2_geodesic_step`); Lifting Theorem promotes
         beable-level results to physics.
@@ -232,7 +232,7 @@ theorem matter_geometry_from_same_rule :
     Standard QFT quantizes a classical field theory (canonical quantization or path
     integral). GTE does not perform this step: the CA orbit states are the quantum
     states from the start. The [D] measure (P37) is the physical probability measure
-    over orbit-state histories. The Algebraic Lifting Theorem (Rank 15-ALT, CatAL)
+    over orbit-state histories. The Algebraic Lifting Theorem (CatAL)
     shows that algebraic beable results already carry physical meaning.
 
     The Hilbert space is the ℓ²-span of Z₇^5 orbit states weighted by [D]; no
@@ -254,7 +254,7 @@ theorem gte_already_quantum :
 
     Follow: `d2_orbit_closed_under_step` (CatAL) + `d2_geodesic_step` (CatAL) —
     D-weighted beables stay physical under f_MDL and always have a causally adjacent
-    successor node.  `geodesic_theorem` (CatAD, Rank 17-GEO) — the full formal claim
+    successor node.  `geodesic_theorem` (CatAD) — the full formal claim
     that `⟨x⟩_D` traces the geodesic is CatAD pending P34 [D] measure.
 
     This is the beable-level analog of the Einstein equation (matter curves spacetime)
@@ -273,25 +273,24 @@ theorem particles_source_and_follow_curvature :
     1. Color confinement (Clay #7 informal analog):
        `no_psc_admissible_single_quark` — proved by native_decide over all 16807 = 7^5
        Z₇^5 states; single-quark states are PSC-inadmissible. CatAL, zero axioms.
-       Rank 25-CCF, commit 24e6042.
 
     2. Yang-Mills mass gap (Clay #7):
        `gte_mass_gap` — positive mass of every physical excitation; **CatAL** (zero sorry,
        zero axioms; trivial abstract-unit witness Δ = 1; physical lower bound Δ ≥ 1.8 MeV
        certified by `gte_mass_formula_physical`, PDG conservative m_u lower bound,
-       zero axioms, `MassGap.lean`). Rank 42-MGP.
+       zero axioms, `MassGap.lean`).
 
     3. Yang-Mills existence (Clay #7 — mathematical):
-       Requires a continuum limit of 3D f_MDL (OQ-CL1). Currently open in GTE.
+       Requires a continuum limit of 3D f_MDL. Currently open in GTE.
        The beable-level theory exists; the limit to a smooth Riemannian manifold
        satisfying the Yang-Mills axioms is not yet established.
 
     Status: confinement CatAL; mass gap CatAL (abstract Δ = 1 and physical Δ ≥ 1.8 MeV
-    both certified, zero axioms); YM existence open (OQ-CL1). -/
+    both certified, zero axioms); YM existence open. -/
 theorem gte_clay_millennium_status :
     -- Color confinement: CatAL (native_decide, zero axioms).
     -- Mass gap: CatAL (zero sorry, zero axioms; abstract Δ = 1; physical Δ ≥ 1.8 MeV, `gte_mass_formula_physical`).
-    -- Yang-Mills existence: open (OQ-CL1 — continuum limit unresolved).
+    -- Yang-Mills existence: open.
     True := trivial
 
 /-- **Unification is not bolt-on (CatA)**: The three sectors (geometry, particles,
@@ -299,7 +298,7 @@ theorem gte_clay_millennium_status :
     single rule f_MDL:
 
     - Geometry emerges because the causal graph of f_MDL (any state sequence) is
-      rule-independent (Rank 12-LCG, `causal_graph_rule_independent`, zero sorry).
+      rule-independent (`causal_graph_rule_independent`, zero sorry).
     - Particles emerge because f_MDL is the unique universal CA at the PSC optimum
       (MDL principle, P28) and its orbit structure is Z₇ (CatAL).
     - Dynamics emerges because D2 (PSC-invariance of [D]) forces geodesic paths
@@ -325,7 +324,7 @@ paper needs a zero-sorry pointer beyond the CatAD aggregation theorems above.
 
 variable (L T : ℕ)
 
-/-- Causal graph rule-independence (CatAL, Rank 12-LCG): connectivity depends on
+/-- Causal graph rule-independence (CatAL): connectivity depends on
     lattice coordinates only, not on f_MDL state or update rule. -/
 theorem certified_causal_graph_rule_independent
     (state1 state2 : CausalNode L T → Fin 2)
@@ -334,12 +333,12 @@ theorem certified_causal_graph_rule_independent
     CausalAdj L T n1 n2 ↔ CausalAdj L T n1 n2 :=
   GTE.Spacetime.causal_graph_rule_independent L T state1 state2 rule1 rule2 n1 n2
 
-/-- Color confinement at beable level (CatAL, Rank 25-CCF): no PSC-admissible single quark. -/
+/-- Color confinement at beable level (CatAL): no PSC-admissible single quark. -/
 theorem certified_no_isolated_quark :
     ∀ b : Fin 5 → Fin 7, PSCAdmissible b → ¬ SingleQuarkBeable b :=
   no_psc_admissible_single_quark
 
-/-- Algebraic lifting bridge (CatAL, Rank 15-ALT): algebraic PSC proofs lift to DWeight > 0 beables. -/
+/-- Algebraic lifting bridge (CatAL): algebraic PSC proofs lift to DWeight > 0 beables. -/
 theorem certified_algebraic_lifting
     {P : (Fin 5 → Fin 7) → Prop}
     (hP : ∀ b : Fin 5 → Fin 7, PSCAdmissible b → P b)
@@ -347,7 +346,7 @@ theorem certified_algebraic_lifting
     P b :=
   algebraic_lifting_theorem P hP b hw
 
-/-- Three physical generations at Compton scale (CatAL, Rank 21-3GP). -/
+/-- Three physical generations at Compton scale (CatAL). -/
 theorem certified_three_generations_physical :
     ∃ g1 g2 g3 : Fin 5 → Fin 7,
         g1 ≠ g2 ∧ g2 ≠ g3 ∧ g1 ≠ g3 ∧
@@ -355,13 +354,13 @@ theorem certified_three_generations_physical :
         DWeight g1 > 0 ∧ DWeight g2 > 0 ∧ DWeight g3 > 0 :=
   three_generations_physical
 
-/-- Beable-level mass gap (CatAL, Rank 42-MGP). -/
+/-- Beable-level mass gap (CatAL). -/
 theorem certified_mass_gap_positive :
     ∃ Δ : ℚ, Δ > 0 ∧
     ∀ b : Fin 5 → Fin 7, DWeight b > 0 → b ≠ fmdl_vacuum5 → ∃ mass : ℚ, mass ≥ Δ :=
   GTE.Spacetime.MassGap.gte_mass_gap
 
-/-- D2 orbit closure (CatAL, Rank 17-GEO): the [D]-weighted ensemble is closed under
+/-- D2 orbit closure (CatAL): the [D]-weighted ensemble is closed under
     one f_MDL step.  Every physical beable has a physical successor.
 
     This is a genuinely proved (non-trivial) component of the D2 geodesic argument:
@@ -371,7 +370,7 @@ theorem certified_d2_orbit_closure
     DWeight (fmdl_step5 b) > 0 :=
   GTE.Spacetime.Geodesic.d2_orbit_closed_under_step b h
 
-/-- D2 geodesic step (CatAL, Rank 17-GEO): for any non-terminal causal node `n`
+/-- D2 geodesic step (CatAL): for any non-terminal causal node `n`
     and physical beable `b`, there exists a causally adjacent successor `n'` and
     the beable's f_MDL successor remains physical.
 
@@ -383,7 +382,7 @@ theorem certified_d2_geodesic_step
     ∃ n' : CausalNode L T, CausalAdj L T n n' ∧ DWeight (fmdl_step5 b) > 0 :=
   GTE.Spacetime.Geodesic.d2_geodesic_step L T n b h_w h_t
 
-/-- Iterative D2 orbit closure (CatAL, Rank 17-GEO, Pass 2): [D]-weight-positive is
+/-- Iterative D2 orbit closure (CatAL): [D]-weight-positive is
     preserved under arbitrarily many f_MDL steps.  Every physical beable stays physical
     at all time scales — no finite CA evolution can expel a beable from the physical sector.
 
@@ -393,7 +392,7 @@ theorem certified_d2_orbit_closed_iter
     DWeight (fmdl_step5^[k] b) > 0 :=
   GTE.Spacetime.Geodesic.d2_orbit_closed_iter b h k
 
-/-- Causal geodesic sequence (CatAL, Rank 17-GEO, Pass 2): for any physical beable
+/-- Causal geodesic sequence (CatAL): for any physical beable
     at any causal node, an infinite timelike sequence exists along which the beable
     remains physical and spatial position is fixed at every step.
 
@@ -409,13 +408,13 @@ theorem certified_causal_sequence_exists
           (seq k).2 = n.2 :=
   GTE.Spacetime.Geodesic.causal_sequence_exists L T n b h_w
 
-/-- Geodesic preferred direction (CatAL, Rank 17-GEO, Pass 3): a timelike causal sequence
+/-- Geodesic preferred direction (CatAL): a timelike causal sequence
     exists such that at every step the beable is physical, the point-localization centroid
     is well-defined, and the spatial centroid is invariant.
 
     This is the P34 point-localization version of the discrete geodesic equation in flat
     (vacuum) spacetime.  Curvature-corrected deviation (matter regions, κ > 0) is CatAD
-    pending distributed P34 [D] measure (EPIC_073 Cluster J).
+    pending distributed P34 [D] measure.
 
     Status: CatAL — zero sorry. -/
 theorem certified_geodesic_preferred_direction
@@ -433,12 +432,12 @@ theorem certified_geodesic_preferred_direction
              ((spatialCoords L T (seq k)).2.2 : ℝ)) :=
   GTE.Spacetime.Geodesic.geodesic_preferred_direction L T n b h_w
 
-/-- P34 point-localization centroid (CatAL, Rank 17-GEO, Pass 3): for any physical
+/-- P34 point-localization centroid (CatAL): for any physical
     beable localized at causal node `loc` with `loc` in the support set `S`, the
     [D]-weighted centroid `beableCentroid b loc S` is well-defined (denominator positive).
 
     Base case of the P34 [D] measure formalization.  Upgrade path: replace point
-    localization with distributed orbit-superposition measure (EPIC_073 / P34).
+    localization with distributed orbit-superposition measure.
 
     Status: CatAL — zero sorry. -/
 theorem certified_centroid_well_defined

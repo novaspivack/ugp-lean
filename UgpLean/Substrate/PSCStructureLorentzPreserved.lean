@@ -3,7 +3,7 @@ import UgpLean.Substrate.PSCPreservingTransformation
 import UgpLean.Substrate.LagrangianLorentzScalar
 
 /-!
-# PSC Structure Preserved Under Lorentz Boosts — Rank 070-107 Phase 2 (Lemma 2)
+# PSC Structure Preserved Under Lorentz Boosts
 
 Lemma 2 (partial): Lorentz boosts preserve Layer-I PSC structure on Φ_MDL.
 

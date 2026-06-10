@@ -15,7 +15,7 @@ import UgpLean.Universality.GaugeInvariance
 import UgpLean.Universality.SylowIndexCouplingHierarchy
 
 /-!
-# Z₇ vacuum-sector selection certificates (088-R03 / 088-R06)
+# Z₇ vacuum-sector selection certificates
 
 Certifies the coupling shift-breaking, χ-kinetic inequivalence, wall-bias minimum,
 Z₃-orbit transversal, BPS-window exclusion for periodic competitors, compact-completion
@@ -76,7 +76,7 @@ def scalarCwStep (r : ℝ) : ℝ := 3 / 2 - (2 * log r + 3 / 2) / r ^ 2
 def couplingSeamRatio : ℝ := 1 + 2 * gteEpsilon * (2 * π) ^ 2
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-20: V_coupling breaks the Z₇ shift
+-- V_coupling breaks the Z₇ shift
 -- ─────────────────────────────────────────────────────────────────────────
 
 theorem two_pi_over_seven_ne_zero : (2 : ℝ) * π / 7 ≠ 0 := by
@@ -116,7 +116,7 @@ theorem vcoupling_breaks_z7_shift
   · exact hφdiff hφzero
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-21: χ-kinetic inequivalence across Z₇ vacua
+-- χ-kinetic inequivalence across Z₇ vacua
 -- ─────────────────────────────────────────────────────────────────────────
 
 theorem chiKineticNorm_zero : chiKineticNorm ⟨0, by decide⟩ = 1 := by
@@ -175,7 +175,7 @@ theorem z7_vacua_chi_kinetic_inequivalent :
   exact chiKineticNorm_six_gt_46
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-22: wall-bias minimum unique at k = 0
+-- wall-bias minimum unique at k = 0
 -- ─────────────────────────────────────────────────────────────────────────
 
 theorem vacuum_angle_sq_pos {k : Fin 7} (hk : k ≠ ⟨0, by decide⟩) :
@@ -208,7 +208,7 @@ theorem wall_bias_minimum_unique (epsilon X : ℝ) (heps : 0 < epsilon) (hX : 0 
     exact wall_bias_weight_pos epsilon X heps hX hk
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-23: {0,1,5} is a ⟨×2⟩ orbit transversal in Z₇
+-- {0,1,5} is a ⟨×2⟩ orbit transversal in Z₇
 -- ─────────────────────────────────────────────────────────────────────────
 
 /-- ⟨×2⟩ orbit of a winding label in Z₇. -/
@@ -230,7 +230,7 @@ theorem gs_set_is_z3_orbit_transversal :
   decide
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-25: periodic profile fails the BPS window; φ² profile passes
+-- periodic profile fails the BPS window; φ² profile passes
 -- ─────────────────────────────────────────────────────────────────────────
 
 theorem periodic_profile_effective_coupling_val :
@@ -271,7 +271,7 @@ theorem vcoup_periodic_profile_fails_bps_window :
   exact ⟨periodic_profile_outside_bps_window, phi_sq_inside_bps_window⟩
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-26: compact completion minimum at k = 0
+-- compact completion minimum at k = 0
 -- ─────────────────────────────────────────────────────────────────────────
 
 theorem compact_completion_nonneg (k : Fin 7) : 0 ≤ compactCompletion k := by
@@ -333,7 +333,7 @@ theorem compact_completion_minimum_at_k0 :
   exact compact_completion_eq_zero_iff
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-27: scalar CW step inward
+-- scalar CW step inward
 -- ─────────────────────────────────────────────────────────────────────────
 
 theorem scalarCwStep_one : scalarCwStep 1 = 0 := by
@@ -420,7 +420,7 @@ theorem scalar_cw_step_inward (r : ℝ) (hr : 1 < r) : 0 < scalarCwStep r :=
   scalarCwStep_pos r hr
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-28: seam discontinuity
+-- seam discontinuity
 -- ─────────────────────────────────────────────────────────────────────────
 
 theorem coupling_seam_ratio_gt_56 : (56 : ℝ) < couplingSeamRatio := by
@@ -445,7 +445,7 @@ theorem z7_coupling_seam_discontinuity :
   exact coupling_seam_ratio_gt_56
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-35: boundary-sensitivity coefficient positive
+-- boundary-sensitivity coefficient positive
 -- ─────────────────────────────────────────────────────────────────────────
 
 /-- Villain color coupling `e² = 7/2` from the Sylow hierarchy. -/

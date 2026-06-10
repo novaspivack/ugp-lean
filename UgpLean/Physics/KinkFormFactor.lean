@@ -66,7 +66,7 @@ theorem integral_sech_comp_mul (m : ℝ) (hm : 0 < m) :
           field_simp [hm0]
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-45 (i): Born second moment and classical RMS radius
+-- Born second moment and classical RMS radius
 -- ─────────────────────────────────────────────────────────────────────────
 
 theorem sech_profile_second_moment (m : ℝ) :
@@ -85,7 +85,7 @@ theorem sech_classical_charge_radius (m : ℝ) (hm : m ≠ 0) :
   rw [sech_born_rms_radius_sq m hm, sech_profile_second_moment]
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-45 (ii): topological second moment
+-- topological second moment
 -- ─────────────────────────────────────────────────────────────────────────
 
 theorem sech_topological_second_moment (m : ℝ) :
@@ -98,7 +98,7 @@ theorem sech_topological_rms_radius_sq (m : ℝ) (hm : m ≠ 0) :
   ring
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-45 (iii): top/born width ratio (BA-SHAPE family link)
+-- top/born width ratio (BA-SHAPE family link)
 -- ─────────────────────────────────────────────────────────────────────────
 
 theorem sech_top_born_rms_ratio (m : ℝ) (hm : 0 < m) :
@@ -138,7 +138,7 @@ theorem sech_top_born_moment_ratio (m : ℝ) (hm : m ≠ 0) :
   ring
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-45 (iv): sech autocorrelation shape
+-- sech autocorrelation shape
 -- ─────────────────────────────────────────────────────────────────────────
 
 theorem sech_autocorrelation_ratio (w d : ℝ) :
@@ -149,7 +149,7 @@ theorem sech_autocorrelation_integral_ratio (w d : ℝ) (hw : 0 < w) :
   unfold sechAutocorrIntegral sechAutocorrShape
   field_simp [hw.ne']
 
-/-- Bundle of LT-088-45 certificates. -/
+/-- Bundle of the kink form-factor moment certificates. -/
 theorem sech_form_factor_moment_bundle (m : ℝ) (hm : 0 < m) :
     sechBornSecondMoment m = Real.pi ^ 2 / (12 * m ^ 2) ∧
       sechTopologicalSecondMoment m = Real.pi ^ 2 / (4 * m ^ 2) ∧
@@ -164,7 +164,7 @@ theorem sech_form_factor_moment_bundle (m : ℝ) (hm : 0 < m) :
     rfl
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-46: dissolution Born-floor hard upper bound
+-- dissolution Born-floor hard upper bound
 -- ─────────────────────────────────────────────────────────────────────────
 
 /-- PDG tau mass (MeV) used in the Born-floor chain. -/

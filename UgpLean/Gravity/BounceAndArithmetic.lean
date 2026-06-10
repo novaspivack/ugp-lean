@@ -91,8 +91,8 @@ theorem cpt_and_generation_coprime : Nat.Coprime 2 3 := by decide
 -- V. Master Bundle: Arithmetic Certifications
 -- ============================================================
 
-/-- Master bundle: all arithmetic certifications for EPIC_078. -/
-theorem epic_078_arithmetic_master_bundle :
+/-- Master bundle: all bounce-cosmology arithmetic certifications. -/
+theorem bounce_arithmetic_master_bundle :
     (3 * (1 - (1 : ℝ))) / (3 * (1 - 1) + Real.pi ^ 2 * 1) = 0 ∧
     ({0, 2, 3, 4, 6} : Finset (ZMod 7)).card = 5 ∧
     (5 : ℕ) - 3 + 1 = 3 ∧

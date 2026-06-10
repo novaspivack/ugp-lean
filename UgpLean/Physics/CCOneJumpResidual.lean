@@ -10,7 +10,7 @@ import UgpLean.Gravity.PSCEpochSelection
 import UgpLean.Gravity.TemporalVoxelCC
 
 /-!
-# CC One-Jump Residual — algebraic and computability core (088-R22)
+# CC One-Jump Residual — algebraic and computability core
 
 Certifies the census/bracket arithmetic of the CC One-Jump Residual Theorem,
 the no-computable-modulus barrier for realized-ledger stage approximants (R05
@@ -37,7 +37,7 @@ open NemS.MFRR
 noncomputable section
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-47: census nomenclature + halting-ledger structural core
+-- census nomenclature + halting-ledger structural core
 -- ─────────────────────────────────────────────────────────────────────────
 
 /-- Census-capacity evaluation of the PSC diagonal ledger (upper bracket).
@@ -143,7 +143,7 @@ theorem d_res_census_annotation :
   exact And.intro psc_undecidability_residual_pos omega_census_from_d_res
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-48: no computable convergence modulus (Theorem C pattern)
+-- no computable convergence modulus (Theorem C pattern)
 -- ─────────────────────────────────────────────────────────────────────────
 
 variable {F : NemS.Framework}
@@ -210,7 +210,7 @@ theorem gte_rt_not_computable : ¬ ComputablePred gteASRRT :=
   asr_rt_not_computable (@NemS.MFRR.DiagonalCapable.asr GTEFramework GTEDiagonalCapable)
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-49: bracket strict interiority (census endpoint above holographic floor)
+-- bracket strict interiority (census endpoint above holographic floor)
 -- ─────────────────────────────────────────────────────────────────────────
 
 theorem omega_holo_eq : Omega_holo = 3 * Real.pi / 14 := rfl
@@ -278,7 +278,7 @@ theorem bracket_strict_interiority :
     exact lt_trans hceil omega_census_gt
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-50: σ* falsifiability horizon (numerical certificate)
+-- σ* falsifiability horizon (numerical certificate)
 -- ─────────────────────────────────────────────────────────────────────────
 
 /-- Planck 2018 reported precision on Ω_Λ (base convention). -/
@@ -334,7 +334,7 @@ theorem sigma_star_falsifiability_horizon :
   · exact planck_sigma_over_sigma_star_gt
 
 -- ─────────────────────────────────────────────────────────────────────────
--- LT-088-51 (optional): PR6-U named hypothesis — not derived here
+-- PR6-U named hypothesis — not derived here
 -- ─────────────────────────────────────────────────────────────────────────
 
 /-- **PR6-U** (named hypothesis, BLOCKED): universal-prior weights `2^{-K(n|PSC)}`

@@ -3,7 +3,7 @@ import Mathlib.Data.Finset.Basic
 import Mathlib.Tactic.Ring
 
 /-!
-# SU(3) Gluon Count from Single-Tape Δw=±1 Constraint (EPIC_079)
+# SU(3) Gluon Count from Single-Tape Δw=±1 Constraint
 
 Certifies four CatAL algebraic results for the SU(3) strong-force structure
 in the three-tape CMCA model:

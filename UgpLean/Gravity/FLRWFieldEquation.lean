@@ -5,7 +5,7 @@ import Mathlib.Topology.EMetricSpace.Lipschitz
 import UgpLean.Spacetime.PhiMDLZ7PotentialMDL
 
 /-!
-# Φ_MDL Klein–Gordon equation on an FLRW background — Picard–Lindelöf well-posedness (EPIC_078)
+# Φ_MDL Klein–Gordon equation on an FLRW background — Picard–Lindelöf well-posedness
 
 The homogeneous Φ_MDL field equation on a spatially flat FLRW background reduces to
 
@@ -343,8 +343,8 @@ theorem flrw_phimdl_potential_lipschitz_constant (m : ℝ) (hm : 0 < m) :
       LipschitzWith L (fun φ : ℝ => z7PotentialDerivative m φ) :=
   ⟨potentialLipschitz m hm, rfl, z7_potential_derivative_lipschitz m hm⟩
 
-/-- Master bundle for EPIC_078 board: well-posedness + Lipschitz certificate. -/
-theorem epic_078_flrw_phimdl_well_posed (bg : FLRWBackground) (m : ℝ) (hm : 0 < m)
+/-- Master bundle: well-posedness + Lipschitz certificate. -/
+theorem flrw_phimdl_well_posed (bg : FLRWBackground) (m : ℝ) (hm : 0 < m)
     (t₀ : ℝ) (x₀ : FLRWState) :
     (∃ ε > 0, ∃ α : ℝ → FLRWState,
       α t₀ = x₀ ∧

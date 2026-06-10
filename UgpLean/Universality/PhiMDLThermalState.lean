@@ -6,7 +6,7 @@ import UgpLean.Universality.FockSpaceKink
 import UgpLean.Universality.GUTStructure
 
 /-!
-# Φ_MDL Hamiltonian Thermal State — Rank 76-L3-LEAN (EPIC_074)
+# Φ_MDL Hamiltonian Thermal State
 
 Formalizes the L3-corrected state-selection content: the physical Φ_MDL quantum state on
 the PSC-admissible-truncated Z₇ sine-Gordon kink Hilbert space is the canonical thermal

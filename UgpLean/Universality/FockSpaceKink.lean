@@ -6,7 +6,7 @@ import UgpLean.Spacetime.PhiMDLKinkQuantumNumbers
 import UgpLean.Framework.GTEOptimalityInstance
 
 /-!
-# Second Quantization of Φ_MDL Kinks — Rank 77-2QUANT (EPIC_073)
+# Second Quantization of Φ_MDL Kinks
 
 Algebraic Fock-space layer over the four GTE-orbit Φ_MDL kink modes, connecting
 normalized kink-mode amplitudes to `BornRuleMDL.BeableAmplitudeHypothesis`.

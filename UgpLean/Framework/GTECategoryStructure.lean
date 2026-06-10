@@ -4,7 +4,7 @@ import UgpLean.Universality.ChiralPairVA
 import UgpLean.Universality.PhiMDLUniversality
 
 /-!
-# UgpLean.Framework.GTECategoryStructure — Rank 074-UNIDM4 (CatAL conditional)
+# UgpLean.Framework.GTECategoryStructure (CatAL conditional)
 
 Lean meta-theorem certifying the **category of Level-1 GTE CA constructions** with
 `Φ_MDL` as the terminal object. Objects are the federated discrete models from the

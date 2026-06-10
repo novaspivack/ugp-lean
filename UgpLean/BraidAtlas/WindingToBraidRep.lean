@@ -5,7 +5,7 @@ import UgpLean.BraidAtlas.ChargeTheorem
 /-!
 # UgpLean.BraidAtlas.WindingToBraidRep — Z₇ ↔ Charged SM Fermion Winding
 
-Proves the algebraic core of `gte_winding_to_braid_rep` (OQ-079-16):
+Proves the algebraic core of `gte_winding_to_braid_rep`:
 
 > **The Z₇ PSC sector index w ∈ {2,4,6} if and only if w = W_g(F) mod 7
 > for some charged SM fermion F ∈ {UpQuark, ChargedLepton, DownQuark}.**
@@ -47,7 +47,7 @@ namespace UgpLean.BraidAtlas
 open UgpLean.BraidAtlas (SMFermionType windingNumber)
 
 -- ════════════════════════════════════════════════════════════════
--- §1  The Z₇ sector identification theorem (OQ-079-16 algebraic core)
+-- §1  The Z₇ sector identification theorem
 -- ════════════════════════════════════════════════════════════════
 
 /-- **Fermionic Z₇ sectors = charged SM fermion windings mod 7.**

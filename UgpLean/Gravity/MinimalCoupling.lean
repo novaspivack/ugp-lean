@@ -8,7 +8,7 @@ import UgpLean.Universality.BeableWindingPartitionInstance
 import UgpLean.Substrate.LagrangianLorentzScalar
 
 /-!
-# MDL-Minimal Scalar–Curvature Coupling and Z₇ Superselection (EPIC_078)
+# MDL-Minimal Scalar–Curvature Coupling and Z₇ Superselection
 
 Certifies two structural prerequisites for quantum-gravity completion on flat Φ_MDL:
 

@@ -65,8 +65,6 @@ combined with a constant FN-2 offset (`Δq^(2)_g = -1`).
 ## Reference
 
 - binary cascade: `UgpLean.MassRelations.BinaryCascade`
-- Lab Notes 23 (Rounds 19–20)
-- Lab Notes 24 (this round, to be written)
 - Original FN paper: Froggatt & Nielsen, Nucl. Phys. B147 (1979) 277.
 -/
 

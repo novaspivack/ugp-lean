@@ -6,7 +6,7 @@ namespace GTE.Spacetime.OrbitMassHierarchy
 open GTE.Spacetime.MassGap
 
 /-!
-# Orbit Generation Mass Hierarchy (Rank 79-MASSES)
+# Orbit Generation Mass Hierarchy
 
 Formalizes the connection between Φ_MDL orbit cascade position (generation index
 g ∈ {1, 2, 3}) and Standard Model particle masses across all three SM sectors:
@@ -208,7 +208,7 @@ theorem sector_gen3_gt_gen2 (s : SmSector) : sectorGen3Lb s > sectorGen2Lb s := 
           m_top_lb_eV, m_charm_lb_eV, m_bottom_lb_eV, m_strange_lb_eV] <;>
     norm_num
 
-/-- **orbit_generation_ordering** (CatAL, Rank 79-MASSES):
+/-- **orbit_generation_ordering** (CatAL):
     For every Standard Model sector (lepton, up-quark, down-quark), the mass
     lower bounds satisfy gen₃ > gen₂ > gen₁ > 0.
 

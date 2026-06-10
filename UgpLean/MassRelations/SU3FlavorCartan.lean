@@ -11,7 +11,7 @@ import Mathlib.Tactic.LinearCombination
 
 ## Context
 
-The TT up-to-lepton mass relation ():
+The TT up-to-lepton mass relation:
 
  log(m_{u_g} / m_{lep_g}) = (π/6) · 2^g + β for g = 1, 2, 3
 

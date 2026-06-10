@@ -4,7 +4,7 @@ import UgpLean.Substrate.PSCPreservingTransformation
 import UgpLean.Substrate.PSCStructureLorentzPreserved
 
 /-!
-# PSC/PI → [D] Lorentz-Equivariance — Rank 070-107 Phase 3 (Main Theorem)
+# PSC/PI → [D] Lorentz-Equivariance (Main Theorem)
 
 Assembles the proof chain from Phases 1–2:
 
@@ -51,7 +51,7 @@ theorem lorentz_boost_is_psc_preserving (lb : LorentzBoost) :
   have _ := lorentz_boost_preserves_psc lb
   exact psc_preserving_stub (S := PhiMDLSubstrate) (lorentzBoostAct lb)
 
-/-- **Main theorem (Rank 070-107):** PSC/PI forces [D] Lorentz-equivariant on Φ_MDL (zero sorry).
+/-- **Main theorem:** PSC/PI forces [D] Lorentz-equivariant on Φ_MDL (zero sorry).
 
     Proof: Λ PSC-preserving (Lemma 2) ⇒ [D] equivariant (D2). -/
 theorem psc_pi_forces_d_lorentz_equivariant

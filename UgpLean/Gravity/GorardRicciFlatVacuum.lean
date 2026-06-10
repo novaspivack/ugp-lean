@@ -9,7 +9,7 @@ import UgpLean.ContinuumLimit.GF7VacuumFixedPoint
 import UgpLean.Gravity.PMDLGravityTheorems
 
 /-!
-# Gorard Vacuum Ricci-Flat Theorem (EPIC_079)
+# Gorard Vacuum Ricci-Flat Theorem
 
 Machine certification of the three-tape CMCA vacuum Ollivier-Ricci flatness result:
 
@@ -67,7 +67,7 @@ theorem w1_adjacent_uniform_eq_one : w1AdjacentUniformCDF = 1 := by
   unfold w1AdjacentUniformCDF cdfLeft cdfRight uniformTripletMass
   norm_num
 
-/-- Alias matching the EPIC_079 board name for the W₁ sub-lemma. -/
+/-- Alias name for the W₁ sub-lemma. -/
 theorem w1_adjacent_uniform_triplets : w1AdjacentUniformCDF = 1 :=
   w1_adjacent_uniform_eq_one
 
@@ -115,7 +115,7 @@ def vacuumGorardEdgeData : VacuumGorardEdgeData where
     3. `w1_adjacent_uniform_eq_one`: W₁ = 1 exactly (CDF arithmetic).
     4. κ = 1 − W₁ = 0 on unit edges (d = 1).
 
-    Upgrades the EPIC_079 algebraic vacuum Ricci-flat result from CatAD to Lean CatAL. -/
+    Upgrades the algebraic vacuum Ricci-flat result from CatAD to Lean CatAL. -/
 theorem three_tape_gorard_vacuum_ricci_flat :
     vacuumEtherDeviationZero ∧
       (ether_period.length = 14) ∧
@@ -131,7 +131,7 @@ theorem three_tape_gorard_vacuum_ricci_flat :
     (2t)³ × 2 from the Gorard continuum-limit analysis. -/
 noncomputable def causalDiamondIntegrand (t : ℝ) : ℝ := (2 * t) ^ 3 * 2
 
-/-- **three_tape_causal_diamond_t4** (CatAL, 2026-05-28):
+/-- **three_tape_causal_diamond_t4** (CatAL):
     Three-tape causal diamond volume satisfies V(T) = T⁴/4 for T > 0.
 
     Proof:

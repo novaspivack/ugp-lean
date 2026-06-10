@@ -5,7 +5,7 @@ import Mathlib.Analysis.InnerProductSpace.Basic
 import UgpLean.Gravity.PMDLGravityTheorems
 
 /-!
-# Page-Wootters Mechanism with τ_c Clock — EPIC_079 (OQ-079-3)
+# Page-Wootters Mechanism with τ_c Clock
 
 Machine certification of the Page-Wootters (PW) Born rule derivation using
 the τ_c outer clock of the three-tape CMCA.

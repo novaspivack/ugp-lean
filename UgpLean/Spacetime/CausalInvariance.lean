@@ -14,7 +14,7 @@ import Mathlib.Tactic.Ring
 namespace GTE.Spacetime.CausalInvariance
 
 /-!
-# Causal Invariance and Lamport Consistency (Rank 37-LCI)
+# Causal Invariance and Lamport Consistency
 
 ## Summary
 
@@ -39,7 +39,7 @@ the causal order of Special Relativity. The AFCA satisfies all Lamport axioms
 (proved below), so it realizes the SR causal structure. The Lorentz group is
 the symmetry group of that causal structure. This gives the geometric content
 of SR. The kinematic formula (time dilation 1/γ) requires the clock-rate
-conjecture (Rank 31-ACS, open).
+conjecture (open).
 
 ## Theorem status
 - `fmdl_causal_invariant`              : zero sorry (delegates to CausalGraph.lean)
@@ -240,7 +240,7 @@ in special relativity."
 For the AFCA:
 1. `lamport_strict_partial_order` (zero sorry): the "happened before" order
    is a strict partial order — satisfying all four Lamport axioms.
-2. The chiral pair (Rank 14-LCD, ChiralPairDecoupling.lean) gives a symmetric
+2. The chiral pair (ChiralPairDecoupling.lean) gives a symmetric
    light cone: causal signals propagate at ±2/3 in both spatial directions.
 3. A symmetric light cone + Lamport-consistent causal order = the Minkowski
    causal structure of SR.
@@ -248,7 +248,7 @@ For the AFCA:
    The AFCA realizes this structure, so Lorentz invariance follows.
 
 This gives the CAUSAL and GEOMETRIC content of SR. The kinematic formula
-(time dilation 1/γ) requires the clock-rate conjecture (Rank 31-ACS) — open.
+(time dilation 1/γ) requires the clock-rate conjecture — open.
 
 Status of the SR theorem: CatAD — the logical chain is complete and the
 Lamport conditions are proved; a formal Lean statement of the Minkowski
@@ -268,7 +268,7 @@ causal structure is pending (needed to state the isomorphism precisely).
 
     CatAD component: the Minkowski isomorphism requires a formal Minkowski
     structure definition (pending). The time-dilation formula requires
-    Rank 31-ACS (open). -/
+    (open). -/
 theorem afca_sr_causal_structure :
     (∀ n : CausalNode L T, ¬ Relation.TransGen (ForwardCausalAdj L T) n n) ∧
     (∀ a b c : CausalNode L T,

@@ -1,7 +1,7 @@
 import UgpLean.Universality.LorentzInvariance
 
 /-!
-# Φ_MDL Lagrangian Lorentz Scalarity — Rank 070-107 Phase 2 (Lemma 1)
+# Φ_MDL Lagrangian Lorentz Scalarity
 
 Certifies that the Φ_MDL Klein–Gordon Lagrangian density is a Lorentz scalar:
 `ℒ_Φ_MDL = −½ η^{μν} ∂_μΦ ∂_νΦ − V(Φ)`.

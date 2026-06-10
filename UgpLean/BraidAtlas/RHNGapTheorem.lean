@@ -26,7 +26,7 @@ Why this is Cat D, not Cat A:
 - P17 (Canonical Braid Atlas v2.0) assigns b₃=19 from GTE integer structure without
   an explicit cascade formula of the form b₃ = b₂ + (N_c²−1).  The Braid Atlas
   identifies the RHN triple (5, 19, 65535; 3) empirically; the gap 19−11 = 8 was
-  noticed post-hoc (MBA-3 analysis, 2026-05-17).
+  noticed post-hoc.
 
 - P21 (neutrino_masses_from_braid_atlas) states b-values {5,11,19} are prime and
   reproduce the mass-squared ratio; it does not derive b₃ via the adjoint gap.
@@ -59,10 +59,8 @@ These are certified by `norm_num` and carry no sorry.  The structural interpreta
   b(ν_τR) = 19 used in the RHN triple (5, 19, 65535; 3) but not derived via the gap.
 - P21 (neutrino_masses_from_braid_atlas.tex) §2: RHN triples identified from P17;
   b-values {5, 11, 19} stated as prime; no gap formula given.
-- MBA-3 lab notes (2026-05-17): gap discovered post-hoc; algebraic equivalence to
-  b₃ = q₂ − b₁ proved analytically; Cat D assigned.
-- MBA-GAP lab notes (2026-05-17): this file — confirms Cat D, gap theorems proved
-  as numerical observations.
+- The algebraic equivalence to b₃ = q₂ − b₁ is proved analytically; Cat D assigned.
+- This file confirms Cat D; the gap theorems are proved as numerical observations.
 -/
 
 namespace UgpLean.BraidAtlas
@@ -108,7 +106,7 @@ theorem su3_adjoint_dim : (3 : ℕ)^2 - 1 = 8 := by norm_num
 
     Source: b₃=19 from P17 (Braid Atlas GTE triple ν_{τ,R} = (5,19,65535;3));
     b₂=11 from gteQuotient(823,73) = 11 (Lean-certified).
-    The gap b₃−b₂ = 8 = N_c²−1 was identified post-hoc (MBA-3, 2026-05-17).
+    The gap b₃−b₂ = 8 = N_c²−1 was identified post-hoc.
 
     Grade: [D] numerical observation (norm_num, zero sorry). -/
 theorem rhn_b3_gap_numerical_standard : (19 : ℕ) = 11 + (3^2 - 1) := by norm_num
@@ -212,10 +210,10 @@ theorem rhn_b3_both_prime : Nat.Prime 19 ∧ Nat.Prime 37 := ⟨by decide, by de
 -/
 
 -- ════════════════════════════════════════════════════════════════════
--- §6  Arithmetic reduction: gap = q₂ − b₁_RHN (Rank 245-SGT)
+-- §6  Arithmetic reduction: gap = q₂ − b₁_RHN
 -- ════════════════════════════════════════════════════════════════════
 
-/-! ### §6  Structural gap as q₂ − b₁_RHN (Rank 245-SGT)
+/-! ### §6  Structural gap as q₂ − b₁_RHN
 
 The gap b₃ = b₂ + (N_c²−1) is algebraically equivalent to b₃ = q₂ − b₁_RHN,
 given the certified structural facts:

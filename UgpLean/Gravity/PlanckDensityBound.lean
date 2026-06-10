@@ -6,7 +6,7 @@ import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import UgpLean.Spacetime.LiftingTheorem
 
 /-!
-# Planck density bound via Algebraic Lifting (EPIC_078 Rank 078-LC4)
+# Planck density bound via Algebraic Lifting
 
 At Planck density the Φ_MDL continuum EFT breaks down (ε₀ → 1). The Level-1 CMCA
 certifies a **finite** discrete state count per Planck-radius volume: |Z₇|⁸ = 7⁸.
@@ -124,7 +124,7 @@ theorem planck_state_count_lifts_to_physical
     P beable :=
   algebraic_lifting_theorem P hP_algebraic beable h_weighted
 
-/-- **Planck density bound via lifting** (Rank 078-LC4, CatAL).
+/-- **Planck density bound via lifting** (CatAL).
 
     There exists a finite natural state count `n_states = 7^8` per Planck-volume cell,
     strictly exceeding the Bekenstein–Hawking microstate ceiling and strictly below 10⁷.
@@ -144,8 +144,8 @@ theorem planck_density_bound_via_lifting :
   · exact bekentein_hawking_microstate_ceil_lt_cmca_count
   · exact cmca_planck_volume_state_count_lt_ten_pow_seven
 
-/-- Master bundle for EPIC_078 board. -/
-theorem epic_078_planck_density_bound_bundle :
+/-- Master bundle for the Planck density bound. -/
+theorem planck_density_bound_bundle :
     cmcaPlanckVolumeStateCount = 7 ^ 8 ∧
       (7 : ℝ) ^ 8 > Real.exp (4 * Real.pi) ∧
       (∃ n_states : ℕ,

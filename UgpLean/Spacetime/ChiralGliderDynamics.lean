@@ -15,7 +15,7 @@ open FMDLClassification
 namespace GTE.Spacetime.ChiralGliderDynamics
 
 /-!
-# Chiral Glider Dynamics → Admissibility Bridge (Rank 83-CHIRALRULE)
+# Chiral Glider Dynamics → Admissibility Bridge
 
 Connects concrete Rule 110 / Rule 124 chiral-pair evolution to
 `ChiralGliderAdmissible` from `CausalInvariance.lean`.
@@ -33,7 +33,7 @@ certified chiral-pair dynamics.
 2. **f_MDL binary sector:** `fmdl_binary_inputs_agree_rule110` (FMDLClassification)
 3. **Cook A-glider period:** `CookNamedGlider.periodTX .A = ⟨3, 2⟩` (CookGliderCatalog)
 4. **CA simulation:** `a_glider_phase0_period3` — Martinez `A(f1_1) = [111110]` on
-   uniform `cookEther`; `infRule110Steps` period 3, spatial shift +2 (Rank 85-AGLIDERCA)
+   uniform `cookEther`; `infRule110Steps` period 3, spatial shift +2
 5. **Ether period:** `etherPeriod = 14` (Rule110.Ether)
 
 ## Main bridge
@@ -215,7 +215,7 @@ theorem chiral_pair_minkowski_isomorphism_from_dynamics (L' T' : ℕ) (hL : 2 �
       (afcaToMinkowski b).1 (afcaToMinkowski b).2 :=
   chiral_pair_minkowski_inclusion_from_dynamics hL hT path hdyn
 
-/-! ## A-glider `infRule110Steps` certificates (Rank 85-AGLIDERCA)
+/-! ## A-glider `infRule110Steps` certificates
 
 Martinez `listPhasesR110.txt`: `A(f1_1) = [111110]` (6 cells, 1l-0r).
 Machine-verified on uniform `cookEther` at `a_gpos = 42` in `CookGliderVerification.lean`.
@@ -307,7 +307,7 @@ theorem chiral_pair_minkowski_from_infRule110Steps {L T : ℕ} (hL : 2 ≤ L) (h
   chiral_pair_minkowski_inclusion_from_dynamics hL hT path
     (a_glider_worldline_from_infRule110Steps hdt hdx)
 
-/-! ## InfTape glider COM ↔ AFCA spatial coordinate (Rank 85b-AFCATAPE)
+/-! ## InfTape glider COM ↔ AFCA spatial coordinate
 
 The Rule 110 CA certificates track defect **anchor** shifts (`gpos → gpos + 2` per
 period). AFCA spatial coordinates identify with the defect **center-of-mass**
@@ -400,7 +400,7 @@ theorem a_glider_infTape_com_matches_ca :
       Rule110.aGliderTapeCom Rule110.a_gpos + aGliderDx :=
   Rule110.a_glider_infRule110Steps_com_advance
 
-/-! ## Rank 85c-AFCATAPEAUTO: automatic COM endpoints from `infRule110Steps`
+/-! ## Automatic COM endpoints from `infRule110Steps`
 
 Derives `AfcaInfTapeComIdent` endpoint data from CA evolution certificates instead of
 manual displacement hypotheses. Standard Martinez seed (`a_gpos = 42`) automatic for

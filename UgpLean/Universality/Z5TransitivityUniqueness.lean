@@ -293,7 +293,7 @@ theorem z5_class2_one_step_allones :
   native_decide
 
 -- ════════════════════════════════════════════════════════════════
--- §8  Transitivity spectrum extension — full (p, w, t) survey (Rank 25)
+-- §8  Transitivity spectrum extension — full (p, w, t) survey
 -- ════════════════════════════════════════════════════════════════
 
 -- Python sweep (research-sandbox/transitivity_spectrum.py) over all

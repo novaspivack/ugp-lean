@@ -36,7 +36,7 @@ open CUP3D
 --     fmdl(0, k, 0) = k  ↔  k = 0 ∨ k = 1
 -- ════════════════════════════════════════════════════════════════
 
-/-- **fmdl_massless_criterion** (Rank 46, CatAL): The CA-masslessness criterion
+/-- **fmdl_massless_criterion** (CatAL): The CA-masslessness criterion
     `fmdl(0, k, 0) = k` holds for exactly k = 0 and k = 1 in Z₇.
 
     - k=0 (photon/EM vacuum): fmdl(0,0,0) = 0 — the vacuum fixed point.
@@ -60,7 +60,7 @@ theorem fmdl_massless_criterion :
     ∀ k : Fin 7, fmdl 0 k 0 = k ↔ (k = 0 ∨ k = 1) := by
   native_decide
 
-/-- **fmdl_massless_unique** (Rank 46, corollary): There are exactly 2 CA-massless
+/-- **fmdl_massless_unique** (corollary): There are exactly 2 CA-massless
     values in Z₇: {0, 1}. All other Z₇ values map to 0 in a vacuum neighborhood.
 
     LEAN-CERTIFIED (native_decide, zero sorry). -/
@@ -71,7 +71,7 @@ theorem fmdl_massless_unique :
   · exact ⟨1, by native_decide, by native_decide⟩
   · native_decide
 
-/-- **fmdl_massive_decay** (Rank 46, corollary): Every SM massive particle
+/-- **fmdl_massive_decay** (corollary): Every SM massive particle
     (Z₇∈{2,3,4,5,6}) decays to the vacuum (output=0) in a vacuum neighborhood.
 
     LEAN-CERTIFIED (native_decide, zero sorry). -/
@@ -83,7 +83,7 @@ theorem fmdl_massive_decay :
 -- §2  Rank 48 — (u, γ, u) → W⁺: CA-Level Electroweak Vertex
 -- ════════════════════════════════════════════════════════════════
 
-/-- **u_photon_u_to_W_vertex** (Rank 48, CatAL): The f_MDL orbit neighborhood
+/-- **u_photon_u_to_W_vertex** (CatAL): The f_MDL orbit neighborhood
     fmdl(2, 0, 2) = 3 defines the CA-level (u, γ, u) → W⁺ vertex.
 
     In Z₇ labeling:
@@ -106,14 +106,14 @@ theorem fmdl_massive_decay :
     LEAN-CERTIFIED (native_decide, zero sorry). -/
 theorem u_photon_u_to_W_vertex : fmdl 2 0 2 = 3 := by native_decide
 
-/-- **nu_photon_nu_absorption** (Rank 48, corollary): The Rule 110 absorption
+/-- **nu_photon_nu_absorption** (corollary): The Rule 110 absorption
     event: fmdl(1, 0, 1) = 1. A photon in a neutrino-pair context remains
     a neutrino — the CA-level photon-neutrino coupling.
 
     LEAN-CERTIFIED (native_decide, zero sorry). -/
 theorem nu_photon_nu_absorption : fmdl 1 0 1 = 1 := by native_decide
 
-/-- **photon_absorption_events** (Rank 48): The two and only two virtual-photon
+/-- **photon_absorption_events**: The two and only two virtual-photon
     absorption events among all 36 matter-matter pairs (l, r ∈ {1,...,6}):
     (1, 1) and (2, 2). All other 34 pairs are transparent to the photon.
 
@@ -139,7 +139,7 @@ def ether_period : List (Fin 7) :=
     LEAN-CERTIFIED (native_decide, zero sorry). -/
 theorem ether_period_length : ether_period.length = 14 := by native_decide
 
-/-- **ether_z7_sum_mod7** (Rank 50, CatAL): The Z₇ sum of one ether period
+/-- **ether_z7_sum_mod7** (CatAL): The Z₇ sum of one ether period
     equals 1 (mod 7), not 0.
 
     Computation: sum([0,1,0,1,1,1,0,0,0,1,1,1,0,1]) = 8; 8 mod 7 = 1.
@@ -162,7 +162,7 @@ theorem ether_z7_composition :
     (ether_period.filter (· = 0)).length = 6 ∧
     (ether_period.filter (· = 1)).length = 8 := by native_decide
 
-/-- **ether_not_em_vacuum** (Rank 50, corollary): The ether is not the
+/-- **ether_not_em_vacuum** (corollary): The ether is not the
     all-zeros EM vacuum configuration: the two structures are distinct.
 
     LEAN-CERTIFIED (native_decide, zero sorry). -/

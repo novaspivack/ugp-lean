@@ -5,7 +5,7 @@ import UgpLean.Algebra.CyclotomicZ7Galois
 import UgpLean.Gravity.CurvedBackgroundPreconditions
 
 /-!
-# PSC–QEC–Wald Algebraic Connections (EPIC_078 Rank 078-LC8)
+# PSC–QEC–Wald Algebraic Connections
 
 Certifies the algebraic chain linking PSC admissibility, GTE RS code structure,
 and the Wald entropy precondition — all without the Lorentzian geometry library:
@@ -127,9 +127,9 @@ theorem phimdl_rt_formula_wald_precondition_chain :
 -- VI. Master bundle
 -- ============================================================
 
-/-- **epic_078_psc_qec_wald_master** (CatAL):
-    Master bundle: PSC–QEC–Wald algebraic connections for EPIC_078. -/
-theorem epic_078_psc_qec_wald_master :
+/-- **psc_qec_wald_master_bundle** (CatAL):
+    Master bundle: PSC–QEC–Wald algebraic connections. -/
+theorem psc_qec_wald_master_bundle :
     pscAdmissibleWindingClasses = rsEvalPointsFinset ∧
       pscAdmissibleWindingClasses.card = 5 ∧
       pscForbiddenWindingClasses.card = 2 ∧

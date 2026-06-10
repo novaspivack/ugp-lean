@@ -2,7 +2,7 @@ import UgpLean.Substrate.Substrate
 import UgpLean.Substrate.PSCPreservingTransformation
 
 /-!
-# Coherence Measure [D] — Rank 070-107 Phase 1
+# Coherence Measure [D]
 
 Encodes P34 §6 **D2** (Presentation Invariance at configuration space):
 any PSC-preserving transformation leaves the coherence measure **[D]** invariant.

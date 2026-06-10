@@ -1,7 +1,7 @@
 import UgpLean.Universality.DynamicalCouplingBridge
 
 /-!
-# UgpLean.Universality.ExcitationCoupling — Excitation-Level Coupling (Rank 070-124)
+# UgpLean.Universality.ExcitationCoupling — Excitation-Level Coupling
 
 Formal excitation-state algebra for inter-layer coupling between Rule 110 and Rule 124
 at glider-frame events, extending the Class B escape (070-122) and resonance cert

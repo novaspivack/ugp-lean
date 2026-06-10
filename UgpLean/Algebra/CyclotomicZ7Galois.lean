@@ -4,7 +4,7 @@ import Mathlib.Data.Nat.GCD.Basic
 import Mathlib.Data.ZMod.Units
 
 /-!
-# Cyclotomic Z₇ Galois Structure (EPIC_078 / SPEC_078_012)
+# Cyclotomic Z₇ Galois Structure
 
 Certifies three CatAL algebraic results for the Q(ζ₇) vacuum sector:
 
