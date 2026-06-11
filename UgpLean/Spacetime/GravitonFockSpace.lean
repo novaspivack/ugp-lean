@@ -50,7 +50,7 @@ theorem gravitational_coupling_lt_one :
     (4 : ℚ) / (21^20 * 7^14) < 1 := by norm_num
 
 /-- GTE Planck mass scale: `M_Pl_GTE = 21^10 × 7^7 / 2` (MeV units in the physics layer). -/
-def gte_planck_mass : ℚ := 21^10 * 7^7 / 2
+def gte_planck_mass : ℚ := (21 : ℚ)^10 * 7^7 / 2
 
 /-- At the Planck scale the gravitational coupling is O(1): EFT breakdown point.
 

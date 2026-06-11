@@ -657,10 +657,10 @@ theorem substrate_field_unique_provisional :
 
 /-! ### Competitor hypothesis enumeration + discriminating tests
 
-Formal mirror of `rank99_substrate_unique_derivation.py` (Round 4, 2026-05-22).
+Formal mirror of the adversarial substrate-enumeration analysis.
 Inputs are Lean-certified only: no PDG / SM coupling values. -/
 
-/-- Adversarial substrate hypotheses from the Round 4 enumeration. -/
+/-- Adversarial substrate hypotheses from the competitor enumeration. -/
 inductive SubstrateHypothesisId
   | H_A | H_B | H_C | H_D
   deriving DecidableEq, Repr, Inhabited

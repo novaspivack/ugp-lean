@@ -133,10 +133,7 @@ The Riccati contraction rate is −1/φ² = −(2−φ). The relation to −φ/2
 
 These are DIFFERENT values: −φ/2 ≈ −0.809 while −1/φ² ≈ −0.382.
 
-The relation between them is:
- −φ/2 = (−1/φ² − 1) · φ / 2 ... no, let me compute.
-
-Actually, the connection is through the QUADRATIC structure:
+The two rates are distinct; the connection is through the quadratic structure:
  −1/φ² = 2 − φ = 2 − (1+√5)/2 = (3−√5)/2
 
 And −φ/2 = −(1+√5)/4.

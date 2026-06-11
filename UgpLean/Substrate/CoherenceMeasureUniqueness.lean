@@ -123,10 +123,10 @@ theorem lorentz_cpt_implicit_in_d2 :
   · intro ρ w; exact cpt_equivariant_from_d2 ρ w
 
 -- ════════════════════════════════════════════════════════════════
--- §2  Six distinguishable [D] candidates — Round 11 witness (~80 lines)
+-- §2  Six distinguishable [D] candidates — census witness (~80 lines)
 -- ════════════════════════════════════════════════════════════════
 
-/-- Six structurally distinct [D] candidates from the C2-CLOSURE Round 11 witness.
+/-- Six structurally distinct [D] candidates from the coherence-closure census.
     All satisfy D1, D2, D4, D5 on Φ_MDL; differ in Born sector marginals. -/
 inductive C2Candidate : Type
   | alphaUniform
@@ -141,7 +141,7 @@ inductive C2Candidate : Type
 def pscAdmissibleSector (k : Fin 7) : Bool :=
   k.val = 0 ∨ k.val = 2 ∨ k.val = 3 ∨ k.val = 4 ∨ k.val = 6
 
-/-- Exact rational sector marginals for each candidate (Round 11 table). -/
+/-- Exact rational sector marginals for each candidate (census table). -/
 def c2SectorMarginal : C2Candidate → Fin 7 → ℚ
   | .alphaUniform =>
       fun _ => 1 / 7
@@ -255,7 +255,7 @@ inductive ALCoupling : Type
   | hirota2D
   deriving DecidableEq, Repr, Inhabited, Fintype
 
-/-- Kolmogorov-style description length K_{U₀} for AL-family members (Round 7 table). -/
+/-- Kolmogorov-style description length K_{U₀} for AL-family members (description-length table). -/
 def K_U0_AL : ALCoupling → ℕ
   | .canonical  => 50
   | .todaMiura  => 52

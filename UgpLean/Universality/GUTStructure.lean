@@ -191,7 +191,7 @@ a-values to quark b-values giving (N_gen², N_fam) simultaneously is (a_L2, a_L3
 - `quark_doublet_pairing_unique`: joint theorem — b_u = N_gen² ∧ b_d = N_fam ∧
     N_gen² + N_fam = 14 (G1 doublet total) ∧ N_gen²/(N_gen²+N_fam) = 9/14 (u-type fraction)
 
-## §30 — Mersenne Cascade Discriminator — 12 → 2 Candidates (Rank 80 Round 02, CatAL)
+## §30 — Mersenne Cascade Discriminator — 12 → 2 Candidates (CatAL)
 
 The cascade consistency constraint on the G1 quark seed c-components reduces the
 12 MDL-doublet-paired candidates (§26) to exactly 2.
@@ -740,7 +740,7 @@ theorem fmdl_chirality_decomposition :
     component of Z after spontaneous symmetry breaking), so its branch capacity
     c_Z is one unit below the Higgs scalar-boundary value c_H = 13.
 
-    Physical interpretation (Scalar Boundary Theorem, Round 12):
+    Physical interpretation (Scalar Boundary Theorem):
     sin²θ_W = b/c = 3/13 is a property of the SCALAR endpoint (H⁰, d = 0).
     Spin-1 gauge bosons (W⁺, Z) have d_P > 0 and c_P = c_H − d_P < c_H,
     so their b/c ratios exceed sin²θ_W = 3/13.  Only H⁰ retains c = c_H.
@@ -763,7 +763,7 @@ theorem z_boson_ratio_neq_weinberg :
     Goldstone; W⁻ absorbs the other — but here we track the c reduction for W⁺
     alone, giving d_W = 2 and c_W = c_H − d_W = 11).
 
-    Physical interpretation (Scalar Boundary Theorem, Round 12):
+    Physical interpretation (Scalar Boundary Theorem):
     Same as Z: only d_H = 0 retains c = c_H.  The W⁺ spin-1 reduction forces
     c_W < c_H, so 3/11 > 3/13.  Among EW bosons, H⁰ is the unique boson
     whose b/c ratio equals sin²θ_W.
@@ -2300,8 +2300,7 @@ theorem joint_selection_theorem :
 
     LEAN-CERTIFIED (norm_num, zero sorry). -/
 theorem double_mersenne_exponent_identity :
-    -- N_fam = 5 = p₃(M): 5 is the 3rd Mersenne prime exponent (2^5 − 1 = 31, wait —
-    -- CORRECTION: 2^5 − 1 = 31 is prime, so 5 IS a Mersenne prime exponent)
+    -- N_fam = 5 is the third Mersenne prime exponent: 2^5 − 1 = 31 is prime.
     -- Mersenne prime exponents: 2 (M₂=3), 3 (M₃=7), 5 (M₅=31), 7 (M₇=127), 13 (M₁₃=8191)
     Nat.Prime (2 ^ n_fam - 1) ∧                    -- 2^5 − 1 = 31 is prime (N_fam is Mersenne exp)
     Nat.Prime (2 ^ (EWBosonStructure.c_higgs) - 1) ∧ -- 2^13 − 1 = 8191 is prime (c_H is Mersenne exp)
@@ -2879,7 +2878,7 @@ a_L3=5}, only the assignment (a_L2, a_L3) = (9, 5) simultaneously gives (N_gen²
 for the (up, down) G1 quark b-values.  No other pair from the lepton a-values produces
 (b_u, b_d) = (9, 5).
 
-Python-verified (CatA, `research-sandbox/quark_seed_permutation.py`): MDL uniqueness
+Python-verified (CatA, quark seed permutation scan): MDL uniqueness
 confirmed; all six lepton→quark pairings checked; only (9, 5) gives (N_gen², N_fam).
 
 These three theorems certify the numeric content (CatAL).  The formal derivation of
@@ -3187,7 +3186,7 @@ theorem ugp_r110_sm_joint_unification :
 --  uniqueness of the Einstein-Hilbert action in D = 4 where 1 "free" Gauss-Bonnet
 --  coefficient is set to zero by the minimum-locality (MDL) principle.
 --
---  Script: research-sandbox/z7_free_minterm_count.py
+--  Z₇ free-minterm count audit (CatA).
 --  CatA computation (2026-05-19): all assertions verified with exact enumeration.
 -- ════════════════════════════════════════════════════════════════
 
@@ -3229,7 +3228,7 @@ theorem z7_free_neighborhood_count :
     must be exactly equal to fmdl.
 
     **Robustness:** This uniqueness holds for orbit depth 3, 4, or 5 under
-    Rule 110 on the 5-cell ring (CatA result, Round 02 computation).  The
+    Rule 110 on the 5-cell ring (CatA computational verification).  The
     (0,0,0) neighborhood is always the unique free minterm in the binary orbit,
     and MDL sets it to 0 → Rule 110 is uniquely selected at every orbit depth.
     The Z₇ MDL selection is therefore robust: it cannot be disturbed by
@@ -3269,8 +3268,8 @@ theorem mdl_robustness_z7
 --
 --  The Class 4 resonance property — that among 96 qualifying Z₂ CA rules,
 --  computationally universal (Wolfram Class 4) rules exist at and only at
---  minterm count 5 — is CatA from exhaustive enumeration (script:
---  research-sandbox/z2_sublayer_consistency.py, 2026-05-19).
+--  minterm count 5 — is CatA from exhaustive enumeration (Z₂ sublayer
+--  consistency audit, CatA).
 --
 --  The full CatAD theorem: c_Z = 12 forces MDL(rule_Z) = 5, which lands
 --  at the isolated Class 4 resonance.  Rule 110 is selected from the two
@@ -3351,7 +3350,7 @@ theorem z_boson_mdl_class4_chain :
 --
 --  SECONDARY FORMULAS (all CatAL, norm_num):
 --    k = N_gen! × N_fam     = 6 × 5 = 30       (3! = 6)
---    k = 4(N_gen² − 1) − 2  = 4×8 − 2 = 30     (from phase formula, Round 02)
+--    k = 4(N_gen² − 1) − 2  = 4×8 − 2 = 30     (from the phase formula)
 --    k = 2(c_H + 2)         = 2×15   = 30       (c_H + 2 = N_gen × N_fam = 15)
 --
 --  KEY STRUCTURAL COINCIDENCE (SPECIFIC to N_gen = 3):
@@ -3366,7 +3365,7 @@ theorem z_boson_mdl_class4_chain :
 --    Analogous to sin²θ_W: exact at UV (3/8 at GUT, 3/13 at EW), with
 --    a one-loop running correction at M_Z.
 --
---  Script: research-sandbox/cs_level_from_gte.py  (2026-05-19, CatA)
+--  Chern–Simons level from GTE phase arithmetic (CatA).
 -- ════════════════════════════════════════════════════════════════
 
 /-- **cs_level_pow2_nfam** (CatAL ★★★★):
@@ -3405,7 +3404,7 @@ theorem cs_level_ngen_factorial : Nat.factorial n_gen * n_fam = 30 := by
     k = 4(N_gen² − 1) − 2 = 30.
 
     This formula is derived from the framing-phase coincidence established in
-    the Möbius-trefoil computation (Round 02): the colored Jones polynomial
+    the Möbius-trefoil computation: the colored Jones polynomial
     of the trefoil at k = 30 satisfies arg(J_{N_gen})/π = sin²θ_W(GUT) = 3/8
     exactly.  Setting 3(N_gen²−1)/(2(k+2)) = N_gen/(N_gen+N_fam) = 3/8 and
     solving gives k+2 = 4(N_gen²−1), which evaluates to 32 at N_gen = 3.
@@ -3607,9 +3606,9 @@ theorem cascade_period_minimum_is_two :
 
 -- ════════════════════════════════════════════════════════════════
 -- §30  Mersenne Cascade Discriminator — 12 Doublet-Paired Candidates → 2
---      (Rank 80 Round 02, CatAL arithmetic)
+--      (CatAL arithmetic)
 --
---  Among the 12 MDL-doublet-paired G1 quark seed candidates (Round 01),
+--  Among the 12 MDL-doublet-paired G1 quark seed candidates,
 --  cascade consistency reduces the field to exactly 2 candidates via the
 --  following two-part Mersenne criterion:
 --
@@ -3636,7 +3635,7 @@ theorem cascade_period_minimum_is_two :
 --  SU(2)_L charge assignment (CatAD) then reduces 2 → 1 by identifying the
 --  I₃=+½ quark (up-type) with N_gen² = 9.
 --
---  Python-verified (CatA, `research-sandbox/quark_mersenne_discriminator.py`):
+--  Python-verified (CatA, quark Mersenne discriminator scan):
 --  Exhaustive check of all 12 candidates; 2 survivors confirmed.
 -- ════════════════════════════════════════════════════════════════
 
@@ -4446,11 +4445,11 @@ theorem dark_budget_identity : (4 : ℕ) + 4 = 2 ^ n_gen := by
   norm_num [n_gen]
 
 -- ============================================================
--- §35 (continued)  Z₇ Dark Baryon Topological Dilution (083C-H0-BARYON-CORR, CatAL)
+-- §35 (continued)  Z₇ Dark Baryon Topological Dilution (CatAL)
 -- D_top = exp(−1/N_c) is CatAL via Z₇ symmetry group theory
 -- ============================================================
 
-/-! ## Z₇ Dark Baryon Topological Dilution Identity (083C-H0-BARYON-CORR, CatAL)
+/-! ## Z₇ Dark Baryon Topological Dilution Identity (CatAL)
 
 The GTE dark matter relic density uses topological dilution factor D_top = exp(−1/N_c).
 The exponent 1/N_c = 1/3 arises from the Z₇ dark baryon charge identity:
@@ -4472,7 +4471,7 @@ Lean theorems (all zero sorry, CatAL):
 - `z7_minus_one_eq_two_Nc`              (decide)
 - `z7_dark_baryon_correction_identity`  (decide)
 - `z7_star_transitivity_under_addition` (decide) ← GROUP THEORY foundation
-- `z7_symmetry_forces_equal_sector_action` (norm_num) ← CLOSES OQ-083C-DTOP-PF
+- `z7_symmetry_forces_equal_sector_action` (norm_num) ← equal-sector-action foundation
 - `d_top_derivation_chain_catal`        (norm_num + decide) ← MASTER CatAL assembly
 - `z7_topological_dilution_formula_rational` (norm_num) ← CatAL (was CatAD)
 - `z7_dark_matter_dilution_factor`      (def: exp(−1/N_c))
@@ -4537,7 +4536,7 @@ theorem z7_star_transitivity_under_addition :
     ∀ (j : Fin 6) (k : Fin 6), ∃ (n : Fin 7), (j.val + 1 + n.val) % 7 = (k.val + 1) % 7 := by
   decide
 
-/-- **z7_symmetry_forces_equal_sector_action** (CatAL — closes OQ-083C-DTOP-PF, upgrades D_top):
+/-- **z7_symmetry_forces_equal_sector_action** (CatAL — upgrades D_top):
     The Z₇ symmetry of the Φ_MDL Lagrangian forces equal distribution of topological
     Euclidean action across the 6 non-trivial Z₇ sectors. This replaces the
     Rajaraman 1982 §4.4 dilute-instanton-gas derivation with a pure symmetry argument.
@@ -4571,7 +4570,7 @@ theorem z7_symmetry_forces_equal_sector_action :
       Step 5: D_top = exp(−S_per) = exp(−1/N_c) = exp(−1/3) (analytic, CatAL)
 
     The Rajaraman 1982 §4.4 citation is superseded by the Z₇ group theory argument
-    in Step 4. This closes OQ-083C-DTOP-PF and upgrades D_top from CatAD to CatAL. -/
+    in Step 4. This upgrades D_top from CatAD to CatAL. -/
 theorem d_top_derivation_chain_catal :
     -- The core rational identity unifying Steps 2–4:
     -- q_dark / |Z₇*| = 2/6 = 1/3 = 1/N_c
@@ -5132,7 +5131,7 @@ This replaces the earlier (incorrect) framing of k=N_gen as "cycle closure back 
 gen₁."  Gen₁ is a Garden of Eden (no fmdl predecessor), so the orbit cannot cycle to
 gen₁.  The correct statement is orbit absorption at the vacuum terminus.
 
-**Correction note:** The B-82 Round 02 discussion described the orbit as
+**Correction note:** An earlier draft described the orbit as
 "gen₁→gen₂→gen₃→gen₁ (cycle closure)."  The CatAL-certified fact
 `fmdl_z7_three_generation_orbit` establishes instead gen₁→gen₂→gen₃→vacuum.
 Gen₁ is a GoE (zero predecessors under fmdl, `fmdl_gen1_is_garden_of_eden`),
@@ -6511,7 +6510,7 @@ theorem gte_winding_sm_vertex_conserved :
 
     Charged-current leptons (e⁻→νe+W⁻ — all 3 generations same):
       (3)  e⁻(4) → νe(0) + W⁻(4):  0+4=4 mod 7  ✓
-      (4)  νe(0) + W⁺(3) → e⁺(3):  3+? actually W⁺ absorbed; 0=? ... encoded below
+      (4)  νe(0) + W⁺(3) → e⁺(3):  0+3=3 mod 7  ✓  (reverse charged current)
 
     Electromagnetic quarks (u→u+γ, d→d+γ, etc., all 6 quark types):
       (5)  u(2) → u(2) + γ(0):  2+0=2  ✓
@@ -6786,7 +6785,7 @@ The GTE arithmetic determines sin²θ_W(GUT) = N_gen / 2^N_gen = 3/8
 
 This section certifies the rational identity and its equivalent forms.
 
-Script: research-sandbox/rank183_gut_coupling.py (CatA verification)
+GUT coupling-ratio audit (CatA verification)
 -/
 
 namespace GUTCoupling
@@ -8624,7 +8623,7 @@ end D2SO3Invariance
 -- §67  C3 TPC Completeness — NEMS Transputation Classification + GTE Identification Lemma
 -- (CatAL arithmetic skeleton)
 --
--- ** Round 4b upgrade (2026-05-20): **
+-- ** Discrete QRF extension (2026-05-20): **
 -- `transputation_classification` is NOW applied directly to the GTE framework in
 -- `UgpLean.Framework.GTEFrameworkInstance.gte_tpc_real` (zero sorry given the
 -- `gte_partrec_eval_iff_fmdl_phi` bridge axiom, same tier as the 6 CUP3D axioms).
@@ -8916,7 +8915,7 @@ end PhysicalBridge
 
 -- ────────────────────────────────────────────────────────────────────────────
 -- §69  BeableHilbert — 't Hooft Beable Construction for GTE (CatAL)
--- Round 1: type definitions and mass gap partition in beable language
+-- Beable-space type definitions and mass-gap partition.
 -- ────────────────────────────────────────────────────────────────────────────
 
 /-! ### §69  BeableHilbert: 't Hooft beable construction for GTE
@@ -8925,15 +8924,15 @@ The two-layer {Rule 110, Rule 124} chiral CA admits a natural beable basis
 following 't Hooft's cogwheel construction: the CA configuration space is the
 "beable space" from which quantum Hilbert space states are built by superposition.
 
-**Beable space (Round 1):**  `Fin 5 → Fin 7` — one Z₇ winding class per cell of
+**Beable space:**  `Fin 5 → Fin 7` — one Z₇ winding class per cell of
 the 5-cell ring.  Each assignment is a CA-level cogwheel eigenstate.
 
 **Mass gap in beable basis (from §44 orbit-closure theorem):**
 - Massless beables: winding w ∈ {0, 1, 2, 5} (self-propagating under f_MDL)
 - Massive beables:  winding w ∈ {3, 4, 6}    (contact vertex; no self-propagating center)
 
-Rank 132, Round 1 — type definitions and beable mass gap in beable language, citing §44.
-Rounds 2–4 will add the two-layer GTE Hamiltonian and the Lorentz dispersion relation
+Discrete beable mass-gap formalization, citing §44.
+Later sections add the two-layer GTE Hamiltonian and the Lorentz dispersion relation
 E² = v²k² + m²_eff. -/
 
 namespace BeableHilbert
@@ -8955,7 +8954,7 @@ def isMasslessBeable (w : Fin 7) : Prop :=
 def isMassiveBeable (w : Fin 7) : Prop :=
   w ∉ orbit_winding_set
 
-/-- **beable_massless_iff_self_propagating** (CatAL — Rank 132, citing §44):
+/-- **beable_massless_iff_self_propagating** (CatAL — citing §44):
     A beable winding is massless iff its Z₇ winding class is self-propagating
     under f_MDL.  This lifts the §44 orbit-closure theorem to beable language:
     the partition {massless} = {self-propagating} is the orbit-closure partition.
@@ -8965,7 +8964,7 @@ theorem beable_massless_iff_self_propagating (w : Fin 7) :
     isMasslessBeable w ↔ (∃ l r : Fin 7, CUP3D.fmdl l w r = w) :=
   (self_propagating_iff_orbit_winding w).symm
 
-/-- **beable_mass_gap_partition** (CatAL — Rank 132):
+/-- **beable_mass_gap_partition** (CatAL):
     Every Z₇ winding class is either massless or massive in the beable sense;
     the partition {0,1,2,5} ∪ {3,4,6} = Z₇ is exhaustive.
 
@@ -8975,7 +8974,7 @@ theorem beable_mass_gap_partition (w : Fin 7) :
   show w ∈ orbit_winding_set ∨ w ∉ orbit_winding_set
   exact Classical.em _
 
-/-- **wplus_is_massive_beable** (CatAL — Rank 132):
+/-- **wplus_is_massive_beable** (CatAL):
     The W⁺ boson (winding 3) is a massive beable: 3 ∉ {0,1,2,5}.
     Consistent with §44 mass_gap_theorem (wplus_center_maps_to_vacuum).
 
@@ -8984,7 +8983,7 @@ theorem wplus_is_massive_beable : isMassiveBeable ⟨3, by norm_num⟩ := by
   show (⟨3, by norm_num⟩ : Fin 7) ∉ orbit_winding_set
   native_decide
 
-/-- **photon_is_massless_beable** (CatAL — Rank 132):
+/-- **photon_is_massless_beable** (CatAL):
     The photon (vacuum ether, winding 0) is a massless beable: 0 ∈ {0,1,2,5}.
     Witness: f_MDL(0,0,0) = 0 (§44 mass_gap_theorem).
 
@@ -8993,7 +8992,7 @@ theorem photon_is_massless_beable : isMasslessBeable ⟨0, by norm_num⟩ := by
   show (⟨0, by norm_num⟩ : Fin 7) ∈ orbit_winding_set
   native_decide
 
-/-- **fermion_windings_massless** (CatAL — Rank 132):
+/-- **fermion_windings_massless** (CatAL):
     The three fermion orbit winding classes {1, 2, 5} are all massless beables.
     These are the SM generation-orbit windings (§44 orbit_winding_set).
 
@@ -9007,7 +9006,7 @@ theorem fermion_windings_massless :
   · show (⟨2, by norm_num⟩ : Fin 7) ∈ orbit_winding_set; native_decide
   · show (⟨5, by norm_num⟩ : Fin 7) ∈ orbit_winding_set; native_decide
 
-/-- **massless_beables_count** (CatAL — Rank 132):
+/-- **massless_beables_count** (CatAL):
     There are exactly 4 massless beable winding classes ({0,1,2,5});
     the remaining 3 windings {3,4,6} are massive contact-vertex beables.
     This is the Finset cardinality form of the §44 orbit_closure_theorem.
@@ -9182,7 +9181,7 @@ Wolfenstein/CKM parameters not captured by rational arithmetic alone.
 - `cabibbo_angle_exists`: ∃ θ, sin θ = 9/40 ∧ 0 < θ < π/2  (Cabibbo angle)
 - `gamma_cp_tan_value`: tan(arctan(√(8191/186)/3)) = √(8191/186)/3  (γ defining eq)
 
-**Round 2 additions (CatAL, zero sorry):**
+**Discrete QRF additions (CatAL, zero sorry):**
 - `wolfenstein_A_tight_bounds`: 0.822 < √(186/275) < 0.823  (3-decimal precision)
 - `jarlskog_invariant_gte_formula`: ∃ J_gte : ℚ, J_gte = λ⁶ A² η̄² (1−λ²/2)² > 0
 
@@ -10124,7 +10123,7 @@ theorem psc_mdl_coupling_chain :
   ⟨rfl, rfl, by norm_num [n_gen, EWBosonStructure.c_higgs],
               by norm_num [n_gen, EWBosonStructure.c_higgs]⟩
 
--- §78 Round 2: Full PSC→MDL→sin²θ_W chain documentation
+-- §78: Full PSC→MDL→sin²θ_W chain documentation
 -- ────────────────────────────────────────────────────────────────
 -- The full derivation chain is:
 --   Step 1 (CatAD): PSC → MDL minimality
@@ -10493,18 +10492,18 @@ end QCDVandermonde
 --
 -- Physical content: The Quantum Reference Frame (QRF) construction
 -- (Bartlett et al. 2007) formalizes D2 (PSC-invariance of [D]) as
--- SO(3)-invariance of physical states.  Round 1 certifies the discrete
+-- SO(3)-invariance of physical states.  The discrete
 -- Z₅ ⊂ SO(3) case via the existing CatAL certificate fmdl_z5_equivariant.
 --
 -- QRF setup:
 --   H_matter   = ℂ^{7^5}  (beable states: Fin 5 → Fin 7  = BeableHilbert.BeableState)
---   H_orient   = L²(SO(3)) (full continuous; Round 1 discrete proxy: functions on Z₅)
+--   H_orient   = L²(SO(3)) (full continuous; discrete proxy: functions on Z₅)
 --   H_phys     = {ψ ∈ H_total | ∀ g ∈ G, (U_g ⊗ V_g)|ψ⟩ = |ψ⟩}  (invariant subspace)
 --
 -- D2 ↔ QRF correspondence:
 --   D2 (PSC-PI): all Z₅ ring relabelings give the same [D]-physics
 --   QRF:         physical states are SO(3)-invariant (H_phys is well-defined)
---   Round 1:     Z₅ cyclic relabelings are the discrete subgroup of ring orientations
+--   Z₅ cyclic relabelings are the discrete subgroup of ring orientations
 --                certified by fmdl_z5_equivariant (§10, CUP3DUniqueness.lean, CatAL)
 --
 -- Status: CatAL (all theorems zero sorry; native_decide basis from §10)
@@ -10524,14 +10523,14 @@ lattice's $O_h$ symmetry.
 preferred direction), so by D2, $[D]$ is invariant under all of $\mathrm{SO}(3)$,
 forcing physical states into $H_{\rm phys}$.
 
-**Round 1** certifies the $\mathrm{Z}_5 \subset \mathrm{SO}(3)$ discrete case:
+**Discrete case:** certifies the $\mathrm{Z}_5 \subset \mathrm{SO}(3)$ proxy:
 - Beable states: `Fin 5 → Fin 7` ($= H_{\rm matter}$, i.e.\ `BeableHilbert.BeableState`).
 - Ring rotations: `CUP3D.cyclic_rotate` implements the $\mathrm{Z}_5$ action.
 - `qrf_d2_z5_equivariance_certified` (★★★★★, CatAL, zero sorry): directly invokes
   `fmdl_z5_equivariant` (§10, native_decide over $7^5 \times 5 = 84{,}035$ cases).
 - `qrf_invariant_subspace_preserved` (★★★★★, CatAL): $\mathrm{Z}_5$-invariant states
   form a subspace closed under $f_{\rm MDL}$ dynamics.
-- `qrf_round1_master` (★★★★★, CatAL): master conjunction of all Round 1 certificates.
+- `qrf_round1_master` (★★★★★, CatAL): master conjunction of the discrete QRF certificates.
 
 **Partial OQ-CL1 progress:** discrete $\mathrm{Z}_5$ case is CatAL.  Full continuous
 $\mathrm{SO}(3)$ (QRF with $L^2(\mathrm{SO}(3))$ and Peter-Weyl decomposition) remains
@@ -10612,7 +10611,7 @@ theorem qrf_beablestate_is_z7_ring :
     BeableHilbert.BeableState = (Fin 5 → Fin 7) := rfl
 
 /-- **qrf_round1_master** ★★★★★ (CatAL):
-    Master conjunction certifying the discrete QRF D2-formalization (Round 1):
+    Master conjunction certifying the discrete QRF D2-formalization:
 
     (1) Z₅ equivariance of f_MDL: the core D2→Z₅ certificate
         (native_decide, 84,035 cases, CatAL)

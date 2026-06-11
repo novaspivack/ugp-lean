@@ -9,9 +9,9 @@ import UgpLean.Substrate.ChiralCurrentL2
 /-!
 # UgpLean.MassRelations.NeutrinoSector — PMNS / leptogenesis structural certificates
 
-Structural PMNS and neutrino-Yukawa results from the 083C FN-left and seesaw
-sessions. These are arithmetic / symmetry facts that do not depend on further
-numerical PMNS fitting.
+Structural PMNS and neutrino-Yukawa results from the Froggatt–Nielsen and
+seesaw analyses. These are arithmetic / symmetry facts that do not depend on
+further numerical PMNS fitting.
 
 ## Theorems
 
@@ -167,7 +167,7 @@ def democraticJMatrix : Matrix (Fin 3) (Fin 3) ℝ :=
 
     CORRECTED 2026-06-01: the prior theorem `democratic_seesaw_gives_maximal_atm_angle`
     incorrectly claimed democratic rank-1 seesaw yields TBM with θ₂₃ = π/4 and θ₁₃ = 0.
-    Computation (083C-PMNS) shows θ₁₃ ≈ arcsin(1/√3) because the heavy eigenstate
+    Direct computation shows θ₁₃ ≈ arcsin(1/√3) because the heavy eigenstate
     is (1,1,1)/√3, not a TBM column. θ₂₃ ≈ π/4 survives from Z₂ μ↔τ symmetry. -/
 theorem democratic_J_matrix_heavy_eigenstate :
     HasEigenvalue (toLin' democraticJMatrix) 3 ∧
@@ -196,7 +196,7 @@ theorem democratic_seesaw_theta23_approximately_maximal :
   intro i j; simp [democraticJMatrix]
 
 -- ════════════════════════════════════════════════════════════════
--- §6  FN Dirac Yukawa rank-1 barrier (083C-LEAN-3)
+-- §6  FN Dirac Yukawa rank-1 barrier
 -- ════════════════════════════════════════════════════════════════
 
 /-!
@@ -205,7 +205,7 @@ For non-negative additive Froggatt–Nielsen charges, the Dirac Yukawa texture
 `h_D = A ⊗ B` with `A_i = ε^{q_{L,i}}`, `B_j = ε^{q_{R,j}}`, hence has rank at most 1.
 A positive-additive FN model cannot supply the rank-3 Dirac Yukawa needed for
 non-trivial PMNS mixing from charge hierarchy alone; complex phases or negative
-charges are required (083C-PMNS Round 4).
+charges are required.
 -/
 
 /-- FN Dirac Yukawa matrix `h_D^{ij} = ε^{q_{L,i} + q_{R,j}}` for additive FN charges. -/
@@ -250,7 +250,7 @@ theorem fn_dirac_yukawa_rank_theorem
   exact rank_vecMulVec_le _ _
 
 -- ════════════════════════════════════════════════════════════════
--- §7  Real Yukawa ⇒ zero leptogenesis CP asymmetry (083C-LEAN-3)
+-- §7  Real Yukawa ⇒ zero leptogenesis CP asymmetry
 -- ════════════════════════════════════════════════════════════════
 
 /-!
@@ -316,7 +316,7 @@ theorem real_yukawa_gives_zero_leptogenesis_cp
   rw [hMM, realYukawaToComplex, Matrix.map_apply, Complex.ofReal_im]
 
 -- ════════════════════════════════════════════════════════════════
--- §8  V-A chirality: RH sector → anti-flavon (083C-LEAN-4)
+-- §8  V-A chirality: RH sector → anti-flavon
 -- ════════════════════════════════════════════════════════════════
 
 /-!
@@ -376,7 +376,7 @@ theorem rh_neutrino_couples_antiflavon :
   · rfl
 
 -- ════════════════════════════════════════════════════════════════
--- §9  PMNS CP phase from Z₇ charged-lepton winding (083C-LEAN-4)
+-- §9  PMNS CP phase from Z₇ charged-lepton winding
 -- ════════════════════════════════════════════════════════════════
 
 /-- Charged-lepton SM Z₇ winding W_L = 4 (e⁻ / W⁻ class, P22 CatAL). -/
@@ -408,7 +408,7 @@ theorem pmns_cp_phase_degrees_rational :
     4 * 360 = 7 * 205 + 5 := by decide
 
 -- ════════════════════════════════════════════════════════════════
--- §10  PMNS mixing angle orbit-ratio formulas (083C-LEAN-5)
+-- §10  PMNS mixing angle orbit-ratio formulas
 -- ════════════════════════════════════════════════════════════════
 
 /-!
@@ -472,7 +472,7 @@ theorem pmns_reactor_sin_val : (b_R2 : ℚ) / b_gen1 < 1 := by
   norm_num [b_R2, b_gen1]
 
 /-!
-PMNS formula set disambiguation (083C-PMNS).
+PMNS formula set disambiguation.
 Two rational formula sets fit the solar angle to comparable precision:
   Set 1 (adopted): sin²θ₁₂ = strand²/c_H = 4/13  (MDL-preferred, CatAL constants only)
   Set 2 (rejected): sin²θ₁₂ = 5/16               (requires additional orbit ratio atom)
@@ -507,7 +507,7 @@ theorem pmns_sin_theta13_lt_one : pmns_sin_theta13 < 1 := by
   norm_num
 
 -- ════════════════════════════════════════════════════════════════
--- §11  Jarlskog invariant from GTE orbit ratios (083C-LEAN-7)
+-- §11  Jarlskog invariant from GTE orbit ratios
 -- ════════════════════════════════════════════════════════════════
 
 /-!
@@ -517,7 +517,7 @@ The PMNS Jarlskog CP invariant from GTE orbit-ratio mixing angles and Z₇ CP ph
 
 with sin²θ₁₂ = 4/13, sin²θ₂₃ = 19/42, sin θ₁₃ = 11/73, δ = 8π/7 (CatAD+CatAL).
 
-Algebraic closed form (083C OQ-PMNS-JARLSKOG):
+Algebraic closed form:
 
   J_GTE = −(8184 × √437 / 5057221) × sin(π/7)
 
@@ -595,7 +595,7 @@ The CP asymmetry in the Fukugita-Yanagida mechanism:
 `real_yukawa_gives_zero_leptogenesis_cp` (CatAL, §7): ε₁ = 0 for real Yukawa.
 
 With Z₇ column phases in the Casas-Ibarra R matrix, h_D is complex, giving ε₁ ≠ 0.
-The numerical value ε₁^CI = 3.98×10⁻⁵ (CatA, H0 Round 3) uses:
+The numerical value ε₁^CI = 3.98×10⁻⁵ (CatA, numerical computation) uses:
   R_Z7: complex orthogonal matrix with phases e^{2πi·k/7} (k = 1, 4, 2 per generation)
   GTE seesaw: M_{R,1} ≈ 10^{10} GeV, M_{R,2} ≈ 2×10^{12} GeV (b_R = 5, 11 orbit indices)
 -/
@@ -732,7 +732,7 @@ theorem eps1_CI_z7_positive : (0 : ℝ) < eps1_CI_z7 := by
     Physical context:
     - Source: Z₇ column phases e^{2πi·k/7} in R_Z7 matrix, GTE seesaw M_{R,1}/M_{R,2} ratio
     - Formula: ε₁^CI = (3/(16π)) × Im[(h h†)²_{12}] / (h h†)_{11} × (M₁/M₂)
-    - Numerical value: 3.98×10⁻⁵ (CatA, H0 Round 3 computation)
+    - Numerical value: 3.98×10⁻⁵ (CatA, numerical computation)
     - Connected theorems: `pmns_cp_phase_from_z7_winding` (Z₇ CP phase δ = 8π/7, CatAL),
       `leptogenesis_cp_nonzero_exists` (structural nonzero CP from complex Y, CatAD)
 

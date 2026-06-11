@@ -45,22 +45,22 @@ GTE provides:
    PSC-admissible beable level.  If the continuum limit preserves the orbit mass
    spectrum (expected from structural continuity), the full Clay mass gap follows.
 
-**Axiom inventory (after Round 1):**
-- `gte_mass_formula_positive` — CLOSED (Round 1): now a proved theorem using the
+**Axiom inventory:**
+- `gte_mass_formula_positive` — CLOSED: a proved theorem using the
   trivial abstract-unit witness Δ = 1.  Zero axioms.  CatAL.
 - `psc_rc_requires_color_neutrality` (from ColorConfinement.lean): the color
-  confinement bridge axiom (separate file, separate rank).
+  confinement bridge axiom (separate file).
 
-**Path to fuller physical content (Round 2):**
+**Path to fuller physical content:**
 - Formalize GTE ridge sieve mass cascade in Lean (P01 §6): replace the abstract
-  witness with Δ = m_u ≈ 2.3 MeV, giving explicit physical content.  Estimated
-  5–10 sessions.  The CatAL status is already achieved; Round 2 adds precision.
+  witness with Δ = m_u ≈ 2.3 MeV, giving explicit physical content.
+  The CatAL status is already achieved; the cascade extension adds precision.
 
 ## Certification summary
 
 | Theorem | Status | Axioms |
 |---------|--------|--------|
-| `gte_mass_formula_positive` | **CatAL** | 0 (proved, Round 1) |
+| `gte_mass_formula_positive` | **CatAL** | 0 (proved) |
 | `beable_positive_mass` | **CatAL** | 0 |
 | `gen1_positive_mass` | **CatAL** | 0 |
 | `gen2_positive_mass` | **CatAL** | 0 |
@@ -92,7 +92,7 @@ This is the Lean axiom encoding the CatA mass cascade numerical result.
 /-- The GTE mass formula assigns positive mass to every non-vacuum PSC-admissible beable,
     with a uniform lower bound Δ > 0.
 
-    **Round 1 proof (trivial abstract-unit witness):** exhibits Δ = 1 (abstract unit) as
+    **Abstract-unit proof (trivial witness):** exhibits Δ = 1 (abstract unit) as
     the uniform lower bound. Every non-vacuum PSC-admissible beable is assigned mass = 1 ≥ 1
     = Δ > 0. This proves the mass gap EXISTS — that a positive lower bound can be found —
     without specifying its physical value.
@@ -101,10 +101,10 @@ This is the Lean axiom encoding the CatA mass cascade numerical result.
     The theorem only guarantees existence of a positive gap; it makes no claim about the
     gap's magnitude relative to any physical scale.
 
-    **Round 2 (future work):** replace Δ = 1 with Δ = m_u ≈ 2.3 MeV expressed in eV
+    **Future work:** replace Δ = 1 with Δ = m_u ≈ 2.3 MeV expressed in eV
     (= 2 300 000 eV), connecting to the GTE ridge sieve mass cascade from P01 §6.
     The formula: m_u from beable structure b_s = N_fam²(2N_fam+1) = 275, orbit depth 1.
-    This Round 2 formalization will elevate the theorem from CatAL (gap exists) to CatAL
+    This extension will elevate the theorem from CatAL (gap exists) to CatAL
     with explicit physical content (gap = m_u).
 
     **Certification:** CatAL — zero sorry, zero axioms. -/
@@ -200,7 +200,7 @@ theorem lightest_meson_positive_mass
 
     ## Proof structure (zero sorry, zero axioms)
 
-    1. `gte_mass_formula_positive` (CatAL, Round 1): ∃ Δ > 0, ∀ non-vacuum PSC b, ∃ mass ≥ Δ.
+    1. `gte_mass_formula_positive` (CatAL): ∃ Δ > 0, ∀ non-vacuum PSC b, ∃ mass ≥ Δ.
        Proved using abstract-unit witness Δ = 1.
     2. `d2_axiom` (CatAL): DWeight b > 0 → PSCAdmissible b.
     3. Combine: DWeight b > 0 ∧ b ≠ vacuum → PSCAdmissible b (step 2) → ∃ mass ≥ Δ (step 1).
@@ -209,7 +209,7 @@ theorem lightest_meson_positive_mass
 
     - Zero sorry.
     - Zero axioms.
-    - Round 2b (2026-05-24): `gte_mass_formula_physical` (§7) provides the
+    - `gte_mass_formula_physical` (§7) provides the
       physical-value version with Δ = m_u ≥ 1.8 MeV (PDG conservative lower
       bound on the up-quark mass).  `smGenMass` assigns this floor to all
       non-vacuum PSC states.  CatAL, zero sorry.  See §7 in this file.
@@ -251,8 +251,8 @@ structure (ℤ⁷ lattice instead of ℝ⁴ manifold) is the only gap from the C
 ### What remains
 
 **Continuum limit:** The full Clay Problem requires taking the lattice
-spacing → 0 and showing the mass gap survives.  This is the content of SPEC_285
-(FCA fractal CA continuum limit).  The AFCA architecture suggests the gap is
+spacing → 0 and showing the mass gap survives (the fractal-CA continuum-limit
+programme).  The AFCA architecture suggests the gap is
 preserved because the orbit spectrum is topological (it depends on orbit depth, not
 on lattice spacing), but the formal proof is open.
 
@@ -261,7 +261,7 @@ on lattice spacing), but the formal proof is open.
 | Claim | Lean status | Remaining work |
 |-------|-------------|----------------|
 | Color confinement | CatAD | close `psc_rc_requires_color_neutrality` |
-| Beable mass gap | **CatAL (this file)** | Round 2: explicit Δ = m_u |
+| Beable mass gap | **CatAL (this file)** | cascade extension: explicit Δ = m_u |
 | Continuum limit | Open | AFCA + renormalization |
 
 The beable mass gap is now fully certified (zero sorry, zero axioms).
@@ -313,7 +313,7 @@ theorem mass_hierarchy_gen3_gt_gen2_gt_gen1 :
   ⟨GTE_mass_gen3_gt_gen2, GTE_mass_gen2_gt_gen1, GTE_mass_gen1_pos⟩
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- §7  Physical mass gap anchor: up-quark PDG lower bound (Round 2b)
+-- §7  Physical mass gap anchor: up-quark PDG lower bound
 -- ─────────────────────────────────────────────────────────────────────────────
 
 /-- PDG 2024 central value for the up-quark mass in eV.
@@ -339,7 +339,7 @@ def up_quark_mass_lb_eV : ℚ := 1800000  -- m_u ≥ 1.8 MeV (PDG lower bound)
       orders of magnitude heavier, but the uniform assignment claims only the
       universal floor — a valid, conservative lower bound on every state.
     - The physical identification of each generation's mass via the UCL cascade
-      (P01 §§3–6) is Round 3 of this formalization programme.
+      (P01 §§3–6) is a planned extension of this formalization.
 
     Marked `noncomputable` because the `if` condition quantifies over a `Prop`
     (the decidable `PSCAdmissible` predicate), which is sufficient for all
@@ -359,12 +359,12 @@ theorem smGenMass_pos (b : Fin 5 → Fin 7)
   unfold smGenMass
   rw [if_pos ⟨h_psc, h_vac⟩]
 
-/-- **gte_mass_formula_physical** (CatAL, Round 2b):
+/-- **gte_mass_formula_physical** (CatAL):
     There exists a positive mass gap Δ ≥ 1.8 MeV such that every non-vacuum
     PSC-admissible beable has mass ≥ Δ.
 
     This upgrades the abstract-unit witness of `gte_mass_formula_positive`
-    (Δ = 1, Round 1) to the physical lower bound
+    (Δ = 1) to the physical lower bound
     Δ = `up_quark_mass_lb_eV` = 1.8 MeV (conservative PDG lower bound on m_u).
 
     **Scientific honesty:**
@@ -375,7 +375,7 @@ theorem smGenMass_pos (b : Fin 5 → Fin 7)
       a conservative uniform floor.  Actual masses of gen₂ and gen₃ are
       far higher (muon ≈ 105 MeV, tau ≈ 1777 MeV).
     - The formal derivation of each generation's mass from the GTE UCL cascade
-      is Round 3; this theorem certifies only the universal floor.
+      is future work; this theorem certifies only the universal floor.
 
     **Certification:** CatAL — zero sorry, zero axioms.
     The proof is `le_refl` after unfolding `smGenMass` via `smGenMass_pos`. -/

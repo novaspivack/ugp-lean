@@ -5,7 +5,7 @@ import UgpLean.ElegantKernel.Unconditional.UCLMassOrderingBounds
 import UgpLean.ElegantKernel.Unconditional.UCLMassOrderingDelta
 
 /-!
-# UCL Mass Ordering — Tier 2 of 083C-UCL-FORM
+# UCL Mass Ordering — Tier 2 of the UCL closed-form certification
 
 **Claim.** For each SM fermion sector (lepton, up-type, down-type), the
 generation-scaled UCL mass proxy
@@ -76,7 +76,7 @@ theorem down_ucl_mass_ordering_holds : downUclMassOrderingProp := by
   · exact ucl_mass_lt_gen12_diff (S₁ := _) (S₂ := _) rfl rfl down_log_delta12
   · exact ucl_mass_lt_gen23_diff (S₂ := _) (S₃ := _) rfl rfl down_log_delta23
 
-/-- **Tier 2 master theorem (083C-UCL-FORM).**
+/-- **Tier 2 master theorem.**
 
 For each SM fermion sector, the generation-scaled UCL mass proxy increases
 strictly with generation under the CatAL Elegant Kernel coefficients.

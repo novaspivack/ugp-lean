@@ -78,9 +78,8 @@ theorem sm_winding_numbers_from_Nc :
   ⟨by norm_num, by norm_num, by norm_num, by norm_num,
    by norm_num, by norm_num, by norm_num, by norm_num⟩
 
-/-- The winding numbers satisfy the anomaly cancellation condition:
-  Σ W_g = (N_c-1) + (-1) + 0 + (-N_c) = -2 + 0 = ... wait, need N_c copies of quarks
-  Corrected: per generation, N_c quarks of each type:
+/-- The winding numbers satisfy the anomaly cancellation condition.
+  Per generation, with N_c copies of each quark type:
   N_c × W_up + N_c × W_down + W_nu + W_e = N_c(N_c-1) + N_c(-1) + 0 + (-N_c)
   = N_c² - N_c - N_c - N_c = N_c² - 3N_c = N_c(N_c-3) = 3(3-3) = 0 for Nc=3. -/
 theorem anomaly_cancellation_from_windings :

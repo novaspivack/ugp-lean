@@ -40,14 +40,17 @@ def gteTransition (n t : ℕ) (qPrev : Option ℕ) (tri : Triple) : Triple × Op
       (⟨a', b', c'⟩, Option.some q)
 
 /-- Apply `s` transitions (`s = 0` returns the seed). Step indices `1 … s`. -/
-def gteAfterSteps (n s : ℕ) : Triple :=
-  let rec go (rem : ℕ) (tri : Triple) (qp : Option ℕ) (t : ℕ) : Triple :=
+def gteRunState (n rem : ℕ) (tri : Triple) (qp : Option ℕ) (t : ℕ) : Triple × Option ℕ :=
+  let rec go (rem : ℕ) (tri : Triple) (qp : Option ℕ) (t : ℕ) : Triple × Option ℕ :=
     match rem with
-    | 0 => tri
+    | 0 => (tri, qp)
     | Nat.succ rem' =>
       let p := gteTransition n t qp tri
       go rem' p.1 p.2 (t + 1)
-  go s LeptonSeed none 1
+  go rem tri qp t
+
+def gteAfterSteps (n s : ℕ) : Triple :=
+  (gteRunState n s LeptonSeed none 1).1
 
 /-! ### Lepton-seed trajectory at n = 10 (first nine states) -/
 

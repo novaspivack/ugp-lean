@@ -164,4 +164,42 @@ theorem fgci_bundle :
   · exact frobenius_chain_terminates
   · exact frobenius_chain_factored
 
+-- ════════════════════════════════════════════════════════════════
+-- §5  Ridge offset / minimal-embeddable-prime consilience (CatAL)
+-- ════════════════════════════════════════════════════════════════
+
+/-- Ridge offset `δ(n) = n + (n² − 1)/2` (integer branch when `n` is odd). -/
+def ridgeOffset (n : ℕ) : ℕ :=
+  n + (n ^ 2 - 1) / 2
+
+/-- Minimal odd prime `q` with `2 ∣ q − 1` and `n ∣ q − 1`. -/
+private def isQMinCandidate (n q : ℕ) : Bool :=
+  decide (Nat.Prime q ∧ 2 ≤ q ∧ q % 2 = 1 ∧ (q - 1) % 2 = 0 ∧ (q - 1) % n = 0)
+
+private def qMinPrime (n : ℕ) : ℕ :=
+  (List.range 200).find? (fun q => isQMinCandidate n q) |>.getD 0
+
+/-- `δ(n)` is an integer exactly when `n` is odd. -/
+def ridgeOffsetDefined (n : ℕ) : Bool :=
+  decide (n % 2 = 1)
+
+/-- Decidable certificate: for `n ∈ {2,…,30}`, `δ(n) = q_min(n)` iff `n = 3`. -/
+private def deltaQminCoincidenceCert : Bool :=
+  (List.range 29).all fun k =>
+    let n := k + 2
+    decide ((ridgeOffsetDefined n = true ∧ ridgeOffset n = qMinPrime n) ↔ n = 3)
+
+/-- **delta_qmin_coincidence_at_three** (CatAL, consilience-grade): for
+    `n ∈ {2,…,30}`, `δ(n) = q_min(n)` iff `n = 3`.  This is bounded
+    over-determination of the modulus chain, not an independent forcing route. -/
+theorem delta_qmin_coincidence_at_three :
+    deltaQminCoincidenceCert = true ∧
+    ((ridgeOffsetDefined 3 = true ∧ ridgeOffset 3 = qMinPrime 3) ↔ (3 : ℕ) = 3) := by
+  native_decide
+
+/-- **delta_qmin_at_nc** (CatAL): the canonical color rank realizes the coincidence. -/
+theorem delta_qmin_at_nc :
+    ridgeOffset N_c = qMinPrime N_c ∧ ridgeOffset N_c = 7 ∧ qMinPrime N_c = 7 := by
+  native_decide
+
 end GTE.Universality.FrobeniusChain

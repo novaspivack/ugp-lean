@@ -1137,7 +1137,7 @@ Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `Sec
 | **ucl_tier2_mass_ordering** | ElegantKernel.Unconditional.MasterCertification | Tier-2 mass-ordering bundle (alias of `ucl_fermion_mass_ordering`) |
 | **ucl_lepton_sector_koide_identity** | ElegantKernel.Unconditional.UCLKoide | Koide $Q=2/3$ from GTE-pinned phase + amplitude chain (CatAL) |
 | **ucl_tier3_lepton_koide** | ElegantKernel.Unconditional.MasterCertification | Tier-3 Koide bundle (alias) |
-| **oq_083c_ucl_3_resolution** | ElegantKernel.Unconditional.UCLKoide | UCL log form alone does not force $Q=2/3$; emergence needs amplitude chain |
+| **ucl_log_form_koide_independence** | ElegantKernel.Unconditional.UCLKoide | UCL log form alone does not force $Q=2/3$; emergence needs amplitude chain |
 | **thm_quarter_lock_catal** | QuarterLock | $k_M=-\varphi/2+7/2048$ (Quarter-Lock CatAL) |
 | **UCL interval infrastructure** | UCLLogBounds, UCLMassOrderingCoeffBounds, UCLMassOrderingInterval, UCLMassOrderingSBounds, UCLMassOrderingCerts, UCLMassOrderingBounds, UCLMassOrderingBridge | Margin certificates: $\log\varphi$, $\log(2\pi)$, all UCL coefficient intervals, six sector $\Delta_{12},\Delta_{23}$ bounds, 40 GTE $b$-seed log intervals (all zero sorry) |
 
@@ -1150,6 +1150,28 @@ Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `Sec
 | **b_L2_eq_two_Nc_Z7** | Universality.FrobeniusChain | $b_{L2}=2N_c|Z_7|=42$ (CatAL) |
 | **fgci_bundle** | Universality.FrobeniusChain | Joint FGCI + chain + $b_{\rm gen1}$ double determination (CatAL) |
 | **b_gen2_frobenius_factorization** | Universality.FrobeniusChain | $b_{\rm gen2}=2N_c|Z_7|$ factorization (CatAL) |
+| **delta_qmin_coincidence_at_three** | Universality.FrobeniusChain | For $n\in\{2,\ldots,30\}$, ridge offset $\delta(n)=n+(n^2-1)/2$ equals the minimal odd prime $q$ with $2\mid q-1$ and $n\mid q-1$ iff $n=3$ (consilience-grade bounded check; not an independent forcing route) (CatAL) |
+| **delta_qmin_at_nc** | Universality.FrobeniusChain | At $N_c=3$: $\delta(N_c)=q_{\min}(N_c)=7$ (CatAL) |
+
+### Direct-interpolation lift (`Universality.TriangleLiftTheorem`)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **gte_orbit_parity_provenance** | Universality.TriangleLiftTheorem | Total parities of the fifteen canonical P01 cascade triples reproduce the certified `smGen1` / `smGen2` / `smGen3` vectors (CatAL) |
+| **orbit_interpolation_vandermonde_full_rank** | Universality.TriangleLiftTheorem | Exhaustive $7^8$ census: orbit-only constraints leave $7$ multilinear survivors; orbit + vacuum transparency leave exactly one survivor $p$ (CatAL) |
+| **ugp_orbit_interpolation_lift** | Universality.TriangleLiftTheorem | Among all $7^8$ multilinear GF(7) rules, exactly one satisfies the parity-orbit ring evaluations together with vacuum transparency; it is $p=C+R-CR-LCR$; without vacuum transparency, exactly seven survive (CatAL) |
+| **evalMultilinear_eq_poly_p** | Universality.TriangleLiftTheorem | The certified interpolant agrees with `poly_p` on all GF(7) inputs (CatAL) |
+| **interpolation_lift_binary_corollary** | Universality.TriangleLiftTheorem | Binary restriction of the interpolant is Rule 110 (CatAL) |
+| **cup4_parity_uniqueness_from_lift** | Universality.TriangleLiftTheorem | CUP-4 uniqueness chain composed with the lift corollary (CatAL) |
+| **rule110_lift_sparsity_floor** | Universality.TriangleLiftTheorem | Rule-110 agreement on $\{0,1\}^3$ forces the unique interpolant $p$; flattened support has exactly four nonzero classes (MDL sparsity floor) (CatAL) |
+| **orbit_chirality_census** | Universality.TriangleLiftTheorem | Over all $120$ family orderings, $20$ admit a vacuum-transparent orbit rule; survivor union is $\{110,124\}$; reversal bijects the two $10$-sets (CatAL) |
+| **orbit_chirality_census_reflection_link** | Universality.TriangleLiftTheorem | Chirality census connects to the certified AGL(1,7) reflection swap Rule 124 $\leftrightarrow$ Rule 110 (CatAL) |
+| **multilinear_binary_determination** | Universality.TriangleLiftStructural | Structural full-rank theorem: the eight binary evaluations determine the multilinear GF(7) coefficients uniquely, by explicit inclusion–exclusion inversion of the binary Vandermonde system — no enumeration (CatAL) |
+| **orbit_vt_forces_interpolant** | Universality.TriangleLiftStructural | Structural lift: the parity-orbit ring evaluations cover seven of the eight binary neighbourhoods, vacuum transparency supplies the eighth, and Möbius inversion forces the interpolant $p$ (CatAL) |
+| **orbit_interpolation_lift_structural** | Universality.TriangleLiftStructural | Existence + uniqueness bundle for the structural lift in the multilinear function class (CatAL) |
+| **evalML_polyPFun_eq_poly_p** | Universality.TriangleLiftStructural | The interpolant's evaluation agrees with `poly_p` on all of GF(7)³ (CatAL) |
+| **gf7_flattening_binary_agreement** | Universality.TriangleLiftStructural | Exponent flattening preserves every binary evaluation of every canonical-form GF(7) polynomial (per-variable degree $\le 6$) (CatAL) |
+| **gf7_rule110_sparsity_floor** | Universality.TriangleLiftStructural | Strongest-form MDL sparsity floor: any canonical-form GF(7) polynomial whose binary restriction is Rule 110 flattens exactly to $p$ and has $\ge 4$ monomials — multilinearity MDL-forced (CatAL) |
 
 ### Fine-structure and Casimir identities (`Universality.AlphaEMStructuralIdentity`, `Universality.CasimirB0Relation`)
 
@@ -1306,9 +1328,9 @@ coprocessor gates, PSC-projection characterisation of $f_{\rm MDL}$, and KL dive
 | **fmdl_psc_projection_of_p** | Polynomial.PolyExplorations | $f_{\rm MDL}(L,C,R)=0$ whenever $(L,C,R)$ is not a fixed PSC neighborhood (corollary of `fmdl_zero_on_free_neighborhoods`) | CatAL |
 | **fmdl_psc_projection_binary** | Polynomial.PolyExplorations | $f_{\rm MDL}(L,C,R)=p(L,C,R)$ when all of $L,C,R\in\{0,1\}$ (binary sublayer) (decide) | CatAL |
 
-### CUP3DUniqueness — R11 additions (`Universality.CUP3DUniqueness`)
+### CUP3DUniqueness — orbit-topology additions (`Universality.CUP3DUniqueness`)
 
-New theorems proved in Round 11 (all zero sorry, CatAL).
+Additional theorems (all zero sorry, CatAL).
 
 | Theorem | Module | Statement | Cat |
 |---------|--------|-----------|-----|
@@ -1350,7 +1372,7 @@ operates at three nested levels: theory selection ($p$ from rule space), field d
 
 ---
 
-## Frontier Closures — Second Wave
+## Frontier Closures — Algebraic and Physical Certificates
 
 **Scope:** 80 net-new zero-`sorry` theorems (plus two conditional CatAL\|H1) across fourteen modules, plus two PARTIAL modules. Cat levels: **CatAL** unless noted **PARTIAL** or **CatAL\|H1**. Covers: golden-quadratic diagonal fixed-point structure, Eisenstein arithmetic of GTE constants, seven-ring dynamical-zeta orbit classification, Z₇ vacuum-selection mechanism with gauge-coupling hierarchy, kink-sector physics algebraic cores, biquadratic-compositum unification of the two master rings, the CC one-jump residual algebraic core, and the N_gen bracket-orientation theorem.
 
@@ -1465,6 +1487,153 @@ Certifies that for **every** ring length $n \ge 3$ the cyclic zero-energy config
 | **zero_energy_zero_center_forces_zero_right** | A zero-energy cell with centre 0 forces its right neighbour to 0 (local factorisation over $\mathbb{Z}/7$) | CatAL |
 | **zero_energy_any_zero_forces_all_zero** | Zero propagation: any vanishing cell on a zero-energy ring forces the vacuum ring $0^n$ | CatAL |
 | **ground_spin_values_card** | $\|\{0,1,5\}\| = 3$ | CatAL |
+
+---
+
+### Spin-7 directed wall spectroscopy (`Polynomial.SpinSevenWallSpectroscopy`)
+
+Twelve CatAL theorems. Module: `UgpLean/Polynomial/SpinSevenWallSpectroscopy.lean`. Zero sorry, zero custom axioms.
+
+Certifies the directed minimal-interface energies of the 49-node spin-7 pair digraph — edge `(a,b) \to (b,c)` weighted by the local triple energy $p(a,b,c)$ — together with bump (closed-excursion) energies and the half-integer gap exponent $(E_w(0\to1)+E_w(1\to0))/2 = 3/2$. Bounded Bellman–Ford search (48 rounds) on `Fin 49` distance tables; individual entries closed by `native_decide`.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **spin7_directed_wall_energies** | Master bundle: directed wall table, composite hub identity, bump table, half-integer gap | CatAL |
+| **directed_wall_energy_table** | $E_w(1\to0)=1$, $E_w(0\to1)=2$, $E_w(5\to0)=2$, $E_w(0\to5)=4$, $E_w(1\to5)=4$, $E_w(5\to1)=4$; $E_w(5\to1)=E_w(5\to0)+E_w(0\to1)$ | CatAL |
+| **loop_bump_energy_table** | $E_{\rm loop}(0)=2$, $E_{\rm loop}(1)=3$, $E_{\rm loop}(5)=4$ | CatAL |
+| **directed_wall_half_integer_gap** | $(E_w(0\to1)+E_w(1\to0))/2 = 3/2$ as exact rational arithmetic | CatAL |
+| Plus 8 supporting `native_decide` certificates | Individual wall/bump entries and composite identity | CatAL |
+
+---
+
+### Spin-7 spectral amplitude certificates (`Polynomial.SpinSevenSpectatorAmplitude`, `Polynomial.SpinSevenGapAmplitude`, `Polynomial.SpinSevenTransferPrimitivity`)
+
+Thirty CatAL theorems across three modules. Zero sorry, zero custom axioms. Together these certify the combinatorial and linear-algebraic core of the spin-7 chain gap law $\Delta(\beta) = e^{-3\beta/2}$: the amplitude $A = 1$, the spectator mechanism, and the Perron–Frobenius hypothesis package for the thermal transfer matrix.
+
+#### Spectator amplitude (`Polynomial.SpinSevenSpectatorAmplitude`)
+
+Ten theorems. The zero-energy adjacency matrix of the 49-node pair digraph has spectral radius exactly 1 (the only recurrent structure is the three uniform self-loops), and a three-level cluster perturbation eigensystem gives ordered gaps $\{T, 2T\}$ — the spectator mechanism behind the gap-law amplitude.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **zero_energy_ground_rows_self_loop_only** | Ground rows of the zero-energy adjacency matrix carry only the uniform self-loops (`native_decide`) | CatAL |
+| **zero_energy_power_stabilizes** | $Z^{22} = Z^{23}$ — powers of the zero-energy matrix stabilize | CatAL |
+| **zero_energy_powers_eventually_constant** | $Z^k$ constant for all $k \ge 22$ | CatAL |
+| **zero_energy_closed_walk_count_three** | $\mathrm{tr}(Z^k) = 3$ for all $k \ge 1$ — spectral radius 1 with three recurrent loops | CatAL |
+| **cluster_eigenvector_plus / minus / spectator** | Explicit eigensystem of the 3×3 cluster-coupling matrix | CatAL |
+| **cluster_gap_pair** | Ordered eigenvalue gaps of the cluster matrix are $\{T, 2T\}$ with $T = \sqrt{ab}$ | CatAL |
+| **spin7_spectator_amplitude** | Master bundle: $\rho = 1$ package + cluster eigensystem + $A = 1$ tie-in via the certified wall counts | CatAL |
+
+#### Gap amplitude (`Polynomial.SpinSevenGapAmplitude`)
+
+Thirteen theorems. Through-walk counts of the pair digraph between ground loops, computed in the weight-truncation semiring $\mathbb{N}[t]/(t^5)$ with a frontier-death certificate making the counts total over all walk lengths.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **wall_frontier_death** | The weight-$\le 4$ interior frontier from each ground loop is empty after 45 steps (`native_decide`) | CatAL |
+| **frontier_death_persists / through_counts_vanish_beyond** | Frontier death propagates: no through-walk beyond the certified horizon | CatAL |
+| **minimal_wall_count_one_to_zero** | $c_{10} = 1$ at weight 1 | CatAL |
+| **minimal_wall_count_zero_to_one** | $c_{01} = 1$ at weight 2 | CatAL |
+| **bump_count_sector_zero / one / five** | $b_0 = 1$, $b_1 = 1$, $b_5 = 2$ | CatAL |
+| **gap_amplitude_sq_unit** | $A^2 = c_{10}\cdot c_{01} = 1$ — the gap-law amplitude is exactly 1 | CatAL |
+| **gap_amplitude_correction_half** | Leading correction $b_0/2 = 1/2$ in $\mathbb{Q}$ | CatAL |
+| **spin7_gap_amplitude_certificate** | Master bundle: counts, frontier death, $A^2 = 1$, correction | CatAL |
+
+#### Transfer-matrix Perron–Frobenius hypotheses (`Polynomial.SpinSevenTransferPrimitivity`)
+
+Seven theorems, uniform in the inverse temperature $\beta : \mathbb{R}$.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **thermalTransfer_nonneg** | $M(\beta)$ entrywise non-negative for all $\beta$ | CatAL |
+| **thermal_transfer_sq_pos** | Every entry of $M(\beta)^2$ is strictly positive — primitivity with explicit power $k = 2$ | CatAL |
+| **spin7_thermal_transfer_primitive** | $M(\beta)$ is primitive for all real $\beta$ | CatAL |
+| **spin7_thermal_transfer_irreducible** | Irreducibility, via primitivity | CatAL |
+| **thermal_transfer_uniform_diag_pos** | Positive uniform self-loops on the diagonal | CatAL |
+| **spin7_transfer_pf_hypotheses** | Master bundle: the complete Perron–Frobenius hypothesis package, uniform in $\beta$ | CatAL |
+
+The leading-eigenvalue positivity/simplicity conclusion itself awaits a Perron–Frobenius eigenvalue theorem in Mathlib; the hypothesis package certified here is the complete input to that theorem.
+
+---
+
+### CMCA physical-point dictionary (`Physics.CMCAPhysicalPoint`)
+
+Eight CatAL theorems (one conditional on `MDLSaturationSpacingHypothesis`). Module: `UgpLean/Physics/CMCAPhysicalPoint.lean`. Zero sorry, zero custom axioms.
+
+Given the seven-kink threshold $\Lambda = 7M$, SCC kink mass $M = (8/49)m_\varphi$ (`mkink_from_scc`), and the named CatB premise `MDLSaturationSpacingHypothesis` ($a\cdot\Lambda = 1$ with positivity), certifies $aM = 1/7$, $am_\varphi = 7/8$, and $\xi^* = 1/(aM) = 7 = |Z_7|$.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **cmca_physical_point_dictionary** | From $\Lambda = 7M$, $M = (8/49)m_\varphi$, and `MDLSaturationSpacingHypothesis`: $aM = 1/7 \land am_\varphi = 7/8 \land \xi^* = 7$ | CatAL \| H |
+| **cmca_physical_point_tree_reading** | Tree-reading witness $a = 1/\Lambda$ reproduces the dictionary at $M = M_{\rm kink}^{\rm SCC}$ | CatAL |
+| **a_times_M_eq_one_seventh** | $aM = 1/7$ from $a\Lambda = 1$ and $\Lambda = 7M$ | CatAL |
+| **a_times_mphi_eq_seven_eighths** | $am_\varphi = 7/8$ from $M = (8/49)m_\varphi$ | CatAL |
+| **xi_star_eq_seven** | $\xi^* = 1/(aM) = 7$ | CatAL |
+| **xi_star_eq_z7_order** | $\xi^* = |Z_7|$ | CatAL |
+| **mdl_saturation_tree_reading** | Consistent instance of `MDLSaturationSpacingHypothesis` at $a = 1/(7M)$ | CatAL |
+
+**Premise structure:** `MDLSaturationSpacingHypothesis` — assumes only $a > 0$, $\Lambda > 0$, and $a\cdot\Lambda = 1$; threshold identification $\Lambda = 7M$ is supplied separately.
+
+#### Tape Saturation Theorem (`Physics.CMCAPhysicalPoint`)
+
+Upgrades `MDLSaturationSpacingHypothesis` from a bare assumption to a theorem-with-named-premise under `ComptonSupportCriterion` + extremization at the hosting boundary. Zero sorry, zero custom axioms.
+
+| Theorem / structure | Statement | Cat |
+|---------|-----------|-----|
+| **ComptonSupportCriterion** | Named premise: κ = 1 hosting `a·Λ ≤ ℏc` at the faithfulness threshold; tape discreteness pins `ℏc = 1` in natural units | CatB |
+| **faithful_tape_admissibility** | Faithful tapes satisfy `a·Λ ≤ 1` (b1) | CatAL |
+| **compton_support_hosting_general** | Threshold hosting propagates to every hosted mass `m ≤ Λ` | CatAL |
+| **faithful_tape_spacing_bound** | Admissible spacing bounded by `a* = ℏc/Λ` | CatAL |
+| **StrictTapePricingHypothesis** | Strict monotone MDL pricing in tape spacing (b2) | CatAD |
+| **tape_pricing_monotonicity** | Coarser admissible spacing strictly lowers cost | CatAD |
+| **TapeSaturationExtremization** | MDL attains hosting boundary `a·Λ = ℏc` (b3 + b4) | CatAD |
+| **tape_saturation_theorem** | Under extremization + CSC: `a·Λ = 1` | CatAD \| CSC |
+| **compton_support_derives_mdl_saturation** | Bridge `ComptonSupportCriterion` → `MDLSaturationSpacingHypothesis` | CatAD \| CSC |
+| **tape_saturation_physical_point_dictionary** | Full dictionary from CSC-derived spacing | CatAD \| CSC |
+| **mdl_supremum_from_strict_pricing** | Strict pricing forces coarser admissible optimum | CatAD |
+| **planck_eft_blocking_ratio** | Blocking-ratio web: $M_{\rm Pl}/\Lambda_{\rm GTE} = 3^{10}7^{18}/2^4$, monomial $3^{10}7^{18}=7^8 21^{10}$, seven-eighths factorization, fine-end $M_{\rm Pl}/M_{\rm kink}=21^{10}7^9/2^4$ via $M_{\rm kink}/m_\tau=8/49$ | CatAL |
+| **RegisterWindowReadability** | Named premise: winding-sector label recoverable within one correlation window ($\xi\ge 1$) | CatB |
+| **hosting_boundary_csc_equivalence** | CSC, register-window readability, and $\kappa=1$ hosting mutually entailed at saturation (named premises) | CatAD \| CSC |
+| **saturation_alphabet_bijection** | At $a\cdot\Lambda=1$: seven winding sectors biject with seven register values; $\xi(M)=7$ | CatAD \| CSC |
+
+#### Variational carrier pricing (`Gravity.TemporalVoxelCC`)
+
+Module: `UgpLean/Gravity/TemporalVoxelCC.lean`. Zero sorry, zero custom axioms.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **pmdl_carrier_coefficient_identities** | Three-form coefficient chain $N\tau(2C_{\rm Gorard}/N)=2C_{\rm Gorard}\tau=N^2/(D^2|Z_7|)=9/112$ | CatAL |
+| **pmdl_carrier_pricing_chain** | Bundle: coefficient identities, $\Omega=3\pi/14$, half-quantum and lattice pricing gaps, bracket exclusion of half-quantum pricing | CatAL |
+| **half_quantum_pricing_excluded** | $2\pi^2>1$ and census endpoint $<2\pi^2$ (half-quantum pricing excluded) | CatAL |
+
+Item (iv) Gaussian-split carrier–record factorization: **deferred** (Mathlib Gaussian-integral infrastructure).
+
+#### GTE trajectory containment (`Universality.GTECompilation`)
+
+Module: `UgpLean/Universality/GTECompilation.lean`. Zero sorry, zero custom axioms.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **gte_uwca_run_eq_after_steps** | Register-machine run equals `gteAfterSteps` (definitional packaging via `gteRunState`) | CatAL |
+| **gte_two_step_compilation_theorem** | Canonical seed trace through two GTE macro-steps (`native_decide`) | CatAL |
+| **gte_two_tile_compilation_theorem** | Two-tile $\sigma_{\rm GTE}$ program (odd register step + even Fibonacci/Mersenne $c$-rule tile) reproduces first two GTE triples from the Lepton seed | CatAL |
+| **gte_trajectory_two_tile_containment** | Finite-horizon `gte_uwca_run n H = gteAfterSteps n H` via register machine / two-tile specialization | CatAL |
+| **gte_trajectory_is_uwca_trajectory** | $\forall H$, `gte_uwca_run n H = gteAfterSteps n H` (finite-horizon coordinate equality) | CatAL |
+
+#### Parity-projection forcing (`Universality.ParityProjectionBattery`, `Universality.ParityProjectionForcing`)
+
+Modules: `UgpLean/Universality/ParityProjectionBattery.lean` (census kernels), `UgpLean/Universality/ParityProjectionForcing.lean` (bundle). Zero sorry, zero custom axioms.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **additive_battery_mod_two** … **additive_battery_mod_seven** | Per-modulus additive homomorphism census ($m=2,\ldots,7$); mirrors R33 Python oracle | CatAL |
+| **additive_battery_totals** | Aggregate status split $277/490/5/5$ over $777$ nonzero forms; three SCC/conjugate tallies | CatAL |
+| **unit_conjugate_two_forced_scc** | $(2,2,2)\bmod 4$ forced + shadow-closed; witness for $g_2$ | CatAL |
+| **unit_conjugate_three_forced_scc** | $(3,3,3)\bmod 6$ forced + shadow-closed; witness for $g_3$ | CatAL |
+| **parity_projection_additive_forcing** | Bundle: totals + per-$m$ censuses + parity-factoring survivors + $g_1=p$, $g_2$, $g_3$ witnesses | CatAL |
+| **mod2_recoding_chunk_zero** … **mod2_recoding_chunk_six** | Seven coordinate chunks ($2401$ assignments each) of mod-2 $\mathrm{GF}(7)$ recoding census | CatAL |
+| **mod2_recoding_totals** | Aggregate $7392/8820/343/252$; $12$ SCC ($6$ parity-factor + $6$ Rule-106 product-parity) | CatAL |
+| **parity_projection_mod2_recoding_forcing** | Bundle: $7^5=16807$ exhaustive census + chunk certificates | CatAL |
 
 ---
 
