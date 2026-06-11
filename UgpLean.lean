@@ -119,6 +119,8 @@ import UgpLean.Universality.UWCAembedsRule110
 import UgpLean.Universality.TuringUniversal
 import UgpLean.Universality.ArchitectureBridge
 import UgpLean.Universality.CUP4TotalParity
+import UgpLean.Universality.TriangleLiftTheorem
+import UgpLean.Universality.TriangleLiftStructural
 import UgpLean.Universality.CUP11ModSeven
 import UgpLean.Universality.TwoLayerConfluence
 import UgpLean.Universality.GTECompilation
@@ -143,6 +145,7 @@ import UgpLean.Polynomial.AGL17ChiralZ2
 import UgpLean.Polynomial.SpinSevenGroundSpace
 import UgpLean.Polynomial.SpinSevenWallSpectroscopy
 import UgpLean.Polynomial.SpinSevenGapAmplitude
+import UgpLean.Polynomial.SpinSevenSpectatorAmplitude
 import UgpLean.Polynomial.SpinSevenTransferPrimitivity
 import UgpLean.Polynomial.MDLThreeLevelUnification
 import UgpLean.Polynomial.GTECausalTree

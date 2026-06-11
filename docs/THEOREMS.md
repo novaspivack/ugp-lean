@@ -1150,6 +1150,28 @@ Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `Sec
 | **b_L2_eq_two_Nc_Z7** | Universality.FrobeniusChain | $b_{L2}=2N_c|Z_7|=42$ (CatAL) |
 | **fgci_bundle** | Universality.FrobeniusChain | Joint FGCI + chain + $b_{\rm gen1}$ double determination (CatAL) |
 | **b_gen2_frobenius_factorization** | Universality.FrobeniusChain | $b_{\rm gen2}=2N_c|Z_7|$ factorization (CatAL) |
+| **delta_qmin_coincidence_at_three** | Universality.FrobeniusChain | For $n\in\{2,\ldots,30\}$, ridge offset $\delta(n)=n+(n^2-1)/2$ equals the minimal odd prime $q$ with $2\mid q-1$ and $n\mid q-1$ iff $n=3$ (consilience-grade bounded check; not an independent forcing route) (CatAL) |
+| **delta_qmin_at_nc** | Universality.FrobeniusChain | At $N_c=3$: $\delta(N_c)=q_{\min}(N_c)=7$ (CatAL) |
+
+### Direct-interpolation lift (`Universality.TriangleLiftTheorem`)
+
+| Theorem | Module | Statement |
+|---------|--------|-----------|
+| **gte_orbit_parity_provenance** | Universality.TriangleLiftTheorem | Total parities of the fifteen canonical P01 cascade triples reproduce the certified `smGen1` / `smGen2` / `smGen3` vectors (CatAL) |
+| **orbit_interpolation_vandermonde_full_rank** | Universality.TriangleLiftTheorem | Exhaustive $7^8$ census: orbit-only constraints leave $7$ multilinear survivors; orbit + vacuum transparency leave exactly one survivor $p$ (CatAL) |
+| **ugp_orbit_interpolation_lift** | Universality.TriangleLiftTheorem | Among all $7^8$ multilinear GF(7) rules, exactly one satisfies the parity-orbit ring evaluations together with vacuum transparency; it is $p=C+R-CR-LCR$; without vacuum transparency, exactly seven survive (CatAL) |
+| **evalMultilinear_eq_poly_p** | Universality.TriangleLiftTheorem | The certified interpolant agrees with `poly_p` on all GF(7) inputs (CatAL) |
+| **interpolation_lift_binary_corollary** | Universality.TriangleLiftTheorem | Binary restriction of the interpolant is Rule 110 (CatAL) |
+| **cup4_parity_uniqueness_from_lift** | Universality.TriangleLiftTheorem | CUP-4 uniqueness chain composed with the lift corollary (CatAL) |
+| **rule110_lift_sparsity_floor** | Universality.TriangleLiftTheorem | Rule-110 agreement on $\{0,1\}^3$ forces the unique interpolant $p$; flattened support has exactly four nonzero classes (MDL sparsity floor) (CatAL) |
+| **orbit_chirality_census** | Universality.TriangleLiftTheorem | Over all $120$ family orderings, $20$ admit a vacuum-transparent orbit rule; survivor union is $\{110,124\}$; reversal bijects the two $10$-sets (CatAL) |
+| **orbit_chirality_census_reflection_link** | Universality.TriangleLiftTheorem | Chirality census connects to the certified AGL(1,7) reflection swap Rule 124 $\leftrightarrow$ Rule 110 (CatAL) |
+| **multilinear_binary_determination** | Universality.TriangleLiftStructural | Structural full-rank theorem: the eight binary evaluations determine the multilinear GF(7) coefficients uniquely, by explicit inclusion–exclusion inversion of the binary Vandermonde system — no enumeration (CatAL) |
+| **orbit_vt_forces_interpolant** | Universality.TriangleLiftStructural | Structural lift: the parity-orbit ring evaluations cover seven of the eight binary neighbourhoods, vacuum transparency supplies the eighth, and Möbius inversion forces the interpolant $p$ (CatAL) |
+| **orbit_interpolation_lift_structural** | Universality.TriangleLiftStructural | Existence + uniqueness bundle for the structural lift in the multilinear function class (CatAL) |
+| **evalML_polyPFun_eq_poly_p** | Universality.TriangleLiftStructural | The interpolant's evaluation agrees with `poly_p` on all of GF(7)³ (CatAL) |
+| **gf7_flattening_binary_agreement** | Universality.TriangleLiftStructural | Exponent flattening preserves every binary evaluation of every canonical-form GF(7) polynomial (per-variable degree $\le 6$) (CatAL) |
+| **gf7_rule110_sparsity_floor** | Universality.TriangleLiftStructural | Strongest-form MDL sparsity floor: any canonical-form GF(7) polynomial whose binary restriction is Rule 110 flattens exactly to $p$ and has $\ge 4$ monomials — multilinearity MDL-forced (CatAL) |
 
 ### Fine-structure and Casimir identities (`Universality.AlphaEMStructuralIdentity`, `Universality.CasimirB0Relation`)
 
@@ -1502,7 +1524,7 @@ Given the seven-kink threshold $\Lambda = 7M$, SCC kink mass $M = (8/49)m_\varph
 
 **Premise structure:** `MDLSaturationSpacingHypothesis` — assumes only $a > 0$, $\Lambda > 0$, and $a\cdot\Lambda = 1$; threshold identification $\Lambda = 7M$ is supplied separately.
 
-#### Tape Saturation Theorem (`Physics.CMCAPhysicalPoint`, LT-088-61)
+#### Tape Saturation Theorem (`Physics.CMCAPhysicalPoint`)
 
 Upgrades `MDLSaturationSpacingHypothesis` from a bare assumption to a theorem-with-named-premise under `ComptonSupportCriterion` + extremization at the hosting boundary. Zero sorry, zero custom axioms.
 
