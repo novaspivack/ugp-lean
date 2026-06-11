@@ -142,6 +142,8 @@ import UgpLean.Polynomial.BiquadraticCompositum
 import UgpLean.Polynomial.AGL17ChiralZ2
 import UgpLean.Polynomial.SpinSevenGroundSpace
 import UgpLean.Polynomial.SpinSevenWallSpectroscopy
+import UgpLean.Polynomial.SpinSevenGapAmplitude
+import UgpLean.Polynomial.SpinSevenTransferPrimitivity
 import UgpLean.Polynomial.MDLThreeLevelUnification
 import UgpLean.Polynomial.GTECausalTree
 import UgpLean.Universality.CUP3DPSCUnification
