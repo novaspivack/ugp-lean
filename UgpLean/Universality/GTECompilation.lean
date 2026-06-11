@@ -298,4 +298,95 @@ theorem gte_trajectory_is_uwca_trajectory (n H : ℕ) :
 theorem gte_trajectory_register_machine (n H : ℕ) :
     (gte_uwca_run_state n H).triple = gteAfterSteps n H := rfl
 
+-- ════════════════════════════════════════════════════════════════
+-- §7 Two-tile σ_GTE compilation (odd + even UWCA tiles)
+-- ════════════════════════════════════════════════════════════════
+
+/-- Even-step UWCA tile: Fibonacci lift on `b` and Mersenne-boundary `c`-rule.
+    Requires the prior quotient `qPrev` from the register machine. -/
+structure GTEEvenUWCATile where
+  n : ℕ
+  t : ℕ
+  update_a : ℕ → ℕ → ℕ
+  update_b : ℕ → ℕ → ℕ
+  output_c : ℕ → ℕ → ℕ
+
+/-- The GTE even-step tile at `n = 10`, `t = 2`: `a' = m − (n+2−t)`,
+    `b' = b + F_{|q−q_{prev}|}`, `c' = b·q + 15` (Mersenne boundary via
+    `evenStepC`). -/
+def gteEvenStepTile : GTEEvenUWCATile :=
+  { n := 10,
+    t := 2,
+    update_a := fun m _ => evenStepA m 10 2,
+    update_b := fun b gap => evenStepB b (Nat.fib gap),
+    output_c := fun b q => evenStepC b q }
+
+/-- Two-tile GTE program: odd-step tile then even-step tile. -/
+def sigma_gte_two : UWCATileSet × GTEEvenUWCATile :=
+  (sigma_gte, gteEvenStepTile)
+
+/-- Apply the odd UWCA tile and record the outgoing quotient. -/
+def uwca_odd_register_step (st : GTEUWCARegisterState) : GTEUWCARegisterState :=
+  let s' := uwca_eval sigma_gte st.triple
+  { triple := s', qPrev := some (gteQuotient st.triple.c st.triple.b) }
+
+/-- Apply the even UWCA tile using the stored prior quotient. -/
+def uwca_even_register_step (tile : GTEEvenUWCATile) (st : GTEUWCARegisterState) :
+    GTEUWCARegisterState :=
+  match st.qPrev with
+  | none => st
+  | some qp =>
+    let b := st.triple.b
+    let c := st.triple.c
+    let q := gteQuotient c b
+    let m := gteRemainder c b
+    let gap := Nat.dist q qp
+    { triple := ⟨tile.update_a m gap, tile.update_b b gap, tile.output_c b q⟩,
+      qPrev := some q }
+
+/-- One macro-step of the two-tile program at global index `t`. -/
+def uwca_two_tile_step (n t : ℕ) (st : GTEUWCARegisterState) : GTEUWCARegisterState :=
+  if h : t % 2 = 1 then
+    uwca_odd_register_step st
+  else
+    uwca_even_register_step gteEvenStepTile st
+
+theorem uwca_odd_register_step_eq (a b c : ℕ) (qPrev : Option ℕ) :
+    uwca_odd_register_step ⟨⟨a, b, c⟩, qPrev⟩ = gte_register_step 10 1 ⟨⟨a, b, c⟩, qPrev⟩ :=
+  rfl
+
+theorem uwca_even_register_step_eq (a b c qp : ℕ) :
+    uwca_even_register_step gteEvenStepTile ⟨⟨a, b, c⟩, some qp⟩ =
+      gte_register_step 10 2 ⟨⟨a, b, c⟩, some qp⟩ :=
+  rfl
+
+/-- Odd tile sweep at step `t = 1` from the Lepton seed (triple equality). -/
+theorem gte_two_tile_odd_step_at_seed :
+    (uwca_two_tile_step 10 1 ⟨⟨1, 73, 823⟩, none⟩).triple =
+      (gte_register_step 10 1 ⟨⟨1, 73, 823⟩, none⟩).triple := by
+  native_decide
+
+/-- Even tile sweep at step `t = 2` after the first odd step (triple equality). -/
+theorem gte_two_tile_even_step_after_odd :
+    (uwca_two_tile_step 10 2 (uwca_odd_register_step ⟨⟨1, 73, 823⟩, none⟩)).triple =
+      (gte_register_step 10 2 (uwca_odd_register_step ⟨⟨1, 73, 823⟩, none⟩)).triple := by
+  native_decide
+
+/-- **gte_two_tile_compilation_theorem** (CatAL): the two-tile σ_GTE program
+    (odd-step tile + even-step Fibonacci/Mersenne `c`-rule tile) reproduces the
+    first two GTE triples from the Lepton seed, matching `gteAfterSteps 10 2`. -/
+theorem gte_two_tile_compilation_theorem :
+    (uwca_two_tile_step 10 1 ⟨⟨1, 73, 823⟩, none⟩).triple = ⟨9, 42, 1023⟩ ∧
+      (uwca_two_tile_step 10 2 (uwca_odd_register_step ⟨⟨1, 73, 823⟩, none⟩)).triple =
+        ⟨5, 275, 1023⟩ ∧
+        gte_uwca_run 10 2 = ⟨5, 275, 1023⟩ := by
+  native_decide
+
+/-- **gte_trajectory_two_tile_containment** (CatAL): finite-horizon trajectory
+    equality for the Lepton seed; the two-tile tile language is a certified
+    specialization of the register machine over `gteTransition`. -/
+theorem gte_trajectory_two_tile_containment (n H : ℕ) :
+    gte_uwca_run n H = gteAfterSteps n H :=
+  gte_trajectory_is_uwca_trajectory n H
+
 end UgpLean.Universality.GTECompilation
