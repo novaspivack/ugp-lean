@@ -1137,7 +1137,7 @@ Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `Sec
 | **ucl_tier2_mass_ordering** | ElegantKernel.Unconditional.MasterCertification | Tier-2 mass-ordering bundle (alias of `ucl_fermion_mass_ordering`) |
 | **ucl_lepton_sector_koide_identity** | ElegantKernel.Unconditional.UCLKoide | Koide $Q=2/3$ from GTE-pinned phase + amplitude chain (CatAL) |
 | **ucl_tier3_lepton_koide** | ElegantKernel.Unconditional.MasterCertification | Tier-3 Koide bundle (alias) |
-| **oq_083c_ucl_3_resolution** | ElegantKernel.Unconditional.UCLKoide | UCL log form alone does not force $Q=2/3$; emergence needs amplitude chain |
+| **ucl_log_form_koide_independence** | ElegantKernel.Unconditional.UCLKoide | UCL log form alone does not force $Q=2/3$; emergence needs amplitude chain |
 | **thm_quarter_lock_catal** | QuarterLock | $k_M=-\varphi/2+7/2048$ (Quarter-Lock CatAL) |
 | **UCL interval infrastructure** | UCLLogBounds, UCLMassOrderingCoeffBounds, UCLMassOrderingInterval, UCLMassOrderingSBounds, UCLMassOrderingCerts, UCLMassOrderingBounds, UCLMassOrderingBridge | Margin certificates: $\log\varphi$, $\log(2\pi)$, all UCL coefficient intervals, six sector $\Delta_{12},\Delta_{23}$ bounds, 40 GTE $b$-seed log intervals (all zero sorry) |
 
@@ -1328,9 +1328,9 @@ coprocessor gates, PSC-projection characterisation of $f_{\rm MDL}$, and KL dive
 | **fmdl_psc_projection_of_p** | Polynomial.PolyExplorations | $f_{\rm MDL}(L,C,R)=0$ whenever $(L,C,R)$ is not a fixed PSC neighborhood (corollary of `fmdl_zero_on_free_neighborhoods`) | CatAL |
 | **fmdl_psc_projection_binary** | Polynomial.PolyExplorations | $f_{\rm MDL}(L,C,R)=p(L,C,R)$ when all of $L,C,R\in\{0,1\}$ (binary sublayer) (decide) | CatAL |
 
-### CUP3DUniqueness — R11 additions (`Universality.CUP3DUniqueness`)
+### CUP3DUniqueness — orbit-topology additions (`Universality.CUP3DUniqueness`)
 
-New theorems proved in Round 11 (all zero sorry, CatAL).
+Additional theorems (all zero sorry, CatAL).
 
 | Theorem | Module | Statement | Cat |
 |---------|--------|-----------|-----|
@@ -1372,7 +1372,7 @@ operates at three nested levels: theory selection ($p$ from rule space), field d
 
 ---
 
-## Frontier Closures — Second Wave
+## Frontier Closures — Algebraic and Physical Certificates
 
 **Scope:** 80 net-new zero-`sorry` theorems (plus two conditional CatAL\|H1) across fourteen modules, plus two PARTIAL modules. Cat levels: **CatAL** unless noted **PARTIAL** or **CatAL\|H1**. Covers: golden-quadratic diagonal fixed-point structure, Eisenstein arithmetic of GTE constants, seven-ring dynamical-zeta orbit classification, Z₇ vacuum-selection mechanism with gauge-coupling hierarchy, kink-sector physics algebraic cores, biquadratic-compositum unification of the two master rings, the CC one-jump residual algebraic core, and the N_gen bracket-orientation theorem.
 
@@ -1503,6 +1503,56 @@ Certifies the directed minimal-interface energies of the 49-node spin-7 pair dig
 | **loop_bump_energy_table** | $E_{\rm loop}(0)=2$, $E_{\rm loop}(1)=3$, $E_{\rm loop}(5)=4$ | CatAL |
 | **directed_wall_half_integer_gap** | $(E_w(0\to1)+E_w(1\to0))/2 = 3/2$ as exact rational arithmetic | CatAL |
 | Plus 8 supporting `native_decide` certificates | Individual wall/bump entries and composite identity | CatAL |
+
+---
+
+### Spin-7 spectral amplitude certificates (`Polynomial.SpinSevenSpectatorAmplitude`, `Polynomial.SpinSevenGapAmplitude`, `Polynomial.SpinSevenTransferPrimitivity`)
+
+Thirty CatAL theorems across three modules. Zero sorry, zero custom axioms. Together these certify the combinatorial and linear-algebraic core of the spin-7 chain gap law $\Delta(\beta) = e^{-3\beta/2}$: the amplitude $A = 1$, the spectator mechanism, and the Perron–Frobenius hypothesis package for the thermal transfer matrix.
+
+#### Spectator amplitude (`Polynomial.SpinSevenSpectatorAmplitude`)
+
+Ten theorems. The zero-energy adjacency matrix of the 49-node pair digraph has spectral radius exactly 1 (the only recurrent structure is the three uniform self-loops), and a three-level cluster perturbation eigensystem gives ordered gaps $\{T, 2T\}$ — the spectator mechanism behind the gap-law amplitude.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **zero_energy_ground_rows_self_loop_only** | Ground rows of the zero-energy adjacency matrix carry only the uniform self-loops (`native_decide`) | CatAL |
+| **zero_energy_power_stabilizes** | $Z^{22} = Z^{23}$ — powers of the zero-energy matrix stabilize | CatAL |
+| **zero_energy_powers_eventually_constant** | $Z^k$ constant for all $k \ge 22$ | CatAL |
+| **zero_energy_closed_walk_count_three** | $\mathrm{tr}(Z^k) = 3$ for all $k \ge 1$ — spectral radius 1 with three recurrent loops | CatAL |
+| **cluster_eigenvector_plus / minus / spectator** | Explicit eigensystem of the 3×3 cluster-coupling matrix | CatAL |
+| **cluster_gap_pair** | Ordered eigenvalue gaps of the cluster matrix are $\{T, 2T\}$ with $T = \sqrt{ab}$ | CatAL |
+| **spin7_spectator_amplitude** | Master bundle: $\rho = 1$ package + cluster eigensystem + $A = 1$ tie-in via the certified wall counts | CatAL |
+
+#### Gap amplitude (`Polynomial.SpinSevenGapAmplitude`)
+
+Thirteen theorems. Through-walk counts of the pair digraph between ground loops, computed in the weight-truncation semiring $\mathbb{N}[t]/(t^5)$ with a frontier-death certificate making the counts total over all walk lengths.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **wall_frontier_death** | The weight-$\le 4$ interior frontier from each ground loop is empty after 45 steps (`native_decide`) | CatAL |
+| **frontier_death_persists / through_counts_vanish_beyond** | Frontier death propagates: no through-walk beyond the certified horizon | CatAL |
+| **minimal_wall_count_one_to_zero** | $c_{10} = 1$ at weight 1 | CatAL |
+| **minimal_wall_count_zero_to_one** | $c_{01} = 1$ at weight 2 | CatAL |
+| **bump_count_sector_zero / one / five** | $b_0 = 1$, $b_1 = 1$, $b_5 = 2$ | CatAL |
+| **gap_amplitude_sq_unit** | $A^2 = c_{10}\cdot c_{01} = 1$ — the gap-law amplitude is exactly 1 | CatAL |
+| **gap_amplitude_correction_half** | Leading correction $b_0/2 = 1/2$ in $\mathbb{Q}$ | CatAL |
+| **spin7_gap_amplitude_certificate** | Master bundle: counts, frontier death, $A^2 = 1$, correction | CatAL |
+
+#### Transfer-matrix Perron–Frobenius hypotheses (`Polynomial.SpinSevenTransferPrimitivity`)
+
+Seven theorems, uniform in the inverse temperature $\beta : \mathbb{R}$.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **thermalTransfer_nonneg** | $M(\beta)$ entrywise non-negative for all $\beta$ | CatAL |
+| **thermal_transfer_sq_pos** | Every entry of $M(\beta)^2$ is strictly positive — primitivity with explicit power $k = 2$ | CatAL |
+| **spin7_thermal_transfer_primitive** | $M(\beta)$ is primitive for all real $\beta$ | CatAL |
+| **spin7_thermal_transfer_irreducible** | Irreducibility, via primitivity | CatAL |
+| **thermal_transfer_uniform_diag_pos** | Positive uniform self-loops on the diagonal | CatAL |
+| **spin7_transfer_pf_hypotheses** | Master bundle: the complete Perron–Frobenius hypothesis package, uniform in $\beta$ | CatAL |
+
+The leading-eigenvalue positivity/simplicity conclusion itself awaits a Perron–Frobenius eigenvalue theorem in Mathlib; the hypothesis package certified here is the complete input to that theorem.
 
 ---
 

@@ -651,7 +651,7 @@ see \S\ref{sec:audit-capstones} for details.
 The library currently holds \textbf{97} global custom named axioms,
 primarily in \texttt{GUTStructure}, \texttt{FrobeniusChain},
 \texttt{NeutrinoSector}, \texttt{SechOverlapIntegralBounds\_bridge}, and related
-modules (see Table~\ref{tab:axiom-inventory} and \S\ref{subsec:epic-083c}).
+modules (see Table~\ref{tab:axiom-inventory} and \S\ref{subsec:frontier-closures}).
 The following named axioms were proved as genuine theorems (zero sorry):
 five \lstinline|: True|-type and existential axioms in \texttt{GaugeMDL},
 \texttt{CCImpossibilityBundle}, \texttt{GUTStructure}, and \texttt{PMDLGravityTheorems};
@@ -3692,7 +3692,7 @@ of $\mathrm{GEN}_1$ are included. (All by \texttt{decide} or previous theorems; 
 \noindent Two partial bundle theorems certify pieces of the Three-Level MDL Unification
 (P51~\S5): \lstinline|mdl_three_level_orbit_bundle| (Level~1$\to$2 orbit steps, \CatAL) and
 \lstinline|mdl_three_level_polynomial_bundle| (orbit + SRRG $\varphi$ diagonal fixed point, \CatAL).
-The full cross-module unification is open (OQ-087-22).
+The full cross-module unification remains open.
 
 % ─────────────────────────────────────────────────────────────────
 \subsection{PSC Unification and GoE Chain (\texttt{CUP3DPSCUnification})}\label{subsec:cup3d-psc-unification}
@@ -8630,7 +8630,7 @@ Theorem & Module & Physical content \\
   & Gravity.Z7AnomalyFree
   & All seven $\mathbb{Z}_7$ vacuum sectors have equal integration weight (1 \texttt{sorry}: path-integral bridge) \\[1pt]
 \midrule
-\multicolumn{3}{@{}l}{\textit{083-ORIC --- Gorard ORIC adjacent-edge $\kappa=0$ (\texttt{ContinuumLimit/GorardVacuumW1Bridge.lean})}} \\[2pt]
+\multicolumn{3}{@{}l}{\textit{Gorard ORIC adjacent-edge $\kappa=0$ (\texttt{ContinuumLimit/GorardVacuumW1Bridge.lean})}} \\[2pt]
 \texttt{vacuum\_\allowbreak coupling\_\allowbreak cost\_\allowbreak eq\_\allowbreak one}
   & ContinuumLimit.\allowbreak GorardVacuumW1Bridge
   & Explicit transport cost between adjacent vacuum walk measures $= 1$ (zero \texttt{sorry}) \\[1pt]
@@ -8647,7 +8647,7 @@ Theorem & Module & Physical content \\
   & ContinuumLimit.\allowbreak GorardVacuumW1Bridge
   & $\kappa_{\rm OR}=0$ for \emph{all} adjacent vacuum edges $\forall n$ (\CatAL; zero \texttt{sorry}) \\[1pt]
 \midrule
-\multicolumn{3}{@{}l}{\textit{083-SRRG-MDL --- OP9 MDL equivalence (\texttt{srrg-lean/Bridges/ToMDL.lean})}} \\[2pt]
+\multicolumn{3}{@{}l}{\textit{OP9 MDL equivalence (\texttt{srrg-lean/Bridges/ToMDL.lean})}} \\[2pt]
 \texttt{argmax\_\allowbreak viability\_\allowbreak iff\_\allowbreak argmin\_\allowbreak descLen}
   & SrrgLean.Bridges.ToMDL
   & $\mathop{\rm argmax}_S F[S] = \mathop{\rm argmin}_S K[S]$; OP9 algebraic core (\CatAD; zero \texttt{sorry}) \\[1pt]
@@ -8664,7 +8664,7 @@ Theorem & Module & Physical content \\
   & SrrgLean.Bridges.ToMDL
   & OP9 \CatAL\ at canonical SRRG instance: $\mathop{\rm argmax} F = \mathop{\rm argmin} K$ (zero \texttt{sorry}; no hypotheses) \\[1pt]
 \midrule
-\multicolumn{3}{@{}l}{\textit{083-W1 --- $W_1$ Wasserstein distance scaffold (\texttt{ContinuumLimit/WassersteinDistance.lean})}} \\[2pt]
+\multicolumn{3}{@{}l}{\textit{$W_1$ Wasserstein distance scaffold (\texttt{ContinuumLimit/WassersteinDistance.lean})}} \\[2pt]
 \texttt{W1\_\allowbreak ge\_\allowbreak of\_\allowbreak lipschitz}
   & ContinuumLimit.\allowbreak WassersteinDistance
   & Kantorovich dual lower bound: $W_1 \ge |E_\mu[f] - E_\nu[f]|$ for 1-Lip $f$ (zero \texttt{sorry}) \\[1pt]
@@ -8684,7 +8684,7 @@ Theorem & Module & Physical content \\
   & ContinuumLimit.\allowbreak WassersteinDistance
   & Achievable transport costs form a compact set (finite polytope compactness; zero \texttt{sorry}) \\[1pt]
 \midrule
-\multicolumn{3}{@{}l}{\textit{083-CMCA-LANG --- CMCA encoding language scaffold (\texttt{srrg-lean/Core/CMCALanguage.lean})}} \\[2pt]
+\multicolumn{3}{@{}l}{\textit{CMCA encoding language scaffold (\texttt{srrg-lean/Core/CMCALanguage.lean})}} \\[2pt]
 \texttt{mdl\_\allowbreak self\_\allowbreak desc\_\allowbreak eq}
   & SrrgLean.Core.CMCALanguage
   & $L[S] = B - R[S]$ (self-description length; zero \texttt{sorry}) \\[1pt]
@@ -8708,14 +8708,14 @@ are in \texttt{ugp-lean};
 \label{tab:new-theorem-inventory-083}
 \end{table}
 
-\subsection{Frontier-closure theorems}\label{subsec:epic-083c}
+\subsection{Frontier-closure theorems}\label{subsec:frontier-closures}
 
 This section covers \textbf{221} net-new zero-\texttt{sorry} theorems across
 twenty-two modules, closing the Yukawa vertex, PMNS orbit-ratio sector, SRRG Higgs
 quartic, full nine-coefficient UCL master certification, FGCI uniqueness at
 $N_c=3$, Pöschl--Teller fluctuation/QFT integral infrastructure, and the
 $D_{\rm top}=\exp(-1/N_c)$ topological dilution chain.
-Highlights are summarized in \cref{tab:epic-083c}; the full catalog is in
+Highlights are summarized in \cref{tab:frontier-closures}; the full catalog is in
 \texttt{docs/THEOREMS.md}.
 
 \begin{table}[h]
@@ -8845,21 +8845,21 @@ certification, PMNS orbit-ratio closure, SRRG Higgs quartic, Pöschl--Teller and
 integrals, Yukawa vertex (\CatAD), FGCI at $N_c=3$, and $\mathbb{Z}_7$ dark-baryon
 identities including $D_{\rm top}=\exp(-1/N_c)$ (\CatAL, Lean-certified).
 The library contains 221 net-new names in this section.}
-\label{tab:epic-083c}
+\label{tab:frontier-closures}
 \end{table}
 
 \paragraph{UCL master certification.}
 \cref{subsec:ucl-unconditional} documents the unconditional closure modules;
-\texttt{elegant\_kernel\_full\_certification} (\cref{tab:epic-083c}) packages all
+\texttt{elegant\_kernel\_full\_certification} (\cref{tab:frontier-closures}) packages all
 nine Elegant Kernel coefficients with their derivation sources in a single
 \CatAL\ bundle, including the Quarter-Lock identity
 $k_M = k_{\rm gen2} + k_{L^2}/4 = -\varphi/2 + 7/2048$.
 
 \paragraph{PMNS and neutrino sector.}
-The \texttt{MassRelations.NeutrinoSector} module (new in 083C) certifies LH
+The \texttt{MassRelations.NeutrinoSector} module certifies LH
 FN charge neutrality ($q_L=0$), the Type-I seesaw algebra, rank-1 Dirac Yukawa
 from positive FN charges, and the orbit-ratio PMNS sines and CP phase listed in
-\cref{tab:epic-083c}.
+\cref{tab:frontier-closures}.
 
 \paragraph{QFT fluctuation spectrum.}
 \cref{sec:qft-modules} is extended by \texttt{Substrate.PhiMDLFluctuationSpectrum}:
@@ -8889,22 +8889,27 @@ The equal-sector-distribution step follows from $\mathbb{Z}_7$ group transitivit
 alone --- no dilute instanton gas approximation is required.
 
 % ═══════════════════════════════════════════════════════════════
-\subsection{New algebraic certificates (EPIC\_088)}\label{subsec:epic-088}
+\subsection{New algebraic certificates}\label{subsec:new-algebraic-certificates}
 % ═══════════════════════════════════════════════════════════════
 
-These certificates arise from the EPIC\_088 breakthrough-search programme,
-spanning GTE polynomial structure, the gauge-coupling sector,
+These certificates span GTE polynomial structure, the gauge-coupling sector,
 cosmological constant structure, and the $N_{\mathrm{gen}}$
 bracket-orientation theorem.
-This section covers \textbf{69} net-new zero-\texttt{sorry} theorems across twelve
+The first group covers \textbf{69} net-new zero-\texttt{sorry} theorems across twelve
 modules, plus one module with partial certifications awaiting kernel-budget
-resolution.
-The wave formalises the diagonal fixed-point structure of the GTE polynomial,
+resolution: the diagonal fixed-point structure of the GTE polynomial,
 the Eisenstein and cyclotomic arithmetic of the GTE integer constants, the full
 dynamical-zeta classification of the seven-ring orbit, the $\mathbb{Z}_7$
 vacuum-selection mechanism with its gauge-coupling hierarchy, the algebraic
 cores of the kink-sector physical observables, and the biquadratic-compositum
 unification of the two master rings.
+A second group --- the spin-7 wall spectroscopy and spectral-amplitude package,
+the CMCA physical-point dictionary with the Tape Saturation Theorem, the
+variational carrier pricing chain, the direct-interpolation lift of the GTE
+polynomial from UGP orbit data, the parity-projection forcing batteries, and
+the GTE register-machine trajectory containment --- adds over
+\textbf{130} further zero-\texttt{sorry} theorems across ten modules and is
+documented in the closing paragraphs of this subsection.
 
 \paragraph{Golden quadratic and diagonal fixed points
   (\texttt{Polynomial/\allowbreak GoldenQuadratic}).}
@@ -9126,6 +9131,182 @@ follows from the Floor Orientation Theorem (the realised ledger cannot
 undercut the MDL-minimal carrier price) and the census half from capacity
 bounds, so the pincer holds unconditionally within the record-ledger
 premise bundle of the One-Jump Residual Theorem.
+
+\paragraph{Spin-7 wall spectroscopy and spectral-amplitude package
+  (\texttt{Polynomial/\allowbreak SpinSevenWallSpectroscopy},
+   \texttt{SpinSevenSpectatorAmplitude},
+   \texttt{SpinSevenGapAmplitude},
+   \texttt{SpinSevenTransferPrimitivity}).}
+Four modules (44~\CatAL\ theorems, zero sorry, zero custom axioms) certify
+the interface thermodynamics of the spin-7 chain.
+\texttt{SpinSevenWallSpectroscopy} (14 theorems) establishes the directed
+minimal-interface energies of the 49-node pair digraph --- edge
+$(a,b)\to(b,c)$ weighted by the local triple energy $p(a,b,c)$ --- by
+bounded Bellman--Ford search closed with \texttt{native\_decide}:
+$E_w(1{\to}0)=1$, $E_w(0{\to}1)=2$, $E_w(5{\to}0)=2$,
+$E_w(0{\to}5)=E_w(1{\to}5)=E_w(5{\to}1)=4$, with the composite hub identity
+$E_w(5{\to}1)=E_w(5{\to}0)+E_w(0{\to}1)$ (sector~0 is the hub of the wall
+algebra), the bump table $E_{\rm loop}(0,1,5)=(2,3,4)$, and the half-integer
+gap exponent $(E_w(0{\to}1)+E_w(1{\to}0))/2 = 3/2$
+(\texttt{spin7\_directed\_wall\_energies},
+ \texttt{directed\_wall\_half\_integer\_gap}).
+\texttt{SpinSevenSpectatorAmplitude} (10 theorems) certifies the spectator
+mechanism behind the gap-law amplitude: the zero-energy adjacency matrix has
+spectral radius exactly~1 --- its powers stabilise at $Z^{22}=Z^{23}$ with
+$\mathrm{tr}(Z^k)=3$ for all $k\ge1$, the three uniform self-loops being the
+only recurrent structure --- and the three-level cluster perturbation
+eigensystem has ordered gaps $\{T, 2T\}$
+(\texttt{zero\_energy\_closed\_walk\_count\_three},
+ \texttt{cluster\_gap\_pair}, \texttt{spin7\_spectator\_amplitude}).
+\texttt{SpinSevenGapAmplitude} (13 theorems) computes the through-walk counts
+between ground loops in the weight-truncation semiring
+$\mathbb{N}[t]/(t^5)$ --- $c_{10}=c_{01}=b_0=b_1=1$, $b_5=2$ --- with a
+frontier-death certificate making the counts total over all walk lengths,
+yielding $A^2 = c_{10}c_{01} = 1$ and the leading correction $b_0/2 = 1/2$
+(\texttt{spin7\_gap\_amplitude\_certificate}, \texttt{wall\_frontier\_death},
+ \texttt{gap\_amplitude\_sq\_unit}).
+\texttt{SpinSevenTransferPrimitivity} (7 theorems) certifies the complete
+Perron--Frobenius hypothesis package for the thermal transfer matrix,
+uniform in $\beta:\mathbb{R}$: entrywise non-negativity, primitivity with
+explicit power $k=2$, irreducibility, and positive uniform diagonal
+(\texttt{spin7\_transfer\_pf\_hypotheses}); the leading-eigenvalue
+simplicity conclusion awaits a Perron--Frobenius eigenvalue theorem in
+Mathlib.
+
+\paragraph{CMCA physical point: dictionary, tape saturation, blocking ratio,
+  and boundary equivalence (\texttt{Physics/\allowbreak CMCAPhysicalPoint}).}
+The module certifies the arithmetic web of the CMCA physical point.
+Given the seven-kink threshold $\Lambda = 7M$, the SCC kink mass
+$M = (8/49)\,m_\varphi$, and the spacing identification $a\cdot\Lambda = 1$
+carried by the named premise structure
+\texttt{MDLSaturationSpacingHypothesis}, the dictionary follows:
+$aM = 1/7$, $a m_\varphi = 7/8$, and the correlation signature
+$\xi^* = 1/(aM) = 7 = |\mathbb{Z}_7|$
+(\texttt{cmca\_physical\_point\_dictionary}, \CatAL~$|$~H --- conditional on
+the named hypothesis, never bare).
+The Tape Saturation Theorem then upgrades the spacing hypothesis from a bare
+assumption to a theorem-with-named-premise: under the
+\texttt{ComptonSupportCriterion} (the $\kappa = 1$ hosting boundary: a tape
+of spacing $a$ faithfully hosts masses $m$ with $m\cdot a \le \hbar c$)
+together with strict MDL pricing
+(\texttt{StrictTapePricingHypothesis}) and extremization at the hosting
+boundary, the optimal tape satisfies $a\cdot\Lambda = 1$
+(\texttt{tape\_saturation\_theorem},
+ \texttt{compton\_support\_derives\_mdl\_saturation},
+ \texttt{tape\_saturation\_physical\_point\_dictionary}; all
+\CatAD~$|$~CSC --- conditional on the named Compton-support premise).
+The Boundary Equivalence Theorem establishes that this premise is minimal:
+the Compton-support criterion, register-window readability
+(\texttt{RegisterWindowReadability} --- the $\mathbb{Z}_7$ winding-sector
+label, entropy $\ln 7$, recoverable within one correlation window), and the
+$\kappa = 1$ hosting boundary are mutually entailed at saturation, and the
+seven winding sectors biject onto the seven register values
+(\texttt{hosting\_boundary\_csc\_equivalence},
+ \texttt{saturation\_alphabet\_bijection}).
+Finally, the blocking-ratio web binds the two tape readings unconditionally:
+$M_{\rm Pl}/\Lambda_{\rm GTE} = 3^{10}\,7^{18}/2^4$ with the monomial
+identity $3^{10}7^{18} = 7^8\,21^{10}$ and the fine-end kink ratio
+$M_{\rm Pl}/M_{\rm kink} = 21^{10}\,7^9/2^4$
+(\texttt{planck\_eft\_blocking\_ratio}, \CatAL).
+
+\paragraph{Variational carrier pricing
+  (\texttt{Gravity/\allowbreak TemporalVoxelCC} extension).}
+Three further \CatAL\ theorems extend the temporal-voxel module
+(\cref{subsec:temporal-voxel-cc}) with the arithmetic spine of the
+variational carrier analysis: the three-form coefficient chain
+$N\tau\,(2C_{\rm Gorard}/N) = 2C_{\rm Gorard}\tau = N^2/(D^2|\mathbb{Z}_7|)
+= 9/112$
+(\texttt{pmdl\_carrier\_coefficient\_identities}), the pricing-gap closed
+forms for the half-quantum continuum and lattice pricings, and the bracket
+exclusion of the half-quantum pricing ($2\pi^2$ exceeds the census endpoint;
+\texttt{half\_quantum\_pricing\_excluded}), bundled in
+\texttt{pmdl\_carrier\_pricing\_chain}.
+
+\paragraph{Direct-interpolation lift and chirality census
+  (\texttt{Universality/\allowbreak TriangleLiftTheorem},
+   \texttt{TriangleLiftStructural};
+   \texttt{FrobeniusChain} extension).}
+Two modules (21~\CatAL\ theorems, zero sorry, zero custom axioms) certify
+that the GTE polynomial $p$ is recoverable from UGP orbit data alone, by two
+independent routes.
+\texttt{gte\_orbit\_parity\_provenance} closes the provenance link: the
+total parities of the fifteen canonical cascade triples reproduce the
+certified generation vectors of \texttt{CUP4TotalParity}.
+The census route
+(\texttt{ugp\_orbit\_interpolation\_lift},
+ \texttt{orbit\_interpolation\_vandermonde\_full\_rank}) is an exhaustive
+$7^8$ \texttt{native\_decide} census over all multilinear $\mathrm{GF}(7)$
+rules: the parity-orbit ring evaluations alone leave seven survivors, and
+adding vacuum transparency leaves exactly one --- $p = C + R - CR - LCR$.
+The structural route
+(\texttt{multilinear\_binary\_determination},
+ \texttt{orbit\_vt\_forces\_interpolant}) proves the same uniqueness with no
+enumeration, by explicit M\"obius inversion of the binary Vandermonde
+system: the orbit covers seven of the eight binary neighbourhoods and vacuum
+transparency supplies the eighth.
+The binary restriction of the interpolant is Rule~110
+(\texttt{interpolation\_lift\_binary\_corollary}) --- the anchor direction
+is inverted: Rule~110 becomes an output of the orbit data rather than an
+input.
+The MDL sparsity floor holds in its strongest form: \emph{any}
+canonical-form $\mathrm{GF}(7)$ polynomial (per-variable degree $\le 6$)
+whose binary restriction is Rule~110 flattens exactly to $p$ and has at
+least four monomials, so multilinearity is MDL-forced rather than declared
+(\texttt{gf7\_rule110\_sparsity\_floor},
+ \texttt{rule110\_lift\_sparsity\_floor}).
+The chirality census (\texttt{orbit\_chirality\_census}) runs the
+construction over all $120$ orderings of the five families: exactly $20$
+admit a vacuum-transparent orbit rule, the survivor union is exactly
+$\{110, 124\}$, and ordering reversal bijects the two $10$-sets --- the
+ordering convention is the chirality gauge, and the unordered orbit data
+force the CMCA chiral pair.
+The \texttt{FrobeniusChain} extension adds the bounded consilience
+certificate \texttt{delta\_qmin\_coincidence\_at\_three}: for
+$n \in \{2,\dots,30\}$ the ridge offset $\delta(n) = n + (n^2-1)/2$ equals
+the minimal admissible prime $q$ iff $n = 3$ (an over-determination of the
+modulus, not an independent forcing route).
+
+\paragraph{Parity-projection forcing batteries
+  (\texttt{Universality/\allowbreak ParityProjectionBattery},
+   \texttt{ParityProjectionForcing}).}
+The forcing-scope theorems certify that the parity projection is forced over
+the full admissible reduction space.
+The additive battery runs all $777$ nonzero weighted forms
+$(\alpha,\beta,\gamma) \bmod m$ for $2 \le m \le 7$ --- every additive
+homomorphism $\mathbb{Z}^3 \to \mathbb{Z}_m$ --- against the canonical orbit
+constraints: the coherently-forcing forms are exactly the parity-factoring
+ones, with forced rules $g_1 = p$ and the unit conjugates $g_2, g_3$
+(\texttt{parity\_projection\_additive\_forcing}; per-modulus
+\texttt{native\_decide} censuses with aggregate totals $277/490/5/5$).
+The recoding battery runs all $7^5 = 16{,}807$ vacuum-normalised
+$\mathrm{GF}(7)$ assignments to the five mod-2 residue patterns: the
+coherently-forcing assignments are exactly $t\cdot(\text{total parity})$ for
+a unit $t$, and the product-parity family is excluded by the Rule-106
+displaced-vacuum classification
+(\texttt{parity\_projection\_mod2\_recoding\_forcing}; seven coordinate
+chunks of $2{,}401$ assignments each, aggregate totals
+$7392/8820/343/252$).
+Together the two censuses prove the maximality of the forcing scope
+constructively: no forcing theorem can exist over arbitrary recodings.
+
+\paragraph{GTE register-machine trajectory containment
+  (\texttt{Universality/\allowbreak GTECompilation} extension).}
+The compilation module (\cref{subsec:gte-compilation}) is extended with the
+finite-horizon trajectory-containment package: a register-machine evolution
+over the UWCA substrate reproduces the GTE arithmetic trace exactly, for
+every horizon $H$
+(\texttt{gte\_trajectory\_is\_uwca\_trajectory}:
+ \texttt{gte\_uwca\_run}~$n$~$H = $ \texttt{gteAfterSteps}~$n$~$H$).
+The two-tile $\sigma_{\rm GTE}$ program --- the odd-step tile of
+\cref{thm:gte-compilation} paired with an even-step tile carrying the
+Fibonacci lift on $b$ and the Mersenne-boundary $c$-rule --- reproduces the
+first two GTE macro-steps from the Lepton seed, matching the reference
+evolution \texttt{gteAfterSteps}
+(\texttt{gte\_two\_tile\_compilation\_theorem}), and the containment
+corollary \texttt{gte\_trajectory\_two\_tile\_containment} packages the
+direction of the statement: GTE trajectories are contained in UWCA
+trajectories --- the UWCA is the general machine and GTE one lawful
+program --- while the converse is false and is not claimed.
 
 
 % ═══════════════════════════════════════════════════════════════
