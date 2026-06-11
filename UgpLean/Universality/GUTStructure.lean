@@ -2300,8 +2300,7 @@ theorem joint_selection_theorem :
 
     LEAN-CERTIFIED (norm_num, zero sorry). -/
 theorem double_mersenne_exponent_identity :
-    -- N_fam = 5 = p₃(M): 5 is the 3rd Mersenne prime exponent (2^5 − 1 = 31, wait —
-    -- CORRECTION: 2^5 − 1 = 31 is prime, so 5 IS a Mersenne prime exponent)
+    -- N_fam = 5 is the third Mersenne prime exponent: 2^5 − 1 = 31 is prime.
     -- Mersenne prime exponents: 2 (M₂=3), 3 (M₃=7), 5 (M₅=31), 7 (M₇=127), 13 (M₁₃=8191)
     Nat.Prime (2 ^ n_fam - 1) ∧                    -- 2^5 − 1 = 31 is prime (N_fam is Mersenne exp)
     Nat.Prime (2 ^ (EWBosonStructure.c_higgs) - 1) ∧ -- 2^13 − 1 = 8191 is prime (c_H is Mersenne exp)
@@ -6511,7 +6510,7 @@ theorem gte_winding_sm_vertex_conserved :
 
     Charged-current leptons (e⁻→νe+W⁻ — all 3 generations same):
       (3)  e⁻(4) → νe(0) + W⁻(4):  0+4=4 mod 7  ✓
-      (4)  νe(0) + W⁺(3) → e⁺(3):  3+? actually W⁺ absorbed; 0=? ... encoded below
+      (4)  νe(0) + W⁺(3) → e⁺(3):  0+3=3 mod 7  ✓  (reverse charged current)
 
     Electromagnetic quarks (u→u+γ, d→d+γ, etc., all 6 quark types):
       (5)  u(2) → u(2) + γ(0):  2+0=2  ✓

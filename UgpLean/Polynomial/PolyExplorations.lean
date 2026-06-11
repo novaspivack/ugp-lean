@@ -167,8 +167,8 @@ theorem poly_p_rule110_explicit :
 
     Proof: the five residues mod 5 for (q, q+2) differ by 2:
     - q ≡ 0 → q+2 ≡ 2. But q ≡ 0 (mod 5) with q prime and q > 5 is impossible.
-    - q ≡ 1 → q+2 ≡ 3. Neither of {1,3} is in {2,3} by the antecedent... wait:
-      Actually 3 ∈ {2,3}. So q ≡ 1 gives q+2 ≡ 3 ∈ {2,3}, but q ≡ 1 ∉ {2,3}. ✓
+    - q ≡ 1 → q+2 ≡ 3. Here q ≡ 1 ∉ {2,3} while q+2 ≡ 3 ∈ {2,3}; at most one
+      member of the pair lies in {2,3}. ✓
     - q ≡ 2 → q+2 ≡ 4. 4 ∉ {2,3}. ✓
     - q ≡ 3 → q+2 ≡ 0. 0 ∉ {2,3}. ✓ (and q+2 divisible by 5 > 5 is composite)
     - q ≡ 4 → q+2 ≡ 1. 1 ∉ {2,3}. ✓

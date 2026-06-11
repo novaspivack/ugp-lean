@@ -90,7 +90,7 @@ theorem fmdl_vacuum_fixed : fmdl 0 0 0 = 0 := by decide
 theorem fmdl_gen1_to_gen2 :
     fmdl 1 1 5 = 2 ∧  -- gen1[0] = 1, gen1[1] = 1, gen1[2] = 5 → gen2[1] = 2
     fmdl 1 5 2 = 5 ∧  -- gen1[1] = 1, gen1[2] = 5, gen1[3] = 2 → gen2[2] = 5
-    fmdl 5 2 2 = 2 ∧  -- gen1[2] = 5, gen1[3] = 2, gen1[4] = 2 → gen2[3] = 2... wait
+    fmdl 5 2 2 = 2 ∧  -- gen1[2]=5, gen1[3]=2, gen1[4]=2 → gen2[3]=2
     fmdl 2 2 1 = 0 ∧
     fmdl 2 1 1 = 2 := by decide
 

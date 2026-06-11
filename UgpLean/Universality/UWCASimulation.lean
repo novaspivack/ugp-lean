@@ -265,12 +265,8 @@ def tapeCRow {L : ℕ} (tape : Tape L) : Fin L → Bool :=
  Rule 110 with periodic boundary produces [1,0,1,1].
  Verified by computing rule110Output at each of the 4 neighborhoods. -/
 theorem uwca_4cell_example :
-    -- row = [1,1,0,1], periodic: neighbor of site 0 is site 3
-    -- site 0: (row[3],row[0],row[1]) = (1,1,1) → 0... wait let's compute:
-    -- site 0: L=row[3]=1, C=row[0]=1, R=row[1]=1 → f(1,1,1)=0? No: 111→0
-    -- site 1: L=1, C=1, R=0 → f(1,1,0)=1
-    -- site 2: L=1, C=0, R=1 → f(1,0,1)=1
-    -- site 3: L=0, C=1, R=1 → f(0,1,1)=1... hmm let me trust the computation
+    -- Periodic row [1,1,0,1]: neighborhoods (L,C,R) at sites 0..3 are
+    -- (1,1,1), (1,1,0), (1,0,1), (0,1,1); Rule 110 outputs [0,1,1,1].
     rule110Output (neighborhoodIndex true  true  true)  = false ∧
     rule110Output (neighborhoodIndex true  true  false) = true  ∧
     rule110Output (neighborhoodIndex true  false true)  = true  ∧

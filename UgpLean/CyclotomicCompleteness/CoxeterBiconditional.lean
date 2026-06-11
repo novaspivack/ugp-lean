@@ -50,8 +50,7 @@ theorem f4_h_dvd_60 : (12 : ℕ) ∣ 60 := by norm_num
 theorem e6_h_dvd_60 : (12 : ℕ) ∣ 60 := by norm_num
 
 /-- B₄ Toda masses: h = 8, and 8 | 60.
-    Note: 60 = 8 × 7 + 4, so actually 8 ∤ 60.
-    Wait — let us verify. 60 / 8 = 7.5, so 8 ∤ 60.
+    Note: 60 = 8 × 7 + 4, so 8 ∤ 60 (60 / 8 = 7.5).
     This means B₄ (h=8) requires a different analysis.
     B₄ masses: the Coxeter exponents of B₄ are {1,3,5,7} and h=8.
     The mass ratios involve sin(πk/8), which lie in Q(cos(π/8)) = Q(ζ_{16})⁺.
