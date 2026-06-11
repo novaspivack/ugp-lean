@@ -18,7 +18,7 @@ import UgpLean.ElegantKernel.Unconditional.UCLKoide
 Packages all nine UCL Elegant Kernel coefficients with their CatAL-certified
 values and structural derivation sources, plus Tier 2/3 mass-spectrum theorems.
 
-Reference: EPIC 083C-UCL-FORM Tiers 1–3.
+Reference: UCL closed-form certification, Tiers 1–3.
 -/
 
 namespace UgpLean.ElegantKernel.Unconditional.MasterCertification
@@ -77,7 +77,7 @@ theorem elegant_kernel_full_certification :
      by rw [derived_agrees_with_definition, k_M_quarter_lock_identity],
      k_M_eq_neg_phi_half_plus_seven_2048⟩⟩
 
-/-- **Tier 2 (083C-UCL-FORM).** Fermion mass ordering under UCL + generation scaling.
+/-- **Tier 2.** Fermion mass ordering under UCL + generation scaling.
 
 CatAL (conditional on EK coefficient interval certificates); zero sorry
 throughout `UCLMassOrdering` and coupled-corner `UCLMassOrderingSBounds`
@@ -88,11 +88,11 @@ theorem ucl_tier2_mass_ordering :
     downUclMassOrderingProp :=
   ucl_fermion_mass_ordering
 
-/-- **Tier 3 (083C-UCL-FORM).** Lepton-sector Koide identity Q = 2/3.
+/-- **Tier 3.** Lepton-sector Koide identity Q = 2/3.
 
 Composes GTE-pinned Koide phase (θ = 2/9) and cone amplitude (b = √2) with
 the algebraic Koide quotient theorem. Zero sorry. The UCL log C_f form does
-not automatically imply Q = 2/3; see `UCLKoide.oq_083c_ucl_3_resolution`. -/
+not automatically imply Q = 2/3; see `UCLKoide.ucl_log_form_koide_independence`. -/
 theorem ucl_tier3_lepton_koide :
     (koideThetaUGP = 2 / 9 ∧
       koideThetaUGP = (3 ^ 2 - 1 : ℝ) / (4 * 3 ^ 2)) ∧

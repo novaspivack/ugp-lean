@@ -4,9 +4,9 @@ import UgpLean.MassRelations.KoideS3DiscreteIdentities
 import UgpLean.ElegantKernel.Unconditional.UCLCalibration
 
 /-!
-# UCL Koide Identity — Tier 3 of 083C-UCL-FORM
+# UCL Koide Identity — Tier 3 of the UCL closed-form certification
 
-**Open question OQ-083C-UCL-3:** Does the UCL restricted to leptons automatically
+**Open question:** Does the UCL restricted to leptons automatically
 reproduce the Koide identity `Q = 2/3` from the Elegant Kernel alone?
 
 **Answer (structural).** No — the UCL is a *log-linear* calibration law on
@@ -53,12 +53,12 @@ theorem lepton_koide_amplitude_pinned :
   rcases koide_cone_pinned with ⟨_, _, hQ⟩
   exact ⟨Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2), hQ⟩
 
-/-- **Tier 3 master theorem (083C-UCL-FORM).**
+/-- **Tier 3 master theorem.**
 
 The lepton-sector Koide identity `Q = 2/3` is structurally certified by
 composing the GTE-pinned Koide phase and cone amplitude with the
 algebraic Koide quotient theorem. Zero sorry. The UCL log C_f form does
-not automatically imply Q = 2/3; see `oq_083c_ucl_3_resolution`. -/
+not automatically imply Q = 2/3; see `ucl_log_form_koide_independence`. -/
 theorem ucl_lepton_sector_koide_identity :
     -- GTE-pinned Koide phase θ = 2/9
     (koideThetaUGP = 2 / 9 ∧
@@ -81,10 +81,10 @@ theorem ucl_lepton_sector_koide_identity :
   · exact (koide_Q_iff_amplitude (Real.sqrt 2) koideThetaUGP).mpr
       (Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2))
 
-/-- **OQ-083C-UCL-3 resolution.** The UCL log form does not automatically yield
- `Q = 2/3`; the Koide identity is a separate √mass-layer theorem, structurally
- pinned for leptons by `(θ, b) = (2/9, √2)`. -/
-theorem oq_083c_ucl_3_resolution :
+/-- **Koide independence of the UCL log form.** The UCL log form does not
+ automatically yield `Q = 2/3`; the Koide identity is a separate √mass-layer
+ theorem, structurally pinned for leptons by `(θ, b) = (2/9, √2)`. -/
+theorem ucl_log_form_koide_independence :
     (∀ θ : ℝ,
       (koideR θ 0 ^ 2 + koideR θ 1 ^ 2 + koideR θ 2 ^ 2) /
         (koideR θ 0 + koideR θ 1 + koideR θ 2) ^ 2 = 2 / 3) ∧

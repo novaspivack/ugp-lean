@@ -113,14 +113,14 @@ theorem phimdl_fluctuation_is_poschl_teller (x : ℝ) :
   arctan_exp_cos_identity x
 
 -- ════════════════════════════════════════════════════════════════
--- §2  Φ_MDL Yukawa vertex — three-kink overlap (083C-YUKAWA)
+-- §2  Φ_MDL Yukawa vertex — three-kink overlap
 -- ════════════════════════════════════════════════════════════════
 
 /-- BPS kink gradient density ρ(x) = (2 m_φ / 7) sech(m_φ x) (P42). -/
 noncomputable def phimdl_kink_density (m_phi x : ℝ) : ℝ :=
   (2 * m_phi / 7) / cosh (m_phi * x)
 
-/-- Coincident three-kink overlap amplitude G3(0) before the sech^3 integral (P42, 083C-YUKAWA). -/
+/-- Coincident three-kink overlap amplitude G3(0) before the sech^3 integral (P42). -/
 noncomputable def phimdl_three_kink_amplitude (m_phi : ℝ) : ℝ :=
   (2 * m_phi / 7) ^ 3 * (Real.pi / 2) / m_phi
 

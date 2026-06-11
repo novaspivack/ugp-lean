@@ -138,7 +138,7 @@ theorem cmca_physical_point_tree_reading
   exact ⟨hMain.1, hMain.2.1, hMain.2.2.1⟩
 
 -- ─────────────────────────────────────────────────────────────────────────
--- Tape Saturation Theorem (LT-088-61): Compton-support criterion spine
+-- Tape Saturation Theorem: Compton-support criterion spine
 -- ─────────────────────────────────────────────────────────────────────────
 
 /-- Admissible supremum `a* = ℏc/Λ` of the κ = 1 hosting boundary. -/

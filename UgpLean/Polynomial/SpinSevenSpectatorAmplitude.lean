@@ -181,7 +181,7 @@ theorem cluster_gap_pair (a b : ℝ) :
 -- §3  Amplitude tie-in: A = √(c₁₀·c₀₁) = 1
 -- ════════════════════════════════════════════════════════════════
 
-/-- **spin7_spectator_amplitude** (CatAL — master bundle, LT-088-62):
+/-- **spin7_spectator_amplitude** (CatAL — master bundle):
     the spectator mechanism for the gap-law amplitude.  (i) ρ = 1 package:
     ground rows are self-loop-only, powers stabilize (`Z²² = Z²³`), and the
     closed-walk count is 3 at every positive length; (ii) the chiral

@@ -4445,11 +4445,11 @@ theorem dark_budget_identity : (4 : ℕ) + 4 = 2 ^ n_gen := by
   norm_num [n_gen]
 
 -- ============================================================
--- §35 (continued)  Z₇ Dark Baryon Topological Dilution (083C-H0-BARYON-CORR, CatAL)
+-- §35 (continued)  Z₇ Dark Baryon Topological Dilution (CatAL)
 -- D_top = exp(−1/N_c) is CatAL via Z₇ symmetry group theory
 -- ============================================================
 
-/-! ## Z₇ Dark Baryon Topological Dilution Identity (083C-H0-BARYON-CORR, CatAL)
+/-! ## Z₇ Dark Baryon Topological Dilution Identity (CatAL)
 
 The GTE dark matter relic density uses topological dilution factor D_top = exp(−1/N_c).
 The exponent 1/N_c = 1/3 arises from the Z₇ dark baryon charge identity:
@@ -4471,7 +4471,7 @@ Lean theorems (all zero sorry, CatAL):
 - `z7_minus_one_eq_two_Nc`              (decide)
 - `z7_dark_baryon_correction_identity`  (decide)
 - `z7_star_transitivity_under_addition` (decide) ← GROUP THEORY foundation
-- `z7_symmetry_forces_equal_sector_action` (norm_num) ← CLOSES OQ-083C-DTOP-PF
+- `z7_symmetry_forces_equal_sector_action` (norm_num) ← equal-sector-action foundation
 - `d_top_derivation_chain_catal`        (norm_num + decide) ← MASTER CatAL assembly
 - `z7_topological_dilution_formula_rational` (norm_num) ← CatAL (was CatAD)
 - `z7_dark_matter_dilution_factor`      (def: exp(−1/N_c))
@@ -4536,7 +4536,7 @@ theorem z7_star_transitivity_under_addition :
     ∀ (j : Fin 6) (k : Fin 6), ∃ (n : Fin 7), (j.val + 1 + n.val) % 7 = (k.val + 1) % 7 := by
   decide
 
-/-- **z7_symmetry_forces_equal_sector_action** (CatAL — closes OQ-083C-DTOP-PF, upgrades D_top):
+/-- **z7_symmetry_forces_equal_sector_action** (CatAL — upgrades D_top):
     The Z₇ symmetry of the Φ_MDL Lagrangian forces equal distribution of topological
     Euclidean action across the 6 non-trivial Z₇ sectors. This replaces the
     Rajaraman 1982 §4.4 dilute-instanton-gas derivation with a pure symmetry argument.
@@ -4570,7 +4570,7 @@ theorem z7_symmetry_forces_equal_sector_action :
       Step 5: D_top = exp(−S_per) = exp(−1/N_c) = exp(−1/3) (analytic, CatAL)
 
     The Rajaraman 1982 §4.4 citation is superseded by the Z₇ group theory argument
-    in Step 4. This closes OQ-083C-DTOP-PF and upgrades D_top from CatAD to CatAL. -/
+    in Step 4. This upgrades D_top from CatAD to CatAL. -/
 theorem d_top_derivation_chain_catal :
     -- The core rational identity unifying Steps 2–4:
     -- q_dark / |Z₇*| = 2/6 = 1/3 = 1/N_c

@@ -14,7 +14,7 @@ g ∈ {1, 2, 3}) and Standard Model particle masses across all three SM sectors:
 - **Up-quark sector** (k=4, W_B = 4k mod 7 = 2): u/c/t
 - **Down-quark sector** (k=5, W_B = 4k mod 7 = 6): d/s/b
 
-## Key result (Round 3 — per-sector, per-generation mass ordering)
+## Key result (per-sector, per-generation mass ordering)
 
 For all three SM sectors, the cascade generation index g=1 < g=2 < g=3
 corresponds to strictly increasing particle mass. This closes OA-1

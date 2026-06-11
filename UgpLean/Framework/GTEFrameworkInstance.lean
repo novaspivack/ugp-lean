@@ -18,7 +18,7 @@ import Transputation.Theorems.Classification
 Instantiates the GTE-Möbius substrate `(A, e, [D])` as a `NemS.Framework`, equipping
 it with `DiagonalCapable` and `PSCBundle` so that `transputation_classification` applies.
 
-## Truth semantics (Round 2 — zone-based)
+## Truth semantics (zone-based)
 
 `gteTruth M 0 := zoneOf M ≠ .L2_transput`
 
@@ -26,7 +26,7 @@ Physical interpretation: query 0 asks whether state `M` lies in the decidably-re
 sector (Zone L0: vacuum fixed point; Zone L1: finite period-3 orbit). Zone L2 states —
 the transputational sector — falsify this query, providing the non-categoricity witness.
 
-This is the faithful Round 2 implementation of the spec's intended
+This is the faithful zone-based implementation of the intended
 `Truth M 0 := vacuumReachable M` semantics: since `vacuumReachable` (from
 `CUP3DPhysicalIncompleteness`) is defined on `FmdlTape = ℕ →₀ Fin 7` (infinite tapes)
 rather than `BeableState = Fin 5 → Fin 7` (finite 5-cell ring), the zone-membership
@@ -77,7 +77,7 @@ def GTEWindingSum (M : BeableState) : ℕ :=
   Finset.univ.sum fun i => (M i).val
 
 -- ────────────────────────────────────────────────────────────────────────────
--- §3  Record truth (Round 2 — zone-based)
+-- §3  Record truth (zone-based)
 -- ────────────────────────────────────────────────────────────────────────────
 
 /-- Record truth: query `0` asks whether `M` is in the decidable-orbit sector
@@ -90,7 +90,7 @@ def gteTruth (M : BeableState) (r : ℕ) : Prop :=
 /-- The GTE-Möbius substrate `(A, e, [D])` as a NemS Framework.
     Model: Z₇⁵ beable states (`Fin 5 → Fin 7`).
     Rec:   ℕ (Gödel-coded physical queries).
-    Truth: zone-membership based reachability query (Round 2). -/
+    Truth: zone-membership based reachability query. -/
 noncomputable def GTEFramework : Framework where
   Model := BeableState
   Rec   := ℕ
@@ -118,7 +118,7 @@ private lemma gte_truth_eq (M : BeableState) (r : ℕ) :
     GTEFramework.Truth M r = gteTruth M r := rfl
 
 -- ────────────────────────────────────────────────────────────────────────────
--- §5  Selector ([D] coherence class projection) — Round 2
+-- §5  Selector ([D] coherence class projection)
 -- ────────────────────────────────────────────────────────────────────────────
 
 /-- The [D] coherence class selector: projects each beable state to a canonical
@@ -184,7 +184,7 @@ noncomputable def GTESelector : GTEFramework.Selector where
   cong := gteSelect_obsEq
 
 -- ────────────────────────────────────────────────────────────────────────────
--- §6  Non-categoricity (Round 2 — zone witness)
+-- §6  Non-categoricity (zone witness)
 -- ────────────────────────────────────────────────────────────────────────────
 
 /-- GTEFramework is not categorical: the vacuum (Zone L0) and the all-2 Zone L2 witness
@@ -282,7 +282,7 @@ theorem gte_tpc_from_nems_classification :
       ¬ ComputablePred (@DiagonalCapable.asr GTEFramework GTEDiagonalCapable).RT) := by
   exact Transputation.Theorems.transputation_classification GTEPSCBundle
 
-/-- **Round 4b cross-reference**: the real TPC classification theorem, replacing the
+/-- **Cross-reference**: the real TPC classification theorem, replacing the
     §67 arithmetic proxies in `GUTStructure.C3TPCCompleteness`. -/
 theorem gte_tpc_real :
     GTEFramework.ObsCategorical ∨
