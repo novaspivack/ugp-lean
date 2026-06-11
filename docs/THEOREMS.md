@@ -1566,20 +1566,24 @@ Module: `UgpLean/Universality/GTECompilation.lean`. Zero sorry, zero custom axio
 |---------|-----------|-----|
 | **gte_uwca_run_eq_after_steps** | Register-machine run equals `gteAfterSteps` (definitional packaging via `gteRunState`) | CatAL |
 | **gte_two_step_compilation_theorem** | Canonical seed trace through two GTE macro-steps (`native_decide`) | CatAL |
+| **gte_two_tile_compilation_theorem** | Two-tile $\sigma_{\rm GTE}$ program (odd register step + even Fibonacci/Mersenne $c$-rule tile) reproduces first two GTE triples from the Lepton seed | CatAL |
+| **gte_trajectory_two_tile_containment** | Finite-horizon `gte_uwca_run n H = gteAfterSteps n H` via register machine / two-tile specialization | CatAL |
 | **gte_trajectory_is_uwca_trajectory** | $\forall H$, `gte_uwca_run n H = gteAfterSteps n H` (finite-horizon coordinate equality) | CatAL |
 
-**Partial residual (LT-088-70):** even-step compilation in the literal two-tile UWCA $\sigma_{\rm GTE}$ tile language (Fibonacci lift + Mersenne-boundary $c$-rule) not separately certified; containment is via the register machine over `gteTransition`.
+#### Parity-projection forcing (`Universality.ParityProjectionBattery`, `Universality.ParityProjectionForcing`)
 
-#### Parity-projection forcing (`Universality.ParityProjectionForcing`)
-
-Module: `UgpLean/Universality/ParityProjectionForcing.lean`. Zero sorry, zero custom axioms.
+Modules: `UgpLean/Universality/ParityProjectionBattery.lean` (census kernels), `UgpLean/Universality/ParityProjectionForcing.lean` (bundle). Zero sorry, zero custom axioms.
 
 | Theorem | Statement | Cat |
 |---------|-----------|-----|
-| **parity_projection_additive_forcing** | Partial core: $777$-form status split ($277/490/5/5$), three parity-factoring survivors, $g_1=p$ orbit+VT witness | CatAL partial |
-| **parity_projection_mod2_recoding_forcing** | Partial core: $7^5=16807$ cardinality, six coherent survivors (count) | CatAL partial |
-
-**Partial residuals (LT-088-72/73):** full per-form `native_decide` over all $777$ additive forms and $g_2,g_3$ witnesses; full $16807$-point mod-2 recoding census with shadow-closure and Rule-106 displaced-vacuum exclusion.
+| **additive_battery_mod_two** … **additive_battery_mod_seven** | Per-modulus additive homomorphism census ($m=2,\ldots,7$); mirrors R33 Python oracle | CatAL |
+| **additive_battery_totals** | Aggregate status split $277/490/5/5$ over $777$ nonzero forms; three SCC/conjugate tallies | CatAL |
+| **unit_conjugate_two_forced_scc** | $(2,2,2)\bmod 4$ forced + shadow-closed; witness for $g_2$ | CatAL |
+| **unit_conjugate_three_forced_scc** | $(3,3,3)\bmod 6$ forced + shadow-closed; witness for $g_3$ | CatAL |
+| **parity_projection_additive_forcing** | Bundle: totals + per-$m$ censuses + parity-factoring survivors + $g_1=p$, $g_2$, $g_3$ witnesses | CatAL |
+| **mod2_recoding_chunk_zero** … **mod2_recoding_chunk_six** | Seven coordinate chunks ($2401$ assignments each) of mod-2 $\mathrm{GF}(7)$ recoding census | CatAL |
+| **mod2_recoding_totals** | Aggregate $7392/8820/343/252$; $12$ SCC ($6$ parity-factor + $6$ Rule-106 product-parity) | CatAL |
+| **parity_projection_mod2_recoding_forcing** | Bundle: $7^5=16807$ exhaustive census + chunk certificates | CatAL |
 
 ---
 
