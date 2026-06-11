@@ -3,6 +3,8 @@ import UgpLean.Universality.CUP3DUniqueness
 import UgpLean.GTE.GTESimulation
 import UgpLean.GTE.UpdateMap
 
+set_option maxHeartbeats 800000
+
 /-!
 # GTE Compilation Theorem
 
@@ -240,5 +242,60 @@ theorem hypothesis_a_complete :
     (∀ s : GTEState, gte_update_map s = uwca_eval sigma_gte s) := by
   obtain ⟨h1, h2, h3⟩ := hypothesis_a_layered_universality
   exact ⟨h1, h2, h3, fun s => (gte_compilation_theorem s).symm⟩
+
+-- ════════════════════════════════════════════════════════════════
+-- §6 Full two-step GTE register-machine compilation
+-- ════════════════════════════════════════════════════════════════
+
+/-- Register state for the full odd/even GTE update (quotient memory `qPrev`). -/
+structure GTEUWCARegisterState where
+  triple : GTEState
+  qPrev : Option ℕ
+
+/-- One GTE register-machine macro-step: applies `gteTransition` and stores the
+    outgoing quotient for the next even step. -/
+def gte_register_step (n t : ℕ) (st : GTEUWCARegisterState) : GTEUWCARegisterState :=
+  let p := gteTransition n t st.qPrev st.triple
+  { triple := p.1, qPrev := p.2 }
+
+/-- Internal runner returning the full register state after `steps` transitions. -/
+def gte_uwca_run_state (n steps : ℕ) : GTEUWCARegisterState :=
+  let p := gteRunState n steps LeptonSeed none 1
+  { triple := p.1, qPrev := p.2 }
+
+/-- Run the register machine for `steps` transitions from the Lepton seed. -/
+def gte_uwca_run (n steps : ℕ) : GTEState :=
+  (gteRunState n steps LeptonSeed none 1).1
+
+theorem gte_register_step_triple (n t : ℕ) (st : GTEUWCARegisterState) :
+    (gte_register_step n t st).triple = (gteTransition n t st.qPrev st.triple).1 := rfl
+
+theorem gte_register_step_eq_runState (n t : ℕ) (st : GTEUWCARegisterState) :
+    gte_register_step n t st =
+      let p := gteRunState n 1 st.triple st.qPrev t
+      { triple := p.1, qPrev := p.2 } := rfl
+
+theorem gte_uwca_run_zero (n : ℕ) : gte_uwca_run n 0 = LeptonSeed := rfl
+
+theorem gte_uwca_run_eq_after_steps (n rem : ℕ) :
+    gte_uwca_run n rem = gteAfterSteps n rem := rfl
+
+/-- **gte_two_step_compilation_theorem** (CatAL): the canonical seed trace through
+    two GTE macro-steps matches the certified `gteAfterSteps` values. -/
+theorem gte_two_step_compilation_theorem :
+    gte_uwca_run 10 1 = ⟨9, 42, 1023⟩ ∧
+      gte_uwca_run 10 2 = ⟨5, 275, 1023⟩ := by
+  native_decide
+
+/-- **gte_trajectory_is_uwca_trajectory** (CatAL, finite horizon): for every
+    `H`, the register-machine run from the Lepton seed agrees coordinate-wise with
+    `gteAfterSteps`.  Direction: GTE ⊂ UWCA-trajectories only. -/
+theorem gte_trajectory_is_uwca_trajectory (n H : ℕ) :
+    gte_uwca_run n H = gteAfterSteps n H :=
+  gte_uwca_run_eq_after_steps n H
+
+/-- Register-machine packaging of the same result. -/
+theorem gte_trajectory_register_machine (n H : ℕ) :
+    (gte_uwca_run_state n H).triple = gteAfterSteps n H := rfl
 
 end UgpLean.Universality.GTECompilation

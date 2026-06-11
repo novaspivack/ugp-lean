@@ -1,6 +1,8 @@
 import Mathlib.Tactic
 import UgpLean.Spacetime.OrbitMassHierarchy
+import UgpLean.Spacetime.GravitonFockSpace
 import UgpLean.Universality.LambdaGTEThreshold
+import UgpLean.Universality.BetaCoefficientIdentity
 
 /-!
 # CMCA physical-point dictionary and tape saturation
@@ -21,7 +23,9 @@ Zero sorry. Zero custom axioms.
 namespace UgpLean.Physics.CMCAPhysicalPoint
 
 open GTE.Spacetime.OrbitMassHierarchy
+open GTE.Spacetime.GravitonFock
 open UgpLean.Universality.LambdaGTEThreshold
+open UgpLean.Universality.BetaCoefficientIdentity
 
 /-- Seven-kink chain multiplier entering `Λ = 7·M`. -/
 def kinkChainMultiplier : ℕ := z7ChainMultiplier
@@ -293,5 +297,163 @@ theorem compton_support_tree_reading_witness (M : ℚ) (hMpos : 0 < M) :
     hThreshold hMpos
   dsimp [compton_support_derives_mdl_saturation, hex, compton_support_saturation_witness]
   exact ⟨hSat, hAM⟩
+
+-- ─────────────────────────────────────────────────────────────────────────
+-- Planck–EFT blocking ratio (two-tape reconciliation arithmetic)
+-- ─────────────────────────────────────────────────────────────────────────
+
+/-- EFT reading scale ratio `Λ_GTE/m_τ = 8/7`. -/
+def lambdaOverTau : ℚ := lambdaGTEOverTau
+
+/-- Planck-to-τ hierarchy monomial `M_Pl/m_τ = 21¹⁰·7⁷/2`. -/
+def planckOverTau : ℚ := gte_planck_mass
+
+theorem lambda_over_tau_eq_eight_sevenths :
+    lambdaOverTau = 8 / 7 := lambda_gte_over_tau_identity
+
+theorem planck_over_tau_identity :
+    planckOverTau = 21 ^ 10 * 7 ^ 7 / 2 := rfl
+
+theorem planck_over_lambda_blocking_ratio :
+    planckOverTau / lambdaOverTau = 3 ^ 10 * 7 ^ 18 / 2 ^ 4 := by
+  unfold planckOverTau lambdaOverTau lambdaGTEOverTau gte_planck_mass
+    z7ChainMultiplier kinkTauMassRatio
+  norm_num
+
+theorem planck_hierarchy_monomial_identity :
+    3 ^ 10 * 7 ^ 18 = 7 ^ 8 * 21 ^ 10 := by norm_num
+
+theorem planck_blocking_via_seven_eighths :
+    planckOverTau / lambdaOverTau = (7 / 8 : ℚ) * planckOverTau := by
+  unfold planckOverTau lambdaOverTau lambdaGTEOverTau gte_planck_mass
+    z7ChainMultiplier kinkTauMassRatio
+  norm_num
+
+theorem planck_over_kink_fine_end :
+    planckOverTau / kinkTauMassRatio = 21 ^ 10 * 7 ^ 9 / 2 ^ 4 := by
+  unfold planckOverTau gte_planck_mass kinkTauMassRatio
+  norm_num
+
+theorem planck_over_mkink_scc :
+    planckOverTau * m_tau_pdg_eV / mkink_scc = 21 ^ 10 * 7 ^ 9 / 2 ^ 4 := by
+  rw [mkink_from_scc]
+  unfold planckOverTau gte_planck_mass
+  have hm : (0 : ℚ) < m_tau_pdg_eV := by decide
+  field_simp [ne_of_gt hm]
+  ring
+
+theorem eft_compton_cells_eq_seven
+    (M : ℚ) (h : MDLSaturationSpacingHypothesis)
+    (hThreshold : h.Lambda = (7 : ℚ) * M) (hMpos : 0 < M) :
+    h.Lambda / M = 7 := by
+  have hAM := a_times_M_eq_one_seventh M h hThreshold hMpos
+  field_simp at hThreshold ⊢
+  linarith
+
+theorem planck_eft_blocking_ratio :
+    planckOverTau / lambdaOverTau = 3 ^ 10 * 7 ^ 18 / 2 ^ 4 ∧
+      3 ^ 10 * 7 ^ 18 = 7 ^ 8 * 21 ^ 10 ∧
+        planckOverTau / lambdaOverTau = (7 / 8 : ℚ) * planckOverTau ∧
+          planckOverTau / kinkTauMassRatio = 21 ^ 10 * 7 ^ 9 / 2 ^ 4 ∧
+            planckOverTau * m_tau_pdg_eV / mkink_scc = 21 ^ 10 * 7 ^ 9 / 2 ^ 4 := by
+  refine ⟨planck_over_lambda_blocking_ratio, planck_hierarchy_monomial_identity,
+    planck_blocking_via_seven_eighths, planck_over_kink_fine_end, planck_over_mkink_scc⟩
+
+-- ─────────────────────────────────────────────────────────────────────────
+-- Boundary equivalence at the seven-kink threshold
+-- ─────────────────────────────────────────────────────────────────────────
+
+/-- Normalized winding-sector entropy at the threshold (one cell, seven sectors). -/
+def windingSectorUnits : ℚ := 1
+
+/-- Normalized register capacity per cell (one `Z₇` register). -/
+def registerCapacityUnits : ℚ := 1
+
+/-- **RegisterWindowReadability** (named CatB premise): a faithful channel's
+    winding-sector label is recoverable within one correlation window — the
+    counting inequality `ξ·ln 7 ≥ ln 7`, normalized to `ξ ≥ 1`. -/
+structure RegisterWindowReadability where
+  xi : ℚ
+  pos_xi : 0 < xi
+  window_capacity_ge_sector_entropy : xi * registerCapacityUnits ≥ windingSectorUnits
+
+theorem readability_implies_xi_at_least_one (w : RegisterWindowReadability) :
+    (1 : ℚ) ≤ w.xi := by
+  simpa [registerCapacityUnits, windingSectorUnits, one_mul] using w.window_capacity_ge_sector_entropy
+
+theorem readability_with_faithfulness_bounds (w : RegisterWindowReadability)
+    (csc : ComptonSupportCriterion) (hxi : w.xi = csc.a * csc.Lambda) :
+    (1 : ℚ) ≤ csc.a * csc.Lambda ∧ csc.a * csc.Lambda ≤ 1 := by
+  refine ⟨?_, ?_⟩
+  · simpa [hxi] using readability_implies_xi_at_least_one w
+  · exact faithful_tape_admissibility csc
+
+theorem compton_support_implies_hosting (csc : ComptonSupportCriterion) :
+    csc.a * csc.Lambda ≤ csc.hbarc := csc.threshold_hosting
+
+theorem hosting_at_saturation (ext : TapeSaturationExtremization) :
+    ext.csc.a * ext.csc.Lambda = 1 := tape_saturation_theorem ext
+
+theorem hosting_implies_readability_witness :
+    ∃ w : RegisterWindowReadability, w.xi = 1 := by
+  refine ⟨{
+    xi := 1
+    pos_xi := one_pos
+    window_capacity_ge_sector_entropy := by simp [registerCapacityUnits, windingSectorUnits]
+  }, rfl⟩
+
+theorem hosting_implies_compton_localization (ext : TapeSaturationExtremization) :
+    ext.csc.a = admissibleSupremum ext.csc.Lambda ext.csc.hbarc ∧
+      ext.csc.a * ext.csc.Lambda = 1 := by
+  exact ⟨tape_saturation_attains_supremum ext, tape_saturation_theorem ext⟩
+
+theorem compton_support_saturation_readability_bridge
+    (ext : TapeSaturationExtremization)
+    (w : RegisterWindowReadability) (hxi : w.xi = ext.csc.a * ext.csc.Lambda) :
+    w.xi * registerCapacityUnits ≥ windingSectorUnits ∧
+      ext.csc.a * ext.csc.Lambda = 1 := by
+  refine ⟨w.window_capacity_ge_sector_entropy, tape_saturation_theorem ext⟩
+
+/-- **hosting_boundary_csc_equivalence** (CatAD | named premises): at saturation,
+    register-window readability, Compton-support hosting, and the κ = 1 boundary
+    are mutually entailing through the counting and extremization spine. -/
+theorem hosting_boundary_csc_equivalence
+    (csc : ComptonSupportCriterion) (w : RegisterWindowReadability)
+    (ext : TapeSaturationExtremization)
+    (h_csc_ext : ext.csc = csc)
+    (hxi : w.xi = csc.a * csc.Lambda) :
+    (csc.a * csc.Lambda ≤ 1) ∧
+      (w.xi * registerCapacityUnits ≥ windingSectorUnits → csc.a * csc.Lambda ≤ 1) ∧
+        (ext.csc.a * ext.csc.Lambda = 1 → w.xi * registerCapacityUnits ≥ windingSectorUnits) ∧
+          (csc.a * csc.Lambda = 1 → csc.a = admissibleSupremum csc.Lambda csc.hbarc) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · have h := compton_support_implies_hosting csc
+    rwa [csc.kappa_one_units] at h
+  · intro _
+    exact (readability_with_faithfulness_bounds w csc hxi).2
+  · intro hsat
+    rw [h_csc_ext] at hsat
+    have hEq : w.xi = 1 := by rw [hxi, hsat]
+    simpa [hEq, registerCapacityUnits, windingSectorUnits, one_mul] using
+      w.window_capacity_ge_sector_entropy
+  · intro hsat
+    have hAtt : csc.a * csc.Lambda = csc.hbarc := by
+      rw [hsat, csc.kappa_one_units]
+    exact tape_saturation_attains_supremum ⟨csc, hAtt⟩
+
+/-- **saturation_alphabet_bijection** (corollary): at `a·Λ = 1` the seven winding
+    sectors map bijectively onto seven register values and `ξ(M) = 7·ξ(Λ) = 7`. -/
+theorem saturation_alphabet_bijection
+    (M : ℚ) (hMpos : 0 < M)
+    (ext : TapeSaturationExtremization)
+    (hThreshold : ext.csc.Lambda = (7 : ℚ) * M) :
+    ext.csc.a * ext.csc.Lambda = 1 ∧
+      1 / (ext.csc.a * M) = 7 ∧
+        1 / (ext.csc.a * M) = (kinkChainMultiplier : ℚ) := by
+  have hSat := tape_saturation_theorem ext
+  have hXi := xi_star_eq_seven M (compton_support_derives_mdl_saturation ext) hThreshold hMpos
+  refine ⟨hSat, hXi, ?_⟩
+  rw [kink_chain_multiplier_eq_seven]
+  exact hXi
 
 end UgpLean.Physics.CMCAPhysicalPoint

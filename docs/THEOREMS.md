@@ -1541,6 +1541,45 @@ Upgrades `MDLSaturationSpacingHypothesis` from a bare assumption to a theorem-wi
 | **compton_support_derives_mdl_saturation** | Bridge `ComptonSupportCriterion` → `MDLSaturationSpacingHypothesis` | CatAD \| CSC |
 | **tape_saturation_physical_point_dictionary** | Full dictionary from CSC-derived spacing | CatAD \| CSC |
 | **mdl_supremum_from_strict_pricing** | Strict pricing forces coarser admissible optimum | CatAD |
+| **planck_eft_blocking_ratio** | Blocking-ratio web: $M_{\rm Pl}/\Lambda_{\rm GTE} = 3^{10}7^{18}/2^4$, monomial $3^{10}7^{18}=7^8 21^{10}$, seven-eighths factorization, fine-end $M_{\rm Pl}/M_{\rm kink}=21^{10}7^9/2^4$ via $M_{\rm kink}/m_\tau=8/49$ | CatAL |
+| **RegisterWindowReadability** | Named premise: winding-sector label recoverable within one correlation window ($\xi\ge 1$) | CatB |
+| **hosting_boundary_csc_equivalence** | CSC, register-window readability, and $\kappa=1$ hosting mutually entailed at saturation (named premises) | CatAD \| CSC |
+| **saturation_alphabet_bijection** | At $a\cdot\Lambda=1$: seven winding sectors biject with seven register values; $\xi(M)=7$ | CatAD \| CSC |
+
+#### Variational carrier pricing (`Gravity.TemporalVoxelCC`)
+
+Module: `UgpLean/Gravity/TemporalVoxelCC.lean`. Zero sorry, zero custom axioms.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **pmdl_carrier_coefficient_identities** | Three-form coefficient chain $N\tau(2C_{\rm Gorard}/N)=2C_{\rm Gorard}\tau=N^2/(D^2|Z_7|)=9/112$ | CatAL |
+| **pmdl_carrier_pricing_chain** | Bundle: coefficient identities, $\Omega=3\pi/14$, half-quantum and lattice pricing gaps, bracket exclusion of half-quantum pricing | CatAL |
+| **half_quantum_pricing_excluded** | $2\pi^2>1$ and census endpoint $<2\pi^2$ (half-quantum pricing excluded) | CatAL |
+
+Item (iv) Gaussian-split carrier–record factorization: **deferred** (Mathlib Gaussian-integral infrastructure).
+
+#### GTE trajectory containment (`Universality.GTECompilation`)
+
+Module: `UgpLean/Universality/GTECompilation.lean`. Zero sorry, zero custom axioms.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **gte_uwca_run_eq_after_steps** | Register-machine run equals `gteAfterSteps` (definitional packaging via `gteRunState`) | CatAL |
+| **gte_two_step_compilation_theorem** | Canonical seed trace through two GTE macro-steps (`native_decide`) | CatAL |
+| **gte_trajectory_is_uwca_trajectory** | $\forall H$, `gte_uwca_run n H = gteAfterSteps n H` (finite-horizon coordinate equality) | CatAL |
+
+**Partial residual (LT-088-70):** even-step compilation in the literal two-tile UWCA $\sigma_{\rm GTE}$ tile language (Fibonacci lift + Mersenne-boundary $c$-rule) not separately certified; containment is via the register machine over `gteTransition`.
+
+#### Parity-projection forcing (`Universality.ParityProjectionForcing`)
+
+Module: `UgpLean/Universality/ParityProjectionForcing.lean`. Zero sorry, zero custom axioms.
+
+| Theorem | Statement | Cat |
+|---------|-----------|-----|
+| **parity_projection_additive_forcing** | Partial core: $777$-form status split ($277/490/5/5$), three parity-factoring survivors, $g_1=p$ orbit+VT witness | CatAL partial |
+| **parity_projection_mod2_recoding_forcing** | Partial core: $7^5=16807$ cardinality, six coherent survivors (count) | CatAL partial |
+
+**Partial residuals (LT-088-72/73):** full per-form `native_decide` over all $777$ additive forms and $g_2,g_3$ witnesses; full $16807$-point mod-2 recoding census with shadow-closure and Rule-106 displaced-vacuum exclusion.
 
 ---
 

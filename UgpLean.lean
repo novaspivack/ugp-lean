@@ -121,6 +121,7 @@ import UgpLean.Universality.ArchitectureBridge
 import UgpLean.Universality.CUP4TotalParity
 import UgpLean.Universality.TriangleLiftTheorem
 import UgpLean.Universality.TriangleLiftStructural
+import UgpLean.Universality.ParityProjectionForcing
 import UgpLean.Universality.CUP11ModSeven
 import UgpLean.Universality.TwoLayerConfluence
 import UgpLean.Universality.GTECompilation

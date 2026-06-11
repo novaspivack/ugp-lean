@@ -1,5 +1,6 @@
 import Mathlib.Data.Real.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Analysis.Real.Pi.Bounds
 
 /-!
 # UgpLean.Gravity.TemporalVoxelCC — temporal voxel cosmological constant
@@ -240,5 +241,107 @@ theorem holographic_nrt_ratio_scale_invariant
         ((9 / 112) * MPl ^ 2 * H0' ^ 2) := by
   rw [holographic_nrt_loop_tree_ratio_h0_independent g mkink MPl H0 hH hM,
       holographic_nrt_loop_tree_ratio_h0_independent g mkink MPl H0' hH' hM]
+
+/-!
+## Variational carrier pricing chain
+
+The three-form carrier coefficient `N_spatial·τ·(2·C_Gorard/N_spatial) = 2·C_Gorard·τ`
+equals `N_spatial²/(D²·|Z₇|) = 9/112`, giving `Ω_carrier = (9/112)(8π/3) = 3π/14`.
+The half-quantum and lattice pricing gaps and their exclusion inequalities are
+certified below.  Gaussian-split factorization (item iv) is deferred — Mathlib lacks
+a packaged finite-dimensional Gaussian-integral split lemma.
+-/
+
+/-- Spatial tape count entering the carrier coefficient. -/
+def nSpatial : ℕ := 3
+
+/-- Spacetime dimension count entering the Gorard bridge. -/
+def dSpacetime : ℕ := 4
+
+/-- Per-cell Gorard conversion factor `c₀ = 2·C_Gorard/N_spatial`. -/
+def carrierPerCellConversion : ℚ := 2 * (3 / 32) / nSpatial
+
+theorem carrier_per_cell_eq_one_over_dsq :
+    carrierPerCellConversion = 1 / (dSpacetime ^ 2 : ℚ) := by
+  unfold carrierPerCellConversion nSpatial dSpacetime
+  norm_num
+
+theorem carrier_three_form_identity :
+    (nSpatial : ℚ) * (3 / 7) * carrierPerCellConversion = 2 * (3 / 32) * (3 / 7) := by
+  unfold carrierPerCellConversion nSpatial
+  ring
+
+theorem carrier_coeff_equals_nsq_over_dsq_z7 :
+    2 * (3 / 32) * (3 / 7) = (nSpatial : ℚ) ^ 2 / (dSpacetime ^ 2 * 7) := by
+  unfold nSpatial dSpacetime
+  norm_num
+
+theorem carrier_coeff_nine_over_112 :
+    (nSpatial : ℚ) ^ 2 / (dSpacetime ^ 2 * 7) = 9 / 112 := by
+  unfold nSpatial dSpacetime
+  norm_num
+
+theorem pmdl_carrier_coefficient_identities :
+    (nSpatial : ℚ) * (3 / 7) * carrierPerCellConversion = 2 * (3 / 32) * (3 / 7) ∧
+      2 * (3 / 32) * (3 / 7) = (nSpatial : ℚ) ^ 2 / (dSpacetime ^ 2 * 7) ∧
+        (nSpatial : ℚ) ^ 2 / (dSpacetime ^ 2 * 7) = 9 / 112 ∧
+          carrierPerCellConversion = 1 / (dSpacetime ^ 2 : ℚ) := by
+  refine ⟨carrier_three_form_identity, carrier_coeff_equals_nsq_over_dsq_z7,
+    carrier_coeff_nine_over_112, carrier_per_cell_eq_one_over_dsq⟩
+
+theorem pmdl_carrier_omega_reference :
+    (9 : ℝ) / 112 * (8 * Real.pi / 3) = 3 * Real.pi / 14 :=
+  omega_lambda_from_temporal_voxel
+
+theorem half_quantum_pricing_omega :
+    (3 * Real.pi / 4) * (8 * Real.pi / 3) = 2 * Real.pi ^ 2 := by
+  have hpi : Real.pi ≠ 0 := Real.pi_ne_zero
+  field_simp
+  ring
+
+theorem half_quantum_to_carrier_gap :
+    (2 * Real.pi ^ 2) / (3 * Real.pi / 14) = 28 * Real.pi / 3 := by
+  have hpi : Real.pi ≠ 0 := Real.pi_ne_zero
+  field_simp
+  ring
+
+theorem lattice_pricing_omega :
+    (6 / Real.pi) * (8 * Real.pi / 3) = 16 := by
+  have hpi : Real.pi ≠ 0 := Real.pi_ne_zero
+  field_simp
+  ring
+
+theorem lattice_to_carrier_gap :
+    (16 : ℝ) / (3 * Real.pi / 14) = 224 / (3 * Real.pi) := by
+  have hpi : Real.pi ≠ 0 := Real.pi_ne_zero
+  field_simp
+  ring
+
+private lemma two_pi_sq_gt_one : (1 : ℝ) < 2 * Real.pi ^ 2 := by
+  nlinarith [Real.pi_pos, Real.pi_gt_d6, sq_pos_of_pos Real.pi_pos]
+
+private lemma census_endpoint_lt_two_pi_sq :
+    (6902 : ℝ) / 10000 < 2 * Real.pi ^ 2 := by
+  nlinarith [Real.pi_pos, Real.pi_gt_d6, sq_pos_of_pos Real.pi_pos]
+
+theorem half_quantum_pricing_excluded :
+    (1 : ℝ) < 2 * Real.pi ^ 2 ∧
+      (6902 : ℝ) / 10000 < 2 * Real.pi ^ 2 := by
+  exact ⟨two_pi_sq_gt_one, census_endpoint_lt_two_pi_sq⟩
+
+theorem pmdl_carrier_pricing_chain :
+    ((nSpatial : ℚ) * (3 / 7) * carrierPerCellConversion = 2 * (3 / 32) * (3 / 7) ∧
+      2 * (3 / 32) * (3 / 7) = (nSpatial : ℚ) ^ 2 / (dSpacetime ^ 2 * 7) ∧
+        (nSpatial : ℚ) ^ 2 / (dSpacetime ^ 2 * 7) = 9 / 112 ∧
+          carrierPerCellConversion = 1 / (dSpacetime ^ 2 : ℚ)) ∧
+      ((9 : ℝ) / 112 * (8 * Real.pi / 3) = 3 * Real.pi / 14) ∧
+        ((3 * Real.pi / 4) * (8 * Real.pi / 3) = 2 * Real.pi ^ 2) ∧
+          ((2 * Real.pi ^ 2) / (3 * Real.pi / 14) = 28 * Real.pi / 3) ∧
+            ((6 / Real.pi) * (8 * Real.pi / 3) = 16) ∧
+              ((16 : ℝ) / (3 * Real.pi / 14) = 224 / (3 * Real.pi)) ∧
+                ((1 : ℝ) < 2 * Real.pi ^ 2 ∧ (6902 : ℝ) / 10000 < 2 * Real.pi ^ 2) := by
+  exact ⟨pmdl_carrier_coefficient_identities, omega_lambda_from_temporal_voxel,
+    half_quantum_pricing_omega, half_quantum_to_carrier_gap,
+    lattice_pricing_omega, lattice_to_carrier_gap, half_quantum_pricing_excluded⟩
 
 end UgpLean.Gravity.TemporalVoxelCC
