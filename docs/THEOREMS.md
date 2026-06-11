@@ -1502,6 +1502,24 @@ Given the seven-kink threshold $\Lambda = 7M$, SCC kink mass $M = (8/49)m_\varph
 
 **Premise structure:** `MDLSaturationSpacingHypothesis` — assumes only $a > 0$, $\Lambda > 0$, and $a\cdot\Lambda = 1$; threshold identification $\Lambda = 7M$ is supplied separately.
 
+#### Tape Saturation Theorem (`Physics.CMCAPhysicalPoint`, LT-088-61)
+
+Upgrades `MDLSaturationSpacingHypothesis` from a bare assumption to a theorem-with-named-premise under `ComptonSupportCriterion` + extremization at the hosting boundary. Zero sorry, zero custom axioms.
+
+| Theorem / structure | Statement | Cat |
+|---------|-----------|-----|
+| **ComptonSupportCriterion** | Named premise: κ = 1 hosting `a·Λ ≤ ℏc` at the faithfulness threshold; tape discreteness pins `ℏc = 1` in natural units | CatB |
+| **faithful_tape_admissibility** | Faithful tapes satisfy `a·Λ ≤ 1` (b1) | CatAL |
+| **compton_support_hosting_general** | Threshold hosting propagates to every hosted mass `m ≤ Λ` | CatAL |
+| **faithful_tape_spacing_bound** | Admissible spacing bounded by `a* = ℏc/Λ` | CatAL |
+| **StrictTapePricingHypothesis** | Strict monotone MDL pricing in tape spacing (b2) | CatAD |
+| **tape_pricing_monotonicity** | Coarser admissible spacing strictly lowers cost | CatAD |
+| **TapeSaturationExtremization** | MDL attains hosting boundary `a·Λ = ℏc` (b3 + b4) | CatAD |
+| **tape_saturation_theorem** | Under extremization + CSC: `a·Λ = 1` | CatAD \| CSC |
+| **compton_support_derives_mdl_saturation** | Bridge `ComptonSupportCriterion` → `MDLSaturationSpacingHypothesis` | CatAD \| CSC |
+| **tape_saturation_physical_point_dictionary** | Full dictionary from CSC-derived spacing | CatAD \| CSC |
+| **mdl_supremum_from_strict_pricing** | Strict pricing forces coarser admissible optimum | CatAD |
+
 ---
 
 ### Retrospective synthesis: biquadratic compositum and AGL chiral Z₂ (`Polynomial.BiquadraticCompositum`, `Polynomial.AGL17ChiralZ2`)
