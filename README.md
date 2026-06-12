@@ -18,7 +18,7 @@ The UGP framework identifies a unique GF(7) polynomial whose orbit under a singl
 
 This library provides machine-checked certificates for all of these claims at the level they can currently be formalized. Every theorem is zero sorry on the core proof path; the six documented stubs outside the core path await specific Mathlib API completions (manifold integrals, matrix exponentials).
 
-See the [formalization paper](paper/ugp_lean_formalization.tex) for the complete theory and theorem inventory.
+See the [formalization paper](paper/ugp_lean_formalization.tex) for the complete theory and theorem inventory, and the [Complete GTE Framework](https://doi.org/10.5281/zenodo.20560550) for the broader theory this formalizes.
 
 ---
 
@@ -121,7 +121,6 @@ This library is part of the **Reflexive Reality** research program.
 | Link | Description |
 |---|---|
 | [Research page](https://www.novaspivack.com/research/) | Full index of all papers, programs, and Lean archives |
+| [UGP Physics programme](https://www.novaspivack.com/research/physics-program) | The UGP Physics research programme |
 | [Full abstracts](https://novaspivack.github.io/research/abstracts/#abs-toc) | Complete abstracts |
-| [Zenodo program hub](https://doi.org/10.5281/zenodo.19429270) | Citable DOI hub for the NEMS program |
-
-**Non-circularity:** Core/ may not import Compute/. See [docs/DESIGN.md](docs/DESIGN.md).
+| [Zenodo program hub](https://doi.org/10.5281/zenodo.20644340) | Citable DOI hub for the UGP Physics program |
