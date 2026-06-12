@@ -1,1712 +1,219 @@
-# ugp-lean: Theorem Catalog
+# ugp-lean: Theorem Highlights
 
-What ugp-lean proves. All listed theorems have **0 sorry, 0 axioms** on the core path unless explicitly marked ⚠.
+**This is a curated selection of the most important theorems by layer.** It is not exhaustive — the library contains thousands of theorems across 376 modules. For the complete inventory, see `paper/ugp_lean_formalization.tex` (Table 1) and browse the source in `UgpLean/`.
 
-**Sorry audit:** **only two** sorries remain in the codebase,
-both openly disclosed with precise citations:
-- `dickman_equidistribution_in_APs` and `crt_equidistribution_within_regime`
-  in `GTE.AnalyticArchitecture` — classical analytic-NT results (Tenenbaum
-  III.6); pending Mathlib analytic-NT infrastructure (Dickman function
-  asymptotics).  These are research-level formalization gaps, not
-  correctness defects.
-
-**Prior integrity issues fixed:**
-- **Tarski `fingerprint_fixed_point_exists`** statement on `Finset ℕ` with
-  only monotonicity was **false** (counter-example `F(P) = P ∪ {max(P)+1}`);
-  restated on `Set ℕ` and proved via `OrderHom.lfp`; bounded `Finset` variant
-  `fingerprint_fixed_point_bounded` also added.
-- **TE22 `SM_is_D_minimizer_extended` vacuous theorem** — the original
-  statement had conclusion `True` (vacuous) despite its name claiming SM
-  D-minimizer uniqueness.  Replaced with a genuine decidable uniqueness
-  claim `SM_gauge_uniquely_selected` + `isSMGauge_iff` (both proved by
-  `decide`) that captures the decidable fragment.  The original name is
-  retained as an alias pointing to `isSMGauge_iff`.  The **full** SM
-  D-minimizer theorem (over the 34,560-universe scan discretization) remains
-  pending Fintype + native_decide (maintainer tracking outside this repo).
-
-## Core Classification (RSUC)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **theoremA_general** | TheoremA | ∀n, UnifiedAdmissibleAt n t → t ∈ CandidatesAt n |
-| **theoremA** | TheoremA | n=10 corollary: UnifiedAdmissible t → t ∈ Candidates |
-| **rsuc_theorem** | RSUC | Residual Seed Uniqueness: residual = Candidates; unique up to MirrorEquiv |
-| **theoremB** | TheoremB | Residual = Candidates; finite classification |
-| **mdl_selects_LeptonSeed** | TheoremB | Lepton Seed is lex-min in Residual |
-| **rsuc_formal** | FormalRSUC | (SF₀ ∧ QL₀ ∧ RA₀) t → t ∈ Residual ∧ MDL selects LeptonSeed |
-| **rsuc_canon** | FormalRSUC | UnifiedAdmissible t → canon t = LeptonSeed |
-| **strengthening_cannot_add_survivors** | MonotonicStrengthening | Strengthening predicates cannot add survivors to Residual |
-
-## Ridge & Sieve
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **ridge_10** | RidgeDefs | ridge 10 = 1008 |
-| **ridgeSurvivors_10** | Sieve | ridgeSurvivorsFinset 10 = {(24,42), (42,24)} |
-| **ridgeSurvivors_5_empty** | SieveBelow10 | ridgeSurvivorsFinset 5 = ∅ |
-| **ridgeSurvivors_6_empty** | SieveBelow10 | ridgeSurvivorsFinset 6 = ∅ |
-| **ridgeSurvivors_7_empty** | SieveBelow10 | ridgeSurvivorsFinset 7 = ∅ |
-| **ridgeSurvivors_8_empty** | SieveBelow10 | ridgeSurvivorsFinset 8 = ∅ |
-| **ridgeSurvivors_9_empty** | SieveBelow10 | ridgeSurvivorsFinset 9 = ∅ |
-| **n10_is_minimal_admissible_ridge** | SieveBelow10 | ∀ n, 5 ≤ n → n < 10 → ridgeSurvivorsFinset n = ∅ |
-| **ridge_minimality_and_existence** | SieveBelow10 | (∀ n, 5≤n → n<10 → survivors=∅) ∧ (survivors at 10 = {(24,42),(42,24)}) |
-| **ridge_remainder_lock** | RidgeRigidity | (2^10−1) % b₂ = 15 for b₂∣1008, b₂≥16 |
-| **m2_canonical** | RidgeRigidity | (2^10−1) % 42 = 15 |
-| **quotient_gap_13** | RidgeRigidity | q₂ − q₁ = 13 when q₂ ≥ 13 |
-| **survivor_gap_42_24** | RidgeRigidity | 24 − q1FromQ2 24 = 13 |
-| **survivor_gap_24_42** | RidgeRigidity | 42 − q1FromQ2 42 = 13 |
-| **remainder_gap_identity** | RidgeRigidity | t=20, s=7, t−s=13 |
-
-## Prime-Lock & Mirror
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **prime_823** | PrimeLock | Nat.Prime 823 |
-| **prime_2137** | PrimeLock | Nat.Prime 2137 |
-| **n10_survivor_c1_primes** | PrimeLock | Both 823 and 2137 prime |
-| **mirror_prime_lock** | PrimeLock | (42,24) and (24,42) yield prime c₁ |
-| **c1_from_divisor** | PrimeLock | c₁ expressed from b₂,q₂ formula |
-| **mirrorC1_ne_leptonC1** | TripleDefs | 2137 ≠ 823 |
-
-## GTE Canonical Orbit
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **canonical_orbit_triples** | Evolution | LeptonSeed=(1,73,823), Gen2=(9,42,1023), Gen3=(5,275,65535) |
-| **fib13_eq** | Evolution | fib13 = 233 |
-| **even_step_rigidity** | Evolution | canonicalGen2.b + fib13 = canonicalGen3.b |
-| **worked_orbit_enforced** | Evolution | Same as canonical_orbit_triples |
-| **trace_identifiability** | Evolution | G₂=(9,42,1023) ⇒ n=10, b₁=73, c₁∈{823,2137} |
-| **c2_canonical** | Evolution | 2^10 − 1 = 1023 |
-| **c3_canonical** | Evolution | 2^16 − 1 = 65535 |
-
-## Quarter-Lock & Elegant Kernel
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **quarterLockLaw** | QuarterLock | ∃ k_M k_gen2, k_M = k_gen2 + ¼k_L2 |
-| **quarterLockStability_holds** | QuarterLock | Defect 0 ⇒ on Quarter-Lock plane |
-| **k_L2_eq** | ElegantKernel | k_L2 = 7/512 |
-| **k_L2_pos** | ElegantKernel | 0 < k_L2 |
-| **L_model_pos** | ElegantKernel | 0 < L_model |
-| **L_model_eq_log_residual** | LModelDerivation | L_model = log₂(residualProduct), residual = (2⁴·5³)/3 |
-| **L_model_eq_log_wedge_form** | LModelDerivation | L_model = log₂((wedge2Factor · wedge5Factor) / orbitLength) |
-| **L_model_from_gauge_structure** | LModelDerivation | L_model = log₂((D₁ · 125) / 3) from D₁, 5³, orbit length 3 |
-
-## Lepton Mass Prediction Pipeline
-
-Module `MassRelations.LeptonMassPrediction`. Zero sorry.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **predictedLeptonMass_zero** | MassRelations.LeptonMassPrediction | predictedLeptonMass m_e θ 0 = m_e |
-| **muon_a_value_is_nine** | MassRelations.LeptonMassPrediction | canonicalGen2.a = 9 |
-| **koide_angle_equals_two_ninths** | MassRelations.LeptonMassPrediction | koideThetaUGP = 2/9 |
-| **koide_angle_equals_two_over_muon_a** | MassRelations.LeptonMassPrediction | koideThetaUGP = 2/canonicalGen2.a |
-| **epic_8_lepton_mass_structural_summary** | MassRelations.LeptonMassPrediction | Bundle: angle=2/muon_a ∧ muon_a=9 ∧ Q=2/3 for any θ |
-
-## VV Unified N_c Formula
-
-Module `MassRelations.DownRational` §7 establishes the unified
-N_c-derivation of all three VV mass coefficients. Zero sorry.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **alpha_d_from_N_c** | MassRelations.DownRational | α_d = 1+(N_c+1)/N_c² = 13/9 |
-| **beta_d_from_N_c** | MassRelations.DownRational | β_d = -(1+1/(2N_c)) = -7/6 |
-| **gamma_d_from_N_c** | MassRelations.DownRational | γ_d = -(N_c+2)/(2(N_c²-2)) = -5/14 |
-| **VV_unified_from_N_c** | MassRelations.DownRational | All three from N_c: α∧β∧γ = rational(N_c) |
-
-> N_c²-2 = δ = 7, so γ_d = -(N_c+2)/(2δ). Combined with the N_c structural chain,
-> both the Koide lepton sector (θ = (N_c²-1)/(4N_c²)) and the VV quark sector
-> are controlled by N_c = 3.
+All listed theorems have **0 sorry, 0 custom axioms** on the core path unless marked ⚠.
 
 ---
 
-## VV Coefficient Structural Identifications
+## RSUC — Residual Seed Uniqueness
 
-Module `MassRelations.DownRational` §§5-6 supplies group-theoretic
-identifications of each VV coefficient. Zero sorry.
+The foundational chain from which all physics derives.
 
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **beta_d_from_hypercharge** | MassRelations.DownRational | β_d = -(1+Y_Q) = -7/6, Y_Q=1/6 |
-| **alpha_d_from_su5_rank** | MassRelations.DownRational | α_d = 1+rank(SU5)/9 = 13/9 |
-| **alpha_d_from_su3_weyl** | MassRelations.DownRational | α_d = (\|W(SU3)\|+7)/9 |
-| **gamma_d_from_gut_dims** | MassRelations.DownRational | γ_d = -dim(45)/dim(126) = -5/14 |
-| **VV_coefficients_structural_summary** | MassRelations.DownRational | Bundle: all 3 VV coefficient identifications |
-
-## Complete N_c Structural Chain
-
-Module `MassRelations.KoideAngle` provides the full N_c structural chain.
-All zero sorry, zero hypotheses. N_c = 3 determines all SM fermion structural constants.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **muon_a_eq_color_rank_squared** | MassRelations.KoideAngle | canonicalGen2.a = 3^2 = 9 |
-| **lepton_a_values_nc_pattern** | MassRelations.KoideAngle | {a_e,a_μ,a_τ} = {N_c^0,(N_c²+1)/2,N_c²} |
-| **lepton_a_values_in_nc_set** | MassRelations.KoideAngle | all lepton a-values ∈ {1,(N_c²+1)/2,N_c²} |
-| **max_lepton_a_eq_nc_squared** | MassRelations.KoideAngle | max{a_e,a_μ,a_τ} = N_c² = 9 |
-| **lepton_b1_from_N_c** | MassRelations.KoideAngle | leptonB = N_c^4 − (N_c²+1)/2 − N_c = 73 |
-| **delta_from_N_c** | MassRelations.KoideAngle | ugp1_s = N_c + (N_c²−1)/2 = 7 |
-| **top_a_from_N_c** | MassRelations.KoideAngle | leptonB + 3 = N_c^4 − (N_c²+1)/2 = 76 |
-| **delta_b1_eq_511** | MassRelations.KoideAngle | ugp1_s × leptonB = 511 |
-| **strand_count_eq_su_nc_adj_div_4** | MassRelations.KoideAngle | (N_c²−1)/4 = 2 = lepton strand count |
-| **koide_angle_from_N_c_pure** | MassRelations.KoideAngle | koideThetaUGP = (N_c²−1)/(4N_c²) = 2/9 |
-| **koide_angle_three_forms** | MassRelations.KoideAngle | All three formulas equal 2/9 |
-| **N_c_determines_everything** | MassRelations.KoideAngle | Full chain: step∧strand∧δ∧b₁∧θ all from N_c |
-
-> **Key identity**: θ = (N_c²−1)/(4N_c²) = dim(SU(N_c))/(4N_c²) = 8/36 = 2/9.  
-> Combined with `SM_gauge_uniquely_selected` (N_c=3 from PSC): complete axiom-level derivation.
+| Theorem | Lean name | Module |
+|---|---|---|
+| At n=10, ridge survivors = {(24,42),(42,24)} | `ridgeSurvivors_10` | Compute.Sieve |
+| ∀n, UnifiedAdmissibleAt n t → t ∈ CandidatesAt n | `theoremA_general` | Classification.TheoremA |
+| Residual = Candidates (classification) | `theoremB` | Classification.TheoremB |
+| MDL selects (1,73,823) as lex-min | `mdl_selects_LeptonSeed` | Classification.TheoremB |
+| **RSUC: unique residual up to MirrorEquiv** | `rsuc_theorem` | Classification.RSUC |
+| n=10 is the minimal admissible ridge level | `n10_is_minimal_admissible_ridge` | Compute.SieveBelow10 |
 
 ---
 
-## Koide Angle and β Derivation
+## GTE Orbit and Update Map
 
-Modules `MassRelations.KoideAngle` and `MassRelations.UpLeptonCyclotomic` §5
-together derive the Koide angle and the β coefficient.
-All zero sorry, zero hypotheses.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **koide_angle_eq_two_ninths** | MassRelations.KoideAngle | koideThetaUGP = 2/9 |
-| **koide_angle_from_gte_structure** | MassRelations.KoideAngle | koideThetaUGP = 2/canonicalGen2.a |
-| **cos_sum_three_120** | MassRelations.KoideAngle | Σcos(θ+2πg/3)=0 |
-| **cos_sq_sum_three_120** | MassRelations.KoideAngle | Σcos²(θ+2πg/3)=3/2 |
-| **koide_Q_two_thirds** | MassRelations.KoideAngle | Q=(Σr²)/(Σr)²=2/3 for any θ |
-| **beta_eq_alpha_div_c2_su3** | MassRelations.UpLeptonCyclotomic | β = α/C₂(SU3) = (π/6)/(4/3) = π/8 |
-| **beta_eq_alpha_times_c2_su2** | MassRelations.UpLeptonCyclotomic | β = α×C₂(SU2) = π/8 |
-| **alpha_over_beta_eq_c2_su3** | MassRelations.UpLeptonCyclotomic | α/β = C₂(SU3) = 4/3 |
+| Theorem | Lean name | Module |
+|---|---|---|
+| Canonical orbit: (1,73,823)→(9,42,1023)→(5,275,65535) | `canonical_orbit_triples` | GTE.Evolution |
+| Orbit forced by T; not hardcoded | `update_map_produces_canonical_orbit` | GTE.UpdateMap |
+| Ridge remainder lock m₂=15 for all n≥5 | `ridge_remainder_lock_general` | GTE.UpdateMap |
+| gcd(2ᵃ−1, 2ᵇ−1) = 2^gcd(a,b)−1 | `mersenne_gcd_identity` | GTE.MersenneGcd |
+| τ(Rₙ) = 5·τ(2^(n−4)−1) exact formula | `tau_ridge_exact` | GTE.MirrorDualConjecture |
+| RC tier structure: 1023, 65535 Mersenne boundaries | `ugp_rc_tier_structure` | GTE.MersenneLadder |
+| Fingerprint fixed-point (Tarski, Set form) | `fingerprint_fixed_point_exists` | GTE.StructuralTheorems |
+| Resonant factory Q₊=Q₋+2; no local obstruction | `factory_gap_two`, `hasse_check_no_obstruction` | GTE.ResonantFactory |
 
 ---
 
-## Claim C — TT Formula = Weyl Bisector × Binary Cascade
+## Orbit Uniqueness and Vacuum Structure
 
-Module `MassRelations.ClaimCBridge` establishes Claim C. All theorems zero sorry, zero hypotheses.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **claim_C_formal** | MassRelations.ClaimCBridge | cascadeState g = angleToAlpha1 omega1 · 2^g + π/8 (formal Claim C: Claim A ⊗ Claim B) |
-| **claim_C_via_su3_const** | MassRelations.ClaimCBridge | cascadeState g = su3WeylBisectorAngle · 2^g + π/8 |
-| **claim_C_increment_is_weyl_scaled** | MassRelations.ClaimCBridge | step(g→g+1) = Weyl bisector · 2^g |
-| **k_gen2_encodes_double_weyl_bisector** | MassRelations.ClaimCBridge | k_gen2 = −φ · cos(2 · Weyl_bisector) = −φ · cos(π/3) |
-| **pentagon_hexagon_TT_unified_bridge** | MassRelations.ClaimCBridge | Conjunction of all 5 structural facts: TT ∧ Weyl ∧ k_gen2=−φcos(2Weyl) ∧ k_gen=φcos(π/10) ∧ Pentagon-Hexagon Bridge |
-| **k_gen2_is_neg_phi_cos_double_TT_coeff** | MassRelations.ClaimCBridge | k_gen2 = −φ · cos(2·(π/6)) |
-
-> **Note:** "Formal Claim C" proves the TT formula coefficient IS the SU(3) Weyl bisector and the 2^g structure comes from the binary cascade. The physical question (WHY the GTE cascade acts as a Weyl rotation) remains interpretive — the formal mathematical content is now Lean-certified.
+| Theorem | Lean name | Module |
+|---|---|---|
+| SM orbit is the *uniquely forced* 3-step trajectory from GEN₁ | `fmdl_orbit_is_unique_psc_trajectory` | Universality.CUP3DUniqueness |
+| GEN₁ is a Garden-of-Eden state (0 predecessors) | `fmdl_gen1_is_goe` | Universality.GoEHierarchy |
+| All 5 cyclic rotations of GEN₁ are GoE states | `fmdl_gen1_all_rotations_are_goe` | Universality.GoEStabilityHierarchy |
+| GEN₂ and GEN₃ each have exactly 1 predecessor | `fmdl_gen2_unique_predecessor` | Universality.GoEStabilityHierarchy |
+| All 16,807 states reach vacuum in ≤7 steps | `fmdl_universal_7step_convergence` | Universality.CUP3DUniqueness |
+| **No false vacua**: vacuum is unique fixed point | `fmdl_unique_fixed_point` | Universality.CUP3DUniqueness |
+| Z₇/Z₂ incompatibility: φ: Z₇→Z₂ is not a ring hom | `z7_binary_not_ring_homomorphism` | Universality.CUP3DUniqueness |
+| Photon is the unique uniform fixed point of f_MDL | `fmdl_unique_uniform_fixed_point` | Universality.CUP3DUniqueness |
+| Z₇ sum conservation unique to gen₁ | `cup11b_z7_sum_conservation_unique` | Universality.CUP3DUniqueness |
 
 ---
 
-## UCL Unconditional Closure (k_gen, k_gen2, Pentagon–Hexagon Bridge)
-
-All theorems in this section have **zero hypotheses, zero sorry, Mathlib-only axioms**.  
-Module: `ElegantKernel.Unconditional.KGenFullClosure` (§§1–9).
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **thm_ucl2_fully_unconditional** | ElegantKernel.Unconditional.KGenFullClosure | k_gen_derived = φ·cos(π/10) = √(φ²−¼) ≈ 1.5388; derived via Quarter-Lock substitution μ=λ²−¼ on Fibonacci char poly |
-| **thm_ucl2_sqrt_form** | ElegantKernel.Unconditional.KGenFullClosure | k_gen_derived = √(φ²−¼) (equivalent form) |
-| **thm_ucl2_summary** | ElegantKernel.Unconditional.KGenFullClosure | k_gen_derived = φcos(π/10) ∧ = √(φ²−¼) ∧ > 0 ∧ > 1 ∧ k_gen² = φ+¾ |
-| **k_gen2_eq_neg_phi_half** | ElegantKernel.KGen2 | k_gen2 = −φ/2 (by definition; also = cos(4π/5)) |
-| **thm_ucl1_unconditional** | ElegantKernel.Unconditional.FibonacciPentagonBridge | If k_gen2 = −λ_dom/2 and λ_dom satisfies Fibonacci char poly, then k_gen2 = −φ/2 |
-| **k_gen_pentagon_hexagon_bridge** | ElegantKernel.Unconditional.KGenFullClosure | k_gen_derived + k_gen2 = φ·(cos(π/10) − cos(π/3)); bridges D₅ pentagonal (Fibonacci/Quarter-Lock) and D₆ hexagonal (SU(3) Weyl/TT formula α=π/6) symmetries |
-| **k_gen_pentagon_hexagon_bridge_half** | ElegantKernel.Unconditional.KGenFullClosure | k_gen_derived + k_gen2 = φ·(cos(π/10) − ½) (equivalent half-angle form) |
-
-> **Deprecated `KGen.lean`:** The module is **not imported** from `UgpLean.lean` (doc-only stub). The former conditional route (`k_gen := π/2` via tautological `FibonacciPhaseAxiom`) is superseded by `thm_ucl2_fully_unconditional` in `KGenFullClosure`. Canonical value: **φ·cos(π/10) ≈ 1.5388** (P01, SM verifier, `theoretical_coefficients.json`).
-
-## Exclusion Filters
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **exclude_16** | ExclusionFilters | c₁ composite for (16,63) |
-| **exclude_18** | ExclusionFilters | c₁ composite for (18,56) |
-| **exclude_21** | ExclusionFilters | c₁ composite for (21,48) |
-| **exclude_28** | ExclusionFilters | c₁ composite for (28,36) |
-| **exclude_36** | ExclusionFilters | c₁ composite for (36,28) |
-| **exclude_63** | ExclusionFilters | c₁ composite for (63,16) |
-
-## Universality
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **rule110_output_iff_minterm** | Rule110 | Output 1 ↔ neighborhood ∈ S_110 |
-| **uwca_simulates_rule110** | UWCAembedsRule110 | UWCA_embeds_Rule110 |
-| **ugp_is_turing_universal** | TuringUniversal | UGP_substrate_turing_universal |
-| **architecture_bridge** | ArchitectureBridge | uniqueness_of_physical_program |
-| **uwca_augmented_left_inverse** | UWCAHistoryReversible | Backward ∘ forward = id on tape × history stack (exact lift) |
-| **uwca_history_lane_step_reversible** | UWCAHistoryReversible | Same with empty initial history |
-| **gte_entropy_prefix8_gt_prefix9** | EntropyNonMonotone | Coarse Shannon entropy drops from 8- to 9-step macro prefix along simulated GTE orbit (\(n=10\)) |
-
-## Phase 4 (Stubs / Constants)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **leptonB_matches_deltaUGP** | DeltaUGP | deltaUGPFormula leptonB |
-| **k_L2_eq** | ElegantKernel | k_L2 = 7/512 (derived from ugp1_s=7, 2^9=512 block scale) |
-| **k_L2_from_ugp1_s** | ElegantKernel | k_L2 = ugp1_s / 2^9 (structural link to mirror offset) |
-| **block_denom_in_half_ridge_interval** | ElegantKernel | 504 < 2^9 ≤ 1008=ridge(10) (2^9 is unique power of 2 in half-ridge interval) |
-| **g1Sq_bare_eq** | GaugeCouplings | g1Sq_bare = 16/125 |
-| **g2Sq_bare_eq** | GaugeCouplings | g2Sq_bare = 2329/5400 |
-| **g3Sq_bare_eq** | GaugeCouplings | g3Sq_bare = 41075281/27648000 |
-| **ugp_coupling_predictions_are_independent** | TE22.ScanCertificate | C15/C16/C4' derived from ugp-lean rationals, not from SM data |
-| **ugp_g1g2_prediction_close_to_SM** | TE22.ScanCertificate | UGP g1²/g2² prediction within 2% of SM value at M_Z |
-| **SM_gauge_uniquely_selected** | TE22.ScanCertificate | Among all 60 (GaugeGroup, Dimension) pairs, exactly `(SU3xSU2xU1, 4D)` satisfies `isSMGauge` (decided) |
-| **isSMGauge_iff** | TE22.ScanCertificate | `isSMGauge g d = true ↔ g = SU3xSU2xU1 ∧ dim_val d = 4` (decided) |
-| **SM_is_D_minimizer_extended** | TE22.ScanCertificate | Alias of `isSMGauge_iff` (decidable fragment of full D-minimizer claim) |
-| **universe_params_card** | TE22.ScanCertificate | `Fintype.card UniverseParams = 34560` (native_decide) |
-| **psc_layer_i_certificate** | TE22.ScanCertificate | Layer I PSC filter: 12 survivors, all N_gen=3, all SM gauge (native_decide) |
-| **psc_enumeration_forces_ngen_3** | TE22.ScanCertificate | ∀ PSC-admissible u, `ngen_val u.ngen = 3` — Two-Layer PSC Layer I (native_decide, CatAL) |
-| **psc_12_survivors_have_ngen_3** | TE22.ScanCertificate | 12 Layer I survivors ∧ all have N_gen = 3 |
-| **psc_admissible_forces_sm_gauge** | TE22.ScanCertificate | ∀ PSC-admissible u, `isSMGauge u.gauge u.dim` (native_decide) |
-
-## GTE Number Theory
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **tau_ridge_exact** | MirrorDualConjecture | τ(2^n−16) = 5·τ(2^(n−4)−1) for n≥5 |
-| **coprime_pow2_mersenne** | MirrorDualConjecture | Coprime(2^a, 2^b−1) for b≥1 |
-| **mdl_c1_n10/n13/n16** | MirrorDualConjecture | MDL-selected c₁ at each level |
-| **branch_linearization** | ResonantFactory | c₁(b₂,q₂) = b₂·(q₂−13) + B(q₂) |
-| **factory_gap_two** | ResonantFactory | Q₊(t) = Q₋(t) + 2 for all t |
-| **factoryDp_prime** | ResonantFactory | D₊ = 119513 is prime |
-| **localDensity_3..43** | ResonantFactory | ρ_F(p) for good primes p ≤ 43 |
-| **hasse_check_no_obstruction** | ResonantFactory | ρ_F(p) < p for all checked primes |
-
-## Analytic Architecture (documented statements)
-
-Statements supporting the Selberg–Delange architecture for the one-factor sum.
-Classical analytic-NT results from Tenenbaum III.6; Lean proofs pending
-Mathlib analytic-NT infrastructure (Dickman function asymptotics, character
-sum estimates).
-
-| Theorem | Module | Status |
-|---------|--------|--------|
-| **qminus_qplus_coprime** | AnalyticArchitecture | ✓ algebraic, proved zero-sorry |
-| **dickman_equidistribution_in_APs** | AnalyticArchitecture | ⚠ sorry — Tenenbaum III.6, Mathlib infra gap |
-| **crt_equidistribution_within_regime** | AnalyticArchitecture | ⚠ sorry — depends on Dickman + CRT |
-
-## Resolved Conjectures (7 of 10)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **mirror_min_dual_proved** | Conjectures | b₁(b₂,q₂) = b₁(q₂,b₂) — commutativity of + |
-| **fib_rigidity_proved** | Conjectures | q₂ − q₁ = 13 — definitional from q₁ = q₂ − 13 |
-| **c1_monotone_in_q2** | Conjectures | c₁ strictly increasing in q₂ (corrected MDL direction) |
-| **robust_universality_proved** | Conjectures | = ugp_is_turing_universal (unconditional) |
-| **sharp_boundary_proved** | Conjectures | Decidable + RE-hard, both proved |
-| **kernel_compatibility_proved** | Conjectures | Quarter-Lock is unconditional algebraic identity |
-| **global_c_attractor_proved** | Conjectures | c reaches 2^n−1 in one step via even_step_c_invariance |
-
-## GTE Structural Theorems
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **mirror_fiber_two** | StructuralTheorems | \|{(b₂,q₂),(q₂,b₂)}\| = 2 when b₂ ≠ q₂ |
-| **mirror_pair_induces_loop** | StructuralTheorems | Mirror-dual pair induces orbit of size 2 under involution |
-| **minimality_duality_n10** | StructuralTheorems | At n=10, MDL pair is {(24,42), (42,24)} |
-| **only_survivors_n10** | Compute.ExclusionFilters | Prime-locked ridge survivors at n=10 are exactly {(24,42), (42,24)} |
-| **fingerprint_fixed_point_exists** | StructuralTheorems | Monotone F : Set ℕ → Set ℕ has a fixed point (Tarski via `OrderHom.lfp`) |
-| **fingerprint_fixed_point_bounded** | StructuralTheorems | Monotone F : Finset ℕ → Finset ℕ bounded by B has fixed point P ⊆ B (Knaster-Tarski on finite Boolean sublattice) |
-| **decidability_phase_transition** | StructuralTheorems | Local decidability ∧ global (Turing) universality |
-| **leptonSeed_is_lex_min_residual** | StructuralTheorems | LeptonSeed lex-minimal c in residual triples at n=10 |
-
-## Open Conjectures (3 of 10)
-
-| Conjecture | Module | Statement |
-|------------|--------|-----------|
-| **MirrorDualConjecture** | MirrorDualConjecture | Infinitely many mirror-dual pairs (twin-prime analog) |
-| **UGPPrimeInfinitudeConjecture** | UGPPrimes | Infinitely many UGP primes (follows from Mirror-Dual) |
-| **MuFlipDistanceConjecture** | Conjectures | Bounded μ-flip waiting time on linear progressions |
-
-## Real Analysis / DSI Export
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **ugpOutputGap** | DSIExport | Real-valued c₁ on hyperbola: g_R(q) = (R/q+q+7)(q-13)+20 |
-| **ugpShell** | DSIExport | Valid parameter domain {q ≥ 14, R/q ≥ 16, q > 0} |
-| **ugpOutputGap_deriv** | DSIExport | HasDerivAt: g'(q) = 13R/q² + 2q − 6 |
-| **ugpOutputGap_deriv_pos** | DSIExport | Derivative positive for q ≥ 14, R > 0 |
-| **ugp_deriv_lower_bound** | DSIExport | Uniform bound: g'(q) ≥ 22 on shell |
-| **ugpOutputGap_differentiableOn** | DSIExport | Differentiable on (0,∞) |
-| **ugpOutputGap_continuousOn_Icc** | DSIExport | Continuous on compact subsets |
-| **UGPWall1Export** *(structure)* | DSIExport | Packaged export for DSI SmallSymmetricMVTBundle |
-
-## RC Tier Structure (Paper 24: Substrate Depth and Self-Generated Mass)
-
-These theorems certify the arithmetic tier boundaries of the reflexive-closure
-analysis (Spivack 2026, Paper 24). Status: **Category A** (arithmetic bounds
-derived from Lean-certified GTE cascade); **Category A/D** for the empirical
-RC correlation (computational COMP-EP18 backed, r = −0.944 p = 6.7×10⁻¹⁹
-n = 38; RC predicate not yet formalized in Lean).
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **tier12_boundary_is_mersenne_10** | GTE.MersenneLadder | 1023 = 2^10 − 1 |
-| **tier23_boundary_is_mersenne_16** | GTE.MersenneLadder | 65535 = 2^16 − 1 |
-| **tier_boundaries_strictly_ordered** | GTE.MersenneLadder | 1023 < 65535 |
-| **tier_boundaries_are_mersenne** | GTE.MersenneLadder | ∃k₁ k₂, 1023 = 2^k₁−1 ∧ 65535 = 2^k₂−1 |
-| **tier23_boundary_from_ridge_and_Nc** | GTE.MersenneLadder | 65535 = 2^(10+2·3)−1 (N_c=3) |
-| **lepton_c_values_span_all_tiers** | GTE.MersenneLadder | LeptonSeed.c < 1023, c₂ = 1023, c₃ = 65535 |
-| **ugp_rc_tier_structure** | GTE.MersenneLadder | Full conjunction of all 7 tier facts (zero sorry) |
-
-## Composite Braid c-Rule (Paper 24 — Category A upgrade)
-
-Module `BraidAtlas.CompositeTriples` formalizes the composition law for
-composite hadron GTE triples. Status: **Category A** for writhe/chirality/tier
-theorems and the **full proton/neutron (a,b,c) derivation** (all zero sorry);
-**Category A/D** for the sector assignment rule (empirically validated).
-
-### c-component theorems
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **antiquark_winding_is_negation** | BraidAtlas.CompositeTriples | W(q̄) = −W(q) (CPT reversal) |
-| **meson_winding_zero** | BraidAtlas.CompositeTriples | W(q) + W(q̄) = 0 for all quark types |
-| **meson_c_real_positive** | BraidAtlas.CompositeTriples | H(0) = 0, so c is real+positive for mesons |
-| **baryon_c_real_of_nonneg_charge** | BraidAtlas.CompositeTriples | c real+positive for baryons with Q ≥ 0 |
-| **proton_winding_eq_Nc_times_Q** | BraidAtlas.CompositeTriples | W(u)+W(u)+W(d) = 3 = N_c·Q(proton) |
-| **neutron_winding_eq_Nc_times_Q** | BraidAtlas.CompositeTriples | W(u)+W(d)+W(d) = 0 = N_c·Q(neutron) |
-| **confinement_mersenne_level** | BraidAtlas.CompositeTriples | 15 = 2^4−1 (lowest composite Mersenne level) |
-| **proton_neutron_c_eq_15_in_confinement_tier** | BraidAtlas.CompositeTriples | 15 < 1023 (proton/neutron in tier 1) |
-| **ugp_composite_braid_c_rule** | BraidAtlas.CompositeTriples | Full composite c-rule conjunction (zero sorry) |
-
-### a-component (min-rule) and b-component (Wolfram Alpha breakthrough)
-
-The Wolfram Alpha representation 11459 = 5 × 2^8 × 3^2 − 61 exposes the
-structural law b(proton) = N_c²·(a_u·2^{N_c²−1} − δ) + (N_c−1), where every
-factor is a Lean-certified UGP constant. The correction 61 has TWO independent
-derivations: `b₁ − N_c(N_c+1) = 73 − 12 = 61` and `δ·N_c² − (N_c−1) = 7·9−2 = 61`.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **proton_a_eq_min** | BraidAtlas.CompositeTriples | min(5,5,9) = 5 (a-rule: min of constituents) |
-| **neutron_a_eq_min** | BraidAtlas.CompositeTriples | min(5,9,9) = 5 |
-| **proton_b_correction_from_lepton_seed** | BraidAtlas.CompositeTriples | 73 − N_c(N_c+1) = 61 |
-| **proton_b_correction_from_delta** | BraidAtlas.CompositeTriples | δ·N_c² − (N_c−1) = 61 |
-| **proton_b_correction_agreement** | BraidAtlas.CompositeTriples | Both paths equal 61 |
-| **proton_b_formula** | BraidAtlas.CompositeTriples | N_c²·(a_u·2^{N_c²−1}−δ)+(N_c−1) = 11459 |
-| **neutron_b_formula** | BraidAtlas.CompositeTriples | Same − 2N_c² = 11441 |
-| **proton_neutron_b_diff** | BraidAtlas.CompositeTriples | 11459 − 11441 = 2N_c² = 18 |
-| **ugp_nucleon_b_formula** | BraidAtlas.CompositeTriples | Full (a,b,c) conjunction for p and n (zero sorry) |
-| **sigma_plus_b_formula** | BraidAtlas.CompositeTriples | b(Σ+)=(b(s)+a_u×seesaw)×(…)=639161 |
-| **strange_baryon_s1_b_eq_lambda** | BraidAtlas.CompositeTriples | |S|=1 sector b: Lambda=Sigma0=Sigma-=38236 |
-| **strange_baryon_s2_b_eq_xi** | BraidAtlas.CompositeTriples | |S|=2 sector b: Xi0=Xi-=878434 |
-| **ugp_all_baryon_b_formulas** | BraidAtlas.CompositeTriples | All 9 light baryon b-values (full conjunction, zero sorry) |
-
-## Asymptotic Sparsity (P25)
-
-Module `Phase4.AsymptoticSparsity` proves the Asymptotic Sparsity Theorem (P25 §4):
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **ridge_ge_8176** | Phase4.AsymptoticSparsity | ridge n ≥ 8176 for n ≥ 13 |
-| **stage2_survivor_10** | Phase4.AsymptoticSparsity | (24,42) is Stage-1 survivor at n=10 with b₁=73 |
-| **no_stage2_at_4..12** | Phase4.AsymptoticSparsity | For each n ∈ {4,5,6,7,8,9,11,12}, no element of ridgeSurvivorsFinset n has b₁=73 (native_decide) |
-| **no_stage2_large_n** | Phase4.AsymptoticSparsity | For n ≥ 13, AM-GM → b₁ = b₂+q₂+7 ≥ 187 ≠ 73 (nlinarith over ℤ) |
-| **asymptotic_sparsity_universal** | Phase4.AsymptoticSparsity | **For ALL n : ℕ**, (n=10,b₁=73) is the UNIQUE Stage-2 survivor. Single ∀n theorem combining finite check + AM-GM + trivial small-n case. |
-| **no_survivor_small_n** | Phase4.AsymptoticSparsity | For n < 4, isMirrorDualSurvivorAt is False (ridge n = 0, no valid pairs) |
-
-## Positive Root Theorem (P25)
-
-Module `Phase4.PositiveRootTheorem` proves T6 (P25 §5):
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **g1_num_val** | Phase4.PositiveRootTheorem | g₁² numerator = 16 (native_decide) |
-| **g2_num_val** | Phase4.PositiveRootTheorem | g₂² numerator = 2329 (native_decide) |
-| **g3_num_val** | Phase4.PositiveRootTheorem | g₃² numerator = 41075281 (native_decide) |
-| **g2_factor** | Phase4.PositiveRootTheorem | 2329 = 17 × 137 (norm_num) |
-| **g3_perfect_sq** | Phase4.PositiveRootTheorem | 41075281 = (13×17×29)² (norm_num) |
-| **su14,su18,su30** | Phase4.PositiveRootTheorem | c(SU(14)₁)=13, c(SU(18)₁)=17, c(SU(30)₁)=29 |
-| **positive_root_theorem** | Phase4.PositiveRootTheorem | SU(N)₁ factor count in numerator(g²_G) = |Φ⁺(G)| for all G |
-| **prime_29_cross_sector** | Phase4.PositiveRootTheorem | 4·N_c²−δ = 29 = c(SU(30)₁): same integer in seesaw and gauge sectors |
-
-## Galois Layer Stability (P25)
-
-Module `GaloisStructure.CyclotomicLayers` proves the Galois Stability Theorem (P25 §7):
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **two_cos_pi12_sq** | GaloisStructure.CyclotomicLayers | (2·cos(π/12))² = 2 + √3 |
-| **two_cos_pi10_sq** | GaloisStructure.CyclotomicLayers | (2·cos(π/10))² = 2 + φ |
-| **p10_at_cos_pi12** | GaloisStructure.CyclotomicLayers | p₁₀(2cos(π/12)) = 2−√3 exactly |
-| **p12_at_cos_pi10** | GaloisStructure.CyclotomicLayers | p₁₂(2cos(π/10)) = φ−2 exactly |
-| **two_minus_sqrt3_ne_zero** | GaloisStructure.CyclotomicLayers | 2−√3 ≠ 0 |
-| **goldenRatio_minus_two_ne_zero** | GaloisStructure.CyclotomicLayers | φ−2 ≠ 0 |
-| **galois_layer_stability** | GaloisStructure.CyclotomicLayers | p₁₀(2cos(π/12))≠0 ∧ p₁₂(2cos(π/10))≠0: layers in different Galois orbits |
-| **galois_cross_eval_values** | GaloisStructure.CyclotomicLayers | Exact evaluation values (2−√3, φ−2) |
-| **strand_count_eq_two** | GaloisStructure.CyclotomicLayers | (N_c²−1)/4 = 2 = strand_count |
-
-## Minimal Cyclotomic Field + Fibonacci-Ridge Structure (P25)
-
-Module `GaloisStructure.MinimalCyclotomic` formalises the minimal cyclotomic
-conductor and the Fibonacci-ridge structural identities:
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **c2_mersenne_exponent** | GaloisStructure.MinimalCyclotomic | 1023 = 2^(2*F(5)) - 1: n_ridge is the c₂ Mersenne exponent |
-| **mersenne_ladder_structure** | GaloisStructure.MinimalCyclotomic | {4,10,16} = {2F(3),2F(5),2F(6)}, step=2Nc (native_decide) |
-| **n_ridge_structural_position** | GaloisStructure.MinimalCyclotomic | 10 = 2F(5) = (4+16)/2; F(6)-F(5)=F(4)=Nc; Nc^2-1=F(6) |
-| **lcm_20_24_eq_120** | GaloisStructure.MinimalCyclotomic | LCM(20,24) = 120 (minimal cyclotomic conductor) |
-| **lcm_minimality** | GaloisStructure.MinimalCyclotomic | ∀ N, 20\|N ∧ 24\|N → 120\|N |
-| **prime_set_120_matches_gauge** | GaloisStructure.MinimalCyclotomic | {2,3,5} prime set shared by 120 and gauge denominators |
-| **prime_137_bitset** | GaloisStructure.MinimalCyclotomic | 137 = 2^0 + 2^3 + 2^7 (bit-set {0, Nc, delta}) |
-| **delta_from_Nc** | GaloisStructure.MinimalCyclotomic | delta = 7 = Nc + (Nc^2-1)/2, derived from Nc=3 |
-| **prime_137_from_Nc** | GaloisStructure.MinimalCyclotomic | 137 = 2^Nc * (2Nc^2-1) + 1 (structural formula) |
-| **prime_137_structural_origin** | GaloisStructure.MinimalCyclotomic | 137 is the bit-set prime {0,Nc,delta} fully determined by Nc=3 (closes P25 §10.2) |
-
-## Unconditional Rigidity
-
-### b1=73 Forced at n=10 + δ_target as Structural Prediction
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **b1_unique_at_n10** | Phase4.AsymptoticSparsity | ∀ survivors at n=10: b2+q2+7=73 (both pairs give 73, native_decide) |
-| **b1_forced_eq_73** | Phase4.AsymptoticSparsity | isMirrorDualSurvivorAt 10 b2 q2 → b2+q2+7=73 |
-| **delta_structural_prediction** *(def)* | Phase4.DeltaUGP | b1=73 arithmetically forced → δ_structural = C_alg/73 is a structural prediction |
-| **b1_in_delta_is_sieve_forced** | Phase4.DeltaUGP | leptonB = 73 (certified, supports prediction interpretation) |
-
-### VV All Coefficients from N_c = 3 — Module MassRelations.VVAllCoefficientsFromNc
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **dim_45_su_Nc_plus_2** | MassRelations.VVAllCoefficientsFromNc | 45 = (Nc+2)(2Nc+3) for Nc=3 (norm_num) |
-| **dim_126_so_2Nc_plus_4** | MassRelations.VVAllCoefficientsFromNc | 126 = C(2(Nc+2),Nc+2)/2 for Nc=3 (native_decide) |
-| **vv_gamma_from_Nc** | MassRelations.VVAllCoefficientsFromNc | γ_d = -5/14 = -(Nc+2)(2Nc+3)/[C(2Nc+4,Nc+2)/2] (norm_num) |
-| **vv_all_coefficients_from_Nc** | MassRelations.VVAllCoefficientsFromNc | All 3 VV exponents (13/9, -7/6, -5/14) from Nc=3 alone (zero sorry) |
-
-## VV Mechanism (P25)
-
-Module `MassRelations.VVMechanism` formalises the VV mass mechanism as a
-log-linear law derived from the SU(5)/SO(10) GUT power law:
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **vv_exponents** | MassRelations.VVMechanism | (13/9)=1+4/9, (-7/6)=-(1+1/6), (-5/14)=-45/126: group-theory identities |
-| **log_of_power_law** | MassRelations.VVMechanism | If f=C·u^α·l^β then log(f)=α·log(u)+β·log(l)+log(C) (pure algebra) |
-| **vv_mechanism_algebraic** | MassRelations.VVMechanism | GUT power law + UCL log map → log-linear VV relation (zero sorry) |
-| **dim_126_eq_two_Nc_sq_delta** | MassRelations.VVMechanism | 126 = 2·Nc²·δ (connects VV to seesaw structure) |
-
-## Neutrino Froggatt-Nielsen Texture — Module MassRelations.NeutrinoFroggattNielsen
-
-Module `MassRelations.NeutrinoFroggattNielsen` selects the structural FN
-texture for the b^(29/9) seesaw exponent under UGP axiom A3 (Compression / MDL).
-
-Setup: two-flavon U(1)_1 x U(1)_2 with M_R(g) ~ b_g^(q1 + q2/Nc^2).
-The b^(29/9) law requires q1 + q2/Nc^2 = 29/9; at Nc=3 this admits
-exactly four non-negative integer solutions in [0,6] x [0,30]:
-{(0,29), (1,20), (2,11), (3,2)}.
-
-A charge is "singleton-atomic in Nc" if it equals one of
-{Nc, Nc-1, Nc+1, Nc^2, Nc^2-1, strand=(Nc^2-1)/4}.
-Pair singleton-atomic = both components singleton-atomic.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **fnEqAtNc3** *(def)* | MassRelations.NeutrinoFroggattNielsen | FN charge equation 9 q1 + q2 = 29 (the form of q1 + q2/Nc^2 = 29/9 at Nc=3) |
-| **fn_solutions_satisfy_eq** | MassRelations.NeutrinoFroggattNielsen | Each pair in {(0,29),(1,20),(2,11),(3,2)} satisfies the equation |
-| **fn_solutions_are_complete** | MassRelations.NeutrinoFroggattNielsen | Every non-negative integer solution with q1<=6, q2<=30 is in the list (interval_cases + omega + decide) |
-| **texture_3_2_is_singleton_atomic** | MassRelations.NeutrinoFroggattNielsen | (3, 2) has both charges singleton-atomic |
-| **texture_0_29_not_singleton_atomic** | MassRelations.NeutrinoFroggattNielsen | (0, 29) lacks singleton-atomic charge q2 = 29 |
-| **texture_1_20_not_singleton_atomic** | MassRelations.NeutrinoFroggattNielsen | (1, 20) lacks singleton-atomic charge q2 = 20 |
-| **texture_2_11_not_singleton_atomic** | MassRelations.NeutrinoFroggattNielsen | (2, 11) lacks singleton-atomic charge q2 = 11 |
-| **fn_texture_3_2_is_unique_singleton_atomic** | MassRelations.NeutrinoFroggattNielsen | Among the four FN solutions, exactly (q1, q2) = (3, 2) is singleton-atomic |
-| **fn_structural_texture_existence_and_uniqueness** | MassRelations.NeutrinoFroggattNielsen | Bundled exists-unique form |
-
-This converts the FN texture choice from aesthetic preference to a
-Lean-certified MDL theorem: among the four arithmetic solutions, only
-(q1, q2) = (Nc, strand) = (3, 2) has both charges as elementary UGP atoms.
-
-## Galois-Protection Non-Renormalization — Module Phase4.GaloisProtection
-
-Module `Phase4.GaloisProtection` formalises the Galois-protection one-loop cancellation theorem.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **c_alg_nonzero_shift** | Phase4.GaloisProtection | If A ≠ 0 and t ≠ 0, then C + A*t ≠ C (linarith + mul_eq_zero) |
-| **galois_protection_coefficient_forced_zero** | Phase4.GaloisProtection | If C + A*t = C and A ≠ 0 then t = 0 (linarith + mul_eq_zero) |
-| **T_Tdagger_cancellation** | Phase4.GaloisProtection | L + (-L) = 0 (linarith) |
-| **L_zero_from_T_Tdagger** | Phase4.GaloisProtection | If L = -L then L = 0 (linarith) |
-| **delta_C_vanishes_from_T_Tdagger** | Phase4.GaloisProtection | C + A*(L with L=-L) = C (rw mul_zero) |
-| **one_loop_correction_zero** | Phase4.GaloisProtection | A*L = 0 under T/T† pairing (rw mul_zero) |
-| **residual_is_positive** | Phase4.GaloisProtection | The 2.39 ppm residual is positive (norm_num) |
-| **residual_below_one_loop_scale** | Phase4.GaloisProtection | 2.39 ppm < alpha/pi (norm_num bound) |
-| **galois_protection_master_theorem** | Phase4.GaloisProtection | Master: C + A*L = C under A≠0 and T/T† pairing (zero sorry) |
-
-The physical content: C_alg ∈ Q(sqrt(5)) ⊂ Q(zeta_120); A ≠ 0; the loop
-transcendental L = sum n_i log(m_i/mu) ∉ Q(sqrt(5)) (Baker's theorem); Galois
-constraint forces A*L = 0; T/T† dual-operator pairing implements L = -L → L = 0.
-Residual R_real = 2.39 ppm = 0.886 × alpha^2/(2*pi^2) is at two-loop magnitude.
-
-## Two-Loop Color Coefficient — Module Phase4.TwoLoopCoefficient
-
-Module `Phase4.TwoLoopCoefficient` certifies the structural identification of
-the two-loop coefficient in the UGP precision residual.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **C2_fund_at_Nc3** | Phase4.TwoLoopCoefficient | C2(SU(3),fund) = (9-1)/(2×3) = 4/3 (norm_num) |
-| **two_loop_coeff_eq_Nc_ratio** | Phase4.TwoLoopCoefficient | C2×2/Nc = (Nc²-1)/Nc² (field_simp + ring) |
-| **two_loop_coefficient_eq_8_over_9** | Phase4.TwoLoopCoefficient | At Nc=3: coefficient = 8/9 (norm_num) |
-| **gluon_count_eq_Nc_sq_minus_1** | Phase4.TwoLoopCoefficient | 3²-1 = 8 = gluon count (norm_num) |
-| **two_loop_coeff_between_zero_and_one** | Phase4.TwoLoopCoefficient | 0 < 8/9 < 1 (norm_num) |
-| **o3_full_identification** | Phase4.TwoLoopCoefficient | Bundled: C2=4/3, coeff=8/9, bounds (zero sorry) |
-
-Physical identification: R_real = [(Nc²-1)/Nc²] × α_EM²/(2π²) = (8/9) × α_EM²/(2π²).
-The (Nc²-1) = 8 = dim(su(3)_adj) is the gluon count; the coefficient arises
-from symmetric T/T†-two-loop diagrams (one-loop cancels by GaloisProtection).
-Verified numerically at 0.33% (within double-precision accuracy of b1_required chain).
-
-## RCC Infinite Families — Module PSC.RCCInfiniteFamilies
-
-Module `PSC.RCCInfiniteFamilies` closes RCC over all four
-infinite classical Lie families: B_n, C_n, D_n, A_n.
-
-Key fact: For B_n = SO(2n+1) and C_n = Sp(2n), the longest Weyl element acts
-as negation (w0 = -id). Therefore -w0(lam) = lam for every dominant weight lam,
-so every irrep is self-dual (real or pseudoreal, never complex). No chiral
-fermions possible -> PSC Layer I fail for ALL n.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **bn_all_irreps_self_dual** | PSC.RCCInfiniteFamilies | For all n, all B_n dominant weights: -(w0 lam) = lam (funext + simp) |
-| **cn_all_irreps_self_dual** | PSC.RCCInfiniteFamilies | Same for C_n = Sp(2n) (identical Weyl group) |
-| **bn_cn_no_complex_reps_all_n** | PSC.RCCInfiniteFamilies | Bundled: all B_n and C_n irreps self-dual for all n (zero sorry) |
-| **dn_even_all_irreps_self_dual** | PSC.RCCInfiniteFamilies | D_n even: -id in W(D_n) since even many sign changes -> all irreps self-dual |
-| **dn_odd_spinorDim_exceeds_threshold** | PSC.RCCInfiniteFamilies | D_n odd, n>=5: spinorDim n = 2^(n-1) >= 16 (Nat.pow_le_pow_right) |
-| **spinorDim_doubles** | PSC.RCCInfiniteFamilies | spinorDim(n+1) = 2 * spinorDim(n) for n>=1 (ring) |
-| **an_adjDim_ge_15** | PSC.RCCInfiniteFamilies | A_n, n>=3: anAdjDim n = (n+1)^2-1 >= 15 (nlinarith) |
-| **an_adjDim_strictly_grows** | PSC.RCCInfiniteFamilies | anAdjDim is strictly increasing for n>=1 (zify + nlinarith) |
-| **dissonanceLB_exceeds_one** | PSC.RCCInfiniteFamilies | dim/12 > 1 when dim >= 13 (linarith over Q) |
-| **an_dissonanceLB_exceeds_one** | PSC.RCCInfiniteFamilies | A_n (n>=3): D_lb > 1 (Layer II fail) |
-| **dn_odd_dissonanceLB_exceeds_one** | PSC.RCCInfiniteFamilies | D_n odd (n>=5): D_lb > 1 (Layer II fail) |
-| **rcc_all_classical_families** | PSC.RCCInfiniteFamilies | Master theorem: all 5 cases (B_n, C_n, D_n even, D_n odd n>=5, A_n n>=3) |
-
-Combined with TE22.ScanCertificate (computational, 34,560 universes) and the
-extended scan certificate (exceptional Lie groups + larger classical shells), RCC is
-established as a theorem over ALL compact simple Lie groups.
-
-## Coxeter–Conductor Theorem — Modules BraidAtlas.CoxeterConductor & CoxeterConductorTowerLaw
-
-Modules `BraidAtlas.CoxeterConductor` and `BraidAtlas.CoxeterConductorTowerLaw`
-formalise the arithmetic core of the Coxeter–conductor theorem: the affine Toda
-mass spectrum of a simple Lie algebra G lies in Q(ζ₁₂₀) iff its Coxeter number
-h(G) divides 120, and prove the **E7 falsifier** via the Tower Law obstruction.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **phi_120** | BraidAtlas.CoxeterConductor | Euler totient φ(120) = 32 = [Q(ζ₁₂₀):Q] (native_decide) |
-| **phi_18** | BraidAtlas.CoxeterConductor | Euler totient φ(18) = 6 = [Q(ζ₁₈):Q] (native_decide) |
-| **q_zeta18_real_degree** | BraidAtlas.CoxeterConductor | [Q(ζ₁₈)⁺ : Q] = φ(18)/2 = 3 (native_decide) |
-| **three_not_dvd_32** | BraidAtlas.CoxeterConductor | 3 ∤ 32 (key Tower Law obstruction, norm_num) |
-| **e8_coxeter_dvd, e6_coxeter_dvd, f4_coxeter_dvd, g2_coxeter_dvd, b4_coxeter_dvd** | BraidAtlas.CoxeterConductor | Coxeter numbers of E8 (30), E6/F4 (12), G2 (6), B4 (8) all divide 120 (norm_num) |
-| **e7_coxeter_not_dvd** | BraidAtlas.CoxeterConductor | **KEY FALSIFIER**: E7 Coxeter number 18 ∤ 120 (norm_num) |
-| **nine_dvd_18_not_120** | BraidAtlas.CoxeterConductor | Root cause: 9 \| 18 but 9 ∤ 120 (norm_num) |
-| **full_lcm_all_coxeter** | BraidAtlas.CoxeterConductor | lcm(30, 12, 8, 6, 3, 2, 1) = 120 (native_decide) |
-| **min_poly_cos_pi9_no_rational_roots** | BraidAtlas.CoxeterConductor | 8X³−6X−1 has no rational roots (8 candidate checks via rcases + norm_num) |
-| **e7_coxeter_conductor_obstruction** | BraidAtlas.CoxeterConductor | Composite arithmetic obstruction (zero sorry) |
-| **positive_coxeter_conductor** | BraidAtlas.CoxeterConductor | Composite Q(ζ₁₂₀) containment for E8/E6/F4/G2/B4 (zero sorry) |
-| **p_int_natDegree** | BraidAtlas.CoxeterConductorTowerLaw | natDegree of 8X³−6X−1 over ℤ = 3 (compute_degree!) |
-| **p_rat_natDegree** | BraidAtlas.CoxeterConductorTowerLaw | natDegree over ℚ = 3 (natDegree_map_of_leadingCoeff_ne_zero) |
-| **p_rat_no_roots** | BraidAtlas.CoxeterConductorTowerLaw | No rational root via num/den_dvd_of_is_root + 8 candidate checks |
-| **p_rat_irreducible** | BraidAtlas.CoxeterConductorTowerLaw | Irreducible over ℚ (irreducible_of_degree_le_three_of_not_isRoot) |
-| **p_rat_q_natDegree** | BraidAtlas.CoxeterConductorTowerLaw | Quotient-form polynomial natDegree = 3 (compute_degree!) |
-| **finrank_p_rat_quot** | BraidAtlas.CoxeterConductorTowerLaw | [ℚ[X]/(8X³−6X−1) : ℚ] = 3 (zero sorry) |
-| **tower_obstruction** | BraidAtlas.CoxeterConductorTowerLaw | ∀ k:ℕ, 3·k ≠ 32 (arithmetic Tower Law obstruction) |
-| **e7_arithmetic_evidence** | BraidAtlas.CoxeterConductorTowerLaw | Composite: irreducibility + degree + φ(120) = 32 + 3∤32 |
-| **e7_tower_law_complete** | BraidAtlas.CoxeterConductorTowerLaw | Complete Tower Law theorem (zero sorry, all five components) |
-
-The Tower Law step uses `finrank_quotient_span_eq_natDegree` on the quotient
-ring `ℚ[X] ⧸ Ideal.span {p_rat_q}`, bypassing the `AdjoinRoot`-instance
-synthesis obstruction (Mathlib `AdjoinRoot` is `def` not `abbrev`).
-
-## Coxeter–Conductor Biconditional — Module CyclotomicCompleteness.CoxeterBiconditional
-
-Module `CyclotomicCompleteness.CoxeterBiconditional` formalises the arithmetic backbone
-of the biconditional criterion: Toda masses in Q(cos(π/h)) = Q(ζ_{2h})⁺ embed in Q(ζ₁₂₀)
-iff 2h | 120 iff h | 60.
-
-| Theorem | Module | Statement / Method |
-|---------|--------|-------------------|
-| **g2_h_dvd_60** | CyclotomicCompleteness.CoxeterBiconditional | 6 \| 60 (G₂, norm_num) |
-| **f4_h_dvd_60** | CyclotomicCompleteness.CoxeterBiconditional | 12 \| 60 (F₄, norm_num) |
-| **e6_h_dvd_60** | CyclotomicCompleteness.CoxeterBiconditional | 12 \| 60 (E₆, norm_num) |
-| **e8_h_dvd_60** | CyclotomicCompleteness.CoxeterBiconditional | 30 \| 60 (E₈, norm_num) |
-| **b4_h_dvd_120** | CyclotomicCompleteness.CoxeterBiconditional | 8 \| 120 (B₄ conductor, norm_num) |
-| **b4_conductor_dvd_120** | CyclotomicCompleteness.CoxeterBiconditional | 8 \| 120 ∧ ¬(8 \| 60); B₄ actual field is Q(√2) ⊆ Q(ζ₈) ⊆ Q(ζ₁₂₀) |
-| **b4_mass_field_conductor** | CyclotomicCompleteness.CoxeterBiconditional | 8 \| 120 ∧ ¬(16 \| 120); conductor is 8 not 16 (norm_num) |
-| **e7_h_not_dvd_60** | CyclotomicCompleteness.CoxeterBiconditional | **KEY EXCLUSION**: ¬(18 \| 60) (norm_num) |
-| **e7_double_failure** | CyclotomicCompleteness.CoxeterBiconditional | ¬(18 \| 60) ∧ ¬(18 \| 120); arithmetic complement to Tower Law (zero sorry) |
-| **two_h_dvd_120_iff_h_dvd_60** | CyclotomicCompleteness.CoxeterBiconditional | ∀ h:ℕ, 2h \| 120 ↔ h \| 60 (omega) |
-| **conductor_biconditional** | CyclotomicCompleteness.CoxeterBiconditional | 120 = 2 × 60 (norm_num) |
-| **lcm_positive_coxeter_h** | CyclotomicCompleteness.CoxeterBiconditional | lcm(6, lcm(12, 30)) = 60 (native_decide) |
-| **conductor_from_h_lcm** | CyclotomicCompleteness.CoxeterBiconditional | 2 × lcm(6, lcm(12, 30)) = 120 (native_decide) |
-| **coxeter_biconditional_summary** | CyclotomicCompleteness.CoxeterBiconditional | Master composite theorem: all positive cases, B₄ conductor, E₇ double failure, biconditional structure (all zero sorry) |
-
-All theorems zero sorry. Imports `BraidAtlas.CoxeterConductor` (for `e7_coxeter_not_dvd`).
-Arithmetic backbone for the cyclotomic / Coxeter certificate stack.
-
-## Cyclotomic Field Embedding — Module CyclotomicCompleteness.CyclotomicContainment
-
-Module `CyclotomicCompleteness.CyclotomicContainment` proves the field-theoretic content of
-the Coxeter–conductor theorem: for h | 60, Q(ζ_{2h}) embeds in Q(ζ₁₂₀) as a ℚ-algebra.
-This is the positive direction of the biconditional; the negative direction (h ∤ 60 ⟹ no
-embedding) is handled via Tower Law in `CoxeterConductorTowerLaw`.
-Field-embedding track (same module stack). All theorems zero sorry.
-
-**Mathlib infrastructure used:** `IsCyclotomicExtension`, `IsPrimitiveRoot`, `IsSplittingField`,
-`Polynomial.SplittingField.splits`, `isRoot_cyclotomic_iff_charZero`,
-`IsCyclotomicExtension.union_of_isPrimitiveRoot`, `IsCyclotomicExtension.splits_cyclotomic`,
-`Polynomial.IsSplittingField.lift`.
-
-| Theorem | Module | Statement / Method |
-|---------|--------|-------------------|
-| **cyclotomic120_contains_primitive_root** | CyclotomicCompleteness.CyclotomicContainment | **Theorem A**: ∀ h, h \| 60 → ∃ ζ : CyclotomicField 120 ℚ, IsPrimitiveRoot ζ (2·h). Extracts ζ₁₂₀ from `SplittingField.splits`; powers to ζ_{2h} via `IsPrimitiveRoot.pow`. Zero sorry. |
-| **cyclotomic_field_embedding** | CyclotomicCompleteness.CyclotomicContainment | **Theorem B**: ∀ h, 0 < h → h \| 60 → Nonempty (CyclotomicField (2·h) ℚ →ₐ[ℚ] CyclotomicField 120 ℚ). Uses `IsCyclotomicExtension.union_of_isPrimitiveRoot` + `IsSplittingField.lift` universal property. Zero sorry. |
-| **g2_cyclotomic_embedding** | CyclotomicCompleteness.CyclotomicContainment | Per-algebra cert for G₂: Nonempty (CyclotomicField 12 ℚ →ₐ[ℚ] CyclotomicField 120 ℚ) [h=6, 2h=12] |
-| **f4_e6_cyclotomic_embedding** | CyclotomicCompleteness.CyclotomicContainment | Per-algebra cert for F₄/E₆: Nonempty (CyclotomicField 24 ℚ →ₐ[ℚ] CyclotomicField 120 ℚ) [h=12, 2h=24] |
-| **e8_cyclotomic_embedding** | CyclotomicCompleteness.CyclotomicContainment | Per-algebra cert for E₈: Nonempty (CyclotomicField 60 ℚ →ₐ[ℚ] CyclotomicField 120 ℚ) [h=30, 2h=60] |
-
-All theorems zero sorry. Imports `CyclotomicCompleteness.CoxeterBiconditional`.
-
-## Electroweak Boson c-Values — Module BraidAtlas.EWBosons
-
-Module `BraidAtlas.EWBosons` derives the EW massive boson c-values
-{c(W), c(Z), c(H)} = {11, 12, 13} from two structural identities at the canonical
-ridge level n = 10, closing the last Category B item in the Braid Atlas (P17).
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **ridge_10_canonical_factorisation** | BraidAtlas.EWBosons | 42 × 24 = 1008 = R₁₀ (canonical factorisation, native_decide) |
-| **ridge_10_mirror_factorisation** | BraidAtlas.EWBosons | 24 × 42 = 1008 = R₁₀ (mirror factorisation, native_decide) |
-| **q₂_canonical_eq_2NcNcPlus1** | BraidAtlas.EWBosons | **Structural Identity I**: q₂(canonical) = 2·N_c·(N_c+1) = 24 |
-| **b₂_canonical_eq_2Nc2NcPlus1** | BraidAtlas.EWBosons | b₂(canonical) = 2·N_c·(2N_c+1) = 42 |
-| **ridge_10_in_Nc** | BraidAtlas.EWBosons | R₁₀ = 4·N_c²·(N_c+1)·(2N_c+1) |
-| **ugp1_g_eq_NcNcPlus1_plus_1** | BraidAtlas.EWBosons | **Structural Identity II**: ugp1_g = N_c·(N_c+1) + 1 = 13 |
-| **c_W_eq_11, c_Z_eq_12, c_H_eq_13** | BraidAtlas.EWBosons | Numerical c-values (native_decide) |
-| **ew_c_values** | BraidAtlas.EWBosons | Composite: {c(W), c(Z), c(H)} = {11, 12, 13} |
-| **c_W_eq_NcNcPlus1_minus_1** | BraidAtlas.EWBosons | c(W) = N_c·(N_c+1) − 1 (structural form) |
-| **c_Z_eq_NcNcPlus1** | BraidAtlas.EWBosons | c(Z) = N_c·(N_c+1) (structural form) |
-| **c_H_eq_NcNcPlus1_plus_1** | BraidAtlas.EWBosons | c(H) = N_c·(N_c+1) + 1 (structural form) |
-| **ew_c_consecutive_window** | BraidAtlas.EWBosons | **Main result**: c(Z) = c(W)+1, c(H) = c(Z)+1 (consecutive triple) |
-| **ew_c_set_in_Nc_form** | BraidAtlas.EWBosons | {c(W), c(Z), c(H)} = {N_c(N_c+1)−1, N_c(N_c+1), N_c(N_c+1)+1} |
-| **ew_c_primality** | BraidAtlas.EWBosons | c(W)=11 prime ∧ c(Z)=12 not prime ∧ c(H)=13 prime |
-| **c_W_eq_q1_canonical** | BraidAtlas.EWBosons | c(W) = q₁(canonical) (cross-domain identification) |
-| **c_H_eq_q2_minus_q1** | BraidAtlas.EWBosons | c(H) = q₂ − q₁ (orbital symmetry-breaking gap) |
-| **ew_boson_c_value_theorem** | BraidAtlas.EWBosons | Composite: 10 facts including consecutive window + structural identities |
-| **orbitalConstants_n10_explicit** | BraidAtlas.EWBosons | Orbital constants at n=10 = {7, 11, 12, 13, 20, 22, 24, 35} (decide) |
-| **unique_consecutive3_in_orbital** | BraidAtlas.EWBosons | **Uniqueness**: {11, 12, 13} is the unique consecutive triple drawn from orbital constants (omega) |
-| **ew_c_window_unique** | BraidAtlas.EWBosons | MDL-uniqueness corollary: composite proof of EW c-window |
-| **triangular_Nc** | BraidAtlas.EWBosons | T(N_c) = N_c·(N_c+1)/2 = 6 at N_c=3 (native_decide) |
-| **q₂_canonical_eq_4T** | BraidAtlas.EWBosons | q₂(canonical) = 4·T(N_c) (triangular form) |
-| **ugp1_g_eq_2T_plus_1** | BraidAtlas.EWBosons | ugp1_g = 2·T(N_c) + 1 (triangular form) |
-| **ew_c_centered_on_2T** | BraidAtlas.EWBosons | EW c-window is centred on 2·T(N_c) |
-| **ew_triangular_unification** | BraidAtlas.EWBosons | **Deepest derivation**: composite triangular-number unification (zero sorry) |
-| **ew_ugp_axiom_derivation** | BraidAtlas.EWBosons | Composite derivation chain from UGP axioms |
-
-This closes the EW boson c-values as Category A: derived from \ugp{} axioms
-(asymptotic sparsity → n=10; anomaly cancellation → N_c=3; RSUC → unique fixed
-point), not postulated.
-
-## E8 Cyclotomic Divisibility & Mirror Triple — Module GTE.GeneralTheorems
-
-Theorems in `GTE.GeneralTheorems` certify the algebraic foundation
-of P24 §7.4 (E8 in Q(ζ₁₂₀)) and the Lean-certified arithmetic backbone of
-P02/P17 GTE-P7 mirror dark matter quantum numbers.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **e8_m2_golden_ratio_poly_nat** | GTE.GeneralTheorems | x²−x−1 has integer coefficients summing to 3 (golden-ratio polynomial) |
-| **e8_m3_poly_integer_check** | GTE.GeneralTheorems | Degree-8 minimal polynomial of 2cos(π/30) has |coeff| sum = 31 |
-| **e8_cyclotomic_divisibility** | GTE.GeneralTheorems | 120 % 10 = 0 ∧ 120 % 60 = 0 (E8 mass ratios containment chain) |
-| **e8_all_masses_divisibility** | GTE.GeneralTheorems | 120 % {5, 6, 10, 12, 15, 30, 60} = 0 (all 8 E8 masses in Q(ζ₁₂₀)) |
-| **mirror_triple_residue** | GTE.GeneralTheorems | gteRemainder 2137 73 = 20 (mirror prime-lock residue) |
-| **mirror_prime_2137** | GTE.GeneralTheorems | 2137 is prime (Lean-certified via native_decide) |
-| **mirror_quotient_q1** | GTE.GeneralTheorems | gteQuotient 2137 73 = 29 (mirror q₁) |
-| **mirror_triple_prime_lock** | GTE.GeneralTheorems | 73 × 29 + 20 = 2137 (prime-lock arithmetic) |
-
-## Refined Charge Theorem — Module BraidAtlas.ChargeTheorem
-
-Module `BraidAtlas.ChargeTheorem` provides paper-citation aliases for the
-GTE-P7 (mirror dark matter) quantum-number derivation.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **sm_charge_leptons** | BraidAtlas.ChargeTheorem | Q = W_g/N_c for leptons and neutrinos (alias bundling charge_from_winding_Nc3 for the colour-singlet sector) |
-| **sm_quarks_fractional_charge** | BraidAtlas.ChargeTheorem | Q = W_g/N_c gives fractional charges for up- and down-quarks (3 ∤ 2, 3 ∤ −1) |
-| **nc_eq_3_from_fractional_charge** | BraidAtlas.ChargeTheorem | Anomaly cancellation forces N_c = 3 (corollary of anomaly_cancellation_forces_Nc_3) |
-| **gmn_color_singlet_neutral** | BraidAtlas.ChargeTheorem | Gell-Mann–Nishijima: T₃=0 ∧ Y=0 → Q = T₃ + Y/2 = 0 (algebraic step for GTE-P7) |
-| **mirror_winding_number_zero** | BraidAtlas.ChargeTheorem | **Axiom**: W_g_mirror = 0 (justified by P17 braid topology, faithfully tracked in PROVENANCE) |
-| **gte_p7_electric_charge_zero** | BraidAtlas.ChargeTheorem | Q_GTE-P7 = W_g_mirror / N_c = 0 (formal derivation from mirror_winding_number_zero) |
-| **gte_p7_quantum_numbers_neutral** | BraidAtlas.ChargeTheorem | Composite: GTE-P7 is electrically neutral, color singlet, sterile (zero sorry beyond the disclosed axiom) |
-
-## CKM θ_23 Structural Ratio — Module MassRelations.CKMTheta23
-
-Module `MassRelations.CKMTheta23` certifies that the specific ratio
-τ(R_10)/D_1 = 15/8 appearing in the CKM θ_23 scaling is structurally
-forced by UGP (P01 OP(v)). The ridge `R_n = 2^n − 16` admits the structural
-Mersenne factorization `R_n = D_1 · M_(n−4)` for `n ≥ 4`, where `D_1 = 16`
-is the U(1) discrete invariant and `M_k = 2^k − 1`. At `n = 10` this gives
-`τ(R_10)/D_1 = 30/16 = 15/8`, and the ratio is unique to `n = 10` across
-the canonical UGP search range `n ∈ [5, 20]`. All theorems zero sorry, zero axioms.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **ridge_eq_D1_mul_mersenne** | MassRelations.CKMTheta23 | For all n ≥ 4: ridge n = D_1 · (2^(n−4) − 1) (master Mersenne factorization) |
-| **ridge_10_eq_D1_mul_M6** | MassRelations.CKMTheta23 | At n = 10: ridge 10 = D_1 · (2^6 − 1) (specialization) |
-| **D1_mul_M6_eq_1008** | MassRelations.CKMTheta23 | D_1 · (2^6 − 1) = 16 · 63 = 1008 (concrete arithmetic, native_decide) |
-| **tau_1008** | MassRelations.CKMTheta23 | τ(1008) = 30 (divisor count, native_decide) |
-| **tau_ridge_10** | MassRelations.CKMTheta23 | τ(ridge 10) = 30 (corollary of ridge_10 + tau_1008) |
-| **ckm_theta23_ratio_at_n10** | MassRelations.CKMTheta23 | τ(ridge 10) / D_1 = 15/8 in ℚ (OP(v) closed-form ratio) |
-| **tau_ridge_ne_30_off_n10** | MassRelations.CKMTheta23 | ∀ n ∈ [5,20], n ≠ 10: τ(ridge n) ≠ 30 (interval_cases + native_decide) |
-| **ckm_theta23_ratio_uniqueness** | MassRelations.CKMTheta23 | ∀ n ∈ [5,20], n ≠ 10: τ(ridge n) / D_1 ≠ 15/8 (uniqueness) |
-| **op_v_ckm_theta23_closure** | MassRelations.CKMTheta23 | **Bundled OP(v) closure certificate**: ridge 10 = D_1·M_6 ∧ τ(ridge 10) = 30 ∧ ratio = 15/8 ∧ uniqueness across [5,20] (zero sorry) |
-
-> **OP(v) closure narrative**: The Lean certificate decomposes the CKM θ_23
-> ratio into structural pieces — the ridge factorization `R_n = D_1 · M_(n−4)`
-> exposes the U(1) invariant as a separate factor; the divisor count
-> `τ(M_6) = τ(63) = τ(3²·7) = 6` then gives `τ(R_10) = 5·τ(M_6) = 30` and
-> `τ(R_10)/D_1 = 30/16 = 15/8`. Combined with the UGP forcing of `n = 10`
-> as the unique canonical ridge level (via
-> `kprime_is_minimal_double_fib_above_n` in the GTE layer), the CKM θ_23
-> scaling ratio is structurally derived from UGP, not data-matched.
-
-## Koide S₃ Discrete Arithmetic-Mean Identity — Module MassRelations.KoideS3DiscreteIdentities
-
-Module `MassRelations.KoideS3DiscreteIdentities` certifies the discrete
-shadow of the S₃ equal-norm Koide condition for the GTE lepton orbit's
-a-component, contributing to the partial closure of P01 OP(vii). Where
-the continuous S₃ equal-norm identity `|v_1|² = |v_2|² = 3` (see
-`koide_equal_norm` in `MassRelations.KoideAngle`) holds for every value of
-the Koide phase θ, the discrete identity holds exactly on the canonical
-Lean-certified orbit a-component sequence (1, 9, 5). Independent of N_c,
-of θ = 2/9, and of absolute normalisation. All theorems zero sorry, zero
-hypotheses.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **lepton_a_arithmetic_mean** | MassRelations.KoideS3DiscreteIdentities | **Discrete S₃ identity**: 2 · canonicalGen3.a = LeptonSeed.a + canonicalGen2.a (i.e., 2·5 = 1+9 = 10) |
-| **lepton_a_tau_is_average** | MassRelations.KoideS3DiscreteIdentities | Equivalent form: canonicalGen3.a · 2 = LeptonSeed.a + canonicalGen2.a |
-| **lepton_a_values** | MassRelations.KoideS3DiscreteIdentities | Canonical lepton a-values: LeptonSeed.a = 1 ∧ canonicalGen2.a = 9 ∧ canonicalGen3.a = 5 |
-| **lepton_a_sum_eq_ten** | MassRelations.KoideS3DiscreteIdentities | LeptonSeed.a + canonicalGen2.a = 10 |
-| **two_tau_a_eq_ten** | MassRelations.KoideS3DiscreteIdentities | 2 · canonicalGen3.a = 10 |
-| **lepton_a_arithmetic_mean_explicit** | MassRelations.KoideS3DiscreteIdentities | Explicit numerical form: 2 · 5 = 1 + 9 (decide) |
-| **lepton_a_discrete_S3_identity** | MassRelations.KoideS3DiscreteIdentities | **Bundled certificate**: a-values (1,9,5) ∧ sum = 10 ∧ arithmetic-mean identity (zero sorry) |
-
-> **OP(vii) partial-closure narrative**: Together with
-> `koide_angle_from_N_c_pure` (which derives θ = 2/9 from N_c = 3 in
-> `MassRelations.KoideAngle`), this module supplies the structural-results
-> pair on which the partial closure of OP(vii) (Koide S₃ quadric forcing)
-> rests in P01. The discrete arithmetic-mean identity is certified here;
-> the remaining refined targets (PDG-θ alignment to 7.4×10⁻⁶ rad,
-> Koide-cone near-attractor of UCL within 6×10⁻⁴) involve PDG real-valued
-> masses and continuous geometric arguments and remain open for full
-> OP(vii) closure.
-
-## PSC Three-Route Forcing Capstone — Module PSC.ThreeRouteForcing [MIGRATED to ugp-physics-lean]
-
-> **Note:** `PSC.ThreeRouteForcing` has been migrated to `ugp-physics-lean`
-> as `UgpPhysicsLean.PSC.ThreeRouteForcing`. The entry below is retained for
-> historical reference; the canonical home is now ugp-physics-lean.
-
-Module `PSC.ThreeRouteForcing` records the architectural shape of the
-residual P01 OP(i) target as a parametric Lean carrier:
-
-> *Any closed self-referential physical theory satisfying*
-> *(i) Gödel–Turing self-reference closure,*
-> *(ii) the Reflexive Landauer Bound, and*
-> *(iii) the Norfleet holonomy defect δ = Λ − π/12 ≠ 0,*
-> *is uniquely characterised by the PSC axiom set (RC, NM\*, TV, SA, PI).*
-
-The substantive content of each route — and the
-`PSC ⇔ NEMS + ER + visibility` decomposition — lives upstream in the
-`nems-lean` companion library and the MFRR programme (NEMS Papers 02, 03,
-05, 08, 14, 23, 51, 56, 88, MFRR Survey, Norfleet 2025). This module
-deliberately does **not** re-derive any NEMS theorem and does **not**
-define any of `(G, L, N, PSC)` as `True` (which would yield a fake
-reflexivity-based proof and constitute smuggling). All four are left as
-`Prop` parameters discharged upstream.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **ThreeRouteBundle** *(structure)* | PSC.ThreeRouteForcing | Prop-valued carrier `(G L N : Prop) → Prop` packaging the three forcing routes (Gödel–Turing, Reflexive Landauer, Norfleet) as a single hypothesis |
-| **bundle_intro** | PSC.ThreeRouteForcing | From three independent route witnesses, build the bundle: G → L → N → ThreeRouteBundle G L N |
-| **bundle_elim** | PSC.ThreeRouteForcing | The bundle entails each of its routes: ThreeRouteBundle G L N → G ∧ L ∧ N |
-| **bundle_iff_and** | PSC.ThreeRouteForcing | Bundle ↔ conjunction: ThreeRouteBundle G L N ↔ G ∧ L ∧ N |
-| **psc_three_route_capstone** | PSC.ThreeRouteForcing | **Conditional capstone (parametric, no smuggling)**: given upstream NEMS-supplied iff H : ThreeRouteBundle G L N ↔ PSC, conclude ThreeRouteBundle G L N ↔ PSC |
-| **psc_three_route_capstone_conj** | PSC.ThreeRouteForcing | Unbundled-conjunction form: given the same H, conclude (G ∧ L ∧ N) ↔ PSC |
-
-> **OP(i) partial-closure narrative**: P01 OP(i) (PSC-axiom deeper structural
-> justification) is partially resolved via the NEMS programme through
-> three convergent results: (a) axiom reduction (NM\* derives from
-> PSC ⇒ RC ⇒ NM\* in `NemS.Physics.Rigidity`); (b) architectural
-> equivalence (PSC = NEMS + ER + visibility, theorem-derived in
-> `NemS.MFRR.PSCBundle`; PSC ⇔ BICS in NEMS Hub); (c) three independent
-> forcing routes (Gödel–Turing logical, Reflexive Landauer energetic,
-> Norfleet holonomy defect geometric, with the Foundational Finality
-> theorem in NEMS 23 ruling out any external "deeper framework" route).
-> A single Lean capstone fusing the three routes into a zero-axiom iff
-> with the PSC axiom set remains the residual structural target; this
-> module records the architectural shape pending the full upstream
-> NEMS-Lean integration.
-
-## CDM Cabibbo Derivation — Module MassRelations.CKMMixing
-
-Module `MassRelations.CKMMixing` formalizes the CDM mechanism: deriving the Wolfenstein
-Cabibbo parameter λ ≈ |V_us| from GUT group theory and the VV down-type coefficient
-α_d = 13/9.  All 20 theorems in this module carry **zero sorry**.
-
-**Physical mechanism:** The FN mixing charge for |V_us| is shifted from Δa_bare = 1 (bare FN)
-to Δa_eff = α_d = 13/9 by the GUT rank correction δ = rank(SU(5))/N_c² = 4/9, giving
-|V_us|_CDM = ε₁^(α_d) = exp(−13π/27) ≈ 0.2203 (PDG: 0.2245; 1.9% off).
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **gut_rank_correction_val** | MassRelations.CKMMixing | gut_rank_correction = 4/9 (rank(SU(5))/N_c²) |
-| **delta_a_eff_val** | MassRelations.CKMMixing | delta_a_eff = 13/9 (effective Cabibbo FN charge) |
-| **cabibbo_effective_charge** | MassRelations.CKMMixing | **CDM THEOREM 1**: Δa_eff = α_d (effective charge = VV coefficient) |
-| **cabibbo_charge_from_GUT** | MassRelations.CKMMixing | **CDM THEOREM 2**: Δa_eff = 1 + rank(SU(5))/N_c² (GUT group-theory origin) |
-| **log_cabibbo_eq_neg_13pi_27** | MassRelations.CKMMixing | **CDM THEOREM 3**: log\|V_us\|_CDM = −13π/27 (pure algebraic identity) |
-| **cabibbo_prediction_formula** | MassRelations.CKMMixing | **CDM THEOREM 4**: \|V_us\|_CDM = exp(−13π/27) |
-| **cabibbo_vev_formula** | MassRelations.CKMMixing | **CDM THEOREM 5**: \|V_us\|_CDM = ε₁^(α_d) in rpow form (CDM formula) |
-| **cabibbo_log_grounded_by_potential** | MassRelations.CKMMixing | Structural grounding via `fn_vevs_are_potential_minima` (ε₁ not a free parameter) |
-| **fnMixChargeDown_eq** | MassRelations.CKMMixing | fnMixChargeDown(α) = α (FN mixing charge simplifies to VV coefficient) |
-| **fn_vv_correction_additive** | MassRelations.CKMMixing | **KEY BRIDGE**: fnMixChargeDown(α_d) = fnMixChargeDown(1) + (α_d−1) (VV propagates additively) |
-| **fn_charge_gap_is_gut_correction** | MassRelations.CKMMixing | rightSectorMixCharge − leftDoubletMixCharge = gut_rank_correction (GUT bridge) |
-| **fn_diagonalization_vv_bridge** | MassRelations.CKMMixing | fnMixChargeDown(α_d) × log(ε₁) = −13π/27 (FN log formula) |
-| **fn_vv_more_suppressed** | MassRelations.CKMMixing | ε₁^(α_d) < ε₁^1 (VV correction increases suppression; α_d > 1) |
-| **fn_cdm_physical_sorry** | MassRelations.CKMMixing | log(cabibbo_structural_prediction) = fnMixChargeDown(α_d) × log(ε₁) (algebraic identity; zero sorry despite historic name) |
-
-> **Open physical bridge [C]:** The identification of |V_us|_SM with ε₁^(α_d) via
-> 2×2 FN SVD diagonalization — |(U_uL† U_dL)₁₂| = ε₁^(α_d)·(1+O(ε₁²)) — is a
-> structural hypothesis supported by 1.9% numerical accuracy but not yet
-> formalized in Lean.  The precise open step is recorded in the maintainer CDM
-> design notes (not published in this repository).
-
-## GTE-NEMS Framework Instance (`Framework.GTEFrameworkInstance`)
-
-All theorems zero sorry. One bridge axiom `gte_partrec_eval_iff_fmdl_phi` (same tier as six CUP3D axioms).
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **GTEFramework** | Framework.GTEFrameworkInstance | NemS.Framework on BeableState / ℕ; `gteTruth M 0 := zoneOf M ≠ .L2_transput` |
-| **GTESelector** | Framework.GTEFrameworkInstance | [D] selector: Zone L2 → gteZoneL2Witness, Zone L0/L1 → vacuum; proved inv/idem/cong |
-| **gte_not_categorical** | Framework.GTEFrameworkInstance | vacuum (Zone L0) and gteZoneL2Witness (Zone L2) disagree on query 0 |
-| **gte_nems** | Framework.GTEFrameworkInstance | GTE satisfies NEMS (∃ internal selector, trivial internality) |
-| **GTEPSCBundle** | Framework.GTEFrameworkInstance | PSCBundle: gte_nems + determinacyPSC_of_framework (free) |
-| **GTEDiagonalCapable** | Framework.GTEFrameworkInstance | DiagonalCapable instance; ASR RT = vacuumReachable ∘ decode_ic; halts_iff_RT via bridge axiom + cook2004 |
-| **gte_tpc_from_nems_classification** | Framework.GTEFrameworkInstance | C3: GTE is categorical ∨ (internal selector ∧ RT not computable); real NEMS proof |
-| **gte_tpc_real** | Framework.GTEFrameworkInstance | alias of gte_tpc_from_nems_classification; drop-in replacement for §67 proxies |
-
-**Bridge axiom:** `gte_partrec_eval_iff_fmdl_phi` — Mathlib `Partrec.Code.eval` ↔ `fmdl_binary_aps.φ` on halting; same mathematical tier as `fmdl_binary_aps` (APS axiom 1).
-
-## Z₇ Anomaly-Free, Gorard ORIC, W₁ Wasserstein, OP9 (all zero sorry)
-
-### Z₇ Global Scalar Anomaly-Free (`Gravity.Z7AnomalyFree`)
-
-All theorems zero sorry.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **z7_shift_measure_preserving** | Gravity.Z7AnomalyFree | Z₇ shift is measure-preserving on the vacuum distribution |
-| **z7_jacobian_eq_one** | Gravity.Z7AnomalyFree | Jacobian of the Z₇ shift action equals 1 (volume-form preserved) |
-| **z7_vacuum_sectors_equiprobable** | Gravity.Z7AnomalyFree | All 7 Z₇ vacuum sectors are equiprobable (anomaly cancellation) |
-| **z7_global_scalar_anomaly_free** | Gravity.Z7AnomalyFree | Z₇ global scalar anomaly is zero: ∑_sectors φ_shift = ∑_sectors φ |
-
-### Gorard ORIC Adjacent-Edge Vacuum Flatness (`ContinuumLimit.GorardVacuumW1Bridge`)
-
-All theorems zero sorry.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **vacuum_w1_eq_one** | ContinuumLimit.GorardVacuumW1Bridge | Vacuum transport cost W₁(μ_n, μ_{n+1}) = 1 between adjacent steps |
-| **gorard_vacuum_oric_zero_of_w1** | ContinuumLimit.GorardVacuumW1Bridge | κ = 0 for any adjacent edge n, conditional on W₁ = 1 (CatAL) |
-| **gorard_vacuum_oric_zero_scoped** | ContinuumLimit.GorardVacuumW1Bridge | ∀ n, adjacent-edge Ollivier–Ricci curvature κ_n = 0 in the vacuum (CatAL, zero sorry) |
-| **couplingCostSet_eq_image** | ContinuumLimit.GorardVacuumW1Bridge | Coupling cost set equals image of the marginal-cost map |
-
-### W₁ Wasserstein Distance Scaffold (`ContinuumLimit.WassersteinDistance`)
-
-All theorems zero sorry (fully CatAL, zero sorry on every proof path).
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **W1_nonneg** | ContinuumLimit.WassersteinDistance | W₁(μ, ν) ≥ 0 (non-negativity) |
-| **W1_le_couplingCost** | ContinuumLimit.WassersteinDistance | W₁ ≤ cost(γ) for any coupling γ (upper bound by coupling cost) |
-| **W1_ge_of_lipschitz** | ContinuumLimit.WassersteinDistance | Kantorovich dual lower bound: W₁ ≥ |𝔼_μ[f] − 𝔼_ν[f]| for any 1-Lipschitz f |
-| **gluedCoupling_cost_le** | ContinuumLimit.WassersteinDistance | Gluing lemma: cost of glued coupling ≤ sum of marginal costs (triangle ingredient) |
-| **W1_triangle** | ContinuumLimit.WassersteinDistance | Triangle inequality: W₁(μ, ρ) ≤ W₁(μ, ν) + W₁(ν, ρ) via glued coupling |
-| **W1_eq_zero_iff** | ContinuumLimit.WassersteinDistance | W₁(μ, ν) = 0 ↔ μ = ν (both directions; identity of indiscernibles) |
-| **W1_attained** | ContinuumLimit.WassersteinDistance | Infimum attained: ∃ γ s.t. W₁ = cost(γ) (finite coupling polytope compactness) |
-| **couplingCostSet_isCompact** | ContinuumLimit.WassersteinDistance | Achievable transport costs form a compact set (finite polytope) |
-| **couplingCostSet_eq_image** | ContinuumLimit.WassersteinDistance | Transport cost set = image of the coupling-to-cost map |
-
-### OP9 — SRRG ↔ MDL Equivalence at CatAL Level (zero sorry)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **op9_catal_unconditional** | SrrgLean.Bridges.ToMDL | OP9 CatAL unconditional: argmax F = argmin K at the canonical SRRG scalar instance (zero sorry, zero hypotheses) |
-| **srrg_op9_k_alg_biconditional** | SrrgLean.Bridges.ToMDL | Biconditional: K_alg profile ↔ SRRG extremum (CatAD, zero sorry) |
-
-### T96-02 — Unconditional MDL Uniqueness of Z₇×Z₃ (CA-level, zero sorry)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **z5_fmdl_no_psc_kink_orbits** | Universality.MDLDerivabilityCriterion | GTE polynomial C+R−CR−LCR over GF(5) with winding-based PSC kink predicate has 0 kink fixed points on 5-cell ring (`native_decide`, 3125 states); (2,2,2,2,2) is a displaced vacuum (zero winding), not a kink |
-| **mdl_total_z7z3_strictly_beats_z5z3** | Universality.MDLDerivabilityCriterion | Total MDL cost: structureSpecCost(7,3) + 0 < structureSpecCost(5,3) + 6, i.e. 3 < 11 (`decide`) |
-| **mdl_ca_rule_coding_closed** | Universality.MDLDerivabilityCriterion | Explicit K_data witness: K_data(7,3)=0, K_data(5,3)=6, and total MDL cost strictly favours Z₇×Z₃; supersedes open placeholder `mdl_ca_rule_coding_open`; closes T96-02 CatAL |
-
-### SU(2)_L GaugeMDL — Machine-certified propositions (zero sorry)
-
-Module `Algebra.GaugeMDL`. Three previously axiomatic SU(2)_L propositions are now machine-certified.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **phimdl_potential_su2l_invariant** | Algebra.GaugeMDL | L2 norm of within-tape doublet preserved under orthogonal 2×2 rotations (`weakDoubletL2Norm (U·Ψ) = weakDoubletL2Norm Ψ` when `UᵀU = 1`) |
-| **su2l_covariant_derivative_minimal** | Algebra.GaugeMDL | MDL strict inequality on doublet orbit: `mdlComplexityGauged WeakDoubletOrbit 0 < mdlComplexityGlobal WeakDoubletOrbit 0` |
-| **tPlus_tMinus_commutator** | Algebra.GaugeMDL | `[T₊,T₋] = 2T₀` on rational 2×2 SU(2)_L proxy |
-| **tZero_tPlus_commutator** | Algebra.GaugeMDL | `[T₀,T₊] = T₊` (2T₀ convention) |
-| **tZero_tMinus_commutator** | Algebra.GaugeMDL | `[T₀,T₋] = −T₋` (2T₀ convention) |
-| **su2l_wpm_generator_algebra** | Algebra.GaugeMDL | All three SU(2) Lie algebra relations bundled |
-
-### PSC Epoch Selection (`Gravity.PSCEpochSelection`)
-
-All theorems zero sorry (CatAL).
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **psc_undecidability_residual_pos** | Gravity.PSCEpochSelection | ∃ d > 0, d = D_res (positive undecidability residual) |
-| **d_res_determines_omega_lambda** | Gravity.PSCEpochSelection | ∃! Ω_Λ, Ω_Λ = (ln2/(3π))·L_PSC |
-| **psp_epoch_selection_master** | Gravity.PSCEpochSelection | D_res > 0 ∧ Ω_Λ^GTE = (ln2/(3π))·L_PSC ∧ uniqueness |
-| **incompleteness_implies_nonzero_omega_lambda** | Gravity.PSCEpochSelection | PSC → D_res > 0 → Ω_Λ > 0; full Incompleteness-Cosmology chain CatAL |
-
-### MDL Tower — Three-Level Unification (zero sorry)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **mdl_tower_bundle** | Framework.MDLTower | CatAL bundle: Role 1 `mdl_ca_rule_coding_closed` (theory selection) ∧ Role 2 `unique_cubic_gravity_coupling` (PMDL gravity) ∧ Role 3 `born_rule_unconditional` ([D]-adjudication / Born rule); three nested MDL domains, non-circular |
-| **mdl_tower_three_levels_non_circular** | Framework.MDLTower | Extends bundle with supplementary T_GTE K-minimality (`IsKMinimalOnGTE` via `phimdl_continuum_is_K_min_in_T_GTE`) |
-| **mdl_tower_role1_T_GTE_supplement** | Framework.MDLTower | Φ_MDL continuum CA component is K-minimal on `T_GTE` (PhiMDLBridge layer) |
-
-### N_gen Partial Universality — Four CatAL Constraints (zero sorry)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **ngen_partial_universality_catal** | Universality.NgenUniversalityPartial | CatAL bundle: PSC PI Layer I (`psc_enumeration_forces_ngen_3`) ∧ DPP ∧ CMCA ∧ TPC ∧ Gorard D²=16 |
-| **ngen_three_from_catal_constraints** | Universality.NgenUniversalityPartial | `n_gen = 3 ∧ fmdl_spatial_dimension = 3 ∧ level_hypercomputation + 1 = 3` |
-| **ngen_unique_catal** | Universality.NgenUniversalityPartial | Parametric uniqueness: `NgenCatALConstraints n → n = 3` for `0 < n` |
-| **NgenCatALConstraints** *(structure)* | Universality.NgenUniversalityPartial | Four CatAL constraint fields (scaffold for full parametric universality) |
-
-### Particles-Computation-Spacetime Trinity (zero sorry)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **ParticlesComputationSpacetimeTrinityBundle** *(structure)* | Universality.ParticlesComputationSpacetimeTrinity | CatAL bundle: Role 1 charge from winding + fermion ID + PSC sectors; Role 2 Rule 110 cell step + Turing universality; Role 3 geodesic (cross-ref `psc_orbit_is_curvature_geodesic`) |
-| **particles_computation_spacetime_trinity_certified** | Universality.ParticlesComputationSpacetimeTrinity | Constructive witness for the bundle (zero sorry) |
-| **particles_computation_spacetime_trinity** | Universality.ParticlesComputationSpacetimeTrinity | **Master certificate**: `Nonempty ParticlesComputationSpacetimeTrinityBundle` — one Φ_MDL kink, three roles from `p(L,C,R)` |
-| **particles_computation_spacetime_trinity_conj** | Universality.ParticlesComputationSpacetimeTrinity | Conjunction form: charge projection, fermion winding ID, PSC sectors, Rule 110 cell simulation |
-| **particles_computation_spacetime_trinity_with_universality** | Universality.ParticlesComputationSpacetimeTrinity | Extends conjunction with `z7kg_kink_universality` (Turing-universal kink dynamics) |
-
-### Single-Source Principle — Five GTE Polynomial Roles (zero sorry)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **gte_polynomial_five_roles_k_extra_zero** | Universality.FiveRolesPolynomial | **Master Single-Source Principle**: same `p(L,C,R)` at `K_extra = 0` for five roles — (1) Rule 110 spatial dynamics, (2) gauge center projection / `gte_winding_sm_vertex_conserved_full`, (3) PMDL gravity mass hierarchy, (4) entanglement Hamiltonian non-degeneracy (Bell S=2.4459 CatA), (5) baryon sector current; plus `Fintype.card LabelledTripleRole = 5` |
-| **gte_polynomial_five_roles_certified** | Universality.FiveRolesPolynomial | Per-role substance bundle (five zero-sorry sub-theorems) |
-| **gte_polynomial_five_labelled_roles** | Universality.FiveRolesPolynomial | Structural: exactly five distinct labelled-triple roles at `K_extra = 0` |
-| **gte_polynomial_three_roles_k_zero** | Gravity.PMDLGravityTheorems | Sub-bundle: Roles 1 (Rule 110) + 3 (gravity mass hierarchy) only |
-
-### GTE polynomial invariant subsets (`Universality.Z7InvariantSubsets`)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **p_poly_agrees_fmdl_on_binary** | Universality.Z7InvariantSubsets | On $\{0,1\}^3$, raw polynomial $p(L,C,R)$ equals $f_{\rm MDL}$ (CatAL; `decide`) |
-| **p_poly_binary_restriction_closed** | Universality.Z7InvariantSubsets | $p$ maps $\{0,1\}^3$ into $\{0,1\}$ (CatAL; `decide`) |
-| **p_poly_invariant_subsets_classification** | Universality.Z7InvariantSubsets | Closed subsets of $\mathbb{Z}_7$ under $p$ are exactly $\emptyset$, $\{0\}$, $\{0,1\}$, $\mathbb{Z}_7$ (CatAL; `native_decide`) |
-| **p_poly_invariant_subsets** | Universality.Z7InvariantSubsets | Prop formulation of invariant-subset classification (CatAL) |
-| **rule110_unique_proper_invariant_subca** | Universality.Z7InvariantSubsets | Unique maximal proper invariant sub-CA is $\{0,1\}$ (Rule 110 binary layer) (CatAL; `native_decide`) |
-| **five_is_qnr_mod7** | Universality.Z7InvariantSubsets | $5 = N_{\rm fam}$ is a quadratic non-residue mod 7 (CatAL; `decide`) |
-| **kink_fixed_point_eq_no_solution** | Universality.Z7InvariantSubsets | $k^2+k-1\equiv 0$ has no solution in $\mathbb{Z}_7$ (CatAL; `decide`) |
-| **no_intermediate_fixed_point** | Universality.Z7InvariantSubsets | Equivalent no-solution form for $k^2+k-1$ (CatAL; `decide`) |
-| **seven_mod_five** | Universality.Z7InvariantSubsets | $7 \equiv 2 \pmod 5$ (CatAL; `decide`) |
-| **nfam_qnr_explains_binary_floor** | Universality.Z7InvariantSubsets | QNR status of $N_{\rm fam}$ plus invariant-subset classification explains binary floor (CatAL; structural) |
+## Rule 110 / Universality
+
+| Theorem | Lean name | Module |
+|---|---|---|
+| Rule 110 is the unique weight-5 SM orbit satisfier | `rule110_unique_weight5_orbit_satisfier` | Universality.CUP4TotalParity |
+| Rule 110 completely isolated on all 1024 orbit pairs | `rule110_orbit_complete_isolation` | Universality.OrbitPerturbationCatalog |
+| d-dim CA with SM orbit must apply Rule 110 on slices | `dimensional_slice_uniqueness` | Universality.DimensionalSliceUniqueness |
+| p=5 uniquely transitive for weight-3 vectors among primes ≤23 | `z5_transitivity_uniqueness` | Universality.Z5TransitivityUniqueness |
+| UWCA sweep implements Rule 110 exactly | `uwca_sweep_implements_rule110` | Universality.UWCASimulation |
+| **UGP substrate is Turing-universal** | `ugp_is_turing_universal` | Universality.TuringUniversal |
+| UWCA history-lane reversibility: backward ∘ forward = id | `uwca_augmented_left_inverse` | Universality.UWCAHistoryReversible |
+| GTE compilation: sigma_gte by `rfl` | `gte_compilation_theorem` | Universality.GTECompilation |
+| **GTE uniqueness**: unique lawful UWCA program up to bisimulation | `gte_uniqueness_up_to_bisimulation` | Universality.GTEUniqueness |
+| Parity-projection forcing maximal (777 + 16,807 forms) | `parity_projection_additive_forcing` | Universality.ParityProjectionForcing |
+| Orbit + vacuum force unique GF(7) interpolant (7⁸ census) | `ugp_orbit_interpolation_lift` | Universality.TriangleLiftTheorem |
+| Z₇ winding conservation ≡ U(1)_EM charge conservation | `winding_charge_equivalence` | Universality.GUTStructure |
+| D_top = exp(−1/N_c) via Z₇ transitivity (CatAL, zero sorry) | `d_top_derivation_chain_catal` | Universality.GUTStructure |
 
 ---
 
-## Frontier Closures — Recent additions
+## Elegant Kernel / Quarter-Lock
 
-**Scope:** 231 net-new `theorem`/`lemma` names across 23 Lean modules (zero sorry on listed results; two pre-existing `axiom` stubs in `GUTStructure.EWChiralBridge` unchanged; two **CatA** axioms in `SechOverlapIntegralBounds_bridge.lean` for the mesh→integral bridge). Cat levels: **CatAL** unless noted **CatAD** or **CatA**.
-
-### Φ_MDL fluctuation spectrum and Yukawa vertex (`Substrate.PhiMDLFluctuationSpectrum`)
-
-Zero sorry in this module; finite-$r$ sech overlap lower bounds import from `SechOverlapIntegralBounds` (see below).
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **phimdl_fluctuation_is_poschl_teller** | Substrate.PhiMDLFluctuationSpectrum | $V_{\rm fl}(x)=m_\phi^2[1-2\,\mathrm{sech}^2(m_\phi x)]$ (Pöschl–Teller well; CatAL) |
-| **integral_sech** | Substrate.PhiMDLFluctuationSpectrum | $\int \mathrm{sech}(x)\,dx = \pi$ (Mathlib FTC; CatAL) |
-| **integral_sech_cubed** | Substrate.PhiMDLFluctuationSpectrum | $\int \mathrm{sech}^3(x)\,dx = \pi/2$ (CatAL) |
-| **phimdl_three_kink_overlap_integral** | Substrate.PhiMDLFluctuationSpectrum | Three-kink overlap $G_3(0)$ integral scaffold (CatAL) |
-| **phimdl_yukawa_amplitude_formula** | Substrate.PhiMDLFluctuationSpectrum | Yukawa amplitude closed form via sech$^3$ product (CatAL) |
-| **yukawa_amplitude_nonzero_sech3** | Substrate.PhiMDLFluctuationSpectrum | Nonzero three-kink Yukawa amplitude for $m_\phi>0$ (CatAL) |
-| **sech_overlap_asymptotic** | Substrate.PhiMDLFluctuationSpectrum | $r\cdot I(r)\to\pi$ as $r\to\infty$ (CatAL) |
-| **sech_overlap_le_pi** | Substrate.PhiMDLFluctuationSpectrum | Overlap integral $\le\pi$ (CatAL) |
-| **phimdl_yukawa_vertex_catad** | Substrate.PhiMDLFluctuationSpectrum | **Master Yukawa vertex**: Pöschl–Teller + sech$^3$ integral + amplitude assembly (CatAD) |
-| **phimdl_yukawa_vertex_winding_trivial** | Substrate.PhiMDLFluctuationSpectrum | Equal LH/RH winding $\Rightarrow$ $|ΔW|=0$ at Higgs vertex (CatAL) |
-| **yukawa_winding_conservation** | Substrate.PhiMDLFluctuationSpectrum | Winding conservation at permitted Yukawa vertex (CatAL) |
-| **gte_yukawa_positive** | Substrate.PhiMDLFluctuationSpectrum | Positive Yukawa coupling for $m_f,v_H>0$ (CatAL) |
-| **sech_overlap_at_five_ge** | Substrate.SechOverlapIntegralBounds_bridge | $I(5)\ge 596903/10^6$ (via CatA bridge axiom; zero sorry) |
-| **sech_overlap_at_eleven_ge** | Substrate.SechOverlapIntegralBounds_bridge | $I(11)\ge 282771/10^6$ (via CatA bridge axiom; zero sorry) |
-| **sech_overlap_at_five_ge_pi** | Substrate.SechOverlapIntegralBounds | $I(5)\ge 0.95\pi/5$ (CatAL; zero sorry, zero axiom) |
-| **sech_overlap_at_eleven_ge_pi** | Substrate.SechOverlapIntegralBounds | $I(11)\ge 0.99\pi/11$ (CatAL; zero sorry, zero axiom) |
-| **sech_overlap_at_five_ge_596_thousand** | Substrate.SechOverlapIntegralBounds | $I(5)\ge 596/1000$ (CatAL; zero sorry) |
-| **sech_overlap_at_eleven_ge_282_thousand** | Substrate.SechOverlapIntegralBounds | $I(11)\ge 282/1000$ (CatAL; zero sorry) |
-| **sech_overlap_five_ratio_ge** | Substrate.SechOverlapIntegralBounds | $5I(5)/\pi\ge 2984515/3141593$ (CatAL; zero sorry) |
-| **sech_overlap_eleven_ratio_ge** | Substrate.SechOverlapIntegralBounds | $11I(11)/\pi\ge 3110481/3141593$ (CatAL; zero sorry) |
-
-### Sech overlap integral certification (`Substrate.SechOverlapIntegralBounds_*`)
-
-| Module | Content |
-|--------|---------|
-| `SechOverlapIntegralBounds_cosh.lean` | $\cosh(2)\le 3763/1000$, …, $\cosh(5)\le 74211/1000$ (CatAL; zero sorry) |
-| `SechOverlapIntegralBounds_r5bins.lean` | 990 per-bin rational lower bounds for sech product (CatAL; zero sorry) |
-| `SechOverlapIntegralBounds_bridge.lean` | 2 **CatA** axioms: `sech_overlap_at_five_ge_certified`, `sech_overlap_at_eleven_ge_certified` (mesh sum $\le$ integral bridge) |
-| `SechOverlapIntegralBounds.lean` | Main module: **0 sorry, 0 axiom**; imports bridge; exports $\pi$-fraction corollaries |
-| `SechOverlapIntegralBounds_r11cert.lean` | $r=11$ mesh certification (arithmetic only; CatAL) |
-| `SechOverlapIntegralBounds_r5mesh.lean` | Not imported (build failures; retained for future mesh closure) |
-
-### Yukawa overlap exponent from DPP tape counting (`Gravity.YukawaOverlapExponent`)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **yukawa_overlap_exponent_arith** | Gravity.YukawaOverlapExponent | $N_c-1=2$ (`decide`; CatAL) |
-| **yukawa_overlap_exponent_catad** | Gravity.YukawaOverlapExponent | Dirac scaling exponent $\alpha=N_c-1=2$ from three-tape DPP counting (CatAD) |
-| **yukawa_dirac_scaling_exponent_eq** | Gravity.YukawaOverlapExponent | $\alpha=2$ (definitional alias; CatAL) |
-| **yukawa_spatial_dims_from_dpp** | Gravity.YukawaOverlapExponent | Spatial dimensions from DPP tape geometry (CatAD) |
-| **yukawa_suppression_denominator** | Gravity.YukawaOverlapExponent | $5^2\times 11^2=3025$ (CatAL) |
-| **leptogenesis_kink_overlap_catad** | Gravity.YukawaOverlapExponent | $f_1\times f_2=1/3025$ (CatAD; uses `sech_overlap_at_*_ge_pi`; **CatAL conditional** on 2 CatA bridge axioms) |
-| **yukawa_overlap_tape_count** | Gravity.YukawaOverlapExponent | Fermion-sector tape count certified (CatAL) |
-| **yukawa_total_tapes** | Gravity.YukawaOverlapExponent | Total tape budget for Yukawa vertex (CatAL) |
-| **yukawa_sech_correction_factor_ge** | Gravity.YukawaOverlapExponent | Certified $(5I(5)/\pi)(11I(11)/\pi)$ lower bound at $b_R=\{5,11\}$ (CatAL; zero sorry) |
-| **eta_B_PDG_in_GTE_bracket** | Gravity.YukawaOverlapExponent | Planck $\eta_B$ in GTE interval $[5.62,6.36]\times 10^{-10}$ (CatAL conditional on $\varepsilon_1^{\mathrm{CI}}$, $\kappa$, 2 sech bridge axioms) |
-| **eta_B_loop_bracket** | Gravity.YukawaOverlapExponent | Planck $\eta_B$ in loop-function interval $[6.06,6.36]\times 10^{-10}$ (CatAL conditional on asymptotic/CRV $\varepsilon_1$) |
-| **eta_B_epsilon1_asym_le_CI** | Gravity.YukawaOverlapExponent | Asymptotic loop $\varepsilon_1 \leq \varepsilon_1^{\mathrm{CI}}$ (CatAL) |
-| **eta_B_GTE_loop_lower_le_upper** | Gravity.YukawaOverlapExponent | Loop-bracket endpoints ordered: $\eta_B^{\mathrm{asym}} \leq \eta_B^{\mathrm{CRV}}$ (CatAL) |
-
-### PMNS NLO atmospheric mixing (`MassRelations.PMNSNLOCorrection`)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **two_b_R2_eq_F21_succ** | MassRelations.PMNSNLOCorrection | $2 b_{R2} = \|F_{21}\|+1 = 22$ (CatAL) |
-| **ngen_eq_nfam_minus_two** | MassRelations.PMNSNLOCorrection | $N_{\mathrm{gen}} = N_{\mathrm{fam}}-2 = 3$ (CatAL) |
-| **pmns_atm_nlo_formula** | MassRelations.PMNSNLOCorrection | $\sin^2\theta_{23}^{\mathrm{NLO}} = 209/441$ (CatAL) |
-| **pmns_atm_nlo_in_1sigma** | MassRelations.PMNSNLOCorrection | $|209/441 - 0.470| < 0.013$ NuFIT 6.0 IC24 NH (CatAL) |
-
-### PMNS and neutrino sector (`MassRelations.NeutrinoSector`)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **lh_neutrino_fn_charge_differential_zero** | MassRelations.NeutrinoSector | $q_L=0$ for all LH generations (CatAL) |
-| **neutrino_higgs_yukawa_vertex_permitted** | MassRelations.NeutrinoSector | $|ΔW|=0$ at ν–H–ν vertex (CatAL) |
-| **seesaw_type_I_formula** | MassRelations.NeutrinoSector | Type-I seesaw $M_R=m_D^2/m_\nu$ (CatAL) |
-| **fn_dirac_yukawa_rank_theorem** | MassRelations.NeutrinoSector | Positive FN charges $\Rightarrow$ rank-1 Dirac Yukawa (CatAL) |
-| **real_yukawa_gives_zero_leptogenesis_cp** | MassRelations.NeutrinoSector | Real Yukawa $\Rightarrow$ $\varepsilon_1=0$ (CatAL) |
-| **pmns_solar_sin_sq** | MassRelations.NeutrinoSector | $\sin^2\theta_{12}=4/13$ (CatAL) |
-| **pmns_atm_sin_sq** | MassRelations.NeutrinoSector | $\sin^2\theta_{23}=19/42$ (CatAL) |
-| **pmns_reactor_sin_val** | MassRelations.NeutrinoSector | $\sin\theta_{13}=11/73$ (CatAL) |
-| **pmns_cp_phase_from_z7_winding** | MassRelations.NeutrinoSector | $\delta_{\rm CP}=8\pi/7$ from $W_L=4$ (CatAL) |
-| **gte_jarlskog_is_negative** | MassRelations.NeutrinoSector | GTE Jarlskog $J<0$ (CatAL) |
-| **pmns_sin_delta_cp** | MassRelations.NeutrinoSector | $\sin\delta_{\rm CP}$ from orbit-ratio algebra (CatAL) |
-| **rh_neutrino_couples_antiflavon** | MassRelations.NeutrinoSector | RH neutrino sector couples to anti-flavon layer (CatAL) |
-| **democratic_seesaw_theta23_approximately_maximal** | MassRelations.NeutrinoSector | Democratic J-matrix $\Rightarrow$ near-maximal $\theta_{23}$ (CatAD; structural) |
-
-### Higgs quartic from SRRG (`MassRelations.HiggsQuartic`)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **higgs_quartic_ch_correction** | MassRelations.HiggsQuartic | $\lambda=\dfrac{\varphi}{4\pi}\left(1+\dfrac{{\rm IPT}-1}{27}\right)$ with $2c_H+1=N_{\rm gen}^3=27$ (CatAL; zero sorry) |
-| **higgs_quartic_numerical_approx** | MassRelations.HiggsQuartic | $0.12<\lambda<0.14$ (interval arithmetic via `UCLLogBounds`; CatAL) |
-| **higgs_quartic_denominator_is_27** | MassRelations.HiggsQuartic | Denominator $2c_H+1=27=N_{\rm gen}^3$ (CatAL) |
-| **higgs_quartic_corrected_pos** | MassRelations.HiggsQuartic | Corrected quartic strictly positive (CatAL) |
-
-### UCL Elegant Kernel — master certification and tiers (`ElegantKernel/Unconditional/*`)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **elegant_kernel_full_certification** | ElegantKernel.Unconditional.MasterCertification | All nine UCL coefficients CatAL in one bundle (`k_{L^2},k_{\rm gen},k_{\rm gen2},k_L,k_{\rm const},k_{M},k_{a,b,c}`) |
-| **ucl_fermion_mass_ordering** | ElegantKernel.Unconditional.UCLMassOrdering | gen1 $<$ gen2 $<$ gen3 per sector under UCL + $4^{g-1}$ scaling (CatAL conditional on EK coefficient intervals; zero sorry) |
-| **ucl_tier2_mass_ordering** | ElegantKernel.Unconditional.MasterCertification | Tier-2 mass-ordering bundle (alias of `ucl_fermion_mass_ordering`) |
-| **ucl_lepton_sector_koide_identity** | ElegantKernel.Unconditional.UCLKoide | Koide $Q=2/3$ from GTE-pinned phase + amplitude chain (CatAL) |
-| **ucl_tier3_lepton_koide** | ElegantKernel.Unconditional.MasterCertification | Tier-3 Koide bundle (alias) |
-| **ucl_log_form_koide_independence** | ElegantKernel.Unconditional.UCLKoide | UCL log form alone does not force $Q=2/3$; emergence needs amplitude chain |
-| **thm_quarter_lock_catal** | QuarterLock | $k_M=-\varphi/2+7/2048$ (Quarter-Lock CatAL) |
-| **UCL interval infrastructure** | UCLLogBounds, UCLMassOrderingCoeffBounds, UCLMassOrderingInterval, UCLMassOrderingSBounds, UCLMassOrderingCerts, UCLMassOrderingBounds, UCLMassOrderingBridge | Margin certificates: $\log\varphi$, $\log(2\pi)$, all UCL coefficient intervals, six sector $\Delta_{12},\Delta_{23}$ bounds, 40 GTE $b$-seed log intervals (all zero sorry) |
-
-### FGCI and Frobenius chain (`Universality.FrobeniusChain`)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **fgci_unique_at_nc** | Universality.FrobeniusChain | FGCI: $F(3)=G(3)=73$ unique at $N_c=3$ (CatAL) |
-| **frobenius_chain_two_primes** | Universality.FrobeniusChain | Frobenius cascade $\{7,73\}$ complete; level-3 terminates (CatAL) |
-| **b_L2_eq_two_Nc_Z7** | Universality.FrobeniusChain | $b_{L2}=2N_c|Z_7|=42$ (CatAL) |
-| **fgci_bundle** | Universality.FrobeniusChain | Joint FGCI + chain + $b_{\rm gen1}$ double determination (CatAL) |
-| **b_gen2_frobenius_factorization** | Universality.FrobeniusChain | $b_{\rm gen2}=2N_c|Z_7|$ factorization (CatAL) |
-| **delta_qmin_coincidence_at_three** | Universality.FrobeniusChain | For $n\in\{2,\ldots,30\}$, ridge offset $\delta(n)=n+(n^2-1)/2$ equals the minimal odd prime $q$ with $2\mid q-1$ and $n\mid q-1$ iff $n=3$ (consilience-grade bounded check; not an independent forcing route) (CatAL) |
-| **delta_qmin_at_nc** | Universality.FrobeniusChain | At $N_c=3$: $\delta(N_c)=q_{\min}(N_c)=7$ (CatAL) |
-
-### Direct-interpolation lift (`Universality.TriangleLiftTheorem`)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **gte_orbit_parity_provenance** | Universality.TriangleLiftTheorem | Total parities of the fifteen canonical P01 cascade triples reproduce the certified `smGen1` / `smGen2` / `smGen3` vectors (CatAL) |
-| **orbit_interpolation_vandermonde_full_rank** | Universality.TriangleLiftTheorem | Exhaustive $7^8$ census: orbit-only constraints leave $7$ multilinear survivors; orbit + vacuum transparency leave exactly one survivor $p$ (CatAL) |
-| **ugp_orbit_interpolation_lift** | Universality.TriangleLiftTheorem | Among all $7^8$ multilinear GF(7) rules, exactly one satisfies the parity-orbit ring evaluations together with vacuum transparency; it is $p=C+R-CR-LCR$; without vacuum transparency, exactly seven survive (CatAL) |
-| **evalMultilinear_eq_poly_p** | Universality.TriangleLiftTheorem | The certified interpolant agrees with `poly_p` on all GF(7) inputs (CatAL) |
-| **interpolation_lift_binary_corollary** | Universality.TriangleLiftTheorem | Binary restriction of the interpolant is Rule 110 (CatAL) |
-| **cup4_parity_uniqueness_from_lift** | Universality.TriangleLiftTheorem | CUP-4 uniqueness chain composed with the lift corollary (CatAL) |
-| **rule110_lift_sparsity_floor** | Universality.TriangleLiftTheorem | Rule-110 agreement on $\{0,1\}^3$ forces the unique interpolant $p$; flattened support has exactly four nonzero classes (MDL sparsity floor) (CatAL) |
-| **orbit_chirality_census** | Universality.TriangleLiftTheorem | Over all $120$ family orderings, $20$ admit a vacuum-transparent orbit rule; survivor union is $\{110,124\}$; reversal bijects the two $10$-sets (CatAL) |
-| **orbit_chirality_census_reflection_link** | Universality.TriangleLiftTheorem | Chirality census connects to the certified AGL(1,7) reflection swap Rule 124 $\leftrightarrow$ Rule 110 (CatAL) |
-| **multilinear_binary_determination** | Universality.TriangleLiftStructural | Structural full-rank theorem: the eight binary evaluations determine the multilinear GF(7) coefficients uniquely, by explicit inclusion–exclusion inversion of the binary Vandermonde system — no enumeration (CatAL) |
-| **orbit_vt_forces_interpolant** | Universality.TriangleLiftStructural | Structural lift: the parity-orbit ring evaluations cover seven of the eight binary neighbourhoods, vacuum transparency supplies the eighth, and Möbius inversion forces the interpolant $p$ (CatAL) |
-| **orbit_interpolation_lift_structural** | Universality.TriangleLiftStructural | Existence + uniqueness bundle for the structural lift in the multilinear function class (CatAL) |
-| **evalML_polyPFun_eq_poly_p** | Universality.TriangleLiftStructural | The interpolant's evaluation agrees with `poly_p` on all of GF(7)³ (CatAL) |
-| **gf7_flattening_binary_agreement** | Universality.TriangleLiftStructural | Exponent flattening preserves every binary evaluation of every canonical-form GF(7) polynomial (per-variable degree $\le 6$) (CatAL) |
-| **gf7_rule110_sparsity_floor** | Universality.TriangleLiftStructural | Strongest-form MDL sparsity floor: any canonical-form GF(7) polynomial whose binary restriction is Rule 110 flattens exactly to $p$ and has $\ge 4$ monomials — multilinearity MDL-forced (CatAL) |
-
-### Fine-structure and Casimir identities (`Universality.AlphaEMStructuralIdentity`, `Universality.CasimirB0Relation`)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **alpha_em_inverse_structural_identity** | Universality.AlphaEMStructuralIdentity | $2^7+3^2=137$ (CatAL) |
-| **alpha_em_inverse_from_z7_and_ngen** | Universality.AlphaEMStructuralIdentity | $2^{|Z_7|}+N_{\rm gen}^2=137$ (CatAL) |
-| **b0_casimir_relation** | Universality.CasimirB0Relation | $b_0=N_{\rm fam}+N_{\rm gen}-1=7$ (CatAL) |
-| **casimir_orbit_ratio** | Universality.CasimirB0Relation | $C(7,3)/C(7,2)=5/3=N_{\rm fam}/N_{\rm gen}$ (CatAL) |
-
-### Quark masses and mesons (`MassRelations.PhysicalMasses`, `MassRelations.DownRational`, `MassRelations.MesonMasses`, `Universality.GUTStructure`)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **six_quark_tt_vv_cascade_bundle** | MassRelations.PhysicalMasses | TT+VV hold on PDG $(m_e,m_\mu)$ anchors for $g<3$ (CatAL) |
-| **bottom_quark_vv_cascade** | MassRelations.DownRational | VV log identity for generation-3 down-type mass (CatAL) |
-| **top_bottom_mass_ratio_approx** | Universality.GUTStructure | $|b_{\rm top}/b_b-41.255|<10^{-3}$ (CatAL) |
-| **g_omega_sq_eq_ngen_times_cz** | MassRelations.MesonMasses | $g_\omega^2=N_{\rm gen}\,c_Z=36$ (CatAL) |
-| **m_omega_ksrf_formula** | MassRelations.MesonMasses | $m_\omega=\sqrt{72}\,f_\pi$ from KSRF (CatAL) |
-| **m_omega_pdg_agreement** | MassRelations.MesonMasses | $|783.55\,\mathrm{MeV}-782.65\,\mathrm{MeV}|<1\,\mathrm{MeV}$ rational proxy (CatAL) |
-| **g_rho_sq_eq_casimir_orbit** | MassRelations.MesonMasses | $g_\rho^2=C(b_0,N_{\rm gen})=\binom{7}{3}=35$ (CatAL) |
-| **g_omega_rho_coupling_gap** | MassRelations.MesonMasses | $g_\omega^2-g_\rho^2=N_{\rm gen}\,c_Z-C(b_0,N_{\rm gen})=1$ (CatAL) |
-| **m_rho_ksrf_formula** | MassRelations.MesonMasses | $m_\rho=\sqrt{70}\,f_\pi$ from KSRF (CatAL) |
-| **m_rho_ksrf_scc_value** | MassRelations.MesonMasses | $\sqrt{70}\,f_\pi^{\rm SCC}\approx 772.57\,\mathrm{MeV}$ within $0.1\,\mathrm{MeV}$ (CatAL) |
-| **chiral_condensate_kink_identification** | MassRelations.PionMassFromGOR | $|\langle\bar\psi\psi\rangle_{\rm GTE}|=M_{\rm kink}^3$ (CatAL) |
-| **pion_mass_from_gor** | MassRelations.PionMassFromGOR | $m_\pi=\pi\sqrt{(m_u+m_d)M_{\rm kink}}$ from GOR + SCC (CatAL) |
-| **pion_mass_numerical_certificate** | MassRelations.PionMassFromGOR | GTE $m_u+m_d=6.8040$ MeV, $M_{\rm kink}=290.10$ MeV $\Rightarrow$ $m_\pi\approx 139.57$ MeV (CatAL) |
-
-### Transcendental mass bounds (`MassRelations.TranscendentalMassBounds`)
-
-Interval axioms for `Real.exp`/`Real.log` factors used by quark and EW numerical certificates (zero sorry in consumers; axioms state tight rational brackets only).
-
-| Name | Module | Statement | Cat |
-|------|--------|-----------|-----|
-| **tt_exp_g0_bounds** | MassRelations.TranscendentalMassBounds | $\exp((\pi/6)\cdot 2+\pi/8)$ for $m_u$ TT factor | CatA (axiom) |
-| **tt_exp_g1_bounds**, **tt_exp_g2_bounds** | MassRelations.TranscendentalMassBounds | TT factors at $g=1,2$ for $m_c$, $m_t$ | CatA (axiom) |
-| **vv_gamma_exp_bounds** | MassRelations.TranscendentalMassBounds | $\exp(-5/14)$ VV offset | CatA (axiom) |
-| **koide_tau_mass_bounds** | MassRelations.TranscendentalMassBounds | Koide $\tau$ mass at PDG $(m_e,m_\mu)$ | CatA (axiom) |
-| **m_d_predicted_interval**, **m_s_predicted_interval**, **m_b_predicted_interval** | MassRelations.TranscendentalMassBounds | Down-type PDG bands at anchors | CatA (axiom) |
-| **m_c_predicted_interval**, **m_t_predicted_interval** | MassRelations.TranscendentalMassBounds | Up-type PDG bands at anchors | CatA (axiom) |
-| **higgs_threshold_log_bound** | MassRelations.TranscendentalMassBounds | $\ln(m_H/M_Z)$ for Weinberg threshold | CatA (axiom) |
-| **sin2_threshold_value_bounds** | MassRelations.TranscendentalMassBounds | Threshold-corrected $\sin^2\theta_W$ band | CatA (axiom) |
-
-### Quark PDG interval certificates (`MassRelations.QuarkMassNumericalCerts`)
-
-| Theorem | Module | Statement | Cat |
-|---------|--------|-----------|-----|
-| **m_u_pdg_interval** | MassRelations.QuarkMassNumericalCerts | $m_u\in[2.09,2.23]\,\mathrm{MeV}$ (uses **tt_exp_g0_bounds**) | CatAD |
-| **m_d_pdg_interval** | MassRelations.QuarkMassNumericalCerts | $m_d$ in PDG band (uses **m_d_predicted_interval**) | CatAD |
-| **m_s_pdg_interval** | MassRelations.QuarkMassNumericalCerts | $m_s$ in PDG band (uses **m_s_predicted_interval**) | CatAD |
-| **m_c_pdg_interval** | MassRelations.QuarkMassNumericalCerts | $m_c$ in PDG band (uses **m_c_predicted_interval**) | CatAD |
-| **m_t_pdg_interval** | MassRelations.QuarkMassNumericalCerts | $m_t$ in PDG band (uses **m_t_predicted_interval**) | CatAD |
-| **m_b_pdg_interval** | MassRelations.QuarkMassNumericalCerts | $m_b\in(4175,4191)\,\mathrm{MeV}$ (uses **m_b_predicted_interval**) | CatAD |
-
-### Electroweak numerical certificates (`Universality.EWBosonNumericalCerts`)
-
-| Theorem | Module | Statement | Cat |
-|---------|--------|-----------|-----|
-| **m_W_pdg_interval** | Universality.EWBosonNumericalCerts | $M_W=80364\,\mathrm{MeV}\in(80351,80377)\,\mathrm{MeV}$ | CatAL |
-| **m_Z_gte_from_wolfenberg** | Universality.EWBosonNumericalCerts | $M_Z=M_W\sqrt{13/10}$ from GTE $\cos^2\theta_W=3/13$ | CatAL |
-| **m_Z_pdg_interval** | Universality.EWBosonNumericalCerts | $M_Z\in(91600,91660)\,\mathrm{MeV}$ (uses **sqrt_thirteen_ten_bounds**) | CatAD |
-| **sin2_theta_W_threshold_interval** | Universality.EWBosonNumericalCerts | $\sin^2\theta_W\in[0.23128,0.23131]$ (uses **higgs_threshold_log_bound**, **sin2_threshold_value_bounds**) | CatAD |
-
-### Seesaw and leptogenesis numerical certificates (`MassRelations.SeesawNumericalCerts`)
-
-| Theorem | Module | Statement | Cat |
-|---------|--------|-----------|-----|
-| **fn_washout_sum_bounds** | MassRelations.SeesawNumericalCerts | $S=1+\exp(-2\pi/3)+\exp(-2\pi)\in[1.124,1.126]$ (uses **exp_neg_two_pi_over_three_bounds**, **exp_neg_two_pi_bounds**) | CatAD |
-| **b5_seesaw_weight_bounds** | MassRelations.SeesawNumericalCerts | $178<5^{29/9}<179$ (integer 9th-power, **norm_num**) | CatAL |
-| **b11_seesaw_weight_bounds** | MassRelations.SeesawNumericalCerts | $2267<11^{29/9}<2268$ | CatAL |
-| **b19_seesaw_weight_bounds** | MassRelations.SeesawNumericalCerts | $13195<19^{29/9}<13196$ | CatAL |
-| **gte_delta_m21_sq_bounds** | MassRelations.SeesawNumericalCerts | $\Delta m^2_{21}\in[7.36,7.38]\times10^{-5}\,\mathrm{eV}^2$ (uses **gte_delta_m21_sq_interval**) | CatAD |
-| **gte_delta_m31_sq_bounds** | MassRelations.SeesawNumericalCerts | $\Delta m^2_{31}\in[2.509,2.513]\times10^{-3}\,\mathrm{eV}^2$ (uses **gte_delta_m31_sq_interval**) | CatAD |
-| **mr_gut_geV_bounds** | MassRelations.SeesawNumericalCerts | $M_{R,\mathrm{GUT}}\in[1.89,1.91]\times10^{16}\,\mathrm{GeV}$ (uses **mr_gut_geV_interval**) | CatAD |
-| **mr1_mr_gut_ratio_bounds** | MassRelations.SeesawNumericalCerts | $M_{R1}/M_{R,\mathrm{GUT}}\in[5.828,5.863]\times10^{-4}$ (uses **exp_neg_pi_bounds**, **mr1_mr_gut_ratio_interval**) | CatAD |
-| **seesaw_leptogenesis_cert_bundle** | MassRelations.SeesawNumericalCerts | Conjunction of all five target interval certificates | CatAD |
-
-### FKTT kink–top coupling (`Physics.FKTTCoupling`)
-
-| Theorem | Module | Statement | Cat |
-|---------|--------|-----------|-----|
-| **phi_mdl_kink_bps_saturation** | Physics.FKTTCoupling | $T_{11}=0$ on kink background (Bogomolny; proved by `rfl`, zero axioms) | CatAL |
-| **bps_kink_is_half_instanton** | Physics.FKTTCoupling | $S_{\rm kink}=\tfrac12 S_{\rm inst}$ (uses `phi_mdl_kink_bps_saturation`, trivially satisfied) | CatAL |
-| **bps_per_tape_action_unconditional** | Physics.FKTTCoupling | Per-tape BPS action $S_1=\pi/N_c$ — unconditional | CatAL |
-| **bps_per_tape_action** | Physics.FKTTCoupling | Per-tape BPS action $S_1=\pi/N_c$ ($|Z_7|$ cancellation; zero axioms) | CatAL |
-| **per_tape_bps_action_eq_pi_over_Nc** | Physics.FKTTCoupling | $S_1=\pi/3$ | CatAL |
-| **per_tape_bps_action_bound** | Physics.FKTTCoupling | $S_1\in[1.047,1.048]$ | CatAL |
-| **kink_top_coupling_eq_eps_FN** | Physics.FKTTCoupling | $g_{\rm kink\text{-}top}=\exp(-S_1)=\varepsilon_{\rm FN}=\exp(-\pi/3)$ (zero axioms) | CatAL |
-| **kink_top_coupling_bounds** | Physics.FKTTCoupling | $g_{\rm kink\text{-}top}\in[0.3508,0.3510]$ (zero axioms) | CatAL |
-| **fktt_coupling_bundle** | Physics.FKTTCoupling | Master conjunction: half-instanton, per-tape action, $\varepsilon_{\rm FN}$ identity, interval bound (zero axioms) | CatAL |
-
-### GUTStructure additions (`Universality.GUTStructure` §35)
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **z7_dark_baryon_correction_identity** | Universality.GUTStructure | $q_{\rm dark}/(|Z_7|-1)=1/N_c$ (CatAL) |
-| **z7_topological_dilution_formula_rational** | Universality.GUTStructure | Topological dilution $2/6=1/3=1/N_c$ (CatAL) |
-| **z7_star_transitivity_under_addition** | Universality.GUTStructure | Z₇ acts transitively on Z₇\* = {1,...,6} — no sector direction preferred (CatAL) |
-| **z7_symmetry_forces_equal_sector_action** | Universality.GUTStructure | Equal distribution forced: S_per = q_dark/|Z₇\*| = 2/6 = 1/3 = 1/N_c (CatAL) |
-| **d_top_derivation_chain_catal** | Universality.GUTStructure | Master CatAL assembly: BPS S₀/T=1 + q_dark=2 + |Z₇\*|=6 + Z₇ transitivity → D_top = exp(−1/N_c) (CatAL) |
-
-**Recent additions catalog count:** 70 named flagship theorems plus 40 interval-bound lemmas and 25 UCL margin/delta certificates plus 10 GTE-polynomial invariant-subset theorems documented in the module list above (**240** total net-new names).
+| Theorem | Lean name | Module |
+|---|---|---|
+| k_M = k_gen2 + ¼k_L² | `quarterLockLaw` | QuarterLock |
+| k_L² = 7/512 | `k_L2_eq` | ElegantKernel |
+| **k_gen = φ·cos(π/10)** (zero hypotheses, zero sorry) | `thm_ucl2_fully_unconditional` | ElegantKernel.Unconditional.KGenFullClosure |
+| k_gen2 = −φ/2 (unique negative root of pentagon quadratic) | `k_gen2_eq_neg_phi_half` | ElegantKernel.KGen2 |
+| Pentagon–Hexagon Bridge: k_gen + k_gen2 = φ·(cos π/10 − cos π/3) | `k_gen_pentagon_hexagon_bridge` | ElegantKernel.Unconditional.KGenFullClosure |
+| All 5 UCL constraints simultaneously satisfiable | `full_closure_summary` | ElegantKernel.Unconditional.FullClosure |
+| UCL master cert: all 9 EK coefficients CatAL | `elegant_kernel_full_certification` | ElegantKernel.Unconditional.MasterCertification |
 
 ---
 
-### GTE Polynomial Explorations (`Polynomial.PolyExplorations`)
+## Mass Relations
 
-39 theorems, all zero sorry, all CatAL. Covers the core mathematical properties of
-$p(L,C,R) = C+R-CR-LCR$ over $\mathbb{F}_7$, its relationship to the integer update
-map $T$, period-475 certificates, GF(7³) number-theoretic structure, GF(7) arithmetic
-coprocessor gates, PSC-projection characterisation of $f_{\rm MDL}$, and KL divergence.
-
-| Theorem | Module | Statement | Cat |
-|---------|--------|-----------|-----|
-| **poly_p_at_111_eq_zero** | Polynomial.PolyExplorations | $p(1,1,1)=0$ over any CommRing (ring) | CatAL |
-| **poly_p_at_111_eq_zero_mod7** | Polynomial.PolyExplorations | Specialisation of above to ZMod 7 | CatAL |
-| **gf5_has_fixed_point** | Polynomial.PolyExplorations | $k=2$ satisfies $k^2+k-1=0$ in GF(5) (decide) | CatAL |
-| **gf5_second_ether** | Polynomial.PolyExplorations | $p(2,2,2)=2$ in GF(5); confirms second ether at $w=2$ (decide) | CatAL |
-| **no_singleton_fixed_point_mod7** | Polynomial.PolyExplorations | $k^2+k-1\neq 0$ for all $k\in\mathbb{Z}/7$; forces $\{0,1\}$ unique invariant subset (decide) | CatAL |
-| **poly_p_zero_variety_count_gf7** | Polynomial.PolyExplorations | $|V(p)\cap\mathrm{GF}(7)^3|=43=\Phi_6(7)$ (native_decide) | CatAL |
-| **poly_p_diagonal_zeros_mod7** | Polynomial.PolyExplorations | $p(w,w,w)=0\Leftrightarrow w\in\{0,1,5\}$ in ZMod 7 (native_decide) | CatAL |
-| **poly_p_rule110_on_binary** | Polynomial.PolyExplorations | $p=\text{Rule 110}$ on $\{0,1\}^3\subset\mathbb{Z}/2$ (decide) | CatAL |
-| **poly_p_rule110_explicit** | Polynomial.PolyExplorations | Explicit 8-case Rule 110 enumeration (decide) | CatAL |
-| **twin_prime_qnr_complementarity** | Polynomial.PolyExplorations | No twin prime pair satisfies both $\equiv\pm2\pmod5$ (omega) | CatAL |
-| **T_b_output_not_determined_by_mod7** | Polynomial.PolyExplorations | $T$'s output mod 7 not determined by input mod 7; counterexample $b=73$, $c=144/151$ (native_decide) | CatAL |
-| **counterexample_same_residue** | Polynomial.PolyExplorations | $144\equiv 151\pmod7$ (native_decide) | CatAL |
-| **counterexample_different_outputs** | Polynomial.PolyExplorations | $b'$ values are 1 and 3 mod 7 for the counterexample (native_decide) | CatAL |
-| **T_computable_not_polynomial_GF7** | Polynomial.PolyExplorations | $T$ is computable but not polynomial over GF(7) | CatAL |
-| **canonical_b2_divisible_by_7** | Polynomial.PolyExplorations | $7\mid b_2=42$ in the canonical orbit (native_decide) | CatAL |
-| **lepton_seed_forces_b2_mult7** | Polynomial.PolyExplorations | The lepton seed $G_1$ forces $b_2\equiv 0\pmod7$ (native_decide) | CatAL |
-| **muon_neff_vacuum_winding** | Polynomial.PolyExplorations | $(b_2 : \mathbb{Z}/7)=0$; muon vacuum winding (native_decide) | CatAL |
-| **p_fmdl_disagree_on_orbit** | Polynomial.PolyExplorations | $p_{\rm poly}\neq f_{\rm MDL}$ at orbit neighborhood $(1,1,5)$ (decide) | CatAL |
-| **p_poly_at_1_1_5** | Polynomial.PolyExplorations | $p_{\rm poly}(1,1,5)=3$ (decide) | CatAL |
-| **fmdl_at_1_1_5** | Polynomial.PolyExplorations | $f_{\rm MDL}(1,1,5)=2$ (decide) | CatAL |
-| **four_object_GTE_pairwise_distinct** | Polynomial.PolyExplorations | $p$, $f_{\rm MDL}$, $T$ are pairwise distinct GTE objects (decide + native_decide) | CatAL |
-| **p_max_walsh_arithmetic_identity** | Polynomial.PolyExplorations | $91=7\times13$, $343=7^3$ — Walsh nonlinearity arithmetic certificate (decide) | CatAL |
-| **poly_p_vacuum_basin_card_eq_52** | Polynomial.PolyExplorations | 52 states in GF(7)^5 converge to the vacuum under iteration (native_decide) | CatAL |
-| **poly_p_uniform_gs_roots** | Polynomial.PolyExplorations | $p(x,x,x)=-x(x-1)(x-5)\pmod7$; ground states $\{0,1,5\}$ (decide) | CatAL |
-| **poly_p_diagonal_factorization** | Polynomial.PolyExplorations | $p(x,x,x)=-x(x-1)(x+2)\pmod7$ (decide) | CatAL |
-| **poly_p_diagonal_plus_factor_eq_zero** | Polynomial.PolyExplorations | Ring-identity form of the diagonal cubic (decide) | CatAL |
-| **period_475_returns** | Polynomial.PolyExplorations | Iterating $p$ on the 5-cell ring 475 times returns to the cycle start (native_decide) | CatAL |
-| **period_475_is_minimal** | Polynomial.PolyExplorations | No proper divisor of 475 is a period (native_decide) | CatAL |
-| **phi25_order_19_on_cycle** | Polynomial.PolyExplorations | $\phi^{25}$ has order exactly 19 on the 475-cycle (native_decide) | CatAL |
-| **nineteen_divides_7cube_minus_1** | Polynomial.PolyExplorations | $19\mid 7^3-1=342$ (decide) | CatAL |
-| **nineteen_not_divides_smaller_extensions** | Polynomial.PolyExplorations | $19\nmid 7^k-1$ for $k=1,2,4,5$ (decide) | CatAL |
-| **ord_19_seven_equals_3** | Polynomial.PolyExplorations | $\mathrm{ord}_{19}(7)=3$ (decide) | CatAL |
-| **nineteen_not_divides_linear_period** | Polynomial.PolyExplorations | $19\nmid 240$ (the linearized period) (decide) | CatAL |
-| **nineteen_unique_prime_in_7cube_minus_1** | Polynomial.PolyExplorations | 19 is the unique prime $p\mid 7^3-1$ with $\mathrm{ord}_p(7)=3$ (decide) | CatAL |
-| **gf73_norm_of_19th_root_is_one** | Polynomial.PolyExplorations | Norm of any 19th root of unity in GF(7³) equals 1; LCR = norm (decide) | CatAL |
-| **p_addition_via_L6** | Polynomial.PolyExplorations | $p(6,a,b)=a+b\pmod7$ for all $a,b\in\mathbb{Z}/7$ — 1-gate GF(7) addition (decide) | CatAL |
-| **p_multiplication_from_two_gates** | Polynomial.PolyExplorations | $a\cdot b = p(6,a,b)-p(0,a,b)\pmod7$ — 2-gate GF(7) multiplication; 49/49 pairs verified (decide) | CatAL |
-| **kl_divergence_fmdl_p_nonzero** | Polynomial.PolyExplorations | $\exists\,(L,C,R)$ with $p(L,C,R)\neq f_{\rm MDL}(L,C,R)$ — certifies strictly positive KL divergence between Objects 0 and 1; witness $(1,1,5)$ (decide) | CatAL |
-| **psc_projection_gives_fmdl** | Polynomial.PolyExplorations | Bundle: $f_{\rm MDL}=0$ on all free (non-fixed) PSC neighborhoods ∧ $p=f_{\rm MDL}$ on binary sublayer $\{0,1\}^3$ (decide) | CatAL |
-| **fmdl_psc_projection_of_p** | Polynomial.PolyExplorations | $f_{\rm MDL}(L,C,R)=0$ whenever $(L,C,R)$ is not a fixed PSC neighborhood (corollary of `fmdl_zero_on_free_neighborhoods`) | CatAL |
-| **fmdl_psc_projection_binary** | Polynomial.PolyExplorations | $f_{\rm MDL}(L,C,R)=p(L,C,R)$ when all of $L,C,R\in\{0,1\}$ (binary sublayer) (decide) | CatAL |
-
-### CUP3DUniqueness — orbit-topology additions (`Universality.CUP3DUniqueness`)
-
-Additional theorems (all zero sorry, CatAL).
-
-| Theorem | Module | Statement | Cat |
-|---------|--------|-----------|-----|
-| **gen2_outer_positions_constant** | Universality.CUP3DUniqueness | GEN₂ outer positions equal: $v_0=v_2=v_4$ in the 5-cell orbit ring (decide) | CatAL |
-| **gen3_outer_positions_constant** | Universality.CUP3DUniqueness | GEN₃ outer positions equal: $v_0=v_2=v_4$ in the 5-cell orbit ring (decide) | CatAL |
-| **gen2_gen3_topology_degenerate** | Universality.CUP3DUniqueness | GEN₂ and GEN₃ share $(a,b,a,c,a)$ topology: outer positions equal, inner positions distinct from each other and from outer (decide) | CatAL |
-| **fmdl_orbit_is_unique_psc_trajectory** | Universality.CUP3DUniqueness | $\mathrm{GEN}_1\to\mathrm{GEN}_2\to\mathrm{GEN}_3\to\mathrm{VAC}$ is the uniquely forced 3-step trajectory from $\mathrm{GEN}_1$ under $\mathsf{fmdl\_step5}$; step-uniqueness at each stage and Garden-of-Eden property of $\mathrm{GEN}_1$ included (decide + prior theorems) | CatAL |
-| **mdl_three_level_orbit_bundle** | Universality.CUP3DUniqueness | Level 1→2 bundle: $\mathsf{fmdl\_step5}(\mathrm{GEN}_1)=\mathrm{GEN}_2$, $\mathsf{fmdl\_step5}(\mathrm{GEN}_2)=\mathrm{GEN}_3$, $\mathsf{fmdl\_step5}(\mathrm{GEN}_3)=\mathrm{VAC}$ | CatAL |
-| **mdl_three_level_polynomial_bundle** | Universality.CUP3DUniqueness | Partial OP4 bundle: orbit steps (via `mdl_three_level_orbit_bundle`) ∧ SRRG $\varphi$ diagonal fixed point $p_{\mathbb{R}}(\varphi,\varphi,\varphi)=\varphi$ (via `gte_poly_srrg_bridge`) | CatAL |
-
-### GTE Causal Tree (`Polynomial.GTECausalTree`)
-
-Module: `UgpLean/Polynomial/GTECausalTree.lean`. Zero sorry. Proves the
-perfect-binary-tree structure of the ruleGTE WolframModel causal graph and
-its botanical correspondence with the Daucus carota compound umbel L-system.
-
-| Theorem | Module | Statement | CatLevel |
-|---------|--------|-----------|----------|
-| **perfectTree_numNodes** | Polynomial.GTECausalTree | Perfect binary tree of depth $n$ has $2^n-1$ nodes (induction+omega) | CatAL |
-| **perfectTree_height** | Polynomial.GTECausalTree | Perfect binary tree of depth $n$ has height $n$ (induction+simp) | CatAL |
-| **perfectTree_numLeaves** | Polynomial.GTECausalTree | Perfect binary tree of depth $n$ has $2^n$ leaves (induction+omega) | CatAL |
-| **gte_rulegte_event_count** | Polynomial.GTECausalTree | $\sum_{k=0}^{n-1} 2^k = 2^n-1$; a 1→2 binary rule accumulates $2^n-1$ total events after $n$ generations (induction+omega) | CatAL |
-| **gte_rulegte_ten_generations** | Polynomial.GTECausalTree | At 10 generations: $\sum_{k=0}^{9} 2^k = 1023$ — certifies the 1023-node count in P49 §5.3 (decide) | CatAL |
-| **perfectTree_horton_ratio** | Polynomial.GTECausalTree | Node count at depth $d+1$ equals twice node count at depth $d$ (Horton ratio $r_B=2$, induction) | CatAL |
-| **gte_causal_tree_horton_ratio_eq_two** | Polynomial.GTECausalTree | $r_B=2$ at all levels 0–8 for depth-10 tree (decide) | CatAL |
-| **gte_causal_tree_summary** | Polynomial.GTECausalTree | The GTE causal tree at depth 10 has 1023 nodes, height 10, 1024 leaves | CatAL |
-
-### MDL Three-Level Unification (`Polynomial.MDLThreeLevelUnification`)
-
-Module: `UgpLean/Polynomial/MDLThreeLevelUnification.lean`. Zero sorry. Cross-module
-CatAL bundle proving that the MDL principle $\Ptop(X) = \arg\min K(x \mid \mathrm{PSC})$
-operates at three nested levels: theory selection ($p$ from rule space), field dynamics
-($\PHIMDL$ via PMDL), and quantum event adjudication (Born rule via transputation).
-
-| Theorem | Module | Statement | CatLevel |
-|---------|--------|-----------|----------|
-| **mdl_three_level_unification** | Polynomial.MDLThreeLevelUnification | Cross-module CatAL bundle: Level 0→1 (MDL theory selection via `mdl_ca_rule_coding_closed`), Level 1→2 (SRRG φ bridge via `gte_poly_srrg_bridge`), PSC link ($p \to f_\mathrm{MDL}$ via `psc_projection_gives_fmdl`), Level 2→3 (unique measurement orbit via `fmdl_orbit_is_unique_psc_trajectory`) | CatAL |
-| **mdl_level23_closed_choice_forces_transputation** | Polynomial.MDLThreeLevelUnification | Wrapper: PSC + closed choice force transputation (imports `closed_choice_forces_transputation` from transputation-lean, re-exported in ugp-lean context) | CatAL |
+| Theorem | Lean name | Module |
+|---|---|---|
+| **Claim C (formal)**: TT = Weyl·2^g (zero hyp, zero sorry) | `claim_C_formal` | MassRelations.ClaimCBridge |
+| Pentagon–Hexagon–TT unified bridge | `pentagon_hexagon_TT_unified_bridge` | MassRelations.ClaimCBridge |
+| Koide ↔ (2S)² = 3N algebraic normal form | `koide_iff_twoS_sq_eq_threeN` | MassRelations.KoideClosedForm |
+| Newton flow fixes Koide null cone; S₃-equivariance | `newton_flow_fixes_null_cone` | MassRelations.KoideNewtonFlow |
+| CKM θ₂₃ ratio = 15/8 unique at n=10 | `op_v_ckm_theta23_closure` | MassRelations.CKMTheta23 |
+| \|V_us\|_CDM = exp(−13π/27) ≈ 0.2203 (1.9% off PDG) | `cabibbo_vev_formula` | MassRelations.CKMMixing |
+| VV GUT coefficient shifts bare FN charge additively | `fn_vv_correction_additive` | MassRelations.CKMMixing |
+| Neutrino mass ratio R ≈ 0.02936; within 1% of NuFIT 6.0 | `neutrino_mass_ratio_within_1pct_of_nufit` | MassRelations.NeutrinoMassRatio |
+| PMNS: sin²θ₁₂=4/13, sin²θ₂₃=19/42, δ_CP=8π/7, J<0 | (various) | MassRelations.NeutrinoSector |
+| Higgs quartic 0.12 < λ < 0.14 | (various) | MassRelations.HiggsQuartic |
+| sin²θ₂₃^NLO = 209/441 | (various) | MassRelations.PMNSNLOCorrection |
+| 2·a_τ = a_e + a_μ (discrete S₃ shadow, zero sorry) | `lepton_a_discrete_S3_identity` | MassRelations.KoideS3DiscreteIdentities |
 
 ---
 
-## Frontier Closures — Algebraic and Physical Certificates
+## BraidAtlas
 
-**Scope:** 80 net-new zero-`sorry` theorems (plus two conditional CatAL\|H1) across fourteen modules, plus two PARTIAL modules. Cat levels: **CatAL** unless noted **PARTIAL** or **CatAL\|H1**. Covers: golden-quadratic diagonal fixed-point structure, Eisenstein arithmetic of GTE constants, seven-ring dynamical-zeta orbit classification, Z₇ vacuum-selection mechanism with gauge-coupling hierarchy, kink-sector physics algebraic cores, biquadratic-compositum unification of the two master rings, the CC one-jump residual algebraic core, and the N_gen bracket-orientation theorem.
-
----
-
-### Golden quadratic and diagonal fixed points (`Polynomial.GoldenQuadratic`)
-
-Nine CatAL theorems. Module: `UgpLean/Polynomial/GoldenQuadratic.lean`. Zero sorry.
-
-| Theorem | Statement |
-|---------|-----------|
-| **gte_diagonal_quadratic_factorization** | $p(x,x,x)-x = -x(x^2+x-1)$ over any commutative ring (`ring`) |
-| **disc5_dichotomy_gf7** | $x^2+x-1$ rootless in $\mathbb{F}_7$ iff $5$ is QNR mod 7; diagonal fixed points of $p$ over $\mathbb{F}_7$ = $\{0\}$ |
-| **golden_floor_duality_bundle** | SRRG fixed-point equation and singleton-invariance equation are the same ℤ-quadratic; ℝ root $1/\varphi$, $\mathbb{F}_7$ rootless |
-| **master_quadratic_no_root_mod_seven_pow** | $\forall k\ge 1$, $x^2+x\ne 1$ in $\mathbb{Z}/7^k\mathbb{Z}$ (7-adic floor inertness) |
-| **master_quadratic_split_iff_qr5** | For odd prime $q\ne 5$: $\exists x,\, x^2+x=1$ in $\mathbb{Z}/q$ iff $q\equiv\pm1\pmod5$ (quadratic reciprocity) |
-| **golden_singleton_invariant_iff_diag_fixed** | $\{k\}$ is $p$-invariant iff $k=0$ or $k^2+k-1=0$ (universal ring) |
-| **second_floor_iff_ramified** | $\{0,k\}$ is $p$-invariant iff $3k=1$ iff $q=5$ — GF(5) ballistic ramification derived |
-| **gf49_golden_roots_frobenius_swap** | $\mathbb{F}_{49}$ has exactly two roots; Frobenius $x\mapsto x^7$ swaps them |
-| **pisano_seven_eq_sixteen** | Fibonacci period mod 7 = 16 (`native_decide`) |
+| Theorem | Lean name | Module |
+|---|---|---|
+| Q = W_g/N_c; anomaly cancellation forces N_c=3 | `charge_theorem` | BraidAtlas.ChargeTheorem |
+| EW boson c-values: c(W)=11, c(Z)=12, c(H)=13 | (various) | BraidAtlas.EWBosons |
+| All 9 light baryon b-formulas (full conjunction) | `ugp_all_baryon_b_formulas` | BraidAtlas.CompositeTriples |
+| b(proton)=11459, b(neutron)=11441, b(p)−b(n)=2N_c²=18 | `ugp_nucleon_b_formula` | BraidAtlas.CompositeTriples |
+| E₇ falsifier: h=18 ∤ 120 | `e7_double_failure` | BraidAtlas.CoxeterConductor |
 
 ---
 
-### Eisenstein arithmetic and $F_{21}$ residue field (`Polynomial.EisensteinIdentities`)
+## GF(7) Polynomial Explorations
 
-Seven CatAL theorems. Module: `UgpLean/Polynomial/EisensteinIdentities.lean`. Zero sorry.
-
-| Theorem | Statement |
-|---------|-----------|
-| **c_H_eq_phi3_ngen** | $c_H = \Phi_3(N_{\rm gen}) = \Phi_6(N_{\rm gen}+1) = 13$ (`norm_num`) |
-| **f21_order_eisenstein_norm_product** | $|F_{21}| = \Phi_6(2)\cdot\Phi_6(3) = 21$ (Eisenstein norm multiplicativity) |
-| **f21_eisenstein_residue_model** | $F_{21}\cong(\mathbb{Z}[\omega]/(3+\omega))^+\rtimes\mu_3$ as Fin 7 × Fin 3 with action ×4 vs ×2 (`decide` on 441 products) |
-| **poly_p_torus_equivariance** | $p(uL+u-1,\,u^{-1}C,\,u^{-1}R)=u^{-1}p(L,C,R)$ for all units $u$ (CommRing + GF(7) check) |
-| **poly_p_variety_orbit_decomposition_gf7** | $V(p)\cap\mathbb{F}_7^3 = \{(-1,0,0)\}\sqcup$ (7 free $\mathbb{F}_7^*$-orbits of size 6); unique ether point (`decide` at 343 states) |
-| **phi6_identity_bundle** | Four identities I1–I4 for $\Phi_6$/$\Phi_3$/$\Phi_{12}$ + instances $91=7\cdot 13$, $21=3\cdot 7$, $73=\Phi_{12}(3)$ |
-| **cH_phi3_unique_at_ngen** | $(n^3-1)/2=\Phi_3(n)\iff n=3$ — $c_H$'s cyclotomic membership forced by $N_{\rm gen}=3$ |
-
----
-
-### Dynamical zeta and period-475 orbit (`Polynomial.DynamicalZeta`)
-
-19 CatAL + 5 PARTIAL. Module: `UgpLean/Polynomial/DynamicalZeta.lean`. Key theorems:
-
-| Theorem | Statement | Cat |
-|---------|-----------|-----|
-| **fixed_point_local_factorization** | $p(a,b,c)-b = c(1-b(1+a))$ over any commutative ring | CatAL |
-| **vacuum_unique_temporal_fixed_point_ring** | $\mathrm{Fix}(T_n)=\{0^n\}$ for all $n\ge 1$ via Möbius chain + pole-within-6 | CatAL |
-| **golden_moebius_single_eight_cycle_gf7** | Möbius $\mu(x)=(1+x)^{-1}$ acts as a single 8-cycle on $\mathbb{P}^1(\mathbb{F}_7)$ | CatAL |
-| **fibonacci_matrix_order_sixteen_gf7** | Fibonacci matrix has order 16 in GL₂(F₇) | CatAL |
-| **prime_ring_cycle_dichotomy_bundle** | Shift-equivariant map on prime-$n$ ring: σ-fixed iff uniform; orbits are all size 1 or $n$ | CatAL |
-| **t95_eq_sigma3_on_period475_cycle** | $T^{95}=\sigma^3$ exactly on the period-475 attractor (`native_decide`) | CatAL |
-| **period475_drift_cancelled_return_order_nineteen** | Return map $\sigma^3\circ T^5=T^{100}$ has order exactly 19 on the cycle | CatAL |
-| **period475_gauge_observable_e1_period_95** | σ-invariant sum $e_1$ has period 95 on the cycle | CatAL |
-| **debruijn_fixed_matrix_trace_one** | De Bruijn fixed-point matrix trace bundle; full `tr(M₁ⁿ)=1` PARTIAL | PARTIAL |
-| **seven_ring_cycle_spectrum** | Cycle-length arithmetic + dichotomy; 7⁷ orbit partition PARTIAL | PARTIAL |
+| Theorem | Lean name | Module |
+|---|---|---|
+| Ground states = {0,1,5} for poly p (CatAL) | `poly_p_uniform_gs_roots` | Polynomial.PolyExplorations |
+| Period-475 certificates (CatAL) | `period_475_returns`, `period_475_is_minimal` | Polynomial.PolyExplorations |
+| Vacuum basin = 52; KL divergence p≠f_MDL | `poly_p_vacuum_basin_card_eq_52` | Polynomial.PolyExplorations |
+| PSC-projection bundle (CatAL) | `psc_projection_gives_fmdl` | Polynomial.PolyExplorations |
+| MDL Three-Level Unification (cross-module CatAL bundle) | `mdl_three_level_unification` | Polynomial.MDLThreeLevelUnification |
+| GTE causal tree: 1023 nodes, Horton r_B=2 | `gte_causal_tree_summary` | Polynomial.GTECausalTree |
+| p(x,x,x)−x = −x(x²+x−1); SRRG and Rule 110 as ℤ-quadratic fibers | `gte_diagonal_quadratic_factorization` | Polynomial.GoldenQuadratic |
+| **Ground-space rigidity**: {0ⁿ,1ⁿ,5ⁿ} for ALL ring lengths n≥3 | `gte_ring_ground_states_uniform_general` | Polynomial.SpinSevenGroundSpace |
+| cond(K)=15=N_gen·N_fam for K=ℚ(√−3,√5) | (various) | Polynomial.BiquadraticCompositum |
+| Fix(T_n)={vacuum} for all ring sizes; period-475 ζ factorization | `vacuum_unique_temporal_fixed_point_ring` | Polynomial.DynamicalZeta |
+| \|AGL(1,7)\|=42; reflection swaps Rule 110 ↔ Rule 124 | (various) | Polynomial.AGL17ChiralZ2 |
+| F₂₁ ≅ (ℤ[ω]/(3+ω))⁺⋊μ₃; Φ₆ ladder identity web | `f21_eisenstein_residue_model` | Polynomial.EisensteinIdentities |
+| Directed wall energies; gap exponent 3/2 (14 theorems) | `spin7_directed_wall_energies` | Polynomial.SpinSevenWallSpectroscopy |
+| Zero-energy spectral radius ρ=1; gap-law A=1 (10 theorems) | `spin7_spectator_amplitude` | Polynomial.SpinSevenSpectatorAmplitude |
+| Perron–Frobenius hypothesis package, uniform in β (7 theorems) | `spin7_transfer_pf_hypotheses` | Polynomial.SpinSevenTransferPrimitivity |
 
 ---
 
-### Z₇ vacuum selection and gauge-coupling hierarchy (`Physics.ZSevenVacuumSelection`, `Universality.SylowIndexCouplingHierarchy`)
+## Physics / Substrate / Gravity
 
-14 CatAL theorems across two modules. Zero sorry.
-
-| Theorem | Module | Statement |
-|---------|--------|-----------|
-| **vcoupling_breaks_z7_shift** | ZSevenVacuumSelection | $V_{\rm coupling}=\varepsilon|\phi|^2(D_\mu\chi)^2$ not invariant under $\mathbb{Z}_7$ shift |
-| **z7_vacua_chi_kinetic_inequivalent** | ZSevenVacuumSelection | $\chi$-kinetic normalisations $Z_k$ strictly monotone in $k$; $Z_6/Z_0>46$ at $\varepsilon=7/9$ |
-| **wall_bias_minimum_unique** | ZSevenVacuumSelection | Unique wall-bias minimum at $k=0$ for $\varepsilon,X>0$ |
-| **gs_set_is_z3_orbit_transversal** | ZSevenVacuumSelection | $\{0,1,5\}$ contains exactly one element of each $\langle\times 2\rangle$ orbit |
-| **vcoup_periodic_profile_fails_bps_window** | ZSevenVacuumSelection | Periodic profile outside BPS window; $\phi^2$ profile inside |
-| **compact_completion_minimum_at_k0** | ZSevenVacuumSelection | $1-\cos(2\pi k/7)$ has unique minimum at $k=0$ |
-| **scalar_cw_step_inward** | ZSevenVacuumSelection | $G(r)>0$ for $r>1$ — scalar CW step inward |
-| **z7_coupling_seam_discontinuity** | ZSevenVacuumSelection | $1+8\pi^2\cdot(7/9)>56$ seam-ratio witness |
-| **boundary_sensitivity_coefficient_positive** | ZSevenVacuumSelection | Counterterm-boundary pull outward ($\pi$ bounds + `linarith`) |
-| **sylow_family_pdg_match_unique_closest** | SylowIndexCouplingHierarchy | $7/2$ uniquely closest to the PDG running value in the Sylow rational family |
-| **thermal_leading_inward_dominance** | SylowIndexCouplingHierarchy | $3e^2 > g^2$ at derived couplings (`norm_num`) |
+| Theorem | Lean name | Module |
+|---|---|---|
+| **η_B = 6.109×10⁻¹⁰ CatAL unconditional** (+0.15σ vs PDG) | `kink_top_coupling_eq_eps_FN` | Physics.FKTTCoupling |
+| BPS saturation T₁₁=0 by `rfl` | `phi_mdl_kink_bps_saturation` | Physics.FKTTCoupling |
+| aM=1/7, am_φ=7/8, ξ*=7; Tape Saturation Theorem | `cmca_physical_point_dictionary` | Physics.CMCAPhysicalPoint |
+| M_Pl/Λ_GTE = 3¹⁰·7¹⁸/2⁴ (CatAL) | `planck_eft_blocking_ratio` | Physics.CMCAPhysicalPoint |
+| V_coupling breaks Z₇ shift symmetry; bias minimum at k=0 | `vcoupling_breaks_z7_shift` | Physics.ZSevenVacuumSelection |
+| Coset-charge spectrum t_V=3, c_coset=−1 | (various) | Physics.BurnsideCosetCharges |
+| ∫sech³ = π/2 (0 sorry) | (various) | Substrate.SechOverlapIntegralBounds |
+| Sech overlap finite-r bounds (0 sorry; 2 CatA bridge axioms) | (various) | Substrate.SechOverlapIntegralBounds_bridge |
+| α = N_c−1 = 2 sech bracket (CatAL-conditional on bridge axioms) ⚠ | `alpha_eq_Nc_minus_1` | Gravity.YukawaOverlapExponent |
+| W₁ nonneg, triangle, W₁=0 iff equal, attainment (all 0 sorry) | `W1_nonneg`, `W1_triangle`, `W1_eq_zero_iff` | ContinuumLimit.WassersteinDistance |
 
 ---
 
-### Kink physics algebraic cores (`Physics.KinkVacuumPolarization`, `KinkFormFactor`, `BurnsideCosetCharges`, `Universality.HeatKernelContactTerms`, `LambdaGTEThreshold`)
+## Spacetime / Mass Gap
 
-11 CatAL + 1 PARTIAL across six modules.
-
-| Theorem | Module | Statement | Cat |
-|---------|--------|-----------|-----|
-| **kink_vacuum_polarization_algebraic_core** | KinkVacuumPolarization | Bundle: $t_{\rm kink}=3$, $\hat{b}=-4$, $c^{S^1,\rm tree}=8\ln(8/7)$, positivity | CatAL |
-| **kink_cartan_charge_trepresentation** | KinkVacuumPolarization | $H_A$ weights $\{0,\pm1/2\}$, $\Sigma q^2=1/2$, $t_{\rm kink}=3$ | CatAL |
-| **b_hat_continuity_identity** | KinkVacuumPolarization | $\hat{b}=-4=7-11$; ties `b0_eq_z7_order` | CatAL |
-| **c_kink_s1tree_rational_log** | KinkVacuumPolarization | $c^{S^1,\rm tree}=8\ln(8/7)$ at $\Lambda/m_\phi=8/7$ | CatAL |
-| **kink_positivity_inequality** | KinkVacuumPolarization | $m_\phi<e^{\gamma/2}\Lambda_{\rm GTE}$ on tree reading | CatAL |
-| **sech_form_factor_moment_bundle** | KinkFormFactor | Born/topological $r_{\rm rms}$ ratio $\sqrt{3}$, BA-SHAPE; sech moments | CatAL |
-| **kink_dissolution_born_floor** | KinkFormFactor | $b\le 2.51/2.53$ (tree/pole) from Born-floor rational chain | CatAL |
-| **burnside_coset_charge_spectrum** | BurnsideCosetCharges | Coset charges $\{\pm1/2,\pm1/2,\pm1\}$, $t_V=3$, $c_{\rm coset}=-1$ | CatAL |
-| **heat_kernel_contact_term_rationals** | HeatKernelContactTerms | $(N^2-3)/(24N)=1/12$ at $N=3$; $\mathfrak{su}(N)$ trace/Killing skeleton | CatAL |
-| **lambda_gte_threshold_identity** | LambdaGTEThreshold | $\Lambda_{\rm GTE}=(8/7)m_\tau$; multiplier 7; $\mathbb{Z}_7$ coset residues; $7=11-4$ | CatAL |
-| **kink_pole_mass_spectral_core** | KinkPoleMassSpectralCore | PT autocorrelation, Levinson, sum rule, dim-reg channel, $\Gamma(-3/2)=4\sqrt{\pi}/3$ as definitional values; full integrals PARTIAL | PARTIAL |
+| Theorem | Lean name | Module |
+|---|---|---|
+| Positive mass gap Δ > 0 for all non-vacuum beables | `gte_mass_gap` | Spacetime.MassGap |
+| Δ ≥ 1.8 MeV (PDG up-quark lower bound) | `gte_mass_formula_physical` | Spacetime.MassGap |
+| gen₃ mass > gen₂ mass > gen₁ mass > 0 (all SM sectors) | `orbit_generation_ordering` | Spacetime.OrbitMassHierarchy |
+| Preferred-direction geodesic via D-weighted centroid (CatAD) | `geodesic_theorem` | Spacetime.GeodesicTheorem |
+| Spatial centroid invariant along timelike worldline | `geodesic_preferred_direction` | Spacetime.GeodesicTheorem |
 
 ---
 
-### Spin-7 ring ground-space rigidity (`Polynomial.SpinSevenGroundSpace`)
+## Cyclotomic / Galois
 
-Eight CatAL theorems. Module: `UgpLean/Polynomial/SpinSevenGroundSpace.lean`. Zero sorry, zero custom axioms.
-
-Certifies that for **every** ring length $n \ge 3$ the cyclic zero-energy configurations of the spin-7 chain — assignments $(s_0,\dots,s_{n-1}) \in \mathbb{F}_7^n$ with $p(s_{i-1},s_i,s_{i+1}) = 0$ at every site — are exactly the three uniform assemblies $\{0^n, 1^n, 5^n\}$. The zero-energy condition $p=0$ is distinct from the temporal fixed-point condition $p = s_i$ classified in `DynamicalZeta` (rigidity set $\{0^n\}$). Proof technique: zero-energy windows determine the right cell from the left pair, defining a deterministic successor function on the 43 active pair states of $\mathbb{F}_7^2$; `native_decide` certifies the only directed cycles are the three uniform self-loops; a cyclic configuration induces a closed walk, the minimal-period bound $\le 49$ pigeonholes the return, and zero cells propagate to the vacuum ring.
-
-| Theorem | Statement | Cat |
-|---------|-----------|-----|
-| **gte_ring_ground_states_uniform_general** | Ground-space rigidity for all $n\ge 3$: every cyclic zero-energy configuration is uniform with value in $\{0,1,5\}$ | CatAL |
-| **gte_ring_ground_states_uniform_bundle** | Characterisation bundle: rigidity + converse (each uniform ground assembly is zero-energy at every site) for all $n\ge 3$ | CatAL |
-| **gte_ring_ground_states_uniform** | Bounded-length corollary ($3\le n\le 7$), delegating to the general theorem | CatAL |
-| **uniform_ground_ring_satisfies_zero_energy** | Converse direction: uniform rings at $c\in\{0,1,5\}$ satisfy the zero-energy window at every site | CatAL |
-| **zero_energy_active_pair_only_uniform_cycles** | The 43-vertex zero-energy pair digraph has exactly the three uniform self-loops as directed cycles (`native_decide`) | CatAL |
-| **zero_energy_zero_center_forces_zero_right** | A zero-energy cell with centre 0 forces its right neighbour to 0 (local factorisation over $\mathbb{Z}/7$) | CatAL |
-| **zero_energy_any_zero_forces_all_zero** | Zero propagation: any vanishing cell on a zero-energy ring forces the vacuum ring $0^n$ | CatAL |
-| **ground_spin_values_card** | $\|\{0,1,5\}\| = 3$ | CatAL |
+| Theorem | Lean name | Module |
+|---|---|---|
+| h\|60 ↔ 2h\|120; E₇ falsifier (h=18 ∤ 120 AND ∤ 60) | `coxeter_biconditional_summary` | CyclotomicCompleteness.CoxeterBiconditional |
+| Q(ζ_{2h}) →ₐ[ℚ] Q(ζ₁₂₀) when h\|60 (zero sorry) | `cyclotomic_field_embedding` | CyclotomicCompleteness.CyclotomicContainment |
+| One-loop QED correction vanishes | `galois_protection_master_theorem` | Phase4.GaloisProtection |
+| Two-loop colour coefficient = 8/9 | `o3_full_identification` | Phase4.TwoLoopCoefficient |
 
 ---
 
-### Spin-7 directed wall spectroscopy (`Polynomial.SpinSevenWallSpectroscopy`)
+## Self-Reference
 
-Twelve CatAL theorems. Module: `UgpLean/Polynomial/SpinSevenWallSpectroscopy.lean`. Zero sorry, zero custom axioms.
-
-Certifies the directed minimal-interface energies of the 49-node spin-7 pair digraph — edge `(a,b) \to (b,c)` weighted by the local triple energy $p(a,b,c)$ — together with bump (closed-excursion) energies and the half-integer gap exponent $(E_w(0\to1)+E_w(1\to0))/2 = 3/2$. Bounded Bellman–Ford search (48 rounds) on `Fin 49` distance tables; individual entries closed by `native_decide`.
-
-| Theorem | Statement | Cat |
-|---------|-----------|-----|
-| **spin7_directed_wall_energies** | Master bundle: directed wall table, composite hub identity, bump table, half-integer gap | CatAL |
-| **directed_wall_energy_table** | $E_w(1\to0)=1$, $E_w(0\to1)=2$, $E_w(5\to0)=2$, $E_w(0\to5)=4$, $E_w(1\to5)=4$, $E_w(5\to1)=4$; $E_w(5\to1)=E_w(5\to0)+E_w(0\to1)$ | CatAL |
-| **loop_bump_energy_table** | $E_{\rm loop}(0)=2$, $E_{\rm loop}(1)=3$, $E_{\rm loop}(5)=4$ | CatAL |
-| **directed_wall_half_integer_gap** | $(E_w(0\to1)+E_w(1\to0))/2 = 3/2$ as exact rational arithmetic | CatAL |
-| Plus 8 supporting `native_decide` certificates | Individual wall/bump entries and composite identity | CatAL |
+| Theorem | Lean name | Module |
+|---|---|---|
+| Lawvere fixed-point theorem | `ugp_lawvere_fixed_point` | SelfRef.LawvereKleene |
+| Kleene recursion theorem | `ugp_kleene_recursion_thm` | SelfRef.LawvereKleene |
+| Rice's theorem | `ugp_rice_theorem` | SelfRef.RiceHalting |
+| Halting problem undecidable | `ugp_halting_undecidable` | SelfRef.RiceHalting |
 
 ---
 
-### Spin-7 spectral amplitude certificates (`Polynomial.SpinSevenSpectatorAmplitude`, `Polynomial.SpinSevenGapAmplitude`, `Polynomial.SpinSevenTransferPrimitivity`)
+## Nuclear Structure
 
-Thirty CatAL theorems across three modules. Zero sorry, zero custom axioms. Together these certify the combinatorial and linear-algebraic core of the spin-7 chain gap law $\Delta(\beta) = e^{-3\beta/2}$: the amplitude $A = 1$, the spectator mechanism, and the Perron–Frobenius hypothesis package for the thermal transfer matrix.
-
-#### Spectator amplitude (`Polynomial.SpinSevenSpectatorAmplitude`)
-
-Ten theorems. The zero-energy adjacency matrix of the 49-node pair digraph has spectral radius exactly 1 (the only recurrent structure is the three uniform self-loops), and a three-level cluster perturbation eigensystem gives ordered gaps $\{T, 2T\}$ — the spectator mechanism behind the gap-law amplitude.
-
-| Theorem | Statement | Cat |
-|---------|-----------|-----|
-| **zero_energy_ground_rows_self_loop_only** | Ground rows of the zero-energy adjacency matrix carry only the uniform self-loops (`native_decide`) | CatAL |
-| **zero_energy_power_stabilizes** | $Z^{22} = Z^{23}$ — powers of the zero-energy matrix stabilize | CatAL |
-| **zero_energy_powers_eventually_constant** | $Z^k$ constant for all $k \ge 22$ | CatAL |
-| **zero_energy_closed_walk_count_three** | $\mathrm{tr}(Z^k) = 3$ for all $k \ge 1$ — spectral radius 1 with three recurrent loops | CatAL |
-| **cluster_eigenvector_plus / minus / spectator** | Explicit eigensystem of the 3×3 cluster-coupling matrix | CatAL |
-| **cluster_gap_pair** | Ordered eigenvalue gaps of the cluster matrix are $\{T, 2T\}$ with $T = \sqrt{ab}$ | CatAL |
-| **spin7_spectator_amplitude** | Master bundle: $\rho = 1$ package + cluster eigensystem + $A = 1$ tie-in via the certified wall counts | CatAL |
-
-#### Gap amplitude (`Polynomial.SpinSevenGapAmplitude`)
-
-Thirteen theorems. Through-walk counts of the pair digraph between ground loops, computed in the weight-truncation semiring $\mathbb{N}[t]/(t^5)$ with a frontier-death certificate making the counts total over all walk lengths.
-
-| Theorem | Statement | Cat |
-|---------|-----------|-----|
-| **wall_frontier_death** | The weight-$\le 4$ interior frontier from each ground loop is empty after 45 steps (`native_decide`) | CatAL |
-| **frontier_death_persists / through_counts_vanish_beyond** | Frontier death propagates: no through-walk beyond the certified horizon | CatAL |
-| **minimal_wall_count_one_to_zero** | $c_{10} = 1$ at weight 1 | CatAL |
-| **minimal_wall_count_zero_to_one** | $c_{01} = 1$ at weight 2 | CatAL |
-| **bump_count_sector_zero / one / five** | $b_0 = 1$, $b_1 = 1$, $b_5 = 2$ | CatAL |
-| **gap_amplitude_sq_unit** | $A^2 = c_{10}\cdot c_{01} = 1$ — the gap-law amplitude is exactly 1 | CatAL |
-| **gap_amplitude_correction_half** | Leading correction $b_0/2 = 1/2$ in $\mathbb{Q}$ | CatAL |
-| **spin7_gap_amplitude_certificate** | Master bundle: counts, frontier death, $A^2 = 1$, correction | CatAL |
-
-#### Transfer-matrix Perron–Frobenius hypotheses (`Polynomial.SpinSevenTransferPrimitivity`)
-
-Seven theorems, uniform in the inverse temperature $\beta : \mathbb{R}$.
-
-| Theorem | Statement | Cat |
-|---------|-----------|-----|
-| **thermalTransfer_nonneg** | $M(\beta)$ entrywise non-negative for all $\beta$ | CatAL |
-| **thermal_transfer_sq_pos** | Every entry of $M(\beta)^2$ is strictly positive — primitivity with explicit power $k = 2$ | CatAL |
-| **spin7_thermal_transfer_primitive** | $M(\beta)$ is primitive for all real $\beta$ | CatAL |
-| **spin7_thermal_transfer_irreducible** | Irreducibility, via primitivity | CatAL |
-| **thermal_transfer_uniform_diag_pos** | Positive uniform self-loops on the diagonal | CatAL |
-| **spin7_transfer_pf_hypotheses** | Master bundle: the complete Perron–Frobenius hypothesis package, uniform in $\beta$ | CatAL |
-
-The leading-eigenvalue positivity/simplicity conclusion itself awaits a Perron–Frobenius eigenvalue theorem in Mathlib; the hypothesis package certified here is the complete input to that theorem.
+| Theorem | Lean name | Module |
+|---|---|---|
+| Proton b-seed 11459 is odd; neutron b-seed 11441 is odd | `proton_b_seed_is_odd`, `neutron_b_seed_is_odd` | GTE.NuclearPairing |
+| b_eff parity = mass-number A mod 2 | `beff_parity` | GTE.NuclearPairing |
+| GTE nuclear parity rule (full conjunction, 0 sorry) | `gte_nuclear_parity_rule` | GTE.NuclearPairing |
+| 5^(3/2) = √125 (pairing constant identity) | `pairing_sqrt_identity` | GTE.NuclearPairing |
 
 ---
 
-### CMCA physical-point dictionary (`Physics.CMCAPhysicalPoint`)
+## GTE-NEMS Framework
 
-Eight CatAL theorems (one conditional on `MDLSaturationSpacingHypothesis`). Module: `UgpLean/Physics/CMCAPhysicalPoint.lean`. Zero sorry, zero custom axioms.
-
-Given the seven-kink threshold $\Lambda = 7M$, SCC kink mass $M = (8/49)m_\varphi$ (`mkink_from_scc`), and the named CatB premise `MDLSaturationSpacingHypothesis` ($a\cdot\Lambda = 1$ with positivity), certifies $aM = 1/7$, $am_\varphi = 7/8$, and $\xi^* = 1/(aM) = 7 = |Z_7|$.
-
-| Theorem | Statement | Cat |
-|---------|-----------|-----|
-| **cmca_physical_point_dictionary** | From $\Lambda = 7M$, $M = (8/49)m_\varphi$, and `MDLSaturationSpacingHypothesis`: $aM = 1/7 \land am_\varphi = 7/8 \land \xi^* = 7$ | CatAL \| H |
-| **cmca_physical_point_tree_reading** | Tree-reading witness $a = 1/\Lambda$ reproduces the dictionary at $M = M_{\rm kink}^{\rm SCC}$ | CatAL |
-| **a_times_M_eq_one_seventh** | $aM = 1/7$ from $a\Lambda = 1$ and $\Lambda = 7M$ | CatAL |
-| **a_times_mphi_eq_seven_eighths** | $am_\varphi = 7/8$ from $M = (8/49)m_\varphi$ | CatAL |
-| **xi_star_eq_seven** | $\xi^* = 1/(aM) = 7$ | CatAL |
-| **xi_star_eq_z7_order** | $\xi^* = |Z_7|$ | CatAL |
-| **mdl_saturation_tree_reading** | Consistent instance of `MDLSaturationSpacingHypothesis` at $a = 1/(7M)$ | CatAL |
-
-**Premise structure:** `MDLSaturationSpacingHypothesis` — assumes only $a > 0$, $\Lambda > 0$, and $a\cdot\Lambda = 1$; threshold identification $\Lambda = 7M$ is supplied separately.
-
-#### Tape Saturation Theorem (`Physics.CMCAPhysicalPoint`)
-
-Upgrades `MDLSaturationSpacingHypothesis` from a bare assumption to a theorem-with-named-premise under `ComptonSupportCriterion` + extremization at the hosting boundary. Zero sorry, zero custom axioms.
-
-| Theorem / structure | Statement | Cat |
-|---------|-----------|-----|
-| **ComptonSupportCriterion** | Named premise: κ = 1 hosting `a·Λ ≤ ℏc` at the faithfulness threshold; tape discreteness pins `ℏc = 1` in natural units | CatB |
-| **faithful_tape_admissibility** | Faithful tapes satisfy `a·Λ ≤ 1` (b1) | CatAL |
-| **compton_support_hosting_general** | Threshold hosting propagates to every hosted mass `m ≤ Λ` | CatAL |
-| **faithful_tape_spacing_bound** | Admissible spacing bounded by `a* = ℏc/Λ` | CatAL |
-| **StrictTapePricingHypothesis** | Strict monotone MDL pricing in tape spacing (b2) | CatAD |
-| **tape_pricing_monotonicity** | Coarser admissible spacing strictly lowers cost | CatAD |
-| **TapeSaturationExtremization** | MDL attains hosting boundary `a·Λ = ℏc` (b3 + b4) | CatAD |
-| **tape_saturation_theorem** | Under extremization + CSC: `a·Λ = 1` | CatAD \| CSC |
-| **compton_support_derives_mdl_saturation** | Bridge `ComptonSupportCriterion` → `MDLSaturationSpacingHypothesis` | CatAD \| CSC |
-| **tape_saturation_physical_point_dictionary** | Full dictionary from CSC-derived spacing | CatAD \| CSC |
-| **mdl_supremum_from_strict_pricing** | Strict pricing forces coarser admissible optimum | CatAD |
-| **planck_eft_blocking_ratio** | Blocking-ratio web: $M_{\rm Pl}/\Lambda_{\rm GTE} = 3^{10}7^{18}/2^4$, monomial $3^{10}7^{18}=7^8 21^{10}$, seven-eighths factorization, fine-end $M_{\rm Pl}/M_{\rm kink}=21^{10}7^9/2^4$ via $M_{\rm kink}/m_\tau=8/49$ | CatAL |
-| **RegisterWindowReadability** | Named premise: winding-sector label recoverable within one correlation window ($\xi\ge 1$) | CatB |
-| **hosting_boundary_csc_equivalence** | CSC, register-window readability, and $\kappa=1$ hosting mutually entailed at saturation (named premises) | CatAD \| CSC |
-| **saturation_alphabet_bijection** | At $a\cdot\Lambda=1$: seven winding sectors biject with seven register values; $\xi(M)=7$ | CatAD \| CSC |
-
-#### Variational carrier pricing (`Gravity.TemporalVoxelCC`)
-
-Module: `UgpLean/Gravity/TemporalVoxelCC.lean`. Zero sorry, zero custom axioms.
-
-| Theorem | Statement | Cat |
-|---------|-----------|-----|
-| **pmdl_carrier_coefficient_identities** | Three-form coefficient chain $N\tau(2C_{\rm Gorard}/N)=2C_{\rm Gorard}\tau=N^2/(D^2|Z_7|)=9/112$ | CatAL |
-| **pmdl_carrier_pricing_chain** | Bundle: coefficient identities, $\Omega=3\pi/14$, half-quantum and lattice pricing gaps, bracket exclusion of half-quantum pricing | CatAL |
-| **half_quantum_pricing_excluded** | $2\pi^2>1$ and census endpoint $<2\pi^2$ (half-quantum pricing excluded) | CatAL |
-
-Item (iv) Gaussian-split carrier–record factorization: **deferred** (Mathlib Gaussian-integral infrastructure).
-
-#### GTE trajectory containment (`Universality.GTECompilation`)
-
-Module: `UgpLean/Universality/GTECompilation.lean`. Zero sorry, zero custom axioms.
-
-| Theorem | Statement | Cat |
-|---------|-----------|-----|
-| **gte_uwca_run_eq_after_steps** | Register-machine run equals `gteAfterSteps` (definitional packaging via `gteRunState`) | CatAL |
-| **gte_two_step_compilation_theorem** | Canonical seed trace through two GTE macro-steps (`native_decide`) | CatAL |
-| **gte_two_tile_compilation_theorem** | Two-tile $\sigma_{\rm GTE}$ program (odd register step + even Fibonacci/Mersenne $c$-rule tile) reproduces first two GTE triples from the Lepton seed | CatAL |
-| **gte_trajectory_two_tile_containment** | Finite-horizon `gte_uwca_run n H = gteAfterSteps n H` via register machine / two-tile specialization | CatAL |
-| **gte_trajectory_is_uwca_trajectory** | $\forall H$, `gte_uwca_run n H = gteAfterSteps n H` (finite-horizon coordinate equality) | CatAL |
-
-#### Parity-projection forcing (`Universality.ParityProjectionBattery`, `Universality.ParityProjectionForcing`)
-
-Modules: `UgpLean/Universality/ParityProjectionBattery.lean` (census kernels), `UgpLean/Universality/ParityProjectionForcing.lean` (bundle). Zero sorry, zero custom axioms.
-
-| Theorem | Statement | Cat |
-|---------|-----------|-----|
-| **additive_battery_mod_two** … **additive_battery_mod_seven** | Per-modulus additive homomorphism census ($m=2,\ldots,7$); mirrors R33 Python oracle | CatAL |
-| **additive_battery_totals** | Aggregate status split $277/490/5/5$ over $777$ nonzero forms; three SCC/conjugate tallies | CatAL |
-| **unit_conjugate_two_forced_scc** | $(2,2,2)\bmod 4$ forced + shadow-closed; witness for $g_2$ | CatAL |
-| **unit_conjugate_three_forced_scc** | $(3,3,3)\bmod 6$ forced + shadow-closed; witness for $g_3$ | CatAL |
-| **parity_projection_additive_forcing** | Bundle: totals + per-$m$ censuses + parity-factoring survivors + $g_1=p$, $g_2$, $g_3$ witnesses | CatAL |
-| **mod2_recoding_chunk_zero** … **mod2_recoding_chunk_six** | Seven coordinate chunks ($2401$ assignments each) of mod-2 $\mathrm{GF}(7)$ recoding census | CatAL |
-| **mod2_recoding_totals** | Aggregate $7392/8820/343/252$; $12$ SCC ($6$ parity-factor + $6$ Rule-106 product-parity) | CatAL |
-| **parity_projection_mod2_recoding_forcing** | Bundle: $7^5=16807$ exhaustive census + chunk certificates | CatAL |
+| Theorem | Lean name | Module |
+|---|---|---|
+| GTE substrate as `NemS.Framework`; NEMS + PSC bundle | `gte_nems` | Framework.GTEFrameworkInstance |
+| Transputation classification on GTE substrate | `gte_tpc_from_nems_classification` | Framework.GTEFrameworkInstance |
+| GTE final coalgebra | (various) | Framework.GTEFinalCoalgebra |
 
 ---
 
-### Retrospective synthesis: biquadratic compositum and AGL chiral Z₂ (`Polynomial.BiquadraticCompositum`, `Polynomial.AGL17ChiralZ2`)
+## Finding More Theorems
 
-22 CatAL theorems. Zero sorry, zero custom axioms.
-
-#### Biquadratic compositum (`Polynomial.BiquadraticCompositum`)
-
-Module: `UgpLean/Polynomial/BiquadraticCompositum.lean`.
-
-| Theorem | Statement |
-|---------|-----------|
-| **biquadratic_conductor_identity** | $\mathrm{cond}(K)=15=N_{\rm gen}\cdot N_{\rm fam}=3\cdot 5$ (`norm_num`) |
-| **alphabet_class_characterization** | $q\equiv 7,13\pmod{15}\iff$ split in $\mathbb{Z}[\omega]$ AND inert in $\mathbb{Z}[\varphi]$ (`decide`) |
-| **minimal_class_prime_is_seven** | Least prime in the alphabet class is 7 (`decide`) |
-| **second_class_prime_is_cH** | Second class prime is 13 = $c_H$ (`decide`) |
-| Plus 11 supporting norm_num/decide certificates | Φ₆-stability lemma, gap adjudication (31 splits, 57 composite), corpus-atom null |
-
-#### AGL(1,7) chiral Z₂ (`Polynomial.AGL17ChiralZ2`)
-
-Module: `UgpLean/Polynomial/AGL17ChiralZ2.lean`.
-
-| Theorem | Statement |
-|---------|-----------|
-| **agl17_order** | $|{\rm AGL}(1,7)| = 6\cdot 7 = 42$ (`native_decide`) |
-| **reflection_order_two** | Spatial reflection $s=(6,0)$ has order 2 |
-| **reflection_swaps_rules** | Rule 110 $\circ\, s =$ Rule 124 on $\{0,1\}^3$; 0 mismatches over all 343 inputs |
-| **color_commutes_reflection** | Color action $x\mapsto 2x$ commutes with $s=(6,0)$ |
-| **free_orbit_card_42** | Free AGL(1,7) orbit on V(p) has cardinality 42 = $|{\rm AGL}(1,7)|$ |
-| Plus 2 supporting decide certificates | ZMod 7 units card = 6; color action order 3 |
-
----
-
-### CC one-jump residual (`Physics.CCOneJumpResidual`)
-
-6 CatAL + 1 PARTIAL. Module: `UgpLean/Physics/CCOneJumpResidual.lean`. Zero sorry on CatAL theorems.
-
-| Theorem | Statement | Cat |
-|---------|-----------|-----|
-| **d_res_census_annotation** | $D_{\rm res} := (\ln 2/\pi)\cdot L_{\rm PSC}$ annotated as the census-capacity upper bracket endpoint of the realised-ledger residual; all prior PSC epoch theorems survive | CatAL |
-| **omega_lambda_bracket_strict** | $3\pi/14 < (\ln 2/3\pi)\cdot\log_2(2000/3)$ — holographic floor strictly below census endpoint; bracket non-empty | CatAL |
-| **bracket_strict_interiority** | Planck 2018 central value strictly inside the bracket $(3\pi/14,\,\Omega_{\rm census})$ | CatAL |
-| **no_computable_gte_rt_convergence_modulus** | No computable modulus of convergence for the realised-ledger stage approximants; reduction to `asr_rt_not_computable` (Theorem C pattern) | CatAL |
-| **sigma_star_falsifiability_horizon** | $\sigma^*\in(2.9\times10^{-4},\,4.3\times10^{-4})$; refutation requires $>5\times$ current Planck precision | CatAL |
-| **cc_one_jump_residual_algebraic_core** | Master bundle: census annotation, bracket, no-modulus, σ* horizon | CatAL |
-| **d_res_halting_ledger_factorization_core** | Left-c.e. structural core + finite `toyLedger` witness; full infinite Form Theorem and deg_T = 0′ identification deferred | PARTIAL |
-
----
-
-### $N_{\rm gen}$ bracket-orientation (`Universality.NgenBracketOrientation`)
-
-5 CatAL + 2 CatAL\|H1. Module: `UgpLean/Universality/NgenBracketOrientation.lean`. Zero sorry. Hypothesis H1 analytically discharged within the record-ledger premise bundle (see note below).
-
-| Theorem | Statement | Cat |
-|---------|-----------|-----|
-| **ngen_bracket_orientation_flip** | Admissible ledger interval $[{\rm floor}(N),{\rm census}(N)]$ non-empty iff $N\le 3$; $N\ge 4$ excluded by separation certificate | CatAL |
-| **ngen_bracket_orientation_excluded_from_four** | $\forall N\ge 4,\; {\rm census}(N) < {\rm floor}(N)$ — bracket inverted, no admissible dark-energy fraction | CatAL |
-| **cc_floor_orientation_atom_inequality** | $14\cdot\ln(2000/3)>9\pi^2$ via rational witness; GTE-atom form $2|Z_7|\ln(D^2 N_{\rm fam}^3/N_{\rm gen})>N_{\rm gen}^2\pi^2$ at $D=4,N_{\rm fam}=5,N_{\rm gen}=3$ | CatAL |
-| **cc_floor_orientation_gte_atom_form** | GTE-atom identity form of the floor inequality at the GTE parameter values | CatAL |
-| **cc_floor_orientation_bracket_non_empty** | Atom inequality implies $\Omega_{\rm holo}<\Omega_{\Lambda,\rm GTE}$ (bracket non-emptiness corollary) | CatAL |
-| **ngen_pincer_from_layer1_and_orientation** | PSC Layer I ($N_{\rm gen}\ge 3$) + bracket-orientation exclusion ($N_{\rm gen}\le 3$) implies $N_{\rm gen}=3$ without Presentation Invariance; conditional on H1 | CatAL\|H1 |
-| **ngen_pincer_pi_free_bundle** | Layer-I interface + orientation exclusion + $N_{\rm gen}=3$ as bundled PI-free theorem | CatAL\|H1 |
-
-**Note on H1:** The orientation hypothesis H1 (`BracketOrientationHypothesis`) is analytically discharged by the Floor Orientation Theorem (floor half: realised ledger cannot undercut the MDL-minimal carrier price; census half: information-capacity bound). The pincer is unconditional within the record-ledger premise bundle of the One-Jump Residual Theorem.
-
----
-
-## External Citations (Not Formalized)
-
-| ID | Claim | Source |
-|----|-------|--------|
-| C1 | Rule 110 Turing-universal | Cook (2004) |
-| C2 | Continued-fraction Fibonacci lift | UGP Paper Updates |
-| C3 | delta_UGP formula, b1=73 unique | JMP Math Foundations |
-| C4 | g1^2, g2^2, g3^2 from invariants | JMP Math Foundations |
+- **Complete inventory**: `paper/ugp_lean_formalization.tex` Table 1
+- **Module-level overview**: [docs/MODULES.md](MODULES.md)
+- **Source**: `UgpLean/<Layer>/<Module>.lean` — all theorems, lemmas, and definitions
+- **Full theorem search**: `grep -r "^theorem\|^lemma" UgpLean/ --include="*.lean" | wc -l`

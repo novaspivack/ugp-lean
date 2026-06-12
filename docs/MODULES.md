@@ -1,169 +1,429 @@
 # ugp-lean: Module Reference
 
+376 `.lean` files across 27 directories. The definitive layer diagram and per-module descriptions are in `paper/ugp_lean_formalization.tex` §Architecture.
+
 ## Dependency Rule
 
-**Core/ may not import Compute/** — enforced to prevent circularity in RSUC.
+**Core/ may not import Compute/** — enforced to prevent circular reasoning in RSUC. See [DESIGN.md](DESIGN.md).
 
-## Module Graph (Simplified)
+---
 
-```
-UgpLean.lean
-├── Core (no Compute)
-│   ├── RidgeDefs, MirrorDefs, TripleDefs, SievePredicates,
-│   ├── Disconfirmation, RidgeRigidity, MirrorAlgebra
-├── Compute (RidgeDefs, MirrorDefs)
-│   ├── PrimeLock, Sieve, SieveBelow10, SieveExtended,
-│   └── ExclusionFilters, DecidablePredicates
-├── Classification
-│   ├── Bounds, TheoremA, TheoremB, RSUC,
-│   └── FormalRSUC, MonotonicStrengthening
-├── GTE
-│   ├── Evolution, Orbit, UpdateMap, GTESimulation, EntropyNonMonotone,
-│   ├── MersenneGcd, MersenneLadder, MirrorDualConjecture, MirrorShift,
-│   ├── InertPrimes, ResonantFactory, AnalyticArchitecture, FiberBundle,
-│   ├── LinearResponse, ScaleConnection, UGPPrimes, PrimeFactorAnalysis,
-│   ├── DSIExport, GeneralTheorems, StructuralTheorems, UniquenessCertificates
-├── BraidAtlas
-│   ├── ChargeTheorem (Q = W_g/N_c; mirror_winding_number_zero axiom)
-│   ├── CompositeTriples (composite c-rule + baryon (a,b,c))
-│   ├── ChiralitySquaring (V−A arithmetic signature)
-│   ├── ChargeDerivation (SM winding from N_c)
-│   ├── CoxeterConductor (Q(ζ₁₂₀) Toda spectrum theorem)
-│   ├── CoxeterConductorTowerLaw (8X³−6X−1 irreducibility)
-│   └── EWBosons (c(W)=11, c(Z)=12, c(H)=13 from N_c)
-├── ElegantKernel (k_L²=7/512)
-│   ├── ChiralityFeature, FibonacciHessian, KGen, KGen2,
-│   ├── PentagonalUniqueness, D5StructuralAxiom, MuTriple, and Unconditional/*
-├── MassRelations
-│   ├── KoideAngle, KoideClosedForm, KoideNewtonFlow,
-│   ├── KoideS3DiscreteIdentities, CKMTheta23, CKMMixing, NeutrinoMassRatio,
-│   ├── ClebschGordan, BinaryCascade, PhysicalMasses,
-│   ├── ScaleTransport, SeesawIndex, FroggattNielsen, NeutrinoFroggattNielsen,
-│   ├── CartanFlavonPotential, ClaimCBridge, DownRational, SU3FlavorCartan,
-│   ├── HeavyFermionTower, LeptonMassPrediction, UpLeptonCyclotomic,
-│   ├── VVMechanism, VVAllCoefficientsFromNc, Z2OrbifoldDepth
-├── GaloisStructure (CyclotomicLayers, MinimalCyclotomic)
-├── CyclotomicCompleteness
-│   ├── CoxeterBiconditional (h|60 ↔ 2h|120 biconditional; per-algebra h|60 certs; B₄ conductor; e7_double_failure; coxeter_biconditional_summary)
-│   └── CyclotomicContainment (cyclotomic120_contains_primitive_root; cyclotomic_field_embedding; per-algebra AlgHom certs for G₂, F₄/E₆, E₈; zero sorry)
-├── Phase4 (DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity,
-│           PositiveRootTheorem, GaloisProtection, TwoLoopCoefficient)
-├── NullDiscipline [migrated to ugp-physics-lean: SaturationBarrier, TheoremEligibility]
-├── IPT [migrated to ugp-physics-lean: InformationProfitThreshold]
-├── PSC (RCCInfiniteFamilies) [ThreeRouteForcing migrated to ugp-physics-lean]
-├── TE22 (ScanCertificate)
-├── SelfRef (LawvereKleene, RiceHalting)
-├── Universality (Rule110, UWCA, UWCASimulation, UWCAembedsRule110,
-│                  UWCAHistoryReversible, TuringUniversal, ArchitectureBridge)
-├── QuarterLock, LModelDerivation, Conjectures
-├── Papers (Paper25, UGPMain)
-└── Instance (NemSBridge)
-```
+## Layer Overview
 
-**Module count:** 143 `.lean` files. The **13-layer** diagram and per-layer module names are authoritative in `paper/ugp_lean_formalization.tex` (§Architecture, Figure/module stack).
+| Layer | Files | What it contains |
+|---|---|---|
+| [Core](#core) | 7 | Ridge/mirror/triple definitions — no algorithms |
+| [Compute](#compute) | 6 | Sieve algorithms, `native_decide` proofs |
+| [Classification](#classification) | 6 | Theorems A/B, RSUC, monotonic strengthening |
+| [GTE](#gte) | 25 | GTE orbit, update map, generation structure, entropy, fiber bundle |
+| [ElegantKernel](#elegantkernel) | 28 | Quarter-Lock, UCL Elegant Kernel, unconditional closure |
+| [MassRelations](#massrelations) | 39 | Koide, CKM, PMNS, Higgs quartic, neutrino sector, pion mass |
+| [BraidAtlas](#braidatlas) | 14 | Charge theorem, EW bosons, dark matter quantum numbers |
+| [Universality](#universality) | 83 | Rule 110, UWCA, Turing universality, GTE compilation/uniqueness |
+| [Polynomial](#polynomial) | 13 | GF(7) ground states, period-475, spin-7 spectroscopy, MDL unification |
+| [Physics](#physics) | 8 | Kink physics, Z₇ vacuum selection, CMCA physical point, BPS coupling |
+| [Substrate](#substrate) | 29 | PhiMDL fluctuation spectrum, sech overlap bounds, Wightman axioms |
+| [Gravity](#gravity) | 26 | Yukawa, FKTT, Wald entropy, FLRW, spinors, CC residual |
+| [Spacetime](#spacetime) | 34 | Geodesic, mass gap, orbit hierarchy, QEC, quantum gravity, holography |
+| [Algebra](#algebra) | 12 | Z₇/F₂₁ Galois structure, SM gauge group, SRRG–CA bridge |
+| [Framework](#framework) | 8 | GTE-NEMS instance, MDL tower, CMCA continuum limit, coalgebra |
+| [ContinuumLimit](#continuumlimit) | 5 | Wasserstein distance, GF(7) vacuum fixed point, Gorard bridge |
+| [QFT](#qft) | 2 | Gauged mass gap, chiral symmetry breaking |
+| [VEVProof](#vevproof) | 3 | EW Goldstone manifold, entropy correction, PSC entropy duality |
+| [VEVNoGo](#vevnogo) | 1 | SRRG no-go theorem |
+| [GaloisStructure](#galoisstructure) | 2 | Cyclotomic layers, minimal cyclotomic |
+| [CyclotomicCompleteness](#cyclotomiccompleteness) | 2 | Coxeter biconditional, Q(ζ₁₂₀) field embedding |
+| [Phase4](#phase4) | 8 | DeltaUGP, gauge couplings, Galois protection, two-loop coefficient |
+| [PSC](#psc) | 2 | RCC infinite families |
+| [TE22](#te22) | 1 | SM gauge universe scan certificate |
+| [SelfRef](#selfref) | 2 | Lawvere–Kleene, Rice–Halting |
+| [Papers / Instance](#papers--instance) | 3 | Citable stubs, NEMS bridge |
+| [Conjectures](#conjectures) | 1 | Resolved and open conjecture register |
 
-### Framework Layer
+---
+
+## Core
+
+Predicate and structural *definitions* only. No algorithms, no `native_decide`. **May not import Compute/.**
 
 | Module | Purpose |
-|--------|---------|
-| **GTEFrameworkInstance** | GTE substrate as `NemS.Framework` with `DiagonalCapable` + `PSCBundle`; fires `transputation_classification`; zone-based truth (`gteTruth M 0 := zoneOf M ≠ .L2_transput`); ASR via Cook 2004 bridge axiom |
-
-## Module Descriptions
-
-### Core Layer
-
-| Module | Purpose |
-|--------|---------|
-| **RidgeDefs** | Rₙ = 2ⁿ − 16, strictRidgeMin=16, UGP-1 params (s=7, g=13, t=20) |
-| **MirrorDefs** | b₁=b₂+q₂+7, q₁=q₂−13, c₁=b₁q₁+20; leptonB=73, leptonC1=823, mirrorC1=2137 |
-| **TripleDefs** | `Triple` structure, LeptonSeed, LeptonMirror, MirrorEquiv, lexLt |
-| **SievePredicates** | SemanticFloor; QuarterLockRigidAt n, RelationalAnchorAt n, UnifiedAdmissibleAt n; legacy n=10: QuarterLockRigid, RelationalAnchor, UnifiedAdmissible |
-| **Disconfirmation** | MirrorEquivClass equivalence, lexLt_seed_mirror |
-| **RidgeRigidity** | Ridge remainder lock (m₂=15), quotient-gap 13 |
+|---|---|
+| **RidgeDefs** | Rₙ = 2ⁿ − 16; UGP-1 parameters (s=7, g=13, t=20) |
+| **MirrorDefs** | Mirror map (b₂,q₂) ↦ (b₁,q₁,c₁); leptonB=73, leptonC1=823 |
+| **TripleDefs** | `Triple` structure; LeptonSeed, LeptonMirror, lexLt |
+| **SievePredicates** | SemanticFloor; QuarterLockRigidAt n; RelationalAnchorAt n; UnifiedAdmissibleAt n |
+| **Disconfirmation** | MirrorEquivClass equivalence; lexLt_seed_mirror |
+| **RidgeRigidity** | Ridge remainder lock (m₂=15); quotient-gap 13 |
 | **MirrorAlgebra** | mirrorS, discSq, symmetric mirror form, discriminant |
 
-### Compute Layer
+## Compute
+
+Algorithms and computational evidence. Imports Core.
 
 | Module | Purpose |
-|--------|---------|
-| **PrimeLock** | Nat.Prime 823, 2137; mirror_prime_lock; c1_from_divisor |
-| **Sieve** | ridgeSurvivorsFinset, ridgeSurvivors_10 = {(24,42),(42,24)} |
-| **SieveExtended** | n∈[5,30] sieve range, mirrorDualCount_10 |
-| **ExclusionFilters** | exclude_16..63 — composite c₁ for listed divisors |
-| **DecidablePredicates** | decUnifiedAdmissible, correctness lemmas |
+|---|---|
+| **PrimeLock** | `Nat.Prime 823`, `Nat.Prime 2137`; mirror_prime_lock |
+| **Sieve** | `ridgeSurvivorsFinset`; `ridgeSurvivors_10 = {(24,42),(42,24)}` |
+| **SieveExtended** | Sieve for n ∈ [5,30]; `mirrorDualCount_10` |
+| **SieveBelow10** | Survivors empty for n < 10; n=10 is minimal admissible ridge |
+| **ExclusionFilters** | Composite c₁ exclusions for divisors 16–63 |
+| **DecidablePredicates** | `decUnifiedAdmissible`; correctness lemmas |
 
-### Classification Layer
-
-| Module | Purpose |
-|--------|---------|
-| **Bounds** | CandidatesAt n : Finset Triple (biUnion over ridgeSurvivorsFinset n); Candidates = CandidatesAt 10 |
-| **TheoremA** | theoremA_general: UnifiedAdmissibleAt n t → t ∈ CandidatesAt n; theoremA: n=10 corollary |
-| **TheoremB** | ResidualAt n, Residual = ResidualAt 10; Residual = Candidates; MDL selects LeptonSeed |
-| **RSUC** | rsuc_theorem (combines A + B) |
-| **FormalRSUC** | rsuc_formal, rsuc_canon (two-layer RSUC with interpretation) |
-| **MonotonicStrengthening** | strengthening_cannot_add_survivors |
-
-### GTE Layer
+## Classification
 
 | Module | Purpose |
-|--------|---------|
-| **Evolution** | fib13=233, canonicalGen2/3, canonical_orbit_triples, even_step_rigidity |
-| **Orbit** | canonical_orbit_three_steps |
+|---|---|
+| **Bounds** | `CandidatesAt n` — biUnion over ridgeSurvivorsFinset n |
+| **TheoremA** | `theoremA_general`: UnifiedAdmissibleAt n t → t ∈ CandidatesAt n |
+| **TheoremB** | `Residual = Candidates`; MDL selects LeptonSeed |
+| **RSUC** | `rsuc_theorem`: unique residual up to MirrorEquiv; MDL selects (1,73,823) |
+| **FormalRSUC** | `rsuc_formal`, `rsuc_canon` — two-layer RSUC with semantic interpretation |
+| **MonotonicStrengthening** | Strengthened predicates cannot add survivors |
 
-### Structural / Phase 4 / Universality
-
-| Module | Purpose |
-|--------|---------|
-| **QuarterLock** | quarterLockLaw, kernelDefect, quarterLockStability |
-| **ElegantKernel** | k_L2=7/512, L_model=log₂(2000/3) |
-| **DeltaUGP** | deltaUGPFormula, leptonB_matches_deltaUGP |
-| **GaugeCouplings** | g1Sq_bare, g2Sq_bare, g3Sq_bare; D₂, D₃ |
-| **UCL, PR1** | Structural stubs |
-| **Rule110** | rule110Output, rule110Minterms, Cook citation |
-| **UWCA** | UWCATile, rule110Tiles |
-| **UWCAembedsRule110** | uwca_simulates_rule110 |
-| **TuringUniversal** | ugp_is_turing_universal |
-| **ArchitectureBridge** | uniqueness_of_physical_program |
-
-### Papers & Instance
+## GTE
 
 | Module | Purpose |
-|--------|---------|
-| **Paper25** | Citable stubs for Paper 25 |
-| **UGPMain** | Citable stubs for UGP Main |
-| **NemSBridge** | GTESpace instance, RSUC for nems-lean |
+|---|---|
+| **Evolution** | Canonical orbit triples; even-step rigidity |
+| **Orbit** | `canonical_orbit_three_steps` |
+| **UpdateMap** | GTE update map T; ridge remainder lock (all n≥5); mirror b₁-invariance |
+| **GeneralTheorems** | General GTE structural theorems |
+| **MersenneGcd** | `gcd(2ᵃ−1, 2ᵇ−1) = 2^gcd(a,b)−1` |
+| **MersenneLadder** | RC tier structure: 1023, 65535 Mersenne boundaries |
+| **PrimeFactorAnalysis** | c-value factorizations; gen 1/2/3 isolation and entanglement |
+| **ResonantFactory** | Twin-prime program; Q₊ = Q₋ + 2; Hasse local density |
+| **MirrorDualConjecture** | τ(Rₙ) = 5·τ(2^(n−4)−1); MDL c₁ monotone across levels |
+| **MirrorShift** | Mirror-shift arithmetic |
+| **UGPPrimes** | UGP prime sequence; infinitude conjecture (open) |
+| **InertPrimes** | Inert prime structure |
+| **AnalyticArchitecture** | Two named axioms (Tenenbaum III.6); Q₋⊥Q₊ proved |
+| **DSIExport** | Real-valued c₁ on hyperbola; derivative positive on shell |
+| **StructuralTheorems** | Mirror fiber size 2; fingerprint fixed-point (Tarski) |
+| **UniquenessCertificates** | Uniqueness certificates for GTE structure |
+| **GTESimulation** | GTE simulation on Z₇⁵ |
+| **EntropyNonMonotone** | ML-9 companion: coarse Shannon-entropy drop |
+| **FiberBundle** | GTE fiber bundle structure |
+| **LinearResponse** | Linear response around GTE orbit |
+| **ScaleConnection** | Scale connection for GTE |
+| **GTBGenerationPrimes** | GTB generation prime certificates (823, 2137, 9007, …) |
+| **NcColorArithmetic** | N_c = 3 color arithmetic |
+| **NuclearPairing** | 5^(3/2) pairing constant; proton/neutron b-seed parity (8 theorems) |
+| **SylowIndexCouplingHierarchy** | Gauge coupling hierarchy from Sylow indices of F₂₁ |
 
-### BraidAtlas Layer (P17 algebraic substrate)
-
-| Module | Purpose |
-|--------|---------|
-| **ChargeTheorem** | Theorem C-W (Q = W_g/N_c); anomaly cancellation forces N_c=3; SM charge derivation; GTE-P7 mirror dark matter quantum numbers (Q=0, color singlet) |
-| **CompositeTriples** | Composite c-rule; baryon (a, b, c) derivation including proton/neutron and full strange-baryon octet; meson constraints |
-| **ChiralitySquaring** | Arithmetic signature of V−A chiral structure: (13×17×29)² perfect square; 17×137 not perfect square |
-| **ChargeDerivation** | SM winding pattern derived from N_c; Y_QL = 1/(2N_c) unifies VV slope and braid winding |
-| **CoxeterConductor** | Arithmetic backbone of the Coxeter–conductor theorem; **E7 falsifier** (h=18 ∤ 120); φ(120)=32, 3∤32; lcm(30,12,8,6,3,2,1)=120 |
-| **CoxeterConductorTowerLaw** | Tower-Law step: 8X³−6X−1 irreducible over ℚ via rational-root theorem; finrank ℚ[X]/(p) = 3 (zero sorry; tower-law certificate) |
-| **EWBosons** | Electroweak boson c-values c(W)=11, c(Z)=12, c(H)=13 derived from canonical ridge factorisation + Higgs gap identity at n=10; consecutive triple centred on 2·T(N_c); triangular-number unification |
-
-### CyclotomicCompleteness Layer (Q(ζ₁₂₀) filter arithmetic)
-
-| Module | Purpose |
-|--------|---------|
-| **CoxeterBiconditional** | Arithmetic backbone of the Coxeter–conductor biconditional: h\|60 ↔ 2h\|120 (omega); per-algebra h\|60 certs for G₂(6), F₄(12), E₆(12), E₈(30) via norm\_num; B₄ conductor analysis (conductor=8, actual field Q(√2) ⊆ Q(ζ₈) ⊆ Q(ζ₁₂₀)); `e7_double_failure` (18∤60 AND 18∤120); `coxeter_biconditional_summary` master theorem; all zero sorry. Imports BraidAtlas.CoxeterConductor. |
-| **CyclotomicContainment** | Field-theoretic biconditional: **Theorem A** `cyclotomic120_contains_primitive_root` — for h\|60, `CyclotomicField 120 ℚ` contains a primitive 2h-th root of unity (zero sorry). **Theorem B** `cyclotomic_field_embedding` — injective ℚ-algebra embedding `CyclotomicField (2h) ℚ →ₐ[ℚ] CyclotomicField 120 ℚ` whenever h\|60 (zero sorry). Per-algebra `AlgHom` certificates: `g2_cyclotomic_embedding` (h=6), `f4_e6_cyclotomic_embedding` (h=12), `e8_cyclotomic_embedding` (h=30). Uses Mathlib `IsCyclotomicExtension`, `IsPrimitiveRoot`, `IsSplittingField`. Imports CoxeterBiconditional. |
-
-### MassRelations Layer (CKM and Koide structural identities)
-
-| Module | Purpose |
-|--------|---------|
-| **CKMTheta23** | P01 OP(v): ridge--Mersenne identity `R_n = D_1 · M_(n−4)` for n ≥ 4; CKM θ_23 ratio τ(R_10)/D_1 = 30/16 = 15/8 at n = 10 and unique to n = 10 across [5,20]; bundled `op_v_ckm_theta23_closure` certificate (zero sorry) |
-| **KoideS3DiscreteIdentities** | P01 OP(vii): discrete shadow of the S₃ equal-norm condition on the lepton a-component; canonical orbit a-values (a_e, a_μ, a_τ) = (1, 9, 5) satisfy `2 · a_τ = a_e + a_μ` (i.e., 2·5 = 1+9 = 10); bundled `lepton_a_discrete_S3_identity` certificate (zero sorry, zero hypotheses) |
-| **CKMMixing** | CDM mechanism (2026-05-11): derives Wolfenstein Cabibbo parameter λ ≈ \|V_us\| from GUT group theory and VV down-type coefficient α_d = 13/9; certifies \|V_us\|_CDM = ε₁^(α_d) = exp(−13π/27) ≈ 0.2203 (1.9% off PDG); key theorems: `cabibbo_effective_charge` (Δa_eff = α_d), `cabibbo_charge_from_GUT` (GUT group-theory origin), `cabibbo_vev_formula` (CDM VEV formula), `fn_vv_correction_additive` (additive VV propagation bridge), `fn_diagonalization_vv_bridge`, `fn_cdm_physical_sorry` (algebraic identity; zero sorry); all 20 theorems zero sorry |
-| **NeutrinoMassRatio** | Seesaw mass-squared ratio R ≈ 0.02936 from FN texture (q₁,q₂)=(3,2) and Braid Atlas b-values {5,11,19}; full tight bound \|R−0.02936\| < 0.0001 and within 1% of NuFIT 6.0; all 5 theorems zero sorry (2026-05-16). Key theorems: `fn_texture_gives_seesaw_exponent` (FN charges give exponent 29/9), `seesaw_ratio_independent_of_MR` (ratio independent of M_R algebraically), `neutrino_mass_ratio_coarse_bound` (certified real interval 0.029 < R < 0.030 via 9th-power integer bounds), `neutrino_mass_ratio_tight_bound` (\|R−0.02936\| < 0.0001 via unit-width integer bounds), `neutrino_mass_ratio_within_1pct_of_nufit` (within 1% of NuFIT 6.0 central value 0.02951). |
-
-### PSC Layer
+## ElegantKernel
 
 | Module | Purpose |
-|--------|---------|
-| **RCCInfiniteFamilies** | RCC over all four infinite classical Lie families (B_n, C_n, D_n, A_n): Layer I/II fail by w_0 = −id Weyl-element argument and dimension thresholds |
-| **ThreeRouteForcing** | **Migrated to ugp-physics-lean** (`UgpPhysicsLean.PSC.ThreeRouteForcing`). P01 OP(i) parametric carrier for the [Gödel–Turing ∧ Reflexive Landauer ∧ Norfleet holonomy defect] ⇔ PSC capstone (no smuggling, zero sorry, zero axioms). |
+|---|---|
+| **QuarterLock** | `quarterLockLaw`: k_M = k_gen2 + ¼k_L² |
+| **LModelDerivation** | L_model = log₂((D₁·5³)/3) derived |
+| **ElegantKernel** (root) | k_L² = 7/512 |
+| **ChiralityFeature** | Chirality feature of the EK |
+| **D5StructuralAxiom** | D₅ pentagonal structure |
+| **FibonacciHessian** | Fibonacci Hessian eigenvalue |
+| **KGen2** | k_gen2 = −φ/2 = cos(4π/5) |
+| **MuTriple** | μ-triple structure |
+| **PentagonalUniqueness** | Pentagon quadratic uniqueness |
+| **Unconditional/** | 18 modules: full UCL unconditional closure — CyclotomicChain, D5Renormalization, FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure, KLFullClosure, PentagonConstraint, RiccatiFixedPoint, MasterCertification, UCLMassOrdering, UCLKoide, UCLLogBounds, UCLMassOrderingSBounds, UCLMassOrderingCoeffBounds, UCLMassOrderingBounds, UCLMassOrderingBridge, UCLMassOrderingCerts, UCLMassOrderingInterval, UCLMassOrderingDelta, UCLCalibration |
+
+## MassRelations
+
+| Module | Purpose |
+|---|---|
+| **MassRelations** (umbrella) | Top-level umbrella import |
+| **KoideClosedForm** | Koide ↔ (2S)² = 3N algebraic normal form |
+| **KoideNewtonFlow** | Newton flow fixes Koide null cone; S₃-equivariance |
+| **KoideAngle** | Koide angle parametrization |
+| **KoideS3DiscreteIdentities** | Discrete shadow of S₃: 2·a_τ = a_e + a_μ |
+| **BinaryCascade** | Cascade closed form b_g = 2^(g−1)·b₁ |
+| **PhysicalMasses** | Physical mass values and bounds |
+| **SU3FlavorCartan** | SU(3) flavor Cartan structure |
+| **CartanFlavonPotential** | Cartan flavon potential |
+| **FroggattNielsen** | FN charge assignments for charged leptons |
+| **NeutrinoFroggattNielsen** | FN texture (q₁,q₂)=(3,2); seesaw exponent 29/9 |
+| **HeavyFermionTower** | Heavy fermion tower |
+| **ClebschGordan** | Clebsch–Gordan coefficients for mass relations |
+| **DownRational** | α_d = 13/9 from N_c = 3 |
+| **UpLeptonCyclotomic** | Cyclotomic structure for up-type and lepton masses |
+| **Z2OrbifoldDepth** | Z₂ orbifold depth structure |
+| **ClaimCBridge** | Claim C (formal): TT = Weyl·2^g; Pentagon–Hexagon Bridge |
+| **LeptonMassPrediction** | Lepton mass predictions |
+| **ScaleTransport** | Scale transport |
+| **SeesawIndex** | Seesaw index |
+| **VVMechanism** | VV mechanism |
+| **VVAllCoefficientsFromNc** | All VV coefficients derived from N_c |
+| **CKMTheta23** | θ₂₃ ratio τ(R₁₀)/D₁ = 15/8; unique at n=10 |
+| **CKMMixing** | CDM mechanism; \|V_us\| = exp(−13π/27); 20 theorems, 0 sorry |
+| **NeutrinoMassRatio** | R ≈ 0.02936 within 1% of NuFIT 6.0; 5 theorems |
+| **NeutrinoSector** | PMNS angles: sin²θ₁₂=4/13, sin²θ₂₃=19/42, δ_CP=8π/7 |
+| **HiggsQuartic** | λ = φ/(4π)·(1 + (IPT−1)/27); 0.12 < λ < 0.14 |
+| **TranscendentalMassBounds** | Six-quark PDG bands (CatAD) |
+| **QuarkMassNumericalCerts** | Quark mass numerical certificates |
+| **PionMassFromGOR** | Pion mass from Gell-Mann–Oakes–Renner |
+| **PMNSNLOCorrection** | sin²θ₂₃^NLO = 209/441; 2b_R2 = \|F₂₁\| + 1 |
+
+## BraidAtlas
+
+| Module | Purpose |
+|---|---|
+| **ChargeTheorem** | Q = W_g/N_c; anomaly cancellation forces N_c=3 |
+| **CompositeTriples** | Composite c-rule; all 9 light baryon b-formulas |
+| **ChiralitySquaring** | V−A arithmetic signature: (13×17×29)² perfect square |
+| **ChargeDerivation** | SM winding pattern from N_c |
+| **CoxeterConductor** | Coxeter–conductor arithmetic; E₇ falsifier (h=18 ∤ 120) |
+| **CoxeterConductorTowerLaw** | 8X³−6X−1 irreducible over ℚ; tower-law certificate |
+| **EWBosons** | c(W)=11, c(Z)=12, c(H)=13 from ridge factorization |
+| **MirrorWindingNumber** | Mirror winding number zero |
+| **EWBosonRHNConnection** | EW boson–RHN connection |
+| **RHNGapTheorem** | Right-handed neutrino gap theorem |
+| **DarkBraidAtlas** | Dark matter quantum numbers |
+| **DarkQuarkCharge** | Dark quark charge |
+| **DarkGaugeCoupling** | Dark gauge coupling |
+
+## Universality
+
+83 files covering Rule 110 universality, UWCA, GTE compilation, orbit isolations, Z₇/Z₅ structure, and parity forcing. Key modules:
+
+| Module | Purpose |
+|---|---|
+| **Rule110** | rule110Output, minterms, Cook citation |
+| **UWCA / UWCASimulation** | UWCA sweep implements Rule 110 exactly |
+| **UWCAHistoryReversible** | backward ∘ forward = id; history-lane reversibility |
+| **UWCAembedsRule110** | UWCA simulates Rule 110 |
+| **TuringUniversal** | `ugp_is_turing_universal` |
+| **GTECompilation** | sigma_gte 1-tile program; `gte_compilation_theorem` by `rfl` |
+| **GTEUniqueness** | `gte_uniqueness_up_to_bisimulation`: unique lawful UWCA program |
+| **GoEHierarchy / GoEStabilityHierarchy** | Garden-of-Eden structure; orbital chain isolation |
+| **CUP3DUniqueness** | SM orbit uniqueness; no false vacua; Z₇/Z₂ incompatibility |
+| **CUP4TotalParity** | Minterm set uniqueness; Rule 110 unique weight-5 orbit satisfier |
+| **CUP3DPSCUnification** | PSC and orbit unification in 3D |
+| **Z5TransitivityUniqueness** | p=5 unique prime for full transitivity of weight-3 vector |
+| **DimensionalSliceUniqueness** | Rule 110 forced on all d-dimensional axis-aligned slices |
+| **OrbitPerturbationCatalog** | Complete orbit perturbation isolation (15 theorems) |
+| **ParityProjectionForcing / Battery** | 777 additive forms + 16,807 mod-2 recodings; forcing maximal |
+| **TriangleLiftTheorem / Structural** | 7⁸ exhaustive census; orbit + vacuum transparency force unique GF(7) rule |
+| **EWBosonNumericalCerts** | M_W CatAL; M_Z, sin²θ_W threshold CatAD |
+| **GUTStructure** | Dark baryon dilution; D_top = exp(−1/N_c) via Z₇ transitivity |
+| **Z7ChargeConjugation** | Z₇ charge conjugation |
+| **SMOrbitCausalIsolation** | SM orbit causal isolation |
+| **PSCUniversality** | PSC universality |
+| *(+ 60 more)* | See `UgpLean/Universality/` for full list |
+
+## Polynomial
+
+| Module | Purpose |
+|---|---|
+| **PolyExplorations** | 39 theorems: ground states {0,1,5}, period-475, GF(7³) 19-factor, vacuum basin=52 |
+| **GTECausalTree** | 8 theorems: 1023-node binary tree, Horton r_B=2 |
+| **MDLThreeLevelUnification** | Cross-module CatAL bundle: theory selection, PSC projection, orbit uniqueness |
+| **GoldenQuadratic** | p(x,x,x)−x = −x(x²+x−1); SRRG and Rule 110 as ℤ-quadratic fibers |
+| **SpinSevenGroundSpace** | Ground-space rigidity: cyclic zero-energy rings = {0ⁿ,1ⁿ,5ⁿ} for all n≥3 |
+| **BiquadraticCompositum** | cond(K)=15=N_gen·N_fam for K=ℚ(√−3,√5); 15 theorems |
+| **AGL17ChiralZ2** | \|AGL(1,7)\|=42; reflection swaps Rule 110 ↔ Rule 124 |
+| **EisensteinIdentities** | F₂₁ ≅ (ℤ[ω]/(3+ω))⁺⋊μ₃; Φ₆ ladder identity web |
+| **DynamicalZeta** | Fix(T_n)={vacuum} for all ring sizes; period-475 Artin–Mazur ζ |
+| **SpinSevenWallSpectroscopy** | Directed wall energies; gap exponent 3/2; 14 theorems |
+| **SpinSevenSpectatorAmplitude** | Zero-energy spectral radius ρ=1; gap-law A=1; 10 theorems |
+| **SpinSevenGapAmplitude** | Through-walk counts; A²=1; 13 theorems |
+| **SpinSevenTransferPrimitivity** | Perron–Frobenius hypothesis package, uniform in β; 7 theorems |
+
+## Physics
+
+| Module | Purpose |
+|---|---|
+| **ZSevenVacuumSelection** | V_coupling breaks Z₇ shift; bias minimum at k=0; vacuum-selection certs |
+| **KinkVacuumPolarization** | One-loop kink vacuum-polarization spectrum |
+| **KinkFormFactor** | Kink form factor; dissolution constant Λ_diss |
+| **KinkPoleMassSpectralCore** | Pöschl–Teller spectral skeleton; Levinson identity (PARTIAL) |
+| **BurnsideCosetCharges** | Coset-charge spectrum t_V=3, c_coset=−1 |
+| **CCOneJumpResidual** | D_res left-c.e. bracket; σ* falsifiability horizon; 6 CatAL + 1 PARTIAL |
+| **FKTTCoupling** | η_B=6.109×10⁻¹⁰ CatAL unconditional; BPS saturation by `rfl` |
+| **CMCAPhysicalPoint** | aM=1/7, am_φ=7/8; Tape Saturation Theorem; M_Pl/Λ_GTE = 3¹⁰·7¹⁸/2⁴ |
+
+## Substrate
+
+| Module | Purpose |
+|---|---|
+| **PhiMDLFluctuationSpectrum** | Pöschl–Teller potential; sech integrals; 0 sorry |
+| **SechOverlapIntegralBounds** | ∫sech³ = π/2; finite-r sech overlap bounds; 0 sorry |
+| **SechOverlapIntegralBounds_bridge** | Mesh→integral bridge; 2 CatA axioms (documented) |
+| **SechOverlapIntegralBounds_{cosh,r5bins,r5mesh,r11cert}** | Supporting sech bound certificates |
+| **Substrate** (root) | Substrate-level definitions |
+| **Wightman Axioms** | Wightman axioms for GTE substrate |
+| **PSCStructureLorentzPreserved** | PSC structure Lorentz-preserved |
+| **LagrangianLorentzScalar** | Lagrangian as Lorentz scalar |
+| **PhiMDLPropagator** | φ_MDL propagator |
+| **CMCAHilbertFockBridge** | CMCA Hilbert–Fock bridge |
+| **TransputationG41 / TransputationStateSelector** | Transputation in G₄₁ |
+| *(+ others)* | See `UgpLean/Substrate/` for full list |
+
+## Gravity
+
+| Module | Purpose |
+|---|---|
+| **YukawaOverlapExponent** | α = N_c−1 = 2; sech bracket CatAL-conditional on bridge axioms |
+| **FKTTCoupling** | (re-exported from Physics) |
+| **WaldEntropy** | Wald entropy scaffold; 3 sorry pending Mathlib manifold integrals |
+| **WaldChainAndInitialState** | Wald chain and MDL initial state |
+| **FermionicStatistics** | Fermionic statistics in GTE framework |
+| **SpinorRep** | Spinor representation |
+| **MinkowskiSpace** | Minkowski spacetime |
+| **LorentzGroupSO13** | Lorentz group SO(1,3) |
+| **MinimalCoupling** | Minimal coupling |
+| **FLRWFieldEquation** | FLRW field equation |
+| **PMDLGravityTheorems** | PMDL gravity theorems |
+| **NRTVacuumEnergy** | NRT vacuum energy |
+| **PlanckDensityBound** | Planck density bound |
+| **CCImpossibilityBundle** | CC impossibility bundle |
+| **CCResidual / CMBSpectralTilt** | Cosmological constant residual; CMB spectral tilt |
+| **RelationalTime / PageWoottersZ7** | Page–Wooters relational time in Z₇ |
+| **PSCEpochSelection** | PSC epoch selection |
+| **Z7AnomalyFree** | Z₇ anomaly cancellation |
+| **TemporalVoxelCC** | Carrier pricing chain; Ω = 3π/14 |
+| *(+ others)* | See `UgpLean/Gravity/` for full list |
+
+## Spacetime
+
+| Module | Purpose |
+|---|---|
+| **GeodesicTheorem** | Preferred-direction geodesic via D-weighted centroid (CatAD) |
+| **CentroidMeasure** | Point-localization centroid; spatial centroid invariant |
+| **MassGap** | Δ > 0 for all non-vacuum beables; Δ ≥ 1.8 MeV |
+| **OrbitMassHierarchy** | gen₃ mass > gen₂ mass > gen₁ mass > 0 for all SM sectors |
+| **QuantumGravity** | Quantum gravity completion |
+| **QECStabilizer** | Quantum error-correction stabilizer |
+| **CausalGraph / CausalInvariance** | Causal structure and invariance |
+| **HolographicScaling** | Holographic scaling |
+| **LiftingTheorem / SpatiallyExtendedLifting** | Spatial lifting theorems |
+| **ColorConfinement** | Color confinement |
+| **StressEnergyTensor** | Stress-energy tensor |
+| **GravitonFockSpace** | Graviton Fock space |
+| **AnomalyRenormalizability** | Anomaly and renormalizability |
+| **ThreeGenerationCapstone** | Three-generation capstone theorem |
+| **UniversalSimulation** | Universal simulation |
+| **ChiralGliderDynamics** | Chiral glider dynamics |
+| **SpectralDimension** | Spectral dimension |
+| *(+ others)* | See `UgpLean/Spacetime/` for full list |
+
+## Algebra
+
+| Module | Purpose |
+|---|---|
+| **CyclotomicZ7Galois** | Z₇ Galois structure |
+| **F21SU3Embedding** | F₂₁ → SU(3) embedding |
+| **SMGaugeGroup** | SM gauge group derivation |
+| **GaugeMDL** | Gauge-MDL connection |
+| **SRRGCABridge** | SRRG–CA bridge |
+| **BaryonNumber** | Baryon number |
+| **ChargeFromPolynomial** | Charge from polynomial |
+| **ChiralDoublet** | Chiral doublet structure |
+| **ColorConfinementMDL** | Color confinement from MDL |
+| **PolynomialContinuumBridge** | Polynomial–continuum bridge |
+| **RSCodeOrbit** | RS code orbit |
+| **SU3GluonCount** | SU(3) gluon count |
+
+## Framework
+
+| Module | Purpose |
+|---|---|
+| **GTEFrameworkInstance** | GTE substrate as `NemS.Framework`; NEMS + determinacy PSC bundle |
+| **GTEOptimalityInstance** | GTE optimality instance |
+| **GTEFinalCoalgebra** | GTE final coalgebra |
+| **GTECategoryStructure** | Category structure on GTE |
+| **MDLTower** | MDL tower structure |
+| **CMCAContinuumLimit** | CMCA continuum limit |
+| **CMCAMDLMinimality** | CMCA MDL minimality |
+| **PhiMDLBridge** | φ_MDL bridge |
+
+## ContinuumLimit
+
+| Module | Purpose |
+|---|---|
+| **WassersteinDistance** | W₁ distance; W₁_nonneg, W₁_triangle, W₁_eq_zero_iff — all zero sorry |
+| **GF7VacuumFixedPoint** | GF(7) vacuum as continuum fixed point |
+| **GorardRationalFormula** | Gorard rational formula |
+| **GorardVacuumW1Bridge** | Gorard vacuum W₁ bridge |
+| **DiscreteBianchi** | Discrete Bianchi identity |
+
+## QFT
+
+| Module | Purpose |
+|---|---|
+| **GaugedMassGap** | Gauged mass gap |
+| **ChiralSymmetryBreaking** | Chiral symmetry breaking |
+
+## VEVProof
+
+| Module | Purpose |
+|---|---|
+| **EWGoldstoneManifold** | EW Goldstone manifold |
+| **GoldstoneEntropyCorrection** | Goldstone entropy correction |
+| **PSCEntropyDuality** | PSC entropy duality |
+
+## VEVNoGo
+
+| Module | Purpose |
+|---|---|
+| **SRRGNoGo** | SRRG VEV no-go theorem |
+
+## GaloisStructure
+
+| Module | Purpose |
+|---|---|
+| **CyclotomicLayers** | Cyclotomic layers |
+| **MinimalCyclotomic** | Minimal cyclotomic field |
+
+## CyclotomicCompleteness
+
+| Module | Purpose |
+|---|---|
+| **CoxeterBiconditional** | h\|60 ↔ 2h\|120; per-algebra certs for G₂, F₄, E₆, E₈; E₇ falsifier |
+| **CyclotomicContainment** | Q(ζ_{2h}) →ₐ[ℚ] Q(ζ₁₂₀) when h\|60; zero sorry |
+
+## Phase4
+
+| Module | Purpose |
+|---|---|
+| **DeltaUGP** | δ_UGP formula; leptonB_matches_deltaUGP |
+| **GaugeCouplings** | g₁², g₂², g₃² bare values |
+| **GaloisProtection** | One-loop QED correction vanishes |
+| **TwoLoopCoefficient** | Two-loop colour coefficient = 8/9 |
+| **AsymptoticSparsity** | Asymptotic sparsity |
+| **PositiveRootTheorem** | Positive root theorem |
+| **UCL, PR1** | Informational stubs (companion derivations in ugp-physics-lean) |
+
+## PSC
+
+| Module | Purpose |
+|---|---|
+| **RCCInfiniteFamilies** | RCC over B_n, C_n, D_n, A_n infinite classical Lie families |
+
+## TE22
+
+| Module | Purpose |
+|---|---|
+| **ScanCertificate** | SM gauge uniquely selected; UGP g₁²/g₂² within 2% of SM@Mz |
+
+## SelfRef
+
+| Module | Purpose |
+|---|---|
+| **LawvereKleene** | Lawvere fixed-point theorem; Kleene recursion |
+| **RiceHalting** | Rice's theorem; halting undecidability |
+
+## Papers / Instance
+
+| Module | Purpose |
+|---|---|
+| **Papers/Paper25** | Citable stubs for Paper 25 (RSUC) |
+| **Papers/UGPMain** | Citable stubs for UGP Main paper |
+| **Instance/NemSBridge** | GTESpace instance; RSUC for nems-lean |
+
+## Conjectures
+
+Tracks resolved and open conjectures. 7 of 10 resolved; 3 open (MirrorDualConjecture, UGPPrimeInfinitude, MuFlipDistance).
+
+---
+
+## Non-Circularity
+
+**Core/ may not import Compute/**. This is enforced structurally — if violated, `lake build` fails. See [DESIGN.md](DESIGN.md) for the rationale.

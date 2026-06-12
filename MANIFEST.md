@@ -1,22 +1,12 @@
 # ugp-lean Theorem Manifest
 
-**Toolchain:** `leanprover/lean4:v4.29.1`  
+**Toolchain:** `leanprover/lean4:v4.29.0-rc6`  
 **Mathlib:** v4.29.1 (via `lakefile.lean`)  
 **Build:** `lake build` from this directory  
 **Root import:** `UgpLean.lean`  
-**Last verified:** 2026-05-12 — matches `lean-toolchain` and Mathlib pin; theorem table below. README / `docs/*` wording aligned with `paper/ugp_lean_formalization.tex` §Architecture (12-layer diagram, Phase4 vs stub wording, TE22 34,560 universe scan). Earlier entry: Pentagon–Hexagon Bridge (`k_gen + k_gen2 = φ·(cos π/10 − cos π/3)`, commit b4358c6).
+**Last verified:** 2026-06-11 — 376 `.lean` files across 27 layers; 0 sorry on core proof path.
 
-**2026-04-18 integrity fix:** `fingerprint_fixed_point_exists` (Tarski) restated
-on `Set ℕ` (the natural complete lattice for unbounded prime patterns) and proven
-via Mathlib's `OrderHom.lfp`.  The previous `Finset ℕ`-with-only-monotonicity
-statement was **false** (counter-example: `F(P) = P ∪ {max(P)+1}` monotone, no
-fixed point).  A bounded `Finset ℕ` variant `fingerprint_fixed_point_bounded` is
-also provided for the restricted-range case.  Both are zero-sorry and depend
-only on Mathlib standard axioms.  Paper `ugp_lean_formalization.tex` updated to
-match.  Maintainer-facing sorry / tech-debt tracking lives in the private
-program workspace (not published in this repository).
-
-**Companion:** The UGP Formalization paper (`NEMS_PAPERS/UGP_GTE_Formalization/`) provides a complete theorem-indexed table mapping every definition and theorem to ugp-lean modules. Use it as the definitive paper-level reference for the artifact.
+**Companion:** The formalization paper (`paper/ugp_lean_formalization.tex`) provides the complete theorem-indexed table mapping every definition and theorem to ugp-lean modules. Use it as the definitive paper-level reference. The curated highlights in `docs/THEOREMS.md` cover the most important theorems by layer.
 
 | Paper / Source | Lean Module | Lean Theorem | Status |
 |----------------|-------------|--------------|--------|
@@ -167,3 +157,50 @@ program workspace (not published in this repository).
 | |S|=1 sector b: Lambda=Sigma0=Sigma-=38236 | BraidAtlas.CompositeTriples | strange_baryon_s1_b_eq_lambda | ✓ |
 | |S|=2 sector b: Xi0=Xi-=878434 | BraidAtlas.CompositeTriples | strange_baryon_s2_b_eq_xi | ✓ |
 | **All 9 light baryon b-formulas** (full conjunction, zero sorry) | BraidAtlas.CompositeTriples | ugp_all_baryon_b_formulas | ✓ |
+| **GTE Orbit Uniqueness and Vacuum** | | | |
+| SM orbit is uniquely forced 3-step trajectory from GEN₁ | Universality.CUP3DUniqueness | fmdl_orbit_is_unique_psc_trajectory | ✓ |
+| All 16,807 states reach vacuum in ≤7 steps (native_decide) | Universality.CUP3DUniqueness | fmdl_universal_7step_convergence | ✓ |
+| Vacuum is unique attractor; no false vacua | Universality.CUP3DUniqueness | fmdl_vacuum_is_unique_attractor | ✓ |
+| Rule 110 unique weight-5 orbit satisfier among C(8,5)=56 rules | Universality.CUP4TotalParity | rule110_unique_weight5_orbit_satisfier | ✓ |
+| Rule 110 completely isolated on all 1024 orbit pairs | Universality.OrbitPerturbationCatalog | rule110_orbit_complete_isolation | ✓ |
+| All 5 cyclic rotations of GEN₁ are Garden-of-Eden states | Universality.GoEStabilityHierarchy | fmdl_gen1_all_rotations_are_goe | ✓ |
+| p=5 unique prime for full transitivity of weight-3 vector | Universality.Z5TransitivityUniqueness | z5_transitivity_uniqueness | ✓ |
+| d-dim CA satisfying SM orbit must apply Rule 110 on slices | Universality.DimensionalSliceUniqueness | dimensional_slice_uniqueness | ✓ |
+| **GTE Compilation and Uniqueness** | | | |
+| sigma_gte compilation theorem (by rfl) | Universality.GTECompilation | gte_compilation_theorem | ✓ |
+| GTE unique up to bisimulation (no minimality hypothesis) | Universality.GTEUniqueness | gte_uniqueness_up_to_bisimulation | ✓ |
+| **Mass Relations (extended)** | | | |
+| PMNS: sin²θ₁₂=4/13, sin²θ₂₃=19/42, sinθ₁₃=11/73, δ_CP=8π/7 | MassRelations.NeutrinoSector | (various) | ✓ |
+| Higgs quartic λ = φ/(4π)·(1+(IPT−1)/27); 0.12 < λ < 0.14 | MassRelations.HiggsQuartic | (various) | ✓ |
+| Neutrino mass ratio R ≈ 0.02936 within 1% of NuFIT 6.0 | MassRelations.NeutrinoMassRatio | neutrino_mass_ratio_within_1pct_of_nufit | ✓ |
+| sin²θ₂₃^NLO = 209/441 | MassRelations.PMNSNLOCorrection | (various) | ✓ |
+| **η_B and BPS Coupling** | | | |
+| η_B = 6.109×10⁻¹⁰ CatAL unconditional (+0.15σ vs PDG) | Physics.FKTTCoupling | kink_top_coupling_eq_eps_FN | ✓ |
+| BPS saturation T₁₁=0 by rfl | Physics.FKTTCoupling | phi_mdl_kink_bps_saturation | ✓ |
+| **GF(7) Polynomial Explorations** | | | |
+| Ground states {0,1,5} (poly_p_uniform_gs_roots, CatAL) | Polynomial.PolyExplorations | poly_p_uniform_gs_roots | ✓ |
+| Period-475 certificates (native_decide, CatAL) | Polynomial.PolyExplorations | period_475_returns, period_475_is_minimal | ✓ |
+| Vacuum basin = 52; KL divergence p≠f_MDL at (1,1,5) | Polynomial.PolyExplorations | poly_p_vacuum_basin_card_eq_52, kl_divergence_fmdl_p_nonzero | ✓ |
+| PSC-projection bundle (CatAL) | Polynomial.PolyExplorations | psc_projection_gives_fmdl | ✓ |
+| **GTE Causal Tree** | | | |
+| 1023-node binary tree causal graph (ruleGTE, decide) | Polynomial.GTECausalTree | gte_rulegte_ten_generations | ✓ |
+| Horton ratio r_B=2 at all levels (CatAL) | Polynomial.GTECausalTree | perfectTree_horton_ratio | ✓ |
+| **MDL Three-Level Unification** | | | |
+| Cross-module CatAL bundle: theory selection + PSC + orbit | Polynomial.MDLThreeLevelUnification | mdl_three_level_unification | ✓ |
+| PSC + closed choice force transputation | Polynomial.MDLThreeLevelUnification | mdl_level23_closed_choice_forces_transputation | ✓ |
+| **Algebraic Structure** | | | |
+| Fix(T_n) = {vacuum} for all ring sizes (dynamical zeta) | Polynomial.DynamicalZeta | vacuum_unique_temporal_fixed_point_ring | ✓ |
+| Zero-energy rings = {0ⁿ,1ⁿ,5ⁿ} for all n≥3 | Polynomial.SpinSevenGroundSpace | gte_ring_ground_states_uniform_general | ✓ |
+| cond(K)=15=N_gen·N_fam for K=ℚ(√−3,√5) | Polynomial.BiquadraticCompositum | (various) | ✓ |
+| \|AGL(1,7)\|=42; reflection swaps Rule 110 ↔ Rule 124 | Polynomial.AGL17ChiralZ2 | (various) | ✓ |
+| p(x,x,x)−x = −x(x²+x−1); SRRG/Rule 110 as ℤ-quadratic fibers | Polynomial.GoldenQuadratic | gte_diagonal_quadratic_factorization | ✓ |
+| Z₇ winding conservation ≡ U(1)_EM charge conservation | Universality.GUTStructure | winding_charge_equivalence | ✓ |
+| Parity projection forcing maximal (777 + 16,807 forms) | Universality.ParityProjectionForcing | parity_projection_additive_forcing | ✓ |
+| **CMCA Physical Point** | | | |
+| aM=1/7, am_φ=7/8, Tape Saturation Theorem, M_Pl/Λ_GTE=3¹⁰·7¹⁸/2⁴ | Physics.CMCAPhysicalPoint | (various) | ✓ |
+| **Wasserstein Distance** | | | |
+| W₁ nonneg, triangle inequality, W₁=0 iff equal, attainment | ContinuumLimit.WassersteinDistance | W1_nonneg, W1_triangle, W1_eq_zero_iff, W1_attained | ✓ |
+| **Spin-7 Spectroscopy** | | | |
+| Directed wall/bump energies; gap exponent 3/2 (14 theorems) | Polynomial.SpinSevenWallSpectroscopy | spin7_directed_wall_energies | ✓ |
+| Zero-energy spectral radius ρ=1; A=1 (10 theorems) | Polynomial.SpinSevenSpectatorAmplitude | spin7_spectator_amplitude | ✓ |
+| Perron–Frobenius package for thermal transfer matrix (7 theorems) | Polynomial.SpinSevenTransferPrimitivity | spin7_transfer_pf_hypotheses | ✓ |
