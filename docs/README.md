@@ -1,72 +1,91 @@
-# ugp-lean System Documentation
+# ugp-lean Documentation
 
-**ugp-lean** is a Lean 4 formalization of the Universal Generative Principle (UGP) and Generative Triple Evolution (GTE). It provides machine-checked proofs of core UGP claims, including the Residual Seed Uniqueness Conjecture (RSUC), the Quarter-Lock Law, Turing universality of the UGP substrate (UWCA / Rule 110; history-lane reversibility), optional ML-9 coarse-entropy companions on a finite GTE simulation, precision Phase4 and cyclotomic layers, and the self-reference stack. The **canonical** module taxonomy and counts match `paper/ugp_lean_formalization.tex` (§Architecture).
+**ugp-lean** is a Lean 4 formalization of the Universal Generative Principle (UGP) and Generative Triple Evolution (GTE) — a research program establishing that a single 7-state cellular automaton over GF(7) generates the Standard Model particle spectrum, gauge structure, and mass predictions from first principles.
+
+The **canonical** module taxonomy and theorem inventory are in `paper/ugp_lean_formalization.tex`.
 
 ## Documentation Index
 
-Tracked here: **build**, **module graph**, **theorem catalog**, and **architecture** only. Advisor memos, program working notes, and other internal write-ups belong in a **local** file (e.g. `docs/ADVISOR_STATUS.md` is gitignored — keep your copy outside the published tree or only on your machine).
-
 | Document | Description |
-|----------|-------------|
+|---|---|
 | [BUILD.md](BUILD.md) | Prerequisites, build instructions, toolchain |
-| [MODULES.md](MODULES.md) | Complete module reference and dependency graph |
-| [THEOREMS.md](THEOREMS.md) | Theorem catalog: what ugp-lean proves |
-| [DESIGN.md](DESIGN.md) | Non-circularity, architecture, proof strategy |
+| [MODULES.md](MODULES.md) | Module reference and dependency graph |
+| [THEOREMS.md](THEOREMS.md) | Curated theorem highlights by layer |
+| [DESIGN.md](DESIGN.md) | Non-circularity contract and architecture |
 
 ## Quick Start
 
 ```bash
-cd ugp-lean
 lake update
 lake build
 ```
 
-Build completes with 0 errors, 0 sorry on the core RSUC path. See [BUILD.md](BUILD.md) for details.
+Build completes with 0 errors, 0 sorry on the core proof path. See [BUILD.md](BUILD.md) for details.
 
 ## Key Results
 
-- **RSUC**: Residual Seed Uniqueness — exactly one equivalence class; MDL selects (1,73,823)
-- **Theorem A (general)**: ∀n, UnifiedAdmissibleAt n t → t ∈ CandidatesAt n
-- **Ridge sieve**: At n=10, survivors = {(24,42), (42,24)}
-- **Quarter-Lock**: k_M = k_G + ¼k_L²
+**Core structure**
+- **RSUC**: unique residual equivalence class; MDL selects (1, 73, 823)
 - **Canonical orbit**: (1,73,823) → (9,42,1023) → (5,275,65535)
-- **Turing universality**: UGP substrate Turing-universal via Rule 110; exact UWCA sweep (`uwca_sweep_implements_rule110`); history-stack inverse (`uwca_augmented_left_inverse`)
-- **ML-9 companion (finite)**: strict coarse Shannon-entropy drop on an 8→9 macro prefix along the Lepton GTE simulation at `n = 10` (`gte_entropy_prefix8_gt_prefix9`)
+- **Quarter-Lock**: k_M = k_gen2 + ¼k_L²
+- Orbit uniqueness: GEN₁→GEN₂→GEN₃→vacuum is the *only* PSC-admissible trajectory from GEN₁
+- Vacuum uniqueness: all 16,807 states converge to vacuum in ≤7 steps; no false vacua
 
-The classification is n-parameterized: predicates and candidate sets are indexed by ridge level n.
+**Mass and mixing**
+- Koide relation in closed algebraic form; Newton flow S₃-equivariance
+- CKM Cabibbo angle |V_us| = exp(−13π/27) ≈ 0.2203 (1.9% off PDG)
+- Neutrino mass ratio R ≈ 0.02936 within 1% of NuFIT 6.0
+- η_B = 6.109×10⁻¹⁰ CatAL unconditional (+0.15σ vs PDG)
+
+**Universality and self-reference**
+- UGP substrate Turing-universal via Rule 110 embedding
+- GTE update map is the *unique* lawful UWCA program up to bisimulation
+- UWCA history-lane reversibility: backward ∘ forward = id
+- Lawvere fixed-point, Rice's theorem, halting undecidability
 
 ## Repository Layout
 
 ```
 ugp-lean/
 ├── lakefile.lean, lean-toolchain
-├── UgpLean.lean              # Root module, imports all
+├── UgpLean.lean              # Root module
 ├── UgpLean/
-│   ├── Core/                 # Definitions (no Compute)
-│   ├── Compute/              # Algorithms, native_decide
-│   ├── Classification/       # Theorem A/B, RSUC
-│   ├── GTE/                  # Evolution, Orbit, UpdateMap, GTESimulation, EntropyNonMonotone, …
-│   ├── MassRelations/, BraidAtlas/, ElegantKernel/, QuarterLock, LModelDerivation, Conjectures
-│   │                         # (full list: docs/MODULES.md)
-│   ├── Phase4/               # DeltaUGP, GaugeCouplings, UCL, PR1, AsymptoticSparsity,
-│   │                         # PositiveRootTheorem, GaloisProtection, TwoLoopCoefficient
-│   ├── GaloisStructure/     # CyclotomicLayers, MinimalCyclotomic
-│   ├── CyclotomicCompleteness/ # CoxeterBiconditional, CyclotomicContainment
-│   ├── TE22/                 # ScanCertificate (PSC universe scan)
-│   ├── PSC/                  # RCCInfiniteFamilies
-│   ├── Universality/         # Rule110, UWCA, UWCASimulation, UWCAHistoryReversible,
-│   │                         # UWCAembedsRule110, TuringUniversal, ArchitectureBridge
-│   ├── Papers/               # Citable stubs (Paper25, UGPMain)
-│   └── Instance/             # NemSBridge
+│   ├── Core/                 # Ridge/mirror/triple definitions (no Compute import)
+│   ├── Compute/              # Sieve algorithms, native_decide
+│   ├── Classification/       # Theorems A/B, RSUC
+│   ├── GTE/                  # Evolution, orbit, update map, fiber bundle, analytic arch
+│   ├── ElegantKernel/        # Quarter-Lock, UCL Elegant Kernel, Unconditional/
+│   ├── MassRelations/        # Koide, CKM, PMNS, Higgs quartic, neutrino sector
+│   ├── BraidAtlas/           # Charge theorem, EW bosons, dark braid, RHN gap
+│   ├── Universality/         # Rule 110, UWCA, Turing universality, GTE compilation
+│   ├── Polynomial/           # GF(7) explorations, causal tree, MDL unification, spin-7
+│   ├── Physics/              # Kink physics, Z₇ vacuum selection, CMCA physical point
+│   ├── Substrate/            # PhiMDL fluctuation, sech overlap bounds, Wightman axioms
+│   ├── Gravity/              # Yukawa, FKTT, Wald entropy, FLRW, spinors
+│   ├── Spacetime/            # Geodesic, mass gap, orbit hierarchy, QEC, quantum gravity
+│   ├── Algebra/              # Z₇ Galois, SM gauge group, F₂₁/SU(3) embedding
+│   ├── Framework/            # GTE-NEMS instance, optimality, coalgebra, CMCA continuum
+│   ├── ContinuumLimit/       # Wasserstein distance, GF(7) vacuum fixed point
+│   ├── QFT/                  # Gauged mass gap, chiral symmetry breaking
+│   ├── VEVProof/             # EW Goldstone manifold, Goldstone entropy correction
+│   ├── VEVNoGo/              # SRRG no-go theorem
+│   ├── GaloisStructure/      # Cyclotomic layers, minimal cyclotomic
+│   ├── CyclotomicCompleteness/ # Coxeter biconditional, cyclotomic containment
+│   ├── Phase4/               # DeltaUGP, gauge couplings, Galois protection
+│   ├── PSC/                  # RCC infinite families
+│   ├── TE22/                 # Scan certificate
+│   ├── SelfRef/              # Lawvere–Kleene, Rice–Halting
+│   ├── Papers/, Instance/    # Citable stubs and NEMS bridge
+│   └── Conjectures           # Resolved and open conjectures
 ├── docs/
-├── MANIFEST.md
-├── Assumptions.md
+├── MANIFEST.md               # Paper → Lean theorem mapping
+├── Assumptions.md            # Premise ledger
 └── README.md
 ```
 
 ## References
 
-- **Roadmap**: `UGP_LEAN_PROGRAM_ROADMAP.md` (in workspace)
-- **Paper 25 Upgrade**: `PAPER_25_UPGRADE_PLAN.md`
-- **UGP Formalization**: `NEMS_PAPERS/UGP_GTE_Formalization/` — definitive formal specification with theorem-indexed mapping to ugp-lean modules (companion to Paper 25)
-- **Source papers**: UGP Main Paper, JMP Math Foundations, gte_triples_explainer
+- **Formalization paper**: `paper/ugp_lean_formalization.tex` — definitive spec, complete theorem inventory
+- **Theorem catalog**: [docs/THEOREMS.md](THEOREMS.md)
+- **Module reference**: [docs/MODULES.md](MODULES.md)
+- **Research page**: https://www.novaspivack.com/research/
