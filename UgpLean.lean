@@ -180,6 +180,7 @@ import UgpLean.Universality.NgenThreeMechanismsUnified
 import UgpLean.Framework.GTECategoryStructure
 import UgpLean.Framework.CMCAContinuumLimit
 import UgpLean.Framework.CMCAMDLMinimality
+import UgpLean.Framework.PSCMeasureUniformity
 import UgpLean.Universality.ChiralPairVA
 import UgpLean.Universality.CouplingNoGo
 import UgpLean.Universality.DynamicalCouplingBridge
@@ -315,6 +316,7 @@ import UgpLean.Algebra.SU3GluonCount
 import UgpLean.Algebra.ColorConfinementMDL
 import UgpLean.Algebra.BaryonNumber
 import UgpLean.Particles.KinkFusionRules
+import UgpLean.Particles.MuonBorelIdentity
 import UgpLean.Algebra.ChargeFromPolynomial
 import UgpLean.Algebra.ChiralDoublet
 import UgpLean.Algebra.SRRGCABridge
