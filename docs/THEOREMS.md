@@ -1,6 +1,6 @@
 # ugp-lean: Theorem Highlights
 
-**This is a curated selection of the most important theorems by layer.** It is not exhaustive — the library contains thousands of theorems across 376 modules. For the complete inventory, see `paper/ugp_lean_formalization.tex` (Table 1) and browse the source in `UgpLean/`.
+**This is a curated selection of the most important theorems by layer.** It is not exhaustive — the library contains thousands of theorems across 361 modules. For the complete inventory, see `paper/ugp_lean_formalization.tex` (Table 1) and browse the source in `UgpLean/`.
 
 All listed theorems have **0 sorry, 0 custom axioms** on the core path unless marked ⚠.
 
@@ -208,6 +208,36 @@ The foundational chain from which all physics derives.
 | GTE substrate as `NemS.Framework`; NEMS + PSC bundle | `gte_nems` | Framework.GTEFrameworkInstance |
 | Transputation classification on GTE substrate | `gte_tpc_from_nems_classification` | Framework.GTEFrameworkInstance |
 | GTE final coalgebra | (various) | Framework.GTEFinalCoalgebra |
+| PR-5 Independence | `pr5_independence` | Framework.PR5Independence |
+| PSC measure uniformity | `psc_measure_uniformity` | Framework.PSCMeasureUniformity |
+
+---
+
+## PSL(2,7) Unification, Golden Fiber, and Algebraic Extensions
+
+| Theorem | Lean name | Module |
+|---|---|---|
+| F₂₁ ≅ PSL(2,7) is the automorphism group of the Fano plane | `psl27_is_automorphism_group_fano_plane` | Polynomial.PSL27Unification |
+| Borel-measurability of the F₂₁ action | `f21_action_borel_measurable` | Polynomial.F21SU2Bridge |
+| Fano regular action well-defined | (various) | Algebra.FanoRegularAction |
+| Golden-fiber states at q=7 classified | `golden_fiber_taxonomy_at_q7` | Polynomial.GoldenFiberTaxonomy |
+| Golden-quadratic arithmetic certified | (various) | Polynomial.GoldenQuadratic |
+| Eisenstein norm-product \|F₂₁\| = Φ₆(2)Φ₆(3) | `eisenstein_norm_product` | Algebra.EisensteinFunctor |
+| A₄ structure from inert-2 ramification | `a4_from_inert_two_ramification` | Algebra.EisensteinFunctor |
+| Eisenstein mass identities | (various) | MassRelations.EisensteinIdentities |
+| Admissible prime set certification | (various) | Polynomial.AdmissiblePrimes |
+| Gaussian face arithmetic | (various) | Polynomial.GaussianFaceLemma |
+| N_gen = 3 is unique | `ngen_uniqueness` | Classification.NgenUniqueness |
+| Cosmological constant vanishes at all algebraic orders | `lambda_all_order_zero` | Gravity.LambdaAllOrderZero |
+| VA quantization bundle | (various) | Substrate.VAQuantBundle |
+| Chiral current L² structure | (various) | Substrate.ChiralCurrentL2 |
+| Coherence-measure uniqueness | (various) | Substrate.CoherenceMeasureUniqueness |
+| Solovay completeness of UWCA | `solovay_completeness` | Universality.SolovayCompleteness |
+| Bi-immunity of the orbit | `orbit_bi_immune` | Universality.BiImmunity |
+| Complex amplitude forcing | `complex_amplitude_forced` | Universality.ComplexAmplitudeForced |
+| CMCA record filtration | (various) | Foundations.CMCARecordFiltration |
+| CMCA thermodynamic bridge | (various) | Foundations.CMCAThermodynamicBridge |
+| Cosmological constant bracket (Hurwitz) | (various) | Cosmology.CCBracketHurwitz |
 
 ---
 

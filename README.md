@@ -2,7 +2,7 @@
 
 Machine-checked Lean 4 formalization of the **Universal Generative Principle (UGP)** — a research program by [Nova Spivack](https://www.novaspivack.com/) establishing that a single 7-state cellular automaton over GF(7) generates the Standard Model particle spectrum, gauge structure, and mass predictions from first principles.
 
-**334 modules · zero sorry on the core proof path · Lean 4 + Mathlib**
+**361 modules · zero sorry on the core proof path · Lean 4 + Mathlib**
 
 ---
 
@@ -48,27 +48,28 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 
 ## Module structure
 
-334 modules organized in 17 layers. Full module lists are in [docs/MODULES.md](docs/MODULES.md) and the formalization paper.
+361 modules organized in 17 layers. Full module lists are in [docs/MODULES.md](docs/MODULES.md) and the formalization paper.
 
 | Layer | Modules | What it covers |
 |---|---|---|
 | **Core** | 7 | Ridge sieve definitions, mirror algebra, disconfirmation |
 | **Compute** | 6 | Prime lock, sieve filters, decidable predicates |
-| **Classification** | 6 | Theorems A/B, RSUC, monotonic strengthening |
+| **Classification** | 7 | Theorems A/B, RSUC, monotonic strengthening, N_gen=3 uniqueness |
 | **GTE** | 25 | GTE orbit, update map, generation structure, entropy, fiber bundle |
 | **Structural** | 30 | Quarter-Lock, Elegant Kernel, UCL mass ordering closure |
-| **MassRelations** | 30 | Koide, CKM, PMNS, Higgs quartic, neutrino sector, pion mass |
+| **MassRelations** | 33 | Koide, CKM, PMNS, Higgs quartic, neutrino sector, pion mass, Eisenstein identities, CKM θ₂₃ structural ratio |
 | **BraidAtlas** | 13 | Charge theorem, EW bosons, dark braid, RHN gap |
-| **Universality** | 49 | Rule 110, UWCA, Turing universality, GTE compilation/uniqueness, EW structure |
-| **Polynomial** | 13 | GF(7) explorations, causal tree, MDL unification, spin-7 ground space |
+| **Universality** | 52 | Rule 110, UWCA, Turing universality, GTE compilation/uniqueness, EW structure, Solovay completeness, bi-immunity, complex amplitude forcing |
+| **Polynomial** | 19 | GF(7) explorations, causal tree, MDL unification, spin-7 ground space, PSL(2,7) unification, golden fiber taxonomy, golden quadratic arithmetic, admissible primes, Gaussian face arithmetic |
+| **Algebra** | 3 | Eisenstein functor, A₄ structure from inert-2 ramification, Fano regular action |
 | **Physics** | 8 | Z₇ vacuum selection, kink physics, CMCA physical point, BPS actions |
-| **Substrate** | 5 | PhiMDL fluctuation spectrum, sech overlap bounds |
-| **Gravity** | 3 | Yukawa overlap, FKTT coupling, Wald entropy scaffold |
+| **Substrate** | 8 | PhiMDL fluctuation spectrum, sech overlap bounds, VA quantization, chiral currents, coherence-measure uniqueness |
+| **Gravity** | 4 | Yukawa overlap, FKTT coupling, Wald entropy scaffold, cosmological constant all-order vanishing |
 | **QFT** | 2 | Gauged mass gap, chiral symmetry breaking |
-| **Framework** | 3 | GTE-NEMS framework instance, optimality, final coalgebra |
+| **Framework** | 6 | GTE-NEMS framework instance, optimality, final coalgebra, PR-5 independence, PSC measure uniformity, F21–SU(2) bridge |
 | **SelfRef** | 2 | Lawvere–Kleene, Rice–Halting |
 | **Spacetime** | ~12 | Geodesic theorem, mass gap, orbit mass hierarchy, QEC stabilizer |
-| **Phase4 / Other** | ~60 | Galois structure, cyclotomic completeness, PSC, conjectures, papers |
+| **Foundations / Cosmology / Phase4 / Other** | ~64 | Galois structure, cyclotomic completeness, PSC, conjectures, papers, CMCA filtration, thermodynamic bridge, cosmological constant bracket |
 
 ---
 
@@ -96,6 +97,11 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 - Ground-space rigidity: cyclic zero-energy rings are exactly {0ⁿ, 1ⁿ, 5ⁿ} for all ring lengths n ≥ 3
 - Z₇ winding conservation ≡ electric charge conservation for all SM color-singlet particles
 - Parity-projection forcing: all 777 additive forms and 16,807 mod-2 recodings enumerated; Rule 110 forcing is maximal
+- PSL(2,7) unification: F₂₁ ≅ PSL(2,7) as the automorphism group of the Fano plane; Borel-measurability of the F₂₁ action (`psl27_is_automorphism_group_fano_plane`)
+- Golden fiber taxonomy: golden-fiber states at q=7 classified; golden-quadratic arithmetic certified (`golden_fiber_taxonomy_at_q7`)
+- Eisenstein functor: A₄ structure derived from inert-2 ramification; Eisenstein norm-product |F₂₁| = Φ₆(2)Φ₆(3) verified
+- N_gen = 3 uniqueness: the three-generation structure is the unique solution satisfying all GTE constraints (`ngen_uniqueness`)
+- Cosmological constant vanishing: all CC contributions vanish at the algebraic level, all orders (`lambda_all_order_zero`)
 
 ---
 

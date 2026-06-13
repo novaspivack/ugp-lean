@@ -2,7 +2,7 @@
 
 Every premise that is not definitional truth. Tag: `definition` | `lemma` | `axiom` | `imported` | `citation`.
 
-This ledger covers the **full library** (376 `.lean` files across 27 layers). The RSUC core proof path has 0 sorry and 0 custom axioms. See `docs/DESIGN.md` for the non-circularity contract.
+This ledger covers the **full library** (361 modules across 27 layers). The RSUC core proof path has 0 sorry and 0 custom axioms. See `docs/DESIGN.md` for the non-circularity contract.
 
 ---
 
