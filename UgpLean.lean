@@ -235,6 +235,8 @@ import UgpLean.Substrate.PhiMDLFluctuationSpectrum
 import UgpLean.Substrate.SechOverlapIntegralBounds
 import UgpLean.Substrate.WightmanAxioms
 import UgpLean.Substrate.ChiralCurrentL2
+import UgpLean.Substrate.VAQuantBundle
+import UgpLean.Polynomial.PSL27Unification
 import UgpLean.Substrate.RSCodeOrbit
 import UgpLean.Substrate.CogwheelDynamicsG21
 import UgpLean.Universality.CasimirMasslessEther
