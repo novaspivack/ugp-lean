@@ -286,7 +286,20 @@ theorem phi6_succ (n : ℕ) : phi6 (n + 1) = n ^ 2 + n + 1 := by
 
 theorem phi6_sq_eq_phi12 (n : ℕ) : phi6 (n ^ 2) = phi12 n := by
   unfold phi6 phi12
-  rw [show (n ^ 2) ^ 2 = n ^ 4 by ring]
+  ring
+
+/-- **phi12_instance_c_H** (CatAL — norm_num):
+    `c_H = Φ₁₂(2) = 2⁴ − 2² + 1 = 13`. -/
+theorem phi12_instance_c_H :
+    c_H = phi12 2 ∧
+    c_H = phi6 (n_gen + 1) ∧
+    phi12 2 = 13 := by
+  have hch := c_H_eq_phi3_ngen
+  have hphi := phi6_sq_eq_phi12 2
+  refine ⟨?_, hch.2.2.1, by unfold phi12; norm_num⟩
+  calc c_H = phi6 (n_gen + 1) := hch.2.2.1
+       _ = phi6 4 := by unfold n_gen; norm_num
+       _ = phi12 2 := hphi.symm
 
 theorem phi6_identity_I1_nat (n : ℕ) : phi3 n = phi6 (n + 1) := by
   rw [phi6_succ, phi3]
