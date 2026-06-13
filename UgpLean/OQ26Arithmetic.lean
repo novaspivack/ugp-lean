@@ -21,6 +21,23 @@ theorem golden_volume : 5 ^ 3 = (125 : ℕ) := by decide
 /-- Product: D₁ × V_golden = 2000. -/
 theorem d1_times_v_golden : 2 ^ 4 * 5 ^ 3 = 2000 := gauge_spectrum_total
 
+/-- Canonical census slot formula at ridge `N`: `census(N) = (N+1)² × N_fam^N / N`. -/
+noncomputable def gte_census (N : ℕ) : ℚ :=
+  ((N + 1 : ℚ) ^ 2 * (5 : ℚ) ^ N) / N
+
+/-- **gte_census_N3** (CatAL): `census(3) = 4² × 5³ / 3 = 2000/3`. -/
+theorem gte_census_N3 : gte_census 3 = 2000 / 3 := by
+  unfold gte_census
+  norm_num
+
+/-- **gte_census_formula** (CatAL): explicit rational census at positive `N`. -/
+theorem gte_census_formula (N : ℕ) (hN : 0 < N) :
+    gte_census N = ((N + 1 : ℚ) ^ 2 * (5 : ℚ) ^ N) / N := by
+  unfold gte_census
+  have hN' : (N : ℚ) ≠ 0 := by
+    exact_mod_cast (Nat.ne_of_gt hN)
+  field_simp [hN']
+
 /-- The Z₃ cyclic quotient: each set of 3 generations is identified by cyclic rotation.
     2000 / 3 ≈ 666.67 is the exact complexity (rational, not integer). -/
 theorem gauge_spectrum_after_quotient_rational :
