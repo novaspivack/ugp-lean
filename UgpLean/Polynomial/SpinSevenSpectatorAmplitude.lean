@@ -123,7 +123,7 @@ theorem zero_energy_closed_walk_count_three :
     rw [zero_energy_powers_eventually_constant k hbig]
     have h22 := zero_energy_closed_walks_bounded ⟨22, by omega⟩ (by simp)
     simpa [zTrace] using h22
-  · push_neg at hbig
+  · push Not at hbig
     exact zero_energy_closed_walks_bounded ⟨k, by omega⟩ hk
 
 -- ════════════════════════════════════════════════════════════════

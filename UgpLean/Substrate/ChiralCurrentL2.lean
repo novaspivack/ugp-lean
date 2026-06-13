@@ -70,7 +70,7 @@ On `Fin 2` this is pure algebra: the contraction reduces to `H_{01} − H_{10}`.
 theorem epsilon2_contract_symmetric (H : Fin 2 → Fin 2 → ℤ) (hH : ∀ μ ν, H μ ν = H ν μ) :
     epsilon2Contract H = 0 := by
   dsimp [epsilon2Contract, epsilon2]
-  simp only [Fin.sum_univ_two, mul_zero]
+  simp only [Fin.sum_univ_two]
   rw [hH 0 1]
   ring
 

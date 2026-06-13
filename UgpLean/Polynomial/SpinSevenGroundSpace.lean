@@ -317,8 +317,7 @@ theorem gte_ring_ground_states_uniform_general {n : ℕ} [NeZero n] (hn : 3 ≤ 
     have hcyc : Nat.iterate zeroEnergyStepFun n (s (ringLeft i₀), s i₀) =
         (s (ringLeft i₀), s i₀) := by
       have hperiod := ringRight_iterate_period i₀
-      simpa [zero_energy_pair_walk s i₀ h, hperiod] using
-        (zero_energy_pair_walk s i₀ h n).symm
+      simp [zero_energy_pair_walk s i₀ h, hperiod]
     exact uniform_of_pair_cycle hn s i₀ h hcyc
 
 -- ════════════════════════════════════════════════════════════════

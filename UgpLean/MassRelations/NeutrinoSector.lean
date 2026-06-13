@@ -665,7 +665,7 @@ theorem leptogenesis_yukawa_witness :
     have h21 : leptogenesisYYdag 2 1 = 0 := by
       simp [leptogenesisYYdag, Matrix.mul_apply, Matrix.conjTranspose_apply,
         leptogenesisYukawaWitness_apply, Fin.sum_univ_three]
-    simp [h02, h21, h20]
+    simp [h02, h21]
   rw [h01, leptogenesisYYdag_00, leptogenesisYYdag_01, leptogenesisYYdag_11]
   norm_num
 
