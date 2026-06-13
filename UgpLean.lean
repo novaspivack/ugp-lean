@@ -304,6 +304,7 @@ import UgpLean.Cosmology.PrimordialAmplitude
 import UgpLean.Cosmology.MDLInitialState
 import UgpLean.Measurement.LandauerFloor
 import UgpLean.Foundations.CMCARecordFiltration
+import UgpLean.Foundations.CMCAThermodynamicBridge
 import UgpLean.Gravity.PageWoottersZ7
 import UgpLean.Gravity.Z7AnomalyFree
 import UgpLean.ContinuumLimit.GF7VacuumFixedPoint
@@ -328,6 +329,7 @@ import UgpLean.Algebra.SRRGCABridge
 import UgpLean.Algebra.GaugeMDL
 import UgpLean.Algebra.F21SU3Embedding
 import UgpLean.Algebra.EisensteinFunctor
+import UgpLean.Algebra.FlavorGroupStructure
 import UgpLean.Algebra.FanoRegularAction
 import UgpLean.Polynomial.F21SU2Bridge
 import UgpLean.Algebra.SMGaugeGroup
