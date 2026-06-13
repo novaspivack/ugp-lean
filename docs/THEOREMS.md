@@ -228,6 +228,9 @@ The foundational chain from which all physics derives.
 | Admissible prime set certification | (various) | Polynomial.AdmissiblePrimes |
 | Gaussian face arithmetic | (various) | Polynomial.GaussianFaceLemma |
 | N_gen = 3 is unique | `ngen_uniqueness` | Classification.NgenUniqueness |
+| N_gen = 3 universality: 7 constraints jointly certified | `ngen_universality_seven_constraints` | Classification.NgenUniqueness |
+| N_gen = 3 universality: 8th constraint (bracket orientation) conditional on OQ-QG-1 | `ngen_universality_eight_conditional` | Classification.NgenUniqueness |
+| N_gen = 3 universality master (7/8 CatAL, 8th conditional) | `ngen_universality_master` | Classification.NgenUniqueness |
 | Cosmological constant vanishes at all algebraic orders | `lambda_all_order_zero` | Gravity.LambdaAllOrderZero |
 | VA quantization bundle | (various) | Substrate.VAQuantBundle |
 | Chiral current L² structure | (various) | Substrate.ChiralCurrentL2 |
