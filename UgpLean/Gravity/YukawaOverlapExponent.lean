@@ -4,6 +4,7 @@ import Mathlib.Tactic
 import UgpLean.Gravity.DimensionalDecomposition
 import UgpLean.Substrate.PhiMDLFluctuationSpectrum
 import UgpLean.Substrate.SechOverlapIntegralBounds
+import UgpLean.MassRelations.SeesawNumericalCerts
 
 /-!
 # UgpLean.Gravity.YukawaOverlapExponent — Yukawa overlap exponent α = N_c − 1 = 2
@@ -72,6 +73,7 @@ namespace UgpLean.Gravity.YukawaOverlapExponent
 
 open UgpLean.DimDecomp
 open UgpLean.Substrate.PhiMDLFluctuationSpectrum
+open UgpLean.MassRelations.SeesawNumericalCerts
 
 -- ════════════════════════════════════════════════════════════════════════════
 -- §1  Tape-counting arithmetic (CatAL — by decide)
@@ -184,8 +186,13 @@ theorem yukawa_overlap_exponent_catad :
 -- ════════════════════════════════════════════════════════════════════════════
 
 /-- GTE seesaw RH neutrino b-values: b_{R,1} = 5, b_{R,2} = 11 (P47, CatAD). -/
-def b_R1 : ℕ := 5
-def b_R2 : ℕ := 11
+def b_R1 : ℕ := braidB1
+
+def b_R2 : ℕ := braidB2
+
+theorem b_R1_eq_braidB1 : b_R1 = 5 := rfl
+
+theorem b_R2_eq_braidB2 : b_R2 = 11 := rfl
 
 /-- **yukawa_suppression_denominator** (CatAL):
     With α = 2, the kink overlap suppression factors are:
@@ -431,5 +438,30 @@ theorem eta_B_loop_bracket :
     eta_B_d_top_lower_q eta_B_d_top_upper_q eta_B_sphaleron_q eta_B_epsilon1_asym_q
     eta_B_epsilon1_CI_q eta_B_overlap_asymp_q eta_B_kappa_q
   norm_num
+
+-- ════════════════════════════════════════════════════════════════════════════
+-- §9  GTB kink-overlap CatAL upgrade (LT-089-095)
+-- ════════════════════════════════════════════════════════════════════════════
+
+/-- **gtb_kink_overlap_certified** (CatAL):
+    The GTB leptogenesis kink-overlap factor is certified at the arithmetic layer:
+    RH neutrino Braid-Atlas positions `b_{R,1}=5`, `b_{R,2}=11` (CatAL:
+    `SeesawNumericalCerts.braidB1/2`), Yukawa exponent `α = N_c - 1 = 2`,
+    and combined suppression `1/(5²·11²) = 1/3025`. This upgrades the physical
+    identification from `leptogenesis_kink_overlap_catad` to CatAL on the
+    GTE-derived b-values and tape-counting exponent. -/
+theorem gtb_kink_overlap_certified :
+    b_R1 = braidB1 ∧
+    b_R2 = braidB2 ∧
+    braidB1 = 5 ∧
+    braidB2 = 11 ∧
+    yukawa_dirac_scaling_exponent = 2 ∧
+    b_R1 ^ yukawa_dirac_scaling_exponent * b_R2 ^ yukawa_dirac_scaling_exponent = 3025 ∧
+    b_R1 ^ yukawa_dirac_scaling_exponent = 25 ∧
+    b_R2 ^ yukawa_dirac_scaling_exponent = 121 := by
+  refine ⟨rfl, rfl, rfl, rfl, yukawa_dirac_scaling_exponent_eq, ?_, ?_, ?_⟩
+  · exact leptogenesis_kink_overlap_catad.2.2.2
+  · exact leptogenesis_kink_overlap_catad.2.1
+  · exact leptogenesis_kink_overlap_catad.2.2.1
 
 end UgpLean.Gravity.YukawaOverlapExponent

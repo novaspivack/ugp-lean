@@ -272,4 +272,27 @@ theorem weak_isospin_identification :
     -- (4) W-boson winding values confirmed
     wb_wplus = 3 ∧ wb_wminus = 4 := by decide
 
+-- ════════════════════════════════════════════════════════════════
+-- §8  SM vocabulary incomplete under chirality Z₂ (CatAL)
+-- ════════════════════════════════════════════════════════════════
+
+/-- Standard Model species winding vocabulary `S = {0,2,3,4,6} ⊂ Z₇`. -/
+def smVocabularyWB : Finset (Fin 7) := {wb_vacuum, wb_u, wb_wplus, wb_eminus, wb_d}
+
+/-- Chirality reflection on `Fin 7`: `s(x) = −x mod 7`. -/
+def chiralityReflection (x : Fin 7) : Fin 7 := -x
+
+theorem sm_vocabulary_card : smVocabularyWB.card = 5 := by decide
+
+/-- **va_sm_vocab_z2_incomplete** (CatAL — decide):
+    `S = {0,2,3,4,6}` is not closed under chirality reflection `s(x) = −x mod 7`:
+    `s(u) = 5 ∉ S` and `s(d) = 1 ∉ S`, so right-handed quark windings are absent. -/
+theorem va_sm_vocab_z2_incomplete :
+    chiralityReflection wb_u = 5 ∧
+    chiralityReflection wb_d = 1 ∧
+    (5 : Fin 7) ∉ smVocabularyWB ∧
+    (1 : Fin 7) ∉ smVocabularyWB ∧
+    ∃ x ∈ smVocabularyWB, chiralityReflection x ∉ smVocabularyWB := by
+  decide
+
 end WeakIsospin

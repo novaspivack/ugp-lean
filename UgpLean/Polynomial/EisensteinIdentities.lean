@@ -286,7 +286,20 @@ theorem phi6_succ (n : ℕ) : phi6 (n + 1) = n ^ 2 + n + 1 := by
 
 theorem phi6_sq_eq_phi12 (n : ℕ) : phi6 (n ^ 2) = phi12 n := by
   unfold phi6 phi12
-  rw [show (n ^ 2) ^ 2 = n ^ 4 by ring]
+  ring
+
+/-- **phi12_instance_c_H** (CatAL — norm_num):
+    `c_H = Φ₁₂(2) = 2⁴ − 2² + 1 = 13`. -/
+theorem phi12_instance_c_H :
+    c_H = phi12 2 ∧
+    c_H = phi6 (n_gen + 1) ∧
+    phi12 2 = 13 := by
+  have hch := c_H_eq_phi3_ngen
+  have hphi := phi6_sq_eq_phi12 2
+  refine ⟨?_, hch.2.2.1, by unfold phi12; norm_num⟩
+  calc c_H = phi6 (n_gen + 1) := hch.2.2.1
+       _ = phi6 4 := by unfold n_gen; norm_num
+       _ = phi12 2 := hphi.symm
 
 theorem phi6_identity_I1_nat (n : ℕ) : phi3 n = phi6 (n + 1) := by
   rw [phi6_succ, phi3]
@@ -332,7 +345,51 @@ theorem phi6_identity_bundle :
     phi6_instance_q_times_cH, phi6_instance_f21, phi12_instance_b1⟩
 
 -- ════════════════════════════════════════════════════════════════
--- §7  c_H = Φ₃(N_gen) forced uniquely at N_gen = 3
+-- §7  GTE cascade Fibonacci lift index = c_H
+-- ════════════════════════════════════════════════════════════════
+
+/-- **fibonacci_lift_index_equals_c_H** (CatAL — decide):
+    The even-step Fibonacci lift index in the GTE cascade equals `c_H = 13`:
+    `⌊1023/42⌋ − ⌊823/73⌋ = 24 − 11 = 13`. -/
+theorem fibonacci_lift_index_equals_c_H :
+    (1023 / 42 : ℕ) - (823 / 73 : ℕ) = 13 := by
+  decide
+
+theorem fibonacci_lift_index_eq_cH :
+    (1023 / 42 : ℕ) - (823 / 73 : ℕ) = c_H := by
+  rw [fibonacci_lift_index_equals_c_H, c_H_eq_phi3_ngen.2.2.2]
+
+/-- **c_H_eq_fib_7** (CatAL — native_decide): `c_H = F₇ = 13` (7th Fibonacci number). -/
+theorem c_H_eq_fib_7 :
+    c_H = Nat.fib 7 ∧
+    Nat.fib 7 = 13 := by
+  refine ⟨?_, by native_decide⟩
+  rw [c_H_eq_phi3_ngen.2.2.2]
+  native_decide
+
+/-- **tau_n_value_from_fibonacci_lift** (CatAL — decide):
+    The tau-sector N-value from the even-step lift: `b₃ = b₂ + F_{c_H} = 42 + F₁₃ = 275`. -/
+theorem tau_n_value_from_fibonacci_lift :
+    42 + Nat.fib 13 = 275 := by
+  native_decide
+
+/-- **fib_13_mod_7_eq_u_quark** (CatAL — native_decide): `F₁₃ mod 7 = 2` (u-quark winding). -/
+theorem fib_13_mod_7_eq_u_quark :
+    Nat.fib 13 % 7 = 2 := by
+  native_decide
+
+/-- **fibonacci_lift_cascade_bundle** (CatAL — decide / norm_num). -/
+theorem fibonacci_lift_cascade_bundle :
+    (1023 / 42 : ℕ) - (823 / 73 : ℕ) = c_H ∧
+    c_H = Nat.fib 7 ∧
+    42 + Nat.fib 13 = 275 ∧
+    Nat.fib 13 % 7 = 2 ∧
+    c_H = phi12 2 := by
+  refine ⟨fibonacci_lift_index_eq_cH, c_H_eq_fib_7.1, tau_n_value_from_fibonacci_lift,
+    fib_13_mod_7_eq_u_quark, phi12_instance_c_H.1⟩
+
+-- ════════════════════════════════════════════════════════════════
+-- §8  c_H = Φ₃(N_gen) forced uniquely at N_gen = 3
 -- ════════════════════════════════════════════════════════════════
 
 theorem phi3_eq_cubic_half_iff (n : ℕ) (hn : 0 < n) : (2 * phi3 n = n ^ 3 - 1 ↔ n = 3) := by

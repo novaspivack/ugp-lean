@@ -17,6 +17,7 @@ import UgpLean.Classification.TheoremB
 import UgpLean.Classification.RSUC
 import UgpLean.Classification.FormalRSUC
 import UgpLean.Classification.MonotonicStrengthening
+import UgpLean.Classification.NgenUniqueness
 import UgpLean.GTE.Evolution
 import UgpLean.GTE.Orbit
 import UgpLean.GTE.PrimeFactorAnalysis
@@ -54,6 +55,7 @@ import UgpLean.GTE.AnalyticArchitecture
 import UgpLean.GTE.StructuralTheorems
 import UgpLean.GTE.UniquenessCertificates
 import UgpLean.GTE.GTBGenerationPrimes
+import UgpLean.GTE.ZPhiRing
 import UgpLean.GTE.DSIExport
 import UgpLean.GTE.NcColorArithmetic
 import UgpLean.GTE.SylowIndexCouplingHierarchy
@@ -139,6 +141,9 @@ import UgpLean.Universality.CUP3DUniqueness
 import UgpLean.Universality.Z7InvariantSubsets
 import UgpLean.Polynomial.PolyExplorations
 import UgpLean.Polynomial.GoldenQuadratic
+import UgpLean.Polynomial.GoldenFiberTaxonomy
+import UgpLean.Polynomial.GaussianFaceLemma
+import UgpLean.Polynomial.AdmissiblePrimes
 import UgpLean.Polynomial.DynamicalZeta
 import UgpLean.Polynomial.EisensteinIdentities
 import UgpLean.Polynomial.BiquadraticCompositum
@@ -152,6 +157,8 @@ import UgpLean.Polynomial.MDLThreeLevelUnification
 import UgpLean.Polynomial.GTECausalTree
 import UgpLean.Universality.CUP3DPSCUnification
 import UgpLean.Universality.CUP3DPhysicalIncompleteness
+import UgpLean.Universality.SolovayCompleteness
+import UgpLean.Universality.BiImmunity
 import UgpLean.Universality.CookRule110Ref
 import UgpLean.Universality.OrbitPerturbationCatalog
 import UgpLean.Universality.Z7ChargeConjugation
@@ -176,6 +183,8 @@ import UgpLean.Universality.NgenThreeMechanismsUnified
 import UgpLean.Framework.GTECategoryStructure
 import UgpLean.Framework.CMCAContinuumLimit
 import UgpLean.Framework.CMCAMDLMinimality
+import UgpLean.Framework.PSCMeasureUniformity
+import UgpLean.Framework.PR5Independence
 import UgpLean.Universality.ChiralPairVA
 import UgpLean.Universality.CouplingNoGo
 import UgpLean.Universality.DynamicalCouplingBridge
@@ -192,6 +201,7 @@ import UgpLean.VEVProof.PSCEntropyDuality
 import UgpLean.VEVProof.EWGoldstoneManifold
 import UgpLean.Universality.MDLDerivabilityCriterion
 import UgpLean.Universality.BornRuleMDL
+import UgpLean.Universality.ComplexAmplitudeForced
 import UgpLean.Universality.ThooftEffectMeasureBridge
 import UgpLean.Universality.PSCEffectMeasureGeneric
 import UgpLean.Universality.PSCEffectMeasure
@@ -231,6 +241,8 @@ import UgpLean.Substrate.PhiMDLFluctuationSpectrum
 import UgpLean.Substrate.SechOverlapIntegralBounds
 import UgpLean.Substrate.WightmanAxioms
 import UgpLean.Substrate.ChiralCurrentL2
+import UgpLean.Substrate.VAQuantBundle
+import UgpLean.Polynomial.PSL27Unification
 import UgpLean.Substrate.RSCodeOrbit
 import UgpLean.Substrate.CogwheelDynamicsG21
 import UgpLean.Universality.CasimirMasslessEther
@@ -286,6 +298,13 @@ import UgpLean.Gravity.LorentzGroupSO13
 import UgpLean.Gravity.PSCEpochSelection
 import UgpLean.Gravity.NRTVacuumEnergy
 import UgpLean.Gravity.CMBSpectralTilt
+import UgpLean.Gravity.LambdaAllOrderZero
+import UgpLean.Cosmology.CCBracketHurwitz
+import UgpLean.Cosmology.PrimordialAmplitude
+import UgpLean.Cosmology.MDLInitialState
+import UgpLean.Measurement.LandauerFloor
+import UgpLean.Foundations.CMCARecordFiltration
+import UgpLean.Foundations.CMCAThermodynamicBridge
 import UgpLean.Gravity.PageWoottersZ7
 import UgpLean.Gravity.Z7AnomalyFree
 import UgpLean.ContinuumLimit.GF7VacuumFixedPoint
@@ -293,6 +312,8 @@ import UgpLean.ContinuumLimit.WassersteinDistance
 import UgpLean.ContinuumLimit.GorardVacuumW1Bridge
 import UgpLean.ContinuumLimit.DiscreteBianchi
 import UgpLean.ContinuumLimit.GorardRationalFormula
+import UgpLean.ContinuumLimit.SpectralConvergence
+import UgpLean.ContinuumLimit.VacuumBSLimit
 import UgpLean.OQ26Arithmetic
 import UgpLean.GTEDerivationChain
 import UgpLean.Algebra.CyclotomicZ7Galois
@@ -300,11 +321,17 @@ import UgpLean.Algebra.RSCodeOrbit
 import UgpLean.Algebra.SU3GluonCount
 import UgpLean.Algebra.ColorConfinementMDL
 import UgpLean.Algebra.BaryonNumber
+import UgpLean.Particles.KinkFusionRules
+import UgpLean.Particles.MuonBorelIdentity
 import UgpLean.Algebra.ChargeFromPolynomial
 import UgpLean.Algebra.ChiralDoublet
 import UgpLean.Algebra.SRRGCABridge
 import UgpLean.Algebra.GaugeMDL
 import UgpLean.Algebra.F21SU3Embedding
+import UgpLean.Algebra.EisensteinFunctor
+import UgpLean.Algebra.FlavorGroupStructure
+import UgpLean.Algebra.FanoRegularAction
+import UgpLean.Polynomial.F21SU2Bridge
 import UgpLean.Algebra.SMGaugeGroup
 import UgpLean.Algebra.PolynomialContinuumBridge
 import UgpLean.Spacetime.PhysicalExclusion
@@ -418,6 +445,8 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.ContinuumLimit.GorardRationalFormula` — EPIC_078 Rank 078-GCL-GORARD-3TAPE: `kappa_SD_eq_10_13`, `kappa_SD_pos`, `kappa_SD_real`, `gorard_discrete_einstein_structure`; Gorard κ_SD = 10/13 exact rational OR curvature at matter locations (ε=1/10); CatAL, zero sorry, zero axioms (2026-05-28)
 - `UgpLean.ContinuumLimit.WassersteinDistance` — OQ-QG-1 Step 2: W₁ = sInf coupling costs; `W1_eq_zero_iff`, `W1_triangle`, Kantorovich dual CatAL; `@deprecated gorard_vacuum_oric_zero` (0 uses); zero proof sorry (2026-05-31)
 - `UgpLean.ContinuumLimit.GorardVacuumW1Bridge` — 083-ORIC-AXIOM-UPGRADE: vacuum graph/measures/coupling CatAL; `vacuum_w1_eq_one` + `gorard_vacuum_oric_zero_adjacent` CatAL (2026-05-31)
+- `UgpLean.ContinuumLimit.SpectralConvergence` — LT-089-107: `spin7_soft_spectrum_converges_kink` + kink mass slots / meson decoupling lemmas; CatAL, zero sorry (2026-06-12)
+- `UgpLean.ContinuumLimit.VacuumBSLimit` — LT-089-108: `gorard_vacuum_bs_local_limit_deterministic`; vacuum BS limit deterministic, κ≡0; CatAL, zero sorry (2026-06-12)
 - `UgpLean.Algebra.SU3GluonCount` — EPIC_079 Ranks 079-GLUON-SELECT, 079-BARYON-COLOR: `su3_gluon_charge_vectors` (6 gluon vectors from Δw=±1), `su3_gluon_two_z3_orbits` (2 disjoint Z₃ orbits), `su3_gluon_conjugate_pairs`, `baryon_color_z3_orbit_neutral`, `su3_cmca_master_bundle`; all CatAL, zero sorry (2026-05-28)
 - `UgpLean.Algebra.ColorConfinementMDL` — EPIC_079 Rank 079-COLOR-Z3: `color_confinement_k_extra_pos`, `k_extra_eq_log2_9`, `k_extra_uniform`, `psc_forbids_free_colored_quarks`; MDL/PSC K_extra inequality ΔK=log₂(9)>0; CatAL, zero sorry (2026-05-28)
 - `UgpLean.Algebra.F21SU3Embedding` — EPIC_080 G23: `f21_burnside_full_enveloping_algebra` (axiom, CatAD), `f21_commutant_dimension`, `f21_matrix_span_dimension`; F₂₁ → SU(3) embedding via Burnside coset-filling; CatAL arithmetic, zero sorry (2026-05-29)

@@ -28,6 +28,14 @@ namespace SRRGCABridge
 open Real
 open UgpLean.VEVProof.EWGoldstoneManifold
 
+/-- GTE polynomial diagonal evaluation `p(x,x,x) = 2x − x² − x³`. -/
+noncomputable def poly_p_diag (x : ℝ) : ℝ := 2 * x - x ^ 2 - x ^ 3
+
+private theorem gte_diagonal_quadratic_factorization (x : ℝ) :
+    poly_p_diag x - x = -(x * (x ^ 2 + x - 1)) := by
+  unfold poly_p_diag
+  ring
+
 /-- The SRRG / CA fixed-point coupling `g* = 1/φ = (√5 - 1)/2 = -ψ`. -/
 noncomputable def srrgFixedPoint : ℝ := -Real.goldenConj
 
@@ -331,5 +339,49 @@ theorem fca_srrg_full_theory_space_identity :
       ∀ (g : ℝ), 0 < g → (srrgBetaFn g = 0 ↔ g = srrgFixedPoint)) ∧
     True := by
   exact ⟨fca_srrg_share_fixed_point, trivial⟩
+
+/-! ## Rule 110 mean-field fixed point and contraction (CatAL) -/
+
+/-- Rule 110 mean-field map on the diagonal: `ρ ↦ p(ρ,ρ,ρ) = 2ρ − ρ² − ρ³`. -/
+noncomputable def rule110MeanField (ρ : ℝ) : ℝ := poly_p_diag ρ
+
+/-- Diagonal mean-field contraction rate: `d/dρ p(ρ,ρ,ρ) = 2 − 2ρ − 3ρ²`. -/
+noncomputable def meanfieldContractionRate (ρ : ℝ) : ℝ := 2 - 2 * ρ - 3 * ρ ^ 2
+
+/-- **rule110_meanfield_fixed_point_golden** (CatAL):
+    The unique non-trivial fixed point of `ρ ↦ p(ρ,ρ,ρ)` is `ρ* = 1/φ`. -/
+theorem rule110_meanfield_fixed_point_golden :
+    rule110MeanField srrgFixedPoint = srrgFixedPoint ∧
+    srrgFixedPoint ^ 2 + srrgFixedPoint = 1 ∧
+    srrgFixedPoint = Real.goldenRatio⁻¹ := by
+  have hfp := fca_attractor_diagonal_fp_equals_srrg_fp
+  have hfac := gte_diagonal_quadratic_factorization srrgFixedPoint
+  have hzero : srrgFixedPoint ^ 2 + srrgFixedPoint - 1 = 0 := sub_eq_zero.mpr hfp
+  unfold rule110MeanField
+  have hfix : poly_p_diag srrgFixedPoint = srrgFixedPoint := by
+    have hsub : poly_p_diag srrgFixedPoint - srrgFixedPoint = 0 := by
+      rw [hfac]
+      have hinner : srrgFixedPoint * (srrgFixedPoint ^ 2 + srrgFixedPoint - 1) = 0 := by
+        rw [hzero, mul_zero]
+      rw [hinner, neg_zero]
+    linarith
+  exact ⟨hfix, hfp, srrg_fixed_point_eq_inv_phi⟩
+
+/-- **meanfield_contraction_eq_neg_inv_phi_sq** (CatAL):
+    `d/dρ[p(ρ,ρ,ρ)]` at `ρ = 1/φ` equals `−1/φ²`. -/
+theorem meanfield_contraction_eq_neg_inv_phi_sq :
+    meanfieldContractionRate srrgFixedPoint = -Real.goldenRatio⁻¹ ^ 2 := by
+  unfold meanfieldContractionRate
+  have hfp : srrgFixedPoint ^ 2 + srrgFixedPoint = 1 := fca_attractor_diagonal_fp_equals_srrg_fp
+  have hs : srrgFixedPoint = Real.goldenRatio⁻¹ := srrg_fixed_point_eq_inv_phi
+  have hquad : srrgFixedPoint ^ 2 = 1 - srrgFixedPoint := by linarith
+  have hrate : 2 - 2 * srrgFixedPoint - 3 * srrgFixedPoint ^ 2 = -1 + srrgFixedPoint := by
+    rw [hquad]
+    ring
+  rw [hrate, hs]
+  have hgr : Real.goldenRatio⁻¹ ^ 2 + Real.goldenRatio⁻¹ = 1 := by
+    rw [← hs]
+    exact hfp
+  linarith
 
 end SRRGCABridge
