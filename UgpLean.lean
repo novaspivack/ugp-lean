@@ -140,6 +140,7 @@ import UgpLean.Universality.CUP3DUniqueness
 import UgpLean.Universality.Z7InvariantSubsets
 import UgpLean.Polynomial.PolyExplorations
 import UgpLean.Polynomial.GoldenQuadratic
+import UgpLean.Polynomial.GaussianFaceLemma
 import UgpLean.Polynomial.DynamicalZeta
 import UgpLean.Polynomial.EisensteinIdentities
 import UgpLean.Polynomial.BiquadraticCompositum
@@ -294,6 +295,7 @@ import UgpLean.Cosmology.CCBracketHurwitz
 import UgpLean.Cosmology.PrimordialAmplitude
 import UgpLean.Cosmology.MDLInitialState
 import UgpLean.Measurement.LandauerFloor
+import UgpLean.Foundations.CMCARecordFiltration
 import UgpLean.Gravity.PageWoottersZ7
 import UgpLean.Gravity.Z7AnomalyFree
 import UgpLean.ContinuumLimit.GF7VacuumFixedPoint

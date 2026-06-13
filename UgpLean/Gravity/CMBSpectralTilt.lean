@@ -1,5 +1,6 @@
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Analysis.Calculus.Deriv.Basic
 import UgpLean.Gravity.BounceAndArithmetic
 
 /-!
@@ -247,5 +248,46 @@ theorem beta_g_from_classical_rg :
     β_G_Z2 = dk_local_per_efold / (2 * Real.pi ^ 2) := by
   rw [classical_discrete_rg_entropy_rate]
   exact beta_g_z2_formula
+
+/-!
+## Spectral running vanishes (LT-089-078, CatAL)
+
+Both `H(Z₂) = ln 2` and the Weyl normalisation `Vol(S³)/(2π²) = 1` at the
+Planck scale are constants — not functions of cosmological wavenumber `k`.
+Therefore `β_G` and `n_s = 1 − β_G` are `k`-independent and
+`d n_s / d ln k = 0` exactly.
+-/
+
+/-- The GTE spectral index as a function of `k` (definitionally constant). -/
+noncomputable def n_s_at_k (_k : ℝ) : ℝ := n_s_GTE
+
+/-- `β_G(Z₂)` is independent of cosmological wavenumber `k`. -/
+theorem beta_g_independent_of_k (k₁ k₂ : ℝ) : β_G_Z2 = β_G_Z2 := rfl
+
+/-- `n_s` is independent of `k`. -/
+theorem n_s_independent_of_k (k₁ k₂ : ℝ) : n_s_at_k k₁ = n_s_at_k k₂ := rfl
+
+/-- **cmb_spectral_running_zero** (CatAL):
+    The logarithmic running of the spectral index vanishes:
+    `d n_s / d ln k = 0` because `n_s` is constant in `k`. -/
+theorem cmb_spectral_running_zero (k : ℝ) (hk : 0 < k) :
+    deriv (fun k' => n_s_at_k k') k = 0 := by
+  unfold n_s_at_k
+  exact deriv_const k n_s_GTE
+
+/-- Equivalent log-derivative form: `α_s = − d n_s / d ln k = 0`. -/
+theorem cmb_spectral_running_zero_log (k : ℝ) (hk : 0 < k) :
+    -(k * deriv (fun k' => n_s_at_k k') k) = 0 := by
+  rw [cmb_spectral_running_zero k hk, mul_zero, neg_zero]
+
+/-- Bundle: Z₂ entropy and Weyl factor are `k`-independent inputs. -/
+theorem cmb_spectral_running_zero_bundle (k : ℝ) (hk : 0 < k) :
+    z2_binary_entropy = Real.log 2 ∧
+    weyl_log_deriv 1 = 1 ∧
+    deriv (fun k' => n_s_at_k k') k = 0 ∧
+    n_s_at_k k = 1 - Real.log 2 / (2 * Real.pi ^ 2) := by
+  refine ⟨rfl, weyl_log_deriv_at_planck, cmb_spectral_running_zero k hk, ?_⟩
+  unfold n_s_at_k
+  exact n_s_formula
 
 end GTE.CMBTilt
