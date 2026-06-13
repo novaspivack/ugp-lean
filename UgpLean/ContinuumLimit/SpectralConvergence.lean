@@ -46,10 +46,10 @@ theorem kink_spectrum_mass_zero (M : ℝ) : KinkSpectrumMasses M 0 = 0 := by
   simp [KinkSpectrumMasses, Matrix.cons_val_zero, Fin.isValue]
 
 theorem kink_spectrum_mass_one (M : ℝ) : KinkSpectrumMasses M 1 = M := by
-  simp [KinkSpectrumMasses, Matrix.cons_val_zero, Fin.isValue]
+  simp [KinkSpectrumMasses, Fin.isValue]
 
 theorem kink_spectrum_mass_two (M : ℝ) : KinkSpectrumMasses M 2 = 2 * M := by
-  simp [KinkSpectrumMasses, Matrix.cons_val_zero, Fin.isValue]
+  simp [KinkSpectrumMasses, Fin.isValue]
 
 /-- Calibrated soft mass from gap ratio: `m_k = M^Q · (Δ_k / Δ₂)`. -/
 def softCalibratedMass (M_Q Δ₂ Δ_k : ℝ) : ℝ := M_Q * Δ_k / Δ₂
