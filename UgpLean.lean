@@ -198,6 +198,7 @@ import UgpLean.VEVProof.PSCEntropyDuality
 import UgpLean.VEVProof.EWGoldstoneManifold
 import UgpLean.Universality.MDLDerivabilityCriterion
 import UgpLean.Universality.BornRuleMDL
+import UgpLean.Universality.ComplexAmplitudeForced
 import UgpLean.Universality.ThooftEffectMeasureBridge
 import UgpLean.Universality.PSCEffectMeasureGeneric
 import UgpLean.Universality.PSCEffectMeasure
@@ -323,6 +324,7 @@ import UgpLean.Algebra.ChiralDoublet
 import UgpLean.Algebra.SRRGCABridge
 import UgpLean.Algebra.GaugeMDL
 import UgpLean.Algebra.F21SU3Embedding
+import UgpLean.Algebra.EisensteinFunctor
 import UgpLean.Algebra.FanoRegularAction
 import UgpLean.Polynomial.F21SU2Bridge
 import UgpLean.Algebra.SMGaugeGroup

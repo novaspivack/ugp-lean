@@ -448,16 +448,20 @@ theorem pisano_seven_eq_two_times_eight : 16 = 2 * (7 + 1) := by decide
 -- §10  Splitting-field assembly (LT-089-088)
 -- ════════════════════════════════════════════════════════════════
 
+/-- Predicate for the GF(49)/GF(7) degree-2 amplitude-field certificate. -/
+def amplitude_field_degree2_extension_prop : Prop :=
+  (∀ x : ZMod 7, x ^ 2 + x - 1 ≠ 0) ∧
+  (F49Rep.goldenRoots.card = 2) ∧
+  (∀ x ∈ F49Rep.goldenRoots, (F49Rep.frob x ∈ F49Rep.goldenRoots ∧ F49Rep.frob x ≠ x)) ∧
+  (∀ a : Fin 7, F49Rep.frob (F49Rep.mk a 0) = F49Rep.mk a 0)
+
 /-- **amplitude_field_is_degree2_extension** (CatAD — assembly):
     The master quadratic `m(x)=x²+x−1` is irreducible over GF(7) (disc-5 QNR);
     its splitting field GF(49) has exactly two golden roots; Frobenius `x↦x⁷`
     swaps them and fixes GF(7), modelling complex conjugation on a degree-2
     amplitude extension. -/
 theorem amplitude_field_is_degree2_extension :
-    (∀ x : ZMod 7, x ^ 2 + x - 1 ≠ 0) ∧
-    F49Rep.goldenRoots.card = 2 ∧
-    (∀ x ∈ F49Rep.goldenRoots, F49Rep.frob x ∈ F49Rep.goldenRoots ∧ F49Rep.frob x ≠ x) ∧
-    (∀ a : Fin 7, F49Rep.frob (F49Rep.mk a 0) = F49Rep.mk a 0) := by
+    amplitude_field_degree2_extension_prop := by
   refine ⟨no_singleton_fixed_point_mod7, ?_⟩
   exact gf49_golden_roots_frobenius_swap
 
