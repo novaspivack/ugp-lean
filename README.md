@@ -101,6 +101,7 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 - Golden fiber taxonomy: golden-fiber states at q=7 classified; golden-quadratic arithmetic certified (`golden_fiber_taxonomy_at_q7`)
 - Eisenstein functor: A₄ structure derived from inert-2 ramification; Eisenstein norm-product |F₂₁| = Φ₆(2)Φ₆(3) verified
 - N_gen = 3 uniqueness: the three-generation structure is the unique solution satisfying all GTE constraints (`ngen_uniqueness`)
+- N_gen = 3 universality (7/8): seven independent structural constraints (PSC, DPP, CMCA, TPC, Gorard dimension, GTE cascade, MDL orbit) are simultaneously certified at N_gen = 3 (`ngen_universality_seven_constraints`); eighth constraint (bracket orientation) conditional on QG-scale identification OQ-QG-1 (`ngen_universality_eight_conditional`); master bundling theorem `ngen_universality_master`; zero sorry, zero axioms
 - Cosmological constant vanishing: all CC contributions vanish at the algebraic level, all orders (`lambda_all_order_zero`)
 
 ---
