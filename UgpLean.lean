@@ -293,6 +293,8 @@ import UgpLean.ContinuumLimit.WassersteinDistance
 import UgpLean.ContinuumLimit.GorardVacuumW1Bridge
 import UgpLean.ContinuumLimit.DiscreteBianchi
 import UgpLean.ContinuumLimit.GorardRationalFormula
+import UgpLean.ContinuumLimit.SpectralConvergence
+import UgpLean.ContinuumLimit.VacuumBSLimit
 import UgpLean.OQ26Arithmetic
 import UgpLean.GTEDerivationChain
 import UgpLean.Algebra.CyclotomicZ7Galois
@@ -418,6 +420,8 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.ContinuumLimit.GorardRationalFormula` — EPIC_078 Rank 078-GCL-GORARD-3TAPE: `kappa_SD_eq_10_13`, `kappa_SD_pos`, `kappa_SD_real`, `gorard_discrete_einstein_structure`; Gorard κ_SD = 10/13 exact rational OR curvature at matter locations (ε=1/10); CatAL, zero sorry, zero axioms (2026-05-28)
 - `UgpLean.ContinuumLimit.WassersteinDistance` — OQ-QG-1 Step 2: W₁ = sInf coupling costs; `W1_eq_zero_iff`, `W1_triangle`, Kantorovich dual CatAL; `@deprecated gorard_vacuum_oric_zero` (0 uses); zero proof sorry (2026-05-31)
 - `UgpLean.ContinuumLimit.GorardVacuumW1Bridge` — 083-ORIC-AXIOM-UPGRADE: vacuum graph/measures/coupling CatAL; `vacuum_w1_eq_one` + `gorard_vacuum_oric_zero_adjacent` CatAL (2026-05-31)
+- `UgpLean.ContinuumLimit.SpectralConvergence` — LT-089-107: `spin7_soft_spectrum_converges_kink` + kink mass slots / meson decoupling lemmas; CatAL, zero sorry (2026-06-12)
+- `UgpLean.ContinuumLimit.VacuumBSLimit` — LT-089-108: `gorard_vacuum_bs_local_limit_deterministic`; vacuum BS limit deterministic, κ≡0; CatAL, zero sorry (2026-06-12)
 - `UgpLean.Algebra.SU3GluonCount` — EPIC_079 Ranks 079-GLUON-SELECT, 079-BARYON-COLOR: `su3_gluon_charge_vectors` (6 gluon vectors from Δw=±1), `su3_gluon_two_z3_orbits` (2 disjoint Z₃ orbits), `su3_gluon_conjugate_pairs`, `baryon_color_z3_orbit_neutral`, `su3_cmca_master_bundle`; all CatAL, zero sorry (2026-05-28)
 - `UgpLean.Algebra.ColorConfinementMDL` — EPIC_079 Rank 079-COLOR-Z3: `color_confinement_k_extra_pos`, `k_extra_eq_log2_9`, `k_extra_uniform`, `psc_forbids_free_colored_quarks`; MDL/PSC K_extra inequality ΔK=log₂(9)>0; CatAL, zero sorry (2026-05-28)
 - `UgpLean.Algebra.F21SU3Embedding` — EPIC_080 G23: `f21_burnside_full_enveloping_algebra` (axiom, CatAD), `f21_commutant_dimension`, `f21_matrix_span_dimension`; F₂₁ → SU(3) embedding via Burnside coset-filling; CatAL arithmetic, zero sorry (2026-05-29)
