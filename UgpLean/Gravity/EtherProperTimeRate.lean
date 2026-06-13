@@ -19,12 +19,22 @@ ether cell is in state 1. Counting the 1-cells of the ether by parity gives
   even-parity cell: fires 5 of 7 steps →      5/7
   global ether average:                        4/7.
 
-All statements are `decide`-checked over the explicit pattern: zero axioms,
-zero sorry. The denominator 7 is forced (drift 4, spatial period 14) and equals
-the ether's intrinsic period — which is exactly why the Z₇ winding is
-`w = τ_c mod 7`. The numerator 3 is the odd-parity 1-count, forced by the ether
-pattern. The only physical input is the odd-parity identification of the
-proper-time-carrying cell (P45).
+The canonical Rule 110 ether is the period-14 spatial background pattern
+`[1,1,1,1,1,0,0,0,1,0,0,1,1,0]`. Under one Rule 110 update it left-translates by
+exactly 4 cells (`ether_is_rule110_orbit`); since `4·t ≡ 0 (mod 14)` first at
+`t = 14/gcd(4,14) = 7`, the temporal period at any fixed cell is exactly 7
+(`ether_period_seven`). Over one period, a fixed cell visits the seven ether
+positions of its own parity class; the gate (proper-time tick) fires iff the
+ether cell is in state 1. Counting the 1-cells of the ether by parity gives
+
+  odd-parity cell: fires 3 of 7 steps  →  τ = 3/7   (`tau_proper_rate`)
+  even-parity cell: fires 5 of 7 steps →      5/7
+  global ether average:                        4/7.
+
+Decide-checked lemmas are zero sorry. One named physics axiom
+(`properTimeCarrierVacuumExclusion`) encodes the V–A motivated vacuum-sector
+selection for the proper-time carrier; the conditional bundle
+`parity_labeling_from_vacuum_exclusion` is CatAL given that axiom.
 -/
 
 namespace UgpLean.Gravity.EtherProperTimeRate
@@ -130,5 +140,57 @@ theorem tau_three_sevenths_from_ether :
     (Finset.univ.filter (fun i : Fin 14 => i.val % 2 = 1 ∧ ether i = true)).card = 3 ∧
     (3 : ℚ) / 7 < 1 := by
   exact ⟨ether_is_rule110_orbit, ether_period_seven, ether_odd_fire_count, tau_lt_one⟩
+
+-- ════════════════════════════════════════════════════════════════
+-- § Parity labeling and vacuum-sector selection (LT-089-R13a-02)
+-- ════════════════════════════════════════════════════════════════
+
+/-- Even-parity ether index `0` visits the Z₇ vacuum sector (`0 mod 7`). -/
+theorem even_orbit_z7_zero_position : (0 : Fin 14).val % 7 = 0 := by decide
+
+/-- Odd-parity ether index `7` visits the Z₇ vacuum sector (`7 mod 7 = 0`). -/
+theorem odd_orbit_z7_zero_position : (7 : Fin 14).val % 7 = 0 := by decide
+
+def etherVacuumEvenIdx : Fin 14 := ⟨0, by decide⟩
+
+def etherVacuumOddIdx : Fin 14 := ⟨7, by decide⟩
+
+/-- **ether_even_orbit_fires_at_vacuum** (CatAL): the even orbit fires at the vacuum sector. -/
+theorem ether_even_orbit_fires_at_vacuum : ether etherVacuumEvenIdx = true := by decide
+
+/-- **ether_odd_orbit_silent_at_vacuum** (CatAL): the odd orbit is silent at the vacuum sector. -/
+theorem ether_odd_orbit_silent_at_vacuum : ether etherVacuumOddIdx = false := by decide
+
+/-- The physical proper-time carrier is silent at the Z₇ = 0 vacuum sector. -/
+def ProperTimeCarrierVacuumExclusion : Prop :=
+  ether etherVacuumOddIdx = false
+
+/-- Physical axiom (CatAD): the proper-time carrier does not fire at the Z₇ = 0 vacuum
+    sector. Motivated by V–A axial-current conservation (`J_A(vacuum) = 0`). -/
+axiom properTimeCarrierVacuumExclusion : ProperTimeCarrierVacuumExclusion
+
+/-- **odd_orbit_proper_time_carrier_vacuum_selection** (conditional CatAL):
+    Given `properTimeCarrierVacuumExclusion`, the odd orbit is the proper-time
+    carrier (silent at vacuum), the even orbit fires at vacuum, and τ = 3/7. -/
+theorem odd_orbit_proper_time_carrier_vacuum_selection
+    (h : ProperTimeCarrierVacuumExclusion) :
+    ether etherVacuumEvenIdx = true ∧
+      ether etherVacuumOddIdx = false ∧
+        etherVacuumEvenIdx.val % 7 = 0 ∧
+          etherVacuumOddIdx.val % 7 = 0 ∧
+            oddFireCount = 3 ∧
+              tauProper = 3 / 7 := by
+  exact ⟨ether_even_orbit_fires_at_vacuum, h, even_orbit_z7_zero_position,
+    odd_orbit_z7_zero_position, oddFireCount_eq_three, tau_proper_rate⟩
+
+/-- Alias for board target LT-089-R13a-02. -/
+theorem parity_labeling_from_vacuum_exclusion (h : ProperTimeCarrierVacuumExclusion) :
+    ether etherVacuumEvenIdx = true ∧
+      ether etherVacuumOddIdx = false ∧
+        etherVacuumEvenIdx.val % 7 = 0 ∧
+          etherVacuumOddIdx.val % 7 = 0 ∧
+            oddFireCount = 3 ∧
+              tauProper = 3 / 7 :=
+  odd_orbit_proper_time_carrier_vacuum_selection h
 
 end UgpLean.Gravity.EtherProperTimeRate

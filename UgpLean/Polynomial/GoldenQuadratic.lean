@@ -468,6 +468,35 @@ theorem amplitude_field_is_degree2_extension :
 /-- Master quadratic discriminant equals `N_fam = 5`. -/
 theorem master_quadratic_disc_eq_n_fam : (1 : ℤ) ^ 2 - 4 * 1 * (-1) = 5 := by decide
 
+-- ════════════════════════════════════════════════════════════════
+-- §12  Minimal polynomial of 1/φ (LT-089-112)
+-- ════════════════════════════════════════════════════════════════
+
+private theorem disc_five_not_square : ¬ ∃ n : ℤ, n ^ 2 = 5 := by
+  intro ⟨n, hn⟩
+  have hle : n ≤ 5 := by nlinarith [sq_nonneg n, hn]
+  have hge : -5 ≤ n := by nlinarith [sq_nonneg n, hn]
+  interval_cases n <;> norm_num at hn
+
+private theorem inv_phi_is_root_of_master_quadratic :
+    let x := (Real.sqrt 5 - 1) / 2
+    x ^ 2 + x - 1 = 0 := by
+  have h := gte_poly_srrg_bridge
+  simp only at h
+  linarith
+
+/-- **master_quad_is_minpoly** (CatAL):
+    `m(x) = x² + x − 1` has degree 2, discriminant 5 (not a perfect square in ℤ),
+    vanishes at `1/φ = (√5 − 1)/2`, and is irreducible over GF(7) (hence over ℤ). -/
+theorem master_quad_is_minpoly :
+    (1 : ℤ) ^ 2 - 4 * 1 * (-1) = 5 ∧
+      Nat.Prime 5 ∧
+        (¬ ∃ n : ℤ, n ^ 2 = 5) ∧
+          (let x := (Real.sqrt 5 - 1) / 2; x ^ 2 + x - 1 = 0) ∧
+            (∀ x : ZMod 7, x ^ 2 + x - 1 ≠ 0) := by
+  refine ⟨by decide, by decide, disc_five_not_square, inv_phi_is_root_of_master_quadratic,
+    no_singleton_fixed_point_mod7⟩
+
 /-- **golden_universality_class_theorem** (CatAD — assembly):
     `m(x)=x²+x−1` is simultaneously certified by six independent internal GTE
     mechanisms: (1) diagonal factorization of `p`; (2) SRRG/MDL fixed point;

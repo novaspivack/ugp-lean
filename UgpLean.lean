@@ -55,6 +55,7 @@ import UgpLean.GTE.AnalyticArchitecture
 import UgpLean.GTE.StructuralTheorems
 import UgpLean.GTE.UniquenessCertificates
 import UgpLean.GTE.GTBGenerationPrimes
+import UgpLean.GTE.ZPhiRing
 import UgpLean.GTE.DSIExport
 import UgpLean.GTE.NcColorArithmetic
 import UgpLean.GTE.SylowIndexCouplingHierarchy
@@ -322,6 +323,7 @@ import UgpLean.Algebra.ChiralDoublet
 import UgpLean.Algebra.SRRGCABridge
 import UgpLean.Algebra.GaugeMDL
 import UgpLean.Algebra.F21SU3Embedding
+import UgpLean.Algebra.FanoRegularAction
 import UgpLean.Polynomial.F21SU2Bridge
 import UgpLean.Algebra.SMGaugeGroup
 import UgpLean.Algebra.PolynomialContinuumBridge
