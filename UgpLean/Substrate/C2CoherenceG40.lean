@@ -135,4 +135,10 @@ alias c2_architectural_route_conditional :=
 /-- **G40 thermal bundle (CatAL conditional on `thermal_coherence_axiom`). -/
 alias c2_thermal_bundle_conditional := CoherenceMeasureUniqueness.c2_thermal_closure_bundle
 
+/-- **LT-089-103** (CatAL): D2 + D4 + D5 on the sector simplex forces the Gibbs minimizer. -/
+alias d1_d5_forces_gibbs_family := CoherenceMeasureUniqueness.d1_d5_forces_gibbs_family
+
+/-- **LT-089-104** (CatAL): unique `freeEnergyGap = 0` minimizers agree (member-independence). -/
+alias c2_selector_member_independent := CoherenceMeasureUniqueness.c2_selector_member_independent
+
 end UgpLean.Substrate.C2CoherenceG40

@@ -655,4 +655,51 @@ theorem c2_thermal_closure_bundle (H : Z7SineGordonHamiltonian) (T : ℝ) (hT : 
   exact ⟨⟨lorentz_cpt_implicit_in_d2.1, lorentz_cpt_implicit_in_d2.2.1⟩,
          c2_distinguishability.1, freeEnergyGap_gibbs_zero H T hT⟩
 
+-- ════════════════════════════════════════════════════════════════
+-- §5  R25: D1–D5 → Gibbs family (LT-089-103 / LT-089-104)
+-- ════════════════════════════════════════════════════════════════
+
+/-- D2 admissibility on the sector-probability simplex. -/
+def IsD2AdmissibleSector (p : Fin 7 → ℝ) : Prop :=
+  (∀ k, 0 ≤ p k) ∧ (∑ k : Fin 7, p k = 1) ∧
+    (∀ k, k ∉ pscAdmissibleSectors → p k = 0)
+
+/-- D4: unique zero of the Gibbs free-energy gap. -/
+def IsD4UniqueMinimizer (H : Z7SineGordonHamiltonian) (T : ℝ) (hT : 0 < T) (p : Fin 7 → ℝ) :
+    Prop :=
+  IsD2AdmissibleSector p ∧
+    freeEnergyGap H T hT p = 0 ∧
+      ∀ q, IsD2AdmissibleSector q → freeEnergyGap H T hT q = 0 → q = p
+
+/-- D5: sector probabilities are Born-rule marginals `|c_k|²`. -/
+def IsD5BornSector (p : Fin 7 → ℝ) : Prop :=
+  ∃ (coeffs : Fin 7 → ℂ),
+    (∀ k, p k = Complex.normSq (coeffs k)) ∧
+      (Finset.univ : Finset (Fin 7)).sum (fun k => Complex.normSq (coeffs k)) = 1
+
+/-- **d1_d5_forces_gibbs_family** (CatAL):
+    On the PSC sector simplex, D2 admissibility + D4 (unique `freeEnergyGap = 0`) +
+    D5 (Born marginals) force the minimizer to equal the Gibbs sector distribution.
+    The Gibbs family is parametrised by `(H,T)` through `ThermalState.sectorProb`. -/
+theorem d1_d5_forces_gibbs_family (H : Z7SineGordonHamiltonian) (T : ℝ) (hT : 0 < T)
+    (p : Fin 7 → ℝ) (hp : IsD2AdmissibleSector p)
+    (_h_d5 : IsD5BornSector p)
+    (h_d4 : ∀ q, IsD2AdmissibleSector q → freeEnergyGap H T hT q = 0 → q = p)
+    (h_min : freeEnergyGap H T hT p = 0) :
+    p = ThermalState.sectorProb H T hT := by
+  rcases hp with ⟨hp_nn, hp_sum, hp_d2⟩
+  exact c2_free_energy_zero_global_gibbs_ext H T hT p hp_nn hp_sum hp_d2 h_min
+
+/-- **c2_selector_member_independent** (CatAL):
+    Any two D2-admissible sector vectors that are unique `freeEnergyGap = 0` minimizers
+    (D4) agree — selector member-independence on the Gibbs sector layer. -/
+theorem c2_selector_member_independent (H : Z7SineGordonHamiltonian) (T : ℝ) (hT : 0 < T)
+    (p q : Fin 7 → ℝ) (hp : IsD2AdmissibleSector p) (hq : IsD2AdmissibleSector q)
+    (hp_min : freeEnergyGap H T hT p = 0) (hq_min : freeEnergyGap H T hT q = 0) :
+    p = q := by
+  rcases hp with ⟨hp_nn, hp_sum, hp_d2⟩
+  rcases hq with ⟨hq_nn, hq_sum, hq_d2⟩
+  rw [c2_free_energy_zero_global_gibbs_ext H T hT p hp_nn hp_sum hp_d2 hp_min,
+    c2_free_energy_zero_global_gibbs_ext H T hT q hq_nn hq_sum hq_d2 hq_min]
+
 end UgpLean.Substrate.CoherenceMeasureUniqueness

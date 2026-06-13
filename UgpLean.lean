@@ -17,6 +17,7 @@ import UgpLean.Classification.TheoremB
 import UgpLean.Classification.RSUC
 import UgpLean.Classification.FormalRSUC
 import UgpLean.Classification.MonotonicStrengthening
+import UgpLean.Classification.NgenUniqueness
 import UgpLean.GTE.Evolution
 import UgpLean.GTE.Orbit
 import UgpLean.GTE.PrimeFactorAnalysis
@@ -152,6 +153,8 @@ import UgpLean.Polynomial.MDLThreeLevelUnification
 import UgpLean.Polynomial.GTECausalTree
 import UgpLean.Universality.CUP3DPSCUnification
 import UgpLean.Universality.CUP3DPhysicalIncompleteness
+import UgpLean.Universality.SolovayCompleteness
+import UgpLean.Universality.BiImmunity
 import UgpLean.Universality.CookRule110Ref
 import UgpLean.Universality.OrbitPerturbationCatalog
 import UgpLean.Universality.Z7ChargeConjugation
@@ -286,6 +289,7 @@ import UgpLean.Gravity.LorentzGroupSO13
 import UgpLean.Gravity.PSCEpochSelection
 import UgpLean.Gravity.NRTVacuumEnergy
 import UgpLean.Gravity.CMBSpectralTilt
+import UgpLean.Gravity.LambdaAllOrderZero
 import UgpLean.Cosmology.CCBracketHurwitz
 import UgpLean.Cosmology.PrimordialAmplitude
 import UgpLean.Cosmology.MDLInitialState
@@ -306,6 +310,7 @@ import UgpLean.Algebra.RSCodeOrbit
 import UgpLean.Algebra.SU3GluonCount
 import UgpLean.Algebra.ColorConfinementMDL
 import UgpLean.Algebra.BaryonNumber
+import UgpLean.Particles.KinkFusionRules
 import UgpLean.Algebra.ChargeFromPolynomial
 import UgpLean.Algebra.ChiralDoublet
 import UgpLean.Algebra.SRRGCABridge
