@@ -6827,6 +6827,33 @@ limit (\lstinline|cmca_continuum_limit_is_phimdl|) with correction
 $\varepsilon_0(M) = \pi^2/(3M^2) \to 0$.
 \end{keybox}
 
+\subsection{Gromov--Hausdorff convergence of CMCA spatial graphs
+  (\texttt{Spacetime/VacuumGHConvergence.lean},
+   \texttt{Spacetime/MatterGHPrecompactness.lean})}\label{subsec:gh-convergence}
+
+Two zero-\lstinline|sorry| modules establish that the vacuum CMCA spatial causal
+graph converges to flat Euclidean space in the Gromov--Hausdorff topology,
+and that finite-kink matter families are pre-compact in the same topology.
+
+\begin{keybox}{\lstinline|vacuum_cmca_gh_converges_to_flat_space| + \lstinline|fin_grid_gh_dist_bound| (zero \texttt{sorry})}
+The vacuum \CMCA{} spatial causal graph $\mathrm{FinGrid}_L$ equipped with the
+scaled $1/L$ metric converges in Gromov--Hausdorff distance to the unit cube
+$[0,1]^3$ (flat three-dimensional Euclidean space) as $L\to\infty$.
+Quantitative bound: $d_{\mathrm{GH}}(\mathrm{FinGrid}_L,\,[0,1]^3)\leq 1/L$.
+Module: \texttt{Spacetime/VacuumGHConvergence.lean} (zero \lstinline|sorry|).
+\end{keybox}
+
+\begin{keybox}{\lstinline|finGrid_family_totally_bounded| + \lstinline|single_kink_gh_converges_to_flat| (zero \texttt{sorry})}
+The family of vacuum \CMCA{} spatial graphs is \emph{totally bounded} in the
+Gromov--Hausdorff topology (every infinite subsequence has a convergent
+subsequence).  A single isolated kink of width~$W$ satisfies
+$d_{\mathrm{GH}}(\mathrm{KinkGrid}_L,\,[0,1]^3)\leq (W/2{+}1)/L\to 0$:
+an isolated kink is measure-zero at large~$L$ and does not curve the
+Gromov--Hausdorff limit.  Finite kink density is required for a curved GH limit
+(OQ-QG-1b full; Cheeger--Colding regularity, open).
+Module: \texttt{Spacetime/MatterGHPrecompactness.lean} (zero \lstinline|sorry|).
+\end{keybox}
+
 \subsection{Theorem inventory: quantum mechanics, Born rule, and gravity sector}\label{subsec:new-theorem-inventory}
 
 The following table lists zero-sorry theorems spanning quantum mechanics,
@@ -7724,6 +7751,24 @@ Packages the MDL covariant derivative and $J^\mu_W$ structural result
 (\lstinline|PhimdlPotentialSu2lInvariant|), and the W$^\pm$ generator algebra
 (\lstinline|su2l_wpm_generator_algebra|). All components zero \texttt{sorry}.
 \end{theorem}
+
+\subsection{SU(2)$_L$ doublet Hilbert space
+  (\texttt{Substrate/SU2LDoubletHilbert.lean})}\label{subsec:su2l-doublet-hilbert}
+
+Module: \texttt{Substrate/SU2LDoubletHilbert.lean} (zero \lstinline|sorry|).
+
+\begin{keybox}{\lstinline|su2l_doublet_hilbert_certified| (zero \texttt{sorry})}
+The $\mathrm{SU}(2)_L$ doublet Hilbert space $(\nu_L,\,e_L)$ is explicitly
+constructed from the \GTE{} discrete data: $T_3$ eigenvalues $+\tfrac{1}{2}$
+(neutrino component) and $-\tfrac{1}{2}$ (charged-lepton component), $W^\pm$
+raising/lowering operators, and the $\mathfrak{su}(2)$ algebra relations
+$[T_+,T_-]=2T_3$, $[T_3,T_\pm]=\pm T_\pm$ are all machine-certified with
+zero \lstinline|sorry| from the certified $W_B$ arithmetic.
+This is the master bundle for the electroweak doublet Hilbert structure.\\
+Individual components: \lstinline|t3_eigenvalue| ($T_3 = \pm\tfrac{1}{2}$ on the
+standard basis) and \lstinline|su2l_algebra_closes| (all three Lie algebra
+commutation relations).
+\end{keybox}
 
 \subsection{Holographic mode-count identification (\texttt{Gravity/TemporalVoxelCC.lean}, G30 closure)}\label{subsec:holographic-mode-count}
 
@@ -8836,14 +8881,28 @@ Theorem & Module & Physical content \\
   & $S_{\rm per}=q_{\rm dark}/|\mathbb{Z}_7^*|=2/6=1/3=1/N_c$ \\[1pt]
 \texttt{d\_\allowbreak top\_\allowbreak derivation\_\allowbreak chain\_\allowbreak catal}
   & Universality.GUTStructure
-  & $D_{\rm top}=\exp(-1/N_c)$ from BPS $S_0/T=1$, $q_{\rm dark}=2$, $|\mathbb{Z}_7^*|=6$, transitivity \\
+  & $D_{\rm top}=\exp(-1/N_c)$ from BPS $S_0/T=1$, $q_{\rm dark}=2$, $|\mathbb{Z}_7^*|=6$, transitivity \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{GH convergence and SU(2)$_L$ doublet Hilbert space (\CatAL)}} \\[2pt]
+\texttt{vacuum\_\allowbreak cmca\_\allowbreak gh\_\allowbreak converges\_\allowbreak to\_\allowbreak flat\_\allowbreak space}
+  & Spacetime.\allowbreak VacuumGH\allowbreak Convergence
+  & Vacuum CMCA spatial graph $\to$ flat $[0,1]^3$ in GH; bound $d_{\rm GH}\leq 1/L$ \\[1pt]
+\texttt{finGrid\_\allowbreak family\_\allowbreak totally\_\allowbreak bounded}
+  & Spacetime.\allowbreak MatterGH\allowbreak Precompactness
+  & FinGrid GH family totally bounded (pre-compact) \\[1pt]
+\texttt{single\_\allowbreak kink\_\allowbreak gh\_\allowbreak converges\_\allowbreak to\_\allowbreak flat}
+  & Spacetime.\allowbreak MatterGH\allowbreak Precompactness
+  & Isolated kink (width $W$): $d_{\rm GH}\leq (W/2{+}1)/L\to 0$ \\[1pt]
+\texttt{su2l\_\allowbreak doublet\_\allowbreak hilbert\_\allowbreak certified}
+  & Substrate.\allowbreak SU2LDoublet\allowbreak Hilbert
+  & $(\nu_L,e_L)$: $T_3=\pm\tfrac{1}{2}$, $W^\pm$, $\mathfrak{su}(2)$ algebra closed \\
 \bottomrule
 \end{tabular}
 \caption{Frontier-closure representative theorems: UCL nine-coefficient master
 certification, PMNS orbit-ratio closure, SRRG Higgs quartic, Pöschl--Teller and sech
-integrals, Yukawa vertex (\CatAD), FGCI at $N_c=3$, and $\mathbb{Z}_7$ dark-baryon
-identities including $D_{\rm top}=\exp(-1/N_c)$ (\CatAL, Lean-certified).
-The library contains 221 net-new names in this section.}
+integrals, Yukawa vertex (\CatAD), FGCI at $N_c=3$, $\mathbb{Z}_7$ dark-baryon
+identities including $D_{\rm top}=\exp(-1/N_c)$ (\CatAL, Lean-certified),
+and GH convergence / SU(2)$_L$ doublet Hilbert space (\CatAL).}
 \label{tab:frontier-closures}
 \end{table}
 
