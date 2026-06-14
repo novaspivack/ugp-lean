@@ -340,6 +340,7 @@ import UgpLean.Spacetime.CausalInvariance
 import UgpLean.Spacetime.ChiralGliderDynamics
 import UgpLean.Spacetime.ChiralMirrorSpeedSymmetry
 import UgpLean.Spacetime.OrbitDepthEtherPeriod
+import UgpLean.Spacetime.VacuumGHConvergence
 import UgpLean.Spacetime.PhiMDLKinkQuantumNumbers
 import UgpLean.Spacetime.AsyncLiftingTheorem
 import UgpLean.QFT.GaugedMassGap
