@@ -44,8 +44,9 @@ noncomputable instance finGridMetricParam (L : ℕ) (hL : 0 < L) : MetricSpace (
   finGridMetricSpace L hL
 
 noncomputable instance finGridCompactParam (L : ℕ) (hL : 0 < L) : CompactSpace (FinGrid L) := by
-  letI : MetricSpace (FinGrid L) := finGridMetricSpace L hL
-  exact inferInstanceAs (CompactSpace (FinGrid L))
+  letI := finGridMetricParam L hL
+  refine { isCompact_univ := ?_ }
+  exact Set.Finite.isCompact (Set.finite_univ : (Set.univ : Set (FinGrid L)).Finite)
 
 lemma finAxisDiff_eq_nat_sub {L : ℕ} {x y : Fin L} (h : y.val ≤ x.val) :
     finAxisDiff x y = ((x.val - y.val : ℕ) : ℝ) := by
@@ -258,7 +259,7 @@ lemma coverAxis_mem (L : ℕ) (hL : 0 < L) (n : ℕ) (gridStep : ℕ) (hgridStep
     have hpitch : 0 < netPitch L hL n := by rw [← hgridStep]; exact hgridSteppos
     have hdiv : inner.val / netPitch L hL n = k := by
       rw [show inner.val = k * netPitch L hL n from by rw [hfval, hgridStep]]
-      exact Nat.mul_div_cancel_left k hpitch
+      simpa [Nat.mul_comm] using Nat.mul_div_cancel_left k hpitch
     have h2 : (snapCoord L hL (netPitch L hL n) (pitchWithinLen L hL n) inner).val =
         k * gridStep := by
       unfold snapCoord
