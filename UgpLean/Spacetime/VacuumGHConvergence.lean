@@ -68,8 +68,8 @@ lemma ciSup_fin_three_div (L : ℕ) (hL : 0 < L) (f : Fin 3 → ℝ) :
   have hmax :
       max (max (f 0 / (L : ℝ)) (f 1 / (L : ℝ))) (f 2 / (L : ℝ)) =
         max (max (f 0) (f 1)) (f 2) / (L : ℝ) := by
-    -- SORRY: max commutes with division on ℝ (finite case)
-    sorry
+    have hLnn : 0 ≤ (L : ℝ) := Nat.cast_nonneg L
+    rw [← max_div_div_right hLnn (max (f 0) (f 1)) (f 2), ← max_div_div_right hLnn (f 0) (f 1)]
   rw [real_ciSup_fin_three_max (fun i => f i / (L : ℝ)), hmax, ← real_ciSup_fin_three_max]
 
 /-! ## Section 2: Unit cube target (compact metric space) -/
@@ -185,8 +185,18 @@ lemma finGridToAmbient_injective (L : ℕ) (hL : 0 < L) :
 
 lemma finGridToAmbient_dist_eq (L : ℕ) (hL : 0 < L) (x y : FinGrid L) :
     dist (finGridToAmbient L hL x) (finGridToAmbient L hL y) = finGridDist L hL x y := by
-  -- SORRY: PiLp iSup / scaled L∞ max alignment (finGridToAmbient_cubeCoord + ciSup_fin_three_div)
-  sorry
+  have hLpos : 0 < (L : ℝ) := Nat.cast_pos.mpr hL
+  have hLnn : 0 ≤ (L : ℝ) := Nat.cast_nonneg L
+  rw [PiLp.dist_eq_iSup, real_ciSup_fin_three_max]
+  rcases x with ⟨x₁, x₂, x₃⟩
+  rcases y with ⟨y₁, y₂, y₃⟩
+  unfold finGridDist finAxisDiff finGridToAmbient
+  simp only [Fin.isValue, Real.dist_eq, PiLp.toLp_apply, sub_div]
+  have abs_sub_div (a b : ℝ) : |a / (L : ℝ) - b / (L : ℝ)| = |a - b| / (L : ℝ) := by
+    rw [div_sub_div_same, abs_div, abs_of_pos hLpos]
+  rw [abs_sub_div, abs_sub_div, abs_sub_div,
+    max_div_div_right hLnn _ _, max_div_div_right hLnn _ _]
+  simp [Int.cast_sub, Int.cast_natCast]
 
 @[reducible]
 noncomputable def finGridMetricSpace (L : ℕ) (hL : 0 < L) : MetricSpace (FinGrid L) :=
@@ -203,11 +213,52 @@ lemma floorCoord_lt (L : ℕ) (hL : 0 < L) (p : AmbientCube) (_hp : p ∈ unitCu
     min (⌊p i * (L : ℝ)⌋₊) (L - 1) < L :=
   (min_le_right _ _).trans_lt (Nat.pred_lt (ne_of_gt hL))
 
-lemma grid_coord_error (L : ℕ) (hL : 0 < L) (p : AmbientCube) (_hp : p ∈ unitCubeSet) (i : Fin 3)
-    (floorVal : ℕ) (_hfloor : floorVal = min (⌊p i * (L : ℝ)⌋₊) (L - 1)) :
+lemma grid_coord_error (L : ℕ) (hL : 0 < L) (p : AmbientCube) (hp : p ∈ unitCubeSet) (i : Fin 3)
+    (floorVal : ℕ) (hfloor : floorVal = min (⌊p i * (L : ℝ)⌋₊) (L - 1)) :
     |p i - (floorVal : ℝ) / (L : ℝ)| ≤ (L : ℝ)⁻¹ := by
-  -- SORRY: floor/min coordinate bound — abs_sub_floor_le / cast alignment
-  sorry
+  have hpi_nn : 0 ≤ p i := (mem_unitCubeSet_iff.mp hp i).1
+  have hpi_le : p i ≤ 1 := (mem_unitCubeSet_iff.mp hp i).2
+  have hLpos : 0 < (L : ℝ) := Nat.cast_pos.mpr hL
+  have hLnn : 0 ≤ (L : ℝ) := Nat.cast_nonneg L
+  have hpmul_nn : 0 ≤ p i * (L : ℝ) := mul_nonneg hpi_nn hLnn
+  rw [hfloor]
+  by_cases hfl : ⌊p i * (L : ℝ)⌋₊ ≤ L - 1
+  · rw [min_eq_left hfl]
+    have hfloor_bound : |p i * (L : ℝ) - (⌊p i * (L : ℝ)⌋₊ : ℝ)| ≤ 1 := by
+      refine abs_le.mpr ⟨?_, ?_⟩
+      · have := Nat.floor_le hpmul_nn
+        linarith
+      · have := Nat.lt_floor_add_one (p i * (L : ℝ))
+        linarith
+    have hkey : |p i - (⌊p i * (L : ℝ)⌋₊ : ℝ) / (L : ℝ)| * (L : ℝ) =
+        |p i * (L : ℝ) - (⌊p i * (L : ℝ)⌋₊ : ℝ)| := by
+      have h1 : (p i - (⌊p i * (L : ℝ)⌋₊ : ℝ) / (L : ℝ)) * (L : ℝ) =
+          p i * (L : ℝ) - (⌊p i * (L : ℝ)⌋₊ : ℝ) := by
+        field_simp [hLpos.ne']
+      calc
+        |p i - (⌊p i * (L : ℝ)⌋₊ : ℝ) / (L : ℝ)| * (L : ℝ)
+            = |(p i - (⌊p i * (L : ℝ)⌋₊ : ℝ) / (L : ℝ)) * (L : ℝ)| := by
+                rw [abs_mul, abs_of_pos hLpos]
+        _ = |p i * (L : ℝ) - (⌊p i * (L : ℝ)⌋₊ : ℝ)| := by rw [h1]
+    rw [← one_div (L : ℝ), le_div_iff₀ hLpos, hkey]
+    exact hfloor_bound
+  · have hlt : L - 1 < ⌊p i * (L : ℝ)⌋₊ := Nat.lt_of_not_ge hfl
+    have hfl_ge : L ≤ ⌊p i * (L : ℝ)⌋₊ := by omega
+    rw [min_eq_right hlt.le]
+    have hpi_one : p i = 1 := by
+      have hfl_geR : (L : ℝ) ≤ (⌊p i * (L : ℝ)⌋₊ : ℝ) := Nat.cast_le.mpr hfl_ge
+      have hfloor_le : (⌊p i * (L : ℝ)⌋₊ : ℝ) ≤ p i * (L : ℝ) := Nat.floor_le hpmul_nn
+      have hLle : (L : ℝ) ≤ p i * (L : ℝ) := hfl_geR.trans hfloor_le
+      exact le_antisymm hpi_le (le_of_mul_le_mul_left (by simpa [mul_comm] using hLle) hLpos)
+    rw [hpi_one, ← one_div (L : ℝ), le_div_iff₀ hLpos]
+    have hcalc : |1 - ↑(L - 1) / (L : ℝ)| * (L : ℝ) = 1 := by
+      have hsub : (1 : ℝ) - ↑(L - 1) / (L : ℝ) = 1 / (L : ℝ) := by
+        rw [Nat.cast_pred hL]
+        field_simp [hLpos.ne']
+        ring
+      rw [hsub, abs_div, abs_of_pos hLpos, abs_one]
+      field_simp [hLpos.ne']
+    exact le_of_eq hcalc
 
 lemma unit_cube_near_grid_point (L : ℕ) (hL : 0 < L) (p : UnitCube) :
     ∃ g : FinGrid L, dist p (finGridToCube L hL g) ≤ 1 / L := by
