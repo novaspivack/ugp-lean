@@ -234,6 +234,8 @@ The foundational chain from which all physics derives.
 | Cosmological constant vanishes at all algebraic orders | `lambda_all_order_zero` | Gravity.LambdaAllOrderZero |
 | **Vacuum CMCA spatial GH convergence to flat 3D space** | **`vacuum_cmca_gh_converges_to_flat_space`** | **Spacetime.VacuumGHConvergence** |
 | **GH distance bound: ghDist(FinGrid L, UnitCube) ≤ 1/L** | **`fin_grid_gh_dist_bound`** | **Spacetime.VacuumGHConvergence** |
+| **FinGrid GH family is totally bounded (matter-present sequences have GH-convergent subsequences)** | **`finGrid_family_totally_bounded`** | **Spacetime.MatterGHPrecompactness** |
+| **Single kink of width W: ghDist(KinkGrid L, UnitCube) ≤ (W/2+1)/L → 0; GH limit is flat R³** | **`single_kink_gh_converges_to_flat`** | **Spacetime.MatterGHPrecompactness** |
 | VA quantization bundle | (various) | Substrate.VAQuantBundle |
 | Chiral current L² structure | (various) | Substrate.ChiralCurrentL2 |
 | Coherence-measure uniqueness | (various) | Substrate.CoherenceMeasureUniqueness |
