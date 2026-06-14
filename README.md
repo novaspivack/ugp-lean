@@ -2,7 +2,7 @@
 
 Machine-checked Lean 4 formalization of the **Universal Generative Principle (UGP)** — a research program by [Nova Spivack](https://www.novaspivack.com/) establishing that a single 7-state cellular automaton over GF(7) generates the Standard Model particle spectrum, gauge structure, and mass predictions from first principles.
 
-**361 modules · zero sorry on the core proof path · Lean 4 + Mathlib**
+**364 modules · zero sorry on the core proof path · Lean 4 + Mathlib**
 
 ---
 
@@ -48,7 +48,7 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 
 ## Module structure
 
-361 modules organized in 17 layers. Full module lists are in [docs/MODULES.md](docs/MODULES.md) and the formalization paper.
+364 modules organized in 17 layers. Full module lists are in [docs/MODULES.md](docs/MODULES.md) and the formalization paper.
 
 | Layer | Modules | What it covers |
 |---|---|---|
@@ -63,12 +63,12 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 | **Polynomial** | 19 | GF(7) explorations, causal tree, MDL unification, spin-7 ground space, PSL(2,7) unification, golden fiber taxonomy, golden quadratic arithmetic, admissible primes, Gaussian face arithmetic |
 | **Algebra** | 3 | Eisenstein functor, A₄ structure from inert-2 ramification, Fano regular action |
 | **Physics** | 8 | Z₇ vacuum selection, kink physics, CMCA physical point, BPS actions |
-| **Substrate** | 8 | PhiMDL fluctuation spectrum, sech overlap bounds, VA quantization, chiral currents, coherence-measure uniqueness |
+| **Substrate** | 9 | PhiMDL fluctuation spectrum, sech overlap bounds, VA quantization, chiral currents, coherence-measure uniqueness, SU(2)_L doublet Hilbert space |
 | **Gravity** | 4 | Yukawa overlap, FKTT coupling, Wald entropy scaffold, cosmological constant all-order vanishing |
 | **QFT** | 2 | Gauged mass gap, chiral symmetry breaking |
 | **Framework** | 6 | GTE-NEMS framework instance, optimality, final coalgebra, PR-5 independence, PSC measure uniformity, F21–SU(2) bridge |
 | **SelfRef** | 2 | Lawvere–Kleene, Rice–Halting |
-| **Spacetime** | ~12 | Geodesic theorem, mass gap, orbit mass hierarchy, QEC stabilizer |
+| **Spacetime** | ~14 | Geodesic theorem, mass gap, orbit mass hierarchy, QEC stabilizer, GH convergence of CMCA spatial graphs |
 | **Foundations / Cosmology / Phase4 / Other** | ~64 | Galois structure, cyclotomic completeness, PSC, conjectures, papers, CMCA filtration, thermodynamic bridge, cosmological constant bracket |
 
 ---
@@ -101,8 +101,10 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 - Golden fiber taxonomy: golden-fiber states at q=7 classified; golden-quadratic arithmetic certified (`golden_fiber_taxonomy_at_q7`)
 - Eisenstein functor: A₄ structure derived from inert-2 ramification; Eisenstein norm-product |F₂₁| = Φ₆(2)Φ₆(3) verified
 - N_gen = 3 uniqueness: the three-generation structure is the unique solution satisfying all GTE constraints (`ngen_uniqueness`)
-- N_gen = 3 universality (7/8): seven independent structural constraints (PSC, DPP, CMCA, TPC, Gorard dimension, GTE cascade, MDL orbit) are simultaneously certified at N_gen = 3 (`ngen_universality_seven_constraints`); eighth constraint (bracket orientation) conditional on QG-scale identification OQ-QG-1 (`ngen_universality_eight_conditional`); master bundling theorem `ngen_universality_master`; zero sorry, zero axioms
+- N_gen = 3 universality (7/8): seven independent structural constraints (PSC, DPP, CMCA, TPC, Gorard dimension, GTE cascade, MDL orbit) are simultaneously certified at N_gen = 3 (`ngen_universality_seven_constraints`); eighth constraint (bracket orientation) conditional on QG-scale identification OQ-QG-1b/c (`ngen_universality_eight_conditional`); master bundling theorem `ngen_universality_master`; zero sorry, zero axioms
 - Cosmological constant vanishing: all CC contributions vanish at the algebraic level, all orders (`lambda_all_order_zero`)
+- Vacuum CMCA GH convergence: the vacuum CMCA spatial graph converges to flat R³ in Gromov–Hausdorff distance with bound d_GH ≤ 1/L (`vacuum_cmca_gh_converges_to_flat_space`); GH family totally bounded (`finGrid_family_totally_bounded`); single kink of width W satisfies d_GH ≤ (W/2+1)/L → 0 (`single_kink_gh_converges_to_flat`)
+- SU(2)_L doublet Hilbert space explicitly constructed from GTE discrete data: T₃ eigenvalues ±½, W± operators, and su(2) algebra machine-certified (`su2l_doublet_hilbert_certified`)
 
 ---
 

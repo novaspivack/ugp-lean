@@ -229,9 +229,16 @@ The foundational chain from which all physics derives.
 | Gaussian face arithmetic | (various) | Polynomial.GaussianFaceLemma |
 | N_gen = 3 is unique | `ngen_uniqueness` | Classification.NgenUniqueness |
 | N_gen = 3 universality: 7 constraints jointly certified | `ngen_universality_seven_constraints` | Classification.NgenUniqueness |
-| N_gen = 3 universality: 8th constraint (bracket orientation) conditional on OQ-QG-1 | `ngen_universality_eight_conditional` | Classification.NgenUniqueness |
+| N_gen = 3 universality: 8th constraint (bracket orientation) conditional on OQ-QG-1b/c | `ngen_universality_eight_conditional` | Classification.NgenUniqueness |
 | N_gen = 3 universality master (7/8 CatAL, 8th conditional) | `ngen_universality_master` | Classification.NgenUniqueness |
 | Cosmological constant vanishes at all algebraic orders | `lambda_all_order_zero` | Gravity.LambdaAllOrderZero |
+| **Vacuum CMCA spatial GH convergence to flat 3D space** | **`vacuum_cmca_gh_converges_to_flat_space`** | **Spacetime.VacuumGHConvergence** |
+| **GH distance bound: ghDist(FinGrid L, UnitCube) ≤ 1/L** | **`fin_grid_gh_dist_bound`** | **Spacetime.VacuumGHConvergence** |
+| **FinGrid GH family is totally bounded (matter-present sequences have GH-convergent subsequences)** | **`finGrid_family_totally_bounded`** | **Spacetime.MatterGHPrecompactness** |
+| **Single kink of width W: ghDist(KinkGrid L, UnitCube) ≤ (W/2+1)/L → 0; GH limit is flat R³** | **`single_kink_gh_converges_to_flat`** | **Spacetime.MatterGHPrecompactness** |
+| **SU(2)_L doublet Hilbert space: T₃ eigenvalues ±½, W± operators, su(2) algebra machine-certified** | **`su2l_doublet_hilbert_certified`** | **Substrate.SU2LDoubletHilbert** |
+| T₃ eigenvalue: +½ (neutrino) and −½ (charged lepton) on standard basis | `t3_eigenvalue` | Substrate.SU2LDoubletHilbert |
+| su(2) algebra: [T₊,T₋]=2T₃ and [T₃,T±]=±T± all certified | `su2l_algebra_closes` | Substrate.SU2LDoubletHilbert |
 | VA quantization bundle | (various) | Substrate.VAQuantBundle |
 | Chiral current L² structure | (various) | Substrate.ChiralCurrentL2 |
 | Coherence-measure uniqueness | (various) | Substrate.CoherenceMeasureUniqueness |
