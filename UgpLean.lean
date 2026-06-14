@@ -241,6 +241,7 @@ import UgpLean.Substrate.PhiMDLFluctuationSpectrum
 import UgpLean.Substrate.SechOverlapIntegralBounds
 import UgpLean.Substrate.WightmanAxioms
 import UgpLean.Substrate.ChiralCurrentL2
+import UgpLean.Substrate.SU2LDoubletHilbert
 import UgpLean.Substrate.VAQuantBundle
 import UgpLean.Polynomial.PSL27Unification
 import UgpLean.Substrate.RSCodeOrbit
@@ -341,6 +342,7 @@ import UgpLean.Spacetime.ChiralGliderDynamics
 import UgpLean.Spacetime.ChiralMirrorSpeedSymmetry
 import UgpLean.Spacetime.OrbitDepthEtherPeriod
 import UgpLean.Spacetime.VacuumGHConvergence
+import UgpLean.Spacetime.MatterGHPrecompactness
 import UgpLean.Spacetime.PhiMDLKinkQuantumNumbers
 import UgpLean.Spacetime.AsyncLiftingTheorem
 import UgpLean.QFT.GaugedMassGap
