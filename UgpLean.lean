@@ -62,6 +62,7 @@ import UgpLean.GTE.ZPhiRing
 import UgpLean.GTE.DSIExport
 import UgpLean.GTE.NcColorArithmetic
 import UgpLean.GTE.SylowIndexCouplingHierarchy
+import UgpLean.GTE.PSCColorRankBundle
 import UgpLean.SelfRef.LawvereKleene
 import UgpLean.SelfRef.RiceHalting
 import UgpLean.Conjectures
