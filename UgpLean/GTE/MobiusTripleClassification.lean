@@ -1,3 +1,6 @@
+import Mathlib.Algebra.Squarefree.Basic
+import Mathlib.Data.Nat.Squarefree
+import Mathlib.Data.Nat.Totient
 import Mathlib.NumberTheory.ArithmeticFunction.Moebius
 
 /-!
@@ -116,5 +119,38 @@ theorem fermion_triples_all_squarefree_pair :
     moebius 9 = 0 ∧
     moebius 275 = 0 ∧
     moebius 76 = 0 := by native_decide
+
+-- ============================================================
+-- §4  b₂ = φ(7) × 7 structural identity (092-C3b / LT-092-18)
+-- ============================================================
+
+/-- **b2_equals_phi7_times_7** (CatAL): b₂ = φ(7) × 7 = 6 × 7 = 42. -/
+theorem b2_equals_phi7_times_7 : (42 : ℕ) = Nat.totient 7 * 7 := by decide
+
+/-- Ridge divisibility: b₂ = φ(7) × 7 divides R₁₀ = 1008. -/
+theorem b2_phi7_divides_ridge : Nat.totient 7 * 7 ∣ 1008 := by decide
+
+/-- Prime factors of b₂ = 42 = 2×3×7 are exactly those in R₁₀ = 1008 = 2⁴×3²×7. -/
+theorem b2_ridge_shared_factors :
+    (42 : ℕ) = 2 * 3 * 7 ∧ (1008 : ℕ) = 2 ^ 4 * 3 ^ 2 * 7 := by decide
+
+-- ============================================================
+-- §5  Lepton seed squarefree MDL argument (092-A1a-MDL / LT-092-20)
+-- ============================================================
+
+/-- c₁ = 823 is prime (squarefree, Möbius = −1). -/
+theorem c1_prime : Nat.Prime 823 := prime_823
+
+/-- c₁ = 823 is squarefree. -/
+theorem c1_squarefree : Squarefree (823 : ℕ) := by native_decide
+
+/-- Full lepton seed (1, 73, 823): all three components are squarefree. -/
+theorem lepton_seed_all_squarefree_mdl :
+    Squarefree (1 : ℕ) ∧ Squarefree 73 ∧ Squarefree 823 := by
+  exact ⟨squarefree_one, by native_decide, c1_squarefree⟩
+
+/-- MDL-minimal lepton seed: each component is 1 or prime, hence maximally squarefree. -/
+theorem lepton_seed_squarefree_mdl_argument : Nat.Prime 73 ∧ Nat.Prime 823 :=
+  ⟨prime_73, c1_prime⟩
 
 end UgpLean.GTE.MobiusTripleClassification

@@ -65,6 +65,17 @@ theorem minkowski_not_positive_definite :
     ∃ v : FourVector, minkowskiInner v v < 0 := by
   exact ⟨fourMomentum 1 0 0 0, by rw [minkowski_timelike_vector]; norm_num⟩
 
+/-- **minkowski_supports_causal_cone** (CatAL):
+with signature `(−,+,+,+)`, timelike vectors have η(v,v) < 0 (inside the causal cone)
+and spacelike vectors have η(w,w) > 0 (outside it). This is the algebraic prerequisite
+for causal propagation bounds in the A2b PSC → Lorentzian chain. -/
+theorem minkowski_supports_causal_cone :
+    (∃ v : FourVector, minkowskiInner v v < 0) ∧
+      (∃ w : FourVector, minkowskiInner w w > 0) := by
+  refine ⟨?_, ?_⟩
+  · exact ⟨fourMomentum 1 0 0 0, by rw [minkowski_timelike_vector]; norm_num⟩
+  · exact ⟨fourMomentum 0 1 0 0, by rw [minkowski_spacelike_vector]; norm_num⟩
+
 /-- **elliptic_implies_no_causal_propagation** (CatAD):
 elliptic PDEs (Euclidean signature) have no characteristic cones and no directed
 causal propagation; the Cauchy problem is ill-posed (Hadamard instability).
