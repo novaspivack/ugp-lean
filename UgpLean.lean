@@ -108,6 +108,7 @@ import UgpLean.MassRelations.VVAllCoefficientsFromNc
 import UgpLean.MassRelations.NeutrinoFroggattNielsen
 import UgpLean.MassRelations.NeutrinoSector
 import UgpLean.QM.BilinearNeutrinoNoGo
+import UgpLean.QM.KahlerStateManifold
 import UgpLean.MassRelations.HiggsQuartic
 import UgpLean.MassRelations.CKMTheta23
 import UgpLean.MassRelations.CKMMixing
@@ -281,6 +282,8 @@ import UgpLean.Spacetime.QECStabilizer
 import UgpLean.Spacetime.DWeightSRFormula
 import UgpLean.Spacetime.MultiParticleHilbert
 import UgpLean.Spacetime.QuantumGravity
+import UgpLean.Spacetime.EntanglementAreaLaw
+import UgpLean.Spacetime.LorentzianCausalityNecessity
 import UgpLean.Spacetime.GravitonFockSpace
 import UgpLean.Spacetime.StressEnergyTensor
 import UgpLean.Gravity.MinimalCoupling
