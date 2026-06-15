@@ -24,6 +24,9 @@ import UgpLean.GTE.PrimeFactorAnalysis
 import UgpLean.GTE.UpdateMap
 import UgpLean.GTE.MersenneGcd
 import UgpLean.GTE.MersenneLadder
+import UgpLean.GTE.RidgeDerivation
+import UgpLean.GTE.SemanticFloorDerivation
+import UgpLean.GTE.FibonacciDerivation
 import UgpLean.BraidAtlas.ChargeTheorem
 import UgpLean.BraidAtlas.WindingToBraidRep
 import UgpLean.BraidAtlas.CompositeTriples
@@ -59,6 +62,7 @@ import UgpLean.GTE.ZPhiRing
 import UgpLean.GTE.DSIExport
 import UgpLean.GTE.NcColorArithmetic
 import UgpLean.GTE.SylowIndexCouplingHierarchy
+import UgpLean.GTE.PSCColorRankBundle
 import UgpLean.SelfRef.LawvereKleene
 import UgpLean.SelfRef.RiceHalting
 import UgpLean.Conjectures
