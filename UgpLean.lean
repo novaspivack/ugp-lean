@@ -25,6 +25,7 @@ import UgpLean.GTE.UpdateMap
 import UgpLean.GTE.MersenneGcd
 import UgpLean.GTE.MersenneLadder
 import UgpLean.GTE.RidgeDerivation
+import UgpLean.GTE.FibonacciDerivation
 import UgpLean.BraidAtlas.ChargeTheorem
 import UgpLean.BraidAtlas.WindingToBraidRep
 import UgpLean.BraidAtlas.CompositeTriples
