@@ -223,6 +223,7 @@ import UgpLean.Universality.BetaCoefficientIdentity
 import UgpLean.Universality.AlphaEMStructuralIdentity
 import UgpLean.Universality.AlphaEMArchivalIdentities
 import UgpLean.Universality.Phi7UnificationTheorem
+import UgpLean.Universality.IMTStructuralPair
 import UgpLean.Universality.CasimirB0Relation
 import UgpLean.Universality.FrobeniusPrimeIdentity
 import UgpLean.Universality.FrobeniusChain
