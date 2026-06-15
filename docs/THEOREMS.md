@@ -270,6 +270,42 @@ The foundational chain from which all physics derives.
 
 ---
 
+## Archival Identity and Structural Classification
+
+| Theorem | Lean name | Module |
+|---|---|---|
+| b₁ = 2^φ(7) + N_gen² (φ(7) route to lepton seed) | `b1_totient7_ngen_identity` | Universality.AlphaEMArchivalIdentities |
+| b₁ + 1/α_em = primorial(7) = 210 | `primorial7_alpha_b1_identity` | Universality.AlphaEMArchivalIdentities |
+| Two routes to 1/α_em are equivalent: 2×73−9 = 2⁷+9 | `alpha_inv_routes_equivalent` | Universality.AlphaEMArchivalIdentities |
+| URC scale: 200 = 2³×5² (GTE structural identification) | `urc_scale_200_gte_identity` | Universality.AlphaEMArchivalIdentities |
+| ord₇(2) = N_gen = 3 (color subgroup order) | `ord7_2_eq_ngen` | Universality.Phi7UnificationTheorem |
+| φ(7) = 2 × N_gen = 6 | `phi7_eq_two_ngen` | Universality.Phi7UnificationTheorem |
+| φ(7) unification: b₁, b₂, α_em as corollaries of \|GF(7)*\| = 2N_gen | `phi7_structural_unification_theorem` | Universality.Phi7UnificationTheorem |
+| φ(7) = 6 uniquely among primes (null test) | `phi7_uniqueness_among_primes` | Universality.Phi7UnificationTheorem |
+| Electron triple is unique lepton with Möbius product +1 | `electron_triple_mobius_unique_lepton` | GTE.MobiusTripleClassification |
+| Lepton c-values ≡ 7 (mod 8): {823, 1023, 65535} | `lepton_c_values_mod8_seven` | GTE.MobiusTripleClassification |
+| Electron triple (1,73,823): all three components squarefree | `electron_all_squarefree` | GTE.MobiusTripleClassification |
+| Bottom quark triple (5,8191,65535): all three squarefree | `bottom_all_squarefree` | GTE.MobiusTripleClassification |
+| Electron and bottom are the unique all-squarefree fermion pair | `fermion_triples_all_squarefree_pair` | GTE.MobiusTripleClassification |
+| b₂ = φ(7) × 7 = 42 (group-order identity) | `b2_equals_phi7_times_7` | GTE.MobiusTripleClassification |
+| b₂ divides ridge R₁₀ (ridge divisibility) | `b2_phi7_divides_ridge` | GTE.MobiusTripleClassification |
+| c₁ = 823 is prime (MDL minimality argument) | `c1_prime` | GTE.MobiusTripleClassification |
+| GTE polynomial Lipschitz constant = 3 over GF(7) symmetric metric | `gte_lipschitz_constant_eq_3` | GTE.PolynomialLipschitz |
+| Bilinear-D unitarity obstruction: row sum zero for any unitary U | `bduo_row_sum_zero` | QM.BilinearNeutrinoNoGo |
+| Unitarity forces interference matrix to be singular | `bduo_interference_sum_zero` | QM.BilinearNeutrinoNoGo |
+| Unitary conjugation preserves trace | `trace_invariant_under_unitary` | QM.KahlerStateManifold |
+| Unitary conjugation preserves density matrix condition | `unitary_preserves_density_matrix` | QM.KahlerStateManifold |
+| GTE state manifold is Kähler (CatAD; Mathlib blocker) | `gte_state_space_kaehler_property` | QM.KahlerStateManifold |
+| Pure-state bipartite entanglement: rank-one projector with unit trace | `pure_state_bipartite_rank_one` | Spacetime.EntanglementAreaLaw |
+| Wald entropy cross-reference to WaldEntropy.lean | `bekenstein_hawking_wald_crossref` | Spacetime.EntanglementAreaLaw |
+| Minkowski metric ≠ Euclidean (indefinite signature certified) | `minkowski_has_indefinite_signature` | Spacetime.LorentzianCausalityNecessity |
+| Minkowski supports causal cone (timelike and spacelike sectors) | `minkowski_supports_causal_cone` | Spacetime.LorentzianCausalityNecessity |
+| PSC → Lorentzian signature (CatAD; PDE Mathlib blocker) | `lorentzian_sig_from_causal_propagation` | Spacetime.LorentzianCausalityNecessity |
+| IMT gen-1/phase pair: g₁ + 2w_phase = 2^N_fam − π/2^n_ridge (e cancels) | `imt_gen1_phase_structural_pair` | Universality.IMTStructuralPair |
+| IMT binding weight: w_bind = −1/(4×11) − 1/2^11 | `imt_binding_weight_structural` | Universality.IMTStructuralPair |
+
+---
+
 ## Finding More Theorems
 
 - **Complete inventory**: `paper/ugp_lean_formalization.tex` Table 1
