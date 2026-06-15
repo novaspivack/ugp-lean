@@ -120,6 +120,7 @@
 \newcommand{\CatAD}{\ensuremath{\mathrm{CatAD}}}
 \newcommand{\CatB}{\ensuremath{\mathrm{CatB}}}
 \newcommand{\GTE}{\ensuremath{\mathrm{GTE}}}
+\newcommand{\CMCA}{\text{CMCA}}
 \newcommand{\ZS}{\mathbb{Z}_7}
 
 \title{\textbf{ugp-lean}: A Machine-Checked Formalization of the\\
@@ -426,7 +427,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 361~\lean{} modules across multiple organizational layers
+The artifact is organized into 368~\lean{} modules across multiple organizational layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -448,13 +449,14 @@ The artifact is organized into 361~\lean{} modules across multiple organizationa
   {\textbf{Classification}~(6)\quad Bounds, TheoremA, TheoremB,
    RSUC, FormalRSUC, MonotonicStrengthening};
 \node[layer, fill=orange!8, below=of class] (gte)
-  {\textbf{GTE}~(23)\quad Evolution, Orbit, UpdateMap,
+  {\textbf{GTE}~(27)\quad Evolution, Orbit, UpdateMap,
    GeneralTheorems, MersenneGcd, PrimeFactorAnalysis, ResonantFactory,
    MirrorDualConjecture, MirrorShift, UGPPrimes, InertPrimes,
    AnalyticArchitecture, DSIExport, StructuralTheorems, UniquenessCertificates,
    GTESimulation, EntropyNonMonotone,
    MersenneLadder, FiberBundle, LinearResponse, ScaleConnection,
-   GTBGenerationPrimes, \textbf{NuclearPairing}};
+   GTBGenerationPrimes, \textbf{NuclearPairing},
+   \textit{new:} RidgeDerivation, FibonacciDerivation, SemanticFloorDerivation, PSCColorRankBundle};
 \node[layer, fill=red!8,    below=of gte]  (struc)
   {\textbf{Structural}~(19)\quad QuarterLock, LModelDerivation;
    \textit{ElegantKernel/} ChiralityFeature, D5StructuralAxiom, FibonacciHessian,
@@ -1144,6 +1146,118 @@ Lean name: \lstinline|nc_uniqueness_from_ridge_divisors|.
 \textup{(in \texttt{GTE.NcColorArithmetic}, 10 theorems, zero \texttt{sorry},
 zero custom axioms; standard Lean/Mathlib kernel only)}
 \end{leanref}
+
+\subsection{Ridge constant derivation (\texttt{GTE.RidgeDerivation})}\label{subsec:ridge-derivation}
+
+The \texttt{GTE.RidgeDerivation} module derives the ridge constant $c_{\rm ridge} = 16$
+from first principles: the multiplicative structure of $\mathbb{Z}_7 \times \mathbb{Z}_3$
+and the divisibility conditions imposed at ridge $n = 10$.
+
+\begin{theorem}[GT-001/GT-009 ridge closure bundle]\label{thm:ridge-closed}
+The ridge constant $16 = 2^{1 + \mathrm{ord}_7(2)}$ is the \emph{unique} power of~$2$
+compatible with the $\mathbb{Z}_7 \times \mathbb{Z}_3$ divisibility condition at $n = 10$.
+
+\begin{leanref}
+\lstinline|gt001_gt009_ridge_closed|, \lstinline|ridge_constant_from_gf7_z3|,
+\lstinline|ridge_divisibility_at_n10|, \lstinline|ridge_offset_unique_power_of_2|
+\textup{(in \texttt{GTE.RidgeDerivation}, zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
+
+\subsection{Fibonacci structure derivation (\texttt{GTE.FibonacciDerivation})}\label{subsec:fib-derivation}
+
+The \texttt{GTE.FibonacciDerivation} module shows that the three key orbit parameters
+$q_2$, $d$, and the generation gap are all consequences of the $\mathbb{Z}_7 \times \mathbb{Z}_3$
+structure, with Fibonacci numbers appearing as a \emph{derived} output rather than an input.
+
+\begin{theorem}[GT-010: $q_2$ from $\mathbb{Z}_7$ and $N_c$]\label{thm:q2-from-z7}
+$q_2 = N_c \times 2^{\mathrm{ord}_7(2)}$ follows from the multiplicative order of~$2$
+in $\mathbb{Z}_7$ and the QCD colour rank $N_c = 3$.
+
+\begin{leanref}
+\lstinline|gt010_q2_from_z7_nc|
+\textup{(in \texttt{GTE.FibonacciDerivation}, zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
+
+\begin{theorem}[GT-011: ridge offset equals Pisano period $\pi(7)$]\label{thm:pisano-7}
+The ridge offset $d = 16$ equals the Pisano period $\pi(7)$, the period of the
+Fibonacci sequence modulo~$7$.
+
+\begin{leanref}
+\lstinline|gt011_ridge_offset_eq_pisano_7|
+\textup{(in \texttt{GTE.FibonacciDerivation}, zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
+
+\begin{theorem}[GT-012: generation gap from $\mathbb{Z}_7 \times \mathbb{Z}_3$]\label{thm:gen-gap}
+The generation gap $= F_{\mathrm{ord}_7(2) + N_c + 1}$ is derived purely from
+$\mathbb{Z}_7 \times \mathbb{Z}_3$ structure.
+
+\begin{leanref}
+\lstinline|gt012_gap_from_z7_z3|
+\textup{(in \texttt{GTE.FibonacciDerivation}, zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
+
+\subsection{Semantic floor derivation (\texttt{GTE.SemanticFloorDerivation})}\label{subsec:semantic-floor-derivation}
+
+The \texttt{GTE.SemanticFloorDerivation} module proves that the SemanticFloor
+condition $a \in \{1, 9, 5\}$ is not a hardcoded sieve parameter but is
+the orbit projection of the cascade formula $a' = m - (n+2-t)$.
+
+\begin{theorem}[SemanticFloor from cascade]\label{thm:semantic-floor-cascade}
+The SemanticFloor set $\{1, 9, 5\}$ is exactly the orbit projection of
+$a' = m - (n+2-t)$ at ridge $n = 10$, certified by exhaustive
+cascade computation.
+
+\begin{leanref}
+\lstinline|semantic_floor_a_condition_from_cascade|, \lstinline|a_orbit_values_at_n10|
+\textup{(in \texttt{GTE.SemanticFloorDerivation}, zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
+
+\subsection{Mersenne ladder uniqueness (\texttt{GTE.MersenneLadder} — extended)}\label{subsec:mersenne-ladder-unique}
+
+In addition to the formulas described in~\S\ref{subsec:mersenne-ladder}, the
+\texttt{GTE.MersenneLadder} module now includes a uniqueness theorem establishing
+that no other ladder structure is admissible.
+
+\begin{theorem}[Mersenne ladder uniqueness]\label{thm:mersenne-unique}
+The even-step capacity $c' = 2^{n + 2N_c} - 1$ is the \emph{unique} Mersenne
+candidate selected by double-Fibonacci minimality; all other Mersenne ladder
+values fail the minimality criterion.
+
+\begin{leanref}
+\lstinline|mersenne_ladder_uniqueness_proved|
+\textup{(in \texttt{GTE.MersenneLadder}, zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
+
+\subsection{PSC colour-rank bundle (\texttt{GTE.PSCColorRankBundle})}\label{subsec:psc-color-rank}
+
+The \texttt{GTE.PSCColorRankBundle} module certifies that $N_c = 3$ is forced
+by the PSC, and that the generation count equals the colour rank.
+
+\begin{theorem}[GT-013: $N_c = 3$ from PSC, Frobenius prime, and FGCI]\label{thm:gt013-psc-nc}
+The PSC, combined with the Frobenius prime constraint and the
+Frobenius–Generation Coincidence Identity (FGCI), forces $N_c = 3$.
+
+\begin{leanref}
+\lstinline|gt013_psc_nc_bundle|
+\textup{(in \texttt{GTE.PSCColorRankBundle}, zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
+
+\begin{theorem}[$N_{\rm gen} = \mathrm{colorRank}$]\label{thm:ngen-color-rank}
+PSC enumeration forces $N_{\rm gen} = \mathrm{colorRank}$, providing an algebraic
+identification of the generation count with the QCD colour rank.
+
+\begin{leanref}
+\lstinline|psc_implies_ngen_eq_colorRank|
+\textup{(in \texttt{GTE.PSCColorRankBundle}, zero \texttt{sorry})}
+\end{leanref}
+\end{theorem}
 
 % ═══════════════════════════════════════════════════════════════
 \section{Braid Atlas Charge Structure}\label{sec:braidatlas}

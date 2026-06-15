@@ -2,7 +2,7 @@
 
 Machine-checked Lean 4 formalization of the **Universal Generative Principle (UGP)** — a research program by [Nova Spivack](https://www.novaspivack.com/) establishing that a single 7-state cellular automaton over GF(7) generates the Standard Model particle spectrum, gauge structure, and mass predictions from first principles.
 
-**364 modules · zero sorry on the core proof path · Lean 4 + Mathlib**
+**368 modules · zero sorry on the core proof path · Lean 4 + Mathlib**
 
 ---
 
@@ -48,7 +48,7 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 
 ## Module structure
 
-364 modules organized in 17 layers. Full module lists are in [docs/MODULES.md](docs/MODULES.md) and the formalization paper.
+368 modules organized in 17 layers. Full module lists are in [docs/MODULES.md](docs/MODULES.md) and the formalization paper.
 
 | Layer | Modules | What it covers |
 |---|---|---|

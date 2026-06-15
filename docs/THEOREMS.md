@@ -201,6 +201,25 @@ The foundational chain from which all physics derives.
 
 ---
 
+## GTE Derivation Modules (EPIC-091 — GT-001 through GT-013)
+
+| Theorem | Lean name | Module |
+|---|---|---|
+| Ridge constant 16 = 2^(1+ord₇(2)) is the unique power of 2 compatible with Z₇×Z₃ divisibility at n=10 (GT-001/GT-009 bundle) | `gt001_gt009_ridge_closed` | GTE.RidgeDerivation |
+| Ridge constant derived from GF(7)×Z₃ structure | `ridge_constant_from_gf7_z3` | GTE.RidgeDerivation |
+| Divisibility condition certified at ridge n=10 | `ridge_divisibility_at_n10` | GTE.RidgeDerivation |
+| Ridge offset is uniquely a power of 2 | `ridge_offset_unique_power_of_2` | GTE.RidgeDerivation |
+| q₂ = N_c × 2^ord₇(2) from Z₇ multiplicative order and colour rank (GT-010) | `gt010_q2_from_z7_nc` | GTE.FibonacciDerivation |
+| Ridge offset d = π(7) = 16 equals Pisano period of 7 (GT-011) | `gt011_ridge_offset_eq_pisano_7` | GTE.FibonacciDerivation |
+| Generation gap = F_{ord₇(2)+N_c+1} derived from Z₇×Z₃ (GT-012) | `gt012_gap_from_z7_z3` | GTE.FibonacciDerivation |
+| SemanticFloor set {1,9,5} is orbit projection of a′ = m−(n+2−t) | `semantic_floor_a_condition_from_cascade` | GTE.SemanticFloorDerivation |
+| Canonical a-orbit values {1,9,5} at ridge n=10 certified | `a_orbit_values_at_n10` | GTE.SemanticFloorDerivation |
+| Even-step c′ = 2^(n+2Nc)−1 uniquely selected by double-Fibonacci minimality | `mersenne_ladder_uniqueness_proved` | GTE.MersenneLadder |
+| N_c = 3 forced by PSC with Frobenius prime and FGCI identities (GT-013 bundle) | `gt013_psc_nc_bundle` | GTE.PSCColorRankBundle |
+| PSC enumeration forces N_gen = colorRank | `psc_implies_ngen_eq_colorRank` | GTE.PSCColorRankBundle |
+
+---
+
 ## GTE-NEMS Framework
 
 | Theorem | Lean name | Module |
