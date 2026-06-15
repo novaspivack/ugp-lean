@@ -63,6 +63,8 @@ import UgpLean.GTE.DSIExport
 import UgpLean.GTE.NcColorArithmetic
 import UgpLean.GTE.SylowIndexCouplingHierarchy
 import UgpLean.GTE.PSCColorRankBundle
+import UgpLean.GTE.MobiusTripleClassification
+import UgpLean.GTE.PolynomialLipschitz
 import UgpLean.SelfRef.LawvereKleene
 import UgpLean.SelfRef.RiceHalting
 import UgpLean.Conjectures
@@ -105,6 +107,7 @@ import UgpLean.MassRelations.VVMechanism
 import UgpLean.MassRelations.VVAllCoefficientsFromNc
 import UgpLean.MassRelations.NeutrinoFroggattNielsen
 import UgpLean.MassRelations.NeutrinoSector
+import UgpLean.QM.BilinearNeutrinoNoGo
 import UgpLean.MassRelations.HiggsQuartic
 import UgpLean.MassRelations.CKMTheta23
 import UgpLean.MassRelations.CKMMixing
@@ -217,6 +220,7 @@ import UgpLean.Universality.SylowIndexCouplingHierarchy
 import UgpLean.Universality.GaugeInvariance
 import UgpLean.Universality.BetaCoefficientIdentity
 import UgpLean.Universality.AlphaEMStructuralIdentity
+import UgpLean.Universality.AlphaEMArchivalIdentities
 import UgpLean.Universality.CasimirB0Relation
 import UgpLean.Universality.FrobeniusPrimeIdentity
 import UgpLean.Universality.FrobeniusChain
