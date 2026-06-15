@@ -30,4 +30,14 @@ theorem alpha_archival_identities_bundle :
   refine ⟨b1_totient7_ngen_identity, alpha_inv_routes_equivalent, primorial7_eq_b1_plus_alpha_inv,
     alpha_em_inverse_structural_identity⟩
 
+-- ============================================================
+-- §2  URC leading scale 200 = 2^N_gen × N_fam^(N_gen−1) (092-A6b / LT-092-13)
+-- ============================================================
+
+/-- URC cascade scale factor: 200 = 2^3 × 5^2 with N_gen = 3, N_fam = 5. -/
+theorem urc_scale_200_gte_identity : (200 : ℕ) = 2 ^ 3 * 5 ^ (3 - 1) := by decide
+
+/-- Rational form of N_gen / 200 = 3/200 as natural-number cross-multiplication. -/
+theorem urc_scale_fraction_identity : 3 * 1000 = (200 : ℕ) * 15 := by decide
+
 end UgpLean.Universality.AlphaEMArchivalIdentities

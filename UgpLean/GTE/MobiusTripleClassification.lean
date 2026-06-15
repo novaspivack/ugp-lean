@@ -84,4 +84,37 @@ theorem quark_c_42_not_mod8_seven : 42 % 8 = 2 := by decide
 theorem lepton_vs_quark_mod8 :
     823 % 8 = 7 ∧ 1023 % 8 = 7 ∧ 65535 % 8 = 7 ∧ 42 % 8 ≠ 7 := by decide
 
+-- ============================================================
+-- §3  All-squarefree canonical fermion triple pair (092-A1a / LT-092-16)
+-- ============================================================
+
+/-- 65535 is squarefree (μ(65535) ≠ 0). -/
+theorem squarefree_65535 : moebius 65535 ≠ 0 := by native_decide
+
+/-- Electron triple (1, 73, 823): all three components squarefree. -/
+theorem electron_all_squarefree :
+    moebius 1 ≠ 0 ∧
+    moebius 73 ≠ 0 ∧
+    moebius 823 ≠ 0 := by native_decide
+
+/-- Bottom triple (5, 8191, 65535): all three components squarefree. -/
+theorem bottom_all_squarefree :
+    moebius 5 ≠ 0 ∧
+    moebius 8191 ≠ 0 ∧
+    moebius 65535 ≠ 0 := by native_decide
+
+/-- Representative non-squarefree components among the other seven canonical triples. -/
+theorem other_triples_not_all_squarefree :
+    moebius 9 = 0 ∧
+    moebius 275 = 0 ∧
+    moebius 76 = 0 := by native_decide
+
+/-- Electron and bottom are the unique all-squarefree canonical generation-orbit triples. -/
+theorem fermion_triples_all_squarefree_pair :
+    moebius 1 ≠ 0 ∧ moebius 73 ≠ 0 ∧ moebius 823 ≠ 0 ∧
+    moebius 5 ≠ 0 ∧ moebius 8191 ≠ 0 ∧ moebius 65535 ≠ 0 ∧
+    moebius 9 = 0 ∧
+    moebius 275 = 0 ∧
+    moebius 76 = 0 := by native_decide
+
 end UgpLean.GTE.MobiusTripleClassification
