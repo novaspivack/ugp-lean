@@ -63,6 +63,8 @@ import UgpLean.GTE.DSIExport
 import UgpLean.GTE.NcColorArithmetic
 import UgpLean.GTE.SylowIndexCouplingHierarchy
 import UgpLean.GTE.PSCColorRankBundle
+import UgpLean.GTE.MobiusTripleClassification
+import UgpLean.GTE.PolynomialLipschitz
 import UgpLean.SelfRef.LawvereKleene
 import UgpLean.SelfRef.RiceHalting
 import UgpLean.Conjectures
@@ -217,6 +219,8 @@ import UgpLean.Universality.SylowIndexCouplingHierarchy
 import UgpLean.Universality.GaugeInvariance
 import UgpLean.Universality.BetaCoefficientIdentity
 import UgpLean.Universality.AlphaEMStructuralIdentity
+import UgpLean.Universality.AlphaEMArchivalIdentities
+import UgpLean.Universality.Phi7UnificationTheorem
 import UgpLean.Universality.CasimirB0Relation
 import UgpLean.Universality.FrobeniusPrimeIdentity
 import UgpLean.Universality.FrobeniusChain
@@ -279,6 +283,9 @@ import UgpLean.Spacetime.MultiParticleHilbert
 import UgpLean.Spacetime.QuantumGravity
 import UgpLean.Spacetime.GravitonFockSpace
 import UgpLean.Spacetime.StressEnergyTensor
+import UgpLean.Spacetime.EntanglementAreaLaw
+import UgpLean.Spacetime.LorentzianCausalityNecessity
+import UgpLean.QM.KahlerStateManifold
 import UgpLean.Gravity.MinimalCoupling
 import UgpLean.Gravity.FLRWFieldEquation
 import UgpLean.Gravity.PlanckDensityBound
@@ -304,6 +311,7 @@ import UgpLean.Gravity.PSCEpochSelection
 import UgpLean.Gravity.NRTVacuumEnergy
 import UgpLean.Gravity.CMBSpectralTilt
 import UgpLean.Gravity.LambdaAllOrderZero
+import UgpLean.Gravity.ClassicalLambda
 import UgpLean.Cosmology.CCBracketHurwitz
 import UgpLean.Cosmology.PrimordialAmplitude
 import UgpLean.Cosmology.MDLInitialState
