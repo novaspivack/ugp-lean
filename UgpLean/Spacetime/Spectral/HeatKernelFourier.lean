@@ -294,9 +294,11 @@ theorem cayley_eigenvalue_quadratic_expansion (M : ℕ) (hM : 2 ≤ M) (k : ZMod
     a four-dimensional Gaussian integral, giving the diffusive scaling
     `(L+2)⁴ · K_{(L+2)²} → C > 0`.
 
-    Mathlib 4.29 lacks a packaged discrete-torus heat-kernel / Riemann-sum → 4D
-    Gaussian bridge at this generality; the analytical chain is recorded as an
-    explicit hypothesis (DFT eigenvalues + quadratic expansion + Laplace method). -/
+    **CatAD blocker (LT-092-09b):** Mathlib lacks a packaged discrete-torus
+    Riemann-sum → four-dimensional Gaussian integral bridge at this generality.
+    The analytical content (Laplace method on the Brillouin zone after DFT
+    diagonalization and quadratic eigenvalue expansion) is standard; machine
+    certification is conditional on that asymptotic-analysis infrastructure. -/
 axiom discrete_torus_gaussian_limit_axiom :
     ∃ C : ℝ, 0 < C ∧
       Filter.Tendsto
@@ -319,6 +321,22 @@ theorem discrete_torus_gaussian_limit :
               20 ((L + 2)^2))
         Filter.atTop (nhds C) :=
   discrete_torus_gaussian_limit_axiom
+
+/-- **LT-092-09b:** discrete Fourier heat-kernel sum → Gaussian diffusive limit.
+
+    CatAD — analytically derived; Lean certification delegates to
+    `discrete_torus_gaussian_limit_axiom` pending Mathlib asymptotic bridge. -/
+theorem heat_kernel_fourier_discrete_gaussian :
+    ∃ C : ℝ, 0 < C ∧
+      Filter.Tendsto
+        (fun L : ℕ =>
+          ((L : ℝ) + 2)^4 *
+            physicalHeatKernelReturnAvg
+              (CausalGraphPeriodic (L + 2) (L + 2)
+                (by omega : 2 ≤ L + 2) (by omega : 1 ≤ L + 2))
+              20 ((L + 2)^2))
+        Filter.atTop (nhds C) :=
+  discrete_torus_gaussian_limit
 
 /-- **Assembled Fourier-route asymptotic** for the spectral-dimension theorem. Combines the three
     steps above; this is the active proof target for the heat-kernel gap. -/

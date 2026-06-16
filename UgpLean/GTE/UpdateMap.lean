@@ -378,11 +378,23 @@ theorem even_step_c_invariance (n b : ℕ) (hn : 5 ≤ n)
   have hbq := ridge_bq_eq_ridge_value n b hn hb hmin
   omega
 
+/-- After the odd step from G₁ = (1, 73, 823), b₂ = 42 divides R₁₀ = 1008. -/
+theorem b2_divides_ridge_10 : (42 : ℕ) ∣ ridge 10 := by native_decide
+
+/-- Equivalently: R₁₀ = 1008 = 42 × 24. -/
+theorem ridge_10_eq_b2_times_24 : (1008 : ℕ) = 42 * 24 := by decide
+
+/-- The odd-step b-value from G₁ satisfies ridge divisibility via the update map. -/
+theorem odd_step_b2_divides_ridge :
+    oddStepB 73 (gteRemainder 823 73) (gteQuotient 823 73) ∣ ridge 10 := by native_decide
+
+/-- The even-step b₃ = 275 does not divide R₁₀ = 1008. -/
+theorem b3_not_divides_ridge_10 : ¬(275 ∣ 1008) := by decide
+
 /-- Corollary at n=10, b=42: c₃_strict = 1023 = c₂. -/
 theorem c3_strict_eq_c2_at_n10 :
     evenStepC 42 ((2^10 - 1) / 42) = 2^10 - 1 := by
-  have hb : (42 : ℕ) ∣ ridge 10 := by native_decide
-  exact even_step_c_invariance 10 42 (by norm_num) hb (by norm_num)
+  exact even_step_c_invariance 10 42 (by norm_num) b2_divides_ridge_10 (by norm_num)
 
 /-- The c₃ = 65535 in the paper's figure is the NEXT Mersenne target
  (2^16 - 1), not the strict even-step output. The strict output is 1023 = c₂.
