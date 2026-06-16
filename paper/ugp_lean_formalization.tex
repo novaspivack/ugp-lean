@@ -8292,6 +8292,14 @@ GTE $M_Z = M_W\sqrt{13/10}$ lies in $(91600,91660)\,\mathrm{MeV}$
 Module: \texttt{Universality/EWBosonNumericalCerts.lean}.
 \end{keybox}
 
+\begin{keybox}{\lstinline|m_Z_rho_corrected_interval| (zero sorry, CatAD)}
+GTE $\hat\rho$-corrected $Z$ boson mass $M_Z^{\rm phys} \in (91190,91220)\,\mathrm{MeV}$,
+using GTE-internal top-quark pole mass $m_t=172610\,\mathrm{MeV}$ (TT+VV cascade) and
+leading top self-energy correction $\hat\rho=1+3G_F m_t^2/(8\pi^2\sqrt{2})$
+(uses \lstinline|sqrt_rho_hat_GTE_bounds|, \lstinline|sqrt_thirteen_ten_bounds|).
+Module: \texttt{Universality/EWRhoCorrectedMZ.lean}.
+\end{keybox}
+
 \begin{keybox}{\lstinline|sin2_theta_W_threshold_interval| (zero sorry, CatAD)}
 Threshold-corrected $\sin^2\theta_W$ in $[0.23128,0.23131]$ at GTE inputs
 (uses \lstinline|higgs_threshold_log_bound|,
