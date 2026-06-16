@@ -21,6 +21,13 @@ theorem alpha_inv_routes_equivalent : 2 * 73 - 9 = 2 ^ 7 + 9 := by decide
 /-- primorial(7) = b₁ + 1/α_em = 73 + 137 = 210. -/
 theorem primorial7_eq_b1_plus_alpha_inv : 2 * 3 * 5 * 7 = (73 : ℕ) + 137 := by decide
 
+/-- **primorial7_alpha_b1_identity** (CatAL):
+primorial(7) = 2×3×5×7 = 210 = b₁ + 1/α_em = 73 + 137.
+This is the GTE archival closure identity: the primorial of 7 equals the sum of the
+two principal GTE α-structure constants (b₁ = 73 and 1/α = 137). -/
+theorem primorial7_alpha_b1_identity : 2 * 3 * 5 * 7 = (73 : ℕ) + 137 :=
+  primorial7_eq_b1_plus_alpha_inv
+
 /-- Bundle linking the totient identity to the certified current α route. -/
 theorem alpha_archival_identities_bundle :
     (73 : ℕ) = 2 ^ Nat.totient 7 + 3 ^ 2 ∧

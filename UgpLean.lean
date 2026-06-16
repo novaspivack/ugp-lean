@@ -314,6 +314,7 @@ import UgpLean.Gravity.PSCEpochSelection
 import UgpLean.Gravity.NRTVacuumEnergy
 import UgpLean.Gravity.CMBSpectralTilt
 import UgpLean.Gravity.LambdaAllOrderZero
+import UgpLean.Gravity.ClassicalLambda
 import UgpLean.Cosmology.CCBracketHurwitz
 import UgpLean.Cosmology.PrimordialAmplitude
 import UgpLean.Cosmology.MDLInitialState
