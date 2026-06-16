@@ -7,7 +7,7 @@ import UgpLean.MassRelations.TranscendentalMassBounds
 /-!
 # Electroweak boson mass numerical certificates
 
-Certifies GTE two-loop M_W = 80364 MeV, M_Z = 91629 MeV from M_W and Wolfenberg cos²θ_W,
+Certifies GTE two-loop M_W = 80364 MeV, M_Z = 91629 MeV from M_W and Weinberg cos²θ_W,
 and the sin²θ_W threshold-corrected value in the PDG band.
 -/
 
@@ -33,8 +33,8 @@ theorem m_W_pdg_interval :
   unfold m_W_GTE_MeV
   constructor <;> norm_num
 
-/-- **m_Z_gte_from_wolfenberg** (CatAL): M_Z = M_W / √(1 − sin²θ_W) = M_W · √(13/10). -/
-theorem m_Z_gte_from_wolfenberg :
+/-- **m_Z_gte_from_weinberg** (CatAL): M_Z = M_W / √(1 − sin²θ_W) = M_W · √(13/10). -/
+theorem m_Z_gte_from_weinberg :
     m_Z_GTE_MeV = m_W_GTE_MeV * Real.sqrt (13 / 10) := rfl
 
 /-- Certified band on √(13/10) for M_Z = M_W · √(13/10). -/
