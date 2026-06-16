@@ -256,6 +256,7 @@ The foundational chain from which all physics derives.
 | N_gen = 3 universality: 8th constraint (bracket orientation) conditional on OQ-QG-1b/c | `ngen_universality_eight_conditional` | Classification.NgenUniqueness |
 | N_gen = 3 universality master (7/8 CatAL, 8th conditional) | `ngen_universality_master` | Classification.NgenUniqueness |
 | Cosmological constant vanishes at all algebraic orders | `lambda_all_order_zero` | Gravity.LambdaAllOrderZero |
+| **Classical cosmological constant is zero (V(0)=0 at Z₇ vacuum)** | **`classical_lambda_zero`** | **Gravity.ClassicalLambda** |
 | **Vacuum CMCA spatial GH convergence to flat 3D space** | **`vacuum_cmca_gh_converges_to_flat_space`** | **Spacetime.VacuumGHConvergence** |
 | **GH distance bound: ghDist(FinGrid L, UnitCube) ≤ 1/L** | **`fin_grid_gh_dist_bound`** | **Spacetime.VacuumGHConvergence** |
 | **FinGrid GH family is totally bounded (matter-present sequences have GH-convergent subsequences)** | **`finGrid_family_totally_bounded`** | **Spacetime.MatterGHPrecompactness** |
