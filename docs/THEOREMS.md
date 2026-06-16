@@ -102,6 +102,11 @@ The foundational chain from which all physics derives.
 | Higgs quartic 0.12 < λ < 0.14 | (various) | MassRelations.HiggsQuartic |
 | sin²θ₂₃^NLO = 209/441 | (various) | MassRelations.PMNSNLOCorrection |
 | 2·a_τ = a_e + a_μ (discrete S₃ shadow, zero sorry) | `lepton_a_discrete_S3_identity` | MassRelations.KoideS3DiscreteIdentities |
+| M_W^GTE = 80364 MeV in PDG band (80351, 80377) | `m_W_pdg_interval` | Universality.EWBosonNumericalCerts |
+| M_Z^GTE = M_W·√(13/10) (Weinberg identity) | `m_Z_gte_from_weinberg` | Universality.EWBosonNumericalCerts |
+| M_Z^GTE(tree) ∈ (91600, 91660) MeV | `m_Z_pdg_interval` | Universality.EWBosonNumericalCerts |
+| sin²θ_W(2-loop) ∈ (0.23128, 0.23131) | `sin2_theta_W_threshold_interval` | Universality.EWBosonNumericalCerts |
+| M_Z^GTE(ρ̂-corrected, GTE m_t=172610 MeV) ∈ (91190, 91220) MeV | `m_Z_rho_corrected_interval` | Universality.EWRhoCorrectedMZ |
 
 ---
 
