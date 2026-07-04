@@ -29,14 +29,22 @@ integer arithmetic discharged by `native_decide`.
   certified structure constants match the inlined matrices, and -K is
   positive definite by Sylvester's criterion (all leading principal minors
   positive, Bareiss-exact). Hence both algebras are compact semisimple.
+* **Rank bound:** for the element x = sum of all 14 basis derivations,
+  ad(x) - computed inside Lean from the certified structure constants -
+  has an invertible 12x12 minor, so dim centralizer(x) <= 2. In a rank-4
+  algebra every centralizer has dimension >= 4, so this excludes
+  su(3)+su(2)+su(2), the only 14-dimensional compact semisimple
+  alternative to g2.
 
 ## Interpretation (classification input, cited not formalized)
 
-Compact semisimple of dimension 8 forces su(3) (no other sum of compact
-simple dimensions equals 8). For dimension 14 the options are g2 or
-su(2)+su(2)+su(3); the rank-2 computation excluding the latter is certified
-numerically in `cp4_g2_stabilizer.py` (Lie-algebra rank via generic
-centralizer), not yet in Lean.
+The only sums of compact simple Lie algebra dimensions (3, 8, 10, 14, 15,
+21, ...) equal to 8 and 14 are: 8 = su(3); 14 = g2 or su(3)+su(2)+su(2).
+Hence, by the Cartan-Killing classification of compact semisimple Lie
+algebras: the apex stabilizer (dim 8, compact semisimple) is su(3), and
+the derivation algebra (dim 14, compact semisimple, an element with
+centralizer dim <= 2) is g2. The classification theorem itself is cited,
+not formalized; every finite check feeding into it is certified below.
 -/
 
 namespace UgpLean.Algebra.G2StabilizerCertificate
@@ -194,6 +202,17 @@ def sylvesterPositive (M : Array (Array Int)) (d : Nat) : Bool :=
 def symmetricCheck (M : Array (Array Int)) (d : Nat) : Bool :=
   (List.range d).all fun i => (List.range d).all fun j =>
     (M.getD i #[]).getD j 0 == (M.getD j #[]).getD i 0
+
+/-! ## Adjoint action of a generic element -/
+
+/-- ad(x)[a][b] = coefficient of D_a in [x, D_b], for x = sum_i coeffs_i D_i,
+    computed from the certified structure constants. -/
+def adEntry (data : Array (Array Int)) (d : Nat) (coeffs : Array Int) (a b : Nat) : Int :=
+  (List.range d).foldl (fun acc i => acc + coeffs.getD i 0 * bracketCoeff data i b a) 0
+
+def adMinor (data : Array (Array Int)) (d : Nat) (coeffs : Array Int)
+    (rows cols : Array Nat) : Array (Array Int) :=
+  rows.map fun a => cols.map fun b => adEntry data d coeffs a b
 
 /-! ## Certificate data -/
 
@@ -422,6 +441,12 @@ def killingForm8 : Array (Array Int) :=
   #[0, 0, 0, 0, 0, 0, 0, -12],
 ]
 
+def rankTwoElementCoeffs : Array Int := #[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
+def rankTwoMinorRows : Array Nat := #[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+
+def rankTwoMinorCols : Array Nat := #[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+
 /-! ## Theorems: derivation witnesses -/
 
 theorem derivation_basis_0_ok : derivationOk (derivationBasis14.getD 0 #[]) = true := by native_decide
@@ -535,6 +560,53 @@ theorem derivation_killing_negative_definite :
 theorem apex_stabilizer_killing_negative_definite :
     symmetricCheck killingForm8 8 = true ∧
     sylvesterPositive (negMatrix killingForm8) 8 = true := by
+  native_decide
+
+/-! ## Theorems: rank bound (g2 vs su(3)+su(2)+su(2)) -/
+
+/-- For x = sum of all 14 basis derivations, ad(x) — built inside Lean from
+    the certified structure constants — has an invertible 12x12 minor
+    (Bareiss det 36888 != 0), so rank ad(x) >= 12 and
+    **dim centralizer(x) <= 2**. In a compact semisimple algebra of rank 4
+    (such as su(3)+su(2)+su(2)) every element's centralizer contains a
+    4-dimensional Cartan subalgebra, so this element rules that case out. -/
+theorem derivation_algebra_rank_at_most_two :
+    bareissDet (adMinor bracketData14 14 rankTwoElementCoeffs
+      rankTwoMinorRows rankTwoMinorCols) = 36888 := by
+  native_decide
+
+/-- **Capstone: der(O) = g2 (Lie-algebra level).** All finite inputs to the
+    classification are certified: dimension exactly 14
+    (`octonion_derivation_dimension_exact`), bracket closure
+    (`derivation_algebra_bracket_closed`), negative-definite Killing form
+    (`derivation_killing_negative_definite` — compact semisimple by Cartan's
+    criterion), and an element with centralizer dimension <= 2
+    (`derivation_algebra_rank_at_most_two` — excludes su(3)+su(2)+su(2),
+    the only other 14-dimensional compact semisimple algebra). By the
+    Cartan-Killing classification (cited, not formalized), the derivation
+    algebra of the QR(7) octonions is g2. -/
+theorem derivation_algebra_is_g2_certificate :
+    derivationBasis14.size = 14 ∧
+    bareissDet independence14Data = -1 ∧
+    bareissDet (minorFromSystem rank50RowIdx rank50ColIdx) = 1024 ∧
+    bracketData14.all (bracketRowOk derivationBasis14) = true ∧
+    (symmetricCheck killingForm14 14 = true ∧
+      sylvesterPositive (negMatrix killingForm14) 14 = true) ∧
+    bareissDet (adMinor bracketData14 14 rankTwoElementCoeffs
+      rankTwoMinorRows rankTwoMinorCols) = 36888 := by
+  native_decide
+
+/-- **Capstone: Stab_der(e0) = su(3) (Lie-algebra level).** Dimension exactly
+    8, bracket closed, Killing negative definite; 8 is not a sum of compact
+    simple dimensions other than su(3) itself, so the classification (cited)
+    forces su(3). This is the Lie-algebra content of SU(3) = Stab_G2(apex). -/
+theorem apex_stabilizer_is_su3_certificate :
+    apexStabilizerBasis8.size = 8 ∧
+    bareissDet independence8Data = -1 ∧
+    bareissDet (minorFromSystem rank56RowIdx rank56ColIdx) = 1024 ∧
+    bracketData8.all (bracketRowOk apexStabilizerBasis8) = true ∧
+    (symmetricCheck killingForm8 8 = true ∧
+      sylvesterPositive (negMatrix killingForm8) 8 = true) := by
   native_decide
 
 end UgpLean.Algebra.G2StabilizerCertificate
