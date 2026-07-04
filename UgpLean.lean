@@ -356,6 +356,7 @@ import UgpLean.Algebra.G2StabilizerCertificate
 import UgpLean.Algebra.OctonionColorFlavorDisambiguation
 import UgpLean.Algebra.TrialityInterface
 import UgpLean.Algebra.KinkSigmaParityAction
+import UgpLean.Algebra.KinkSectorTrialityAction
 import UgpLean.Polynomial.F21SU2Bridge
 import UgpLean.Algebra.SMGaugeGroup
 import UgpLean.Algebra.PolynomialContinuumBridge
@@ -368,6 +369,7 @@ import UgpLean.Spacetime.OrbitDepthEtherPeriod
 import UgpLean.Spacetime.VacuumGHConvergence
 import UgpLean.Spacetime.MatterGHPrecompactness
 import UgpLean.Spacetime.PhiMDLKinkQuantumNumbers
+import UgpLean.Spacetime.PhiMDLZeroModeIndex
 import UgpLean.Spacetime.AsyncLiftingTheorem
 import UgpLean.QFT.GaugedMassGap
 import UgpLean.QFT.ChiralSymmetryBreaking
