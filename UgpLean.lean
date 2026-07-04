@@ -357,6 +357,7 @@ import UgpLean.Algebra.OctonionColorFlavorDisambiguation
 import UgpLean.Algebra.TrialityInterface
 import UgpLean.Algebra.KinkSigmaParityAction
 import UgpLean.Algebra.KinkSectorTrialityAction
+import UgpLean.Algebra.BraidAtlasPhaseEquivariance
 import UgpLean.Polynomial.F21SU2Bridge
 import UgpLean.Algebra.SMGaugeGroup
 import UgpLean.Algebra.PolynomialContinuumBridge
