@@ -350,6 +350,8 @@ import UgpLean.Algebra.F21SU3Embedding
 import UgpLean.Algebra.EisensteinFunctor
 import UgpLean.Algebra.FlavorGroupStructure
 import UgpLean.Algebra.FanoRegularAction
+import UgpLean.Algebra.OctonionShadowInterface
+import UgpLean.Algebra.HurwitzCosetCertificate
 import UgpLean.Polynomial.F21SU2Bridge
 import UgpLean.Algebra.SMGaugeGroup
 import UgpLean.Algebra.PolynomialContinuumBridge
