@@ -355,6 +355,7 @@ import UgpLean.Algebra.HurwitzCosetCertificate
 import UgpLean.Algebra.G2StabilizerCertificate
 import UgpLean.Algebra.OctonionColorFlavorDisambiguation
 import UgpLean.Algebra.TrialityInterface
+import UgpLean.Algebra.KinkSigmaParityAction
 import UgpLean.Polynomial.F21SU2Bridge
 import UgpLean.Algebra.SMGaugeGroup
 import UgpLean.Algebra.PolynomialContinuumBridge
