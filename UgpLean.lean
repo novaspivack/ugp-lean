@@ -117,6 +117,7 @@ import UgpLean.MassRelations.NeutrinoMassRatio
 import UgpLean.MassRelations.TranscendentalMassBounds
 import UgpLean.MassRelations.QuarkMassNumericalCerts
 import UgpLean.MassRelations.SeesawNumericalCerts
+import UgpLean.MassRelations.SeesawTrialityPinning
 import UgpLean.Universality.EWBosonNumericalCerts
 import UgpLean.Universality.EWRhoCorrectedMZ
 import UgpLean.MassRelations
