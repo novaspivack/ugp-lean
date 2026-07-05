@@ -1,6 +1,6 @@
 # ugp-lean: Theorem Highlights
 
-**This is a curated selection of the most important theorems by layer.** It is not exhaustive — the library contains thousands of theorems across 361 modules. For the complete inventory, see `paper/ugp_lean_formalization.tex` (Table 1) and browse the source in `UgpLean/`.
+**This is a curated selection of the most important theorems by layer.** It is not exhaustive — the library contains thousands of theorems across 392 modules. For the complete inventory, see `paper/ugp_lean_formalization.tex` (Table 1) and browse the source in `UgpLean/`.
 
 All listed theorems have **0 sorry, 0 custom axioms** on the core path unless marked ⚠.
 
@@ -309,6 +309,109 @@ The foundational chain from which all physics derives.
 | PSC → Lorentzian signature (CatAD; PDE Mathlib blocker) | `lorentzian_sig_from_causal_propagation` | Spacetime.LorentzianCausalityNecessity |
 | IMT gen-1/phase pair: g₁ + 2w_phase = 2^N_fam − π/2^n_ridge (e cancels) | `imt_gen1_phase_structural_pair` | Universality.IMTStructuralPair |
 | IMT binding weight: w_bind = −1/(4×11) − 1/2^11 | `imt_binding_weight_structural` | Universality.IMTStructuralPair |
+
+---
+
+## Octonion Certificate Cluster (QR(7) → G₂ → Spin(8) triality)
+
+All modules in this cluster: zero sorry, zero custom axioms.
+
+### OctonionShadowInterface
+
+| Theorem | Lean name | Module |
+|---|---|---|
+| UGP `weights` IS the octonion difference set QR(7) = {1,2,4} | `weights_eq_D` | Algebra.OctonionShadowInterface |
+| QR(7) is a (7,3,1) difference set: all nonzero differences appear exactly once | `qr7_is_difference_set` | Algebra.OctonionShadowInterface |
+| Exactly 3 Fano lines through each point (pencil count = N_c) | `pencil_count_eq_three` | Algebra.OctonionShadowInterface |
+| F₂₁ translation preserves the oriented octonion product | `translation_preserves_oriented_product` | Algebra.OctonionShadowInterface |
+| F₂₁ doubling (ℤ₃) preserves the oriented octonion product | `doubling_preserves_oriented_product` | Algebra.OctonionShadowInterface |
+| UGP ℤ₃ = cyclic color rotation cycles the pencil ladder pairs (1,3)→(2,6)→(4,5) | `z3_cycles_pencil_ladder_pairs` | Algebra.OctonionShadowInterface |
+| 6 pairwise weight differences = 6 nonzero residues (λ=1): all distinct gluon vectors | `weight_differences_all_nonzero` | Algebra.OctonionShadowInterface |
+| Pencil cardinality = 3 = N_c (not an independent input) | `pencil_card_eq_Nc` | Algebra.OctonionShadowInterface |
+
+### HurwitzCosetCertificate
+
+| Theorem | Lean name | Module |
+|---|---|---|
+| permA is an involution on 168 cosets | `permA_involution` | Algebra.HurwitzCosetCertificate |
+| permB has order 3 | `permB_order_three` | Algebra.HurwitzCosetCertificate |
+| **\|⟨a,b \| a², b³, (ab)⁷, [a,b]⁴⟩\| = 168** (Hurwitz presentation) | `hurwitz_group_order_168` | Algebra.HurwitzCosetCertificate |
+
+### G2StabilizerCertificate
+
+| Theorem | Lean name | Module |
+|---|---|---|
+| **Derivation algebra dimension exactly 14** (Bareiss rank, zero sorry) | `derivation_dimension_exactly_14` | Algebra.G2StabilizerCertificate |
+| Apex stabilizer (D(e₀)=0) dimension exactly 8 | `stabilizer_dimension_exactly_8` | Algebra.G2StabilizerCertificate |
+| 14 derivation witnesses satisfy the Leibniz rule on all 64 basis pairs | `derivation_witnesses_valid` | Algebra.G2StabilizerCertificate |
+| 14×14 Bareiss determinant ≠ 0: witness set is linearly independent | `derivation_witnesses_independent` | Algebra.G2StabilizerCertificate |
+| 50×50 rank minor ≠ 0: nullspace dimension exactly 14 | `derivation_nullspace_rank` | Algebra.G2StabilizerCertificate |
+| All 91 commutators [Dᵢ,Dⱼ] equal certified linear combinations of the basis | `derivation_bracket_closed` | Algebra.G2StabilizerCertificate |
+| **Killing form negative definite** (Sylvester, all principal minors positive, Bareiss) | `derivation_killing_negative_definite` | Algebra.G2StabilizerCertificate |
+| Centralizer rank bound: dim centralizer(x) ≤ 2 for generic element x (excludes rank-4 alternative) | `centralizer_dim_bound` | Algebra.G2StabilizerCertificate |
+
+### TrialityInterface (Theorems G1–G6)
+
+| Theorem | Lean name | Module |
+|---|---|---|
+| **G1**: Z(Spin(8)) = V₄ (Klein four-group); 4 scalar-related patterns certified | `G1_klein_center_card` | Algebra.TrialityInterface |
+| **G2**: Triality ρ acts as a 3-cycle on {V, S⁺, S⁻} | `G2_rho_triality_action` | Algebra.TrialityInterface |
+| **G3**: σ swaps S⁺ and S⁻ (outer involution), fixes V | `G3_sigma_swaps_spinors` | Algebra.TrialityInterface |
+| **G4**: gen₁ ↔ V slot pinning (Eisenstein selection) | `G4_gen1_vector_slot_pinning` | Algebra.TrialityInterface |
+| **G5**: gen₂ and gen₃ occupy the two spinor slots S⁺ and S⁻ | `G5_gen23_spinor_slots` | Algebra.TrialityInterface |
+| **G6**: S₃ = ⟨ρ,σ⟩ acts faithfully on the 3-element generation set | `G6_triality_s3_action_faithful` | Algebra.TrialityInterface |
+
+### OctonionColorFlavorDisambiguation
+
+| Theorem | Lean name | Module |
+|---|---|---|
+| Color Z₃ (×2 on ℤ₇) acts on Fano points; flavor Z₃ (θ↦θ+2π/3) acts on Koide cone | `color_action_on_fano_points`, `flavor_action_on_koide_phase` | Algebra.OctonionColorFlavorDisambiguation |
+| **Color and flavor Z₃ are not formally identified** (no import relation) | `color_action_not_flavor_action` | Algebra.OctonionColorFlavorDisambiguation |
+| Color Z₃ order 3 on ℤ₇ (certified) | `color_z3_order_three` | Algebra.OctonionColorFlavorDisambiguation |
+| Inner/outer split master: color = inner G₂, flavor = outer triality | `z3_disambig_master` | Algebra.OctonionColorFlavorDisambiguation |
+
+### KinkSigmaParityAction
+
+| Theorem | Lean name | Module |
+|---|---|---|
+| σ swaps Q_φ=4 and Q_φ=3 kink labels (ℤ₇ charge conjugation) | `sigma_swaps_q4_q3` | Algebra.KinkSigmaParityAction |
+| σ action not realized by any non-identity Aut(F₂₁) element | `sigma_not_f21_automorphism` | Algebra.KinkSigmaParityAction |
+| Kink sigma parity master bundle | `kink_sigma_parity_master` | Algebra.KinkSigmaParityAction |
+
+### KinkSectorTrialityAction
+
+| Theorem | Lean name | Module |
+|---|---|---|
+| S₃ acts faithfully on {gen₁, gen₂, gen₃} as degree-3 permutation rep | `s3_acts_faithfully_on_generation_sectors` | Algebra.KinkSectorTrialityAction |
+| ρ acts as the 3-cycle gen₁→gen₂→gen₃→gen₁ | `rho_triality_on_sectors` | Algebra.KinkSectorTrialityAction |
+| σ acts as the transposition gen₂↔gen₃ | `sigma_triality_on_sectors` | Algebra.KinkSectorTrialityAction |
+
+### PhiMDLZeroModeIndex
+
+| Theorem | Lean name | Module |
+|---|---|---|
+| cos(7φₖ) = 1 at every Z₇ vacuum φₖ = 2πk/7 | `cosine_yukawa_equals_one_at_vacua` | Spacetime.PhiMDLZeroModeIndex |
+| Dirac mass g·cos(7φ) = g at all Z₇ vacua (same sign at both kink ends) | `cosine_yukawa_equals_g_at_all_vacua` | Spacetime.PhiMDLZeroModeIndex |
+| **Callias index vanishes for Z₇-periodic cosine Yukawa** (Case A, zero sorry) | `callias_index_vanishes` | Spacetime.PhiMDLZeroModeIndex |
+
+### BraidAtlasPhaseEquivariance
+
+| Theorem | Lean name | Module |
+|---|---|---|
+| σ maps the fermionic sector (Q_φ=4, phase −1) to the bosonic W⁺ sector (Q_φ=3, phase +1) | `sigma_maps_fermion_to_boson` | Algebra.BraidAtlasPhaseEquivariance |
+| Exchange phase not equivariant under S₃ (non-equivariance certified) | `braid_phase_not_s3_equivariant` | Algebra.BraidAtlasPhaseEquivariance |
+| **Phase structure carries ℤ₂ = {e, σρ²} but no larger proper subgroup of S₃** | `braid_phase_z2_but_not_s3` | Algebra.BraidAtlasPhaseEquivariance |
+
+### SeesawTrialityPinning
+
+| Theorem | Lean name | Module |
+|---|---|---|
+| RH braid seeds: b_{R,1}=5, b_{R,2}=11, b_{R,3}=19 | `b_R1_eq_5`, `b_R2_eq_11`, `b_R3_eq_19` | MassRelations.SeesawTrialityPinning |
+| Strict seed ordering 5 < 11 < 19 | `seed_ordering_strict` | MassRelations.SeesawTrialityPinning |
+| **b_{R,3}=19 is the unique Eisenstein norm** among {5,11,19} | `b_R3_unique_eisenstein_norm` | MassRelations.SeesawTrialityPinning |
+| 5 and 11 are not Eisenstein norms | `b_R1_not_eisenstein`, `b_R2_not_eisenstein` | MassRelations.SeesawTrialityPinning |
+| Seesaw map m(b)=C·b^{29/9} is strictly monotone for C>0 | `seesaw_map_strict_monotone` | MassRelations.SeesawTrialityPinning |
+| **Normal mass ordering m_{ν,1} < m_{ν,2} < m_{ν,3}** conditional on corpus seesaw formula | `normal_ordering_from_seeds` | MassRelations.SeesawTrialityPinning |
 
 ---
 

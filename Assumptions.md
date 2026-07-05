@@ -2,7 +2,7 @@
 
 Every premise that is not definitional truth. Tag: `definition` | `lemma` | `axiom` | `imported` | `citation`.
 
-This ledger covers the **full library** (361 modules across 27 layers). The RSUC core proof path has 0 sorry and 0 custom axioms. See `docs/DESIGN.md` for the non-circularity contract.
+This ledger covers the **full library** (392 modules across 27 layers). The RSUC core proof path has 0 sorry and 0 custom axioms. See `docs/DESIGN.md` for the non-circularity contract.
 
 ---
 
@@ -134,6 +134,7 @@ None of A1–A4 appear in the axiom closure of any physics or classification the
 | C6 | FN SVD diagonalization: \|V_us\|_SM = ε₁^(α_d)·(1+O(ε²)) | MassRelations.CKMMixing | citation |
 | C7 | Pöschl–Teller spectral completeness | Substrate.PhiMDLFluctuationSpectrum | citation |
 | C8 | Wald entropy formula S = Area/(4G) | Gravity.WaldEntropy | citation |
+| C9 | Cartan–Killing classification: compact semisimple Lie algebras classified by root system (Cartan 1894; Killing 1888); used to identify dim-14/rank-≤2 algebra as g₂ and dim-8 stabilizer as su(3) from certified dimension and rank witnesses | Algebra.G2StabilizerCertificate | citation |
 
 ---
 

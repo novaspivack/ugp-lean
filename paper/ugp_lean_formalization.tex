@@ -140,7 +140,7 @@
 \begin{abstract}
 We present \textbf{ugp-lean}, a \lean{}~4 formalization of the
 Universal Generative Principle (\ugp{}) against Mathlib, comprising
-361~\lean{} modules across multiple organizational layers (canonical library covering
+392~\lean{} modules across multiple organizational layers (canonical library covering
 spacetime, QFT, and hadronic physics) with a strict zero-sorry,
 zero-custom-axiom policy on the core proof path (core physics proof path remains
 zero-axiom).
@@ -427,7 +427,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 368~\lean{} modules across multiple organizational layers
+The artifact is organized into 392~\lean{} modules across multiple organizational layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -465,13 +465,14 @@ The artifact is organized into 368~\lean{} modules across multiple organizationa
    FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure,
    KLFullClosure, PentagonConstraint, RiccatiFixedPoint};
 \node[layer, fill=teal!8,   below=of struc] (mass)
-  {\textbf{MassRelations}~(39)\quad KoideClosedForm, KoideNewtonFlow,
+  {\textbf{MassRelations}~(40)\quad KoideClosedForm, KoideNewtonFlow,
    BinaryCascade, PhysicalMasses, SU3FlavorCartan, CartanFlavonPotential,
    FroggattNielsen, HeavyFermionTower, ClebschGordan, DownRational,
    UpLeptonCyclotomic, Z2OrbifoldDepth,
    KoideAngle, ClaimCBridge, LeptonMassPrediction, ScaleTransport, SeesawIndex,
    NeutrinoFroggattNielsen, VVMechanism, VVAllCoefficientsFromNc,
-   CKMTheta23, KoideS3DiscreteIdentities, KoideGenerationCyclicSymmetry, KoideSectorAngle};
+   CKMTheta23, KoideS3DiscreteIdentities, KoideGenerationCyclicSymmetry, KoideSectorAngle,
+   \textit{new:} \textbf{SeesawTrialityPinning}};
 \node[layer, fill=cyan!6,   below=of mass]  (braid)
   {\textbf{BraidAtlas}~(12)\quad ChargeTheorem, CompositeTriples, ChiralitySquaring, ChargeDerivation,
    CoxeterConductor, CoxeterConductorTowerLaw, EWBosons,
@@ -516,7 +517,7 @@ The artifact is organized into 368~\lean{} modules across multiple organizationa
    \textit{new:} GTECategoryStructure, \textbf{CMCAContinuumLimit},
    CMCAMDLMinimality, PhiMDLBridge};
 \node[layer, fill=olive!8,  below=of fwk]   (space)
-  {\textbf{Spacetime}~(32)\quad CausalGraph, CausalInvariance, LiftingTheorem,
+  {\textbf{Spacetime}~(33)\quad CausalGraph, CausalInvariance, LiftingTheorem,
    SpatiallyExtendedLifting, ChiralGliderDynamics, ChiralMirrorSpeedSymmetry,
    ChiralPairDecoupling, OrbitDepthEtherPeriod, ColorConfinement, MassGap,
    OrbitMassHierarchy, ThreeGenerationCapstone, PhysicalExclusion,
@@ -525,14 +526,29 @@ The artifact is organized into 368~\lean{} modules across multiple organizationa
    PhiMDLKinkQuantumNumbers, PhiMDLZ7PotentialMDL,
    \textbf{StressEnergyTensor}, \textbf{AsyncLiftingTheorem},
    \textbf{GravitonFockSpace},
-   SpectralDimension, SpectralDimensionDegree, \textbf{HeatKernelFourier}
-   (+ 3 Spectral sub-modules; canonical library, zero sorry unless noted)};
+   SpectralDimension, SpectralDimensionDegree, \textbf{HeatKernelFourier},
+   \textit{new:} \textbf{PhiMDLZeroModeIndex}
+   (+ 5 Spectral sub-modules; canonical library, zero sorry unless noted)};
 \node[layer, fill=brown!6,  below=of space] (subs)
   {\textbf{Substrate}~(12)\quad Substrate, LExtended, LagrangianLorentzScalar,
    NoetherAngularMomentum, PSCPILorentzMain, PSCPreservingTransformation,
    PSCStructureLorentzPreserved, CoherenceMeasure, CoherenceMeasureUniqueness,
    QECStabilizer, TransputationStateSelector,
    \textbf{WindingCoinDecoupling} (canonical library, zero sorry)};
+
+\node[layer, fill=magenta!6, below=of subs] (alg)
+  {\textbf{Algebra}~(23)\quad EisensteinFunctor, F21SU3Embedding, FanoRegularAction,
+   GaugeMDL, SMGaugeGroup, SRRGCABridge, PolynomialContinuumBridge,
+   BaryonNumber, ChargeFromPolynomial, ChiralDoublet,
+   ColorConfinementMDL, CyclotomicZ7Galois, FlavorGroupStructure,
+   RSCodeOrbit, SU3GluonCount;
+   \textit{new (octonion cluster):}
+   \textbf{OctonionShadowInterface}, \textbf{HurwitzCosetCertificate},
+   \textbf{G2StabilizerCertificate}, \textbf{TrialityInterface},
+   \textbf{OctonionColorFlavorDisambiguation},
+   \textbf{KinkSigmaParityAction}, \textbf{KinkSectorTrialityAction},
+   \textbf{BraidAtlasPhaseEquivariance}
+   (support layer; used by BraidAtlas, Universality, Framework; zero sorry)};
 
 \draw[arr] (core.south)  -- (comp.north);
 \draw[arr] (comp.south)  -- (class.north);
@@ -547,6 +563,7 @@ The artifact is organized into 368~\lean{} modules across multiple organizationa
 \draw[arr] (self.south)  -- (fwk.north);
 \draw[arr] (fwk.south)   -- (space.north);
 \draw[arr] (space.south) -- (subs.north);
+\draw[arr] (subs.south)  -- (alg.north);
 \end{tikzpicture}
 \end{center}
 
@@ -10515,6 +10532,70 @@ and \texttt{Framework/PSCMeasureUniformity} establish the cosmological constant 
 CMCA filtration and thermodynamic bridge, PR-5 independence, and PSC measure uniformity.
 All new modules carry zero \texttt{sorry} and zero custom axioms beyond the library's
 documented structural axioms.
+
+\medskip
+\noindent\textbf{Octonion certificate cluster}
+(10 new modules, all zero \texttt{sorry}, zero custom axioms):
+\texttt{Algebra/OctonionShadowInterface} proves that the UGP color sector is
+generated by the quadratic residues $\mathrm{QR}(7) = \{1,2,4\} \subset \mathbb{Z}_7$,
+which coincide with the $(7,3,1)$ difference set that seeds the Cayley octonions;
+it certifies that the $F_{21}$ automorphism action preserves the oriented Fano lines,
+establishing $F_{21} \hookrightarrow G_2$ at the index level, and that the pencil
+count $|\mathrm{QR}(7)| = 3 = N_c$ is not an independent input but an intrinsic
+property of the design.
+\texttt{Algebra/HurwitzCosetCertificate} replays the Todd--Coxeter coset
+enumeration for the $(2,3,7;4)$ presentation, certifying $|\langle a,b \mid
+a^2, b^3, (ab)^7, [a,b]^4\rangle| = 168$ by an explicit 168-coset permutation
+representation verified by \texttt{native\_decide}.
+\texttt{Algebra/G2StabilizerCertificate} constructs the QR(7)-octonion derivation
+Lie algebra by exact integer arithmetic: 14 derivation witnesses satisfying the
+Leibniz rule on all 64 basis pairs, independence confirmed by a
+$14 \times 14$ Bareiss determinant $\neq 0$, exact dimension verified by a
+$50 \times 50$ rank minor, bracket closure for all 91 commutators, and
+negative-definite Killing form by Sylvester's criterion; the same procedure
+certifies the apex stabilizer as 8-dimensional.
+The Cartan--Killing classification (cited, not formalized) then identifies the
+derivation algebra as $\mathfrak{g}_2$ and the stabilizer as $\mathfrak{su}(3)$.
+\texttt{Algebra/TrialityInterface} certifies six theorems (G1--G6) for the
+Spin(8) triality skeleton: $Z(\mathrm{Spin}(8)) = V_4$, the permutation action of
+the triality group $S_3 = \langle\rho,\sigma\rangle$ on the three vector/spinor
+slots, inner vs.\ outer classification of the two $\mathbb{Z}_3$ actions, and the
+faithful $S_3$ action on the set of three generation kink species.
+\texttt{Algebra/OctonionColorFlavorDisambiguation} certifies that the $\mathbb{Z}_3$
+subgroup of $F_{21}$ acts in two inequivalent representations: as \emph{color
+rotation} ($\times 2$ on $\mathbb{Z}_7$, an inner $G_2$ automorphism) and as
+\emph{flavor cycling} (phase shift $\theta \mapsto \theta + 2\pi/3$ on the Koide
+cone, an outer Spin(8) triality action); neither is formally identified with the
+other, making the inner/outer split manifest.
+\texttt{Algebra/KinkSigmaParityAction} certifies that the outer triality involution
+$\sigma$ acts on the four GTE orbit kink labels as $\mathbb{Z}_7$ charge conjugation,
+swapping $Q_\varphi = 4$ and $Q_\varphi = 3$, and that this permutation is not
+realized by any non-identity $\mathrm{Aut}(F_{21})$ element.
+\texttt{Algebra/KinkSectorTrialityAction} and \texttt{Spacetime/PhiMDLZeroModeIndex}
+complete the kink sector analysis: the former certifies that $S_3$ acts faithfully
+on $\{\mathrm{gen}_1, \mathrm{gen}_2, \mathrm{gen}_3\}$ as a degree-3 permutation
+representation (zero JR zero-mode analysis required); the latter certifies the
+Callias boundary-value theorem for the $\mathbb{Z}_7$-invariant cosine Yukawa profile
+$f(\varphi) = \cos(7\varphi)$, showing that the boundary Dirac masses agree at both
+asymptotic kink ends (same sign), so the spectral-flow index vanishes, blocking JR
+zero modes for Case~A; no normalizable zero modes arise and fermionic statistics
+follow from triple exchange.
+\texttt{Algebra/BraidAtlasPhaseEquivariance} certifies that the uniform-triple
+exchange phase $P(g,g,g)$ is \emph{not} $S_3$-equivariant: the sector permutation
+$\sigma$ acts as $\mathbb{Z}_7$ charge conjugation on windings, mapping the fermionic
+charged-lepton sector ($Q_\varphi = 4$, phase $-1$) to the bosonic $W^+$ sector
+($Q_\varphi = 3$, phase $+1$); the phase structure carries only a $\mathbb{Z}_2$
+symmetry $\{e, \sigma\rho^2\}$.
+\texttt{MassRelations/SeesawTrialityPinning} certifies: RH braid seeds
+$b_{R,1} = 5$, $b_{R,2} = 11$, $b_{R,3} = 19$ (strict ordering $5 < 11 < 19$
+by \texttt{decide}); the unique Eisenstein norm among the seeds is $b_{R,3} = 19 =
+N(-5-3\omega)$, paralleling the Eisenstein selection of $b_{\rm gen1} = 73$ in the
+charged-lepton sector; and strict monotonicity of $m(b) = C \cdot b^{29/9}$ implies
+normal mass ordering $m_{\nu,1} < m_{\nu,2} < m_{\nu,3}$ conditional on the corpus
+seesaw formula.
+All ten modules carry zero \texttt{sorry} and zero custom axioms; the only cited
+external input is the Cartan--Killing classification theorem
+(see Assumption~C9 in the premise ledger).
 
 \paragraph{What remains open.}
 Six conjectures are formally stated in \cref{tab:conjectures}.
