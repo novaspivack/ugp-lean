@@ -45,8 +45,7 @@ paper/
 
 ## Status
 
-**Branch:** `theoretical_path_closure_sandbox` on `ugp-lean-exp` (experimental).  
-Graduation to canonical `ugp-lean` requires explicit user approval.
+Published at: `https://github.com/novaspivack/ugp-lean`
 
 ## Target
 
