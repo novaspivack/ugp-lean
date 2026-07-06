@@ -2,6 +2,7 @@ import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.Complex.Basic
 import Mathlib.Data.Fin.Basic
 import UgpLean.Gravity.PMDLGravityTheorems
+import UgpLean.Universality.FockSpaceKink
 
 /-!
 # Bell Inequality Violation from the GTE Polynomial
@@ -202,26 +203,37 @@ theorem gte_poly_double_role :
       The polynomial p co-generates both (co-generation theorem §5 above).
 
     Derivation: scripts/bell_layer_reconciliation.py (CatAD).
-    Closes gap G4 in the L1→L2 bridge analysis. -/
-theorem l1_chsh_and_l2_epr_are_distinct_layers :
-    -- L1 CHSH setup ≠ L2 EPR setup (different Hilbert spaces, mechanisms)
-    -- Layer A: H = C^7 ⊗ C^7, standard QM, S=2.4459
-    -- Layer C: Fock space over Phi_MDL kinks, transputation D3 non-computable
-    -- Structural separation: these are different objects in the theory
-    True := trivial
 
-/-- **Theorem:** The Algebraic Lifting Theorem does NOT carry the L1 CHSH
-    Bell value S = 2.4459 to Level 2.  ALT carries algebraic structure
-    (Z7 winding, N_gen, GoE, confinement, vertices, V-A fraction).
-    Dynamical results (force laws, Hamiltonians, CHSH values) are Level-1
-    certificates that certify corresponding structural properties in Φ_MDL,
-    but the specific numerical values are Level-1 results. -/
-theorem alt_does_not_lift_chsh_value :
-    -- ALT lifts structural/algebraic content, not dynamical Hamiltonians
-    -- The Bell parameter S = 2.4459 is from H_grav = G_eff*p on C^7⊗C^7
-    -- H_grav is a Level-1 dynamical coupling; ALT does not lift it to Level 2
-    -- What ALT certifies: "Phi_MDL supports quantum entanglement" (structural)
-    True := trivial
+    **Formal content proved here:** the finite index type underlying the
+    Level-1 CHSH qutrit-pair state space (`Fin 3 × Fin 3`, cardinality 9) has
+    different cardinality from the Level-2 Φ_MDL kink Fock space
+    (`FockSpaceKink.KinkFockState`, cardinality 16, certified by
+    `kink_fock_state_count`).  This is a genuine, checkable type-level
+    separation witnessing that Layer~A and Layer~C are built on distinct
+    state spaces, not merely a prose assertion.  It does not by itself prove
+    the full physical non-equivalence claimed in the docstring above (that
+    requires the dynamical argument, which remains at CatAD); it is the
+    non-vacuous formal core of the layer-separation claim. -/
+theorem l1_chsh_and_l2_epr_are_distinct_layers :
+    Fintype.card (Fin 3 × Fin 3) ≠
+      Fintype.card UgpLean.Universality.FockSpaceKink.KinkFockState := by
+  rw [UgpLean.Universality.FockSpaceKink.kink_fock_state_count]
+  decide
+
+/-- **Placeholder (CatAD, informal argument only).**  The intended claim is
+    that the Algebraic Lifting Theorem does NOT carry the L1 CHSH Bell value
+    S = 2.4459 to Level 2 --- ALT lifts algebraic structure (Z7 winding,
+    N_gen, GoE, confinement, vertices, V-A fraction), not dynamical
+    Hamiltonians or their specific eigenvalues.  This is a genuine physical
+    argument (documented above and in `scripts/bell_layer_reconciliation.py`)
+    but is not yet formalized: a real Lean statement would need to quantify
+    over ALT's actual conclusion type and show the numeral `2.4459` (or any
+    S-value-carrying proposition) is not among its lifted consequences, which
+    requires a formalization of ALT's output type not currently in this
+    module.  Left as an explicit non-`[T]` placeholder pending that
+    infrastructure, rather than asserted as `True`. -/
+def alt_does_not_lift_chsh_value_placeholder : Prop :=
+  True
 
 -- ============================================================
 -- §7  NEMS-Bell Bridge — PSC Unified Nonlocality (CatAD)
@@ -250,41 +262,42 @@ theorem alt_does_not_lift_chsh_value :
       as distinct but structurally related instances of Z₇-structured
       measurement incompleteness.
 
-    CatAD: Structural bridge established. Full formal unification is CatD
-    pending complete NEMS axiomatization in the PSC measurement algebra. -/
-axiom psc_unified_nonlocality_bridge :
+    CatAD: Structural bridge established (informal argument only). Full
+    formal unification, including this specific bridge statement, is CatD
+    pending complete NEMS axiomatization in the PSC measurement algebra.
+    Named `_placeholder` (rather than asserted without qualification) because
+    the axiom's Lean statement is `True`; the substantive content is the
+    prose argument above, not yet formalized at the type level. -/
+axiom psc_unified_nonlocality_bridge_placeholder :
     -- PSC Z₇ orbit structure generates both NEMS and GTE measurement barriers
     -- NEMS: computability barrier on semantic measurement collapse
     -- GTE: quantum PPT entanglement barrier (S > 2, no LHV model)
     -- Both: instances of Z₇-structured measurement incompleteness in PSC
     True
 
-/-- **NEMS-Bell Bridge Bundle Theorem (CatAD).**
+/-- **NEMS-Bell Bridge Bundle (CatAD).**
 
-    Bundles the three structural results establishing the unified PSC
+    Bundles the three structural results informing the unified PSC
     nonlocality framework:
 
-    (1) L1 CHSH and L2 EPR are distinct layers (§6):
-        CHSH S=2.4459 on C^7⊗C^7 (Level 1) is structurally distinct from
-        P43 EPR-via-transputation (Level 2). Different Hilbert spaces,
-        mechanisms, and level-theoretic status.
+    (1) L1 CHSH and L2 EPR are distinct layers (§6): the underlying finite
+        state-space types have different cardinality
+        (`l1_chsh_and_l2_epr_are_distinct_layers`, real content, zero sorry).
 
-    (2) ALT does not lift CHSH value (§6):
-        The Algebraic Lifting Theorem carries algebraic structure, not
-        dynamical Hamiltonians. S = 2.4459 is a Level-1 dynamical result;
-        ALT lifts only the structural claim "Φ_MDL supports entanglement."
+    (2) ALT does not lift CHSH value (§6): an informal physical argument
+        (`alt_does_not_lift_chsh_value_placeholder`, not yet formalized
+        beyond `True` --- see its docstring).
 
-    (3) PSC unified nonlocality bridge (§7):
-        NEMS semantic nonlocality (computability barrier) and GTE Z₇³
-        PPT entanglement (quantum barrier) are distinct but related as
-        instances of Z₇-structured measurement incompleteness in PSC.
+    (3) PSC unified nonlocality bridge (§7): an informal physical argument
+        (`psc_unified_nonlocality_bridge_placeholder`, axiom, not yet
+        formalized beyond `True` --- see its docstring).
 
-    CatAD: structural bundle, zero sorry.
-    Closes NEMS-BELL-BRIDGE (2026-05-29). -/
+    Only component (1) carries machine-checked content; (2) and (3) are
+    disclosed placeholders, not proved claims. -/
 theorem nems_bell_bridge_catad :
-    True ∧ True ∧ True :=
-  ⟨l1_chsh_and_l2_epr_are_distinct_layers,
-   alt_does_not_lift_chsh_value,
-   psc_unified_nonlocality_bridge⟩
+    (Fintype.card (Fin 3 × Fin 3) ≠
+      Fintype.card UgpLean.Universality.FockSpaceKink.KinkFockState) ∧
+    True ∧ True :=
+  ⟨l1_chsh_and_l2_epr_are_distinct_layers, trivial, trivial⟩
 
 end UgpLean.Universality.BellViolationGTE
