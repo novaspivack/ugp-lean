@@ -38,6 +38,16 @@ The PW Born rule follows: P(k|τ) = |⟨k|U_sys(τ)|ψ₀⟩|²
 
 CatAL for algebraic structure (Theorems 1–3, zero sorry).
 Named axiom for PW validity (Theorem 4, CatAD).
+
+## Placeholders (not certified — do not cite as proved)
+
+`tau_c_born_prob_clock_independent_placeholder`, `l1_l2_born_rule_bridge_placeholder`,
+and `born_bridge_informal_argument_placeholder` are documentation stubs whose Lean
+statements are bare `True` (or `∀ ..., True`) — they record the *intended* Page–Wootters
+Born-bridge claims pending a real Page–Wootters formalism library, and establish no
+mathematical content themselves. This is distinct from `z7_winding_eigenstate_uniform_prob`
+and the first conjunct of `z7_discrete_born_rule_level1`, which are real, non-vacuous,
+zero-sorry results.
 -/
 
 namespace UgpLean.Gravity.PageWoottersZ7
@@ -162,23 +172,28 @@ axiom tau_c_pw_clock_validity (T : ℕ) (hT : T > 1) (omega_c : ℝ) (hω : omeg
     ∧
     True  -- WD constraint satisfied by PW ansatz (standard result)
 
-/-- **Named axiom (CatAD):** The Born rule probability P(k|τ) = |⟨k|U_sys(τ)|ψ₀⟩|²
-    is independent of the clock state distribution {c_τ}:
-    whether τ_c is in a uniform superposition (classical step counter) or
-    a Gaussian wavepacket (quantum clock), the conditional Born probabilities are identical.
+/-- **Placeholder axiom (not Lean-certified content):** intended target is that the
+    Born rule probability P(k|τ) = |⟨k|U_sys(τ)|ψ₀⟩|² is independent of the clock
+    state distribution {c_τ} — whether τ_c is in a uniform superposition (classical
+    step counter) or a Gaussian wavepacket (quantum clock), the conditional Born
+    probabilities are identical.
 
-    This is the mathematical content of the PW derivation: the conditional state
-    ρ_sys(τ) = U(τ)|ψ₀⟩⟨ψ₀|U†(τ) is determined by the system evolution alone,
-    not by the clock weight c_τ.
+    As stated below, the conclusion is bare `True`: the axiom does not actually
+    encode any relationship between `c1`, `c2`, and the Born probabilities — it is
+    a documentation placeholder for the claim, not a certification of it. This is
+    the mathematical content the PW derivation is intended to establish: the
+    conditional state ρ_sys(τ) = U(τ)|ψ₀⟩⟨ψ₀|U†(τ) is determined by the system
+    evolution alone, not by the clock weight c_τ.
 
-    Verified numerically: max |P_uniform(k|τ) - P_gaussian(k|τ)| = 0 for all τ.
-    Status: CatAD (standard PW result; formal Lean cert pending PW library). -/
-axiom tau_c_born_prob_clock_independent :
+    Verified numerically only (not Lean-certified): max |P_uniform(k|τ) - P_gaussian(k|τ)| = 0 for all τ.
+    Status: CatA (numerical); no Lean formalization of this statement exists yet
+    pending a Page–Wootters formalism library. -/
+axiom tau_c_born_prob_clock_independent_placeholder :
     ∀ (T d : ℕ) (hT : T > 1) (hd : d > 0),
     ∀ (c1 c2 : Fin T → ℂ) (psi0 : Fin d → ℂ) (H_sys : Fin d → ℝ),
     ∀ (tau : Fin T) (k : Fin d),
     -- The conditional state is the same regardless of clock state
-    True  -- |⟨k|U(τ)|ψ₀⟩|² does not depend on c1 or c2
+    True  -- |⟨k|U(τ)|ψ₀⟩|² does not depend on c1 or c2 — NOT actually encoded below
 
 -- ============================================================
 -- §5  Z₇ discrete Born rule at Level 1
@@ -223,27 +238,32 @@ theorem z7_discrete_born_rule_level1 :
     M→∞ limit of the CMCA as Φ_MDL).
 
     Derivation: scripts/born_rule_bridge_pw_to_field.py (CatAD).
-    Full CatAL would require a PW formalism library in Mathlib. -/
-axiom l1_l2_born_rule_bridge :
+    Full CatAL would require a PW formalism library in Mathlib.
+
+    As stated below, this axiom's statement is bare `True` — it is a documentation
+    placeholder recording the intended bridge identity, not a Lean certification of it. -/
+axiom l1_l2_born_rule_bridge_placeholder :
     -- For a BPS kink state, both Born rules are sech^2(mx):
     -- ψ(x) = sqrt(m/2) * sech(mx)  =>  P_PW(x) = (m/2) * sech^2(mx)
     -- ∂_x Φ(x) = (2m/7) * sech(mx)  =>  P_field(x) = (4m^2/49) * sech^2(mx) / Z
     -- Both proportional to sech^2(mx) — same distribution.
     -- Bridge: ψ(x) = ∂_x Φ(x) / √Z (kink gradient = quantum amplitude).
     -- Convergence rate O(1/M²) matches Nyquist residual ε_Z(M).
-    True  -- structural placeholder; physics CatAD
+    True  -- structural placeholder; physics CatAD; NOT an encoded bridge identity
 
-/-- **Theorem:** The Born rule bridge requires no new axiom beyond the continuum limit.
-    The identification ψ = ∂_x Φ/√Z is forced by the BPS condition:
-      ∂_x Φ = sqrt(2·V_{Z7}(Φ))   (BPS saturation)
-    and the fact that ψ(x) is the soliton wavefunction in the kink sector.
-    No additional input is needed: the bridge follows from the CMCAContinuumLimit theorem
-    plus the BPS kink profile. -/
-theorem born_bridge_no_new_axiom :
+/-- **Placeholder (not a proved bridge):** this theorem's name previously asserted
+    "the Born rule bridge requires no new axiom beyond the continuum limit" — a
+    claim about the trust boundary of an unformalized argument, stated as though it
+    were established. As written, the statement is bare `True` and does not verify
+    that claim or any other content; the surrounding prose argument (BPS saturation
+    forcing ψ = ∂_x Φ/√Z) remains an informal derivation, not a Lean proof. Renamed
+    to remove the misleading "no new axiom" assertion. -/
+theorem born_bridge_informal_argument_placeholder :
     -- Structural: the bridge ψ = ∂_x Φ/√Z requires only:
     --   (1) CMCA continuum limit M→∞ (cmca_continuum_limit_is_phimdl — CatAL)
     --   (2) BPS kink profile (derives from V_{Z7} potential — CatAD)
-    -- No additional axioms needed.
+    -- No additional axioms are used in this placeholder, but the identity itself
+    -- is not formalized — see docstring.
     True := trivial
 
 end UgpLean.Gravity.PageWoottersZ7
