@@ -6771,8 +6771,8 @@ The following named axioms are proved theorems (zero sorry):
 Additionally proved as theorems (zero sorry):
 \begin{itemize}[nosep]
 \item \lstinline|g_s_from_sigma_gte_2loop_rge| (\texttt{GaugeMDL}) — type \lstinline|: True|; trivially proved.
-\item \lstinline|phimdl_no_susy_degenerate_spectrum| (\texttt{CCImpossibilityBundle}) — type \lstinline|: True|; trivially proved.
-\item \lstinline|phimdl_no_antigravitating_sector| (\texttt{CCImpossibilityBundle}) — type \lstinline|: True|; trivially proved.
+\item \lstinline|phimdl_no_susy_degenerate_spectrum_placeholder| (\texttt{CCImpossibilityBundle}) — type \lstinline|: True|; trivially proved; placeholder pending a real SUSY/fermion-spectrum formalization (none exists in this library).
+\item \lstinline|phimdl_no_antigravitating_sector_placeholder| (\texttt{CCImpossibilityBundle}) — type \lstinline|: True|; trivially proved; placeholder — the unconstrained statement \lstinline|∀ cfg, T00 ≥ 0| is actually false under this library's own \texttt{StressEnergyTensor.lean} definitions (see module docstring for the explicit counterexample), so a correct restricted version is not yet formalized.
 \item \lstinline|g_inter_structural_catA| (\texttt{GaugeMDL}) — type \lstinline|: True|; trivially proved.
 \item \lstinline|eta_B_normalization_axiom| (\texttt{GUTStructure}) — type \lstinline|: ∃ κ : ℝ, 0 < κ ∧ κ = 1|; proved by \lstinline|⟨1, one_pos, rfl⟩|.
 \item \lstinline|adj_mem_periodicCausalNeighbors| (\texttt{SpectralDimensionDegree}) — proved via
@@ -7871,10 +7871,10 @@ Theorem & Module & Physical content \\
   & Algebra.GaugeMDL
   & G10 master: EW couplings + $\alpha_s$ structural bundle (zero \texttt{sorry}) \\[1pt]
 \midrule
-\multicolumn{3}{@{}l}{\textit{G30 --- CC cancellation impossibility (\texttt{Gravity/CCImpossibilityBundle.lean})}} \\[2pt]
-\texttt{cc\_\allowbreak cancellation\_\allowbreak impossible\_\allowbreak in\_\allowbreak gte}
+\multicolumn{3}{@{}l}{\textit{G30 --- CC cancellation impossibility, placeholder (\texttt{Gravity/CCImpossibilityBundle.lean})}} \\[2pt]
+\texttt{cc\_\allowbreak cancellation\_\allowbreak impossible\_\allowbreak in\_\allowbreak gte\_\allowbreak placeholder}
   & Gravity.CCImpossibilityBundle
-  & No SUSY-degenerate fermion sector; no antigravitating $T_{00}<0$ sector (structural axioms) \\[1pt]
+  & Type \lstinline|True ∧ True ∧ True|; intended target is no SUSY-degenerate fermion sector and no antigravitating $T_{00}<0$ sector, but neither component is Lean-certified (zero \texttt{axiom} declarations in this module; see module docstring) \\[1pt]
 \texttt{voxel\_\allowbreak cc\_\allowbreak coefficient}
   & Gravity.TemporalVoxelCC
   & GTE voxel CC coefficient $9/112 = 9/(7{\times}16)$ (zero \texttt{sorry}) \\[1pt]
