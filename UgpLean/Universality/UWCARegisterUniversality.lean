@@ -33,14 +33,14 @@ realized by layer (1) — not as the load-bearing universality mechanism.
 
 ## Named axiom used (one)
 
-- `RegisterMachine.counter_machine_simulates_computable` (Minsky 1967)
+- `RegisterMachine.minsky_counter_machine_turing_complete_1967` (Minsky 1967)
 
-## Scope guard
+## Sweep-level bridge
 
-This module certifies register-file / ALU-level universality matching P48's native
-computer architecture.  The refinement "each ALU macro-op equals a bounded number of
-binary P1–P4 sweeps on an explicit prime-window encoding" is the sweep-level bridge
-left for future work; it is **not** required for the semantic universality theorem here.
+See `UWCARegisterSweep`: `uwcaApplyRounds` iterates the real P1–P4 sweeps; `uwca_rounds_C_eq_ringRule110`
+proves `k` sweeps equal `k` Rule 110 steps on the C-row.  Static bounded INC/DEC/JZ macros on a
+periodic tape without gliders are not uniformly realizable; counter-machine steps compose via
+Cook's Rule 110 pipeline at the sweep level.
 -/
 
 namespace UgpLean.Universality

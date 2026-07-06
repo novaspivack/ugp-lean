@@ -6,7 +6,7 @@ import UgpLean.Universality.UWCARegisterUniversality
 The UGP substrate is Turing-universal via the UWCA register-machine route:
 
 1. Minsky counter machines compute every total computable function
-   (`RegisterMachine.counter_machine_simulates_computable`, one named axiom).
+   (`RegisterMachine.minsky_counter_machine_turing_complete_1967`, one named axiom).
 2. The UWCA CRT register file executes counter-machine programs step-for-step
    (`UWCARegisterUniversality.uwca_substrate_turing_universal`, zero sorry).
 

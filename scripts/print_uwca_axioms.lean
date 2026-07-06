@@ -1,6 +1,12 @@
 import UgpLean.Universality.TuringUniversal
 import UgpLean.Universality.UWCARegisterUniversality
+import UgpLean.Universality.CookComputableBridge
+import UgpLean.Universality.PhiMDLUniversality
+import UgpLean.Universality.GTEComputability
 
 #print axioms UgpLean.Universality.ugp_is_turing_universal
 #print axioms UgpLean.Universality.uwca_substrate_turing_universal
 #print axioms UgpLean.Universality.uwca_simulates_rule110_binary_holds
+#print axioms UgpLean.Universality.CookComputableBridge.cook_rule110_simulates_computable
+#print axioms UgpLean.Universality.PhiMDLUniversality.phimdl_turing_universal
+#print axioms UgpLean.Universality.GTEComputability.gte_embeds_in_rule110_via_computability

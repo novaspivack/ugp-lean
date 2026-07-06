@@ -15,11 +15,13 @@ and Infinite Machines*): finitely many registers holding natural numbers, with
 
 ## Named axiom (classical, not smuggled)
 
-- `counter_machine_simulates_computable` — every total computable `ℕ → ℕ` function is
+- `minsky_counter_machine_turing_complete_1967` — every total computable `ℕ → ℕ` function is
   computed by some counter program with a fuel function.  This is Minsky's theorem
   (equivalence of counter machines and Turing machines / partial recursive functions).
-  Mathlib does not yet contain a counter-machine development; this axiom records the
-  standard classical result pending full formalization.
+
+  **Mathlib audit (2026):** no counter-machine, register-machine, URM, or Minsky formalization
+  in `Mathlib.Computability.*` (`Partrec`, `PartrecCode`, `TuringMachine`, `PartrecToTM2`, …).
+  Discharge path: Minsky 1967 two-counter construction, or `PartrecToTM2` + counter↔TM compilation.
 
 The UWCA register-machine universality route (`UWCARegisterUniversality.lean`) uses this
 axiom together with a zero-sorry UWCA register-file interpreter.
@@ -93,20 +95,26 @@ theorem counter_step_total (prog : CounterProgram) (st : CounterState) :
 theorem counter_run_zero (prog : CounterProgram) (st : CounterState) :
     counter_run prog 0 st = st := rfl
 
-/-- **Axiom (Minsky counter-machine Turing completeness).**
+/-- **Axiom (Minsky 1967: counter machines are Turing complete).**
 
     Every total computable function `f : ℕ → ℕ` is computed by some counter program:
     there exist a finite program and a fuel function such that running from
     `counter_encode_input n` and decoding register 0 yields `f n`.
 
-    **Classical source:** Minsky (1967); equivalent to Turing-machine / partial-recursive
-    computability.  **Not** a restatement of the UWCA conclusion — this is the standard
-    counter-machine completeness theorem, independent of any CA substrate.
+    **Classical source:** Minsky, *Computation: Finite and Infinite Machines* (1967), Ch. 8–9.
+    Equivalent to Turing-machine / partial-recursive computability.
 
-    **Discharge path:** formalize Minsky's 2-counter simulation of Turing machines, or
-    import via Mathlib's `PartrecToTM2` chain and a counter-machine → TM2 compilation. -/
-axiom counter_machine_simulates_computable (f : ℕ → ℕ) (hf : Computable f) :
+    **Assumed, not derived:** Mathlib has no counter-machine development as of v4.29.1.
+    Full formalization of Minsky's 2-counter Turing simulation is out of scope here; this
+    records a textbook-standard, uncontroversial classical result. -/
+axiom minsky_counter_machine_turing_complete_1967 (f : ℕ → ℕ) (hf : Computable f) :
     ∃ (prog : CounterProgram) (fuel : ℕ → ℕ),
       ∀ n, counter_decode_output (counter_run prog (fuel n) (counter_encode_input n)) = f n
+
+/-- Backward-compatible alias for the Minsky 1967 axiom. -/
+theorem counter_machine_simulates_computable (f : ℕ → ℕ) (hf : Computable f) :
+    ∃ (prog : CounterProgram) (fuel : ℕ → ℕ),
+      ∀ n, counter_decode_output (counter_run prog (fuel n) (counter_encode_input n)) = f n :=
+  minsky_counter_machine_turing_complete_1967 f hf
 
 end UgpLean.Universality.RegisterMachine
