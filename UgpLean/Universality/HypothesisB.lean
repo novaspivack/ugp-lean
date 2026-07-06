@@ -312,13 +312,15 @@ def infRule110Steps : ℕ → InfTape → InfTape
    recursive, hence computable. Proved via `Primrec.nat_mod`, `Primrec.nat_div`,
    `Primrec.nat_sub`, `Primrec.nat_add`, `Primrec₂.natPair`, `Primrec.unpair`.
 
-2. **`GTEComputability.rule110_simulates_computable`** (named axiom):
-   Any total computable ℕ → ℕ function embeds in Rule 110. This is Cook (2004)'s
-   Turing universality theorem at the tape level. The formalization gap is
-   Milestones 3–5 in `rule110-lean`.
+2. **`GTEComputability.rule110_simulates_computable`** (theorem, zero sorry):
+   Any total computable ℕ → ℕ function embeds in Rule 110. Proved via
+   `CookComputableBridge.cook_rule110_simulates_computable` (the named axiom
+   packaging Cook (2004)'s operational universality composed with universal TM
+   compilation) — this is Cook's Turing universality theorem at the tape level.
 
 The old `gte_in_rule110_sim_ax` is **removed**. `#print axioms gte_embeds_in_rule110`
-now lists only `GTEComputability.rule110_simulates_computable` (plus Lean universe axioms).
+now lists only `CookComputableBridge.cook_rule110_simulates_computable` (plus Lean
+universe axioms).
 
 Note: the tape type is `Rule110.InfTape = ℕ → Bool`, which is definitionally the same
 as `InfTape = ℕ → Bool` in this file. The coercion below is trivial.
@@ -357,11 +359,12 @@ open GTEComputability in
 
     Derived from two honest, named components:
     - `gte_update_map_nat_computable` (zero sorry): GTE arithmetic is computable.
-    - `rule110_simulates_computable` (named axiom): Cook (2004) — Rule 110 simulates
-      any computable function.
+    - `rule110_simulates_computable` (theorem, zero sorry, proved from the named axiom
+      `CookComputableBridge.cook_rule110_simulates_computable`): Cook (2004) — Rule 110
+      simulates any computable function.
 
     The old `gte_in_rule110_sim_ax` is **removed**. `#print axioms gte_embeds_in_rule110`
-    now shows only `rule110_simulates_computable`. -/
+    now shows only `CookComputableBridge.cook_rule110_simulates_computable`. -/
 theorem gte_embeds_in_rule110 :
     ∃ (encode : GTEState → InfTape)
       (decode : InfTape → GTEState)
@@ -389,8 +392,8 @@ theorem gte_embeds_in_rule110 :
     **GTE sector** (infinite tape, `InfTape` encoding):
       N Rule 110 steps on the encoded GTE state produce the next GTE state. The encoding
       maps GTEState into `InfTape = ℕ → Bool` with a faithful round-trip.
-      Source: `gte_embeds_in_rule110` — proved zero sorry, one axiom
-      (`GTEComputability.rule110_simulates_computable`).
+      Source: `gte_embeds_in_rule110` — proved zero sorry, one named axiom
+      (`CookComputableBridge.cook_rule110_simulates_computable`).
 
     Together: the Rule 110 Boolean tape is the **single universal computational substrate** —
     it simultaneously computes the SM charge sector (fMDL winding, finite tape) and the mass
@@ -401,8 +404,9 @@ theorem gte_embeds_in_rule110 :
     lattice of L sites); the GTE sector uses `InfTape` (natural for Turing simulation).
     Both are concretely-typed instantiations of the Boolean Rule 110 CA.
 
-    **Status**: zero sorry. One explicit named axiom (`rule110_simulates_computable`) stands in
-    for Cook (2004)'s tape encoding formalization — the same gap as §3a. -/
+    **Status**: zero sorry. One explicit named axiom
+    (`CookComputableBridge.cook_rule110_simulates_computable`) stands in for Cook (2004)'s
+    tape encoding formalization — the same gap as §3a. -/
 theorem hypothesis_b_tape_level :
     -- fMDL sector: finite tape coherence (zero sorry, zero axioms)
     (∀ {L : ℕ} [NeZero L] (tape : UWCASubstrate L) (_ : tape.inBinarySector) (i : Fin L),

@@ -314,7 +314,7 @@ theorem z7kg_nat_int_tape_equivalence
     rw [← rule110_output_compat]
 
 -- Note: `phimdl_turing_universal` (Route B Turing universality conclusion) is defined
--- after `z7_prime_field_universality` in §R2 below (forward reference resolved there).
+-- in §R2.7 below, after the Cook composition axiom is brought into scope.
 
 -- ─────────────────────────────────────────────────────────────────────────────
 -- §R2  Route 2: Z₇ Prime Field Universality (Cook-independent)
@@ -782,8 +782,9 @@ theorem z7kg_kink_nand (QL QR : Bool) :
 
     **Proof**: the Bool ↔ ZMod 7 retraction `z7_to_bool ∘ bool_to_z7 = id`
     (`bool_z7_roundtrip`) provides an explicit witness without invoking NAND gate
-    trees or `rule110_simulates_computable`.  For the full Turing universality conclusion,
-    `z7_prime_field_universality` (Route 2) is the Cook-independent certificate. -/
+    trees or `rule110_simulates_computable`.  This is a finite Boolean-completeness
+    witness, not a Turing-universality certificate; the full Turing universality
+    conclusion for Φ_MDL is `phimdl_turing_universal` (Cook route, §R2.7). -/
 theorem z7kg_kink_universality_cook_free :
     ∀ (f : Bool → Bool → Bool),
       ∃ (kink_compute : ZMod 7 × ZMod 7 × ZMod 7 → ZMod 7),

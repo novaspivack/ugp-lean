@@ -47,11 +47,14 @@ advance jointly on a single combined tape, not on separate substrates.
 
 ## Status
 
-- `psc_forces_tape_unification`: **PROVED, zero sorry** (two named axioms:
-  `rcc_physics_ax` from `PSC.RCCComplete`, `GTEComputability.rule110_simulates_computable`
-  via `HypothesisB.gte_embeds_in_rule110`).
+- `psc_forces_tape_unification`: **PROVED, zero sorry** (named axioms:
+  `rcc_physics_ax` from `PSC.RCCComplete`,
+  `CookComputableBridge.cook_rule110_simulates_computable` (via
+  `HypothesisB.gte_embeds_in_rule110`), and
+  `RegisterMachine.minsky_counter_machine_turing_complete_1967` (via the Hypothesis~C
+  conjunct, `UGP_substrate_turing_universal`)).
 - `simultaneous_dual_tape_ax`: Named axiom (same mathematical status as
-  `rule110_simulates_computable`; follows from fMDL+GTE coherence + Rule 110
+  `cook_rule110_simulates_computable`; follows from fMDL+GTE coherence + Rule 110
   vacuum-transparency enabling independent region evolution).
 - `simultaneous_sector_coherence`: **PROVED, zero sorry, one named axiom**.
 
@@ -81,11 +84,14 @@ open PSC.RCC
     - **Left conjunct** (Hypothesis C, `PSCUniversality.lean` §4):
       `hypothesis_c_psc_forces_universality S T h_rcc h_psc`
       gives `UGP_substrate_turing_universal` — PSC + RCC forces SM gauge signature,
-      which forces Rule 110 orbit, which forces Turing universality.
+      which forces Rule 110 orbit, which forces Turing universality via the UWCA
+      register-machine route (conditional on
+      `RegisterMachine.minsky_counter_machine_turing_complete_1967`).
     - **Right conjunct** (Hypothesis B, `HypothesisB.lean` §7):
       `hypothesis_b_tape_level` — unconditional tape-level unification.
       The fMDL sector (finite tape coherence, zero axioms) and GTE sector
-      (infinite tape simulation, one axiom `GTEComputability.rule110_simulates_computable`) both hold
+      (infinite tape simulation, one named axiom
+      `CookComputableBridge.cook_rule110_simulates_computable`) both hold
       independently of PSC.
 
     The chain theorem joins them: PSC is what forces the **specific** Rule 110 tape;
@@ -96,9 +102,11 @@ open PSC.RCC
     gives tape-level unification but not a forcing relation to PSC. Together they say:
     PSC → the specific dual-sector substrate is uniquely selected.
 
-    LEAN-CERTIFIED: zero sorry. Two named axioms: `rcc_physics_ax` (PSC.RCCComplete,
-    analytically backed) and `GTEComputability.rule110_simulates_computable` (Cook 2004
-    bridge axiom, discharged via `gte_embeds_in_rule110`). -/
+    LEAN-CERTIFIED: zero sorry. Named axioms: `rcc_physics_ax` (PSC.RCCComplete,
+    analytically backed), `CookComputableBridge.cook_rule110_simulates_computable` (Cook 2004
+    bridge axiom, discharged via `gte_embeds_in_rule110`), and
+    `RegisterMachine.minsky_counter_machine_turing_complete_1967` (Minsky 1967 bridge
+    axiom, discharged via the Hypothesis~C conjunct). -/
 theorem psc_forces_tape_unification
     (S : GaugeTheorySpace) (T : S.Theory)
     (h_psc : PSCAdmissible S T) :
@@ -136,12 +144,13 @@ advance the GTE encoding by one `gte_update_map` step.
 The axiom `simultaneous_dual_tape_ax` encodes this existence claim. Its mathematical
 basis is:
 1. `fmdl_sector_coherence` (zero sorry, zero axioms): C-bits under Rule 110 = fMDL step.
-2. `GTEComputability.rule110_simulates_computable` (named axiom): GTE embeds in Rule 110 on InfTape.
+2. `CookComputableBridge.cook_rule110_simulates_computable` (named axiom): GTE embeds in
+   Rule 110 on InfTape.
 3. Vacuum-transparency of Rule 110 (`110 % 2 = 0`): vacuum buffer prevents cross-region
    interference, so the combined tape evolves both sectors independently.
 
-**Same mathematical status as `rule110_simulates_computable`**: these are the Cook (2004)
-bridge axioms. The gap between axiom and zero-axiom proof is formalizing the explicit
+**Same mathematical status as `cook_rule110_simulates_computable`**: this is the Cook (2004)
+bridge axiom. The gap between axiom and zero-axiom proof is formalizing the explicit
 tape encoding from Cook (2004) + the region-independence argument.
 -/
 
@@ -167,10 +176,10 @@ tape encoding from Cook (2004) + the region-independence argument.
 
     **Mathematical basis**:
     - fMDL coherence: `fmdl_sector_coherence` (zero sorry, zero axioms)
-    - GTE coherence: `GTEComputability.rule110_simulates_computable` (named axiom, Cook 2004)
+    - GTE coherence: `CookComputableBridge.cook_rule110_simulates_computable` (named axiom, Cook 2004)
     - Region independence: vacuum buffer + Rule 110 vacuum-transparency (`110 % 2 = 0`)
 
-    **Same status as `rule110_simulates_computable`** (Cook 2004 bridge axiom). -/
+    **Same status as `cook_rule110_simulates_computable`** (Cook 2004 bridge axiom). -/
 axiom simultaneous_dual_tape_ax :
     ∃ (encode_dual : ∀ (L : ℕ), UWCASubstrate L → GTEState → InfTape)
       (decode_fmdl : ∀ (L : ℕ), Fin L → InfTape → Fin 7)
@@ -208,7 +217,7 @@ axiom simultaneous_dual_tape_ax :
     zero, so both regions evolve independently and coherently.
 
     LEAN-CERTIFIED: zero sorry, one explicit named axiom (`simultaneous_dual_tape_ax`).
-    Same mathematical status as `rule110_simulates_computable`. -/
+    Same mathematical status as `cook_rule110_simulates_computable`. -/
 theorem simultaneous_sector_coherence :
     ∃ (encode_dual : ∀ (L : ℕ), UWCASubstrate L → GTEState → InfTape)
       (decode_fmdl : ∀ (L : ℕ), Fin L → InfTape → Fin 7)
@@ -236,7 +245,8 @@ theorem simultaneous_sector_coherence :
     the simultaneous coherence theorem and Hyp B).
 
     LEAN-CERTIFIED: zero sorry. Named axioms: `rcc_physics_ax`, `simultaneous_dual_tape_ax`
-    (and `rule110_simulates_computable` via `gte_embeds_in_rule110`). -/
+    (and `cook_rule110_simulates_computable` via `gte_embeds_in_rule110`, and
+    `minsky_counter_machine_turing_complete_1967` via the Hypothesis~C conjunct). -/
 theorem psc_forces_simultaneous_coherence
     (S : GaugeTheorySpace) (T : S.Theory)
     (h_psc : PSCAdmissible S T) :
