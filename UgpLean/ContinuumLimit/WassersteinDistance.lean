@@ -1277,13 +1277,36 @@ axiom gorard_vacuum_oric_zero
     OllivierRicci M x y μ ν = 0
 
 -- ---------------------------------------------------------------------------
--- Rule 110 Gromov-Wasserstein limit (axiom)
+-- Rule 110 Gromov-Hausdorff continuum limit — open question
 -- ---------------------------------------------------------------------------
 
-/-- There exists a sequence of finite metric spaces (Rule 110 CMCA graphs) that
-    serves as the discrete approximation of flat Riemannian space.
-    Stated as an axiom pending the full G26 continuum-limit proof. -/
-axiom rule110_gromov_wasserstein_limit :
-    ∃ _ : ℕ → FiniteMetricSpace, True
+/-!
+### Open question: Gromov–Hausdorff convergence of the Rule 110 CMCA graph family
+
+The discrete-gravity programme's continuum-limit claim is that the sequence of
+finite Rule 110 CMCA spatial graphs Gromov–Hausdorff–converges to flat Riemannian
+space as the grid parameter grows. This requires an explicit `FiniteMetricSpace`
+sequence built from the Rule 110 CMCA graphs, together with a genuine
+Gromov–Hausdorff convergence bound to a flat-space limit.
+
+A prior version of this module recorded this claim as
+`axiom rule110_gromov_wasserstein_limit : ∃ _ : ℕ → FiniteMetricSpace, True` —
+satisfiable by any sequence of finite metric spaces whatsoever (for example the
+constant sequence of one-point spaces), since the existential's body carries no
+constraint connecting the witness to Rule 110, the CMCA graph construction, or
+Gromov–Hausdorff convergence. That axiom has been removed rather than replaced
+with an equally axiomatized-but-honest statement, because the real content this
+claim needs — the actual CMCA-graph-indexed metric space family and a proved (or
+at minimum precisely stated) Gromov–Hausdorff bound to flat space — is not yet
+formalized anywhere in this repository. Introducing an axiom whose statement
+*does* mention the CMCA graph family without a corresponding real convergence
+argument would still be an unearned claim.
+
+This remains open pending the G26 continuum-limit programme. See
+`UgpLean/Spacetime/VacuumGHConvergence.lean` for a separate, already-proved
+Gromov–Hausdorff convergence result on the *vacuum* CMCA spatial graph
+(`vacuum_cmca_gh_converges_to_flat_space`), which does not by itself establish
+the general Rule 110 CMCA graph family limit claimed here.
+-/
 
 end GTE.ContinuumLimit.Wasserstein
