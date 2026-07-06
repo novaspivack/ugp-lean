@@ -1,0 +1,6 @@
+import UgpLean.Universality.TuringUniversal
+import UgpLean.Universality.UWCARegisterUniversality
+
+#print axioms UgpLean.Universality.ugp_is_turing_universal
+#print axioms UgpLean.Universality.uwca_substrate_turing_universal
+#print axioms UgpLean.Universality.uwca_simulates_rule110_binary_holds

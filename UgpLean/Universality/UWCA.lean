@@ -51,8 +51,18 @@ def UWCA_single_sweep_correctness : Prop :=
         (tape i)
         (tape ⟨(i.val + 1) % L, Nat.mod_lt _ hL⟩))
 
-/-- UWCA simulates Rule 110. The survivor topos contains a finite-local subsystem
- isomorphic to Rule 110. Proved in UWCASimulation. -/
-def UWCA_embeds_Rule110 : Prop := True  -- Structural marker; real content in uwca_simulates_rule110_real
+/-- UWCA simulates Rule 110 on the binary sector: one P1–P4 round = one Rule 110 step.
+    Proved in `UWCASimulation.uwca_sweep_implements_rule110` and packaged in
+    `UWCARegisterUniversality.uwca_simulates_rule110_binary`. -/
+def UWCA_simulates_rule110_binary : Prop :=
+  ∀ (L : ℕ) [NeZero L] (tape : Tape L) (h : tape.inBinarySector) (i : Fin L),
+    (uwcaRound tape i).C =
+      rule110Output (neighborhoodIndex
+        (tape ⟨(i.val + L - 1) % L, Nat.mod_lt _ (Nat.pos_of_ne_zero (NeZero.ne L))⟩).C
+        (tape i).C
+        (tape ⟨(i.val + 1) % L, Nat.mod_lt _ (Nat.pos_of_ne_zero (NeZero.ne L))⟩).C)
+
+/-- Deprecated alias kept for import stability; use `UWCA_simulates_rule110_binary`. -/
+abbrev UWCA_embeds_Rule110 := UWCA_simulates_rule110_binary
 
 end UgpLean.Universality

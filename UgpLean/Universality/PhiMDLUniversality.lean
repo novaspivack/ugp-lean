@@ -439,25 +439,15 @@ theorem nand_z7_poly_rep :
 
 -- §R2.6  Cook-independent bridge axiom
 
-/-- **Axiom (Z₇ Boolean completeness → Φ_MDL Turing universality)**.
+/-- **Axiom (Z₇ Boolean completeness → Φ_MDL Turing universality)** — **NOT the substrate route**.
 
-    If Φ_MDL kink arithmetic can represent every 3-input Boolean function over ZMod 7,
-    then Φ_MDL is Turing universal.
+    **Scope warning:** Boolean functional completeness (NAND / finite circuits) does **not**
+    imply Turing universality on an unbounded tape.  This axiom encodes a Shannon-style
+    TM→circuit bridge that is **not** valid as stated for spatially-local CA dynamics.
+    Substrate Turing universality is certified separately via the UWCA register-machine
+    route (`UWCARegisterUniversality.uwca_substrate_turing_universal`, Minsky axiom only).
 
-    **Mathematical content** (classical, Cook-independent):
-    - Every Turing machine can be simulated by a Boolean circuit (Shannon 1949).
-    - Boolean circuits decompose into NAND gates.
-    - NAND over ZMod 7 is `1 − A·B` (proved in `nand_z7_poly_rep`).
-    - Φ_MDL kink dynamics implement addition and multiplication in ZMod 7, hence can
-      evaluate any Boolean circuit step-by-step.
-    - Chaining circuit steps gives a Turing-complete simulation.
-
-    **Cook-independence**: Does NOT invoke `rule110_simulates_computable`.
-    Uses the Shannon (1949) TM → circuit reduction, a separate classical result.
-
-    **Gap to zero-axiom**: Formalizing the Shannon reduction (TM → circuit) and the
-    circuit → Φ_MDL kink implementation requires ~200 lines of Lean; left as future
-    proof-engineering work. -/
+    Retained for the Φ_MDL / Z₇ kink-field Route 2 chain pending either discharge or removal.
 axiom z7_boolean_completeness_implies_turing_universal :
     (∀ (f : Bool → Bool → Bool → Bool),
       ∃ (kink : ZMod 7 × ZMod 7 × ZMod 7 → ZMod 7),

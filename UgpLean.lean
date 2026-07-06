@@ -128,6 +128,7 @@ import UgpLean.Universality.UWCA
 import UgpLean.Universality.UWCASimulation
 import UgpLean.Universality.UWCAHistoryReversible
 import UgpLean.Universality.UWCAembedsRule110
+import UgpLean.Universality.UWCARegisterUniversality
 import UgpLean.Universality.TuringUniversal
 import UgpLean.Universality.ArchitectureBridge
 import UgpLean.Universality.CUP4TotalParity
