@@ -1,6 +1,7 @@
-# PROPOSAL — Rule110 AlgebraicUniversality scope correction
+# Rule110 AlgebraicUniversality scope correction
 
-**Status:** Proposal only — not committed to `rule110-lean`. For Nova review.
+**Status:** EXECUTED. Committed and pushed to `rule110-lean` (its own `origin`,
+direct push authorized — this repo has no dev-sandbox counterpart).
 
 **Problem:** `rule110_turing_universal_algebraic` is literally `boolean_nand_complete` —
 2-input NAND functional completeness (Sheffer 1913), not Turing universality.
@@ -20,7 +21,7 @@ theorem rule110_turing_universal_algebraic :
   boolean_nand_complete
 ```
 
-## After (proposed)
+## After (executed)
 
 ```lean
 theorem rule110_center1_nand_functional_completeness :
@@ -29,7 +30,11 @@ theorem rule110_center1_nand_functional_completeness :
         ∀ (a b : Bool), circuit a b = f a b :=
   boolean_nand_complete
 
+@[deprecated rule110_center1_nand_functional_completeness (since := "2026-07-06")]
 abbrev rule110_turing_universal_algebraic := rule110_center1_nand_functional_completeness
 ```
 
-See full proposed module header in this document's git history or the agent report.
+The module header docstring and `README.md` in `rule110-lean` were updated to match:
+the module title changed from "Algebraic Universality Certificate" to "Finite NAND
+Functional Completeness", and the claim that "Cook's theorem is a corollary of the
+algebraic route" was removed (neither result is a corollary of the other).

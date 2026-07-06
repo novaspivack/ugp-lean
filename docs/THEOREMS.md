@@ -61,14 +61,14 @@ The foundational chain from which all physics derives.
 | d-dim CA with SM orbit must apply Rule 110 on slices | `dimensional_slice_uniqueness` | Universality.DimensionalSliceUniqueness |
 | p=5 uniquely transitive for weight-3 vectors among primes ≤23 | `z5_transitivity_uniqueness` | Universality.Z5TransitivityUniqueness |
 | UWCA sweep implements Rule 110 exactly | `uwca_sweep_implements_rule110` | Universality.UWCASimulation |
-| Rule 110 is Turing-universal (Cook 2004, 5 named bridge axioms) | `rule110_turing_universal_from_cook` | rule110-lean (`CookUniversalityTop`) |
+| Rule 110 is Turing-universal (Cook 2004, 5 named bridge axioms) ⚠ | `rule110_turing_universal_from_cook` | rule110-lean (`CookUniversalityTop`) |
 | Rule 110 at center-1 realizes any finite 2-input Boolean function (Sheffer 1913; not Turing universality) | `rule110_center1_is_nand`, `z7_bool3_finite_functional_completeness` | Universality.PhiMDLUniversality |
-| Minsky two-counter machines simulate every computable function (1 named axiom) | `counter_machine_simulates_computable` | Universality.RegisterMachine |
+| Minsky two-counter machines simulate every computable function (1 named axiom) ⚠ | `counter_machine_simulates_computable` | Universality.RegisterMachine |
 | UWCA CRT register file simulates counter machines (zero sorry) | `uwca_substrate_simulates_computable` | Universality.UWCARegisterUniversality |
 | $k$ UWCA sweeps = $k$ Rule 110 steps (zero sorry, zero axioms) | `uwca_rounds_C_eq_ringRule110` | Universality.UWCARegisterSweep |
-| Cook operational universality composed with TM compilation (1 named axiom) | `cook_rule110_simulates_computable` | Universality.CookComputableBridge |
-| $\Phi_{\rm MDL}$ is Turing-universal (Cook route, 1 named axiom) | `phimdl_turing_universal` | Universality.PhiMDLUniversality |
-| **UGP substrate is Turing-universal** (register-machine route, 1 named axiom) | `ugp_is_turing_universal` | Universality.TuringUniversal |
+| Cook operational universality composed with TM compilation (1 named axiom) ⚠ | `cook_rule110_simulates_computable` | Universality.CookComputableBridge |
+| $\Phi_{\rm MDL}$ is Turing-universal (Cook route, 1 named axiom) ⚠ | `phimdl_turing_universal` | Universality.PhiMDLUniversality |
+| **UGP substrate is Turing-universal** (register-machine route, 1 named axiom) ⚠ | `ugp_is_turing_universal` | Universality.TuringUniversal |
 | UWCA history-lane reversibility: backward ∘ forward = id | `uwca_augmented_left_inverse` | Universality.UWCAHistoryReversible |
 | GTE compilation: sigma_gte by `rfl` | `gte_compilation_theorem` | Universality.GTECompilation |
 | **GTE uniqueness**: unique lawful UWCA program up to bisimulation | `gte_uniqueness_up_to_bisimulation` | Universality.GTEUniqueness |

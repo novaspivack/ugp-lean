@@ -2,7 +2,13 @@
 
 Every premise that is not definitional truth. Tag: `definition` | `lemma` | `axiom` | `imported` | `citation`.
 
-This ledger covers the **full library** (435 modules across 27 layers). The RSUC core proof path has 0 sorry and 0 custom axioms. See `docs/DESIGN.md` for the non-circularity contract.
+This is a curated selection of the premises behind the library's key results — it is not
+exhaustive. The library is 435 modules across 27 layers and references on the order of 97
+named axioms in total; for the complete, current axiom inventory see the formalization
+paper's axiom-inventory table (`paper/ugp_lean_formalization.tex`). This ledger's purpose is
+narrower: it documents the RSUC core proof path (0 sorry, 0 custom axioms) and the handful of
+axioms and citations most relevant to spot-checking that path and the Universality chain. See
+`docs/DESIGN.md` for the non-circularity contract.
 
 ---
 
@@ -70,7 +76,7 @@ This ledger covers the **full library** (435 modules across 27 layers). The RSUC
 | ID | Lean name | Module | Tag |
 |---|---|---|---|
 | L40 | `uwca_sweep_implements_rule110` — UWCA sweep exactly implements Rule 110 | Universality.UWCASimulation | lemma |
-| L41 | `ugp_is_turing_universal` — UGP substrate Turing-universal | Universality.TuringUniversal | lemma |
+| L41 | `ugp_is_turing_universal` — UGP substrate Turing-universal (conditional on A5) | Universality.TuringUniversal | lemma |
 | L42 | `uwca_augmented_left_inverse` — backward ∘ forward = id | Universality.UWCAHistoryReversible | lemma |
 | L43 | `gte_uniqueness_up_to_bisimulation` — unique lawful UWCA program | Universality.GTEUniqueness | lemma |
 | L44 | `parity_projection_additive_forcing` — all 777 additive forms; Rule 110 forcing maximal | Universality.ParityProjectionForcing | lemma |
@@ -103,8 +109,14 @@ This ledger covers the **full library** (435 modules across 27 layers). The RSUC
 | A2 | `crt_equidistribution_within_regime` | GTE.AnalyticArchitecture | Tenenbaum III.6 + CRT; same dependency |
 | A3 | `sech_overlap_mesh_to_integral` | Substrate.SechOverlapIntegralBounds_bridge | Mesh→integral bridge; CatA class |
 | A4 | `sech_overlap_bridge_r5` | Substrate.SechOverlapIntegralBounds_bridge | Second mesh→integral bridge; CatA class |
+| A5 | `minsky_counter_machine_turing_complete_1967` | Universality.RegisterMachine | Minsky 1967, classical counter-machine Turing-completeness; absent from Mathlib. **Load-bearing** for the Universality chain (`ugp_is_turing_universal`, L41). |
+| A6 | `cook_rule110_simulates_computable` | Universality.CookComputableBridge | Composition of Cook's proven CTS construction (`rule110_turing_universal_from_cook` in `rule110-lean`, zero-sorry modulo 5 classical Cook bridge axioms — real, established mathematics) with TM/Partrec compilation; axiom only because this specific composition step is not yet re-derived within `ugp-lean-exp` itself, not because the underlying mathematics is in doubt. **Load-bearing** for `phimdl_turing_universal` (Universality.PhiMDLUniversality). |
 
-None of A1–A4 appear in the axiom closure of any physics or classification theorem.
+None of A1–A4 appear in the axiom closure of any physics or classification theorem; they are
+outside the RSUC core proof path entirely. A5 and A6 are different: they ARE load-bearing, but
+specifically and only for the Universality chain (`ugp_is_turing_universal`,
+`phimdl_turing_universal`) — they do not appear in the RSUC core, GTE orbit, mass-relations, or
+algebraic-structure results listed above.
 
 ---
 
@@ -143,5 +155,6 @@ None of A1–A4 appear in the axiom closure of any physics or classification the
 - RSUC proof path (TheoremA + TheoremB) has **0 sorry, 0 custom axioms**
 - **Core/ does not import Compute/** (non-circularity enforced by module structure)
 - All sieve predicates defined without referencing the answer (anti-smuggling rule)
-- The four `axiom` entries (A1–A4) are **outside** the physics theorem closure
+- A1–A4 are **outside** the physics theorem closure entirely (analytic-NT and mesh-bridge axioms, unrelated to RSUC or Universality)
+- A5–A6 are **load-bearing, but only for the Universality chain** (`ugp_is_turing_universal`, `phimdl_turing_universal`) — they do not affect RSUC, GTE orbit, or mass-relations results
 - Every `native_decide` call reduces to kernel-checkable arithmetic
