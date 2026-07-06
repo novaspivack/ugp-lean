@@ -3,7 +3,7 @@
 Every premise that is not definitional truth. Tag: `definition` | `lemma` | `axiom` | `imported` | `citation`.
 
 This is a curated selection of the premises behind the library's key results — it is not
-exhaustive. The library is 435 modules across 27 layers and references on the order of 97
+exhaustive. The library is 435 modules across 27 layers and references on the order of 98
 named axioms in total; for the complete, current axiom inventory see the formalization
 paper's axiom-inventory table (`paper/ugp_lean_formalization.tex`). This ledger's purpose is
 narrower: it documents the RSUC core proof path (0 sorry, 0 custom axioms) and the handful of
