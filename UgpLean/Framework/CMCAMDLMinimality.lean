@@ -20,18 +20,33 @@ Prefix-free `log₂+1` cost for cardinal channels; per-bit rule-table cost; MDL 
 | Component | Status |
 |-----------|--------|
 | `CAConstruction`, `K_CA`, four instances | CatAL — zero sorry, `decide` |
-| `K_CA_all_features_lower_bound` | CatAL conditional — `omega`, zero sorry |
+| `K_CA_all_features_lower_bound` | CatAL conditional — zero sorry |
 | `cmca_is_mdl_minimal_with_all_five_features` | CatAL conditional — zero sorry |
-| Physical-interpretation axioms | 6 axioms (CatA/CatAD/CatAL physical certificates) |
+| Physical-interpretation axioms | 1 axiom (CatAL physical certificate) |
 
-## Axioms (physical interpretation — not Lean gaps)
+## Axiom (physical interpretation — not a Lean gap)
 
-1. `turing_universality_min_outer_bits` — Turing-univ → outerRuleBits ≥ 8 (CUP-4 / CUP-12)
-2. `z7_orbit_min_alphabet` — Z₇ orbit → alphabetSize ≥ 7 (f_MDL, CUP-11)
-3. `va_min_two_layers` — V–A → numOuterLayers ≥ 2 (ChiralPairVA, P41)
-4. `va_min_mirror_bit` — V–A + Turing → outerRuleBits ≥ 9 (ChiralPairVA 32/125)
-5. `sr_min_async` — dynamics-SR → innerClockKind = AsyncTauC (P36 `prop:async_equiv`)
-6. `sr_min_gating` — dynamics-SR → gatingBits ≥ 3 (P36 §SR AFCA gating spec)
+`va_min_mirror_bit` — V–A + Turing universality forces the outer-rule-table channel
+to carry one additional "mirror flag" bit (outerRuleBits ≥ 9) beyond the 8 bits needed
+to specify Rule 110 alone, because Rule 124 is fully determined as the spatial mirror
+of Rule 110 (`ChiralPairVA.rule124 l c r := rule110 r c l`) and therefore costs exactly
+one extra bit to select, not a second independent 8-bit table.
+
+### Note on the four channel-membership predicates
+
+`ConstructionIsTuringUniversal`, `ConstructionHasZ7Orbit`, `ConstructionHasVAStructure`,
+and the first conjunct of `ConstructionHasSRTimeDilation` are *definitions*
+(`c.outerRuleBits ≥ 8`, `c.alphabetSize ≥ 7`, `c.numOuterLayers ≥ 2`,
+`c.innerClockKind = .AsyncTauC`, `c.gatingBits ≥ 3` respectively) — the corresponding
+channel bound is available directly from unfolding the hypothesis, with no axiom
+required. A prior version of this module additionally declared five axioms
+(`turing_universality_min_outer_bits`, `z7_orbit_min_alphabet`, `va_min_two_layers`,
+`sr_min_async`, `sr_min_gating`) whose conclusions were syntactically identical to
+their own hypotheses after unfolding — literal `P → P` tautologies contributing no
+physical content beyond the definitions themselves. They have been removed;
+`K_CA_all_features_lower_bound` now derives its four definitional bounds directly
+from `hZ`, `hV`, and `hSR`, and depends on exactly one substantive axiom
+(`va_min_mirror_bit`).
 -/
 
 namespace UgpLean.Framework.CMCAMDL
@@ -141,46 +156,31 @@ def constructionOf : GTELevel1Object → CAConstruction
   | .PhiMDL              => cCMCA
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- §6  Physical-interpretation axioms (CatA / CatAD / CatAL certificates)
+-- §6  Physical-interpretation axiom (CatAL certificate)
 -- ─────────────────────────────────────────────────────────────────────────────
 
-/-- **CatAL (CUP-4 / CUP-12):** Turing-universal Z₇ CAs require ≥ 8 outer rule bits. -/
-axiom turing_universality_min_outer_bits (c : CAConstruction)
-    (hT : ConstructionIsTuringUniversal c) :
-    c.outerRuleBits ≥ 8
-
-/-- **CatAL (CUP-11 / f_MDL):** Z₇ orbit content requires alphabet Fin 7 or larger. -/
-axiom z7_orbit_min_alphabet (c : CAConstruction)
-    (hZ : ConstructionHasZ7Orbit c) :
-    c.alphabetSize ≥ 7
-
-/-- **CatAL (ChiralPairVA / P41):** V–A chirality requires at least two outer layers. -/
-axiom va_min_two_layers (c : CAConstruction)
-    (hV : ConstructionHasVAStructure c) :
-    c.numOuterLayers ≥ 2
-
-/-- **CatAL (ChiralPairVA 32/125):** V–A with Turing-univ forces mirror bit (+1) on outer rules. -/
+/-- **CatAL (ChiralPairVA — Rule 124 as spatial mirror of Rule 110):** a Turing-universal
+    outer rule table (≥ 8 bits) combined with a second, mirror-related outer layer
+    (V–A structure, ≥ 2 layers) forces the outer-rule-table channel to ≥ 9 bits: the
+    mirror layer is fully determined by the primary rule table up to a one-bit
+    "mirror flag" (`ChiralPairVA.rule124 l c r := rule110 r c l`), rather than requiring
+    a second independent 8-bit table. -/
 axiom va_min_mirror_bit (c : CAConstruction)
     (hT : ConstructionIsTuringUniversal c)
     (hV : ConstructionHasVAStructure c) :
     c.outerRuleBits ≥ 9
 
-/-- **CatAD (P36 `prop:async_equiv`):** dynamics-level SR requires asynchronous τ_c clock. -/
-axiom sr_min_async (c : CAConstruction)
-    (hSR : ConstructionHasSRTimeDilation c) :
-    c.innerClockKind = .AsyncTauC
-
-/-- **CatAD (P36 §SR AFCA gating):** dynamics-level SR requires ≥ 3 gating bits. -/
-axiom sr_min_gating (c : CAConstruction)
-    (hSR : ConstructionHasSRTimeDilation c) :
-    c.gatingBits ≥ 3
-
 -- ─────────────────────────────────────────────────────────────────────────────
--- §7  Main lower-bound theorem (CatAL conditional on 6 axioms)
+-- §7  Main lower-bound theorem (CatAL conditional on one axiom)
 -- ─────────────────────────────────────────────────────────────────────────────
 
 /-- Any Level-1 CA construction with all five feature channels costs at least 19 bits,
-    saturating the CMCA specification exactly. -/
+    saturating the CMCA specification exactly.
+
+    Three of the four non-mirror channel bounds (`ha`, `hl`, `hi`/`hg`) follow directly
+    from unfolding `ConstructionHasZ7Orbit`, `ConstructionHasVAStructure`, and
+    `ConstructionHasSRTimeDilation` — no axiom is needed for them. Only the mirror-bit
+    channel bound (`ho`) requires the substantive `va_min_mirror_bit` axiom. -/
 theorem K_CA_all_features_lower_bound (c : CAConstruction)
     (hT : ConstructionIsTuringUniversal c)
     (hZ : ConstructionHasZ7Orbit c)
@@ -190,10 +190,10 @@ theorem K_CA_all_features_lower_bound (c : CAConstruction)
     K_CA c ≥ K_CA cCMCA := by
   have h19 : K_CA cCMCA = 19 := K_CA_CMCA
   have ho := va_min_mirror_bit c hT hV
-  have ha := z7_orbit_min_alphabet c hZ
-  have hl := va_min_two_layers c hV
-  have hi := sr_min_async c hSR
-  have hg := sr_min_gating c hSR
+  have ha : c.alphabetSize ≥ 7 := hZ
+  have hl : c.numOuterLayers ≥ 2 := hV
+  have hi : c.innerClockKind = .AsyncTauC := hSR.1
+  have hg : c.gatingBits ≥ 3 := hSR.2
   have hge19 : K_CA c ≥ 19 := by
     unfold K_CA primaryFieldBits innerClockBits
     rw [hi]

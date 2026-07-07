@@ -140,10 +140,11 @@
 \begin{abstract}
 We present \textbf{ugp-lean}, a \lean{}~4 formalization of the
 Universal Generative Principle (\ugp{}) against Mathlib, comprising
-392~\lean{} modules across multiple organizational layers (canonical library covering
-spacetime, QFT, and hadronic physics) with a strict zero-sorry,
-zero-custom-axiom policy on the core proof path (core physics proof path remains
-zero-axiom).
+435~\lean{} modules across multiple organizational layers (canonical library covering
+spacetime, QFT, and hadronic physics) with a strict zero-sorry policy throughout
+and zero custom axioms on the core arithmetic/algebraic proof path; the
+Turing-universality results are conditional on a small number of explicitly named,
+standard classical axioms disclosed at the point of use.
 The \ugp{} is a deterministic arithmetic framework on integer ridges
 $R_n = 2^n - 16$ that produces, from first principles and without free
 parameters, a unique canonical seed $(1,73,823)$ and a rigid
@@ -427,7 +428,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 392~\lean{} modules across multiple organizational layers
+The artifact is organized into 435~\lean{} modules across multiple organizational layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -649,7 +650,7 @@ full soft-constraint $D$-minimization over all 14 scan constraints; the
 Layer~I survivor structure and $N_{\mathrm{gen}} = 3$ consequence are
 machine-certified.
 
-\medskip\noindent\textbf{Documented axioms (97 global named axioms).}
+\medskip\noindent\textbf{Documented axioms (98 global named axioms).}
 Two theorems in \texttt{GTE.AnalyticArchitecture} are declared as
 \texttt{axiom} rather than \texttt{sorry}: \texttt{dickman\_equidistribution\_in\_APs}
 and \texttt{crt\_equidistribution\_within\_regime}, both citing
@@ -666,9 +667,15 @@ $\{\mathtt{propext},\mathtt{Classical.choice},\mathtt{Quot.sound}\}$.
 An audit discharged several previously declared axioms in
 \texttt{VEVProof/GoldstoneEntropyCorrection.lean} as proved theorems;
 see \S\ref{sec:audit-capstones} for details.
-The library currently holds \textbf{97} global custom named axioms,
-primarily in \texttt{GUTStructure}, \texttt{FrobeniusChain},
-\texttt{NeutrinoSector}, \texttt{SechOverlapIntegralBounds\_bridge}, and related
+The library currently holds \textbf{98} global custom named axioms,
+counted by the reproducible command
+\lstinline!grep -rhoE "^axiom [a-zA-Z0-9_']+" UgpLean --include="*.lean" | sort -u | wc -l!
+(top-level \texttt{axiom} declarations across every \texttt{.lean} file, deduplicated by
+name; standard Lean/Mathlib logical axioms \texttt{propext}, \texttt{Classical.choice},
+\texttt{Quot.sound} are excluded, as they are not disclosed physics/mathematics premises
+in the sense meant here), primarily in \texttt{MassRelations.TranscendentalMassBounds},
+\texttt{Universality.CUP3DPhysicalIncompleteness}, \texttt{Substrate.WightmanAxioms},
+\texttt{Gravity.PageWoottersZ7}, \texttt{Gravity.PMDLGravityTheorems}, and related
 modules (see Table~\ref{tab:axiom-inventory} and \S\ref{subsec:frontier-closures}).
 The following named axioms were proved as genuine theorems (zero sorry):
 five \lstinline|: True|-type and existential axioms in \texttt{GaugeMDL},
@@ -3489,14 +3496,30 @@ gauge equivalence (\lstinline|ew_vacuum_manifold_uniqueness|).
 
 \subsection{Turing universality}
 
-The \ugp{} substrate is Turing-universal via a two-step reduction:
+The \ugp{} substrate is Turing-universal via a register-machine reduction:
 
 \begin{enumerate}[nosep]
-\item The Universal Windowed Cellular Automaton (\uwca{}) tile set
-  exactly simulates Rule~110 (machine-checked).
-\item Rule~110 is Turing-universal~\cite{Cook2004,Wolfram1984,Wolfram2002}.  This is cited,
-  not mechanized.
+\item The Universal Windowed Cellular Automaton's (\uwca{}) CRT arithmetic register
+  file simulates Minsky-style two-counter machines step-for-step (machine-checked,
+  zero \texttt{sorry}).
+\item Minsky's (1967) theorem: two-counter machines are equivalent to Turing
+  machines / partial-recursive functions.  This is a named classical axiom
+  (\lstinline|minsky_counter_machine_turing_complete_1967|), not mechanized ---
+  Mathlib has no counter-machine or register-machine development as of the
+  version used here.
 \end{enumerate}
+
+Separately, and not part of this reduction, the \uwca{}'s binary sweep layer exactly
+simulates Rule~110 (machine-checked, zero \texttt{sorry},
+\lstinline|uwca_sweep_implements_rule110|), and Rule~110 is itself Turing-universal
+via Cook's theorem~\cite{Cook2004,Wolfram1984,Wolfram2002}
+(\lstinline|cook_operational_stage3_tm_microstep_readback| in \texttt{rule110-lean},
+formerly \lstinline|rule110_turing_universal_from_cook|, zero \texttt{sorry} modulo five
+named classical Cook collision-analysis bridge axioms).  A finite-window binary
+tile embedding of Rule~110 does not by itself establish Turing universality on the
+\uwca{} substrate, since Cook's construction requires an unbounded tape; the
+register-machine route above is the substrate's actual Turing-universality
+certificate.
 
 What is unusual here is that the \uwca{} is not an ad hoc computational
 device: it is built natively from the \ugp{} survivor space and the GTE
@@ -3540,9 +3563,13 @@ The truth table is independently verified: \lstinline|uwca_tile_verification|.
 \end{proof}
 
 \begin{theorem}[UGP Turing universality]\label{thm:turing}
-The \ugp{} substrate is Turing-universal.
+The \ugp{} substrate is Turing-universal, via its CRT arithmetic register file
+simulating Minsky two-counter machines (conditional on one named classical axiom).
 
 \begin{leanref} \lstinline|ugp_is_turing_universal|
+\textup{(\texttt{Universality.TuringUniversal}; \CatAL{} conditional, zero
+\texttt{sorry}, one named axiom:
+\lstinline|minsky_counter_machine_turing_complete_1967|)}
 \end{leanref}
 \end{theorem}
 
@@ -3552,25 +3579,30 @@ layer via Gödel numbering or Diophantine encoding (MRDP theorem), so why is thi
 more than a generic observation about arithmetic systems?
 
 \medskip
-Three structural properties distinguish this from a generic encoding argument:
+Two structural properties distinguish this from a generic encoding argument:
 
 \medskip
 \noindent\textbf{(1) Native emergence, not external wiring.}
-The UWCA tile set is not imposed on the \ugp{} from outside: it arises from
-the \ugp{} survivor-space geometry.  The five tiles correspond exactly to the
-five minterms of the Rule~110 table ($S_{110} = \{1,2,3,5,6\}$), and the
-four passes (P1–P4) map directly onto the GTE update cycle.  The same
-arithmetic sieve—ridge $R_{10}=1008$, prime-lock filter, update map~$T$—that
-selects the canonical seed $(1,73,823)$ is what defines the computational substrate.
-There is no separate ``encoding step.''
+The \uwca{}'s CRT register file is not imposed on the \ugp{} from outside: it is the
+same native arithmetic substrate (prime-residue windows, ALU tiles) that hosts the
+survivor-space geometry.  The register-file interpreter (\lstinline|uwca_counter_step|,
+\lstinline|uwca_register_run|) is a zero-sorry, zero-axiom simulation of Minsky counter
+machines on this substrate; only Minsky's classical equivalence theorem (counter
+machines $\simeq$ Turing machines) is taken as an axiom, since Mathlib has no
+counter-machine formalization.  Separately, the \uwca{}'s binary sweep layer is also
+native: the five tiles correspond exactly to the five minterms of the Rule~110 table
+($S_{110} = \{1,2,3,5,6\}$), and the four passes (P1--P4) map directly onto the GTE
+update cycle.  There is no separate ``encoding step'' for either layer.
 
 \medskip
-\noindent\textbf{(2) The tile set is certified minimal.}
-The 5-tile set is not just sufficient; it is \emph{necessary}: removing any
+\noindent\textbf{(2) The Rule-110 tile set is certified minimal.}
+The 5-tile binary-sweep set is not just sufficient; it is \emph{necessary}: removing any
 single minterm $u \in S_{110}$ produces wrong output at neighborhood~$u$
 (\lstinline|rule110_each_tile_essential|, proved by exhaustive case analysis).
-A generic Gödel-numbering argument gives no such minimality guarantee—it
-provides a sufficient encoding, not a tight one.
+A generic Gödel-numbering argument gives no such minimality guarantee for the binary
+layer---it provides a sufficient encoding, not a tight one.  (This minimality result
+concerns the Rule-110 tile embedding specifically; the substrate's Turing universality
+itself rests on the register-machine reduction above, not on this tile set.)
 
 \medskip
 \noindent\textbf{(3) The payoff is a sharp decidability phase transition.}
@@ -4239,7 +4271,12 @@ recursive (\texttt{Primrec}), hence Computable.
 The module also introduces the named axiom
 \texttt{rule110\_simulates\_computable}: for every computable function
 $f : \mathbb{N} \to \mathbb{N}$, Rule~110 simulates $f$ on its canonical
-initial tape.  This axiom reflects Cook's theorem and underlies
+initial tape.  This is a theorem (zero \texttt{sorry}), proved from the named axiom
+\lstinline|cook_rule110_simulates_computable| in \texttt{Universality.CookComputableBridge}
+(Cook's operational universality theorem
+\lstinline|cook_operational_stage3_tm_microstep_readback| in \texttt{rule110-lean},
+formerly \lstinline|rule110_turing_universal_from_cook|,
+composed with universal Turing-machine/partial-recursive compilation), and underlies
 \lstinline|gte_embeds_in_rule110_via_computability|.
 
 % ═══════════════════════════════════════════════════════════════
@@ -4252,8 +4289,11 @@ Module: \texttt{Universality/PhiMDLUniversality.lean}
 standard axioms only for all algebraic and simulation results).
 
 This module certifies that the $\Phi_{\rm MDL}$ field (the Z$_7$-symmetric
-Klein-Gordon substrate) is Turing universal via two independent, Cook-independent
-routes, plus a complementary A-glider period-3 certificate.
+Klein-Gordon substrate) is Turing universal via Cook's theorem composed with a
+proved stepwise Rule-110 simulation, and additionally certifies a Cook-independent
+finite Boolean functional-completeness result (Route~2, below) that is distinct
+from and not sufficient for Turing universality, plus a complementary A-glider
+period-3 certificate.
 
 \begin{keybox}{GF(7) polynomial representation of Rule~110 (Route~A foundation)}
 \textbf{Theorem \lstinline|rule110_z7_poly_rep|.}
@@ -4286,13 +4326,16 @@ $\Phi_{\rm MDL}$ kinks with centre winding number $Q_C = 1$ implement $\mathrm{N
 Zero \texttt{sorry}.
 \end{keybox}
 
-\begin{keybox}{GF(7) prime field universality (Cook-independent, Route~2)}
-\textbf{Theorem \lstinline|z7_prime_field_universality|.}
-Every computable function $f : \mathbb{N} \to \mathbb{N}$ is computable by the
-$\Phi_{\rm MDL}$ kink dynamics via the GF(7) polynomial representation.
-Zero \texttt{sorry}; conditional on named axiom
-\lstinline|z7_boolean_completeness_implies_turing_universal|
-(Shannon 1948 TM$\to$Boolean circuit bridge; Cook-independent).
+\begin{keybox}{GF(7) finite Boolean functional completeness (Cook-independent, Route~2)}
+\textbf{Theorem \lstinline|z7_bool3_finite_functional_completeness|.}
+Every \lstinline|Bool -> Bool -> Bool -> Bool| function has a representative over
+\lstinline|ZMod 7| on Boolean inputs, via the GF(7) polynomial representation.
+This is a \emph{finite} Boolean functional-completeness result about a fixed input
+size; it does \textbf{not} imply Turing universality on an unbounded tape.  Zero
+\texttt{sorry}.  (The former unsound axiom
+\lstinline|z7_boolean_completeness_implies_turing_universal|, which purported to
+bridge this finite result to Turing universality via a Shannon-style TM$\to$circuit
+argument, has been removed as unsound and no longer exists in the corpus.)
 \end{keybox}
 
 \begin{keybox}{Law = Description = Execution for $\Phi_{\rm MDL}$ (Route~B)}
@@ -4303,11 +4346,18 @@ Rule~110 step-for-step.
 Zero \texttt{sorry}; zero new axioms.
 \end{keybox}
 
-\begin{keybox}{$\Phi_{\rm MDL}$ Turing universality}
+\begin{keybox}{$\Phi_{\rm MDL}$ Turing universality (Cook route)}
 \textbf{Theorem \lstinline|phimdl_turing_universal|.}
-$\Phi_{\rm MDL}$ is Turing universal. This is a direct one-line corollary of
-\lstinline|z7_prime_field_universality|; no Cook axiom is invoked.
-Zero \texttt{sorry}.
+$\Phi_{\rm MDL}$ is Turing universal.  Proved by composing
+\lstinline|CookComputableBridge.cook_rule110_simulates_computable| (Cook's
+operational universality theorem
+\lstinline|cook_operational_stage3_tm_microstep_readback| in \texttt{rule110-lean},
+formerly \lstinline|rule110_turing_universal_from_cook|,
+composed with universal TM/partial-recursive compilation) with the proved
+stepwise $\Phi_{\rm MDL}$--Rule~110 simulation
+(\lstinline|phiMDL_evolution_simulates_rule110|).
+Zero \texttt{sorry}; conditional on one named axiom:
+\lstinline|cook_rule110_simulates_computable|.
 \end{keybox}
 
 \paragraph{Turing universality as lower bound.}
@@ -4338,22 +4388,28 @@ Theorem & Sorry & What it certifies \\
 \lstinline|z7kg_kink_nand| & 0 & $\Phi_{\rm MDL}$ kinks with $Q_C=1$ implement NAND \\
 \lstinline|z7kg_kink_universality| & 0 & $\Phi_{\rm MDL}$ kinks embed Rule~110 cell-by-cell \\
 \lstinline|z7kg_kink_universality_cook_free| & 0 & Any 2-input Bool fn computable by kinks \\
-\lstinline|z7_prime_field_universality| & 1 named & Turing universal, Cook-independent \\
+\lstinline|z7_bool3_finite_functional_completeness| & 0 & Finite Boolean functional completeness, Cook-independent (not Turing universality) \\
 \lstinline|phimdl_law_description_execution| & 0 & $\Phi_{\rm MDL}$ simulates Rule~110 step-for-step \\
 \lstinline|z7kg_nat_int_tape_equivalence| & 0 & $\mathbb{N}/\mathbb{Z}$ tape equivalence (light-cone induction) \\
-\lstinline|phimdl_turing_universal| & 0 & $\Phi_{\rm MDL}$ Turing universal (= \lstinline|z7_prime_field_universality|) \\
+\lstinline|phimdl_turing_universal| & 1 named & $\Phi_{\rm MDL}$ Turing universal, via the Cook route (\lstinline|cook_rule110_simulates_computable|) \\
 \bottomrule
 \end{tabular}
-\caption{Theorems in \texttt{PhiMDLUniversality.lean} (all zero sorry except one named axiom).
-The named axiom \lstinline|z7_boolean_completeness_implies_turing_universal|
-is the Shannon~(1948) TM$\to$Boolean-circuit bridge, independent of Cook~(2004).}
+\caption{Theorems in \texttt{PhiMDLUniversality.lean}.  All are zero \texttt{sorry};
+\lstinline|phimdl_turing_universal| is conditional on one named axiom,
+\lstinline|cook_rule110_simulates_computable| (\texttt{CookComputableBridge.lean}).
+The former unsound axiom \lstinline|z7_boolean_completeness_implies_turing_universal|
+(a purported Shannon-style TM$\to$Boolean-circuit bridge) has been removed.}
 \label{tab:phimdl-universality}
 \end{table}
 
 Cook's theorem~\cite{Cook2004,Wolfram1984} --- that Rule~110 is Turing universal via cyclic
-tag system embedding --- is now a corollary of the algebraic chain above, confirmed from a
-completely independent direction.
-The algebraic characterization of Rule~110 as a polynomial over $\text{GF}(7)$ and its role in Cook-independent Turing universality are documented in the companion paper~\cite{SpivackGF7Universality}.
+tag system embedding --- remains the sole load-bearing route to Rule~110's (and hence
+$\Phi_{\rm MDL}$'s) Turing universality; it is not a corollary of the finite Boolean
+functional-completeness identity above, which is a separate, correctly-scoped result about
+a fixed input size.
+The algebraic characterization of Rule~110 as a polynomial over $\text{GF}(7)$ and its role
+in Cook-independent finite Boolean functional completeness are documented in the companion
+paper~\cite{SpivackGF7Universality}.
 
 % ─────────────────────────────────────────────────────────────────
 \subsection{Hypothesis~B: Single Universal Substrate (\texttt{HypothesisB})}\label{subsec:hypothesis-b}
@@ -4436,11 +4492,12 @@ PSC-admissible model realizes both sectors on a single substrate tape.
 The \texttt{Universality.PSCUniversality} module certifies Hypothesis~C: any PSC-admissible
 universe model is computationally universal.  This closes the chain
 $\text{PSC} \Rightarrow \text{SM gauge group} \Rightarrow \text{Rule 110 orbit}
-\Rightarrow \text{Turing universality}$ in Lean.
+\Rightarrow \text{Turing universality (register-machine route)}$ in Lean.
 
 \begin{theorem}[PSC implies computational universality]\label{thm:psc-universality}
 Any type $U$ satisfying \texttt{PSCAdmissible} and the type-class instance
-\texttt{IsPSC U} is computationally universal.
+\texttt{IsPSC U} is computationally universal, where \texttt{IsComputationallyUniversal}
+is defined as \lstinline|UGP_substrate_turing_universal|.
 In particular, the UGP substrate (\texttt{Unit} carrier) satisfies PSC
 (\lstinline|ugp_satisfies_psc|) and is computationally universal
 (\lstinline|ugp_is_computationally_universal|).
@@ -4449,7 +4506,9 @@ In particular, the UGP substrate (\texttt{Unit} carrier) satisfies PSC
 \lstinline|psc_implies_computational_universality|,
 \lstinline|ugp_is_computationally_universal|,
 \lstinline|ugp_satisfies_psc|
-\textup{(in \texttt{Universality.PSCUniversality}, zero \texttt{sorry})}
+\textup{(in \texttt{Universality.PSCUniversality}, zero \texttt{sorry}; conditional on
+one named axiom \texttt{minsky\_counter\_machine\_turing\_complete\_1967}, via
+\lstinline|UGP_substrate_turing_universal|)}
 \end{leanref}
 \end{theorem}
 
@@ -4458,17 +4517,23 @@ The Hypothesis~C chain is fully certified:
 \[
   \text{PSC} \;\Rightarrow\; \text{SM signature}
   \;\Rightarrow\; \text{Rule 110 orbit}
-  \;\Rightarrow\; \text{Turing universality.}
+  \;\Rightarrow\; \text{Turing universality (register-machine route).}
 \]
 The RCC step is discharged by \texttt{PSC.RCC.rcc\_physics\_ax}
 (named axiom, analytically backed by \texttt{rcc\_analytical\_complete}).
-The gauge-to-orbit and orbit-to-universality steps carry zero \texttt{sorry}.
+The final arrow concludes \lstinline|UGP_substrate_turing_universal|, which is
+established via the \uwca{}'s CRT register file simulating Minsky two-counter
+machines, conditional on the named axiom
+\lstinline|minsky_counter_machine_turing_complete_1967|.
+The gauge-to-orbit step carries zero \texttt{sorry} and no additional axioms.
 
 \begin{leanref}
 \lstinline|hypothesis_c_psc_forces_universality|,
 \lstinline|sm_signature_forces_orbit|
 \textup{(in \texttt{Universality.PSCUniversality}, zero \texttt{sorry};
-one named axiom \texttt{rcc\_physics\_ax} from \texttt{PSC.RCCComplete})}
+two named axioms: \texttt{rcc\_physics\_ax} from \texttt{PSC.RCCComplete}, and
+\texttt{minsky\_counter\_machine\_turing\_complete\_1967} from
+\texttt{Universality.RegisterMachine})}
 \end{leanref}
 \end{theorem}
 
@@ -6700,7 +6765,7 @@ and existential axioms across \texttt{GaugeMDL}, \texttt{CCImpossibilityBundle},
 \texttt{GUTStructure}, and \texttt{PMDLGravityTheorems}, and
 \lstinline|adj_mem_periodicCausalNeighbors| in \texttt{SpectralDimensionDegree}
 (proved via complete case analysis).
-The verified global named-axiom total is \textbf{97}.
+The verified global named-axiom total is \textbf{98}.
 
 The following named axioms are proved theorems (zero sorry):
 \begin{itemize}[nosep]
@@ -6717,8 +6782,8 @@ The following named axioms are proved theorems (zero sorry):
 Additionally proved as theorems (zero sorry):
 \begin{itemize}[nosep]
 \item \lstinline|g_s_from_sigma_gte_2loop_rge| (\texttt{GaugeMDL}) — type \lstinline|: True|; trivially proved.
-\item \lstinline|phimdl_no_susy_degenerate_spectrum| (\texttt{CCImpossibilityBundle}) — type \lstinline|: True|; trivially proved.
-\item \lstinline|phimdl_no_antigravitating_sector| (\texttt{CCImpossibilityBundle}) — type \lstinline|: True|; trivially proved.
+\item \lstinline|phimdl_no_susy_degenerate_spectrum_placeholder| (\texttt{CCImpossibilityBundle}) — type \lstinline|: True|; trivially proved; placeholder pending a real SUSY/fermion-spectrum formalization (none exists in this library).
+\item \lstinline|phimdl_no_antigravitating_sector_placeholder| (\texttt{CCImpossibilityBundle}) — type \lstinline|: True|; trivially proved; placeholder — the unconstrained statement \lstinline|∀ cfg, T00 ≥ 0| is actually false under this library's own \texttt{StressEnergyTensor.lean} definitions (see module docstring for the explicit counterexample), so a correct restricted version is not yet formalized.
 \item \lstinline|g_inter_structural_catA| (\texttt{GaugeMDL}) — type \lstinline|: True|; trivially proved.
 \item \lstinline|eta_B_normalization_axiom| (\texttt{GUTStructure}) — type \lstinline|: ∃ κ : ℝ, 0 < κ ∧ κ = 1|; proved by \lstinline|⟨1, one_pos, rfl⟩|.
 \item \lstinline|adj_mem_periodicCausalNeighbors| (\texttt{SpectralDimensionDegree}) — proved via
@@ -6732,26 +6797,63 @@ Additionally proved as theorems (zero sorry):
 \toprule
 Module & Scope & Custom axioms \\
 \midrule
-\texttt{GTE.AnalyticArchitecture}     & Dickman / CRT equidistribution & 2 \\
+\texttt{MassRelations.TranscendentalMassBounds} & Transcendental exponential mass-bound numerics (cascade anchors) & 19 \\
+\texttt{Universality.CUP3DPhysicalIncompleteness} & CUP3D physical-incompleteness bridge & 6 \\
+\texttt{Substrate.WightmanAxioms}     & Wightman QFT axioms & 6 \\
+\texttt{Gravity.PageWoottersZ7}       & Page--Wootters timeless-formalism bridge & 6 \\
+\texttt{Gravity.PMDLGravityTheorems}  & PMDL gravity theorems & 5 \\
+\texttt{Algebra.F21SU3Embedding}      & $F_{21}\hookrightarrow SU(3)$ embedding & 4 \\
+\texttt{Universality.EWChiralBridge}  & Electroweak chirality bridge & 3 \\
+\texttt{Universality.BellViolationGTE} & Bell-violation GTE bridge & 3 \\
 Rule110-lean (cross-repo)             & ChiralGliderDynamics & (cross-repo) \\
 \hline
-\texttt{Substrate.SechOverlap\allowbreak IntegralBounds\_bridge} & Mesh-to-integral bridge for $r\in\{5,11\}$ & 2 \\
-\texttt{Universality.GUTStructure}    & Native\_decide certs and SM structure & 43 \\
-\texttt{Universality.FrobeniusChain}  & FGCI uniqueness and chain closure & 4 \\
-\texttt{MassRelations.NeutrinoSector} & PMNS angles, CP phase, seesaw & 5 \\
-\texttt{Gravity.YukawaOverlapExponent} & DPP tape-counting, Yukawa scaling & 4 \\
-Other modules                         & Bridge and auxiliary axioms & 39 \\
+Other modules (37 files, $\le 2$ axioms each) & Bridge, structural, and auxiliary axioms, including \texttt{Universality.RegisterMachine} (A5) and \texttt{Universality.CookComputableBridge} (A6) & 46 \\
 \hline
-\textbf{Global named custom axioms}   & \textbf{total} & \textbf{97} \\
+\textbf{Global named custom axioms}   & \textbf{total} & \textbf{98} \\
 \bottomrule
 \end{tabular}
 \caption{Custom named-axiom inventory. Each row lists the module, physical scope,
-  and axiom count. The global verified total is \textbf{97}; the core physics
+  and axiom count. Counted via
+  \lstinline!grep -rhoE "^axiom [a-zA-Z0-9_']+" UgpLean --include="*.lean" | sort -u | wc -l!
+  (top-level \texttt{axiom} declarations, deduplicated by name; excludes the standard
+  Lean/Mathlib logical axioms \texttt{propext}, \texttt{Classical.choice},
+  \texttt{Quot.sound}). The global verified total is \textbf{98}; the core physics
   proof path (charged leptons, couplings, generation count) uses only standard
   Lean/Mathlib axioms. \lstinline|causal\_path\_exists| is proved as a theorem
-  (forward-causal pairs only) and is no longer a module-local axiom.}
+  (forward-causal pairs only) and is no longer a module-local axiom.
+  ``Other modules'' includes the two Turing-universality bridge axioms discussed below.}
 \label{tab:axiom-inventory}
 \end{table}
+
+\paragraph{Universality-layer axiom update.}
+The Turing-universality closure work (\S\ref{subsec:phimdl-universality},
+\S\ref{sec:universality}) replaced one unsound axiom with two justified classical
+axioms, a net change of zero to the global total:
+\begin{itemize}[nosep]
+\item \textbf{Removed (unsound):} \lstinline|z7_boolean_completeness_implies_turing_universal|
+  --- a purported Shannon-style bridge from finite Boolean completeness to Turing
+  universality; the finite-completeness result it was attached to does not entail
+  Turing universality, so the bridge was retired rather than repaired.
+\item \textbf{Added, justified:} \lstinline|cook_rule110_simulates_computable|
+  (\texttt{Universality.CookComputableBridge}) --- packages Cook's (2004) proved
+  operational universality theorem (\lstinline|cook_operational_stage3_tm_microstep_readback|
+  in \texttt{rule110-lean}, formerly \lstinline|rule110_turing_universal_from_cook|)
+  composed with universal Turing-machine/partial-recursive
+  compilation; replaces the former directly-declared axiom
+  \lstinline|GTEComputability.rule110_simulates_computable| (now a zero-sorry theorem).
+\item \textbf{Added, justified:} \lstinline|minsky_counter_machine_turing_complete_1967|
+  (\texttt{Universality.RegisterMachine}) --- Minsky's (1967) classical theorem that
+  two-counter machines are equivalent to Turing machines / partial-recursive functions;
+  Mathlib has no counter-machine formalization, so this textbook-standard result is
+  taken as a named axiom rather than re-derived.
+\end{itemize}
+Four new modules support this closure:
+\texttt{Universality.RegisterMachine} (Minsky counter-machine semantics, zero sorry
+apart from the axiom above), \texttt{Universality.UWCARegisterUniversality} (UWCA
+register-file simulates counter machines, zero sorry),
+\texttt{Universality.UWCARegisterSweep} ($k$ UWCA sweeps $=$ $k$ Rule-110 steps, zero
+sorry, zero axioms), and \texttt{Universality.CookComputableBridge} (Cook composition
+axiom and re-export of \texttt{rule110-lean}'s operational universality theorem).
 
 \subsection{Bridge capstones}\label{subsec:audit-capstones}
 
@@ -7324,18 +7426,18 @@ Theorem / Axiom & Module & Physical content \\
 \texttt{gte\_G\_eff\_G\_N\_ratio}
   & Gravity.PMDLGravityTheorems
   & $G_{\rm eff}/G_N = 4\pi M_{\rm kink}/M_{\rm PMDL}$; G2 bridge identification \\[1pt]
-\texttt{l1\_l2\_born\_rule\_bridge} (axiom)
+\texttt{l1\_l2\_born\_rule\_bridge\_placeholder} (axiom)
   & Gravity.PageWoottersZ7
-  & PW Born $P(k|\tau_c)$ converges to field Born $|\partial_x\Phi|^2/Z$ at rate $O(1/M^2)$; closes G3 \\[1pt]
-\texttt{born\_bridge\_no\_new\_axiom}
+  & Placeholder for: PW Born $P(k|\tau_c)$ converges to field Born $|\partial_x\Phi|^2/Z$ at rate $O(1/M^2)$; not yet formalized beyond \texttt{True} \\[1pt]
+\texttt{born\_bridge\_informal\_argument\_placeholder}
   & Gravity.PageWoottersZ7
-  & Born bridge requires no axiom beyond \texttt{cmca\_continuum\_limit\_is\_phimdl} \\[1pt]
+  & Documented informal argument that the Born bridge requires no axiom beyond \texttt{cmca\_continuum\_limit\_is\_phimdl}; not yet formalized beyond \texttt{True} \\[1pt]
 \texttt{l1\_chsh\_and\_\allowbreak l2\_epr\_are\_\allowbreak distinct\_layers}
   & Universality.BellViolationGTE
-  & L1 CHSH ($S=2.4459$) and L2 P43 EPR are separate layers; closes G4 \\[1pt]
-\texttt{alt\_does\_not\_lift\_chsh\_value}
+  & Level-1 CHSH ($S=2.4459$) state-space index type and Level-2 P43 EPR Fock-space type have different cardinality (9 vs.\ 16); machine-checked \\[1pt]
+\texttt{alt\_does\_not\_lift\_chsh\_value\_placeholder}
   & Universality.BellViolationGTE
-  & ALT lifts algebraic structure, not dynamical Hamiltonians or CHSH values \\[1pt]
+  & Documented informal argument that ALT lifts algebraic structure, not dynamical Hamiltonians or CHSH values; not yet formalized beyond \texttt{True} \\[1pt]
 \texttt{gap\_g1\_\allowbreak polynomial\_\allowbreak continuum\_\allowbreak taxonomy}
   & Algebra.\allowbreak PolynomialContinuumBridge
   & $p$ (update/coupling) $\neq$ $V_{\ZS}$ (potential energy); taxonomy; closes G1 \\[1pt]
@@ -7449,29 +7551,42 @@ The bridge identification is $\psi(x)=\partial_x\Phi_{\mathrm{MDL}}(x)/\sqrt{Z}$
 Closes gap~G3.
 \end{theorem}
 
-\begin{theorem}[\lstinline|born_bridge_no_new_axiom|, zero \texttt{sorry}]
-The Born bridge $\psi=\partial_x\Phi/\sqrt{Z}$ requires no axiom beyond
-\lstinline|cmca_continuum_limit_is_phimdl|: the identification is forced by the
-BPS saturation condition $\partial_x\Phi=\sqrt{2V_{\ZS}(\Phi)}$ together with
-the $M\to\infty$ continuum limit theorem.
-\end{theorem}
+\begin{remark}[\lstinline|born_bridge_informal_argument_placeholder|]
+The Born bridge $\psi=\partial_x\Phi/\sqrt{Z}$ is intended to require no axiom
+beyond \lstinline|cmca_continuum_limit_is_phimdl|: the identification is
+informally motivated by the BPS saturation condition
+$\partial_x\Phi=\sqrt{2V_{\ZS}(\Phi)}$ together with the $M\to\infty$
+continuum limit theorem.  This connection is currently a documented informal
+argument (Lean statement \lstinline|True|), not a machine-checked theorem;
+the identifier is named \lstinline|_placeholder| to prevent it from being
+cited as a zero-\texttt{sorry} formal result.
+\end{remark}
 
 \begin{theorem}[\lstinline|l1_chsh_and_l2_epr_are_distinct_layers|, zero \texttt{sorry}]
-The Level-1 CHSH violation ($S=2.4459$ on $\mathbb{C}^7\otimes\mathbb{C}^7$,
-certified in \lstinline|gte_bell_violation_at_half_coupling|) and the Level-2
-$[\mathbf{D}]$-record EPR correlations of P43 (transputation~D3, non-computable)
-are structurally distinct phenomena at different levels of the theory.
-Closes gap~G4.
+The finite index type underlying the Level-1 CHSH state space
+($\mathrm{Fin}\,3\times\mathrm{Fin}\,3$, cardinality~9; the qutrit-pair setup
+of \lstinline|gte_bell_violation_at_half_coupling|, $S=2.4459$ on
+$\mathbb{C}^7\otimes\mathbb{C}^7$) has different cardinality from the Level-2
+$\Phi_{\mathrm{MDL}}$ kink Fock space
+\lstinline|FockSpaceKink.KinkFockState| (cardinality~16).  This machine-checked
+type-level separation is the formal core of the broader claim that the Level-1
+CHSH violation and the Level-2 $[\mathbf{D}]$-record EPR correlations of P43
+(transputation~D3, non-computable) are structurally distinct phenomena at
+different levels of the theory; the full dynamical argument for that broader
+claim remains at $\CatAD$.
 \end{theorem}
 
-\begin{theorem}[\lstinline|alt_does_not_lift_chsh_value|, zero \texttt{sorry}]
-The Algebraic Lifting Theorem carries algebraic and structural content
-($\mathbb{Z}_7$ winding, $N_{\mathrm{gen}}$, GoE, confinement, gauge vertices,
-V--A fraction) from Level~1 to Level~2, but does \emph{not} lift dynamical
-Hamiltonians or specific CHSH values.  The Bell parameter $S=2.4459$ is a
-Level-1 dynamical certificate; what lifts is the structural statement that
-$\Phi_{\mathrm{MDL}}$ supports genuine quantum entanglement.
-\end{theorem}
+\begin{remark}[\lstinline|alt_does_not_lift_chsh_value_placeholder|]
+The intended claim is that the Algebraic Lifting Theorem carries algebraic
+and structural content ($\mathbb{Z}_7$ winding, $N_{\mathrm{gen}}$, GoE,
+confinement, gauge vertices, V--A fraction) from Level~1 to Level~2, but does
+\emph{not} lift dynamical Hamiltonians or specific CHSH values.  The Bell
+parameter $S=2.4459$ is a Level-1 dynamical certificate; what lifts is the
+structural statement that $\Phi_{\mathrm{MDL}}$ supports genuine quantum
+entanglement.  This is a documented physical argument, not yet a
+machine-checked theorem (Lean statement \lstinline|True|); the identifier is
+named \lstinline|_placeholder| accordingly.
+\end{remark}
 
 \subsection{Theorem inventory: phantom-reference resolution}\label{subsec:new-theorem-inventory-audit}
 
@@ -7787,10 +7902,10 @@ Theorem & Module & Physical content \\
   & Algebra.GaugeMDL
   & G10 master: EW couplings + $\alpha_s$ structural bundle (zero \texttt{sorry}) \\[1pt]
 \midrule
-\multicolumn{3}{@{}l}{\textit{G30 --- CC cancellation impossibility (\texttt{Gravity/CCImpossibilityBundle.lean})}} \\[2pt]
-\texttt{cc\_\allowbreak cancellation\_\allowbreak impossible\_\allowbreak in\_\allowbreak gte}
+\multicolumn{3}{@{}l}{\textit{G30 --- CC cancellation impossibility, placeholder (\texttt{Gravity/CCImpossibilityBundle.lean})}} \\[2pt]
+\texttt{cc\_\allowbreak cancellation\_\allowbreak impossible\_\allowbreak in\_\allowbreak gte\_\allowbreak placeholder}
   & Gravity.CCImpossibilityBundle
-  & No SUSY-degenerate fermion sector; no antigravitating $T_{00}<0$ sector (structural axioms) \\[1pt]
+  & Type \lstinline|True ∧ True ∧ True|; intended target is no SUSY-degenerate fermion sector and no antigravitating $T_{00}<0$ sector, but neither component is Lean-certified (zero \texttt{axiom} declarations in this module; see module docstring) \\[1pt]
 \texttt{voxel\_\allowbreak cc\_\allowbreak coefficient}
   & Gravity.TemporalVoxelCC
   & GTE voxel CC coefficient $9/112 = 9/(7{\times}16)$ (zero \texttt{sorry}) \\[1pt]
@@ -10262,8 +10377,14 @@ Five theorems certify the entanglement area law and Jacobson GR route:
   a rank-one projector with unit trace.
 \item \lstinline|bekenstein_hawking_wald_crossref| (\CatAD): cross-reference to
   \lstinline|phimdl_wald_entropy_is_area_over_4G| in \texttt{WaldEntropy.lean}.
-\item \lstinline|gte_entanglement_area_law| (\CatAD): $S(D) = \eta\cdot\mathrm{Area}(\partial D)$;
-  blocked by CMCA causal-graph entropy formalization.
+\item \lstinline|gte_entanglement_area_law_scaffold|: names the intended claim
+  $S(D) = \eta\cdot\mathrm{Area}(\partial D)$, but its current Lean statement is a
+  tautological identity ($x = x+0$) with no entanglement, area, or entropy
+  content --- a documentation scaffold, not a \CatAD\ bridge with formal
+  content.  Genuine formalization is blocked by CMCA causal-graph entropy
+  infrastructure not yet in this repository; the \lstinline|_scaffold| suffix
+  marks it as pending that infrastructure, not as an established result at
+  any Cat level.
 \end{itemize}
 
 \subsection{\texttt{Spacetime/LorentzianCausalityNecessity}}\label{subsec:lorentzian-causality}
@@ -10344,7 +10465,11 @@ We have presented ugp-lean, a self-contained \lean{} formalization of
 the Universal Generative Principle.  The artifact defines the \ugp{}
 framework from first principles---ridge sieve, prime-lock criterion,
 \rsuc{}, \gte{} orbit, Quarter-Lock, Turing universality---with a
-strict zero-sorry, zero-custom-axiom policy on the core proof path.
+strict zero-sorry policy throughout, and zero custom axioms on the
+arithmetic/algebraic core proof path; the Turing-universality results are
+conditional on a small number of explicitly named, standard classical axioms
+(Minsky's counter-machine theorem, Cook's collision-analysis bridge lemmas),
+each disclosed at the point of use.
 
 The formalization contributes several results not present in prior work:
 the orbit-from-$T$ derivation (\cref{thm:orbit-T}), the general ridge
@@ -10498,7 +10623,7 @@ exclusion criterion (\lstinline|unified_physical_exclusion|) and the
 three-generation uniqueness capstone
 (\lstinline|gte_uniquely_predicts_three_generations|).
 An audit discharged several \texttt{VEVProof} axioms as proved theorems;
-the verified global named-axiom total is 75 (see Table~\ref{tab:axiom-inventory}).
+the verified global named-axiom total is 98 (see Table~\ref{tab:axiom-inventory}).
 
 \medskip
 \noindent\textbf{PSL(2,7) unification, golden fiber, and algebraic extensions}

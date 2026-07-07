@@ -20,7 +20,7 @@ in `UgpLean.SelfRef.RiceHalting`.
    One UWCA round implements exactly one Rule 110 step on binary initial conditions.
    Therefore fmdl-on-binary-IC simulates Rule 110.
 
-3. **Rule 110 is Turing-universal** (Cook 2004, cited; Lean: ugp_is_turing_universal):
+3. **UGP substrate is Turing-universal** (register-machine route; Lean: `ugp_is_turing_universal`):
    Rule 110 can simulate any Turing machine. Therefore fmdl-on-binary-IC is
    Turing-universal: any TM can be encoded as a binary initial condition for fmdl.
 
@@ -362,8 +362,9 @@ theorem fmdl_orbit_not_decidable :
 | Claim | Status | Source |
 |-------|--------|--------|
 | fmdl = Rule110 on binary inputs | ✅ zero sorry, zero axioms | CUP3DUniqueness.fmdl_rule110_binary |
-| UWCA simulates Rule 110 | ✅ zero sorry, zero axioms | UWCASimulation.uwca_sweep_implements_rule110 |
-| Rule 110 is Turing-universal | ✅ structural stub (Cook 2004 cited) | Rule110.Rule110CookUniversality := True |
+| UGP substrate Turing-universal (register route) | ✅ zero sorry, 1 Minsky axiom | UWCARegisterUniversality.uwca_substrate_turing_universal |
+| Rule 110 NAND at center=1 | ✅ zero sorry, zero axioms | Rule110.rule110_center_is_nand |
+| UWCA simulates Rule 110 (binary sweep) | ✅ zero sorry, zero axioms | UWCASimulation.uwca_sweep_implements_rule110 |
 | Halting undecidable in any APS | ✅ zero sorry, zero axioms | RiceHalting.ugp_halting_undecidable |
 | encode_decode_left | ✅ zero sorry (from Encodable.encodek) | encode_decode_left (§3) |
 | fmdl APS, Cook 2004 | ⚑ 6 explicit named axioms | §3a (mathematically sound) |

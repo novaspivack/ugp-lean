@@ -2,7 +2,7 @@
 
 Machine-checked Lean 4 formalization of the **Universal Generative Principle (UGP)** — a research program by [Nova Spivack](https://www.novaspivack.com/) establishing that a single 7-state cellular automaton over GF(7) generates the Standard Model particle spectrum, gauge structure, and mass predictions from first principles.
 
-**392 modules · zero sorry on the core proof path · Lean 4 + Mathlib**
+**435 modules · zero sorry on the core proof path · Lean 4 + Mathlib**
 
 ---
 
@@ -13,7 +13,7 @@ The UGP framework identifies a unique GF(7) polynomial whose orbit under a singl
 - The Standard Model generation structure (3 generations, 5 families)
 - Lepton and quark mass ratios (Koide relations, CKM/PMNS mixing angles)
 - Gauge coupling hierarchy and electroweak structure
-- Turing universality of the underlying substrate (Rule 110 embedding)
+- Turing universality of the underlying substrate (CRT register file simulating Minsky counter machines, conditional on one named axiom)
 - Quantum gravity and metric structure (RT formula, Wald entropy)
 
 This library provides machine-checked certificates for all of these claims at the level they can currently be formalized. Every theorem is zero sorry on the core proof path; the six documented stubs outside the core path await specific Mathlib API completions (manifold integrals, matrix exponentials).
@@ -48,7 +48,7 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 
 ## Module structure
 
-392 modules organized in 17 layers. Full module lists are in [docs/MODULES.md](docs/MODULES.md) and the formalization paper.
+435 modules organized in 17 layers. Full module lists are in [docs/MODULES.md](docs/MODULES.md) and the formalization paper.
 
 | Layer | Modules | What it covers |
 |---|---|---|
@@ -59,7 +59,7 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 | **Structural** | 30 | Quarter-Lock, Elegant Kernel, UCL mass ordering closure |
 | **MassRelations** | 33 | Koide, CKM, PMNS, Higgs quartic, neutrino sector, pion mass, Eisenstein identities, CKM θ₂₃ structural ratio |
 | **BraidAtlas** | 13 | Charge theorem, EW bosons, dark braid, RHN gap |
-| **Universality** | 52 | Rule 110, UWCA, Turing universality, GTE compilation/uniqueness, EW structure, Solovay completeness, bi-immunity, complex amplitude forcing |
+| **Universality** | 94 | Rule 110, UWCA, register-machine Turing universality, GTE compilation/uniqueness, EW structure, Solovay completeness, bi-immunity, complex amplitude forcing |
 | **Polynomial** | 19 | GF(7) explorations, causal tree, MDL unification, spin-7 ground space, PSL(2,7) unification, golden fiber taxonomy, golden quadratic arithmetic, admissible primes, Gaussian face arithmetic |
 | **Algebra** | 23 | Eisenstein functor, A₄ structure, Fano regular action, QR(7)→octonion interface, Hurwitz coset certificate, G₂/su(3) stabilizer certificates, Spin(8) triality, color/flavor Z₃ disambiguation, kink sector structure, EW coupling certificates |
 | **Physics** | 8 | Z₇ vacuum selection, kink physics, CMCA physical point, BPS actions |
@@ -88,7 +88,9 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 - η_B = 6.109×10⁻¹⁰ CatAL unconditional (+0.15σ vs PDG), from kink–top BPS coupling
 
 **Turing universality**
-- GTE substrate is Turing-universal via Rule 110 embedding (`ugp_is_turing_universal`)
+- GTE substrate is Turing-universal via its CRT register file simulating Minsky (1967) two-counter machines, conditional on one named classical axiom (`ugp_is_turing_universal`)
+- Rule 110 itself is Turing-universal via Cook's (2004) cyclic-tag-system construction; the in-repo operational readback certificate (`cook_operational_stage3_tm_microstep_readback` in `rule110-lean`, formerly `rule110_turing_universal_from_cook`) is zero sorry modulo five named classical Cook collision-analysis bridge axioms, and is composed with classical TM/Partrec compilation via the named axiom `cook_rule110_simulates_computable` to yield `phimdl_turing_universal`
+- Rule 110 at center cell 1 additionally realizes any finite two-input Boolean function algebraically (Sheffer 1913 NAND completeness), independently of Cook's construction — a finite functional-completeness result, distinct from Turing universality (`rule110_center1_is_nand`, `z7_bool3_finite_functional_completeness`)
 - GTE update map is the *unique* lawful UWCA program up to bisimulation (`gte_uniqueness_up_to_bisimulation`)
 - UWCA history-lane reversibility: backward ∘ forward = id exactly
 

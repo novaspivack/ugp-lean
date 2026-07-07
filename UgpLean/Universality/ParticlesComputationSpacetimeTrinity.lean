@@ -13,8 +13,13 @@ same 19-bit polynomial `p(L,C,R) = C + R − C·R − L·C·R` with `K_extra = 0
 
 1. **Particle identity** — Z₇ winding → SM charge (`gte_charge_is_linear_projection`) and
    fermionic sector identification (`gte_winding_identifies_charged_fermions`).
-2. **Computation** — kink step implements Rule 110 Boolean gate
-   (`z7kg_kink_simulates_rule110_cell`, `z7kg_kink_universality`).
+2. **Computation** — a single kink-collision step implements one Rule 110
+   Boolean gate cell-by-cell (`z7kg_kink_simulates_rule110_cell`,
+   `z7kg_kink_universality`).  This is a single-step cell-embedding, not a
+   Turing-universality claim: there is no iteration, tape, or use of
+   `phiMDL_evolution` here.  Full Turing universality of the Φ_MDL kink
+   substrate is a separate, conditional result (`phimdl_turing_universal`,
+   Cook route, one named axiom).
 3. **Spacetime** — PSC-admissible orbits follow curvature geodesics in the 3D f_MDL causal graph;
    certified separately in `GTE.Spacetime.Geodesic.psc_orbit_is_curvature_geodesic` (CatAL, zero sorry).
 
@@ -77,8 +82,10 @@ structure ParticlesComputationSpacetimeTrinityBundle where
       z7kg_rule110_step Q_L Q_C Q_R =
         if rule110_output (decide (Q_L ≠ 0)) (decide (Q_C ≠ 0)) (decide (Q_R ≠ 0))
         then (1 : ZMod 7) else (0 : ZMod 7)
-  /-- Role 2b: Φ_MDL kink dynamics Turing-universal (Rule 110 embedding). -/
-  kink_turing_universal :
+  /-- Role 2b: a Φ_MDL kink-collision step implements the Rule 110 gate on
+      Boolean-encoded three-cell neighborhoods (single-step cell-embedding;
+      not, by itself, a Turing-universality claim --- see module docstring). -/
+  kink_implements_rule110_gate :
     ∃ (encode : Bool × Bool × Bool → ZMod 7 × ZMod 7 × ZMod 7)
       (step : ZMod 7 × ZMod 7 × ZMod 7 → ZMod 7),
       ∀ L C R : Bool,
@@ -93,14 +100,16 @@ def particles_computation_spacetime_trinity_certified :
   psc_admissible_winding := psc_admissible_are_rs_evaluation_points
   kink_simulates_rule110 := fun Q_L Q_C Q_R =>
     z7kg_kink_simulates_rule110_cell Q_L Q_C Q_R
-  kink_turing_universal := z7kg_kink_universality
+  kink_implements_rule110_gate := z7kg_kink_universality
   kink_geodesic := trivial
 
 /-- **Particles-Computation-Spacetime Trinity (CatAL).**
 
     A PSC-admissible Φ_MDL kink with winding w ∈ {0,2,3,4,6} simultaneously:
     (1) carries SM quantum numbers via `p(0,w,0) = w` and fermionic sector identification,
-    (2) implements Boolean computation via Rule 110 kink step (Turing universal),
+    (2) implements one Rule 110 gate step at the kink-collision level
+        (cell-embedding on Boolean-encoded three-cell neighborhoods, not a
+        full Turing-universality claim),
     (3) sources τ_c curvature and follows spacetime geodesics — Role 3 certified in
         `GTE.Spacetime.Geodesic.psc_orbit_is_curvature_geodesic`; bundled via
         `ParticlesComputationSpacetimeTrinityBundle.kink_geodesic`.

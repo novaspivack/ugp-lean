@@ -1,6 +1,7 @@
 import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Fin.Basic
 import Mathlib.Tactic.FinCases
+import Mathlib.Data.Bool.Basic
 
 /-!
 # UgpLean.Universality.Rule110 — Elementary CA Rule 110
@@ -43,9 +44,32 @@ theorem rule110_output_iff_minterm (i : Fin 8) :
   unfold rule110Output rule110Minterms
   fin_cases i <;> native_decide
 
-/-- Cook (2004) "Universality in Elementary Cellular Automaton Rule 110":
- Rule 110 can simulate any Turing machine. We cite this as an external result.
- Full formalization of the reduction would require a separate project. -/
-def Rule110CookUniversality : Prop := True  -- Cited; not proved here
+/-- Encode a 3-bit neighborhood (L, C, R) as a Fin 8 index. -/
+def neighborhoodIndex (l c r : Bool) : Fin 8 :=
+  ⟨(l.toNat * 4 + c.toNat * 2 + r.toNat), by
+    rcases l <;> rcases c <;> rcases r <;> simp [Bool.toNat]⟩
+
+/-- **Rule 110 NAND functional completeness at center = 1** (NOT Turing universality).
+
+    When the center cell is 1, Rule 110 implements NAND on the left/right neighbors.
+    Combined with Sheffer functional completeness, this gives Boolean circuit
+    expressibility — a strictly weaker property than Turing universality on an
+    unbounded tape.
+
+    For substrate Turing universality see `UWCARegisterUniversality.uwca_substrate_turing_universal`.
+    For Rule 110 as a UWCA tile program see `UWCARegisterUniversality.uwca_simulates_rule110_binary`.
+
+    Cook (2004) gives a separate, constructive TM simulation via cyclic tag systems;
+    that result is not mechanized here. -/
+def Rule110_nand_functional_completeness : Prop :=
+  ∀ (L R : Bool), rule110Output (neighborhoodIndex L true R) = !(L && R)
+
+theorem rule110_center_is_nand :
+    Rule110_nand_functional_completeness := by
+  intro L R
+  fin_cases L <;> fin_cases R <;> simp [neighborhoodIndex, rule110Output, Bool.toNat]
+
+/-- Deprecated name; retained for import stability.  Does **not** assert Turing universality. -/
+abbrev Rule110CookUniversality := Rule110_nand_functional_completeness
 
 end UgpLean.Universality

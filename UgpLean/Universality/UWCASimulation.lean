@@ -86,11 +86,6 @@ def Tape.inBinarySector {L : ℕ} (tape : Tape L) : Prop :=
 def Tape.C_at {L : ℕ} (tape : Tape L) (i : Fin L) : Bool :=
   (tape i).C
 
-/-- Encode a 3-bit neighborhood (L, C, R) as a Fin 8 index. -/
-def neighborhoodIndex (l c r : Bool) : Fin 8 :=
-  ⟨(l.toNat * 4 + c.toNat * 2 + r.toNat), by
-    rcases l <;> rcases c <;> rcases r <;> simp [Bool.toNat]⟩
-
 /-- Decode a Fin 8 index back to (L, C, R). -/
 def decodeNeighborhood (u : Fin 8) : Bool × Bool × Bool :=
   (u.val / 4 % 2 == 1, u.val / 2 % 2 == 1, u.val % 2 == 1)
