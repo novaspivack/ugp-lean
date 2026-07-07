@@ -6,13 +6,17 @@ import Rule110.CookUniversalityTop
 /-!
 # Cook Rule 110 → computable-function bridge
 
-Connects the **proved** operational Cook universality theorem in `rule110-lean` to the
+Connects the **proved** operational Cook readback theorem in `rule110-lean` to the
 `Computable (ℕ → ℕ)` simulation interface used by `GTEComputability` and `PhiMDLUniversality`.
 
 ## What is proved in `rule110-lean` (zero sorry, five classical bridge axioms)
 
-`Rule110.CookUniversalityTop.rule110_turing_universal_from_cook`: every compiled TM microstep is
-matched by a CTS trace whose Rule 110 evolution satisfies C3′′ origin readback.
+`Rule110.CookUniversalityTop.cook_operational_stage3_tm_microstep_readback`: every compiled TM
+microstep is matched by a CTS trace whose Rule 110 evolution satisfies C3′′ origin readback.  This
+is a conditional operational certification for *already-supplied* `TMCTSCompilation` witnesses —
+it does not by itself assert Turing universality (no `Computable`, no encoding of arbitrary TMs).
+The axiom below packages the additional classical composition (universal TM/partial-recursive
+compilation) needed to reach the `Computable (ℕ → ℕ)` statement used here.
 
 ## Named axiom (composition + forward-cone decode)
 
@@ -28,16 +32,20 @@ and composes with the proved Φ_MDL ↔ Rule 110 forward-cone agreement
 
 namespace UgpLean.Universality.CookComputableBridge
 
-/-- Re-export of Cook's operational universality top theorem. -/
-def cook_tm_operational_universality := Rule110.rule110_turing_universal_from_cook
+/-- Re-export of Cook's operational Stage 3 TM-microstep readback theorem
+    (not, by itself, a Turing-universality statement --- see module docstring). -/
+def cook_tm_operational_stage3_readback :=
+  Rule110.cook_operational_stage3_tm_microstep_readback
 
 /-- **Named axiom (Cook composition + forward-cone decode).**
 
     Every total computable `ℕ → ℕ` function is simulated on Rule 110 `InfTape` after `N` steps,
     with a decode map whose value depends only on cells at indices `j ≥ N`.
 
-    **Proved component:** `cook_tm_operational_universality`
-    (`Rule110.CookUniversalityTop.rule110_turing_universal_from_cook`).
+    **Proved component:** `cook_tm_operational_stage3_readback`
+    (`Rule110.CookUniversalityTop.cook_operational_stage3_tm_microstep_readback`)
+    --- a conditional operational microstep-readback certificate, not itself a
+    Turing-universality statement.
 
     **Open composition gap:** FinTM2 compilation of partial-recursive programs and explicit
     output-region extraction (Milestones in `rule110-lean` / Mathlib `PartrecToTM2` chain).

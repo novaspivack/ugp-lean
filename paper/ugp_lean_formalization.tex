@@ -7408,18 +7408,18 @@ Theorem / Axiom & Module & Physical content \\
 \texttt{gte\_G\_eff\_G\_N\_ratio}
   & Gravity.PMDLGravityTheorems
   & $G_{\rm eff}/G_N = 4\pi M_{\rm kink}/M_{\rm PMDL}$; G2 bridge identification \\[1pt]
-\texttt{l1\_l2\_born\_rule\_bridge} (axiom)
+\texttt{l1\_l2\_born\_rule\_bridge\_placeholder} (axiom)
   & Gravity.PageWoottersZ7
-  & PW Born $P(k|\tau_c)$ converges to field Born $|\partial_x\Phi|^2/Z$ at rate $O(1/M^2)$; closes G3 \\[1pt]
-\texttt{born\_bridge\_no\_new\_axiom}
+  & Placeholder for: PW Born $P(k|\tau_c)$ converges to field Born $|\partial_x\Phi|^2/Z$ at rate $O(1/M^2)$; not yet formalized beyond \texttt{True} \\[1pt]
+\texttt{born\_bridge\_informal\_argument\_placeholder}
   & Gravity.PageWoottersZ7
-  & Born bridge requires no axiom beyond \texttt{cmca\_continuum\_limit\_is\_phimdl} \\[1pt]
+  & Documented informal argument that the Born bridge requires no axiom beyond \texttt{cmca\_continuum\_limit\_is\_phimdl}; not yet formalized beyond \texttt{True} \\[1pt]
 \texttt{l1\_chsh\_and\_\allowbreak l2\_epr\_are\_\allowbreak distinct\_layers}
   & Universality.BellViolationGTE
-  & L1 CHSH ($S=2.4459$) and L2 P43 EPR are separate layers; closes G4 \\[1pt]
-\texttt{alt\_does\_not\_lift\_chsh\_value}
+  & Level-1 CHSH ($S=2.4459$) state-space index type and Level-2 P43 EPR Fock-space type have different cardinality (9 vs.\ 16); machine-checked \\[1pt]
+\texttt{alt\_does\_not\_lift\_chsh\_value\_placeholder}
   & Universality.BellViolationGTE
-  & ALT lifts algebraic structure, not dynamical Hamiltonians or CHSH values \\[1pt]
+  & Documented informal argument that ALT lifts algebraic structure, not dynamical Hamiltonians or CHSH values; not yet formalized beyond \texttt{True} \\[1pt]
 \texttt{gap\_g1\_\allowbreak polynomial\_\allowbreak continuum\_\allowbreak taxonomy}
   & Algebra.\allowbreak PolynomialContinuumBridge
   & $p$ (update/coupling) $\neq$ $V_{\ZS}$ (potential energy); taxonomy; closes G1 \\[1pt]
@@ -7533,29 +7533,42 @@ The bridge identification is $\psi(x)=\partial_x\Phi_{\mathrm{MDL}}(x)/\sqrt{Z}$
 Closes gap~G3.
 \end{theorem}
 
-\begin{theorem}[\lstinline|born_bridge_no_new_axiom|, zero \texttt{sorry}]
-The Born bridge $\psi=\partial_x\Phi/\sqrt{Z}$ requires no axiom beyond
-\lstinline|cmca_continuum_limit_is_phimdl|: the identification is forced by the
-BPS saturation condition $\partial_x\Phi=\sqrt{2V_{\ZS}(\Phi)}$ together with
-the $M\to\infty$ continuum limit theorem.
-\end{theorem}
+\begin{remark}[\lstinline|born_bridge_informal_argument_placeholder|]
+The Born bridge $\psi=\partial_x\Phi/\sqrt{Z}$ is intended to require no axiom
+beyond \lstinline|cmca_continuum_limit_is_phimdl|: the identification is
+informally motivated by the BPS saturation condition
+$\partial_x\Phi=\sqrt{2V_{\ZS}(\Phi)}$ together with the $M\to\infty$
+continuum limit theorem.  This connection is currently a documented informal
+argument (Lean statement \lstinline|True|), not a machine-checked theorem;
+the identifier is named \lstinline|_placeholder| to prevent it from being
+cited as a zero-\texttt{sorry} formal result.
+\end{remark}
 
 \begin{theorem}[\lstinline|l1_chsh_and_l2_epr_are_distinct_layers|, zero \texttt{sorry}]
-The Level-1 CHSH violation ($S=2.4459$ on $\mathbb{C}^7\otimes\mathbb{C}^7$,
-certified in \lstinline|gte_bell_violation_at_half_coupling|) and the Level-2
-$[\mathbf{D}]$-record EPR correlations of P43 (transputation~D3, non-computable)
-are structurally distinct phenomena at different levels of the theory.
-Closes gap~G4.
+The finite index type underlying the Level-1 CHSH state space
+($\mathrm{Fin}\,3\times\mathrm{Fin}\,3$, cardinality~9; the qutrit-pair setup
+of \lstinline|gte_bell_violation_at_half_coupling|, $S=2.4459$ on
+$\mathbb{C}^7\otimes\mathbb{C}^7$) has different cardinality from the Level-2
+$\Phi_{\mathrm{MDL}}$ kink Fock space
+\lstinline|FockSpaceKink.KinkFockState| (cardinality~16).  This machine-checked
+type-level separation is the formal core of the broader claim that the Level-1
+CHSH violation and the Level-2 $[\mathbf{D}]$-record EPR correlations of P43
+(transputation~D3, non-computable) are structurally distinct phenomena at
+different levels of the theory; the full dynamical argument for that broader
+claim remains at $\CatAD$.
 \end{theorem}
 
-\begin{theorem}[\lstinline|alt_does_not_lift_chsh_value|, zero \texttt{sorry}]
-The Algebraic Lifting Theorem carries algebraic and structural content
-($\mathbb{Z}_7$ winding, $N_{\mathrm{gen}}$, GoE, confinement, gauge vertices,
-V--A fraction) from Level~1 to Level~2, but does \emph{not} lift dynamical
-Hamiltonians or specific CHSH values.  The Bell parameter $S=2.4459$ is a
-Level-1 dynamical certificate; what lifts is the structural statement that
-$\Phi_{\mathrm{MDL}}$ supports genuine quantum entanglement.
-\end{theorem}
+\begin{remark}[\lstinline|alt_does_not_lift_chsh_value_placeholder|]
+The intended claim is that the Algebraic Lifting Theorem carries algebraic
+and structural content ($\mathbb{Z}_7$ winding, $N_{\mathrm{gen}}$, GoE,
+confinement, gauge vertices, V--A fraction) from Level~1 to Level~2, but does
+\emph{not} lift dynamical Hamiltonians or specific CHSH values.  The Bell
+parameter $S=2.4459$ is a Level-1 dynamical certificate; what lifts is the
+structural statement that $\Phi_{\mathrm{MDL}}$ supports genuine quantum
+entanglement.  This is a documented physical argument, not yet a
+machine-checked theorem (Lean statement \lstinline|True|); the identifier is
+named \lstinline|_placeholder| accordingly.
+\end{remark}
 
 \subsection{Theorem inventory: phantom-reference resolution}\label{subsec:new-theorem-inventory-audit}
 
@@ -10346,8 +10359,14 @@ Five theorems certify the entanglement area law and Jacobson GR route:
   a rank-one projector with unit trace.
 \item \lstinline|bekenstein_hawking_wald_crossref| (\CatAD): cross-reference to
   \lstinline|phimdl_wald_entropy_is_area_over_4G| in \texttt{WaldEntropy.lean}.
-\item \lstinline|gte_entanglement_area_law| (\CatAD): $S(D) = \eta\cdot\mathrm{Area}(\partial D)$;
-  blocked by CMCA causal-graph entropy formalization.
+\item \lstinline|gte_entanglement_area_law_scaffold|: names the intended claim
+  $S(D) = \eta\cdot\mathrm{Area}(\partial D)$, but its current Lean statement is a
+  tautological identity ($x = x+0$) with no entanglement, area, or entropy
+  content --- a documentation scaffold, not a \CatAD\ bridge with formal
+  content.  Genuine formalization is blocked by CMCA causal-graph entropy
+  infrastructure not yet in this repository; the \lstinline|_scaffold| suffix
+  marks it as pending that infrastructure, not as an established result at
+  any Cat level.
 \end{itemize}
 
 \subsection{\texttt{Spacetime/LorentzianCausalityNecessity}}\label{subsec:lorentzian-causality}
