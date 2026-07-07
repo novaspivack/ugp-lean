@@ -650,7 +650,7 @@ full soft-constraint $D$-minimization over all 14 scan constraints; the
 Layer~I survivor structure and $N_{\mathrm{gen}} = 3$ consequence are
 machine-certified.
 
-\medskip\noindent\textbf{Documented axioms (97 global named axioms).}
+\medskip\noindent\textbf{Documented axioms (98 global named axioms).}
 Two theorems in \texttt{GTE.AnalyticArchitecture} are declared as
 \texttt{axiom} rather than \texttt{sorry}: \texttt{dickman\_equidistribution\_in\_APs}
 and \texttt{crt\_equidistribution\_within\_regime}, both citing
@@ -667,9 +667,15 @@ $\{\mathtt{propext},\mathtt{Classical.choice},\mathtt{Quot.sound}\}$.
 An audit discharged several previously declared axioms in
 \texttt{VEVProof/GoldstoneEntropyCorrection.lean} as proved theorems;
 see \S\ref{sec:audit-capstones} for details.
-The library currently holds \textbf{97} global custom named axioms,
-primarily in \texttt{GUTStructure}, \texttt{FrobeniusChain},
-\texttt{NeutrinoSector}, \texttt{SechOverlapIntegralBounds\_bridge}, and related
+The library currently holds \textbf{98} global custom named axioms,
+counted by the reproducible command
+\lstinline!grep -rhoE "^axiom [a-zA-Z0-9_']+" UgpLean --include="*.lean" | sort -u | wc -l!
+(top-level \texttt{axiom} declarations across every \texttt{.lean} file, deduplicated by
+name; standard Lean/Mathlib logical axioms \texttt{propext}, \texttt{Classical.choice},
+\texttt{Quot.sound} are excluded, as they are not disclosed physics/mathematics premises
+in the sense meant here), primarily in \texttt{MassRelations.TranscendentalMassBounds},
+\texttt{Universality.CUP3DPhysicalIncompleteness}, \texttt{Substrate.WightmanAxioms},
+\texttt{Gravity.PageWoottersZ7}, \texttt{Gravity.PMDLGravityTheorems}, and related
 modules (see Table~\ref{tab:axiom-inventory} and \S\ref{subsec:frontier-closures}).
 The following named axioms were proved as genuine theorems (zero sorry):
 five \lstinline|: True|-type and existential axioms in \texttt{GaugeMDL},
@@ -3507,7 +3513,8 @@ Separately, and not part of this reduction, the \uwca{}'s binary sweep layer exa
 simulates Rule~110 (machine-checked, zero \texttt{sorry},
 \lstinline|uwca_sweep_implements_rule110|), and Rule~110 is itself Turing-universal
 via Cook's theorem~\cite{Cook2004,Wolfram1984,Wolfram2002}
-(\lstinline|rule110_turing_universal_from_cook|, zero \texttt{sorry} modulo five
+(\lstinline|cook_operational_stage3_tm_microstep_readback| in \texttt{rule110-lean},
+formerly \lstinline|rule110_turing_universal_from_cook|, zero \texttt{sorry} modulo five
 named classical Cook collision-analysis bridge axioms).  A finite-window binary
 tile embedding of Rule~110 does not by itself establish Turing universality on the
 \uwca{} substrate, since Cook's construction requires an unbounded tape; the
@@ -4266,7 +4273,9 @@ The module also introduces the named axiom
 $f : \mathbb{N} \to \mathbb{N}$, Rule~110 simulates $f$ on its canonical
 initial tape.  This is a theorem (zero \texttt{sorry}), proved from the named axiom
 \lstinline|cook_rule110_simulates_computable| in \texttt{Universality.CookComputableBridge}
-(Cook's operational universality theorem \lstinline|rule110_turing_universal_from_cook|
+(Cook's operational universality theorem
+\lstinline|cook_operational_stage3_tm_microstep_readback| in \texttt{rule110-lean},
+formerly \lstinline|rule110_turing_universal_from_cook|,
 composed with universal Turing-machine/partial-recursive compilation), and underlies
 \lstinline|gte_embeds_in_rule110_via_computability|.
 
@@ -4341,7 +4350,9 @@ Zero \texttt{sorry}; zero new axioms.
 \textbf{Theorem \lstinline|phimdl_turing_universal|.}
 $\Phi_{\rm MDL}$ is Turing universal.  Proved by composing
 \lstinline|CookComputableBridge.cook_rule110_simulates_computable| (Cook's
-operational universality theorem \lstinline|rule110_turing_universal_from_cook|
+operational universality theorem
+\lstinline|cook_operational_stage3_tm_microstep_readback| in \texttt{rule110-lean},
+formerly \lstinline|rule110_turing_universal_from_cook|,
 composed with universal TM/partial-recursive compilation) with the proved
 stepwise $\Phi_{\rm MDL}$--Rule~110 simulation
 (\lstinline|phiMDL_evolution_simulates_rule110|).
@@ -6754,7 +6765,7 @@ and existential axioms across \texttt{GaugeMDL}, \texttt{CCImpossibilityBundle},
 \texttt{GUTStructure}, and \texttt{PMDLGravityTheorems}, and
 \lstinline|adj_mem_periodicCausalNeighbors| in \texttt{SpectralDimensionDegree}
 (proved via complete case analysis).
-The verified global named-axiom total is \textbf{97}.
+The verified global named-axiom total is \textbf{98}.
 
 The following named axioms are proved theorems (zero sorry):
 \begin{itemize}[nosep]
@@ -6786,25 +6797,31 @@ Additionally proved as theorems (zero sorry):
 \toprule
 Module & Scope & Custom axioms \\
 \midrule
-\texttt{GTE.AnalyticArchitecture}     & Dickman / CRT equidistribution & 2 \\
+\texttt{MassRelations.TranscendentalMassBounds} & Transcendental exponential mass-bound numerics (cascade anchors) & 19 \\
+\texttt{Universality.CUP3DPhysicalIncompleteness} & CUP3D physical-incompleteness bridge & 6 \\
+\texttt{Substrate.WightmanAxioms}     & Wightman QFT axioms & 6 \\
+\texttt{Gravity.PageWoottersZ7}       & Page--Wootters timeless-formalism bridge & 6 \\
+\texttt{Gravity.PMDLGravityTheorems}  & PMDL gravity theorems & 5 \\
+\texttt{Algebra.F21SU3Embedding}      & $F_{21}\hookrightarrow SU(3)$ embedding & 4 \\
+\texttt{Universality.EWChiralBridge}  & Electroweak chirality bridge & 3 \\
+\texttt{Universality.BellViolationGTE} & Bell-violation GTE bridge & 3 \\
 Rule110-lean (cross-repo)             & ChiralGliderDynamics & (cross-repo) \\
 \hline
-\texttt{Substrate.SechOverlap\allowbreak IntegralBounds\_bridge} & Mesh-to-integral bridge for $r\in\{5,11\}$ & 2 \\
-\texttt{Universality.GUTStructure}    & Native\_decide certs and SM structure & 43 \\
-\texttt{Universality.FrobeniusChain}  & FGCI uniqueness and chain closure & 4 \\
-\texttt{MassRelations.NeutrinoSector} & PMNS angles, CP phase, seesaw & 5 \\
-\texttt{Gravity.YukawaOverlapExponent} & DPP tape-counting, Yukawa scaling & 4 \\
-Other modules                         & Bridge and auxiliary axioms & 39 \\
+Other modules (37 files, $\le 2$ axioms each) & Bridge, structural, and auxiliary axioms, including \texttt{Universality.RegisterMachine} (A5) and \texttt{Universality.CookComputableBridge} (A6) & 46 \\
 \hline
-\textbf{Global named custom axioms}   & \textbf{total} & \textbf{97} \\
+\textbf{Global named custom axioms}   & \textbf{total} & \textbf{98} \\
 \bottomrule
 \end{tabular}
 \caption{Custom named-axiom inventory. Each row lists the module, physical scope,
-  and axiom count. The global verified total is \textbf{97}; the core physics
+  and axiom count. Counted via
+  \lstinline!grep -rhoE "^axiom [a-zA-Z0-9_']+" UgpLean --include="*.lean" | sort -u | wc -l!
+  (top-level \texttt{axiom} declarations, deduplicated by name; excludes the standard
+  Lean/Mathlib logical axioms \texttt{propext}, \texttt{Classical.choice},
+  \texttt{Quot.sound}). The global verified total is \textbf{98}; the core physics
   proof path (charged leptons, couplings, generation count) uses only standard
   Lean/Mathlib axioms. \lstinline|causal\_path\_exists| is proved as a theorem
   (forward-causal pairs only) and is no longer a module-local axiom.
-  ``Other modules'' includes the two Turing-universality bridge axioms below.}
+  ``Other modules'' includes the two Turing-universality bridge axioms discussed below.}
 \label{tab:axiom-inventory}
 \end{table}
 
@@ -6819,8 +6836,9 @@ axioms, a net change of zero to the global total:
   Turing universality, so the bridge was retired rather than repaired.
 \item \textbf{Added, justified:} \lstinline|cook_rule110_simulates_computable|
   (\texttt{Universality.CookComputableBridge}) --- packages Cook's (2004) proved
-  operational universality theorem (\lstinline|rule110_turing_universal_from_cook| in
-  \texttt{rule110-lean}) composed with universal Turing-machine/partial-recursive
+  operational universality theorem (\lstinline|cook_operational_stage3_tm_microstep_readback|
+  in \texttt{rule110-lean}, formerly \lstinline|rule110_turing_universal_from_cook|)
+  composed with universal Turing-machine/partial-recursive
   compilation; replaces the former directly-declared axiom
   \lstinline|GTEComputability.rule110_simulates_computable| (now a zero-sorry theorem).
 \item \textbf{Added, justified:} \lstinline|minsky_counter_machine_turing_complete_1967|
@@ -10605,7 +10623,7 @@ exclusion criterion (\lstinline|unified_physical_exclusion|) and the
 three-generation uniqueness capstone
 (\lstinline|gte_uniquely_predicts_three_generations|).
 An audit discharged several \texttt{VEVProof} axioms as proved theorems;
-the verified global named-axiom total is 97 (see Table~\ref{tab:axiom-inventory}).
+the verified global named-axiom total is 98 (see Table~\ref{tab:axiom-inventory}).
 
 \medskip
 \noindent\textbf{PSL(2,7) unification, golden fiber, and algebraic extensions}

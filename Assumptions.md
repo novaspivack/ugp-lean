@@ -3,9 +3,13 @@
 Every premise that is not definitional truth. Tag: `definition` | `lemma` | `axiom` | `imported` | `citation`.
 
 This is a curated selection of the premises behind the library's key results — it is not
-exhaustive. The library is 435 modules across 27 layers and references on the order of 98
-named axioms in total; for the complete, current axiom inventory see the formalization
-paper's axiom-inventory table (`paper/ugp_lean_formalization.tex`). This ledger's purpose is
+exhaustive. The library is 435 modules across 27 layers and references **98** named axioms
+in total, counted via `grep -rhoE "^axiom [a-zA-Z0-9_']+" UgpLean --include="*.lean" | sort -u | wc -l`
+(top-level `axiom` declarations, deduplicated by name; excludes the standard Lean/Mathlib
+logical axioms `propext`/`Classical.choice`/`Quot.sound`, which are not disclosed
+physics/mathematics premises in the sense meant here); for the complete, current axiom
+inventory see the formalization paper's axiom-inventory table
+(`paper/ugp_lean_formalization.tex`, Table `tab:axiom-inventory`). This ledger's purpose is
 narrower: it documents the RSUC core proof path (0 sorry, 0 custom axioms) and the handful of
 axioms and citations most relevant to spot-checking that path and the Universality chain. See
 `docs/DESIGN.md` for the non-circularity contract.

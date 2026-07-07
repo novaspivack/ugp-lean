@@ -24,7 +24,8 @@ bridge axiom `gte_in_rule110_sim_ax` with a cleaner decomposition:
 ### Cook-dependent path (this file)
 `gte_embeds_in_rule110_via_computability` derives the Rule 110 embedding via
 `CookComputableBridge.cook_rule110_simulates_computable`, which packages Cook (2004)'s
-operational universality (`rule110_turing_universal_from_cook` in `rule110-lean`, zero sorry
+operational universality (`cook_operational_stage3_tm_microstep_readback` in `rule110-lean`,
+formerly `rule110_turing_universal_from_cook`, zero sorry
 modulo five classical bridge axioms) composed with universal TM compilation.
 
 ### Φ_MDL path (PhiMDLUniversality)

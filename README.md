@@ -89,7 +89,7 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 
 **Turing universality**
 - GTE substrate is Turing-universal via its CRT register file simulating Minsky (1967) two-counter machines, conditional on one named classical axiom (`ugp_is_turing_universal`)
-- Rule 110 itself is Turing-universal via Cook's (2004) cyclic-tag-system construction, zero sorry modulo five named classical Cook collision-analysis bridge axioms (`rule110_turing_universal_from_cook`)
+- Rule 110 itself is Turing-universal via Cook's (2004) cyclic-tag-system construction; the in-repo operational readback certificate (`cook_operational_stage3_tm_microstep_readback` in `rule110-lean`, formerly `rule110_turing_universal_from_cook`) is zero sorry modulo five named classical Cook collision-analysis bridge axioms, and is composed with classical TM/Partrec compilation via the named axiom `cook_rule110_simulates_computable` to yield `phimdl_turing_universal`
 - Rule 110 at center cell 1 additionally realizes any finite two-input Boolean function algebraically (Sheffer 1913 NAND completeness), independently of Cook's construction — a finite functional-completeness result, distinct from Turing universality (`rule110_center1_is_nand`, `z7_bool3_finite_functional_completeness`)
 - GTE update map is the *unique* lawful UWCA program up to bisimulation (`gte_uniqueness_up_to_bisimulation`)
 - UWCA history-lane reversibility: backward ∘ forward = id exactly

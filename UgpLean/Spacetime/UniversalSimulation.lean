@@ -34,7 +34,8 @@ Reference:
   Cook's theorem (an arbitrary local rule's block dynamics compiled into a Rule
   110 glider program); the general compiler is not yet formalized in Lean, only
   Cook's original TM-to-Rule-110 compiler
-  (`Rule110.CookUniversalityTop.rule110_turing_universal_from_cook`).
+  (`Rule110.CookUniversalityTop.cook_operational_stage3_tm_microstep_readback`,
+  formerly `rule110_turing_universal_from_cook`).
 - `fca_implementable_in_rule110`: **theorem**, zero new axioms — direct instance
   of `universal_ca_simulates_any_ca` at `g := ChiralPairVA.rule110` (true
   self-simulation, using Rule 110's own rule table, not an unrelated stand-in).
