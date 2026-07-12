@@ -1,6 +1,6 @@
 # ugp-lean: Theorem Highlights
 
-**This is a curated selection of the most important theorems by layer.** It is not exhaustive — the library contains thousands of theorems across 435 modules. For the complete inventory, see `paper/ugp_lean_formalization.tex` (Table 1) and browse the source in `UgpLean/`.
+**This is a curated selection of the most important theorems by layer.** It is not exhaustive — the library contains thousands of theorems across 436 modules. For the complete inventory, see `paper/ugp_lean_formalization.tex` (Table 1) and browse the source in `UgpLean/`.
 
 All listed theorems have **0 sorry, 0 custom axioms** on the core path unless marked ⚠.
 
@@ -419,6 +419,23 @@ All modules in this cluster: zero sorry, zero custom axioms.
 | 5 and 11 are not Eisenstein norms | `b_R1_not_eisenstein`, `b_R2_not_eisenstein` | MassRelations.SeesawTrialityPinning |
 | Seesaw map m(b)=C·b^{29/9} is strictly monotone for C>0 | `seesaw_map_strict_monotone` | MassRelations.SeesawTrialityPinning |
 | **Normal mass ordering m_{ν,1} < m_{ν,2} < m_{ν,3}** conditional on corpus seesaw formula | `normal_ordering_from_seeds` | MassRelations.SeesawTrialityPinning |
+
+---
+
+### PhiMDLFockSpaceParticles
+
+| Theorem | Lean name | Module |
+|---|---|---|
+| Every PSC-admissible Z₇ sector {0,2,3,4,6} has a normalizable one-particle Fock-sector state | `psc_admissible_sector_has_normalizable_fock_state` | Universality.PhiMDLFockSpaceParticles |
+| Fock lift realizes the Algebraic Lifting Theorem's physical realization for every [D]-weighted beable | `fock_state_realizes_algebraic_lifting` | Universality.PhiMDLFockSpaceParticles |
+| Each GTE kink-mode Fock one-particle state carries the certified (Q_Φ, Q_χ) pair | `kink_mode_fock_carries_certified_quantum_numbers` | Universality.PhiMDLFockSpaceParticles |
+| The four canonical PSC-orbit beables (vacuum, gen₁, gen₂, gen₃) each have a normalized Fock-sector lift | `psc_admissible_beable_has_normalized_fock_lift` | Universality.PhiMDLFockSpaceParticles |
+| **Master bundle**: sector totality + beable lift + algebraic-Fock-only construction + gen₁ mass/stability + three-generation mass ordering | `phimdl_fock_particle_master_bundle` | Universality.PhiMDLFockSpaceParticles |
+
+Physical meaning: Φ_MDL particles are second-quantized Fock-space excitations within
+topological superselection sectors, certified by an extended (never spatially-compact)
+classical background — the Fock-space realization the Algebraic Lifting Theorem
+(`Spacetime.LiftingTheorem`) promises. Zero sorry, zero new axioms.
 
 ---
 

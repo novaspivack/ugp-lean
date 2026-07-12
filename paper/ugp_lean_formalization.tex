@@ -140,7 +140,7 @@
 \begin{abstract}
 We present \textbf{ugp-lean}, a \lean{}~4 formalization of the
 Universal Generative Principle (\ugp{}) against Mathlib, comprising
-435~\lean{} modules across multiple organizational layers (canonical library covering
+436~\lean{} modules across multiple organizational layers (canonical library covering
 spacetime, QFT, and hadronic physics) with a strict zero-sorry policy throughout
 and zero custom axioms on the core arithmetic/algebraic proof path; the
 Turing-universality results are conditional on a small number of explicitly named,
@@ -428,7 +428,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 435~\lean{} modules across multiple organizational layers
+The artifact is organized into 436~\lean{} modules across multiple organizational layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -487,7 +487,7 @@ The artifact is organized into 435~\lean{} modules across multiple organizationa
   {\textbf{IPT}~(1) \textit{migrated to ugp-physics-lean}:
    InformationProfitThreshold};
 \node[layer, fill=purple!8, below=of ipt]   (univ)
-  {\textbf{Universality}~(65)\quad Rule110, UWCA, UWCASimulation,
+  {\textbf{Universality}~(66)\quad Rule110, UWCA, UWCASimulation,
    UWCAHistoryReversible, UWCAembedsRule110, TuringUniversal, ArchitectureBridge,
    CUP4TotalParity, CUP11ModSeven, CUP3DUniqueness, CUP3DPSCUnification,
    CUP3DPhysicalIncompleteness, TwoLayerConfluence, GTECompilation, GTEUniqueness,
@@ -508,7 +508,8 @@ The artifact is organized into 435~\lean{} modules across multiple organizationa
    FockSpaceKink, \textbf{MDLDerivabilityCriterion}, ThooftEffectMeasureBridge,
    ExcitationCoupling, EWScalePrediction, AlgebraicDescentTheorem,
    BeableWindingPartitionInstance, TwoRoleTheorem,
-   \textbf{Z3SubOrbitDisjointness}, \textbf{Z3InvariantEntropy}, \textbf{PSCOrbitWindows}};
+   \textbf{Z3SubOrbitDisjointness}, \textbf{Z3InvariantEntropy}, \textbf{PSCOrbitWindows};
+   \textit{new:} \textbf{PhiMDLFockSpaceParticles}};
 \node[layer, fill=gray!8,   below=of univ]  (self)
   {\textbf{SelfRef}~(2)\quad LawvereKleene, RiceHalting};
 \node[layer, fill=pink!10,  below=of self]  (fwk)
@@ -6225,6 +6226,67 @@ paths; \lstinline|PhysicalBaryonState| definition).
 \lstinline|causal_path_exists| is proved as a theorem for forward-causal pairs
 ($t_a \leq t_b$); zero sorry; standard foundational axioms only.
 Meson and baryon existence are unconditional on this result.
+
+\subsection{\texorpdfstring{$\Phi_{\rm MDL}$}{Phi\_MDL} Fock-Space Particle Realization
+  (\texttt{Universality/\allowbreak PhiMDLFockSpaceParticles.lean})}\label{subsec:phimdl-fock-space-particles}
+
+Module: \texttt{Universality/PhiMDLFockSpaceParticles.lean} (canonical library,
+zero \lstinline|sorry|, zero new axioms). Connects the algebraic Fock-space
+layer (\texttt{Universality/FockSpaceKink.lean},
+\texttt{Universality/BeableWindingPartitionInstance.lean},
+\texttt{Substrate/CMCAHilbertFockBridge.lean}) to the Algebraic Lifting Theorem
+(\S\ref{subsec:lifting-theorem}), certifying the physical realization the
+Lifting Theorem promises without requiring any spatially-compact classical
+field profile.
+
+\begin{keybox}{\texorpdfstring{$\Phi_{\rm MDL}$}{Phi\_MDL} particles are Fock-space excitations}
+\textbf{Theorem \lstinline|phimdl_fock_particle_master_bundle|.}
+Every PSC-admissible $\mathbb{Z}_7$ winding sector in
+$\{0,2,3,4,6\}$ admits a normalizable one-particle Fock-sector state (or a
+unit-weight normalized sector amplitude on the certified beable partition).
+Every $[\mathbf{D}]$-weighted physical beable inherits this Fock lift via the
+Algebraic Lifting Theorem. The construction uses only the algebraic Fock
+layer --- no spatially-compact classical $\Phi_{\rm MDL}$ soliton profile
+enters any step. Mass positivity, Garden-of-Eden stability, and the
+three-generation mass ordering are bundled in on the same certified
+orbit Fock states.
+\end{keybox}
+
+Physical meaning: $\Phi_{\rm MDL}$ particles are second-quantized Fock
+excitations within topological superselection sectors. The classical
+background certifying a sector's winding, colour charge, and generation index
+may be spatially extended (e.g.\ an infinite domain wall); a compact
+finite-energy topological soliton is never required and is in fact
+independently excluded on general grounds (any continuous field
+configuration with a direction-independent vacuum limit at spatial infinity
+has zero winding, and no shape retains both finite energy and topological
+protection). This module closes the gap between that exclusion and the
+Algebraic Lifting Theorem's promise of a physical realization: the
+realization is the normalizable Fock-sector state constructed here, not a
+compact classical lump.
+
+Key theorems:
+\begin{itemize}[nosep]
+\item \lstinline|psc_admissible_sector_has_normalizable_fock_state| --- every
+  PSC-admissible winding sector $w \in \{0,2,3,4,6\}$ admits a normalizable
+  one-particle Fock-sector state or a unit-weight normalized sector amplitude.
+\item \lstinline|fock_state_realizes_algebraic_lifting| --- every
+  $[\mathbf{D}]$-weighted physical beable admits a normalized Fock-sector lift
+  in its winding superselection sector, composing
+  \lstinline|algebraic_lifting_theorem| with the sector-level existence result.
+\item \lstinline|kink_mode_fock_carries_certified_quantum_numbers| --- each
+  GTE kink-mode Fock one-particle state carries the certified
+  $(Q_\Phi, Q_\chi)$ winding/colour pair.
+\item \lstinline|psc_admissible_beable_has_normalized_fock_lift| --- the four
+  canonical PSC-orbit beables (vacuum, gen$_1$, gen$_2$, gen$_3$) each have a
+  normalized Fock-sector lift, exhausting \lstinline|PSCAdmissible| via
+  \lstinline|psc_admissible_iff_orbit|.
+\item \lstinline|gen1_fock_layer_mass_and_stability|,
+  \lstinline|fock_orbit_mass_hierarchy| --- gen$_1$ positive mass and
+  Garden-of-Eden stability, and the three-generation mass ordering
+  $m_{\rm gen_3} > m_{\rm gen_2} > m_{\rm gen_1} > 0$, all survive on the
+  Fock/orbit layer with no classical-lump dependency.
+\end{itemize}
 
 \subsection{Geodesic Theorem (\texttt{GeodesicTheorem.lean})}\label{subsec:geodesic-theorem}
 

@@ -2,7 +2,7 @@
 
 Machine-checked Lean 4 formalization of the **Universal Generative Principle (UGP)** — a research program by [Nova Spivack](https://www.novaspivack.com/) establishing that a single 7-state cellular automaton over GF(7) generates the Standard Model particle spectrum, gauge structure, and mass predictions from first principles.
 
-**435 modules · zero sorry on the core proof path · Lean 4 + Mathlib**
+**436 modules · zero sorry on the core proof path · Lean 4 + Mathlib**
 
 ---
 
@@ -48,7 +48,7 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 
 ## Module structure
 
-435 modules organized in 17 layers. Full module lists are in [docs/MODULES.md](docs/MODULES.md) and the formalization paper.
+436 modules organized in 17 layers. Full module lists are in [docs/MODULES.md](docs/MODULES.md) and the formalization paper.
 
 | Layer | Modules | What it covers |
 |---|---|---|
@@ -59,7 +59,7 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 | **Structural** | 30 | Quarter-Lock, Elegant Kernel, UCL mass ordering closure |
 | **MassRelations** | 33 | Koide, CKM, PMNS, Higgs quartic, neutrino sector, pion mass, Eisenstein identities, CKM θ₂₃ structural ratio |
 | **BraidAtlas** | 13 | Charge theorem, EW bosons, dark braid, RHN gap |
-| **Universality** | 94 | Rule 110, UWCA, register-machine Turing universality, GTE compilation/uniqueness, EW structure, Solovay completeness, bi-immunity, complex amplitude forcing |
+| **Universality** | 95 | Rule 110, UWCA, register-machine Turing universality, GTE compilation/uniqueness, EW structure, Solovay completeness, bi-immunity, complex amplitude forcing, Φ_MDL Fock-space particle realization |
 | **Polynomial** | 19 | GF(7) explorations, causal tree, MDL unification, spin-7 ground space, PSL(2,7) unification, golden fiber taxonomy, golden quadratic arithmetic, admissible primes, Gaussian face arithmetic |
 | **Algebra** | 23 | Eisenstein functor, A₄ structure, Fano regular action, QR(7)→octonion interface, Hurwitz coset certificate, G₂/su(3) stabilizer certificates, Spin(8) triality, color/flavor Z₃ disambiguation, kink sector structure, EW coupling certificates |
 | **Physics** | 8 | Z₇ vacuum selection, kink physics, CMCA physical point, BPS actions |
@@ -80,6 +80,7 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 - GEN₁ is a Garden-of-Eden state — no predecessor in the 16,807-state space (`fmdl_gen1_is_goe`)
 - All 16,807 states converge to the vacuum in ≤7 steps; no false vacua (`fmdl_vacuum_is_unique_attractor`)
 - Rule 110 is the unique CA rule satisfying the SM orbit and vacuum transparency (`rule110_unique_weight5_orbit_satisfier`)
+- Every PSC-admissible Z₇ winding sector {0,2,3,4,6} admits a normalizable one-particle Fock-space state, and every [D]-weighted physical beable inherits this via the Algebraic Lifting Theorem — Φ_MDL particles are second-quantized Fock excitations within topological superselection sectors, never spatially-compact classical solitons (`phimdl_fock_particle_master_bundle`)
 
 **Mass relations**
 - Koide relation certified in closed algebraic form; Newton flow S₃-equivariance proved
