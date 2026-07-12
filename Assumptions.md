@@ -3,7 +3,7 @@
 Every premise that is not definitional truth. Tag: `definition` | `lemma` | `axiom` | `imported` | `citation`.
 
 This is a curated selection of the premises behind the library's key results — it is not
-exhaustive. The library is 435 modules across 27 layers and references **98** named axioms
+exhaustive. The library is 436 modules across 27 layers and references **98** named axioms
 in total, counted via `grep -rhoE "^axiom [a-zA-Z0-9_']+" UgpLean --include="*.lean" | sort -u | wc -l`
 (top-level `axiom` declarations, deduplicated by name; excludes the standard Lean/Mathlib
 logical axioms `propext`/`Classical.choice`/`Quot.sound`, which are not disclosed
@@ -102,6 +102,19 @@ axioms and citations most relevant to spot-checking that path and the Universali
 |---|---|---|---|
 | L60 | `W1_triangle`, `W1_eq_zero_iff`, `W1_attained` | ContinuumLimit.WassersteinDistance | lemma |
 | L61 | `planck_eft_blocking_ratio` — M_Pl/Λ_GTE = 3¹⁰·7¹⁸/2⁴ | Physics.CMCAPhysicalPoint | lemma |
+
+### Fock-space particle realization
+
+**No new axioms.** This module (`Universality.PhiMDLFockSpaceParticles`) is built entirely
+from previously-certified lemmas/axioms (`FockSpaceKink`, `BeableWindingPartitionInstance`,
+`CMCAHilbertFockBridge`, `algebraic_lifting_theorem`) — it introduces zero new `axiom`
+declarations and does not add to the 98-axiom count above.
+
+| ID | Lean name | Module | Tag |
+|---|---|---|---|
+| L70 | `psc_admissible_sector_has_normalizable_fock_state` — every PSC-admissible Z₇ sector has a normalizable one-particle Fock-sector state or unit-weight sector amplitude | Universality.PhiMDLFockSpaceParticles | lemma |
+| L71 | `fock_state_realizes_algebraic_lifting` — every [D]-weighted physical beable's Fock lift realizes the Algebraic Lifting Theorem's physical realization | Universality.PhiMDLFockSpaceParticles | lemma |
+| L72 | `phimdl_fock_particle_master_bundle` — master bundle: sector totality, beable lift, algebraic-Fock-only construction, mass/stability/hierarchy on Fock-orbit states | Universality.PhiMDLFockSpaceParticles | lemma |
 
 ---
 
