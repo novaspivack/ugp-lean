@@ -10,7 +10,14 @@ Lean 4 certifications for three results from the Casimir/photon-vacuum session:
   **Rank 46 — CA Masslessness Criterion (CatAL)**
   The f_MDL CA-masslessness criterion fmdl(0,k,0)=k holds iff k∈{0,1}.
   This selects exactly the photon/EM-vacuum sector (Z₇=0) and the
-  neutrino-weight sector (Z₇=1) as the two CA-massless sectors. All SM
+  complementary CA-massless sector (Z₇=1) as the two values that are
+  propagation-stable in a vacuum neighborhood. Z₇=1 is the PSC-forbidden
+  dark-mirror sector (paired with the down-quark sector Z₇=6 under
+  1+6≡0 mod 7; see PhiMDLThermalState.pscForbiddenSectors) — it is a
+  discrete CA-level arithmetic fact about the update rule, not a claim
+  that any SM particle occupies Z₇=1. The physical neutrino occupies
+  Z₇=0, together with the photon (see Z7ZeroSectorDiscriminant.lean,
+  where both are members of the same W_B=0 colorless sector). All SM
   massive particles (Z₇∈{2,3,4,5,6}) fail the criterion.
 
   **Rank 48 — (u,γ,u)→W⁺ CA-Level Electroweak Vertex (CatAL)**
@@ -21,8 +28,14 @@ Lean 4 certifications for three results from the Casimir/photon-vacuum session:
 
   **Rank 50 — Rule 110 Ether Z₇ Sum (CatAL)**
   The Rule 110 ether (period-14 binary background) has Z₇ sum mod 7 = 1,
-  not 0. The ether carries neutrino-sector winding (Z₇=1), NOT the
-  EM-vacuum winding (Z₇=0). The ether is NOT an f_MDL fixed point.
+  not 0. This is an arithmetic checksum over the ether's 14-site period,
+  a different construction from a single kink's asymptotic winding number
+  (which requires the field to approach a constant vacuum value at
+  x→±∞; the periodic ether never does). The ether is NOT the EM-vacuum
+  fixed point (Z₇=0) and is NOT an f_MDL fixed point; its checksum value
+  of 1 coincides numerically with the PSC-forbidden dark-mirror sector
+  label but should not be read as a claim that the ether is, or contains,
+  a physically-realized SM-branch particle.
 
 All proofs are by `native_decide`, zero sorry, zero axioms beyond Lean's kernel.
 -/
@@ -40,20 +53,24 @@ open CUP3D
     `fmdl(0, k, 0) = k` holds for exactly k = 0 and k = 1 in Z₇.
 
     - k=0 (photon/EM vacuum): fmdl(0,0,0) = 0 — the vacuum fixed point.
-    - k=1 (neutrino-weight sector): fmdl(0,1,0) = 1 — the Rule 110 binary
-      fact (0,1,0)→1, certifying Z₇=1 stability in a vacuum neighborhood.
+    - k=1 (PSC-forbidden dark-mirror sector): fmdl(0,1,0) = 1 — the Rule 110
+      binary fact (0,1,0)→1, certifying Z₇=1 stability in a vacuum
+      neighborhood at the discrete CA-arithmetic level.
     - k∈{2,3,4,5,6} (all SM massive particles): fmdl(0,k,0) = 0 ≠ k — these
       decay to vacuum when surrounded by vacuum, acquiring an effective mass.
 
     Physical interpretation: the CA-masslessness criterion fmdl(0,k,0)=k
-    partitions Z₇ into massless sectors {0,1} and massive sectors {2,3,4,5,6},
-    correctly matching the SM: only the photon (Z₇=0) and neutrino-weight
-    sector (Z₇=1) are propagation-stable in a vacuum neighborhood.
-
-    Note: the Z₇=1 masslessness is at the winding-sector level. The physical
-    neutrino acquires a tiny mass via the GTE cascade at a deeper level of the
-    theory; the CA-masslessness is a necessary but not sufficient condition for
-    physical masslessness.
+    partitions Z₇ into CA-massless sectors {0,1} and CA-massive sectors
+    {2,3,4,5,6}. Only Z₇=0 corresponds to a physically-realized SM-branch
+    massless particle (the photon). Z₇=1 is CA-massless as a discrete
+    arithmetic fact but is PSC-forbidden (dark-mirror, paired with the
+    down-quark sector Z₇=6) and is not occupied by any SM-branch particle,
+    let alone the neutrino — the physical neutrino shares Z₇=0 with the
+    photon (both are members of the W_B=0 colorless sector; see
+    Z7ZeroSectorDiscriminant.lean, `z7_zero_sector_unified_discriminant`).
+    The apparent two-element coincidence {0,1} here is a discrete-CA-level
+    arithmetic fact about the update rule, not a two-particle physical
+    correspondence.
 
     LEAN-CERTIFIED (native_decide, 7 cases, zero sorry). -/
 theorem fmdl_massless_criterion :
@@ -126,7 +143,7 @@ theorem photon_absorption_events :
   native_decide
 
 -- ════════════════════════════════════════════════════════════════
--- §3  Rank 50 — Rule 110 Ether Z₇ Winding = 1 (Neutrino Sector)
+-- §3  Rank 50 — Rule 110 Ether Z₇ Checksum = 1 (not the EM vacuum)
 -- ════════════════════════════════════════════════════════════════
 
 /-- The Rule 110 ether: the period-14 binary background through which gliders
@@ -144,11 +161,17 @@ theorem ether_period_length : ether_period.length = 14 := by native_decide
 
     Computation: sum([0,1,0,1,1,1,0,0,0,1,1,1,0,1]) = 8; 8 mod 7 = 1.
 
-    Physical interpretation: the Rule 110 ether carries net Z₇ winding = 1
-    per period. The Z₇=1 sector is the neutrino-weight orbital carrier. Therefore
-    the ether is a NEUTRINO-SECTOR background, NOT the EM vacuum (which would
-    require Z₇ winding = 0). The EM vacuum is the all-zeros fixed point; the
-    ether is a distinct, dynamically richer structure.
+    This is an arithmetic checksum over the 14 discrete sites of one ether
+    period — a different construction from a single kink's asymptotic
+    winding number (which is defined by the difference of vacuum values at
+    x=+∞ and x=−∞; the ether pattern is periodic and never settles to a
+    constant value, so no such asymptotic winding is defined for it at all).
+    The numeral value 1 obtained here should not be read as identifying the
+    ether with any specific SM particle's winding sector. What the checksum
+    does establish: the ether is NOT the EM vacuum (which would require a
+    checksum of 0, per `ether_not_em_vacuum` below). The EM vacuum is the
+    all-zeros fixed point; the ether is a distinct, dynamically richer
+    structure.
 
     LEAN-CERTIFIED (native_decide, zero sorry). -/
 theorem ether_z7_sum_mod7 :
@@ -218,10 +241,14 @@ theorem helicity_parity_violation :
     natural two-sector structure for masslessness and vacuum:
 
     (i) [Masslessness] fmdl(0,k,0)=k selects {0,1} ⊂ Z₇ as the two CA-massless
-        sectors: EM vacuum (k=0) and neutrino-weight (k=1).
+        sectors: EM vacuum (k=0, physically the photon) and the PSC-forbidden
+        dark-mirror sector (k=1, CA-massless as an arithmetic fact, not a
+        physically-realized SM-branch particle).
     (ii) [EW vertex] fmdl(2,0,2)=3: the unique CA-level EM-to-weak mixing vertex.
-    (iii) [Ether winding] The Rule 110 ether carries Z₇ sum mod 7 = 1 (neutrino
-        sector), not 0 (EM sector) — the ether is the neutrino-sector background.
+    (iii) [Ether checksum] The Rule 110 ether carries Z₇ sum mod 7 = 1, not 0 —
+        the ether is distinct from the EM-vacuum fixed point. This checksum is
+        a discrete arithmetic fact about the ether's 14-site period, not a
+        winding-number identification of the ether with any SM particle.
 
     LEAN-CERTIFIED (native_decide, zero sorry). -/
 theorem casimir_sector_structure :

@@ -222,6 +222,7 @@ import UgpLean.Universality.FockSpaceKink
 import UgpLean.Universality.BeableWindingPartitionInstance
 import UgpLean.Universality.DualFrameBornRule
 import UgpLean.Universality.PhiMDLThermalState
+import UgpLean.Universality.PhiMDLFockSpaceParticles
 import UgpLean.Universality.SylowIndexCouplingHierarchy
 import UgpLean.Universality.GaugeInvariance
 import UgpLean.Universality.BetaCoefficientIdentity
@@ -489,6 +490,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Substrate.C2CoherenceG40` — EPIC_080 G40: thin re-export layer for P43 C2 / P34 Conjecture C2; `c2_coherence_mdl_scaffold`, `c2_lorentz_cpt_equivariance`; CatAL scaffold (full G40 blocked on Mathlib Petz recovery gap); zero sorry (2026-05-29)
 - `UgpLean.Substrate.TransputationG41` — EPIC_080 G41: sector probability layer of transputation CatAL; `gibbs_sector_unique_minimizer`, `transputation_sector_gibbs_master`; global [D]-class uniqueness and Φ_MDL decoherence dynamics remain CatAD/open; zero sorry (2026-05-29)
 - `UgpLean.Substrate.CMCAHilbertFockBridge` — EPIC_080 G22: `fock_vacuum_maps_to_cmca_vacuum`, `bps_psc_sector_has_beable_lift`, `cmca_hilbert_fock_bridge_master` (CatAL, zero sorry); `cmca_hilbert_inductive_limit` (CatAD axiom, 2026-05-29)
+- `UgpLean.Universality.PhiMDLFockSpaceParticles` — Rank 102-T19: `psc_admissible_sector_has_normalizable_fock_state`, `fock_state_realizes_algebraic_lifting`, `phimdl_fock_particle_master_bundle` (CatAL, zero sorry)
 - `UgpLean.Substrate.PhiMDLPropagator` — EPIC_080 G27: `phimdl_free_propagator_formula`, `phimdl_propagator_well_defined`, `phimdl_quartic_coupling`, `phimdl_sextic_coupling`, `phimdl_z7_coupling_fingerprint`, `phimdl_potential_even`; Φ_MDL tree-level propagator G(p)=1/(p²+m²) and Z₇ Feynman vertices; CatAD, zero sorry (2026-05-29)
 - `UgpLean.Substrate.WightmanAxioms` — EPIC_080 G38: `phimdl_satisfies_wightman_axioms`, `phimdl_wightman_locality_positivity_bundle`; structural axiom scaffold for Wightman axioms 1–5 on Φ_MDL; CatAD structural, zero sorry (2026-05-29)
 - `UgpLean.Substrate.ChiralCurrentL2` — EPIC_080 G16: `phimdl_axial_current_topological`, `phimdl_vector_current_topological`, `tape_chiral_signs_opposite`, `va_fraction_l1`, `va_fraction_lifts_to_l2_chiral_current`, `l2_chiral_current_bundle_g16`; Level-2 chiral V–A current from Φ_MDL domain-wall topology; axial/vector current conservation via Schwarz symmetry; L1 mismatch ratio 32/125 lifts to L2 chiral structure; CatAL/CatAD, zero sorry (2026-05-29)
