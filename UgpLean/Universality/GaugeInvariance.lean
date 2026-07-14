@@ -29,7 +29,7 @@ What is NOT certified here (remains CatA):
 
 Related CatAL certifications in `SylowIndexCouplingHierarchy.lean`:
 - §5p: `vcoup_gauge_invariant`, `rank136_vcoup_uniqueness` (V_coupling uniqueness)
-- §5q: `epsilon_coupling_f21`, `rank137_epsder_closure` (ε = N₇/N₃² = 7/9)
+- §5q: `epsilon_coupling_f21`, `rank137_eps_is_seven_ninths` (ε = N₇/N₃² = 7/9)
 
 ## Lean module
 `UgpLean.Universality.GaugeInvariance`

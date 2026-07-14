@@ -147,6 +147,7 @@ import UgpLean.Universality.HypothesisB
 import UgpLean.Universality.HypothesisBCChain
 import UgpLean.Universality.GoEHierarchy
 import UgpLean.Universality.GoEStabilityHierarchy
+import UgpLean.Universality.GTP3Uniqueness
 import UgpLean.Universality.ZGMMesInvariant
 import UgpLean.Universality.LawvereZone
 import UgpLean.Universality.PSCUniversality
@@ -220,6 +221,7 @@ import UgpLean.Universality.PSCEffectMeasureGeneric
 import UgpLean.Universality.PSCEffectMeasure
 import UgpLean.Universality.FockSpaceKink
 import UgpLean.Universality.BeableWindingPartitionInstance
+import UgpLean.Universality.WindingSectorSuperselection
 import UgpLean.Universality.DualFrameBornRule
 import UgpLean.Universality.PhiMDLThermalState
 import UgpLean.Universality.PhiMDLFockSpaceParticles
@@ -341,6 +343,8 @@ import UgpLean.ContinuumLimit.VacuumBSLimit
 import UgpLean.OQ26Arithmetic
 import UgpLean.GTEDerivationChain
 import UgpLean.Algebra.CyclotomicZ7Galois
+import UgpLean.Algebra.CyclotomicZ7GaloisGroup
+import UgpLean.Algebra.CyclotomicFieldDisjointness
 import UgpLean.Algebra.RSCodeOrbit
 import UgpLean.Algebra.SU3GluonCount
 import UgpLean.Algebra.ColorConfinementMDL

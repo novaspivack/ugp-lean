@@ -3,7 +3,7 @@
 Every premise that is not definitional truth. Tag: `definition` | `lemma` | `axiom` | `imported` | `citation`.
 
 This is a curated selection of the premises behind the library's key results — it is not
-exhaustive. The library is 436 modules across 27 layers and references **98** named axioms
+exhaustive. The library is 440 modules across 27 layers and references **98** named axioms
 in total, counted via `grep -rhoE "^axiom [a-zA-Z0-9_']+" UgpLean --include="*.lean" | sort -u | wc -l`
 (top-level `axiom` declarations, deduplicated by name; excludes the standard Lean/Mathlib
 logical axioms `propext`/`Classical.choice`/`Quot.sound`, which are not disclosed
@@ -115,6 +115,25 @@ declarations and does not add to the 98-axiom count above.
 | L70 | `psc_admissible_sector_has_normalizable_fock_state` — every PSC-admissible Z₇ sector has a normalizable one-particle Fock-sector state or unit-weight sector amplitude | Universality.PhiMDLFockSpaceParticles | lemma |
 | L71 | `fock_state_realizes_algebraic_lifting` — every [D]-weighted physical beable's Fock lift realizes the Algebraic Lifting Theorem's physical realization | Universality.PhiMDLFockSpaceParticles | lemma |
 | L72 | `phimdl_fock_particle_master_bundle` — master bundle: sector totality, beable lift, algebraic-Fock-only construction, mass/stability/hierarchy on Fock-orbit states | Universality.PhiMDLFockSpaceParticles | lemma |
+
+### GTP-3 uniqueness, winding superselection, and cyclotomic Galois certificates
+
+**No new axioms.** These four modules (`Universality.GTP3Uniqueness`,
+`Universality.WindingSectorSuperselection`, `Algebra.CyclotomicZ7GaloisGroup`,
+`Algebra.CyclotomicFieldDisjointness`) are built entirely from previously-certified
+results and Mathlib (`fmdl_step5`, `BeableWindingPartitionInstance`,
+`IsCyclotomicExtension.autEquivPow`, cyclotomic irreducibility over ℚ) — they introduce
+zero new `axiom` declarations and do not add to the 98-axiom count above.
+
+| ID | Lean name | Module | Tag |
+|---|---|---|---|
+| L80 | `sm_orbit_unique_gtp3` — a state starts a GTP-3 chain iff it is a cyclic rotation of gen₁ (exhaustive over 16,807 states) | Universality.GTP3Uniqueness | lemma |
+| L81 | `sm_orbit_gtp3_count` — exactly 5 GTP-3 start states exist | Universality.GTP3Uniqueness | lemma |
+| L82 | `winding_sector_superselection` — winding-preserving injective evolution never maps a nonzero sector-w state into sector w' ≠ w | Universality.WindingSectorSuperselection | lemma |
+| L83 | `topological_kink_stability` — nonzero non-trivial-winding states cannot evolve into the vacuum sector | Universality.WindingSectorSuperselection | lemma |
+| L84 | `galois_z7_cyclic_order_6` — Gal(Q(ζ₇)/Q) is cyclic of order 6 (actual Galois group, via `autEquivPow`) | Algebra.CyclotomicZ7GaloisGroup | lemma |
+| L85 | `galois_z7_cpt_generator` / `galois_z7_generation_subgroup_order_3` — conjugation has order 2, Frobenius σ₂ has order 3: Z₆ = Z₂ × Z₃ | Algebra.CyclotomicZ7GaloisGroup | lemma |
+| L86 | `cyclotomic_z7_not_embeddable_in_z120` — no ℚ-algebra embedding Q(ζ₇) ↪ Q(ζ₁₂₀) (degree obstruction 6 ∤ 32) | Algebra.CyclotomicFieldDisjointness | lemma |
 
 ---
 
