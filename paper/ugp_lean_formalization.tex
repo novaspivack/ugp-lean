@@ -140,7 +140,7 @@
 \begin{abstract}
 We present \textbf{ugp-lean}, a \lean{}~4 formalization of the
 Universal Generative Principle (\ugp{}) against Mathlib, comprising
-436~\lean{} modules across multiple organizational layers (canonical library covering
+440~\lean{} modules across multiple organizational layers (canonical library covering
 spacetime, QFT, and hadronic physics) with a strict zero-sorry policy throughout
 and zero custom axioms on the core arithmetic/algebraic proof path; the
 Turing-universality results are conditional on a small number of explicitly named,
@@ -428,7 +428,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 436~\lean{} modules across multiple organizational layers
+The artifact is organized into 440~\lean{} modules across multiple organizational layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -7701,6 +7701,112 @@ Theorem & Module & Physical content \\
 \end{tabular}
 \caption{Zero-sorry theorems resolving phantom theorem name references in physics papers.}
 \label{tab:new-theorem-inventory-audit}
+\end{table}
+
+\subsection{Theorem inventory: GTP-3 uniqueness, winding superselection, and
+  cyclotomic Galois certificates}\label{subsec:new-theorem-inventory-gtp3-galois}
+
+The following theorems span four modules, all zero \lstinline|sorry| and zero
+new axioms.
+\texttt{Universality/GTP3Uniqueness.lean} completes the GTP-3 classification
+begun in \texttt{GoEStabilityHierarchy.lean}: where the existing
+\lstinline|sm_orbit_is_gtp3| certifies the \emph{existence} direction (the SM
+orbit gen$_1{\to}$gen$_2{\to}$gen$_3{\to}$vacuum is a Garden-of-Eden-rooted
+terminating path of length~3) and \lstinline|fmdl_no_gtp4| the no-GTP-4 bound,
+the new module certifies \emph{uniqueness} and the exact count by exhaustive
+\lstinline|native_decide| over all $7^5 = 16{,}807$ ring states (the decision
+procedure evaluates a short-circuiting boolean form, ordered so the $O(1)$
+depth-3 conditions filter out almost every state before any $O(7^5)$
+predecessor scan runs).
+\texttt{Universality/WindingSectorSuperselection.lean} certifies the
+winding-sector superselection statement underlying the black-hole information
+argument, grounded in the certified $\mathbb{Z}_7$ winding conservation law
+(\lstinline|gte_winding_sm_vertex_conserved|,
+\lstinline|gte_seven_vertices_z7_winding|).
+\texttt{Algebra/CyclotomicZ7GaloisGroup.lean} upgrades the arithmetic
+$(\mathbb{Z}/7)^\times$ certificates of \texttt{CyclotomicZ7Galois.lean} to
+statements about the \emph{actual} Galois group
+$\mathrm{Gal}(\mathbb{Q}(\zeta_7)/\mathbb{Q})$ via Mathlib's
+\lstinline|IsCyclotomicExtension.autEquivPow| (using irreducibility of
+$\Phi_7$ over $\mathbb{Q}$).
+\texttt{Algebra/CyclotomicFieldDisjointness.lean} proves the field-theoretic
+content of the $\mathbb{Z}_7$/$\mathbb{Z}_{120}$ sector-disjointness claim by
+a degree obstruction.
+
+\begin{table}[h]
+\centering\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}p{5.2cm}p{4.4cm}p{4.4cm}@{}}
+\toprule
+Theorem & Module & Physical content \\
+\midrule
+\multicolumn{3}{@{}l}{\textit{GTP-3 uniqueness and count (\texttt{Universality/GTP3Uniqueness.lean})}} \\[2pt]
+\texttt{sm\_\allowbreak orbit\_\allowbreak unique\_\allowbreak gtp3}
+  & Universality.GTP3Uniqueness
+  & A state starts a GTP-3 chain \textbf{iff} it is a cyclic rotation of
+    gen$_1$; exhaustive over $16{,}807$ states (\CatAL) \\[1pt]
+\texttt{sm\_\allowbreak orbit\_\allowbreak gtp3\_\allowbreak count}
+  & Universality.GTP3Uniqueness
+  & Exactly 5 GTP-3 start states exist in $\mathbb{Z}_7^5$ — the five
+    rotations of gen$_1$ (\CatAL) \\[1pt]
+\texttt{gen1\_\allowbreak is\_\allowbreak gtp3\_\allowbreak start}
+  & Universality.GTP3Uniqueness
+  & gen$_1$ itself is a GTP-3 start (connects to \lstinline|sm_orbit_is_gtp3|) \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{Winding-sector superselection (\texttt{Universality/WindingSectorSuperselection.lean})}} \\[2pt]
+\texttt{distinct\_\allowbreak sector\_\allowbreak support\_\allowbreak forces\_\allowbreak zero}
+  & Universality.\allowbreak WindingSector\allowbreak Superselection
+  & A wavefunction supported in two distinct winding sectors is identically
+    zero \\[1pt]
+\texttt{winding\_\allowbreak sector\_\allowbreak superselection}
+  & Universality.\allowbreak WindingSector\allowbreak Superselection
+  & A winding-preserving injective evolution never maps a nonzero sector-$w$
+    state into sector $w' \neq w$ (\CatAL) \\[1pt]
+\texttt{topological\_\allowbreak kink\_\allowbreak stability}
+  & Universality.\allowbreak WindingSector\allowbreak Superselection
+  & Specialization to $w'{=}0$: nonzero states of non-trivial winding cannot
+    evolve into the vacuum sector (\CatAL) \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{Galois group of $\mathbb{Q}(\zeta_7)/\mathbb{Q}$ (\texttt{Algebra/CyclotomicZ7GaloisGroup.lean})}} \\[2pt]
+\texttt{galois\_\allowbreak z7\_\allowbreak cyclic\_\allowbreak order\_\allowbreak 6}
+  & Algebra.\allowbreak CyclotomicZ7GaloisGroup
+  & $\mathrm{Gal}(\mathbb{Q}(\zeta_7)/\mathbb{Q})$ has order 6 and is cyclic
+    — the full $\cong \mathbb{Z}_6$ statement (\CatAL) \\[1pt]
+\texttt{galois\_\allowbreak z7\_\allowbreak cpt\_\allowbreak generator}
+  & Algebra.\allowbreak CyclotomicZ7GaloisGroup
+  & The automorphism $\sigma_6 : \zeta_7 \mapsto \zeta_7^{-1}$ (complex
+    conjugation; CPT under the $\Phi_{\rm MDL}$ kink identification) has
+    order exactly 2 (\CatAL) \\[1pt]
+\texttt{galois\_\allowbreak z7\_\allowbreak generation\_\allowbreak subgroup\_\allowbreak order\_\allowbreak 3}
+  & Algebra.\allowbreak CyclotomicZ7GaloisGroup
+  & The Frobenius $\sigma_2$ (generation symmetry) has order exactly 3, so
+    $\mathbb{Z}_6 = \mathbb{Z}_2 \times \mathbb{Z}_3 = {\rm CPT} \times
+    {\rm generation}$ (\CatAL) \\[1pt]
+\midrule
+\multicolumn{3}{@{}l}{\textit{Cyclotomic field disjointness (\texttt{Algebra/CyclotomicFieldDisjointness.lean})}} \\[2pt]
+\texttt{finrank\_\allowbreak cyclotomic\_\allowbreak seven\_\allowbreak eq\_\allowbreak six}
+  & Algebra.\allowbreak CyclotomicField\allowbreak Disjointness
+  & $[\mathbb{Q}(\zeta_7):\mathbb{Q}] = \varphi(7) = 6$ \\[1pt]
+\texttt{finrank\_\allowbreak cyclotomic\_\allowbreak onetwenty\_\allowbreak eq\_\allowbreak thirtytwo}
+  & Algebra.\allowbreak CyclotomicField\allowbreak Disjointness
+  & $[\mathbb{Q}(\zeta_{120}):\mathbb{Q}] = \varphi(120) = 32$ \\[1pt]
+\texttt{cyclotomic\_\allowbreak z7\_\allowbreak not\_\allowbreak embeddable\_\allowbreak in\_\allowbreak z120}
+  & Algebra.\allowbreak CyclotomicField\allowbreak Disjointness
+  & No $\mathbb{Q}$-algebra embedding
+    $\mathbb{Q}(\zeta_7) \hookrightarrow \mathbb{Q}(\zeta_{120})$ exists
+    (degree obstruction $6 \nmid 32$): the $\mathbb{Z}_7$ vacuum sector's
+    cyclotomic field is arithmetically independent of the
+    $\mathbb{Z}_{120}$ mass/Yukawa sector's (\CatAL) \\
+\bottomrule
+\end{tabular}
+\caption{GTP-3 uniqueness, winding-sector superselection, and cyclotomic
+Galois certificates. All zero \lstinline|sorry|, zero new axioms.
+\texttt{GTP3Uniqueness} decides by exhaustive \lstinline|native_decide|;
+\texttt{WindingSectorSuperselection} states its unitarity residue
+(injectivity, $U0=0$) as explicit hypotheses;
+the two \texttt{Algebra} modules work through Mathlib's cyclotomic field
+theory rather than arithmetic proxies.}
+\label{tab:new-theorem-inventory-gtp3-galois}
 \end{table}
 
 \subsection{Theorem inventory: L1--L2 bridge and BPS kink dynamics}\label{subsec:new-theorem-inventory-080}

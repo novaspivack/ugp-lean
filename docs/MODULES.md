@@ -1,6 +1,6 @@
 # ugp-lean: Module Reference
 
-376 `.lean` files across 27 directories. The definitive layer diagram and per-module descriptions are in `paper/ugp_lean_formalization.tex` §Architecture.
+440 `.lean` files across 32 directories (plus 7 root-level modules). The definitive layer diagram and per-module descriptions are in `paper/ugp_lean_formalization.tex` §Architecture.
 
 ## Dependency Rule
 
@@ -14,20 +14,20 @@
 |---|---|---|
 | [Core](#core) | 7 | Ridge/mirror/triple definitions — no algorithms |
 | [Compute](#compute) | 6 | Sieve algorithms, `native_decide` proofs |
-| [Classification](#classification) | 6 | Theorems A/B, RSUC, monotonic strengthening |
-| [GTE](#gte) | 25 | GTE orbit, update map, generation structure, entropy, fiber bundle |
+| [Classification](#classification) | 7 | Theorems A/B, RSUC, monotonic strengthening, N_gen uniqueness |
+| [GTE](#gte) | 32 | GTE orbit, update map, generation structure, entropy, fiber bundle |
 | [ElegantKernel](#elegantkernel) | 28 | Quarter-Lock, UCL Elegant Kernel, unconditional closure |
-| [MassRelations](#massrelations) | 39 | Koide, CKM, PMNS, Higgs quartic, neutrino sector, pion mass |
+| [MassRelations](#massrelations) | 40 | Koide, CKM, PMNS, Higgs quartic, neutrino sector, pion mass |
 | [BraidAtlas](#braidatlas) | 14 | Charge theorem, EW bosons, dark matter quantum numbers |
-| [Universality](#universality) | 83 | Rule 110, UWCA, Turing universality, GTE compilation/uniqueness |
-| [Polynomial](#polynomial) | 13 | GF(7) ground states, period-475, spin-7 spectroscopy, MDL unification |
+| [Universality](#universality) | 97 | Rule 110, UWCA, Turing universality, GTE compilation/uniqueness, GTP-3 uniqueness, winding superselection |
+| [Polynomial](#polynomial) | 18 | GF(7) ground states, period-475, spin-7 spectroscopy, MDL unification |
 | [Physics](#physics) | 8 | Kink physics, Z₇ vacuum selection, CMCA physical point, BPS coupling |
-| [Substrate](#substrate) | 29 | PhiMDL fluctuation spectrum, sech overlap bounds, Wightman axioms |
-| [Gravity](#gravity) | 26 | Yukawa, FKTT, Wald entropy, FLRW, spinors, CC residual |
-| [Spacetime](#spacetime) | 34 | Geodesic, mass gap, orbit hierarchy, QEC, quantum gravity, holography |
-| [Algebra](#algebra) | 12 | Z₇/F₂₁ Galois structure, SM gauge group, SRRG–CA bridge |
-| [Framework](#framework) | 8 | GTE-NEMS instance, MDL tower, CMCA continuum limit, coalgebra |
-| [ContinuumLimit](#continuumlimit) | 5 | Wasserstein distance, GF(7) vacuum fixed point, Gorard bridge |
+| [Substrate](#substrate) | 31 | PhiMDL fluctuation spectrum, sech overlap bounds, Wightman axioms |
+| [Gravity](#gravity) | 28 | Yukawa, FKTT, Wald entropy, FLRW, spinors, CC residual |
+| [Spacetime](#spacetime) | 39 | Geodesic, mass gap, orbit hierarchy, QEC, quantum gravity, holography |
+| [Algebra](#algebra) | 25 | Z₇/F₂₁ Galois structure, SM gauge group, SRRG–CA bridge, octonion certificates, Q(ζ₇) Galois group, cyclotomic disjointness |
+| [Framework](#framework) | 10 | GTE-NEMS instance, MDL tower, CMCA continuum limit, coalgebra |
+| [ContinuumLimit](#continuumlimit) | 7 | Wasserstein distance, GF(7) vacuum fixed point, Gorard bridge |
 | [QFT](#qft) | 2 | Gauged mass gap, chiral symmetry breaking |
 | [VEVProof](#vevproof) | 3 | EW Goldstone manifold, entropy correction, PSC entropy duality |
 | [VEVNoGo](#vevnogo) | 1 | SRRG no-go theorem |
@@ -38,7 +38,12 @@
 | [TE22](#te22) | 1 | SM gauge universe scan certificate |
 | [SelfRef](#selfref) | 2 | Lawvere–Kleene, Rice–Halting |
 | [Papers / Instance](#papers--instance) | 3 | Citable stubs, NEMS bridge |
-| [Conjectures](#conjectures) | 1 | Resolved and open conjecture register |
+| [Cosmology](#cosmology) | 3 | CC bracket Hurwitz, MDL initial state, primordial amplitude |
+| [Foundations](#foundations) | 2 | CMCA record filtration, CMCA thermodynamic bridge |
+| [Measurement](#measurement) | 1 | Landauer floor |
+| [Particles](#particles) | 2 | Kink fusion rules, muon Borel identity |
+| [QM](#qm) | 2 | Bilinear neutrino no-go, Kähler state manifold |
+| Root-level modules | 7 | Conjectures register, ElegantKernel/QuarterLock/LModelDerivation/MassRelations umbrellas, GTEDerivationChain, OQ26Arithmetic |
 
 ---
 
@@ -181,7 +186,7 @@ Algorithms and computational evidence. Imports Core.
 
 ## Universality
 
-83 files covering Rule 110 universality, UWCA, GTE compilation, orbit isolations, Z₇/Z₅ structure, and parity forcing. Key modules:
+97 files covering Rule 110 universality, UWCA, GTE compilation, orbit isolations, Z₇/Z₅ structure, and parity forcing. Key modules:
 
 | Module | Purpose |
 |---|---|
@@ -206,7 +211,9 @@ Algorithms and computational evidence. Imports Core.
 | **Z7ChargeConjugation** | Z₇ charge conjugation |
 | **SMOrbitCausalIsolation** | SM orbit causal isolation |
 | **PSCUniversality** | PSC universality |
-| *(+ 60 more)* | See `UgpLean/Universality/` for full list |
+| **GTP3Uniqueness** | GTP-3 uniqueness and count: SM orbit is the only GoE-rooted terminating 3-chain (exhaustive, 16,807 states) |
+| **WindingSectorSuperselection** | Winding-sector superselection; topological kink stability |
+| *(+ 72 more)* | See `UgpLean/Universality/` for full list |
 
 ## Polynomial
 
@@ -308,7 +315,9 @@ Algorithms and computational evidence. Imports Core.
 
 | Module | Purpose |
 |---|---|
-| **CyclotomicZ7Galois** | Z₇ Galois structure |
+| **CyclotomicZ7Galois** | Z₇ Galois structure ((ZMod 7)ˣ arithmetic certificates) |
+| **CyclotomicZ7GaloisGroup** | Actual Galois group Gal(Q(ζ₇)/Q) ≅ Z₆ = Z₂ × Z₃ (CPT × generation) via Mathlib `autEquivPow` |
+| **CyclotomicFieldDisjointness** | No ℚ-algebra embedding Q(ζ₇) ↪ Q(ζ₁₂₀) (degree obstruction 6 ∤ 32) |
 | **F21SU3Embedding** | F₂₁ → SU(3) embedding |
 | **SMGaugeGroup** | SM gauge group derivation |
 | **GaugeMDL** | Gauge-MDL connection |

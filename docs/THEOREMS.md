@@ -1,6 +1,6 @@
 # ugp-lean: Theorem Highlights
 
-**This is a curated selection of the most important theorems by layer.** It is not exhaustive — the library contains thousands of theorems across 436 modules. For the complete inventory, see `paper/ugp_lean_formalization.tex` (Table 1) and browse the source in `UgpLean/`.
+**This is a curated selection of the most important theorems by layer.** It is not exhaustive — the library contains thousands of theorems across 440 modules. For the complete inventory, see `paper/ugp_lean_formalization.tex` (Table 1) and browse the source in `UgpLean/`.
 
 All listed theorems have **0 sorry, 0 custom axioms** on the core path unless marked ⚠.
 
@@ -49,6 +49,10 @@ The foundational chain from which all physics derives.
 | Z₇/Z₂ incompatibility: φ: Z₇→Z₂ is not a ring hom | `z7_binary_not_ring_homomorphism` | Universality.CUP3DUniqueness |
 | Photon is the unique uniform fixed point of f_MDL | `fmdl_unique_uniform_fixed_point` | Universality.CUP3DUniqueness |
 | Z₇ sum conservation unique to gen₁ | `cup11b_z7_sum_conservation_unique` | Universality.CUP3DUniqueness |
+| GTP-3 uniqueness: a state starts a GoE-rooted terminating 3-chain **iff** it is a cyclic rotation of gen₁ (exhaustive over 16,807 states) | `sm_orbit_unique_gtp3` | Universality.GTP3Uniqueness |
+| Exactly 5 GTP-3 start states exist — the five rotations of gen₁ | `sm_orbit_gtp3_count` | Universality.GTP3Uniqueness |
+| Winding-preserving injective evolution never maps a nonzero sector-w state into sector w' ≠ w | `winding_sector_superselection` | Universality.WindingSectorSuperselection |
+| Nonzero non-trivial-winding states cannot evolve into the vacuum sector (topological information preservation) | `topological_kink_stability` | Universality.WindingSectorSuperselection |
 
 ---
 
@@ -188,6 +192,10 @@ The foundational chain from which all physics derives.
 | Q(ζ_{2h}) →ₐ[ℚ] Q(ζ₁₂₀) when h\|60 (zero sorry) | `cyclotomic_field_embedding` | CyclotomicCompleteness.CyclotomicContainment |
 | One-loop QED correction vanishes | `galois_protection_master_theorem` | Phase4.GaloisProtection |
 | Two-loop colour coefficient = 8/9 | `o3_full_identification` | Phase4.TwoLoopCoefficient |
+| Gal(Q(ζ₇)/Q) is cyclic of order 6 (actual Galois group via `autEquivPow`) | `galois_z7_cyclic_order_6` | Algebra.CyclotomicZ7GaloisGroup |
+| Conjugation σ₆ : ζ₇ ↦ ζ₇⁻¹ (CPT) has order exactly 2 | `galois_z7_cpt_generator` | Algebra.CyclotomicZ7GaloisGroup |
+| Frobenius σ₂ (generation symmetry) has order exactly 3: Z₆ = Z₂ × Z₃ | `galois_z7_generation_subgroup_order_3` | Algebra.CyclotomicZ7GaloisGroup |
+| No ℚ-algebra embedding Q(ζ₇) ↪ Q(ζ₁₂₀) (degree obstruction 6 ∤ 32) | `cyclotomic_z7_not_embeddable_in_z120` | Algebra.CyclotomicFieldDisjointness |
 
 ---
 
