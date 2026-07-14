@@ -341,6 +341,7 @@ import UgpLean.ContinuumLimit.VacuumBSLimit
 import UgpLean.OQ26Arithmetic
 import UgpLean.GTEDerivationChain
 import UgpLean.Algebra.CyclotomicZ7Galois
+import UgpLean.Algebra.CyclotomicFieldDisjointness
 import UgpLean.Algebra.RSCodeOrbit
 import UgpLean.Algebra.SU3GluonCount
 import UgpLean.Algebra.ColorConfinementMDL
