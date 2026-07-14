@@ -271,10 +271,10 @@ Exhaustive Python search (gtp_chain_uniqueness.py, 2026-05-19) confirms:
 exactly 5 GTP-3 chains exist in Z₇⁵ under f_MDL_ring, all cyclic rotations of gen₁.
 No other GoE state begins a GTP-3 chain.
 
-The Lean CatAL proof of uniqueness (`sm_orbit_unique_gtp3`) requires `native_decide`
-over all 16,807 states of `Fin 5 → Fin 7` with inner ∀-conditions per state.
-This generates extremely large LLVM IR (30+ minute LLVM compile time) and is
-deferred to a future build-time-optimized version.
+The Lean CatAL proof of uniqueness is `sm_orbit_unique_gtp3` in
+`GTP3Uniqueness.lean` (together with the exact count `sm_orbit_gtp3_count`),
+using a short-circuiting boolean evaluation so the exhaustive `native_decide`
+over all 16,807 states compiles quickly.
 
 The existence results below (sm_orbit_is_gtp3, fmdl_no_gtp4) are fully CatAL.
 -/

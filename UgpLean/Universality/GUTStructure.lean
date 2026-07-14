@@ -7850,7 +7850,7 @@ theorem tpc_hierarchy_level_one : level_tpc = 1 := by rfl
 
     Physical identification (CatAD): hypercomputation (oracle for halting) solves
     undecidable DECISION problems. The diagonal barrier (NEMS Paper 11, Lean-certified
-    via `pt_non_effectiveness`) establishes that TPC cannot decide the halting problem,
+    via `pt_not_total_effective_on_RT`, nems-lean) establishes that TPC cannot decide the halting problem,
     placing TPC strictly below hypercomputation.
 
     LEAN-CERTIFIED: rfl, zero sorry. -/
@@ -8741,7 +8741,7 @@ theorem gte_tpc_from_nems_transputation :
 
     (2) Diagonal-capable: Zone L2 contains diagonal configurations where f_MDL-chain
         reachability is undecidable (from NEMS Paper 11 diagonal barrier, Lean-certified
-        via `pt_non_effectiveness` in GTEComputability.lean). The ASR (Arithmetic
+        via `pt_not_total_effective_on_RT` in nems-lean). The ASR (Arithmetic
         Self-Reference) structure is present in (A, e) via Rule 110 universality (P28).
         Proxy: TPCPowerClass.level_tpc ≥ 1 (non-trivial level exists) ✓
 
