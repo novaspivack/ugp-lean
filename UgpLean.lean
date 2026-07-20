@@ -267,6 +267,8 @@ import UgpLean.Substrate.RSCodeOrbit
 import UgpLean.Substrate.CogwheelDynamicsG21
 import UgpLean.Universality.CasimirMasslessEther
 import UgpLean.Spacetime.CausalGraph
+import UgpLean.Spacetime.SpacelikeCutAreaScaling
+import UgpLean.Spacetime.ThreeTapeCutAreaScaling
 import UgpLean.Spacetime.HolographicScaling
 import UgpLean.Spacetime.SpectralDimension
 import UgpLean.Spacetime.SpectralDimensionDegree
