@@ -140,7 +140,7 @@
 \begin{abstract}
 We present \textbf{ugp-lean}, a \lean{}~4 formalization of the
 Universal Generative Principle (\ugp{}) against Mathlib, comprising
-440~\lean{} modules across multiple organizational layers (canonical library covering
+442~\lean{} modules across multiple organizational layers (canonical library covering
 spacetime, QFT, and hadronic physics) with a strict zero-sorry policy throughout
 and zero custom axioms on the core arithmetic/algebraic proof path; the
 Turing-universality results are conditional on a small number of explicitly named,
@@ -428,7 +428,7 @@ immediately after a ridge hit.  This is a theorem, not a coincidence
 
 \subsection{Module structure}
 
-The artifact is organized into 440~\lean{} modules across multiple organizational layers
+The artifact is organized into 442~\lean{} modules across multiple organizational layers
 (six modules migrated to \texttt{ugp-physics-lean}; see below):
 
 \begin{center}
@@ -510,7 +510,30 @@ The artifact is organized into 440~\lean{} modules across multiple organizationa
    BeableWindingPartitionInstance, TwoRoleTheorem,
    \textbf{Z3SubOrbitDisjointness}, \textbf{Z3InvariantEntropy}, \textbf{PSCOrbitWindows};
    \textit{new:} \textbf{PhiMDLFockSpaceParticles}};
-\node[layer, fill=gray!8,   below=of univ]  (self)
+\draw[arr] (core.south)  -- (comp.north);
+\draw[arr] (comp.south)  -- (class.north);
+\draw[arr] (class.south) -- (gte.north);
+\draw[arr] (gte.south)   -- (struc.north);
+\draw[arr] (struc.south) -- (mass.north);
+\draw[arr] (mass.south)  -- (braid.north);
+\draw[arr] (braid.south) -- (null.north);
+\draw[arr] (null.south)  -- (ipt.north);
+\draw[arr] (ipt.south)   -- (univ.north);
+\end{tikzpicture}
+\end{center}
+
+\noindent\textit{(continued below: SelfRef, Framework, Spacetime, Substrate, Algebra layers)}
+
+\begin{center}
+\begin{tikzpicture}[
+  layer/.style={draw, rounded corners, text width=12.5cm,
+                align=center, minimum height=0.65cm,
+                font=\footnotesize, inner sep=4pt},
+  arr/.style={-{Stealth[length=5pt]}, thick, gray!60},
+  >=Stealth,
+  node distance=0.28cm
+]
+\node[layer, fill=gray!8]   (self)
   {\textbf{SelfRef}~(2)\quad LawvereKleene, RiceHalting};
 \node[layer, fill=pink!10,  below=of self]  (fwk)
   {\textbf{Framework}~(7)\quad \textbf{GTEFrameworkInstance},
@@ -519,7 +542,7 @@ The artifact is organized into 440~\lean{} modules across multiple organizationa
    \textit{new:} GTECategoryStructure, \textbf{CMCAContinuumLimit},
    CMCAMDLMinimality, PhiMDLBridge};
 \node[layer, fill=olive!8,  below=of fwk]   (space)
-  {\textbf{Spacetime}~(33)\quad CausalGraph, CausalInvariance, LiftingTheorem,
+  {\textbf{Spacetime}~(35)\quad CausalGraph, CausalInvariance, LiftingTheorem,
    SpatiallyExtendedLifting, ChiralGliderDynamics, ChiralMirrorSpeedSymmetry,
    ChiralPairDecoupling, OrbitDepthEtherPeriod, ColorConfinement, MassGap,
    OrbitMassHierarchy, ThreeGenerationCapstone, PhysicalExclusion,
@@ -529,7 +552,8 @@ The artifact is organized into 440~\lean{} modules across multiple organizationa
    \textbf{StressEnergyTensor}, \textbf{AsyncLiftingTheorem},
    \textbf{GravitonFockSpace},
    SpectralDimension, SpectralDimensionDegree, \textbf{HeatKernelFourier},
-   \textit{new:} \textbf{PhiMDLZeroModeIndex}
+   \textbf{PhiMDLZeroModeIndex};
+   \textit{new:} \textbf{SpacelikeCutAreaScaling}, \textbf{ThreeTapeCutAreaScaling}
    (+ 5 Spectral sub-modules; canonical library, zero sorry unless noted)};
 \node[layer, fill=brown!6,  below=of space] (subs)
   {\textbf{Substrate}~(12)\quad Substrate, LExtended, LagrangianLorentzScalar,
@@ -552,16 +576,6 @@ The artifact is organized into 440~\lean{} modules across multiple organizationa
    \textbf{BraidAtlasPhaseEquivariance}
    (support layer; used by BraidAtlas, Universality, Framework; zero sorry)};
 
-\draw[arr] (core.south)  -- (comp.north);
-\draw[arr] (comp.south)  -- (class.north);
-\draw[arr] (class.south) -- (gte.north);
-\draw[arr] (gte.south)   -- (struc.north);
-\draw[arr] (struc.south) -- (mass.north);
-\draw[arr] (mass.south)  -- (braid.north);
-\draw[arr] (braid.south) -- (null.north);
-\draw[arr] (null.south)  -- (ipt.north);
-\draw[arr] (ipt.south)   -- (univ.north);
-\draw[arr] (univ.south)  -- (self.north);
 \draw[arr] (self.south)  -- (fwk.north);
 \draw[arr] (fwk.south)   -- (space.north);
 \draw[arr] (space.south) -- (subs.north);
@@ -10578,6 +10592,68 @@ Three \CatAL\ theorems (zero \texttt{sorry}) certify the IMT engine constant str
 \item \lstinline|imt_binding_weight_structural|: $w_{\rm bind} = -1/(4\times11) - 1/2^{11}$
   where $q_1 = 11 = \lfloor c_1/b_1\rfloor$ is the first-step cascade quotient.
 \end{itemize}
+
+\subsection{\texttt{Spacetime/SpacelikeCutAreaScaling} and \texttt{Spacetime/ThreeTapeCutAreaScaling}}\label{subsec:cut-area-scaling}
+
+These two modules supply an intrinsic (metric-free) combinatorial cut measure for a
+spacelike coordinate hyperplane, first as a proof of concept on the certified 3D causal
+graph and then ported to the actual three-tape $\mathbb{Z}_7$ CMCA substrate. Neither
+\lstinline|HolographicScaling.three_tape_state_card| (a state-space cardinality count,
+$7^{3L}$ vs.\ $7^{L^3}$, with no notion of a specific cut) nor
+\lstinline|Gravity.GorardRicciFlatVacuum.three_tape_causal_diamond_t4| (a continuum
+causal-diamond \emph{volume} $T^4/4$, not a boundary \emph{area}) establishes a literal
+codimension-2 cut area; these modules supply that missing object.
+
+\paragraph{\texttt{SpacelikeCutAreaScaling} (causal-graph proof of concept).}
+On the certified causal graph \lstinline|GTE.Spacetime.CausalGraph| (spatial lattice
+$\mathrm{Fin}\,L \times \mathrm{Fin}\,L \times \mathrm{Fin}\,L$, adjacency
+\lstinline|SpacelikeAdj|), the spacelike causal edges crossing the coordinate cut
+$x = c$ at a fixed time $t$ are parametrized by their shared $(y,z)$ position
+(\lstinline|cutEdgeAt|). Three \CatAL\ theorems (zero \texttt{sorry}) establish that
+this parametrization is injective (\lstinline|cutEdgeAt_injective|), that every
+parametrized pair is a genuine \lstinline|SpacelikeAdj| edge
+(\lstinline|cutEdgeAt_is_spacelike_adj|), and --- the completeness half needed to make
+the count exact rather than a lower bound --- that every \lstinline|SpacelikeAdj| pair
+straddling the cut arises from this parametrization
+(\lstinline|cutEdgeAt_characterizes_x_crossing|). The main theorem,
+\lstinline|cut_crossing_finset_card_eq_L_sq| (\CatAL), concludes that the crossing-edge
+\lstinline|Finset| has cardinality exactly $L^2$: genuine quadratic, area-like scaling,
+built entirely from \lstinline|Fin|-coordinate adjacency, with no metric, no continuum
+geometry, and no dependence on the CA update rule. This is a positive existence result
+for a GTE-style discrete causal graph, not yet the literal three-tape construction of
+the following module.
+
+\paragraph{\texttt{ThreeTapeCutAreaScaling} (three-tape $\mathbb{Z}_7$ CMCA port).}
+This module ports the same construction to the actual three-tape CMCA configuration
+space $(\mathrm{Fin}\,L \to \mathbb{Z}_7) \times (\mathrm{Fin}\,L \to \mathbb{Z}_7)
+\times (\mathrm{Fin}\,L \to \mathbb{Z}_7)$ used by
+\lstinline|HolographicScaling.three_tape_state_card|. P45's gravitational-coupling
+source-density formula $\rho(x) = p(w_x(x), w_y(x), w_z(x))/6$ is ambiguous, read
+literally, about whether each tape function $w_j$ depends on all three spatial
+coordinates or only its own axis's coordinate; the module resolves this by an explicit,
+checked choice rather than an unstated assumption
+(\lstinline|three_tape_config_card_confirms_reading_A|): only the one-coordinate-per-tape
+reading reproduces the certified cardinality $7^{3L}$, so this is the reading adopted.
+Under that reading, the emergent spatial lattice \lstinline|SpatialPoint L| is shown to
+be \emph{definitionally} (\lstinline|rfl|) the spatial part of
+\lstinline|CausalGraph.CausalNode|, and the corresponding adjacency relation
+\lstinline|SpatialAdj| is shown to agree exactly with \lstinline|SpacelikeAdj| restricted
+to a shared time (\lstinline|spatialPoint_eq_causalNode_spatial_part|,
+\lstinline|spatialAdj_eq_spacelikeAdj_at_shared_time|) --- confirming the port is a
+genuine specialization, not an independent redefinition that could disagree with the
+proof of concept above. The main theorem,
+\lstinline|three_tape_cut_crossing_card_eq_L_sq| (\CatAL, zero \texttt{sorry}, zero new
+\texttt{axiom}), concludes that the number of spacelike edges crossing a coordinate cut
+in the three-tape substrate's emergent 3D lattice equals $L^2$ exactly --- the same
+intrinsic quadratic area-scaling law, now established for the CMCA architecture itself
+rather than only the proof-of-concept causal graph.
+
+\paragraph{Scope.} These results establish an intrinsic, non-metric, area-scaling
+($L^2$) count of spacelike causal edges crossing a coordinate cut in the three-tape CMCA
+substrate's emergent spatial lattice. They do \emph{not} establish that this count is the
+boundary entropy of a genuine causal diamond with a horizon/null-congruence structure, and
+they do not compute an entropy $S$ or slope $\eta$; both remain open. No physical length
+scale, $\ell_{\rm Pl}$, or $G$ appears anywhere in either module.
 
 \section{Related Work}\label{sec:related}
 % ═══════════════════════════════════════════════════════════════

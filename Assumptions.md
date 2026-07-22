@@ -3,7 +3,7 @@
 Every premise that is not definitional truth. Tag: `definition` | `lemma` | `axiom` | `imported` | `citation`.
 
 This is a curated selection of the premises behind the library's key results — it is not
-exhaustive. The library is 440 modules across 27 layers and references **98** named axioms
+exhaustive. The library is 442 modules across 27 layers and references **98** named axioms
 in total, counted via `grep -rhoE "^axiom [a-zA-Z0-9_']+" UgpLean --include="*.lean" | sort -u | wc -l`
 (top-level `axiom` declarations, deduplicated by name; excludes the standard Lean/Mathlib
 logical axioms `propext`/`Classical.choice`/`Quot.sound`, which are not disclosed
@@ -115,6 +115,23 @@ declarations and does not add to the 98-axiom count above.
 | L70 | `psc_admissible_sector_has_normalizable_fock_state` — every PSC-admissible Z₇ sector has a normalizable one-particle Fock-sector state or unit-weight sector amplitude | Universality.PhiMDLFockSpaceParticles | lemma |
 | L71 | `fock_state_realizes_algebraic_lifting` — every [D]-weighted physical beable's Fock lift realizes the Algebraic Lifting Theorem's physical realization | Universality.PhiMDLFockSpaceParticles | lemma |
 | L72 | `phimdl_fock_particle_master_bundle` — master bundle: sector totality, beable lift, algebraic-Fock-only construction, mass/stability/hierarchy on Fock-orbit states | Universality.PhiMDLFockSpaceParticles | lemma |
+
+### Intrinsic area-scaling cut measure (causal graph and three-tape CMCA)
+
+**No new axioms.** These two modules (`Spacetime.SpacelikeCutAreaScaling`,
+`Spacetime.ThreeTapeCutAreaScaling`) are built entirely from previously-certified
+infrastructure (`GTE.Spacetime.CausalGraph`'s `SpacelikeAdj`/`FinAdj`,
+`Spacetime.HolographicScaling`'s `three_tape_state_card`, `Algebra.ChargeFromPolynomial`'s
+`gtePolynomial`) plus `Finset`/`Fintype` combinatorics from Mathlib — they introduce zero
+new `axiom` declarations and do not add to the 98-axiom count above (verified by
+`grep -rhoE "^axiom [a-zA-Z0-9_']+" UgpLean/Spacetime/SpacelikeCutAreaScaling.lean
+UgpLean/Spacetime/ThreeTapeCutAreaScaling.lean`, zero matches).
+
+| ID | Lean name | Module | Tag |
+|---|---|---|---|
+| L90 | `cut_crossing_finset_card_eq_L_sq` — spacelike edges crossing a coordinate cut in the certified causal graph number exactly L² | Spacetime.SpacelikeCutAreaScaling | lemma |
+| L91 | `three_tape_config_card_confirms_reading_A` — the three-tape ℤ₇ configuration space has cardinality exactly 7^(3L), confirming the one-coordinate-per-tape reading of the source-density formula | Spacetime.ThreeTapeCutAreaScaling | lemma |
+| L92 | `three_tape_cut_crossing_card_eq_L_sq` — spacelike edges crossing a coordinate cut in the three-tape CMCA's emergent 3D lattice number exactly L² | Spacetime.ThreeTapeCutAreaScaling | lemma |
 
 ### GTP-3 uniqueness, winding superselection, and cyclotomic Galois certificates
 
