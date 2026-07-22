@@ -1,6 +1,6 @@
 # ugp-lean: Module Reference
 
-440 `.lean` files across 32 directories (plus 7 root-level modules). The definitive layer diagram and per-module descriptions are in `paper/ugp_lean_formalization.tex` §Architecture.
+442 `.lean` files across 32 directories (plus 7 root-level modules). The definitive layer diagram and per-module descriptions are in `paper/ugp_lean_formalization.tex` §Architecture.
 
 ## Dependency Rule
 
@@ -24,7 +24,7 @@
 | [Physics](#physics) | 8 | Kink physics, Z₇ vacuum selection, CMCA physical point, BPS coupling |
 | [Substrate](#substrate) | 31 | PhiMDL fluctuation spectrum, sech overlap bounds, Wightman axioms |
 | [Gravity](#gravity) | 28 | Yukawa, FKTT, Wald entropy, FLRW, spinors, CC residual |
-| [Spacetime](#spacetime) | 39 | Geodesic, mass gap, orbit hierarchy, QEC, quantum gravity, holography |
+| [Spacetime](#spacetime) | 41 | Geodesic, mass gap, orbit hierarchy, QEC, quantum gravity, holography, intrinsic area-scaling cut measure |
 | [Algebra](#algebra) | 25 | Z₇/F₂₁ Galois structure, SM gauge group, SRRG–CA bridge, octonion certificates, Q(ζ₇) Galois group, cyclotomic disjointness |
 | [Framework](#framework) | 10 | GTE-NEMS instance, MDL tower, CMCA continuum limit, coalgebra |
 | [ContinuumLimit](#continuumlimit) | 7 | Wasserstein distance, GF(7) vacuum fixed point, Gorard bridge |
@@ -309,6 +309,8 @@ Algorithms and computational evidence. Imports Core.
 | **UniversalSimulation** | Universal simulation |
 | **ChiralGliderDynamics** | Chiral glider dynamics |
 | **SpectralDimension** | Spectral dimension |
+| **SpacelikeCutAreaScaling** | Intrinsic (metric-free) area-scaling (L²) cut-crossing-edge count, proof of concept on the certified causal graph |
+| **ThreeTapeCutAreaScaling** | Same intrinsic L² cut-crossing-edge count ported to and proved for the actual three-tape ℤ₇ CMCA substrate |
 | *(+ others)* | See `UgpLean/Spacetime/` for full list |
 
 ## Algebra

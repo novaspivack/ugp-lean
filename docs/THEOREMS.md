@@ -1,6 +1,6 @@
 # ugp-lean: Theorem Highlights
 
-**This is a curated selection of the most important theorems by layer.** It is not exhaustive — the library contains thousands of theorems across 440 modules. For the complete inventory, see `paper/ugp_lean_formalization.tex` (Table 1) and browse the source in `UgpLean/`.
+**This is a curated selection of the most important theorems by layer.** It is not exhaustive — the library contains thousands of theorems across 442 modules. For the complete inventory, see `paper/ugp_lean_formalization.tex` (Table 1) and browse the source in `UgpLean/`.
 
 All listed theorems have **0 sorry, 0 custom axioms** on the core path unless marked ⚠.
 
@@ -324,6 +324,9 @@ The foundational chain from which all physics derives.
 | PSC → Lorentzian signature (CatAD; PDE Mathlib blocker) | `lorentzian_sig_from_causal_propagation` | Spacetime.LorentzianCausalityNecessity |
 | IMT gen-1/phase pair: g₁ + 2w_phase = 2^N_fam − π/2^n_ridge (e cancels) | `imt_gen1_phase_structural_pair` | Universality.IMTStructuralPair |
 | IMT binding weight: w_bind = −1/(4×11) − 1/2^11 | `imt_binding_weight_structural` | Universality.IMTStructuralPair |
+| Spacelike causal edges crossing a coordinate cut in the certified causal graph number exactly L² (metric-free, area-scaling) | `cut_crossing_finset_card_eq_L_sq` | Spacetime.SpacelikeCutAreaScaling |
+| Three-tape ℤ₇ configuration space has cardinality exactly 7^(3L), confirming the one-coordinate-per-tape reading of the source-density formula | `three_tape_config_card_confirms_reading_A` | Spacetime.ThreeTapeCutAreaScaling |
+| Spacelike edges crossing a coordinate cut in the three-tape CMCA's emergent 3D lattice number exactly L² (same area-scaling law, now for the actual CMCA substrate) | `three_tape_cut_crossing_card_eq_L_sq` | Spacetime.ThreeTapeCutAreaScaling |
 
 ---
 
