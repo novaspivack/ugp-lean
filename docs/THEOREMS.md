@@ -1,6 +1,6 @@
 # ugp-lean: Theorem Highlights
 
-**This is a curated selection of the most important theorems by layer.** It is not exhaustive — the library contains thousands of theorems across 442 modules. For the complete inventory, see `paper/ugp_lean_formalization.tex` (Table 1) and browse the source in `UgpLean/`.
+**This is a curated selection of the most important theorems by layer.** It is not exhaustive — the library contains thousands of theorems across 438 modules (corrected 2026-09-13 from a stale 442; see `docs/MODULES.md`). For the complete inventory, see `paper/ugp_lean_formalization.tex` (Table 1) and browse the source in `UgpLean/`.
 
 All listed theorems have **0 sorry, 0 custom axioms** on the core path unless marked ⚠.
 

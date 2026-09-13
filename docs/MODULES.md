@@ -1,6 +1,8 @@
 # ugp-lean: Module Reference
 
-442 `.lean` files across 32 directories (plus 7 root-level modules). The definitive layer diagram and per-module descriptions are in `paper/ugp_lean_formalization.tex` §Architecture.
+438 `.lean` files across 32 directories (plus 7 root-level modules). The definitive layer diagram and per-module descriptions are in `paper/ugp_lean_formalization.tex` §Architecture.
+
+*(2026-09-13: corrected from 442 — a dead/orphaned-file audit found and removed 3 broken `Substrate/SechOverlapIntegralBounds_{r5mesh,r5bins,cosh}.lean` files [confirmed non-compiling, superseded by the axiom-based route already in `SechOverlapIntegralBounds_bridge.lean`] and 1 broken `ElegantKernel/Unconditional/UCLMassOrderingBridge.lean` [confirmed non-compiling — referenced identifiers removed by a later refactor — and an exact duplicate of theorems already proved in the imported `UCLMassOrderingSBounds.lean`], and wired in 1 previously-orphaned-but-sound file, `Spacetime/UniversalSimulation.lean`. Net: 442 − 4 = 438. See `nova-publishing/docs/KNOWN_ISSUES_AND_TECHNICAL_DEBT.md` TD-010 for full evidence.)*
 
 ## Dependency Rule
 
@@ -16,13 +18,13 @@
 | [Compute](#compute) | 6 | Sieve algorithms, `native_decide` proofs |
 | [Classification](#classification) | 7 | Theorems A/B, RSUC, monotonic strengthening, N_gen uniqueness |
 | [GTE](#gte) | 32 | GTE orbit, update map, generation structure, entropy, fiber bundle |
-| [ElegantKernel](#elegantkernel) | 28 | Quarter-Lock, UCL Elegant Kernel, unconditional closure |
+| [ElegantKernel](#elegantkernel) | 27 | Quarter-Lock, UCL Elegant Kernel, unconditional closure |
 | [MassRelations](#massrelations) | 40 | Koide, CKM, PMNS, Higgs quartic, neutrino sector, pion mass |
 | [BraidAtlas](#braidatlas) | 14 | Charge theorem, EW bosons, dark matter quantum numbers |
 | [Universality](#universality) | 97 | Rule 110, UWCA, Turing universality, GTE compilation/uniqueness, GTP-3 uniqueness, winding superselection |
 | [Polynomial](#polynomial) | 18 | GF(7) ground states, period-475, spin-7 spectroscopy, MDL unification |
 | [Physics](#physics) | 8 | Kink physics, Z₇ vacuum selection, CMCA physical point, BPS coupling |
-| [Substrate](#substrate) | 31 | PhiMDL fluctuation spectrum, sech overlap bounds, Wightman axioms |
+| [Substrate](#substrate) | 28 | PhiMDL fluctuation spectrum, sech overlap bounds, Wightman axioms |
 | [Gravity](#gravity) | 28 | Yukawa, FKTT, Wald entropy, FLRW, spinors, CC residual |
 | [Spacetime](#spacetime) | 41 | Geodesic, mass gap, orbit hierarchy, QEC, quantum gravity, holography, intrinsic area-scaling cut measure |
 | [Algebra](#algebra) | 25 | Z₇/F₂₁ Galois structure, SM gauge group, SRRG–CA bridge, octonion certificates, Q(ζ₇) Galois group, cyclotomic disjointness |
@@ -128,7 +130,7 @@ Algorithms and computational evidence. Imports Core.
 | **KGen2** | k_gen2 = −φ/2 = cos(4π/5) |
 | **MuTriple** | μ-triple structure |
 | **PentagonalUniqueness** | Pentagon quadratic uniqueness |
-| **Unconditional/** | 18 modules: full UCL unconditional closure — CyclotomicChain, D5Renormalization, FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure, KLFullClosure, PentagonConstraint, RiccatiFixedPoint, MasterCertification, UCLMassOrdering, UCLKoide, UCLLogBounds, UCLMassOrderingSBounds, UCLMassOrderingCoeffBounds, UCLMassOrderingBounds, UCLMassOrderingBridge, UCLMassOrderingCerts, UCLMassOrderingInterval, UCLMassOrderingDelta, UCLCalibration |
+| **Unconditional/** | 20 modules (label was stale at "18" against a 21-name list even before this pass's deletion — corrected to match the actual file count): full UCL unconditional closure — CyclotomicChain, D5Renormalization, FibonacciPentagonBridge, FullClosure, KConstFullClosure, KGenFullClosure, KLFullClosure, PentagonConstraint, RiccatiFixedPoint, MasterCertification, UCLMassOrdering, UCLKoide, UCLLogBounds, UCLMassOrderingSBounds, UCLMassOrderingCoeffBounds, UCLMassOrderingBounds, UCLMassOrderingCerts, UCLMassOrderingInterval, UCLMassOrderingDelta, UCLCalibration (`UCLMassOrderingBridge` removed 2026-09-13 — non-compiling, exact duplicate of theorems already proved in `UCLMassOrderingSBounds`; see TD-010) |
 
 ## MassRelations
 

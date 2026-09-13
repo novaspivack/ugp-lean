@@ -383,6 +383,7 @@ import UgpLean.Spacetime.MatterGHPrecompactness
 import UgpLean.Spacetime.PhiMDLKinkQuantumNumbers
 import UgpLean.Spacetime.PhiMDLZeroModeIndex
 import UgpLean.Spacetime.AsyncLiftingTheorem
+import UgpLean.Spacetime.UniversalSimulation
 import UgpLean.QFT.GaugedMassGap
 import UgpLean.QFT.ChiralSymmetryBreaking
 import UgpLean.Physics.FKTTCoupling
@@ -511,6 +512,7 @@ Formalization of UGP (Universal Generative Principle) and GTE (Generative Triple
 - `UgpLean.Spacetime.CausalInvariance` — Rank 37-LCI: f_MDL causal invariance + Lamport consistency + SR connection; `ForwardCausalAdj`, `forward_causal_time_step`, `forward_causal_acyclic`, `transgen_time_strictly_increases`, `lamport_irrefl`, `lamport_strict_partial_order`, `lamport_order_update_independent`, `afca_sr_causal_structure`; all zero sorry, zero axioms (CatAL/CatAD — Lamport properties CatAL, Minkowski isomorphism CatAD, 2026-05-21)
 - `UgpLean.Spacetime.DWeightSRFormula` — Rank 63-DMDL: [D]-weighted SR formula; `dmdl_dweight_positive`, `dmdl_proper_time_ratio`, `dmdl_dweight_sr_formula`, `dmdl_lorentz_factor_algebraic`, `dmdl_tau_c_ratio_structure`, `dmdl_qec_sr_bundle`; all zero sorry, zero custom axioms (CatAL, 2026-05-24)
 - `UgpLean.Spacetime.AsyncLiftingTheorem` — Rank 32-ALT2: Asynchronous Lifting Theorem; `async_algebraic_lifting_theorem`, `async_color_confinement`, `async_dweight_is_local`, `async_psc_admissible_is_local`; all CatAL, zero sorry — async ALT is definitionally the sync ALT because DWeight and PSCAdmissible are local state predicates (2026-05-26)
+- `UgpLean.Spacetime.UniversalSimulation` — Rule 110 universal-simulation chain: `rule110_turing_complete` (zero new axioms, via `CookComputableBridge`); `universal_ca_simulates_any_ca` (axiom, disclosed CA-embedding generalization of Cook's theorem); `fca_implementable_in_rule110` (zero new axioms, instance at `g := ChiralPairVA.rule110`); `async_rule110_exists` (axiom, disclosed async/sync CA equivalence, cf. Fatès 2014); `afca_exists` (zero new axioms, composes the two axioms). Was unreachable from `UgpLean.lean` until wired in 2026-09-13 (found orphaned by a corpus-count audit; verified zero sorry, builds cleanly, no duplicate content elsewhere, all axioms already non-vacuous and self-disclosed in the module docstring)
 
 **Non-circularity:** Core/ does not import Compute/. See README.md.
 -/

@@ -2,7 +2,7 @@
 
 Machine-checked Lean 4 formalization of the **Universal Generative Principle (UGP)** — a research program by [Nova Spivack](https://www.novaspivack.com/) establishing that a single 7-state cellular automaton over GF(7) generates the Standard Model particle spectrum, gauge structure, and mass predictions from first principles.
 
-**442 modules · zero sorry on the core proof path · Lean 4 + Mathlib**
+**438 modules · zero sorry on the core proof path · Lean 4 + Mathlib**
 
 ---
 
@@ -48,7 +48,9 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 
 ## Module structure
 
-442 modules organized in 17 layers. Full module lists are in [docs/MODULES.md](docs/MODULES.md) and the formalization paper.
+438 modules organized in 17 layers. Full module lists are in [docs/MODULES.md](docs/MODULES.md) and the formalization paper.
+
+*(2026-09-13: corrected from 442 — see `docs/MODULES.md` for the dead/orphaned-file audit that removed 4 non-compiling files and wired in 1 sound one. Note: this table's per-layer "Structural" row is corrected below; the other rows use a different layer-to-directory mapping than `docs/MODULES.md`'s and were not independently re-audited this pass — a few rows (e.g. BraidAtlas: 13 here vs. 14 in `docs/MODULES.md`) already disagreed with `docs/MODULES.md` before this pass and are flagged as a separate pre-existing doc-consistency gap, not something this pass's file changes caused.)*
 
 | Layer | Modules | What it covers |
 |---|---|---|
@@ -56,7 +58,7 @@ A clean build completes with the standard Mathlib axiom signature `[propext, Cla
 | **Compute** | 6 | Prime lock, sieve filters, decidable predicates |
 | **Classification** | 7 | Theorems A/B, RSUC, monotonic strengthening, N_gen=3 uniqueness |
 | **GTE** | 25 | GTE orbit, update map, generation structure, entropy, fiber bundle |
-| **Structural** | 30 | Quarter-Lock, Elegant Kernel, UCL mass ordering closure |
+| **Structural** | 29 | Quarter-Lock, Elegant Kernel, UCL mass ordering closure |
 | **MassRelations** | 33 | Koide, CKM, PMNS, Higgs quartic, neutrino sector, pion mass, Eisenstein identities, CKM θ₂₃ structural ratio |
 | **BraidAtlas** | 13 | Charge theorem, EW bosons, dark braid, RHN gap |
 | **Universality** | 97 | Rule 110, UWCA, register-machine Turing universality, GTE compilation/uniqueness, EW structure, Solovay completeness, bi-immunity, complex amplitude forcing, Φ_MDL Fock-space particle realization, GTP-3 uniqueness, winding-sector superselection |

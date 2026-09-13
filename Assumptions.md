@@ -3,7 +3,10 @@
 Every premise that is not definitional truth. Tag: `definition` | `lemma` | `axiom` | `imported` | `citation`.
 
 This is a curated selection of the premises behind the library's key results — it is not
-exhaustive. The library is 442 modules across 27 layers and references **98** named axioms
+exhaustive. The library is 438 modules across 27 layers (corrected 2026-09-13 from a stale
+442 — a dead/orphaned-file audit removed 4 non-compiling files and wired in 1 sound one; see
+`docs/MODULES.md` and `nova-publishing/docs/KNOWN_ISSUES_AND_TECHNICAL_DEBT.md` TD-010) and
+references **98** named axioms
 in total, counted via `grep -rhoE "^axiom [a-zA-Z0-9_']+" UgpLean --include="*.lean" | sort -u | wc -l`
 (top-level `axiom` declarations, deduplicated by name; excludes the standard Lean/Mathlib
 logical axioms `propext`/`Classical.choice`/`Quot.sound`, which are not disclosed
